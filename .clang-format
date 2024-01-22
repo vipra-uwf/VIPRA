@@ -1,0 +1,11 @@
+Language: Cpp
+BasedOnStyle: Google
+Standard: c++20
+TabWidth: 2
+UseTab: Never
+ColumnLimit: 110
+PointerAlignment: Left
+ReflowComments:  false
+IncludeBlocks: Preserve
+AlignConsecutiveDeclarations: true
+DerivePointerAlignment: false

@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+
+# Build
+build
+
+# VS Code
+.vscode
+.cache
+
+# Temporary
+temp
