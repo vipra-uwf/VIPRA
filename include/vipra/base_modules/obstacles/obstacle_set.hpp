@@ -9,13 +9,15 @@
 #include "vipra/types/f3d.hpp"
 #include "vipra/types/float.hpp"
 
-namespace VIPRA {
-class Obstacles {
+// TODO(rolland): implement quadtree for storing obstacles
+
+namespace VIPRA::Obstacles {
+class QuadTree {
   VIPRA_MODULE_TYPE(OBSTACLES);
 
  public:
   template <Concepts::InputModule input_t>
-  explicit Obstacles(const input_t& input) {}
+  explicit QuadTree(const input_t& input) {}
 
   template <typename params_t>
   static void register_params() {
@@ -41,6 +43,6 @@ class Obstacles {
   VIPRA::f3dVec            _dummy;
   std::vector<std::string> _dummy2;
 };
-}  // namespace VIPRA
+}  // namespace VIPRA::Obstacles
 
-CHECK_MODULE(ObstacleModule, VIPRA::Obstacles);
+CHECK_MODULE(ObstacleModule, VIPRA::Obstacles::QuadTree);

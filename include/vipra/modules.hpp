@@ -11,6 +11,8 @@ enum class Type {
   OUTPUT,
   PEDESTRIANS,
   PARAMETERS,
+  MAP,
+  FIELD,
   OBSTACLES,
   SIMULATION,
 };
@@ -33,6 +35,10 @@ inline auto to_string(Type type) -> std::string {
       return "OBSTACLES";
     case Type::SIMULATION:
       return "SIMULATION";
+    case Type::MAP:
+      return "MAP";
+    case Type::FIELD:
+      return "FIELD";
   }
 }
 
@@ -43,5 +49,6 @@ inline auto to_string(Type type) -> std::string {
                                                                                   \
  private:
 
-#define CHECK_MODULE(type, name) static_assert(VIPRA::Concepts::type<name>);
+// NOLINTNEXTLINE(cppcoreguidelines-macro-usage) This is a very simple macro
+#define CHECK_MODULE(type, ...) static_assert(VIPRA::Concepts::type<__VA_ARGS__>);
 }  // namespace VIPRA::Modules

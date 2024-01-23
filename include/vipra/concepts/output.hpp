@@ -27,4 +27,23 @@ concept OutputModule = Module<output_t, VIPRA::Modules::Type::OUTPUT> &&
   // { output.ped_timestep_value(VIPRA::idx{}, key, VIPRA::f3d & value) } -> std::same_as<void>;
   // { output.ped_timestep_value(VIPRA::idx{}, key, const VIPRA::f3d& value) } -> std::same_as<void>;
 };
+
+class DummyOutput {
+  VIPRA_MODULE_TYPE(OUTPUT)
+ public:
+  using output_data_t = void;
+
+  template <typename params_t>
+  static void register_params() {}
+
+  void setup(auto& /*unused*/) {}
+
+  void write() {}
+  void sim_value(const char* /*unused*/, auto&& /*unused*/) {}
+  void timestep_value(const char* /*unused*/, auto&& /*unused*/) {}
+  void ped_value(VIPRA::idx /*unused*/, const char* /*unused*/, auto&& /*unused*/) {}
+  void ped_timestep_value(VIPRA::idx /*unused*/, const char* /*unused*/, auto&& /*unused*/) {}
+};
+
+CHECK_MODULE(OutputModule, DummyOutput);
 }  // namespace VIPRA::Concepts

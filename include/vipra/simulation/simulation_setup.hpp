@@ -1,7 +1,7 @@
 #pragma once
 
 #include <type_traits>
-#include "vipra/base_modules.hpp"
+
 #include "vipra/concepts/parameters.hpp"
 #include "vipra/simulation/module_checks.hpp"
 #include "vipra/simulation/sim_type.hpp"
@@ -31,7 +31,7 @@ constexpr auto simulation(Mode mode, args_t... args) {
   constexpr std::size_t MODEL_IDX = FindIndex<0, Checks::Model, args_t...>::value;
   constexpr std::size_t PEDSET_IDX = FindIndex<0, Checks::Pedset, args_t...>::value;
   constexpr std::size_t GOALS_IDX = FindIndex<0, Checks::Goals, args_t...>::value;
-  constexpr std::size_t OBSTACLES_IDX = FindIndex<0, Checks::Obstacles, args_t...>::value;
+  constexpr std::size_t MAP_IDX = FindIndex<0, Checks::Map, args_t...>::value;
 
   // Static asserts to ensure that the modules are valid
   static_assert(PARAMS_IDX != -1,
@@ -49,7 +49,7 @@ constexpr auto simulation(Mode mode, args_t... args) {
   static_assert(GOALS_IDX != -1,
                 "Goals Module does Not conform to the Goals Module specification OR A valid Goals Module was "
                 "not provided");
-  static_assert(OBSTACLES_IDX != -1,
+  static_assert(MAP_IDX != -1,
                 "Obstacle Module does Not conform to the Obstacle Module specification OR A valid Obstacle "
                 "Module was not provided");
 
@@ -57,6 +57,6 @@ constexpr auto simulation(Mode mode, args_t... args) {
   // Returns the SimType object
   return SimType(mode, std::move(std::get<PARAMS_IDX>(temp)), std::move(std::get<OUTPUT_IDX>(temp)),
                  std::move(std::get<MODEL_IDX>(temp)), std::move(std::get<PEDSET_IDX>(temp)),
-                 std::move(std::get<GOALS_IDX>(temp)), std::move(std::get<OBSTACLES_IDX>(temp)));
+                 std::move(std::get<GOALS_IDX>(temp)), std::move(std::get<MAP_IDX>(temp)));
 }
 }  // namespace VIPRA

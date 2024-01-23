@@ -4,12 +4,6 @@
 #include <utility>
 
 #include "vipra/concepts/all_concepts.hpp"
-#include "vipra/concepts/goals.hpp"
-#include "vipra/concepts/model.hpp"
-#include "vipra/concepts/obstacle_set.hpp"
-#include "vipra/concepts/output.hpp"
-#include "vipra/concepts/parameters.hpp"
-#include "vipra/concepts/pedset.hpp"
 
 #include "vipra/types/parameter.hpp"
 #include "vipra/types/timestep.hpp"
@@ -19,13 +13,13 @@ namespace VIPRA {
 enum class Mode { SINGLE, SWEEP };
 
 template <Concepts::ParamModule params_t, Concepts::OutputModule output_t, Concepts::ModelModule model_t,
-          Concepts::PedsetModule pedset_t, Concepts::GoalsModule goals_t, Concepts::ObstacleModule obstacle_t>
+          Concepts::PedsetModule pedset_t, Concepts::GoalsModule goals_t, Concepts::MapModule map_t>
 class SimType {
   using output_data_t = decltype(std::declval<output_t>().write());
 
  public:
   constexpr SimType(Mode mode, params_t&& params, output_t&& output, model_t&& model, pedset_t&& pedset,
-                    goals_t&& goals, obstacle_t&& obstacles)
+                    goals_t&& goals, map_t&& obstacles)
       : _mode(mode),
         _params(params),
         _output(output),
@@ -43,7 +37,7 @@ class SimType {
     model_t::template register_params<params_t>();
     pedset_t::template register_params<params_t>();
     goals_t::template register_params<params_t>();
-    obstacle_t::template register_params<params_t>();
+    map_t::template register_params<params_t>();
   }
 
   auto operator()() -> output_data_t {
@@ -55,13 +49,13 @@ class SimType {
   }
 
  private:
-  Mode       _mode{Mode::SINGLE};
-  params_t   _params;
-  output_t   _output;
-  model_t    _model;
-  pedset_t   _pedset;
-  goals_t    _goals;
-  obstacle_t _obstacles;
+  Mode     _mode{Mode::SINGLE};
+  params_t _params;
+  output_t _output;
+  model_t  _model;
+  pedset_t _pedset;
+  goals_t  _goals;
+  map_t    _obstacles;
 
   VIPRA::timestep _timestep{0};
 
