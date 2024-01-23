@@ -4,17 +4,19 @@
 #include "vipra/concepts/parameters.hpp"
 #include "vipra/concepts/pedset.hpp"
 #include "vipra/modules.hpp"
+#include "vipra/types/float.hpp"
 
 namespace CALM {
 class Model {
   VIPRA_MODULE_TYPE(MODEL)
+  struct Data {
+    std::vector<VIPRA::f_pnt> masses;
+    std::vector<VIPRA::f_pnt> reactionTimes;
+    std::vector<VIPRA::f_pnt> maxSpeeds;
+    std::vector<VIPRA::f_pnt> shoulderLens;
+  };
 
  public:
-  template <VIPRA::Concepts::ParamModule params_t>
-  explicit Model(const params_t& params) {
-    // TODO: get parameters
-  }
-
   void timestep(const auto& pedset, const auto& obsset) {}
 
   template <VIPRA::Concepts::ParamModule params_t>
@@ -32,6 +34,17 @@ class Model {
                              VIPRA::Parameter{VIPRA::Parameter::Type::REQUIRED});
     params_t::register_param(MODULE_TYPE, "shoulderLenStdDev",
                              VIPRA::Parameter{VIPRA::Parameter::Type::REQUIRED});
+  }
+
+  void setup(const auto& params) {
+    auto meanMass = params.template get_param<VIPRA::f_pnt>(MODULE_TYPE, "meanMass");
+    auto massStdDev = params.template get_param<VIPRA::f_pnt>(MODULE_TYPE, "massStdDev");
+    auto meanReactionTime = params.template get_param<VIPRA::f_pnt>(MODULE_TYPE, "meanReactionTime");
+    auto reactionTimeStdDev = params.template get_param<VIPRA::f_pnt>(MODULE_TYPE, "reactionTimeStdDev");
+    auto meanMaxSpeed = params.template get_param<VIPRA::f_pnt>(MODULE_TYPE, "meanMaxSpeed");
+    auto maxSpeedStdDev = params.template get_param<VIPRA::f_pnt>(MODULE_TYPE, "maxSpeedStdDev");
+    auto meanShoulderLen = params.template get_param<VIPRA::f_pnt>(MODULE_TYPE, "meanShoulderLen");
+    auto shoulderLenStdDev = params.template get_param<VIPRA::f_pnt>(MODULE_TYPE, "shoulderLenStdDev");
   }
 
  private:

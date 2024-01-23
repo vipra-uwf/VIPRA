@@ -34,7 +34,7 @@ class SimType {
         _goals(goals),
         _obstacles(obstacles) {}
 
-  static void setup() {
+  static void register_params() {
     params_t::register_param(Modules::Type::SIMULATION, "max_timestep",
                              VIPRA::Parameter{Parameter::Type::REQUIRED});
     params_t::register_param(Modules::Type::SIMULATION, "timestep_size",

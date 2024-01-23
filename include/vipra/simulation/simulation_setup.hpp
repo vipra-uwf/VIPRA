@@ -54,7 +54,6 @@ constexpr auto simulation(Mode mode, args_t... args) {
                 "Module was not provided");
 
   auto&& temp = std::forward_as_tuple(args...);
-
   // Returns the SimType object
   return SimType(mode, std::move(std::get<PARAMS_IDX>(temp)), std::move(std::get<OUTPUT_IDX>(temp)),
                  std::move(std::get<MODEL_IDX>(temp)), std::move(std::get<PEDSET_IDX>(temp)),

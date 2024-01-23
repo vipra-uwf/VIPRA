@@ -8,14 +8,14 @@
 #include "vipra/modules.hpp"
 #include "vipra/types/parameter.hpp"
 
+// TODO(rolland): Check that all required parameters are provided
 namespace VIPRA {
 template <Concepts::InputModule input_t>
 class Parameters {
   VIPRA_MODULE_TYPE(PARAMETERS)
 
  public:
-  explicit Parameters(const input_t& input) : _input(input) {}
-  explicit Parameters(input_t&& input) : _input(input) {}
+  explicit Parameters<input_t>(input_t&& input) : _input(input) {}
 
   static void register_param(VIPRA::Modules::Type module, const std::string& name, Parameter param) {
     get_params()[module][name] = param;

@@ -7,22 +7,29 @@
 #include "vipra/modules.hpp"
 
 #include "vipra/types/f3d.hpp"
+#include "vipra/types/float.hpp"
 
 namespace VIPRA {
 class Obstacles {
   VIPRA_MODULE_TYPE(OBSTACLES);
 
  public:
-  template <Concepts::ParamModule params_t, Concepts::InputModule input_t>
-  explicit Obstacles(const params_t& /*unused*/, const input_t& input) {}
+  template <Concepts::InputModule input_t>
+  explicit Obstacles(const input_t& input) {}
 
   template <typename params_t>
-  static void register_params() {}
+  static void register_params() {
+    // TODO: register parameters
+  }
+
+  void setup(auto& params) {
+    // TODO: load parameters
+  }
 
   // NOLINTBEGIN rolland: Dummy Object that cannot be used, we don't care about errors here
   auto get_map_dimensions() -> std::pair<VIPRA::f3d, VIPRA::f3d> { return {VIPRA::f3d{}, VIPRA::f3d{}}; }
   auto collision(VIPRA::f3d) -> bool { return false; }
-  auto ray_hit(VIPRA::f3d, VIPRA::f3d) -> float { return 1.0F; }
+  auto ray_hit(VIPRA::f3d, VIPRA::f3d) -> VIPRA::f_pnt { return 1.0F; }
   auto nearest_obstacle(VIPRA::f3d) -> VIPRA::f3d { return VIPRA::f3d{}; }
   auto nearest_obstacle_in_direction(VIPRA::f3d, VIPRA::f3d) -> VIPRA::f3d { return VIPRA::f3d{}; }
   auto get_object_types() -> const std::vector<std::string>& { return _dummy2; }

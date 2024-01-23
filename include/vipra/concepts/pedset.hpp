@@ -26,6 +26,8 @@ class DummyPedSet {
   template <typename params_t>
   static void register_params() {}
 
+  void setup(auto& params) {}
+
   static auto num_pedestrians() -> VIPRA::size { return 1; }
   static auto ped_coords(VIPRA::idx /*unused*/) -> VIPRA::f3d { return VIPRA::f3d{0}; }
   auto        all_coords() -> const std::vector<VIPRA::f3d>& { return _dummy; }

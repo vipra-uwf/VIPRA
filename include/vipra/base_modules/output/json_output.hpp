@@ -16,12 +16,13 @@ class JSON {
   VIPRA_MODULE_TYPE(OUTPUT)
 
  public:
-  template <Concepts::ParamModule params_t>
-  explicit JSON(const params_t& /*unused*/, const char* filename) : _outputPath(filename) {}
-
   template <typename params_t>
   static void register_params() {
-    params_t::register_param(MODULE_TYPE, "filename", VIPRA::Parameter{Parameter::Type::REQUIRED});
+    params_t::register_param(MODULE_TYPE, "filepath", VIPRA::Parameter{Parameter::Type::REQUIRED});
+  }
+
+  void setup(auto& params) {
+    // TODO: load parameters
   }
 
   void write() {

@@ -15,8 +15,8 @@ class Pedestrians {
   VIPRA_MODULE_TYPE(PEDESTRIANS)
 
  public:
-  template <Concepts::ParamModule params_t, Concepts::InputModule input_t>
-  explicit Pedestrians(const params_t& /*unused*/, const input_t& input) {
+  template <Concepts::InputModule input_t>
+  explicit Pedestrians(const input_t& input) {
     auto coords = input.template get_vector<VIPRA::f3d>("coords");
     if (!coords) throw std::runtime_error("Could not find pedestrian coordinates in input file");
 
@@ -26,6 +26,8 @@ class Pedestrians {
 
   template <Concepts::ParamModule params_t>
   static void register_params() {}
+
+  void setup(auto& params) {}
 
   [[nodiscard]] auto num_pedestrians() -> VIPRA::size { return _coords.size(); }
   [[nodiscard]] auto ped_coords(VIPRA::idx pedIdx) -> VIPRA::f3d { return _coords[pedIdx]; }

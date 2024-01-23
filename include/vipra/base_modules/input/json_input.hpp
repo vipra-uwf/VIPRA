@@ -7,6 +7,7 @@
 
 #include "vipra/concepts/input.hpp"
 #include "vipra/modules.hpp"
+#include "vipra/types/float.hpp"
 
 namespace VIPRA::Input {
 class JSON {
@@ -69,7 +70,7 @@ inline auto JSON::get_vector<VIPRA::f3d>(std::string_view key) const
     for (const auto& [subkey, value] : _json[key].items()) {
       VIPRA::f3d temp{};
       for (const auto& dimension : value.items()) {
-        temp[dimension.key()[0]] = dimension.value().get<float>();
+        temp[dimension.key()[0]] = dimension.value().get<VIPRA::f_pnt>();
       }
       inputData.push_back(temp);
     }
@@ -91,7 +92,7 @@ inline auto JSON::get<VIPRA::f3d>(std::string_view key) const -> std::optional<V
     for (const auto& [subkey, value] : _json[key].items()) {
       VIPRA::f3d temp{};
       for (const auto& dimension : value.items()) {
-        temp[dimension.key()[0]] = dimension.value().get<float>();
+        temp[dimension.key()[0]] = dimension.value().get<VIPRA::f_pnt>();
       }
       inputData.push_back(temp);
     }

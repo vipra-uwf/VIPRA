@@ -5,23 +5,26 @@
 #include <stdexcept>
 #include <vector>
 
+#include "vipra/types/float.hpp"
+
 namespace VIPRA {
 // NOLINTNEXTLINE (rolland) Keeping f3d from before format changes :  ignore(readability-identifier-naming)
 struct f3d {
-  float x, y, z;
+  VIPRA::f_pnt x, y, z;
 
   ~f3d() = default;
   constexpr explicit f3d() noexcept : x(0), y(0), z(0) {}
-  constexpr explicit f3d(float valX) noexcept : x(valX), y(0), z(0) {}
-  constexpr explicit f3d(float valX, float valY) noexcept : x(valX), y(valY), z(0) {}
-  constexpr explicit f3d(float valX, float valY, float valZ) noexcept : x(valX), y(valY), z(valZ) {}
+  constexpr explicit f3d(VIPRA::f_pnt valX) noexcept : x(valX), y(0), z(0) {}
+  constexpr explicit f3d(VIPRA::f_pnt valX, VIPRA::f_pnt valY) noexcept : x(valX), y(valY), z(0) {}
+  constexpr explicit f3d(VIPRA::f_pnt valX, VIPRA::f_pnt valY, VIPRA::f_pnt valZ) noexcept
+      : x(valX), y(valY), z(valZ) {}
   constexpr f3d(const f3d& other) noexcept = default;
   constexpr f3d(f3d&& other) noexcept = default;
   constexpr auto operator=(const f3d& other) noexcept -> f3d& = default;
   constexpr auto operator=(f3d&& other) noexcept -> f3d& = default;
 
   template <typename data_t, class = typename std::enable_if<std::is_integral<data_t>::value>::type>
-  inline constexpr auto operator[](data_t index) -> float& {
+  inline constexpr auto operator[](data_t index) -> VIPRA::f_pnt& {
     switch (index) {
       case 0:
         return x;
@@ -41,7 +44,7 @@ struct f3d {
   }
 
   template <typename data_t, class = typename std::enable_if<std::is_integral<data_t>::value>::type>
-  inline constexpr auto operator[](data_t index) const -> float {
+  inline constexpr auto operator[](data_t index) const -> VIPRA::f_pnt {
     switch (index) {
       case 0:
         return x;
@@ -123,26 +126,26 @@ struct f3d {
     return *this;
   }
 
-  [[nodiscard]] inline constexpr auto distance_to_sqrd(const f3d& other) const noexcept -> float {
-    const float dX = other.x - x;
-    const float dY = other.y - y;
-    const float dZ = other.z - z;
+  [[nodiscard]] inline constexpr auto distance_to_sqrd(const f3d& other) const noexcept -> VIPRA::f_pnt {
+    const VIPRA::f_pnt dX = other.x - x;
+    const VIPRA::f_pnt dY = other.y - y;
+    const VIPRA::f_pnt dZ = other.z - z;
 
     return (dX * dX) + (dY * dY) + (dZ * dZ);
   }
 
-  [[nodiscard]] inline constexpr auto distance_to(const f3d& other) const -> float {
-    const float dX = other.x - x;
-    const float dY = other.y - y;
-    const float dZ = other.z - z;
+  [[nodiscard]] inline constexpr auto distance_to(const f3d& other) const -> VIPRA::f_pnt {
+    const VIPRA::f_pnt dX = other.x - x;
+    const VIPRA::f_pnt dY = other.y - y;
+    const VIPRA::f_pnt dZ = other.z - z;
 
     return std::sqrt((dX * dX) + (dY * dY) + (dZ * dZ));
   }
 
-  inline constexpr auto distance_to(f3d&& other) const -> float {
-    const float dX = other.x - x;
-    const float dY = other.y - y;
-    const float dZ = other.z - z;
+  inline constexpr auto distance_to(f3d&& other) const -> VIPRA::f_pnt {
+    const VIPRA::f_pnt dX = other.x - x;
+    const VIPRA::f_pnt dY = other.y - y;
+    const VIPRA::f_pnt dZ = other.z - z;
 
     return std::sqrt((dX * dX) + (dY * dY) + (dZ * dZ));
   }
@@ -178,18 +181,18 @@ struct f3d {
   /**
    * @brief Returns vector magnitude^2
    * 
-   * @return constexpr float 
+   * @return constexpr VIPRA::f_pnt 
    */
-  [[nodiscard]] inline constexpr auto magnitude_sqrd() const noexcept -> float {
+  [[nodiscard]] inline constexpr auto magnitude_sqrd() const noexcept -> VIPRA::f_pnt {
     return (x * x) + (y * y) + (z * z);
   }
 
   /**
    * @brief Returns the vectors magnitude
    * 
-   * @return constexpr float 
+   * @return constexpr VIPRA::f_pnt 
    */
-  [[nodiscard]] inline constexpr auto magnitude() const -> float {
+  [[nodiscard]] inline constexpr auto magnitude() const -> VIPRA::f_pnt {
     return std::sqrt((x * x) + (y * y) + (z * z));
   }
 
@@ -197,9 +200,9 @@ struct f3d {
    * @brief Returns the dot product between two f3ds
    * 
    * @param other : 
-   * @return constexpr float 
+   * @return constexpr VIPRA::f_pnt 
    */
-  [[nodiscard]] inline constexpr auto dot(const f3d& other) const noexcept -> float {
+  [[nodiscard]] inline constexpr auto dot(const f3d& other) const noexcept -> VIPRA::f_pnt {
     return (x * other.x) + (y * other.y) + (z * other.z);
   }
 };
@@ -212,8 +215,8 @@ inline constexpr auto operator*(data_t&& multiplier, const f3d& other) noexcept 
 using f3dVec = std::vector<f3d>;
 
 inline constexpr const f3d _emptyf3d_ =  // NOLINT
-    VIPRA::f3d{std::numeric_limits<float>::max(), std::numeric_limits<float>::max(),
-               std::numeric_limits<float>::max()};
+    VIPRA::f3d{std::numeric_limits<VIPRA::f_pnt>::max(), std::numeric_limits<VIPRA::f_pnt>::max(),
+               std::numeric_limits<VIPRA::f_pnt>::max()};
 
 extern const f3dVec emptyf3d_vec;  // NOLINT
 }  // namespace VIPRA
