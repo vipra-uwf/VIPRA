@@ -9,7 +9,7 @@
 
 #include "vipra/modules.hpp"
 
-namespace VIPRA {
+namespace VIPRA::Module {
 template <Concepts::ObstacleModule obstacles_t, Concepts::FieldModule... field_ts>
 class Map {
   VIPRA_MODULE_TYPE(MAP);
@@ -26,10 +26,11 @@ class Map {
     const auto objTypes = input.template get_vector<std::string>("obj_types");
     const auto objMap = std::map<std::string, std::vector<VIPRA::f3d>>{};
 
-    for (size_t i = 0; i < objTypes->size(); ++i) {
-      const auto objPos = input.template get_vector<VIPRA::f3d>(objTypes->at(i));
-      objMap[objTypes->at(i)].push_back(objPos->at(i));
-    }
+    std::for_each(objTypes->begin(), objTypes->end(), [&](const auto& objType) {
+      const auto objPos = input.template get_vector<VIPRA::f3d>(objType);
+      std::for_each(objPos->begin(), objPos->end(),
+                    [&](const auto& objPos) { objMap[objType].push_back(objPos); });
+    });
 
     _obstacles.initialize(input.get_vector("obstacles"), objTypes.value(), objMap);
   }
@@ -101,4 +102,4 @@ class Map {
 };
 
 CHECK_MODULE(MapModule, Map<Concepts::DummyObsSet, Concepts::DummyField>)
-}  // namespace VIPRA
+}  // namespace VIPRA::Module

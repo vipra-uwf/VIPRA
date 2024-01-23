@@ -26,6 +26,9 @@ class DummyModel {
   template <typename params_t>
   static void register_params() {}
 
+  template <typename pedset_t>
+  void initialize(const pedset_t& /*unused*/) {}
+
   void setup(auto& /*unused*/) {}
   void timestep(const DummyPedSet& /*unused*/, const DummyObsSet& /*unused*/) {}
 };

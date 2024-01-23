@@ -3,7 +3,7 @@
 #include "vipra/concepts/output.hpp"
 #include "vipra/types/util/result_or_void.hpp"
 
-namespace VIPRA {
+namespace VIPRA::Module {
 template <Concepts::OutputModule... output_ts>
 class Output {
   VIPRA_MODULE_TYPE(OUTPUT)
@@ -91,4 +91,4 @@ class Output {
 };
 
 CHECK_MODULE(OutputModule, Output<Concepts::DummyOutput>);
-}  // namespace VIPRA
+}  // namespace VIPRA::Module
