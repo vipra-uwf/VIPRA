@@ -26,7 +26,7 @@ class SimType {
         _model(model),
         _pedset(pedset),
         _goals(goals),
-        _obstacles(obstacles) {}
+        _map(obstacles) {}
 
   static void register_params() {
     params_t::register_param(Modules::Type::SIMULATION, "max_timestep",
@@ -41,6 +41,10 @@ class SimType {
   }
 
   auto operator()() -> output_data_t {
+    _model.initialize(_pedset);
+    _map.initialize(_pedset);
+    _goals.initialize(_pedset, _map);
+
     if constexpr (std::is_same_v<output_data_t, void>) {
       run_sim();
     } else {
@@ -55,7 +59,7 @@ class SimType {
   model_t  _model;
   pedset_t _pedset;
   goals_t  _goals;
-  map_t    _obstacles;
+  map_t    _map;
 
   VIPRA::timestep _timestep{0};
 
@@ -64,7 +68,7 @@ class SimType {
         _params.template get_param<VIPRA::timestep>(Modules::Type::SIMULATION, "max_timestep");
 
     while (_timestep < maxTimestep) {
-      _model.timestep(_pedset, _obstacles);
+      _model.timestep(_pedset, _map);
       ++_timestep;
     }
   }

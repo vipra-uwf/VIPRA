@@ -8,6 +8,12 @@
 #include "vipra/modules.hpp"
 
 namespace VIPRA::Concepts {
+
+template <typename model_t>
+concept Model_Initialization = requires(model_t model, const DummyPedSet& pedset) {
+  {model.initialize(pedset)};
+};
+
 template <typename model_t>
 concept ModelModule = Module<model_t, VIPRA::Modules::Type::MODEL> &&
     requires(model_t model, const DummyPedSet& pedset, const DummyObsSet& obsset) {

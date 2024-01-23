@@ -1,5 +1,7 @@
 #pragma once
 
+#include <tuple>
+
 #include "vipra/concepts/field.hpp"
 #include "vipra/concepts/input.hpp"
 #include "vipra/concepts/map.hpp"
@@ -19,8 +21,32 @@ class Map {
    * @param params 
    */
   template <Concepts::InputModule input_t>
-  explicit constexpr Map(const input_t& input) {
-    // TODO: load map from input
+  explicit Map(const input_t& input, obstacles_t&& obstacles, field_ts&&... fields)
+      : _obstacles{std::move(obstacles)}, _fields{std::move(fields)...} {
+    const auto objTypes = input.template get_vector<std::string>("obj_types");
+    const auto objMap = std::map<std::string, std::vector<VIPRA::f3d>>{};
+
+    for (size_t i = 0; i < objTypes->size(); ++i) {
+      const auto objPos = input.template get_vector<VIPRA::f3d>(objTypes->at(i));
+      objMap[objTypes->at(i)].push_back(objPos->at(i));
+    }
+
+    _obstacles.initialize(input.get_vector("obstacles"), objTypes.value(), objMap);
+  }
+
+  /**
+   * @brief Initializes all fields with the pedestrians and obstacles
+   * 
+   * @tparam pedestrians_t 
+   * @param pedestrians 
+   */
+  template <Concepts::PedsetModule pedestrians_t>
+  void initialize(const pedestrians_t& pedestrians) {
+    std::apply(
+        [&](auto&&... fields) {
+          (fields.template initialize<obstacles_t, pedestrians_t>(pedestrians, _obstacles), ...);
+        },
+        _fields);
   }
 
   /**
@@ -38,6 +64,35 @@ class Map {
   template <Concepts::ParamModule params_t>
   static void register_params() {
     obstacles_t::template register_params<params_t>();
+    (field_ts::template register_params<params_t>(), ...);
+  }
+
+  [[nodiscard]] constexpr inline auto get_dimensions() -> std::pair<VIPRA::f3d, VIPRA::f3d> {
+    return _obstacles.get_dimensions();
+  }
+  [[nodiscard]] constexpr inline auto collision(VIPRA::f3d point) -> bool {
+    return _obstacles.collision(point);
+  }
+  [[nodiscard]] constexpr inline auto ray_hit(VIPRA::f3d start, VIPRA::f3d end) -> VIPRA::f_pnt {
+    return _obstacles.ray_hit(start, end);
+  }
+  [[nodiscard]] constexpr inline auto nearest_obstacle(VIPRA::f3d point) -> VIPRA::f3d {
+    return _obstacles.nearest_obstacle(point);
+  }
+  [[nodiscard]] constexpr inline auto nearest_obstacle_in_direction(VIPRA::f3d point, VIPRA::f3d direction)
+      -> VIPRA::f3d {
+    return _obstacles.nearest_obstacle_in_direction(point, direction);
+  }
+
+  // TODO(rolland): decide on what other methods to access fields with
+  template <Concepts::FieldModule field_t>
+  [[nodiscard]] constexpr inline auto field() -> field_t& {
+    return std::get<field_t>(_fields);
+  }
+
+  template <Concepts::FieldModule field_t>
+  [[nodiscard]] constexpr inline auto field() const -> const field_t& {
+    return std::get<field_t>(_fields);
   }
 
  private:
@@ -45,5 +100,5 @@ class Map {
   std::tuple<field_ts...> _fields;
 };
 
-// CHECK_MODULE(MapModule, Map<Concepts::DummyObsSet, Concepts::DummyField>)
+CHECK_MODULE(MapModule, Map<Concepts::DummyObsSet, Concepts::DummyField>)
 }  // namespace VIPRA

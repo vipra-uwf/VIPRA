@@ -17,6 +17,15 @@ class Model {
   };
 
  public:
+  template <VIPRA::Concepts::PedsetModule pedset_t>
+  void initialize(const pedset_t& pedset) {
+    // Data data;
+    // data.masses = pedset.get_vector<VIPRA::f_pnt>("mass");
+    // data.reactionTimes = pedset.get_vector<VIPRA::f_pnt>("reactionTime");
+    // data.maxSpeeds = pedset.get_vector<VIPRA::f_pnt>("maxSpeed");
+    // data.shoulderLens = pedset.get_vector<VIPRA::f_pnt>("shoulderLen");
+  }
+
   void timestep(const auto& pedset, const auto& obsset) {}
 
   template <VIPRA::Concepts::ParamModule params_t>

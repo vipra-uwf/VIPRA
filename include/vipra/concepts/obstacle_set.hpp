@@ -1,6 +1,7 @@
 #pragma once
 
 #include <concepts>
+#include <map>
 #include <utility>
 
 #include "vipra/concepts/pedset.hpp"
@@ -8,6 +9,13 @@
 #include "vipra/types/float.hpp"
 
 namespace VIPRA::Concepts {
+
+template <typename obstacle_t>
+concept Obstacle_Initialization = requires(obstacle_t obsset, const std::vector<VIPRA::f3d>& obstacles,
+                                           const std::vector<std::string>&                       types,
+                                           const std::map<std::string, std::vector<VIPRA::f3d>>& objects) {
+  {obsset.initialize(obstacles, types, objects)};
+};
 
 template <typename obstacle_t>
 concept Obstacle_Objects = requires(obstacle_t obsset, const std::string& type) {
@@ -29,7 +37,7 @@ concept Obstacle_Questions = requires(obstacle_t obsset) {
 
 template <typename obstacle_t>
 concept Obstacle_Map = requires(obstacle_t obsset) {
-  { obsset.get_map_dimensions() } -> std::same_as<std::pair<VIPRA::f3d, VIPRA::f3d>>;
+  { obsset.get_dimensions() } -> std::same_as<std::pair<VIPRA::f3d, VIPRA::f3d>>;
 };
 
 template <typename obstacle_t>
@@ -47,7 +55,7 @@ class DummyObsSet {
   void setup(auto& params) {}
 
   // NOLINTBEGIN rolland: Dummy Object that cannot be used, we don't care about errors here
-  auto get_map_dimensions() -> std::pair<VIPRA::f3d, VIPRA::f3d> { return {VIPRA::f3d{}, VIPRA::f3d{}}; }
+  auto get_dimensions() -> std::pair<VIPRA::f3d, VIPRA::f3d> { return {VIPRA::f3d{}, VIPRA::f3d{}}; }
   auto collision(VIPRA::f3d) -> bool { return false; }
   auto ray_hit(VIPRA::f3d, VIPRA::f3d) -> VIPRA::f_pnt { return 1.0F; }
   auto nearest_obstacle(VIPRA::f3d) -> VIPRA::f3d { return VIPRA::f3d{}; }
@@ -62,6 +70,6 @@ class DummyObsSet {
   DummyObsSet() = default;
 };
 
-static_assert(ObstacleModule<DummyObsSet>);
+CHECK_MODULE(ObstacleModule, DummyObsSet)
 
 }  // namespace VIPRA::Concepts

@@ -3,10 +3,18 @@
 #include <concepts>
 #include <type_traits>
 
+#include "vipra/concepts/map.hpp"
 #include "vipra/concepts/module.hpp"
+#include "vipra/concepts/pedset.hpp"
 #include "vipra/modules.hpp"
 
 namespace VIPRA::Concepts {
+
+template <typename goals_t>
+concept Goals_Initialization = requires(goals_t goals, const DummyPedSet& pedset, const DummyMap& map) {
+  {goals.initialize(pedset, map)};
+};
+
 template <typename goals_t>
 concept GoalsModule = Concepts::Module<goals_t, VIPRA::Modules::Type::GOALS>;
 

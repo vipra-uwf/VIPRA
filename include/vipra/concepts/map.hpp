@@ -1,12 +1,18 @@
 #pragma once
 
 #include "vipra/concepts/module.hpp"
+#include "vipra/concepts/pedset.hpp"
 #include "vipra/modules.hpp"
 
 namespace VIPRA::Concepts {
 
 template <typename map_t>
-concept MapModule = Module<map_t, Modules::Type::MAP>;
+concept Map_Initialization = requires(map_t map, const DummyPedSet& pedset) {
+  {map.initialize(pedset)};
+};
+
+template <typename map_t>
+concept MapModule = Module<map_t, Modules::Type::MAP> && Map_Initialization<map_t>;
 
 class DummyMap {
   VIPRA_MODULE_TYPE(MAP);
@@ -16,6 +22,9 @@ class DummyMap {
   static void register_params() {}
 
   void setup(auto& params) {}
+
+  template <Concepts::PedsetModule pedestrians_t>
+  void initialize(const pedestrians_t& pedestrians) {}
 };
 
 CHECK_MODULE(MapModule, DummyMap);

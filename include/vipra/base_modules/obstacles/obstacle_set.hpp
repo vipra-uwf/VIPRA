@@ -19,6 +19,11 @@ class QuadTree {
   template <Concepts::InputModule input_t>
   explicit QuadTree(const input_t& input) {}
 
+  void initialize(const std::vector<VIPRA::f3d>& obstacles, const std::vector<std::string>& types,
+                  const std::map<std::string, VIPRA::f3dVec>& objects) {
+    // TODO: implement
+  }
+
   template <typename params_t>
   static void register_params() {
     // TODO: register parameters
@@ -29,7 +34,7 @@ class QuadTree {
   }
 
   // NOLINTBEGIN rolland: Dummy Object that cannot be used, we don't care about errors here
-  auto get_map_dimensions() -> std::pair<VIPRA::f3d, VIPRA::f3d> { return {VIPRA::f3d{}, VIPRA::f3d{}}; }
+  auto get_dimensions() -> std::pair<VIPRA::f3d, VIPRA::f3d> { return {VIPRA::f3d{}, VIPRA::f3d{}}; }
   auto collision(VIPRA::f3d) -> bool { return false; }
   auto ray_hit(VIPRA::f3d, VIPRA::f3d) -> VIPRA::f_pnt { return 1.0F; }
   auto nearest_obstacle(VIPRA::f3d) -> VIPRA::f3d { return VIPRA::f3d{}; }
