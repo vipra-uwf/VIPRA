@@ -3,6 +3,7 @@
 #include "vipra/concepts/input.hpp"
 #include "vipra/concepts/obstacle_set.hpp"
 
+#include "vipra/concepts/parameters.hpp"
 #include "vipra/modules.hpp"
 
 #include "vipra/types/f3d.hpp"
@@ -12,8 +13,8 @@ class Obstacles {
   VIPRA_MODULE_TYPE(OBSTACLES);
 
  public:
-  template <Concepts::InputModule input_t>
-  explicit Obstacles(const input_t& input) {}
+  template <Concepts::ParamModule params_t, Concepts::InputModule input_t>
+  explicit Obstacles(const params_t& /*unused*/, const input_t& input) {}
 
   template <typename params_t>
   static void register_params() {}
@@ -29,6 +30,7 @@ class Obstacles {
   // NOLINTEND
 
  private:
+  // TODO(rolland): remove this dummy object, implement obstacle set
   VIPRA::f3dVec            _dummy;
   std::vector<std::string> _dummy2;
 };

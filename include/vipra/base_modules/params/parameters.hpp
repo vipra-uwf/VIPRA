@@ -27,7 +27,14 @@ class Parameters {
       throw std::runtime_error("Parameter: " + name + " For Module: " + to_string(module) +
                                " Not Registered");
 
-    return _input.template get<data_t>(name);
+    auto value = _input.template get<data_t>(name);
+    if (!value.has_value()) {
+      if (get_params()[module][name].type == Parameter::Type::REQUIRED)
+        throw std::runtime_error("Required Parameter: " + name + " For Module: " + to_string(module) +
+                                 " Not Provided In Input");
+    }
+
+    return value.value();
   }
 
  private:

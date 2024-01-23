@@ -13,6 +13,11 @@ class AStar {
   VIPRA_MODULE_TYPE(GOALS)
  public:
   template <Concepts::ParamModule params_t>
+  explicit AStar(const params_t& params) {
+    // TODO: get parameters
+  }
+
+  template <Concepts::ParamModule params_t>
   static void register_params() {
     params_t::register_param(MODULE_TYPE, "endGoalType", VIPRA::Parameter{Parameter::Type::REQUIRED});
     params_t::register_param(MODULE_TYPE, "goalRange", VIPRA::Parameter{Parameter::Type::REQUIRED});

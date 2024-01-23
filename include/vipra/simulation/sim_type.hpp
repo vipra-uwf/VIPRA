@@ -46,7 +46,13 @@ class SimType {
     obstacle_t::template register_params<params_t>();
   }
 
-  auto operator()() -> output_data_t {}
+  auto operator()() -> output_data_t {
+    if constexpr (std::is_same_v<output_data_t, void>) {
+      run_sim();
+    } else {
+      return run_sim();
+    }
+  }
 
  private:
   Mode       _mode{Mode::SINGLE};
@@ -64,7 +70,8 @@ class SimType {
         _params.template get_param<VIPRA::timestep>(Modules::Type::SIMULATION, "max_timestep");
 
     while (_timestep < maxTimestep) {
-      _model.timestep();
+      _model.timestep(_pedset, _obstacles);
+      ++_timestep;
     }
   }
 };

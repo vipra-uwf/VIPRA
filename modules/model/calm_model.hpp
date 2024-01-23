@@ -10,6 +10,11 @@ class Model {
   VIPRA_MODULE_TYPE(MODEL)
 
  public:
+  template <VIPRA::Concepts::ParamModule params_t>
+  explicit Model(const params_t& params) {
+    // TODO: get parameters
+  }
+
   void timestep(const auto& pedset, const auto& obsset) {}
 
   template <VIPRA::Concepts::ParamModule params_t>
