@@ -1,8 +1,9 @@
 #pragma once
 
-#include <cstdio>
+#include <iostream>
 
 #include "vipra/concepts/input.hpp"
+#include "vipra/concepts/pedset.hpp"
 #include "vipra/modules.hpp"
 
 #include "vipra/types/f3d.hpp"
@@ -15,10 +16,16 @@ class Pedestrians {
 
  public:
   template <Concepts::InputModule input_t>
-  explicit Pedestrians(const input_t& input) {}
+  explicit Pedestrians(const input_t& input) {
+    auto coords = input.template get_vector<VIPRA::f3d>("coords");
+    if (!coords) throw std::runtime_error("Could not find pedestrian coordinates in input file");
 
-  template <typename params_t>
-  void set_params(params_t& params) {}
+    _velocities = std::vector<VIPRA::f3d>((*coords).size());
+    _coords = std::move(*coords);
+  }
+
+  template <Concepts::ParamModule params_t>
+  static void register_params() {}
 
   [[nodiscard]] auto num_pedestrians() -> VIPRA::size { return _coords.size(); }
   [[nodiscard]] auto ped_coords(VIPRA::idx pedIdx) -> VIPRA::f3d { return _coords[pedIdx]; }
@@ -31,3 +38,5 @@ class Pedestrians {
   VIPRA::f3dVec _velocities;
 };
 }  // namespace VIPRA
+
+CHECK_MODULE(PedsetModule, VIPRA::Pedestrians)

@@ -5,6 +5,7 @@
 
 #include "nlohmann/json.hpp"
 
+#include "vipra/concepts/output.hpp"
 #include "vipra/concepts/parameters.hpp"
 #include "vipra/modules.hpp"
 #include "vipra/types/f3d.hpp"
@@ -18,8 +19,8 @@ class JSON {
   explicit JSON(const char* filename) : _outputPath(filename) {}
 
   template <typename params_t>
-  void set_params(params_t& params) {
-    params.set_param(MODULE_TYPE, "filename", VIPRA::Parameter{Parameter::Type::REQUIRED});
+  static void register_params() {
+    params_t::register_param(MODULE_TYPE, "filename", VIPRA::Parameter{Parameter::Type::REQUIRED});
   }
 
   void write() {
@@ -59,3 +60,5 @@ inline void Output::JSON::ped_value(VIPRA::idx pedIdx, const char* key, const VI
   _json["pedestrians"].at(pedIdx)[key] = nlohmann::json({value.x, value.y, value.z});
 }
 }  // namespace VIPRA::Output
+
+CHECK_MODULE(OutputModule, VIPRA::Output::JSON)

@@ -21,6 +21,8 @@ enum class Mode { SINGLE, SWEEP };
 template <Concepts::ParamModule params_t, Concepts::OutputModule output_t, Concepts::ModelModule model_t,
           Concepts::PedsetModule pedset_t, Concepts::GoalsModule goals_t, Concepts::ObstacleModule obstacle_t>
 class SimType {
+  using output_data_t = decltype(std::declval<output_t>().write());
+
  public:
   constexpr SimType(Mode mode, params_t&& params, output_t&& output, model_t&& model, pedset_t&& pedset,
                     goals_t&& goals, obstacle_t&& obstacles)
@@ -32,7 +34,19 @@ class SimType {
         _goals(goals),
         _obstacles(obstacles) {}
 
-  void operator()() { setup_params(); }
+  static void setup() {
+    params_t::register_param(Modules::Type::SIMULATION, "max_timestep",
+                             VIPRA::Parameter{Parameter::Type::REQUIRED});
+    params_t::register_param(Modules::Type::SIMULATION, "timestep_size",
+                             VIPRA::Parameter{Parameter::Type::REQUIRED});
+    output_t::template register_params<params_t>();
+    model_t::template register_params<params_t>();
+    pedset_t::template register_params<params_t>();
+    goals_t::template register_params<params_t>();
+    obstacle_t::template register_params<params_t>();
+  }
+
+  auto operator()() -> output_data_t {}
 
  private:
   Mode       _mode{Mode::SINGLE};
@@ -45,16 +59,7 @@ class SimType {
 
   VIPRA::timestep _timestep{0};
 
-  void setup_params() {
-    _params.set_param(Modules::Type::SIMULATION, "max_timestep", Parameter::Type::REQUIRED);
-    _params.set_param(Modules::Type::SIMULATION, "timestep_size", Parameter::Type::REQUIRED);
-    _model.set_params(_params);
-    _output.set_params(_params);
-    _pedset.set_params(_params);
-    _goals.set_params(_params);
-  }
-
-  void run_sim() {
+  auto run_sim() -> output_data_t {
     VIPRA::timestep maxTimestep =
         _params.template get_param<VIPRA::timestep>(Modules::Type::SIMULATION, "max_timestep");
 

@@ -14,15 +14,16 @@ class Parameters {
   VIPRA_MODULE_TYPE(PARAMETERS)
 
  public:
+  explicit Parameters(const input_t& input) : _input(input) {}
   explicit Parameters(input_t&& input) : _input(input) {}
 
-  void set_param(VIPRA::Modules::Type module, const std::string& name, Parameter param) {
-    _params[module][name] = param;
+  static void register_param(VIPRA::Modules::Type module, const std::string& name, Parameter param) {
+    get_params()[module][name] = param;
   }
 
   template <typename data_t>
   auto get_param(VIPRA::Modules::Type module, const std::string& name) -> data_t {
-    if (!_params[module].contains(name))
+    if (!get_params()[module].contains(name))
       throw std::runtime_error("Parameter: " + name + " For Module: " + to_string(module) +
                                " Not Registered");
 
@@ -30,7 +31,13 @@ class Parameters {
   }
 
  private:
-  std::map<VIPRA::Modules::Type, std::map<std::string, Parameter>> _params;
-  input_t                                                          _input;
+  // NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables) Bug in Clang-Tidy
+
+  input_t _input;
+
+  static auto get_params() -> std::map<VIPRA::Modules::Type, std::map<std::string, Parameter>>& {
+    static std::map<VIPRA::Modules::Type, std::map<std::string, Parameter>> params{};
+    return params;
+  }
 };
 }  // namespace VIPRA

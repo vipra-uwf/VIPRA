@@ -1,6 +1,8 @@
 #pragma once
 
+#include <type_traits>
 #include "vipra/base_modules.hpp"
+#include "vipra/concepts/parameters.hpp"
 #include "vipra/simulation/module_checks.hpp"
 #include "vipra/simulation/sim_type.hpp"
 
@@ -23,6 +25,7 @@ struct FindIndex<index_t, check_t> {
 
 template <typename... args_t>
 constexpr auto simulation(Mode mode, args_t... args) {
+  // Finds the index for each module type
   constexpr std::size_t PARAMS_IDX = FindIndex<0, Checks::Params, args_t...>::value;
   constexpr std::size_t OUTPUT_IDX = FindIndex<0, Checks::Output, args_t...>::value;
   constexpr std::size_t MODEL_IDX = FindIndex<0, Checks::Model, args_t...>::value;
@@ -30,6 +33,7 @@ constexpr auto simulation(Mode mode, args_t... args) {
   constexpr std::size_t GOALS_IDX = FindIndex<0, Checks::Goals, args_t...>::value;
   constexpr std::size_t OBSTACLES_IDX = FindIndex<0, Checks::Obstacles, args_t...>::value;
 
+  // Static asserts to ensure that the modules are valid
   static_assert(PARAMS_IDX != -1,
                 "Params Module does Not conform to the Params Module specification OR A valid Params Module "
                 "was not provided");
@@ -51,6 +55,7 @@ constexpr auto simulation(Mode mode, args_t... args) {
 
   auto&& temp = std::forward_as_tuple(args...);
 
+  // Returns the SimType object
   return SimType(mode, std::move(std::get<PARAMS_IDX>(temp)), std::move(std::get<OUTPUT_IDX>(temp)),
                  std::move(std::get<MODEL_IDX>(temp)), std::move(std::get<PEDSET_IDX>(temp)),
                  std::move(std::get<GOALS_IDX>(temp)), std::move(std::get<OBSTACLES_IDX>(temp)));

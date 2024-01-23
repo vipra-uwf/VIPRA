@@ -12,22 +12,25 @@ class Model {
  public:
   void timestep(const auto& pedset, const auto& obsset) {}
 
-  template <typename params_t>
-  void set_params(params_t& params) {
-    params.set_param(MODULE_TYPE, "meanMass", VIPRA::Parameter::Type::REQUIRED);
-    params.set_param(MODULE_TYPE, "massStdDev", VIPRA::Parameter::Type::REQUIRED);
-    params.set_param(MODULE_TYPE, "meanReactionTime", VIPRA::Parameter::Type::REQUIRED);
-    params.set_param(MODULE_TYPE, "reactionTimeStdDev", VIPRA::Parameter::Type::REQUIRED);
-    params.set_param(MODULE_TYPE, "meanMaxSpeed", VIPRA::Parameter::Type::REQUIRED);
-    params.set_param(MODULE_TYPE, "maxSpeedStdDev", VIPRA::Parameter::Type::REQUIRED);
-    params.set_param(MODULE_TYPE, "meanShoulderLen", VIPRA::Parameter::Type::REQUIRED);
-    params.set_param(MODULE_TYPE, "shoulderLenStdDev", VIPRA::Parameter::Type::REQUIRED);
+  template <VIPRA::Concepts::ParamModule params_t>
+  static void register_params() {
+    params_t::register_param(MODULE_TYPE, "meanMass", VIPRA::Parameter{VIPRA::Parameter::Type::REQUIRED});
+    params_t::register_param(MODULE_TYPE, "massStdDev", VIPRA::Parameter{VIPRA::Parameter::Type::REQUIRED});
+    params_t::register_param(MODULE_TYPE, "meanReactionTime",
+                             VIPRA::Parameter{VIPRA::Parameter::Type::REQUIRED});
+    params_t::register_param(MODULE_TYPE, "reactionTimeStdDev",
+                             VIPRA::Parameter{VIPRA::Parameter::Type::REQUIRED});
+    params_t::register_param(MODULE_TYPE, "meanMaxSpeed", VIPRA::Parameter{VIPRA::Parameter::Type::REQUIRED});
+    params_t::register_param(MODULE_TYPE, "maxSpeedStdDev",
+                             VIPRA::Parameter{VIPRA::Parameter::Type::REQUIRED});
+    params_t::register_param(MODULE_TYPE, "meanShoulderLen",
+                             VIPRA::Parameter{VIPRA::Parameter::Type::REQUIRED});
+    params_t::register_param(MODULE_TYPE, "shoulderLenStdDev",
+                             VIPRA::Parameter{VIPRA::Parameter::Type::REQUIRED});
   }
 
  private:
 };
-
-// static_assert(VIPRA::Concepts::ModelModule<Model>);
 }  // namespace CALM
 
 CHECK_MODULE(ModelModule, CALM::Model)
