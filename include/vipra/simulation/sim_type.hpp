@@ -7,7 +7,7 @@
 #include "vipra/concepts/all_concepts.hpp"
 
 #include "vipra/types/parameter.hpp"
-#include "vipra/types/timestep.hpp"
+#include "vipra/types/time.hpp"
 #include "vipra/types/util/result_or_void.hpp"
 #include "vipra/util/debug_do.hpp"
 
