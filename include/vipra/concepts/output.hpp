@@ -3,6 +3,7 @@
 #include <concepts>
 
 #include "vipra/concepts/module.hpp"
+#include "vipra/concepts/not_void.hpp"
 #include "vipra/modules.hpp"
 
 #include "vipra/types/f3d.hpp"
@@ -29,6 +30,23 @@ concept OutputModule = Module<output_t, VIPRA::Modules::Type::OUTPUT> &&
 };
 
 class DummyOutput {
+  VIPRA_MODULE_TYPE(OUTPUT)
+ public:
+  using output_data_t = void;
+
+  template <typename params_t>
+  static void register_params() {}
+
+  void setup(auto& /*unused*/) {}
+
+  void write() {}
+  void sim_value(const char* /*unused*/, auto&& /*unused*/) {}
+  void timestep_value(const char* /*unused*/, auto&& /*unused*/) {}
+  void ped_value(VIPRA::idx /*unused*/, const char* /*unused*/, auto&& /*unused*/) {}
+  void ped_timestep_value(VIPRA::idx /*unused*/, const char* /*unused*/, auto&& /*unused*/) {}
+};
+
+class DummyOutput2 {
   VIPRA_MODULE_TYPE(OUTPUT)
  public:
   using output_data_t = void;

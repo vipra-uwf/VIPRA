@@ -1,6 +1,9 @@
 #pragma once
 
+#include <tuple>
+#include <type_traits>
 #include "vipra/concepts/output.hpp"
+#include "vipra/types/idx.hpp"
 #include "vipra/types/util/result_or_void.hpp"
 
 namespace VIPRA::Module {
@@ -10,16 +13,30 @@ class Output {
 
   // TODO(rolland): decide if we need std::remove_reference
 
+  template <typename output_t>
+  // NOLINTNEXTLINE(readability-identifier-naming)
+  struct write_helper {
+    static auto write(output_t& output) {
+      if constexpr (std::is_same_v<result_or_VOID_t<decltype(std::declval<output_t>().write())>, VOID>) {
+        return VOID{};
+      } else {
+        return output.write();
+      }
+    }
+  };
+
  public:
   constexpr explicit Output(output_ts... outputs) : _outputs(std::make_tuple(outputs...)) {}
 
   /**
-   * @brief Calls write on all outputs, returning a tuple of the results
+   * @brief Calls write on all outputs, returning a tuple of the results or VOID
    * 
    * @return result_or_VOID_tuple<std::tuple<output_ts...>>::type 
    */
-  auto write() -> result_or_VOID_tuple<std::tuple<output_ts...>>::type {
-    return std::apply([](auto&&... outputs) { return std::make_tuple(outputs.write()...); }, _outputs);
+  auto write() -> std::tuple<result_or_VOID_t<decltype(std::declval<output_ts>().write())>...> {
+    return std::apply(
+        [](auto&&... outputs) { return std::make_tuple(write_helper<decltype(outputs)>::write(outputs)...); },
+        _outputs);
   }
 
   /**

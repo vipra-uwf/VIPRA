@@ -40,6 +40,8 @@ inline auto to_string(Type type) -> std::string {
     case Type::FIELD:
       return "FIELD";
   }
+
+  return "UNKNOWN";
 }
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage) This is a very simple macro
