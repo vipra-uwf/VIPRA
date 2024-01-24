@@ -3,6 +3,7 @@
 #include <concepts>
 #include <utility>
 
+#include "vipra/concepts/goals.hpp"
 #include "vipra/concepts/map.hpp"
 #include "vipra/concepts/obstacle_set.hpp"
 #include "vipra/concepts/pedset.hpp"
@@ -17,8 +18,9 @@ concept can_initialize_model = requires(model_t model, const DummyPedSet& pedset
 };
 
 template <typename model_t>
-concept has_model_timestep = requires(model_t model, const DummyPedSet& pedset, const DummyMap& map) {
-  { model.timestep(pedset, map) } -> std::same_as<const VIPRA::State&>;
+concept has_model_timestep = requires(model_t model, const DummyPedSet& pedset, const DummyMap& map,
+                                      const DummyGoals& goals) {
+  { model.timestep(pedset, map, goals) } -> std::same_as<const VIPRA::State&>;
 };
 
 template <typename model_t>
@@ -37,7 +39,8 @@ class DummyModel {
 
   void setup(auto& /*unused*/) {}
 
-  auto timestep(const DummyPedSet& /*unused*/, const DummyMap& /*unused*/) -> const VIPRA::State& {
+  auto timestep(const DummyPedSet& /*unused*/, const DummyMap& /*unused*/, const DummyGoals& /*unused*/)
+      -> const VIPRA::State& {
     return _state;
   }
 

@@ -12,6 +12,10 @@ class Output {
   VIPRA_MODULE_TYPE(OUTPUT)
 
   // TODO(rolland): decide if we need std::remove_reference
+  // TODO(rolland): need to figure out how to get paths for each output
+  //                   - if multiple output modules use the same parameter, how do we split them up
+  //                   - maybe require a path parameter for each output module, in their constrcutor?
+  //                            - this would require a recompile for changing paths
 
   template <typename output_t>
   // NOLINTNEXTLINE(readability-identifier-naming)
@@ -37,6 +41,10 @@ class Output {
     return std::apply(
         [](auto&&... outputs) { return std::make_tuple(write_helper<decltype(outputs)>::write(outputs)...); },
         _outputs);
+  }
+
+  void current_state(const VIPRA::State& state) {
+    std::apply([&state](auto&&... outputs) { (outputs.current_state(state), ...); }, _outputs);
   }
 
   /**

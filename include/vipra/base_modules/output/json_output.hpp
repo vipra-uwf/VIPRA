@@ -16,13 +16,14 @@ class JSON {
   VIPRA_MODULE_TYPE(OUTPUT)
 
  public:
-  template <typename params_t>
+  template <Concepts::ParamModule params_t>
   static void register_params() {
     params_t::register_param(MODULE_TYPE, "filepath", ParameterType::REQUIRED);
   }
 
-  void setup(auto& params) {
-    // TODO: load parameters
+  template <Concepts::ParamModule params_t>
+  void setup(params_t& params) {
+    _outputPath = params.template get_param<std::string>(Modules::Type::OUTPUT, "filepath");
   }
 
   void write() {
@@ -33,6 +34,9 @@ class JSON {
 
     file << _json.dump(2);
   }
+
+  void current_state(const VIPRA::State& /*unused*/) {}
+
   void sim_value(const char* key, auto&& value) { _json[key] = value; }
   void timestep_value(const char* key, auto&& value) {
     _json["timesteps"].push_back(nlohmann::json({key, value}));

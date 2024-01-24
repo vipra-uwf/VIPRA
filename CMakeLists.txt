@@ -1,35 +1,32 @@
 cmake_minimum_required(VERSION 3.14)
 set(PROJECT_NAME VIPRA)
 
-option(DEBUG "Build with debug flags" OFF)
+project(
+  ${PROJECT_NAME} 
+  VERSION 0.0.1
+  DESCRIPTION "VIPRA pedestrian dynamics simulation library"
+  LANGUAGES CXX
+)
+
+option(VIPRA_DEBUG "Build with debug flags" OFF)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
 
-if(DEBUG)
-  message(STATUS "Building with debug flags")
-  set(CMAKE_BUILD_TYPE Debug)
-else()
-  message(STATUS "Building with release flags")
-  set(CMAKE_BUILD_TYPE Release)
+if (VIPRA_DEBUG)
+  message(STATUS "Building VIPRA with debug flags")
+  add_compile_definitions(VIPRA_DEBUG)
 endif()
 
-project(
+add_library(
   ${PROJECT_NAME}
-  VERSION 0.1
-  DESCRIPTION "VIPRA Pedestrian Dynamics Simulation"
-  LANGUAGES CXX
-)
-
-add_executable(
-  ${PROJECT_NAME}
-  main.cpp
+  src/vipra.cpp
 )
 
 target_include_directories(
   ${PROJECT_NAME}
-  PRIVATE
+  PUBLIC
   ${PROJECT_SOURCE_DIR}/include
 )
 
