@@ -7,24 +7,26 @@
 #include "vipra/concepts/obstacle_set.hpp"
 #include "vipra/concepts/pedset.hpp"
 #include "vipra/modules.hpp"
+#include "vipra/types/state.hpp"
 
 namespace VIPRA::Concepts {
 
 template <typename model_t>
-concept Model_Initialization = requires(model_t model, const DummyPedSet& pedset) {
+concept can_initialize_model = requires(model_t model, const DummyPedSet& pedset) {
   {model.initialize(pedset)};
 };
 
 template <typename model_t>
-concept Model_Timestep = requires(model_t model, const DummyPedSet& pedset, const DummyMap& map) {
-  { model.timestep(pedset, map) } -> std::same_as<void>;
+concept has_model_timestep = requires(model_t model, const DummyPedSet& pedset, const DummyMap& map) {
+  { model.timestep(pedset, map) } -> std::same_as<const VIPRA::State&>;
 };
 
 template <typename model_t>
-concept ModelModule =
-    Module<model_t, VIPRA::Modules::Type::MODEL> && Model_Timestep<model_t> && Model_Initialization<model_t>;
+concept ModelModule = is_module<model_t, VIPRA::Modules::Type::MODEL> && has_model_timestep<model_t> &&
+    can_initialize_model<model_t>;
 
 class DummyModel {
+  // NOLINTBEGIN
   VIPRA_MODULE_TYPE(MODEL)
  public:
   template <typename params_t>
@@ -35,7 +37,13 @@ class DummyModel {
 
   void setup(auto& /*unused*/) {}
 
-  void timestep(const DummyPedSet& /*unused*/, const DummyMap& /*unused*/) {}
+  auto timestep(const DummyPedSet& /*unused*/, const DummyMap& /*unused*/) -> const VIPRA::State& {
+    return _state;
+  }
+
+ private:
+  VIPRA::State _state;
+  // NOLINTEND
 };
 
 CHECK_MODULE(ModelModule, DummyModel);

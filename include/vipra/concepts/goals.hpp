@@ -11,12 +11,12 @@
 namespace VIPRA::Concepts {
 
 template <typename goals_t>
-concept Goals_Initialization = requires(goals_t goals, const DummyPedSet& pedset, const DummyMap& map) {
+concept can_initialize_goals = requires(goals_t goals, const DummyPedSet& pedset, const DummyMap& map) {
   {goals.initialize(pedset, map)};
 };
 
 template <typename goals_t>
-concept GoalsModule = Concepts::Module<goals_t, VIPRA::Modules::Type::GOALS> && Goals_Initialization<goals_t>;
+concept GoalsModule = is_module<goals_t, VIPRA::Modules::Type::GOALS> && can_initialize_goals<goals_t>;
 
 class DummyGoals {
   VIPRA_MODULE_TYPE(GOALS)

@@ -11,12 +11,13 @@
 #include "vipra/modules.hpp"
 
 #include "vipra/types/f3d.hpp"
+#include "vipra/types/parameter.hpp"
 
 namespace VIPRA::Concepts {
 
 // TODO(rolland): clean this up and make it more generic/strict
 template <typename input_t>
-concept Get_Values = requires(input_t input, std::string_view key, std::string_view key2) {
+concept can_get_values = requires(input_t input, std::string_view key, std::string_view key2) {
   { input.template get_vector<int>(key) } -> std::same_as<std::optional<std::vector<int>>>;
   { input.template get_vector<int>(key, key2) } -> std::same_as<std::optional<std::vector<int>>>;
   { input.template get_vector<std::string>(key) } -> std::same_as<std::optional<std::vector<std::string>>>;
@@ -31,7 +32,7 @@ concept Get_Values = requires(input_t input, std::string_view key, std::string_v
 
 template <typename input_t>
 concept InputModule = is_type<input_t, Modules::Type::INPUT> &&
-    std::constructible_from<input_t, std::string_view> && Get_Values<input_t>;
+    std::constructible_from<input_t, std::string_view> && can_get_values<input_t>;
 
 class DummyInput {
   // NOLINTBEGIN

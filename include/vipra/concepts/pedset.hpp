@@ -12,14 +12,25 @@
 namespace VIPRA::Concepts {
 
 template <typename pedset_t>
-concept PedsetModule = Module<pedset_t, VIPRA::Modules::Type::PEDESTRIANS> &&
-    requires(const pedset_t pedset) {
+concept can_get_num_peds = requires(const pedset_t pedset) {
   { pedset.num_pedestrians() } -> std::same_as<VIPRA::size>;
-  { pedset.ped_coords(VIPRA::idx{}) } -> std::same_as<VIPRA::f3d>;
+};
+
+template <typename pedset_t>
+concept can_get_ped_coords = requires(const pedset_t pedset, VIPRA::idx idx) {
+  { pedset.ped_coords(idx) } -> std::same_as<VIPRA::f3d>;
   { pedset.all_coords() } -> std::same_as<const std::vector<VIPRA::f3d>&>;
-  { pedset.ped_velocity(VIPRA::idx{}) } -> std::same_as<VIPRA::f3d>;
+};
+
+template <typename pedset_t>
+concept can_get_ped_velocity = requires(const pedset_t pedset, VIPRA::idx idx) {
+  { pedset.ped_velocity(idx) } -> std::same_as<VIPRA::f3d>;
   { pedset.all_velocities() } -> std::same_as<const std::vector<VIPRA::f3d>&>;
 };
+
+template <typename pedset_t>
+concept PedsetModule = is_module<pedset_t, VIPRA::Modules::Type::PEDESTRIANS> && can_get_num_peds<pedset_t> &&
+    can_get_ped_coords<pedset_t> && can_get_ped_velocity<pedset_t>;
 
 class DummyPedSet {
   // NOLINTBEGIN

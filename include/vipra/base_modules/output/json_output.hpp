@@ -18,7 +18,7 @@ class JSON {
  public:
   template <typename params_t>
   static void register_params() {
-    params_t::register_param(MODULE_TYPE, "filepath", VIPRA::Parameter{Parameter::Type::REQUIRED});
+    params_t::register_param(MODULE_TYPE, "filepath", ParameterType::REQUIRED);
   }
 
   void setup(auto& params) {

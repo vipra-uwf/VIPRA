@@ -11,39 +11,39 @@
 namespace VIPRA::Concepts {
 
 template <typename obstacle_t>
-concept Obstacle_Initialization = requires(obstacle_t obsset, const std::vector<VIPRA::f3d>& obstacles,
-                                           const std::vector<std::string>&                       types,
-                                           const std::map<std::string, std::vector<VIPRA::f3d>>& objects) {
+concept can_initialize_obstacles = requires(obstacle_t obsset, const std::vector<VIPRA::f3d>& obstacles,
+                                            const std::vector<std::string>&                       types,
+                                            const std::map<std::string, std::vector<VIPRA::f3d>>& objects) {
   {obsset.initialize(obstacles, types, objects)};
 };
 
 template <typename obstacle_t>
-concept Obstacle_Objects = requires(obstacle_t obsset, const std::string& type) {
+concept can_get_objects = requires(obstacle_t obsset, const std::string& type) {
   { obsset.get_object_types() } -> std::same_as<const std::vector<std::string>&>;
   { obsset.get_objects(type) } -> std::same_as<const VIPRA::f3dVec&>;
 };
 
 template <typename obstacle_t>
-concept Obstacle_Get_Nearest = requires(obstacle_t obsset) {
+concept can_get_nearest_obs = requires(obstacle_t obsset) {
   { obsset.nearest_obstacle(VIPRA::f3d{}) } -> std::same_as<VIPRA::f3d>;
   { obsset.nearest_obstacle_in_direction(VIPRA::f3d{}, VIPRA::f3d{}) } -> std::same_as<VIPRA::f3d>;
 };
 
 template <typename obstacle_t>
-concept Obstacle_Questions = requires(obstacle_t obsset) {
+concept has_collisions = requires(obstacle_t obsset) {
   { obsset.collision(VIPRA::f3d{}) } -> std::same_as<bool>;
   { obsset.ray_hit(VIPRA::f3d{}, VIPRA::f3d{}) } -> std::same_as<VIPRA::f_pnt>;
 };
 
 template <typename obstacle_t>
-concept Obstacle_Map = requires(obstacle_t obsset) {
+concept can_get_dimensions = requires(obstacle_t obsset) {
   { obsset.get_dimensions() } -> std::same_as<std::pair<VIPRA::f3d, VIPRA::f3d>>;
 };
 
 template <typename obstacle_t>
 concept ObstacleModule =
-    Module<obstacle_t, VIPRA::Modules::Type::OBSTACLES> && Obstacle_Objects<obstacle_t> &&
-    Obstacle_Get_Nearest<obstacle_t> && Obstacle_Questions<obstacle_t> && Obstacle_Map<obstacle_t>;
+    is_module<obstacle_t, VIPRA::Modules::Type::OBSTACLES> && can_get_objects<obstacle_t> &&
+    can_get_nearest_obs<obstacle_t> && has_collisions<obstacle_t> && can_get_dimensions<obstacle_t>;
 
 class DummyObsSet {
   VIPRA_MODULE_TYPE(OBSTACLES);

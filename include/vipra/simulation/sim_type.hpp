@@ -8,6 +8,7 @@
 
 #include "vipra/types/parameter.hpp"
 #include "vipra/types/timestep.hpp"
+#include "vipra/types/util/result_or_void.hpp"
 #include "vipra/util/debug_do.hpp"
 
 namespace VIPRA {
@@ -31,10 +32,8 @@ class SimType {
         _map(obstacles) {}
 
   static void register_params() {
-    params_t::register_param(Modules::Type::SIMULATION, "max_timestep",
-                             VIPRA::Parameter{Parameter::Type::REQUIRED});
-    params_t::register_param(Modules::Type::SIMULATION, "timestep_size",
-                             VIPRA::Parameter{Parameter::Type::REQUIRED});
+    params_t::register_param(Modules::Type::SIMULATION, "max_timestep", ParameterType::REQUIRED);
+    params_t::register_param(Modules::Type::SIMULATION, "timestep_size", ParameterType::REQUIRED);
     output_t::template register_params<params_t>();
     model_t::template register_params<params_t>();
     pedset_t::template register_params<params_t>();
@@ -43,14 +42,32 @@ class SimType {
   }
 
   auto operator()() -> output_data_t {
+    // initialize modules
     _model.initialize(_pedset);
     _map.initialize(_pedset);
     _goals.initialize(_pedset, _map);
 
-    if constexpr (std::is_same_v<output_data_t, void>) {
+    if constexpr (std::is_same_v<output_data_t, void> || std::is_same_v<output_data_t, std::tuple<VOID>> ||
+                  std::is_same_v<output_data_t, VOID>) {
+      // no return type, so just run the sim
       run_sim();
     } else {
       return run_sim();
+    }
+  }
+
+  auto run_sim() -> output_data_t {
+    const auto [maxTimestep, timestepSize] = get_sim_params();
+
+    while (_timestep < maxTimestep) {
+      _model.timestep(_pedset, _map);
+      ++_timestep;
+    }
+
+    if constexpr (std::is_same_v<output_data_t, void>) {
+      _output.write();
+    } else {
+      return _output.write();
     }
   }
 
@@ -65,25 +82,13 @@ class SimType {
 
   VIPRA::timestep _timestep{0};
 
-  auto run_sim() -> output_data_t {
+  [[nodiscard]] constexpr auto get_sim_params() -> std::pair<VIPRA::f_pnt, VIPRA::f_pnt> {
     VIPRA::timestep maxTimestep =
         _params.template get_param<VIPRA::timestep>(Modules::Type::SIMULATION, "max_timestep");
     VIPRA::f_pnt timestepSize =
         _params.template get_param<VIPRA::f_pnt>(Modules::Type::SIMULATION, "timestep_size");
 
-    Util::debug_do([&]() { std::cout << "maxTimestep: " << maxTimestep << "\n"; });
-    Util::debug_do([&]() { std::cout << "timestepSize: " << timestepSize << "\n"; });
-
-    while (_timestep < maxTimestep) {
-      _model.timestep(_pedset, _map);
-      ++_timestep;
-    }
-
-    if constexpr (std::is_same_v<output_data_t, void>) {
-      _output.write();
-    } else {
-      return _output.write();
-    }
+    return {maxTimestep, timestepSize};
   }
 };
 }  // namespace VIPRA

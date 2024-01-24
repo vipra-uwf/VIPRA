@@ -21,10 +21,10 @@ class AStar {
 
   template <Concepts::ParamModule params_t>
   static void register_params() {
-    params_t::register_param(MODULE_TYPE, "endGoalType", VIPRA::Parameter{Parameter::Type::REQUIRED});
-    params_t::register_param(MODULE_TYPE, "goalRange", VIPRA::Parameter{Parameter::Type::REQUIRED});
-    params_t::register_param(MODULE_TYPE, "gridSize", VIPRA::Parameter{Parameter::Type::REQUIRED});
-    params_t::register_param(MODULE_TYPE, "closestObstacle", VIPRA::Parameter{Parameter::Type::REQUIRED});
+    params_t::register_param(MODULE_TYPE, "endGoalType", ParameterType::REQUIRED);
+    params_t::register_param(MODULE_TYPE, "goalRange", ParameterType::REQUIRED);
+    params_t::register_param(MODULE_TYPE, "gridSize", ParameterType::REQUIRED);
+    params_t::register_param(MODULE_TYPE, "closestObstacle", ParameterType::REQUIRED);
   }
 
   template <Concepts::ParamModule params_t>

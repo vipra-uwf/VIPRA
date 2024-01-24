@@ -7,12 +7,12 @@
 namespace VIPRA::Concepts {
 
 template <typename map_t>
-concept Map_Initialization = requires(map_t map, const DummyPedSet& pedset) {
+concept can_initialize_map = requires(map_t map, const DummyPedSet& pedset) {
   {map.initialize(pedset)};
 };
 
 template <typename map_t>
-concept MapModule = Module<map_t, Modules::Type::MAP> && Map_Initialization<map_t>;
+concept MapModule = is_module<map_t, Modules::Type::MAP> && can_initialize_map<map_t>;
 
 class DummyMap {
   VIPRA_MODULE_TYPE(MAP);

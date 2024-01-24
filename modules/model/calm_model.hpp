@@ -1,10 +1,12 @@
 #pragma once
 
+#include <iostream>
 #include "vipra/concepts/model.hpp"
 #include "vipra/concepts/parameters.hpp"
 #include "vipra/concepts/pedset.hpp"
 #include "vipra/modules.hpp"
 #include "vipra/types/float.hpp"
+#include "vipra/util/debug_do.hpp"
 
 namespace CALM {
 class Model {
@@ -27,28 +29,27 @@ class Model {
   template <VIPRA::Concepts::PedsetModule pedset_t>
   void initialize(const pedset_t& pedset) {
     _peds.resize(pedset.num_pedestrians());
+    _state.initialize(pedset.num_pedestrians());
   }
 
   template <VIPRA::Concepts::PedsetModule peds_t, VIPRA::Concepts::MapModule map_t>
-  void timestep(const peds_t& pedset, const map_t& obsset) {
+  auto timestep(const peds_t& pedset, const map_t& obsset) -> const VIPRA::State& {
     // TODO(rolland): implement
+    VIPRA::Util::debug_do([]() { std::cout << "Model timestep" << std::endl; });
+
+    return _state;
   }
 
   template <VIPRA::Concepts::ParamModule params_t>
   static void register_params() {
-    params_t::register_param(MODULE_TYPE, "meanMass", VIPRA::Parameter{VIPRA::Parameter::Type::REQUIRED});
-    params_t::register_param(MODULE_TYPE, "massStdDev", VIPRA::Parameter{VIPRA::Parameter::Type::REQUIRED});
-    params_t::register_param(MODULE_TYPE, "meanReactionTime",
-                             VIPRA::Parameter{VIPRA::Parameter::Type::REQUIRED});
-    params_t::register_param(MODULE_TYPE, "reactionTimeStdDev",
-                             VIPRA::Parameter{VIPRA::Parameter::Type::REQUIRED});
-    params_t::register_param(MODULE_TYPE, "meanMaxSpeed", VIPRA::Parameter{VIPRA::Parameter::Type::REQUIRED});
-    params_t::register_param(MODULE_TYPE, "maxSpeedStdDev",
-                             VIPRA::Parameter{VIPRA::Parameter::Type::REQUIRED});
-    params_t::register_param(MODULE_TYPE, "meanShoulderLen",
-                             VIPRA::Parameter{VIPRA::Parameter::Type::REQUIRED});
-    params_t::register_param(MODULE_TYPE, "shoulderLenStdDev",
-                             VIPRA::Parameter{VIPRA::Parameter::Type::REQUIRED});
+    params_t::register_param(MODULE_TYPE, "meanMass", VIPRA::ParameterType::REQUIRED);
+    params_t::register_param(MODULE_TYPE, "massStdDev", VIPRA::ParameterType::REQUIRED);
+    params_t::register_param(MODULE_TYPE, "meanReactionTime", VIPRA::ParameterType::REQUIRED);
+    params_t::register_param(MODULE_TYPE, "reactionTimeStdDev", VIPRA::ParameterType::REQUIRED);
+    params_t::register_param(MODULE_TYPE, "meanMaxSpeed", VIPRA::ParameterType::REQUIRED);
+    params_t::register_param(MODULE_TYPE, "maxSpeedStdDev", VIPRA::ParameterType::REQUIRED);
+    params_t::register_param(MODULE_TYPE, "meanShoulderLen", VIPRA::ParameterType::REQUIRED);
+    params_t::register_param(MODULE_TYPE, "shoulderLenStdDev", VIPRA::ParameterType::REQUIRED);
   }
 
   void setup(const auto& params) {
@@ -63,7 +64,8 @@ class Model {
   }
 
  private:
-  Data _peds;
+  Data         _peds;
+  VIPRA::State _state;
 };
 }  // namespace CALM
 

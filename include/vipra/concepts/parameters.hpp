@@ -10,7 +10,9 @@ namespace VIPRA::Concepts {
 
 template <typename params_t>
 concept has_static_register_param = requires(const std::string& str) {
-  { params_t::register_param(VIPRA::Modules::Type::PARAMETERS, str, Parameter{}) } -> std::same_as<void>;
+  {
+    params_t::register_param(VIPRA::Modules::Type::PARAMETERS, str, ParameterType::REQUIRED)
+    } -> std::same_as<void>;
 };
 
 template <typename params_t>
@@ -27,11 +29,11 @@ struct DummyParams {
   // NOLINTBEGIN
   static constexpr VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::PARAMETERS;
   static void register_param(VIPRA::Modules::Type /*unused*/, const std::string& /*unused*/,
-                             VIPRA::Parameter /*unused*/) {}
+                             VIPRA::ParameterType /*unused*/) {}
   template <typename data_t>
   auto get_param(VIPRA::Modules::Type /*unused*/, const std::string& /*unused*/) const -> data_t {}
   // NOLINTEND
 };
 
-static_assert(Concepts::ParamModule<DummyParams>, "DummyParams does not satisfy ParamModule");
+CHECK_MODULE(ParamModule, DummyParams)
 }  // namespace VIPRA::Concepts

@@ -23,5 +23,5 @@ concept has_setup = requires(module_t module, const DummyParams& params) {
 };
 
 template <typename module_t, Modules::Type type>
-concept Module = is_type<module_t, type> && has_static_parameters<module_t> && has_setup<module_t>;
+concept is_module = is_type<module_t, type> && has_static_parameters<module_t> && has_setup<module_t>;
 }  // namespace VIPRA::Concepts
