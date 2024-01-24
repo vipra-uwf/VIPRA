@@ -1,4 +1,5 @@
 #include <cstddef>
+#include <iostream>
 #include <tuple>
 #include <type_traits>
 #include <utility>
@@ -7,6 +8,7 @@
 
 #include "vipra/types/parameter.hpp"
 #include "vipra/types/timestep.hpp"
+#include "vipra/util/debug_do.hpp"
 
 namespace VIPRA {
 
@@ -41,6 +43,7 @@ class SimType {
   }
 
   auto operator()() -> output_data_t {
+    // TODO: Load all parameters from input
     _model.initialize(_pedset);
     _map.initialize(_pedset);
     _goals.initialize(_pedset, _map);
@@ -66,6 +69,11 @@ class SimType {
   auto run_sim() -> output_data_t {
     VIPRA::timestep maxTimestep =
         _params.template get_param<VIPRA::timestep>(Modules::Type::SIMULATION, "max_timestep");
+    VIPRA::f_pnt timestepSize =
+        _params.template get_param<VIPRA::f_pnt>(Modules::Type::SIMULATION, "timestep_size");
+
+    Util::debug_do([&]() { std::cout << "maxTimestep: " << maxTimestep << "\n"; });
+    Util::debug_do([&]() { std::cout << "timestepSize: " << timestepSize << "\n"; });
 
     while (_timestep < maxTimestep) {
       _model.timestep(_pedset, _map);

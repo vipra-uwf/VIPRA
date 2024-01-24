@@ -5,6 +5,7 @@
 #include <fstream>
 #include <iostream>
 #include <nlohmann/json.hpp>
+#include <tuple>
 #include <utility>
 
 #include "vipra/concepts/input.hpp"
@@ -13,6 +14,7 @@
 #include "vipra/util/get_nth_value.hpp"
 
 #include "vipra/util/debug_do.hpp"
+#include "vipra/util/tuple_tail.hpp"
 
 namespace VIPRA::Input {
 class JSON {
@@ -38,7 +40,9 @@ class JSON {
   }
 
   template <typename data_t, typename... keys_t>
-  [[nodiscard]] auto get(keys_t... keys) const -> std::optional<data_t> {
+  [[nodiscard]] auto get(keys_t&&... keys) const -> std::optional<data_t> {
+    auto&& keysTuple = std::forward_as_tuple(keys...);
+
     if constexpr (sizeof...(keys) == 0) {
       Util ::debug_do([&]() {
         std::cout << "Can't Find Empty Key: "
@@ -48,12 +52,12 @@ class JSON {
     } else if constexpr (sizeof...(keys) == 1) {
       return get_helper_helper<data_t>(keys..., _json);
     } else {
-      return get_helper<data_t>(Util::get_nth_value<0>(keys...), keys...);
+      return get_helper<data_t>(std::get<0>(keysTuple), Util::tuple_tail(keysTuple), _json);
     }
   }
 
   template <typename data_t, typename... keys_t>
-  [[nodiscard]] auto get_vector(keys_t... keys) const -> std::optional<std::vector<data_t>> {
+  [[nodiscard]] auto get_vector(keys_t&&... keys) const -> std::optional<std::vector<data_t>> {
     if constexpr (sizeof...(keys) == 0) {
       Util ::debug_do([&]() {
         std::cout << "Can't Find Empty Key:"
@@ -63,7 +67,8 @@ class JSON {
     } else if constexpr (sizeof...(keys) == 1) {
       return get_helper_helper<std::vector<data_t>>(keys..., _json);
     } else {
-      return get_helper<std::vector<data_t>>(Util::get_nth_value<0>(keys...), keys...);
+      return get_helper<std::vector<data_t>>(Util::get_nth_value<0>(keys...),
+                                             Util::tuple_tail(std::forward_as_tuple(keys...)), _json);
     }
   }
 
@@ -72,18 +77,19 @@ class JSON {
 
   // NOTE: I don't know if I should be disgusted by this or impressed
   template <typename data_t, typename key_t, typename... keys_t>
-  [[nodiscard]] auto get_helper(key_t baseKey, keys_t... keys) const -> std::optional<data_t> {
+  [[nodiscard]] auto get_helper(const key_t baseKey, std::tuple<keys_t...> keys,
+                                const nlohmann::json& value) const -> std::optional<data_t> {
     Util::debug_do([&]() { std::cout << "get_helper: " << baseKey << "\n"; });
 
-    if constexpr (sizeof...(keys) == 0) {
-      return get_helper<data_t>(baseKey, _json);
+    if constexpr (std::tuple_size_v<std::tuple<keys_t...>> == 0) {
+      return get_helper_helper<data_t>(baseKey, value);
     } else {
-      return get_helper_helper<data_t>(Util::get_nth_value<0>(keys...), _json[baseKey]);
+      return get_helper<data_t>(std::get<0>(keys), Util::tuple_tail(keys), value[baseKey]);
     }
   }
 
   template <typename data_t>
-  [[nodiscard]] auto get_helper_helper(std::string_view key, const nlohmann::json& value) const
+  [[nodiscard]] auto get_helper_helper(const std::string_view key, const nlohmann::json& value) const
       -> std::optional<data_t> {
     Util::debug_do([&]() { std::cout << "get_helper_helper: " << key << "\n"; });
 
