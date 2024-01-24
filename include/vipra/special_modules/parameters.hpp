@@ -23,11 +23,15 @@ class Parameters {
 
   template <typename data_t>
   auto get_param(VIPRA::Modules::Type module, const std::string& name) -> data_t {
+    // lowercase module type string
+    std::string moduleStr = to_string(module);
+    std::transform(moduleStr.begin(), moduleStr.end(), moduleStr.begin(), ::tolower);
+
     if (!get_params()[module].contains(name))
       throw std::runtime_error("Parameter: " + name + " For Module: " + to_string(module) +
                                " Not Registered");
 
-    auto value = _input.template get<data_t>(name);
+    auto value = _input.template get<data_t>(moduleStr, name);
     if (!value.has_value()) {
       if (get_params()[module][name].type == Parameter::Type::REQUIRED)
         throw std::runtime_error("Required Parameter: " + name + " For Module: " + to_string(module) +

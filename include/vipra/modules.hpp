@@ -20,28 +20,28 @@ enum class Type {
 inline auto to_string(Type type) -> std::string {
   switch (type) {
     case Type::MODEL:
-      return "MODEL";
+      return "model";
     case Type::GOALS:
-      return "GOALS";
+      return "goals";
     case Type::INPUT:
-      return "INPUT";
+      return "input";
     case Type::OUTPUT:
-      return "OUTPUT";
+      return "output";
     case Type::PEDESTRIANS:
-      return "PEDESTRIANS";
+      return "pedestrians";
     case Type::PARAMETERS:
-      return "PARAMETERS";
+      return "parameters";
     case Type::OBSTACLES:
-      return "OBSTACLES";
+      return "obstacles";
     case Type::SIMULATION:
-      return "SIMULATION";
+      return "simulation";
     case Type::MAP:
-      return "MAP";
+      return "map";
     case Type::FIELD:
-      return "FIELD";
+      return "field";
   }
 
-  return "UNKNOWN";
+  return "unknown";
 }
 
 // NOLINTNEXTLINE(cppcoreguidelines-macro-usage) This is a very simple macro

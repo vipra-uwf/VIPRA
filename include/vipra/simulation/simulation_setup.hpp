@@ -54,6 +54,14 @@ constexpr auto simulation(Mode mode, args_t... args) {
                 "Module was not provided");
 
   auto&& temp = std::forward_as_tuple(args...);
+
+  SimType<std::remove_reference_t<decltype(std::get<PARAMS_IDX>(temp))>,
+          std::remove_reference_t<decltype(std::get<OUTPUT_IDX>(temp))>,
+          std::remove_reference_t<decltype(std::get<MODEL_IDX>(temp))>,
+          std::remove_reference_t<decltype(std::get<PEDSET_IDX>(temp))>,
+          std::remove_reference_t<decltype(std::get<GOALS_IDX>(temp))>,
+          std::remove_reference_t<decltype(std::get<MAP_IDX>(temp))>>::register_params();
+
   // Returns the SimType object
   return SimType(mode, std::move(std::get<PARAMS_IDX>(temp)), std::move(std::get<OUTPUT_IDX>(temp)),
                  std::move(std::get<MODEL_IDX>(temp)), std::move(std::get<PEDSET_IDX>(temp)),

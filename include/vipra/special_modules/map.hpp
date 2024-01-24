@@ -25,7 +25,9 @@ class Map {
       : _obstacles{std::move(obstacles)}, _fields{std::move(fields)...} {
     // TODO(rolland): replace point obstacles with polygons
     const auto objTypes = input.template get_vector<std::string>("obj_types");
-    auto       objMap = std::map<std::string, std::vector<VIPRA::f3d>>{};
+    if (!objTypes) throw std::runtime_error("Could not find object types in input file");
+
+    auto objMap = std::map<std::string, std::vector<VIPRA::f3d>>{};
 
     std::for_each(objTypes->begin(), objTypes->end(), [&](const auto& objType) {
       const auto objPos = input.template get_vector<VIPRA::f3d>(objType);

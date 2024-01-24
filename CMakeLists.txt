@@ -1,10 +1,19 @@
 cmake_minimum_required(VERSION 3.14)
 set(PROJECT_NAME VIPRA)
 
+option(DEBUG "Build with debug flags" OFF)
+
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
-set(CMAKE_BUILD_TYPE Release)
+
+if(DEBUG)
+  message(STATUS "Building with debug flags")
+  set(CMAKE_BUILD_TYPE Debug)
+else()
+  message(STATUS "Building with release flags")
+  set(CMAKE_BUILD_TYPE Release)
+endif()
 
 project(
   ${PROJECT_NAME}
