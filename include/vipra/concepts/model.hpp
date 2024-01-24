@@ -3,6 +3,7 @@
 #include <concepts>
 #include <utility>
 
+#include "vipra/concepts/map.hpp"
 #include "vipra/concepts/obstacle_set.hpp"
 #include "vipra/concepts/pedset.hpp"
 #include "vipra/modules.hpp"
@@ -15,10 +16,13 @@ concept Model_Initialization = requires(model_t model, const DummyPedSet& pedset
 };
 
 template <typename model_t>
-concept ModelModule = Module<model_t, VIPRA::Modules::Type::MODEL> &&
-    requires(model_t model, const DummyPedSet& pedset, const DummyObsSet& obsset) {
-  { model.timestep(pedset, obsset) } -> std::same_as<void>;
+concept Model_Timestep = requires(model_t model, const DummyPedSet& pedset, const DummyMap& map) {
+  { model.timestep(pedset, map) } -> std::same_as<void>;
 };
+
+template <typename model_t>
+concept ModelModule =
+    Module<model_t, VIPRA::Modules::Type::MODEL> && Model_Timestep<model_t> && Model_Initialization<model_t>;
 
 class DummyModel {
   VIPRA_MODULE_TYPE(MODEL)
@@ -30,7 +34,8 @@ class DummyModel {
   void initialize(const pedset_t& /*unused*/) {}
 
   void setup(auto& /*unused*/) {}
-  void timestep(const DummyPedSet& /*unused*/, const DummyObsSet& /*unused*/) {}
+
+  void timestep(const DummyPedSet& /*unused*/, const DummyMap& /*unused*/) {}
 };
 
 CHECK_MODULE(ModelModule, DummyModel);

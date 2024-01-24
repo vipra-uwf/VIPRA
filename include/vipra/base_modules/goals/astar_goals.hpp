@@ -3,6 +3,7 @@
 #include <cstdio>
 
 #include "vipra/concepts/goals.hpp"
+#include "vipra/concepts/obstacle_set.hpp"
 #include "vipra/concepts/parameters.hpp"
 
 #include "vipra/modules.hpp"
@@ -13,6 +14,11 @@ namespace VIPRA::Goals {
 class AStar {
   VIPRA_MODULE_TYPE(GOALS)
  public:
+  template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t>
+  void initialize(const pedset_t& pedset, const map_t& obstacles) {
+    // TODO(rolland): implement
+  }
+
   template <Concepts::ParamModule params_t>
   static void register_params() {
     params_t::register_param(MODULE_TYPE, "endGoalType", VIPRA::Parameter{Parameter::Type::REQUIRED});

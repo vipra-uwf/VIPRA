@@ -16,9 +16,6 @@ class QuadTree {
   VIPRA_MODULE_TYPE(OBSTACLES);
 
  public:
-  template <Concepts::InputModule input_t>
-  explicit QuadTree(const input_t& input) {}
-
   void initialize(const std::vector<VIPRA::f3d>& obstacles, const std::vector<std::string>& types,
                   const std::map<std::string, VIPRA::f3dVec>& objects) {
     // TODO: implement

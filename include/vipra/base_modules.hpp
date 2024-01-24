@@ -8,6 +8,6 @@
 
 #include "vipra/base_modules/output/json_output.hpp"
 
-#include "vipra/base_modules/pedestrians/pedestrian_set.hpp"
+#include "vipra/base_modules/pedestrians/grid.hpp"
 
-#include "vipra/base_modules/obstacles/obstacle_set.hpp"
+#include "vipra/base_modules/obstacles/quad_tree.hpp"

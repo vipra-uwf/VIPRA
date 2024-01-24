@@ -4,13 +4,21 @@
 
 #include "vipra/concepts/goals.hpp"
 
-namespace VIPRA {
+// TODO(rolland): do we need a coordinator for goals, or will there only ever be one?
+
+namespace VIPRA::Module {
 template <Concepts::GoalsModule... goals_ts>
 class Goals {
   VIPRA_MODULE_TYPE(GOALS);
 
  public:
   constexpr explicit Goals(goals_ts... goals) : _goals(std::make_tuple(goals...)) {}
+
+  template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t>
+  void initialize(const pedset_t& pedset, const map_t& map) {
+    std::apply([&](auto&&... goals) { (goals.template initialize<pedset_t, map_t>(pedset, map), ...); },
+               _goals);
+  }
 
   /**
    * @brief Calls setup on all goals modules
@@ -36,4 +44,4 @@ class Goals {
 };
 
 CHECK_MODULE(GoalsModule, Goals<Concepts::DummyGoals>);
-}  // namespace VIPRA
+}  // namespace VIPRA::Module

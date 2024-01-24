@@ -23,8 +23,9 @@ class Map {
   template <Concepts::InputModule input_t>
   explicit Map(const input_t& input, obstacles_t&& obstacles, field_ts&&... fields)
       : _obstacles{std::move(obstacles)}, _fields{std::move(fields)...} {
+    // TODO(rolland): replace point obstacles with polygons
     const auto objTypes = input.template get_vector<std::string>("obj_types");
-    const auto objMap = std::map<std::string, std::vector<VIPRA::f3d>>{};
+    auto       objMap = std::map<std::string, std::vector<VIPRA::f3d>>{};
 
     std::for_each(objTypes->begin(), objTypes->end(), [&](const auto& objType) {
       const auto objPos = input.template get_vector<VIPRA::f3d>(objType);
@@ -32,7 +33,10 @@ class Map {
                     [&](const auto& objPos) { objMap[objType].push_back(objPos); });
     });
 
-    _obstacles.initialize(input.get_vector("obstacles"), objTypes.value(), objMap);
+    auto obsCoords = input.template get_vector<VIPRA::f3d>("obstacles");
+    if (!obsCoords) throw std::runtime_error("Could not find obstacle coordinates in input file");
+
+    _obstacles.initialize(obsCoords.value(), objTypes.value(), objMap);
   }
 
   /**

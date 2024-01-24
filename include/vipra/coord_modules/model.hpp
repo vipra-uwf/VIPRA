@@ -6,15 +6,23 @@
 #include "vipra/concepts/parameters.hpp"
 #include "vipra/concepts/pedset.hpp"
 
-namespace VIPRA {
+namespace VIPRA::Module {
 template <Concepts::ModelModule... model_ts>
 class Model {
   VIPRA_MODULE_TYPE(MODEL);
 
  public:
+  constexpr explicit Model(model_ts... models) : _models(std::make_tuple(models...)) {}
+
   template <Concepts::ParamModule params_t>
   static void register_params() {
     (model_ts::template register_params<params_t>(), ...);
+  }
+
+  template <VIPRA::Concepts::PedsetModule peds_t, VIPRA::Concepts::MapModule map_t>
+  void timestep(const peds_t& pedset, const map_t& obsset) {
+    std::apply([&](auto&&... models) { (models.template timestep<peds_t, map_t>(pedset, obsset), ...); },
+               _models);
   }
 
   template <Concepts::ParamModule params_t>
@@ -39,4 +47,4 @@ class Model {
 };
 
 CHECK_MODULE(ModelModule, Model<Concepts::DummyModel>);
-}  // namespace VIPRA
+}  // namespace VIPRA::Module

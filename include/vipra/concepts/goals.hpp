@@ -16,11 +16,14 @@ concept Goals_Initialization = requires(goals_t goals, const DummyPedSet& pedset
 };
 
 template <typename goals_t>
-concept GoalsModule = Concepts::Module<goals_t, VIPRA::Modules::Type::GOALS>;
+concept GoalsModule = Concepts::Module<goals_t, VIPRA::Modules::Type::GOALS> && Goals_Initialization<goals_t>;
 
 class DummyGoals {
   VIPRA_MODULE_TYPE(GOALS)
  public:
+  template <typename pedset_t, typename map_t>
+  void initialize(const pedset_t& /*unused*/, const map_t& /*unused*/) {}
+
   template <typename params_t>
   static void register_params() {}
 

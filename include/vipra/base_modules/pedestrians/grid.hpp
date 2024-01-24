@@ -10,13 +10,13 @@
 #include "vipra/types/idx.hpp"
 #include "vipra/types/size.hpp"
 
-namespace VIPRA {
-class Pedestrians {
+namespace VIPRA::Pedestrians {
+class Grid {
   VIPRA_MODULE_TYPE(PEDESTRIANS)
 
  public:
   template <Concepts::InputModule input_t>
-  explicit Pedestrians(const input_t& input) {
+  explicit Grid(const input_t& input) {
     auto coords = input.template get_vector<VIPRA::f3d>("coords");
     if (!coords) throw std::runtime_error("Could not find pedestrian coordinates in input file");
 
@@ -39,6 +39,6 @@ class Pedestrians {
   VIPRA::f3dVec _coords;
   VIPRA::f3dVec _velocities;
 };
-}  // namespace VIPRA
+}  // namespace VIPRA::Pedestrians
 
-CHECK_MODULE(PedsetModule, VIPRA::Pedestrians)
+CHECK_MODULE(PedsetModule, VIPRA::Pedestrians::Grid)

@@ -26,7 +26,10 @@ class Model {
     // data.shoulderLens = pedset.get_vector<VIPRA::f_pnt>("shoulderLen");
   }
 
-  void timestep(const auto& pedset, const auto& obsset) {}
+  template <VIPRA::Concepts::PedsetModule peds_t, VIPRA::Concepts::MapModule map_t>
+  void timestep(const peds_t& pedset, const map_t& obsset) {
+    // TODO(rolland): implement
+  }
 
   template <VIPRA::Concepts::ParamModule params_t>
   static void register_params() {

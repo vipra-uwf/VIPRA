@@ -71,6 +71,12 @@ class SimType {
       _model.timestep(_pedset, _map);
       ++_timestep;
     }
+
+    if constexpr (std::is_same_v<output_data_t, void>) {
+      _output.write();
+    } else {
+      return _output.write();
+    }
   }
 };
 }  // namespace VIPRA

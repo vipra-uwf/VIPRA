@@ -11,7 +11,7 @@
 #include "vipra/types/f3d.hpp"
 #include "vipra/types/idx.hpp"
 
-namespace VIPRA::Output {
+namespace VIPRA::Output::Trajectories {
 class JSON {
   VIPRA_MODULE_TYPE(OUTPUT)
 
@@ -50,17 +50,18 @@ class JSON {
 };
 
 template <>
-inline void Output::JSON::ped_value(VIPRA::idx pedIdx, const char* key, VIPRA::f3d&& value) {
+inline void Output::Trajectories::JSON::ped_value(VIPRA::idx pedIdx, const char* key, VIPRA::f3d&& value) {
   _json["pedestrians"].at(pedIdx)[key] = nlohmann::json({value.x, value.y, value.z});
 }
 template <>
-inline void Output::JSON::ped_value(VIPRA::idx pedIdx, const char* key, VIPRA::f3d& value) {
+inline void Output::Trajectories::JSON::ped_value(VIPRA::idx pedIdx, const char* key, VIPRA::f3d& value) {
   _json["pedestrians"].at(pedIdx)[key] = nlohmann::json({value.x, value.y, value.z});
 }
 template <>
-inline void Output::JSON::ped_value(VIPRA::idx pedIdx, const char* key, const VIPRA::f3d& value) {
+inline void Output::Trajectories::JSON::ped_value(VIPRA::idx pedIdx, const char* key,
+                                                  const VIPRA::f3d& value) {
   _json["pedestrians"].at(pedIdx)[key] = nlohmann::json({value.x, value.y, value.z});
 }
-}  // namespace VIPRA::Output
+}  // namespace VIPRA::Output::Trajectories
 
-CHECK_MODULE(OutputModule, VIPRA::Output::JSON)
+CHECK_MODULE(OutputModule, VIPRA::Output::Trajectories::JSON)
