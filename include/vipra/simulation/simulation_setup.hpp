@@ -62,6 +62,12 @@ constexpr auto simulation(Mode mode, args_t... args) {
           std::remove_reference_t<decltype(std::get<GOALS_IDX>(temp))>,
           std::remove_reference_t<decltype(std::get<MAP_IDX>(temp))>>::register_params();
 
+  std::get<OUTPUT_IDX>(temp).setup(std::get<PARAMS_IDX>(temp));
+  std::get<MODEL_IDX>(temp).setup(std::get<PARAMS_IDX>(temp));
+  std::get<PEDSET_IDX>(temp).setup(std::get<PARAMS_IDX>(temp));
+  std::get<GOALS_IDX>(temp).setup(std::get<PARAMS_IDX>(temp));
+  std::get<MAP_IDX>(temp).setup(std::get<PARAMS_IDX>(temp));
+
   // Returns the SimType object
   return SimType(mode, std::move(std::get<PARAMS_IDX>(temp)), std::move(std::get<OUTPUT_IDX>(temp)),
                  std::move(std::get<MODEL_IDX>(temp)), std::move(std::get<PEDSET_IDX>(temp)),

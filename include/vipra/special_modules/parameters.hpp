@@ -5,6 +5,7 @@
 #include <nlohmann/json.hpp>
 
 #include "vipra/concepts/input.hpp"
+#include "vipra/concepts/parameters.hpp"
 #include "vipra/modules.hpp"
 #include "vipra/types/parameter.hpp"
 
@@ -22,8 +23,7 @@ class Parameters {
   }
 
   template <typename data_t>
-  auto get_param(VIPRA::Modules::Type module, const std::string& name) -> data_t {
-    // lowercase module type string
+  [[nodiscard]] auto get_param(VIPRA::Modules::Type module, const std::string& name) const -> data_t {
     std::string moduleStr = to_string(module);
     std::transform(moduleStr.begin(), moduleStr.end(), moduleStr.begin(), ::tolower);
 
@@ -51,4 +51,7 @@ class Parameters {
     return params;
   }
 };
+
+CHECK_MODULE(ParamModule, Parameters<Concepts::DummyInput>)
+
 }  // namespace VIPRA

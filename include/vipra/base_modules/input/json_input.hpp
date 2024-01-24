@@ -58,18 +58,7 @@ class JSON {
 
   template <typename data_t, typename... keys_t>
   [[nodiscard]] auto get_vector(keys_t&&... keys) const -> std::optional<std::vector<data_t>> {
-    if constexpr (sizeof...(keys) == 0) {
-      Util ::debug_do([&]() {
-        std::cout << "Can't Find Empty Key:"
-                  << "\n";
-      });
-      return std::nullopt;
-    } else if constexpr (sizeof...(keys) == 1) {
-      return get_helper_helper<std::vector<data_t>>(keys..., _json);
-    } else {
-      return get_helper<std::vector<data_t>>(Util::get_nth_value<0>(keys...),
-                                             Util::tuple_tail(std::forward_as_tuple(keys...)), _json);
-    }
+    return get<std::vector<data_t>>(keys...);
   }
 
  private:
@@ -79,11 +68,12 @@ class JSON {
   template <typename data_t, typename key_t, typename... keys_t>
   [[nodiscard]] auto get_helper(const key_t baseKey, std::tuple<keys_t...> keys,
                                 const nlohmann::json& value) const -> std::optional<data_t> {
-    Util::debug_do([&]() { std::cout << "get_helper: " << baseKey << "\n"; });
-
     if constexpr (std::tuple_size_v<std::tuple<keys_t...>> == 0) {
       return get_helper_helper<data_t>(baseKey, value);
     } else {
+      if (!value.contains(baseKey)) {
+        return std::nullopt;
+      }
       return get_helper<data_t>(std::get<0>(keys), Util::tuple_tail(keys), value[baseKey]);
     }
   }
@@ -91,8 +81,6 @@ class JSON {
   template <typename data_t>
   [[nodiscard]] auto get_helper_helper(const std::string_view key, const nlohmann::json& value) const
       -> std::optional<data_t> {
-    Util::debug_do([&]() { std::cout << "get_helper_helper: " << key << "\n"; });
-
     if (value.contains(key)) {
       try {
         return value.at(key).get<data_t>();
@@ -101,7 +89,6 @@ class JSON {
       }
     }
 
-    Util::debug_do([&]() { std::cout << "Can't Find: " << key << "\n"; });
     return std::nullopt;
   }
 };
@@ -110,8 +97,6 @@ template <>
 inline auto JSON::get_helper_helper<std::vector<VIPRA::f3d>>(std::string_view      key,
                                                              const nlohmann::json& value) const
     -> std::optional<std::vector<VIPRA::f3d>> {
-  Util::debug_do([&]() { std::cout << "get_helper_helper std::vector<VIPRA::f3d>: " << key << "\n"; });
-
   VIPRA::f3dVec inputData{};
   try {
     for (const auto& [subkey, value] : value[key].items()) {
@@ -122,7 +107,6 @@ inline auto JSON::get_helper_helper<std::vector<VIPRA::f3d>>(std::string_view   
       inputData.push_back(temp);
     }
   } catch (const nlohmann::json::type_error& e) {
-    Util::debug_do([&]() { std::cout << "Can't Find: " << key << "\n"; });
     return std::nullopt;
   }
 
@@ -137,8 +121,6 @@ inline auto JSON::get_helper_helper<std::vector<VIPRA::f3d>>(std::string_view   
 template <>
 inline auto JSON::get_helper_helper<VIPRA::f3d>(std::string_view key, const nlohmann::json& value) const
     -> std::optional<VIPRA::f3d> {
-  Util::debug_do([&]() { std::cout << "get_helper_helper VIPRA::f3d: " << key << "\n"; });
-
   VIPRA::f3dVec inputData{};
   try {
     for (const auto& [subkey, value] : value[key].items()) {
@@ -151,7 +133,6 @@ inline auto JSON::get_helper_helper<VIPRA::f3d>(std::string_view key, const nloh
   }
 
   catch (const nlohmann::json::type_error& e) {
-    Util::debug_do([&]() { std::cout << "Can't Find: " << key << "\n"; });
     return std::nullopt;
   }
 

@@ -43,7 +43,6 @@ class SimType {
   }
 
   auto operator()() -> output_data_t {
-    // TODO: Load all parameters from input
     _model.initialize(_pedset);
     _map.initialize(_pedset);
     _goals.initialize(_pedset, _map);

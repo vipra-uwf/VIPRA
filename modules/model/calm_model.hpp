@@ -14,16 +14,19 @@ class Model {
     std::vector<VIPRA::f_pnt> reactionTimes;
     std::vector<VIPRA::f_pnt> maxSpeeds;
     std::vector<VIPRA::f_pnt> shoulderLens;
+
+    void resize(size_t size) {
+      masses.resize(size);
+      reactionTimes.resize(size);
+      maxSpeeds.resize(size);
+      shoulderLens.resize(size);
+    }
   };
 
  public:
   template <VIPRA::Concepts::PedsetModule pedset_t>
   void initialize(const pedset_t& pedset) {
-    // Data data;
-    // data.masses = pedset.get_vector<VIPRA::f_pnt>("mass");
-    // data.reactionTimes = pedset.get_vector<VIPRA::f_pnt>("reactionTime");
-    // data.maxSpeeds = pedset.get_vector<VIPRA::f_pnt>("maxSpeed");
-    // data.shoulderLens = pedset.get_vector<VIPRA::f_pnt>("shoulderLen");
+    _peds.resize(pedset.num_pedestrians());
   }
 
   template <VIPRA::Concepts::PedsetModule peds_t, VIPRA::Concepts::MapModule map_t>
@@ -60,6 +63,7 @@ class Model {
   }
 
  private:
+  Data _peds;
 };
 }  // namespace CALM
 

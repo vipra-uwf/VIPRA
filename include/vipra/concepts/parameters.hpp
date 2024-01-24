@@ -14,7 +14,7 @@ concept has_static_register_param = requires(const std::string& str) {
 };
 
 template <typename params_t>
-concept can_get_params = requires(params_t params) {
+concept can_get_params = requires(const params_t params) {
   { params.template get_param<int>(VIPRA::Modules::Type::PARAMETERS, "") } -> std::same_as<int>;
 };
 
@@ -24,11 +24,13 @@ concept ParamModule =
     VIPRA::Modules::Type::PARAMETERS&& has_static_register_param<params_t>&& can_get_params<params_t>;
 
 struct DummyParams {
+  // NOLINTBEGIN
   static constexpr VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::PARAMETERS;
   static void register_param(VIPRA::Modules::Type /*unused*/, const std::string& /*unused*/,
                              VIPRA::Parameter /*unused*/) {}
   template <typename data_t>
-  auto get_param(VIPRA::Modules::Type /*unused*/, const std::string& /*unused*/) -> data_t {}
+  auto get_param(VIPRA::Modules::Type /*unused*/, const std::string& /*unused*/) const -> data_t {}
+  // NOLINTEND
 };
 
 static_assert(Concepts::ParamModule<DummyParams>, "DummyParams does not satisfy ParamModule");

@@ -46,22 +46,5 @@ class DummyOutput {
   void ped_timestep_value(VIPRA::idx /*unused*/, const char* /*unused*/, auto&& /*unused*/) {}
 };
 
-class DummyOutput2 {
-  VIPRA_MODULE_TYPE(OUTPUT)
- public:
-  using output_data_t = void;
-
-  template <typename params_t>
-  static void register_params() {}
-
-  void setup(auto& /*unused*/) {}
-
-  void write() {}
-  void sim_value(const char* /*unused*/, auto&& /*unused*/) {}
-  void timestep_value(const char* /*unused*/, auto&& /*unused*/) {}
-  void ped_value(VIPRA::idx /*unused*/, const char* /*unused*/, auto&& /*unused*/) {}
-  void ped_timestep_value(VIPRA::idx /*unused*/, const char* /*unused*/, auto&& /*unused*/) {}
-};
-
 CHECK_MODULE(OutputModule, DummyOutput);
 }  // namespace VIPRA::Concepts

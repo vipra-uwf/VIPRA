@@ -13,6 +13,8 @@
 #include "vipra/types/f3d.hpp"
 
 namespace VIPRA::Concepts {
+
+// TODO(rolland): clean this up and make it more generic/strict
 template <typename input_t>
 concept Get_Values = requires(input_t input, std::string_view key, std::string_view key2) {
   { input.template get_vector<int>(key) } -> std::same_as<std::optional<std::vector<int>>>;
@@ -30,4 +32,36 @@ concept Get_Values = requires(input_t input, std::string_view key, std::string_v
 template <typename input_t>
 concept InputModule = is_type<input_t, Modules::Type::INPUT> &&
     std::constructible_from<input_t, std::string_view> && Get_Values<input_t>;
+
+class DummyInput {
+  // NOLINTBEGIN
+  VIPRA_MODULE_TYPE(INPUT)
+ public:
+  explicit DummyInput(std::string_view /*unused*/) {}
+
+  template <typename data_t>
+  auto get(std::string_view /*unused*/, std::string_view /*unused*/) const -> std::optional<data_t> {
+    return std::nullopt;
+  }
+
+  template <typename data_t>
+  auto get(std::string_view /*unused*/) const -> std::optional<data_t> {
+    return std::nullopt;
+  }
+
+  template <typename data_t>
+  auto get_vector(std::string_view /*unused*/, std::string_view /*unused*/) const
+      -> std::optional<std::vector<data_t>> {
+    return std::nullopt;
+  }
+
+  template <typename data_t>
+  auto get_vector(std::string_view /*unused*/) const -> std::optional<std::vector<data_t>> {
+    return std::nullopt;
+  }
+  // NOLINTEND
+};
+
+CHECK_MODULE(InputModule, DummyInput);
+
 }  // namespace VIPRA::Concepts

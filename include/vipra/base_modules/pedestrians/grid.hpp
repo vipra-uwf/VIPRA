@@ -29,11 +29,11 @@ class Grid {
 
   void setup(auto& params) {}
 
-  [[nodiscard]] auto num_pedestrians() -> VIPRA::size { return _coords.size(); }
-  [[nodiscard]] auto ped_coords(VIPRA::idx pedIdx) -> VIPRA::f3d { return _coords[pedIdx]; }
-  [[nodiscard]] auto all_coords() -> const std::vector<VIPRA::f3d>& { return _coords; }
-  [[nodiscard]] auto ped_velocity(VIPRA::idx pedIdx) -> VIPRA::f3d { return _velocities[pedIdx]; }
-  [[nodiscard]] auto all_velocities() -> const std::vector<VIPRA::f3d>& { return _velocities; }
+  [[nodiscard]] auto num_pedestrians() const -> VIPRA::size { return _coords.size(); }
+  [[nodiscard]] auto ped_coords(VIPRA::idx pedIdx) const -> VIPRA::f3d { return _coords[pedIdx]; }
+  [[nodiscard]] auto all_coords() const -> const std::vector<VIPRA::f3d>& { return _coords; }
+  [[nodiscard]] auto ped_velocity(VIPRA::idx pedIdx) const -> VIPRA::f3d { return _velocities[pedIdx]; }
+  [[nodiscard]] auto all_velocities() const -> const std::vector<VIPRA::f3d>& { return _velocities; }
 
  private:
   VIPRA::f3dVec _coords;
