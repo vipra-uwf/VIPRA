@@ -5,7 +5,7 @@
 
 namespace VIPRA {
 class Rectangle {
-  // TODO(rolland): implement
+  // TODO(rolland): implement, currently axis aligned only
   // TODO(rolland): create tests
  public:
   constexpr Rectangle() = default;
@@ -14,6 +14,10 @@ class Rectangle {
   constexpr Rectangle(VIPRA::f3d point1, VIPRA::f3d point3) : _p1(point1), _p3(point3) {
     _p2 = VIPRA::f3d(point3.x, point1.y, point1.z);
     _p4 = VIPRA::f3d(point1.x, point3.y, point3.z);
+  }
+
+  [[nodiscard]] inline constexpr auto is_point_inside(VIPRA::f3d point) const -> bool {
+    return point.x >= _p1.x && point.x <= _p2.x && point.y >= _p1.y && point.y <= _p4.y;
   }
 
   // ---------- Getters -------------------
