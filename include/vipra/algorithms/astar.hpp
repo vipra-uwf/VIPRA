@@ -24,22 +24,49 @@
 namespace VIPRA::Algo {
 
 namespace AStar {
+/**
+ * @brief Concept for type that can be used as a graph for the A* algorithm
+ * 
+ * @tparam graph_t 
+ */
 template <typename graph_t>
 concept Graph = requires(const graph_t graph, VIPRA::idx idx) {
   { graph.neighbors(idx) } -> std::same_as<const std::vector<VIPRA::idx>&>;
 };
 
+/**
+ * @brief Concept for a function that returns the distance between two nodes
+ * 
+ * @tparam func_t 
+ */
 template <typename func_t>
 concept distance_func = requires(func_t func, VIPRA::idx idx1, VIPRA::idx idx2) {
   { func(idx1, idx2) } -> std::same_as<VIPRA::f_pnt>;
 };
 
+/**
+ * @brief Concept for a function that converts a node index to a desired type
+ * 
+ * @tparam func_t 
+ */
 template <typename func_t>
 concept conversion_func = std::is_same_v<func_t, VOID> || requires(func_t func, VIPRA::idx idx1) {
   {func(idx1)};
 };
 }  // namespace AStar
 
+/**
+ * @brief Creates a path from start to end using the A* algorithm, and returns it as a queue of indices. Or a queue of results of the conversion function, if one is provided. 
+ * @tparam graph_t Graph type that satisfies the AStar::Graph concept
+ * @tparam distance_f_t Function for getting the distance between two nodes, that satisfies the AStar::distance_func concept
+ * @tparam conversion_f_t (optional) Function for converting the node index to the desired type, that satisfies the AStar::conversion_func concept
+ * @param start starting node index
+ * @param end ending node index
+ * @param graph graph to search
+ * @param distance_func node distance function
+ * @param conversion_func (optional) node conversion function
+ * @return std::queue<VIPRA::idx> OR std::queue<std::invoke_result_t<conversion_func, VIPRA::idx>> 
+ */
 template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
           AStar::conversion_func conversion_f_t = VOID>
 [[nodiscard]] auto astar(VIPRA::idx start, VIPRA::idx end, const graph_t& graph, distance_f_t&& distance_func,

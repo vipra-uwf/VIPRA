@@ -8,7 +8,9 @@
 
 #include "vipra/types/f3d.hpp"
 #include "vipra/types/float.hpp"
+#include "vipra/types/idx.hpp"
 #include "vipra/types/parameter.hpp"
+#include "vipra/types/size.hpp"
 
 // TODO(rolland): implement quadtree for storing obstacles
 
@@ -36,19 +38,88 @@ class QuadTree {
   }
 
   void setup(auto& params) {
-    params.template register_param(VIPRA::Modules::Type::OBSTACLES, "minGridSize",
-                                   VIPRA::ParameterType::REQUIRED);
+    _obsDistance = params.template get_param<VIPRA::f_pnt>(VIPRA::Modules::Type::OBSTACLES, "minGridSize");
   }
 
   // TODO(rolland): implement
   [[nodiscard]] auto get_dimensions() const -> VIPRA::f3d { return _dimensions; }
-  [[nodiscard]] auto collision(VIPRA::f3d) const -> bool { return false; }
-  [[nodiscard]] auto ray_hit(VIPRA::f3d, VIPRA::f3d) const -> VIPRA::f_pnt { return 1.0F; }
-  [[nodiscard]] auto nearest_obstacle(VIPRA::f3d) const -> VIPRA::f3d { return VIPRA::f3d{}; }
-  [[nodiscard]] auto nearest_obstacle_in_direction(VIPRA::f3d, VIPRA::f3d) const -> VIPRA::f3d {
-    return VIPRA::f3d{};
+
+  [[nodiscard]] auto collision(VIPRA::f3d point) const -> bool {
+    return std::any_of(_obstacles.begin(), _obstacles.end(),
+                       [&](const VIPRA::f3d& obs) { return obs.distance_to(point) < _obsDistance; });
   }
+
+  [[nodiscard]] auto ray_hit(VIPRA::f3d start, VIPRA::f3d end) const -> VIPRA::f_pnt {
+    if (start == end) {
+      return -1;
+    }
+
+    VIPRA::f_pnt nearest = std::numeric_limits<VIPRA::f_pnt>::max();
+    for (const auto& obstacle : _obstacles) {
+      const VIPRA::f3d vAP = obstacle - start;
+      const VIPRA::f3d vAB = end - start;
+
+      const VIPRA::f_pnt sqDistanceAB = start.distance_to_sqrd(end);
+      const VIPRA::f_pnt abapProduct = vAB.x * vAP.x + vAB.y * vAP.y;
+      const VIPRA::f_pnt amount = abapProduct / sqDistanceAB;
+
+      VIPRA::f3d intersect =
+          VIPRA::f3d{(amount * (end.x - start.x)) + start.x, (amount * (end.y - start.y)) + start.y};
+
+      if (intersect.distance_to_sqrd(obstacle) < _obsDistance * _obsDistance) {
+        const VIPRA::f_pnt dist = intersect.distance_to(start);
+        if (dist < nearest) {
+          nearest = dist;
+        }
+      }
+    }
+
+    if (nearest == std::numeric_limits<VIPRA::f_pnt>::max()) {
+      return -1;
+    }
+    return nearest;
+  }
+
+  [[nodiscard]] auto nearest_obstacle(VIPRA::f3d point) const -> VIPRA::f3d {
+    const VIPRA::size obCnt = _obstacles.size();
+    VIPRA::idx        closest = VIPRA::INVALID_IDX;
+    VIPRA::f_pnt      cDist = std::numeric_limits<VIPRA::f_pnt>::max();
+
+    for (VIPRA::idx i = 0; i < obCnt; ++i) {
+      VIPRA::f_pnt dist = _obstacles[i].distance_to(point);
+      if (dist < cDist) {
+        cDist = dist;
+        closest = i;
+      }
+    }
+    return _obstacles[closest];
+  }
+
+  [[nodiscard]] auto nearest_obstacle_in_direction(VIPRA::f3d point, VIPRA::f3d direction) const
+      -> VIPRA::f3d {
+    const VIPRA::size obsCnt = _obstacles.size();
+    VIPRA::idx        nearest = VIPRA::INVALID_IDX;
+    VIPRA::f_pnt      cDist = std::numeric_limits<VIPRA::f_pnt>::max();
+
+    for (VIPRA::idx i = 0; i < obsCnt; ++i) {
+      if (direction_test(point, direction, _obstacles[i])) {
+        VIPRA::f_pnt dist = _obstacles[i].distance_to_sqrd(point);
+        if (dist < cDist) {
+          cDist = dist;
+          nearest = i;
+        }
+      }
+    }
+
+    if (nearest == VIPRA::INVALID_IDX) {
+      return VIPRA::_emptyf3d_;
+    }
+
+    return _obstacles.at(nearest);
+  }
+
   [[nodiscard]] auto get_object_types() const -> const std::vector<std::string>& { return _objectTypes; }
+
   [[nodiscard]] auto get_objects(const std::string& objType) const -> const VIPRA::f3dVec& {
     return _objects.at(objType);
   }
@@ -60,6 +131,15 @@ class QuadTree {
 
   VIPRA::f_pnt _obsDistance;
   VIPRA::f3d   _dimensions;
+
+  static inline auto direction_test(VIPRA::f3d point, VIPRA::f3d direction, VIPRA::f3d obstacle) -> bool {
+    const VIPRA::f3d displacement = point - obstacle;
+
+    const VIPRA::f_pnt result =
+        (displacement.x * direction.x) + (displacement.y * direction.y) + (displacement.z * direction.z);
+
+    return result <= 0;
+  }
 };
 }  // namespace VIPRA::Obstacles
 

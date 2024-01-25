@@ -21,12 +21,6 @@ class Grid {
     auto coords = input.template get_vector<VIPRA::f3d>("coords");
     if (!coords) throw std::runtime_error("Could not find pedestrian coordinates in input file");
 
-    Util::debug_do([&]() {
-      for (const auto& coord : *coords) {
-        std::cout << "Ped Coord:" << coord.to_string() << std::endl;
-      }
-    });
-
     _velocities = std::vector<VIPRA::f3d>((*coords).size());
     _coords = std::move(*coords);
   }
