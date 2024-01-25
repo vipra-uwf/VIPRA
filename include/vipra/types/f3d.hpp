@@ -127,27 +127,27 @@ struct f3d {
   }
 
   [[nodiscard]] inline constexpr auto distance_to_sqrd(const f3d& other) const noexcept -> VIPRA::f_pnt {
-    const VIPRA::f_pnt dX = other.x - x;
-    const VIPRA::f_pnt dY = other.y - y;
-    const VIPRA::f_pnt dZ = other.z - z;
+    const VIPRA::f_pnt deltaX = other.x - x;
+    const VIPRA::f_pnt deltaY = other.y - y;
+    const VIPRA::f_pnt deltaZ = other.z - z;
 
-    return (dX * dX) + (dY * dY) + (dZ * dZ);
+    return (deltaX * deltaX) + (deltaY * deltaY) + (deltaZ * deltaZ);
   }
 
   [[nodiscard]] inline constexpr auto distance_to(const f3d& other) const -> VIPRA::f_pnt {
-    const VIPRA::f_pnt dX = other.x - x;
-    const VIPRA::f_pnt dY = other.y - y;
-    const VIPRA::f_pnt dZ = other.z - z;
+    const VIPRA::f_pnt deltaX = other.x - x;
+    const VIPRA::f_pnt deltaY = other.y - y;
+    const VIPRA::f_pnt deltaZ = other.z - z;
 
-    return std::sqrt((dX * dX) + (dY * dY) + (dZ * dZ));
+    return std::sqrt((deltaX * deltaX) + (deltaY * deltaY) + (deltaZ * deltaZ));
   }
 
   inline constexpr auto distance_to(f3d&& other) const -> VIPRA::f_pnt {
-    const VIPRA::f_pnt dX = other.x - x;
-    const VIPRA::f_pnt dY = other.y - y;
-    const VIPRA::f_pnt dZ = other.z - z;
+    const VIPRA::f_pnt deltaX = other.x - x;
+    const VIPRA::f_pnt deltaY = other.y - y;
+    const VIPRA::f_pnt deltaZ = other.z - z;
 
-    return std::sqrt((dX * dX) + (dY * dY) + (dZ * dZ));
+    return std::sqrt((deltaX * deltaX) + (deltaY * deltaY) + (deltaZ * deltaZ));
   }
 
   inline constexpr auto operator==(const f3d& other) const noexcept -> bool {
@@ -204,6 +204,15 @@ struct f3d {
    */
   [[nodiscard]] inline constexpr auto dot(const f3d& other) const noexcept -> VIPRA::f_pnt {
     return (x * other.x) + (y * other.y) + (z * other.z);
+  }
+
+  /**
+   * @brief Returns the string representation of the f3d
+   * 
+   * @return std::string 
+   */
+  [[nodiscard]] inline auto to_string() const -> std::string {
+    return std::string{"("} + std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z) + ")";
   }
 };
 

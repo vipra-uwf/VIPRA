@@ -8,7 +8,10 @@ namespace VIPRA {
  * @brief Placeholder Type for void
  * 
  */
-struct VOID {};
+struct VOID {
+  template <typename... arg_ts>
+  inline void operator()(arg_ts... /*unused*/) const noexcept {}
+};
 
 template <typename>
 struct result_or_VOID;

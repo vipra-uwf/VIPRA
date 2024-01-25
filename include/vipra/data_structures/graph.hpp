@@ -2,12 +2,15 @@
 
 #include <vector>
 
+#include "vipra/algorithms/astar.hpp"
 #include "vipra/types/idx.hpp"
 
 namespace VIPRA::DataStructures {
 template <typename data_t>
 class Graph {
  public:
+  using value_t = data_t;
+
   struct Node {
     data_t                  data;
     std::vector<VIPRA::idx> neighbors;
@@ -22,7 +25,7 @@ class Graph {
     return _nodes[nodeIdx].neighbors;
   }
   [[nodiscard]] constexpr auto neighbors(VIPRA::idx nodeIdx) const -> const std::vector<VIPRA::idx>& {
-    return _nodes[nodeIdx]->neighbors;
+    return _nodes[nodeIdx].neighbors;
   }
 
   [[nodiscard]] constexpr auto data(VIPRA::idx nodeIdx) -> data_t& { return _nodes[nodeIdx].data; }
@@ -36,9 +39,10 @@ class Graph {
   }
 
   [[nodiscard]] constexpr auto add_node(data_t data) -> VIPRA::idx {
-    _nodes.emplace_back(Node{data, {}});
+    _nodes.push_back(Node{data, {}});
     return _nodes.size() - 1;
   }
+
   [[nodiscard]] auto add_node(data_t data, std::vector<VIPRA::idx> neighbors) -> VIPRA::idx {
     _nodes.emplace_back(Node{data, neighbors});
     for (auto neighbor : neighbors) {
@@ -50,4 +54,6 @@ class Graph {
  private:
   std::vector<Node> _nodes;
 };
+
+static_assert(Algo::AStar::Graph<Graph<VIPRA::f3d>>);
 }  // namespace VIPRA::DataStructures

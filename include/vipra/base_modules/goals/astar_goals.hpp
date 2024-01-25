@@ -15,8 +15,10 @@
 #include "vipra/modules.hpp"
 
 #include "vipra/types/float.hpp"
+#include "vipra/types/idx.hpp"
 #include "vipra/types/parameter.hpp"
 #include "vipra/types/size.hpp"
+#include "vipra/util/debug_do.hpp"
 
 namespace VIPRA::Goals {
 class AStar {
@@ -24,24 +26,33 @@ class AStar {
  public:
   template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t>
   void initialize(const pedset_t& pedset, const map_t& map) {
-    _currentGoals.resize(pedset.size());
-    _endGoals.resize(pedset.size());
-    _paths.resize(pedset.size());
+    _currentGoals.resize(pedset.num_pedestrians());
+    _endGoals.resize(pedset.num_pedestrians());
 
     construct_graph(map);
     set_end_goals(pedset, map);
 
-    for (VIPRA::idx pedIdx = 0; pedIdx < pedset.size(); ++pedIdx) {
-      const auto& ped = pedset[pedIdx];
-      const auto  pos = ped.position();
+    for (VIPRA::idx pedIdx = 0; pedIdx < pedset.num_pedestrians(); ++pedIdx) {
+      const auto pos = pedset.ped_coords(pedIdx);
 
-      const auto startIdx = get_closest_grid_idx(pos, map.dimensions());
-      const auto endIdx = get_closest_grid_idx(_endGoals[pedIdx], map.dimensions());
+      VIPRA::idx startIdx = get_closest_grid_idx(pos, map.get_dimensions());
+      VIPRA::idx endIdx = get_closest_grid_idx(_endGoals[pedIdx], map.get_dimensions());
 
-      _paths[pedIdx] = VIPRA::Algo::astar(startIdx, endIdx);
+      const auto path = VIPRA::Algo::astar(
+          startIdx, endIdx, _graph,
+          [&](VIPRA::idx left, VIPRA::idx right) -> VIPRA::f_pnt {
+            return _graph.data(left).distance_to(_graph.data(right));
+          },
+          [&](VIPRA::idx nodeIdx) -> VIPRA::f3d { return _graph.data(nodeIdx); });
+
+      if (path.empty()) {
+        throw std::runtime_error("No path found for pedestrian");
+      }
+
+      _paths.push_back(std::move(path));
     }
 
-    for (VIPRA::idx pedIdx = 0; pedIdx < pedset.size(); ++pedIdx) {
+    for (VIPRA::idx pedIdx = 0; pedIdx < pedset.num_pedestrians(); ++pedIdx) {
       _currentGoals[pedIdx] = _paths[pedIdx].front();
       _paths[pedIdx].pop();
     }
@@ -65,9 +76,8 @@ class AStar {
 
   template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t>
   void update(const pedset_t& pedset, const map_t& /*unused*/) {
-    for (VIPRA::idx pedIdx = 0; pedIdx < pedset.size(); ++pedIdx) {
-      const auto& ped = pedset[pedIdx];
-      const auto  pos = ped.position();
+    for (VIPRA::idx pedIdx = 0; pedIdx < pedset.num_pedestrians(); ++pedIdx) {
+      const auto pos = pedset.ped_coords(pedIdx);
 
       if (pos.distance_to(_currentGoals[pedIdx]) < _goal_range) {
         if (!_paths[pedIdx].empty()) {
@@ -78,12 +88,12 @@ class AStar {
     }
   }
 
-  [[nodiscard]] auto end_goals() -> const VIPRA::f3dVec& { return _endGoals; }
-  [[nodiscard]] auto current_goals() -> const VIPRA::f3dVec& { return _currentGoals; }
-  [[nodiscard]] auto current_goal(VIPRA::idx pedIdx) -> VIPRA::f3d { return _currentGoals[pedIdx]; }
-  [[nodiscard]] auto end_goal(VIPRA::idx pedIdx) -> VIPRA::f3d { return _endGoals[pedIdx]; }
-  [[nodiscard]] auto is_goal_met(VIPRA::idx pedIdx) -> bool { return _paths[pedIdx].empty(); }
-  [[nodiscard]] auto is_sim_goal_met() -> bool {
+  [[nodiscard]] auto end_goals() const -> const VIPRA::f3dVec& { return _endGoals; }
+  [[nodiscard]] auto current_goals() const -> const VIPRA::f3dVec& { return _currentGoals; }
+  [[nodiscard]] auto current_goal(VIPRA::idx pedIdx) const -> VIPRA::f3d { return _currentGoals[pedIdx]; }
+  [[nodiscard]] auto end_goal(VIPRA::idx pedIdx) const -> VIPRA::f3d { return _endGoals[pedIdx]; }
+  [[nodiscard]] auto is_goal_met(VIPRA::idx pedIdx) const -> bool { return _paths[pedIdx].empty(); }
+  [[nodiscard]] auto is_sim_goal_met() const -> bool {
     return std::all_of(_paths.begin(), _paths.end(), [](const auto& path) { return path.empty(); });
   }
 
@@ -100,28 +110,42 @@ class AStar {
   VIPRA::DataStructures::Graph<VIPRA::f3d> _graph;
 
   void construct_graph(const Concepts::MapModule auto& map) {
-    const VIPRA::f3d dimensions = map.dimensions();
+    const VIPRA::f3d dimensions = map.get_dimensions();
 
-    const auto xSize = static_cast<VIPRA::idx>(dimensions.x / _grid_size);
-    const auto ySize = static_cast<VIPRA::idx>(dimensions.y / _grid_size);
+    const auto xSize = static_cast<VIPRA::idx>(dimensions.x / _grid_size) + 1;
+    const auto ySize = static_cast<VIPRA::idx>(dimensions.y / _grid_size) + 1;
 
     _graph.reserve(xSize * ySize);
 
-    for (VIPRA::idx currX = 0; currX < xSize; ++currX) {
-      for (VIPRA::idx currY = 0; currY < ySize; ++currY) {
-        const auto idx = _graph.add_node(VIPRA::f3d{static_cast<VIPRA::f_pnt>(currX) * _grid_size,
-                                                    static_cast<VIPRA::f_pnt>(currY) * _grid_size, 0.0F});
-        if (currX > 0) {
-          _graph.add_edge(idx, idx - 1);
+    for (VIPRA::idx currY = 0; currY < ySize; ++currY) {
+      for (VIPRA::idx currX = 0; currX < xSize; ++currX) {
+        const VIPRA::f3d currPos = VIPRA::f3d{static_cast<VIPRA::f_pnt>(currX) * _grid_size,
+                                              static_cast<VIPRA::f_pnt>(currY) * _grid_size, 0.0F};
+        const VIPRA::idx currIdx = _graph.add_node(currPos);
+
+        // TODO(rolland): check if grid is traversable
+
+        if (currX > 1) {
+          _graph.add_edge(currIdx, currIdx - 1);
         }
-        if (currY > 0) {
-          _graph.add_edge(idx, idx - ySize);
+        if (currY > 1) {
+          _graph.add_edge(currIdx, currIdx - xSize);
+        }
+        if (currX > 1 && currY > 1) {
+          _graph.add_edge(currIdx, currIdx - xSize - 1);
+        }
+        if (currX > 1 && currY > ySize && currX < xSize - 1) {
+          _graph.add_edge(currIdx, currIdx - xSize + 1);
         }
       }
     }
   }
 
   [[nodiscard]] constexpr auto get_closest_grid_idx(VIPRA::f3d pos, VIPRA::f3d dims) const -> VIPRA::idx {
+    if (pos.x < 0.0F || pos.x > dims.x || pos.y < 0.0F || pos.y > dims.y) {
+      throw std::runtime_error("Pedestrian is outside of map at: " + pos.to_string());
+    }
+
     const auto xSize = static_cast<VIPRA::idx>(pos.x / _grid_size);
     const auto ySize = static_cast<VIPRA::idx>(pos.y / _grid_size);
     return xSize + ySize * static_cast<VIPRA::idx>(dims.x / _grid_size);
@@ -134,7 +158,7 @@ class AStar {
   }
 
   void set_end_goals(const Concepts::PedsetModule auto& pedset, const Concepts::MapModule auto& map) {
-    const VIPRA::size pedCnt = pedset.size();
+    const VIPRA::size pedCnt = pedset.num_pedestrians();
 
     const auto& objects = map.get_objects(_end_goal_type);
     if (objects.empty()) {
@@ -142,8 +166,7 @@ class AStar {
     }
 
     for (VIPRA::idx pedIdx = 0; pedIdx < pedCnt; ++pedIdx) {
-      const auto& ped = pedset[pedIdx];
-      const auto  pos = ped.position();
+      const auto pos = pedset.ped_coords(pedIdx);
 
       const auto nearestGoal = get_nearest_goal(pos, objects);
 

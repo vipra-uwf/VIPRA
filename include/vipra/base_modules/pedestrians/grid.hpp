@@ -9,6 +9,7 @@
 #include "vipra/types/f3d.hpp"
 #include "vipra/types/idx.hpp"
 #include "vipra/types/size.hpp"
+#include "vipra/util/debug_do.hpp"
 
 namespace VIPRA::Pedestrians {
 class Grid {
@@ -19,6 +20,12 @@ class Grid {
   explicit Grid(const input_t& input) {
     auto coords = input.template get_vector<VIPRA::f3d>("coords");
     if (!coords) throw std::runtime_error("Could not find pedestrian coordinates in input file");
+
+    Util::debug_do([&]() {
+      for (const auto& coord : *coords) {
+        std::cout << "Ped Coord:" << coord.to_string() << std::endl;
+      }
+    });
 
     _velocities = std::vector<VIPRA::f3d>((*coords).size());
     _coords = std::move(*coords);

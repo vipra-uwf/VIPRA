@@ -11,7 +11,7 @@
 namespace VIPRA::Concepts {
 
 template <typename goals_t>
-concept can_get_goals = requires(goals_t goals) {
+concept can_get_goals = requires(const goals_t goals) {
   { goals.current_goals() } -> std::same_as<const std::vector<VIPRA::f3d>&>;
   { goals.end_goals() } -> std::same_as<const std::vector<VIPRA::f3d>&>;
   { goals.current_goal(VIPRA::idx{}) } -> std::same_as<VIPRA::f3d>;
@@ -46,12 +46,12 @@ class DummyGoals {
 
   template <typename params_t>
   static void register_params() {}
-  auto        current_goals() -> const VIPRA::f3dVec& { return _dummy; }
-  auto        end_goals() -> const VIPRA::f3dVec& { return _dummy; }
-  auto        current_goal(VIPRA::idx) -> VIPRA::f3d { return VIPRA::f3d{}; }
-  auto        end_goal(VIPRA::idx) -> VIPRA::f3d { return VIPRA::f3d{}; }
-  auto        is_goal_met(VIPRA::idx) -> bool { return false; }
-  auto        is_sim_goal_met() -> bool { return false; }
+  auto        current_goals() const -> const VIPRA::f3dVec& { return _dummy; }
+  auto        end_goals() const -> const VIPRA::f3dVec& { return _dummy; }
+  auto        current_goal(VIPRA::idx) const -> VIPRA::f3d { return VIPRA::f3d{}; }
+  auto        end_goal(VIPRA::idx) const -> VIPRA::f3d { return VIPRA::f3d{}; }
+  auto        is_goal_met(VIPRA::idx) const -> bool { return false; }
+  auto        is_sim_goal_met() const -> bool { return false; }
 
   void setup(auto& /*unused*/) {}
 

@@ -63,7 +63,7 @@ class SimType {
     _goals.initialize(_pedset, _map);
 
     while (_timestep < maxTimestep) {
-      const auto& state = _model.timestep(_pedset, _map);
+      const VIPRA::State& state = _model.timestep(_pedset, _map, _goals, timestepSize);
       _pedset.update(state);
       _output.current_state(state);
       _goals.update(_pedset, _map);
