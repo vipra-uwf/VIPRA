@@ -24,6 +24,13 @@ class Grid {
     _coords = std::move(*coords);
   }
 
+  void update(const VIPRA::State& state) {
+    for (VIPRA::idx pedIdx = 0; pedIdx < state.size(); ++pedIdx) {
+      _coords[pedIdx] = state.positions[pedIdx];
+      _velocities[pedIdx] = state.velocities[pedIdx];
+    }
+  }
+
   template <Concepts::ParamModule params_t>
   static void register_params() {}
 

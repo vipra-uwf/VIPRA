@@ -8,6 +8,7 @@
 #include "vipra/types/f3d.hpp"
 #include "vipra/types/idx.hpp"
 #include "vipra/types/size.hpp"
+#include "vipra/types/state.hpp"
 
 namespace VIPRA::Concepts {
 
@@ -32,8 +33,13 @@ concept can_get_ped_velocity = requires(const pedset_t pedset, VIPRA::idx idx) {
 };
 
 template <typename pedset_t>
+concept can_update_pedset = requires(pedset_t pedset) {
+  {pedset.update(VIPRA::State{})};
+};
+
+template <typename pedset_t>
 concept PedsetModule = is_module<pedset_t, VIPRA::Modules::Type::PEDESTRIANS> && can_get_num_peds<pedset_t> &&
-    can_get_ped_coords<pedset_t> && can_get_ped_velocity<pedset_t>;
+    can_get_ped_coords<pedset_t> && can_get_ped_velocity<pedset_t> && can_update_pedset<pedset_t>;
 
 class DummyPedSet {
   // NOLINTBEGIN
@@ -44,6 +50,7 @@ class DummyPedSet {
   static void register_params() {}
 
   void setup(auto& params) {}
+  void update(const VIPRA::State&) {}
 
   auto num_pedestrians() const -> VIPRA::size { return 1; }
   auto ped_coords(VIPRA::idx /*unused*/) const -> VIPRA::f3d { return VIPRA::f3d{0}; }
@@ -53,7 +60,6 @@ class DummyPedSet {
 
  private:
   VIPRA::f3dVec _dummy;
-  DummyPedSet() = default;
   // NOLINTEND
 };
 

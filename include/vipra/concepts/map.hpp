@@ -1,6 +1,7 @@
 #pragma once
 
 #include "vipra/concepts/module.hpp"
+#include "vipra/concepts/obstacle_set.hpp"
 #include "vipra/concepts/pedset.hpp"
 #include "vipra/modules.hpp"
 
@@ -11,6 +12,7 @@ concept can_initialize_map = requires(map_t map, const DummyPedSet& pedset) {
   {map.initialize(pedset)};
 };
 
+// TODO(rolland): add in requirement to match obstacle types
 template <typename map_t>
 concept MapModule = is_module<map_t, Modules::Type::MAP> && can_initialize_map<map_t>;
 

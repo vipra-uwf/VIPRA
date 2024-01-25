@@ -3,9 +3,12 @@
 #include <concepts>
 #include <map>
 #include <utility>
+#include <vector>
 
-#include "vipra/concepts/pedset.hpp"
+#include "vipra/concepts/module.hpp"
 #include "vipra/modules.hpp"
+
+#include "vipra/types/f3d.hpp"
 #include "vipra/types/float.hpp"
 
 namespace VIPRA::Concepts {

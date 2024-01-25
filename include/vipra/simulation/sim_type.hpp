@@ -63,7 +63,10 @@ class SimType {
     _goals.initialize(_pedset, _map);
 
     while (_timestep < maxTimestep) {
-      _model.timestep(_pedset, _map);
+      const auto& state = _model.timestep(_pedset, _map);
+      _pedset.update(state);
+      _output.current_state(state);
+      _goals.update(_pedset, _map);
       ++_timestep;
     }
 

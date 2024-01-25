@@ -26,8 +26,13 @@ concept can_initialize_goals = requires(goals_t goals, const DummyPedSet& pedset
 };
 
 template <typename goals_t>
+concept can_update_goals = requires(goals_t goals, const DummyPedSet& pedset, const DummyMap& map) {
+  {goals.update(pedset, map)};
+};
+
+template <typename goals_t>
 concept GoalsModule = is_module<goals_t, VIPRA::Modules::Type::GOALS> && can_initialize_goals<goals_t> &&
-    can_get_goals<goals_t>;
+    can_get_goals<goals_t> && can_update_goals<goals_t>;
 
 class DummyGoals {
   // NOLINTBEGIN
@@ -36,17 +41,22 @@ class DummyGoals {
   template <typename pedset_t, typename map_t>
   void initialize(const pedset_t& /*unused*/, const map_t& /*unused*/) {}
 
+  template <typename pedset_t, typename map_t>
+  void update(const pedset_t& /*unused*/, const map_t& /*unused*/) {}
+
   template <typename params_t>
   static void register_params() {}
-
-  auto current_goals() -> const VIPRA::f3dVec& { return VIPRA::f3dVec{}; }
-  auto end_goals() -> const VIPRA::f3dVec& { return VIPRA::f3dVec{}; }
-  auto current_goal(VIPRA::idx) -> VIPRA::f3d { return VIPRA::f3d{}; }
-  auto end_goal(VIPRA::idx) -> VIPRA::f3d { return VIPRA::f3d{}; }
-  auto is_goal_met(VIPRA::idx) -> bool { return false; }
-  auto is_sim_goal_met() -> bool { return false; }
+  auto        current_goals() -> const VIPRA::f3dVec& { return _dummy; }
+  auto        end_goals() -> const VIPRA::f3dVec& { return _dummy; }
+  auto        current_goal(VIPRA::idx) -> VIPRA::f3d { return VIPRA::f3d{}; }
+  auto        end_goal(VIPRA::idx) -> VIPRA::f3d { return VIPRA::f3d{}; }
+  auto        is_goal_met(VIPRA::idx) -> bool { return false; }
+  auto        is_sim_goal_met() -> bool { return false; }
 
   void setup(auto& /*unused*/) {}
+
+ private:
+  VIPRA::f3dVec _dummy;
   // NOLINTEND
 };
 

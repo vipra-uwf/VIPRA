@@ -15,9 +15,13 @@ class Pedestrians {
   explicit Pedestrians(pedset_t&& pedset) : _pedestrians(pedset) {}
 
   template <Concepts::ParamModule params_t>
-  static void register_params() {}
+  static void register_params() {
+    pedset_t::template register_params<params_t>();
+  }
 
-  void setup(auto& params) {}
+  void setup(auto& params) { _pedestrians.setup(params); }
+
+  void update(const VIPRA::State& state) { _pedestrians.update(state); }
 
   [[nodiscard]] auto num_pedestrians() const -> VIPRA::size { return _pedestrians.num_pedestrians(); }
   [[nodiscard]] auto ped_coords(VIPRA::idx pedIdx) const -> VIPRA::f3d {

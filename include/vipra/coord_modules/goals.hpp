@@ -30,6 +30,15 @@ class Goals {
   }
 
   /**
+   * @brief Calls update on all goals modules
+   * 
+   * @param state 
+   */
+  void update(const auto& pedset, const auto& map) {
+    std::apply([&pedset, &map](auto&&... goals) { (goals.update(pedset, map), ...); }, _goals);
+  }
+
+  /**
    * @brief Calls register_params on all goals modules
    * 
    * @tparam params_t 
@@ -38,6 +47,14 @@ class Goals {
   static void register_params() {
     (goals_ts::template register_params<params_t>(), ...);
   }
+
+  static void register_params() {}
+  auto        current_goals() -> const VIPRA::f3dVec& { return _dummy; }
+  auto        end_goals() -> const VIPRA::f3dVec& { return _dummy; }
+  auto        current_goal(VIPRA::idx) -> VIPRA::f3d { return VIPRA::f3d{}; }
+  auto        end_goal(VIPRA::idx) -> VIPRA::f3d { return VIPRA::f3d{}; }
+  auto        is_goal_met(VIPRA::idx) -> bool { return false; }
+  auto        is_sim_goal_met() -> bool { return false; }
 
  private:
   std::tuple<goals_ts...> _goals;

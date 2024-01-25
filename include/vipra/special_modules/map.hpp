@@ -74,15 +74,26 @@ class Map {
     (field_ts::template register_params<params_t>(), ...);
   }
 
+  [[nodiscard]] inline auto get_object_types() -> std::vector<std::string> {
+    return _obstacles.get_object_types();
+  }
+
+  [[nodiscard]] constexpr inline auto get_objects(const std::string& type) -> const VIPRA::f3dVec& {
+    return _obstacles.get_objects(type);
+  }
+
   [[nodiscard]] constexpr inline auto get_dimensions() -> std::pair<VIPRA::f3d, VIPRA::f3d> {
     return _obstacles.get_dimensions();
   }
+
   [[nodiscard]] constexpr inline auto collision(VIPRA::f3d point) -> bool {
     return _obstacles.collision(point);
   }
+
   [[nodiscard]] constexpr inline auto ray_hit(VIPRA::f3d start, VIPRA::f3d end) -> VIPRA::f_pnt {
     return _obstacles.ray_hit(start, end);
   }
+
   [[nodiscard]] constexpr inline auto nearest_obstacle(VIPRA::f3d point) -> VIPRA::f3d {
     return _obstacles.nearest_obstacle(point);
   }

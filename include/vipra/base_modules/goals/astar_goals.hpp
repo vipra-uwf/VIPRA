@@ -4,14 +4,19 @@
 #include <cstdio>
 #include <queue>
 
+#include "vipra/algorithms/astar.hpp"
+
 #include "vipra/concepts/goals.hpp"
 #include "vipra/concepts/obstacle_set.hpp"
 #include "vipra/concepts/parameters.hpp"
 
 #include "vipra/data_structures/graph.hpp"
+
 #include "vipra/modules.hpp"
+
 #include "vipra/types/float.hpp"
 #include "vipra/types/parameter.hpp"
+#include "vipra/types/size.hpp"
 
 namespace VIPRA::Goals {
 class AStar {
@@ -19,12 +24,35 @@ class AStar {
  public:
   template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t>
   void initialize(const pedset_t& pedset, const map_t& map) {
-    // TODO(rolland): implement
     _currentGoals.resize(pedset.size());
     _endGoals.resize(pedset.size());
     _paths.resize(pedset.size());
 
     construct_graph(map);
+    set_end_goals(pedset, map);
+
+    for (VIPRA::idx pedIdx = 0; pedIdx < pedset.size(); ++pedIdx) {
+      const auto& ped = pedset[pedIdx];
+      const auto  pos = ped.position();
+
+      const auto startIdx = get_closest_grid_idx(pos, map.dimensions());
+      const auto endIdx = get_closest_grid_idx(_endGoals[pedIdx], map.dimensions());
+
+      _paths[pedIdx] = VIPRA::Algo::astar(startIdx, endIdx);
+    }
+
+    for (VIPRA::idx pedIdx = 0; pedIdx < pedset.size(); ++pedIdx) {
+      _currentGoals[pedIdx] = _paths[pedIdx].front();
+      _paths[pedIdx].pop();
+    }
+  }
+
+  template <Concepts::ParamModule params_t>
+  void setup(const params_t& params) {
+    _end_goal_type = params.template get_param<std::string>(MODULE_TYPE, "endGoalType");
+    _goal_range = params.template get_param<VIPRA::f_pnt>(MODULE_TYPE, "goalRange");
+    _grid_size = params.template get_param<VIPRA::f_pnt>(MODULE_TYPE, "gridSize");
+    _closest_obstacle = params.template get_param<VIPRA::f_pnt>(MODULE_TYPE, "closestObstacle");
   }
 
   template <Concepts::ParamModule params_t>
@@ -35,12 +63,19 @@ class AStar {
     params_t::register_param(MODULE_TYPE, "closestObstacle", ParameterType::REQUIRED);
   }
 
-  template <Concepts::ParamModule params_t>
-  void setup(const params_t& params) {
-    _end_goal_type = params.template get_param<std::string>(MODULE_TYPE, "endGoalType");
-    _goal_range = params.template get_param<VIPRA::f_pnt>(MODULE_TYPE, "goalRange");
-    _grid_size = params.template get_param<VIPRA::f_pnt>(MODULE_TYPE, "gridSize");
-    _closest_obstacle = params.template get_param<VIPRA::f_pnt>(MODULE_TYPE, "closestObstacle");
+  template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t>
+  void update(const pedset_t& pedset, const map_t& /*unused*/) {
+    for (VIPRA::idx pedIdx = 0; pedIdx < pedset.size(); ++pedIdx) {
+      const auto& ped = pedset[pedIdx];
+      const auto  pos = ped.position();
+
+      if (pos.distance_to(_currentGoals[pedIdx]) < _goal_range) {
+        if (!_paths[pedIdx].empty()) {
+          _currentGoals[pedIdx] = _paths[pedIdx].front();
+          _paths[pedIdx].pop();
+        }
+      }
+    }
   }
 
   [[nodiscard]] auto end_goals() -> const VIPRA::f3dVec& { return _endGoals; }
@@ -82,6 +117,40 @@ class AStar {
         if (currY > 0) {
           _graph.add_edge(idx, idx - ySize);
         }
+      }
+    }
+  }
+
+  [[nodiscard]] constexpr auto get_closest_grid_idx(VIPRA::f3d pos, VIPRA::f3d dims) const -> VIPRA::idx {
+    const auto xSize = static_cast<VIPRA::idx>(pos.x / _grid_size);
+    const auto ySize = static_cast<VIPRA::idx>(pos.y / _grid_size);
+    return xSize + ySize * static_cast<VIPRA::idx>(dims.x / _grid_size);
+  }
+
+  [[nodiscard]] static auto get_nearest_goal(VIPRA::f3d pos, const std::vector<VIPRA::f3d>& goals) {
+    return std::min_element(goals.begin(), goals.end(), [&](const auto& left, const auto& right) {
+      return pos.distance_to(left) < pos.distance_to(right);
+    });
+  }
+
+  void set_end_goals(const Concepts::PedsetModule auto& pedset, const Concepts::MapModule auto& map) {
+    const VIPRA::size pedCnt = pedset.size();
+
+    const auto& objects = map.get_objects(_end_goal_type);
+    if (objects.empty()) {
+      throw std::runtime_error("No objects of type " + _end_goal_type + " found in map");
+    }
+
+    for (VIPRA::idx pedIdx = 0; pedIdx < pedCnt; ++pedIdx) {
+      const auto& ped = pedset[pedIdx];
+      const auto  pos = ped.position();
+
+      const auto nearestGoal = get_nearest_goal(pos, objects);
+
+      if (nearestGoal != objects.end()) {
+        _endGoals[pedIdx] = *nearestGoal;
+      } else {
+        throw std::runtime_error("No goal found for pedestrian");
       }
     }
   }
