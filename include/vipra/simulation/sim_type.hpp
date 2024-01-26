@@ -62,13 +62,17 @@ class SimType {
     _map.initialize(_pedset);
     _goals.initialize(_pedset, _map);
 
+    Util::debug_do([]() { std::cout << "Simulation Starting" << std::endl; });
+
     while (_timestep < maxTimestep) {
       const VIPRA::State& state = _model.timestep(_pedset, _map, _goals, timestepSize);
       _pedset.update(state);
-      _output.current_state(state);
       _goals.update(_pedset, _map);
+      output_positions();
       ++_timestep;
     }
+
+    Util::debug_do([]() { std::cout << "Simulation complete" << std::endl; });
 
     if constexpr (std::is_same_v<output_data_t, void>) {
       _output.write();
@@ -95,6 +99,19 @@ class SimType {
         _params.template get_param<VIPRA::f_pnt>(Modules::Type::SIMULATION, "timestep_size");
 
     return {maxTimestep, timestepSize};
+  }
+
+  void output_positions() {
+    const VIPRA::size pedCnt = _pedset.num_pedestrians();
+    const auto&       coords = _pedset.all_coords();
+
+    for (VIPRA::idx i = 0; i < pedCnt; ++i) {
+      // Util::debug_do([&]() {
+      //   std::printf("Pedestrian %lu at timestep %lu: %f, %f, %f\n", i, _timestep, coords.at(i).x,
+      //               coords.at(i).y, coords.at(i).z);
+      // });
+      _output.ped_timestep_value(i, _timestep, "position", coords.at(i));
+    }
   }
 };
 }  // namespace VIPRA

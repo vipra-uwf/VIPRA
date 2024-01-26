@@ -49,14 +49,16 @@ class AStar {
           },
           [&](VIPRA::idx nodeIdx) -> VIPRA::f3d { return _graph.data(nodeIdx).pos; }));
 
+      // TODO(rolland): squash paths where the next point is in the same direction as the current point
+
       if (_paths.back().empty()) {
         throw std::runtime_error("No path found for pedestrian");
       }
     }
 
     for (VIPRA::idx pedIdx = 0; pedIdx < pedset.num_pedestrians(); ++pedIdx) {
-      _currentGoals[pedIdx] = _paths[pedIdx].front();
-      _paths[pedIdx].pop();
+      _currentGoals[pedIdx] = _paths[pedIdx].back();
+      _paths[pedIdx].pop_back();
     }
   }
 
@@ -80,11 +82,10 @@ class AStar {
   void update(const pedset_t& pedset, const map_t& /*unused*/) {
     for (VIPRA::idx pedIdx = 0; pedIdx < pedset.num_pedestrians(); ++pedIdx) {
       const auto pos = pedset.ped_coords(pedIdx);
-
       if (pos.distance_to(_currentGoals[pedIdx]) < _goal_range) {
         if (!_paths[pedIdx].empty()) {
-          _currentGoals[pedIdx] = _paths[pedIdx].front();
-          _paths[pedIdx].pop();
+          _currentGoals[pedIdx] = _paths[pedIdx].back();
+          _paths[pedIdx].pop_back();
         }
       }
     }
@@ -113,7 +114,7 @@ class AStar {
   VIPRA::f3dVec _currentGoals;
   VIPRA::f3dVec _endGoals;
 
-  std::vector<std::queue<VIPRA::f3d>>     _paths;
+  std::vector<std::vector<VIPRA::f3d>>    _paths;
   VIPRA::DataStructures::Graph<GridPoint> _graph;
   VIPRA::size                             _xCount;
   VIPRA::size                             _yCount;

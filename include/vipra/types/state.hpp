@@ -1,6 +1,8 @@
 #pragma once
 
 #include <vector>
+
+#include "vipra/concepts/pedset.hpp"
 #include "vipra/types/f3d.hpp"
 
 namespace VIPRA {
@@ -14,9 +16,9 @@ struct State {
 
   [[nodiscard]] auto size() const -> size_t { return positions.size(); }
 
-  void initialize(size_t size) {
-    positions.resize(size);
-    velocities.resize(size);
+  void initialize(const VIPRA::Concepts::PedsetModule auto& pedset) {
+    positions = pedset.all_coords();
+    velocities = pedset.all_velocities();
   }
 };
 }  // namespace VIPRA

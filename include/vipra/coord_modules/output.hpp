@@ -18,10 +18,11 @@ class Output {
   //                            - this would require a recompile for changing paths
 
   template <typename output_t>
-  // NOLINTNEXTLINE(readability-identifier-naming)
+  // NOLINTNEXTLINE(readability-identifier-naming) helper struct
   struct write_helper {
     static auto write(output_t& output) {
       if constexpr (std::is_same_v<result_or_VOID_t<decltype(std::declval<output_t>().write())>, VOID>) {
+        output.write();
         return VOID{};
       } else {
         return output.write();
@@ -41,10 +42,6 @@ class Output {
     return std::apply(
         [](auto&&... outputs) { return std::make_tuple(write_helper<decltype(outputs)>::write(outputs)...); },
         _outputs);
-  }
-
-  void current_state(const VIPRA::State& state) {
-    std::apply([&state](auto&&... outputs) { (outputs.current_state(state), ...); }, _outputs);
   }
 
   /**
@@ -82,8 +79,10 @@ class Output {
    * @param key 
    * @param value 
    */
-  void timestep_value(const char* key, auto&& value) {
-    std::apply([&key, &value](auto&&... outputs) { (outputs.timestep_value(key, value), ...); }, _outputs);
+  void timestep_value(const char* key, VIPRA::timestep timestep, auto&& value) {
+    std::apply(
+        [&key, &timestep, &value](auto&&... outputs) { (outputs.timestep_value(key, timestep, value), ...); },
+        _outputs);
   }
 
   /**
@@ -105,10 +104,10 @@ class Output {
    * @param key 
    * @param value 
    */
-  void ped_timestep_value(VIPRA::idx pedIdx, const char* key, auto&& value) {
-    std::apply(
-        [&pedIdx, &key, &value](auto&&... outputs) { (outputs.ped_timestep_value(pedIdx, key, value), ...); },
-        _outputs);
+  void ped_timestep_value(VIPRA::idx pedIdx, VIPRA::timestep timestep, const char* key, auto&& value) {
+    std::apply([&pedIdx, &timestep, &key, &value](
+                   auto&&... outputs) { (outputs.ped_timestep_value(pedIdx, timestep, key, value), ...); },
+               _outputs);
   }
 
  private:

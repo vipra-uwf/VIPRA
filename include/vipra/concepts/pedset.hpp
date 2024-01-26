@@ -8,7 +8,10 @@
 #include "vipra/types/f3d.hpp"
 #include "vipra/types/idx.hpp"
 #include "vipra/types/size.hpp"
-#include "vipra/types/state.hpp"
+
+namespace VIPRA {
+struct State;
+}
 
 namespace VIPRA::Concepts {
 
@@ -33,8 +36,8 @@ concept can_get_ped_velocity = requires(const pedset_t pedset, VIPRA::idx idx) {
 };
 
 template <typename pedset_t>
-concept can_update_pedset = requires(pedset_t pedset) {
-  {pedset.update(VIPRA::State{})};
+concept can_update_pedset = requires(pedset_t pedset, const State& state) {
+  {pedset.update(state)};
 };
 
 template <typename pedset_t>

@@ -9,6 +9,8 @@
 #include "vipra/types/f3d.hpp"
 #include "vipra/types/idx.hpp"
 #include "vipra/types/size.hpp"
+#include "vipra/types/state.hpp"
+
 #include "vipra/util/debug_do.hpp"
 
 namespace VIPRA::Pedestrians {

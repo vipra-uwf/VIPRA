@@ -71,11 +71,12 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
           AStar::conversion_func conversion_f_t = VOID>
 [[nodiscard]] constexpr auto astar(VIPRA::idx start, VIPRA::idx end, const graph_t& graph,
                                    distance_f_t&& distance_func, conversion_f_t&& conversion_func = VOID{})
-    -> std::queue<std::remove_reference_t<Util::invoke_result_or_t<VIPRA::idx, conversion_f_t, VIPRA::idx>>> {
+    -> std::vector<
+        std::remove_reference_t<Util::invoke_result_or_t<VIPRA::idx, conversion_f_t, VIPRA::idx>>> {
   // TODO(rolland): implement, and actually check that it's correct
 
   using ret_t =
-      std::queue<std::remove_reference_t<Util::invoke_result_or_t<VIPRA::idx, conversion_f_t, VIPRA::idx>>>;
+      std::vector<std::remove_reference_t<Util::invoke_result_or_t<VIPRA::idx, conversion_f_t, VIPRA::idx>>>;
   struct Node {
     VIPRA::idx   self;
     VIPRA::idx   parent;
@@ -123,7 +124,7 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
     openset.pop();
     closedset.insert(current);
     for (VIPRA::idx neighborIdx : graph.neighbors(current->self)) {
-      if (closedset.find(&nodes[neighborIdx]) == closedset.end()) {
+      if (!closedset.contains(&nodes[neighborIdx])) {
         Node neighbor;
         neighbor.self = neighborIdx;
         neighbor.parent = current->self;
@@ -148,11 +149,12 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
   ret_t path;
   while (current->self != start) {
     if constexpr (std::is_same_v<conversion_f_t, VOID>) {
-      path.push(current->self);
+      path.push_back(current->self);
     } else {
       const auto converted = conversion_func(current->self);
-      path.push(converted);
+      path.push_back(converted);
     }
+
     current = &nodes[current->parent];
   }
 
