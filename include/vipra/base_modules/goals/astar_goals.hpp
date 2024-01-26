@@ -32,43 +32,44 @@ class AStar {
     construct_graph(map);
     set_end_goals(pedset, map);
 
-    // Util::debug_do([&]() {
-    //   std::printf("{\n\"nodes\":[\n");
-    //   for (auto& node : _graph.nodes()) {
-    //     std::printf(R"(  { "pos": [%0.2f, %0.2f], "traversable": %s, "neighbors": [)", node.data.pos.x,
-    //                 node.data.pos.y, node.data.traversable ? "true" : "false");
-    //     for (auto& neighbor : node.neighbors) {
-    //       std::printf("{ \"pos\": [%0.2f, %0.2f] }%c", _graph.data(neighbor).pos.x,
-    //                   _graph.data(neighbor).pos.y, neighbor == node.neighbors.back() ? ' ' : ',');
-    //     }
-    //     std::printf("] }%c\n", node.data.pos == _graph.nodes().back().data.pos ? ' ' : ',');
-    //   }
-    //   std::printf("]}");
-    //   std::fflush(stdout);
-    // });
-
-    for (VIPRA::idx pedIdx = 0; pedIdx < pedset.num_pedestrians(); ++pedIdx) {
+    for (VIPRA::idx pedIdx = 0; pedIdx < 1; ++pedIdx) {
       const auto pos = pedset.ped_coords(pedIdx);
 
-      VIPRA::idx startIdx = get_closest_grid_idx(pos, map.get_dimensions());
-      VIPRA::idx endIdx = get_closest_grid_idx(_endGoals[pedIdx], map.get_dimensions());
+      VIPRA::idx startIdx = get_closest_grid_idx(pos);
+      VIPRA::idx endIdx = get_closest_grid_idx(_endGoals[pedIdx]);
 
-      const auto path = VIPRA::Algo::astar(
+      if (_graph.nodes().size() <= startIdx || _graph.nodes().size() <= endIdx) {
+        throw std::runtime_error("Start or end index is out of bounds");
+      }
+
+      _paths.push_back(VIPRA::Algo::astar(
           startIdx, endIdx, _graph,
           [&](VIPRA::idx left, VIPRA::idx right) -> VIPRA::f_pnt {
             return _graph.data(left).pos.distance_to(_graph.data(right).pos);
           },
-          [&](VIPRA::idx nodeIdx) -> VIPRA::f3d { return _graph.data(nodeIdx).pos; });
+          [&](VIPRA::idx nodeIdx) -> VIPRA::f3d { return _graph.data(nodeIdx).pos; }));
 
-      if (path.empty()) {
+      if (_paths.back().empty()) {
         throw std::runtime_error("No path found for pedestrian");
       }
-
-      _paths.push_back(std::move(path));
     }
 
     Util::debug_do([&]() {
-      std::printf("{\n\"paths\": [\n");
+      std::printf("{");
+      std::printf("\n\"nodes\": [\n");
+      // for (VIPRA::idx nodeIdx = 0; nodeIdx < _graph.nodes().size(); ++nodeIdx) {
+      //   const auto& node = _graph.data(nodeIdx);
+      //   std::printf(R"(  { "pos": [%0.2f, %0.2f], "traversable": %s)", node.pos.x, node.pos.y,
+      //               node.traversable ? "true" : "false");
+      //   std::printf(", \"neighbors\": [");
+      //   for (const auto& edge : _graph.neighbors(nodeIdx)) {
+      //     std::printf(R"({"pos": [%0.2f, %0.2f]}%c)", _graph.data(edge).pos.x, _graph.data(edge).pos.y,
+      //                 edge == _graph.neighbors(nodeIdx).back() ? ' ' : ',');
+      //   }
+      //   std::printf("]}%c", nodeIdx == _graph.nodes().size() - 1 ? ' ' : ',');
+      // }
+      std::printf("\n],\n");
+      std::printf("\n\"paths\": [\n");
       for (VIPRA::idx pedIdx = 0; pedIdx < 1; ++pedIdx) {
         std::printf(R"(  { "pedIdx": %lu, "path": [)", pedIdx);
         while (!_paths[pedIdx].empty()) {
@@ -77,7 +78,7 @@ class AStar {
           std::printf(R"( { "pos": [%0.2f, %0.2f] }%c)", node.x, node.y,
                       node == _paths[pedIdx].back() ? ' ' : ',');
         }
-        std::printf("]}");
+        std::printf("]}%c", pedIdx == 1 ? ' ' : ',');
       }
       std::printf("]}");
       std::fflush(stdout);
@@ -144,58 +145,43 @@ class AStar {
 
   std::vector<std::queue<VIPRA::f3d>>     _paths;
   VIPRA::DataStructures::Graph<GridPoint> _graph;
+  VIPRA::size                             _xCount;
+  VIPRA::size                             _yCount;
 
   void construct_graph(const Concepts::MapModule auto& map) {
-    const VIPRA::f3d dimensions = map.get_dimensions();
+    set_grid_counts(map);
+    _graph.reserve(_xCount * _yCount);
 
-    const auto xSize = static_cast<VIPRA::idx>(dimensions.x / _grid_size);
-    const auto ySize = static_cast<VIPRA::idx>(dimensions.y / _grid_size);
+    // TODO(rolland): This starts the grid a (0, 0) and not the bottom left corner of the map, we may want to change this
+    VIPRA::f3d center;
 
-    _graph.reserve(xSize * ySize);
-
-    for (VIPRA::idx currY = 0; currY < ySize; ++currY) {
-      for (VIPRA::idx currX = 0; currX < xSize; ++currX) {
-        const VIPRA::f3d currPos = VIPRA::f3d{static_cast<VIPRA::f_pnt>(currX) * _grid_size,
-                                              static_cast<VIPRA::f_pnt>(currY) * _grid_size, 0.0F};
-        const VIPRA::idx currIdx = _graph.add_node(
-            {currPos, map.nearest_obstacle(currPos).distance_to(currPos) > _closest_obstacle});
+    for (VIPRA::idx currY = 0; currY < _yCount; ++currY) {
+      center.x = 0.0F;
+      center.y += _grid_size;
+      for (VIPRA::idx currX = 0; currX < _xCount; ++currX) {
+        center.x += _grid_size;
+        const VIPRA::idx currIdx =
+            _graph.add_node({center, map.nearest_obstacle(center).distance_to(center) > _closest_obstacle});
 
         if (!_graph.data(currIdx).traversable) {
           continue;
         }
 
-        // TODO(rolland): check if grid is traversable
-
+        // TODO(rolland): move adjacent edge creation to a function
         if (currX > 1) {
           if (_graph.data(currIdx - 1).traversable) _graph.add_edge(currIdx, currIdx - 1);
         }
         if (currY > 1) {
-          if (_graph.data(currIdx - xSize).traversable) _graph.add_edge(currIdx, currIdx - xSize);
+          if (_graph.data(currIdx - _xCount).traversable) _graph.add_edge(currIdx, currIdx - _xCount);
         }
         if (currX > 1 && currY > 1) {
-          if (_graph.data(currIdx - xSize - 1).traversable) _graph.add_edge(currIdx, currIdx - xSize - 1);
+          if (_graph.data(currIdx - _xCount - 1).traversable) _graph.add_edge(currIdx, currIdx - _xCount - 1);
         }
-        if (currX > 1 && currY > ySize && currX < xSize - 1) {
-          if (_graph.data(currIdx - xSize + 1).traversable) _graph.add_edge(currIdx, currIdx - xSize + 1);
+        if (currX < _xCount - 1 && currY > 1) {
+          if (_graph.data(currIdx - _xCount + 1).traversable) _graph.add_edge(currIdx, currIdx - _xCount + 1);
         }
       }
     }
-  }
-
-  [[nodiscard]] constexpr auto get_closest_grid_idx(VIPRA::f3d pos, VIPRA::f3d dims) const -> VIPRA::idx {
-    if (pos.x < 0.0F || pos.x > dims.x || pos.y < 0.0F || pos.y > dims.y) {
-      throw std::runtime_error("Position is outside of map at: " + pos.to_string());
-    }
-
-    const auto xSize = static_cast<VIPRA::idx>(pos.x / _grid_size);
-    const auto ySize = static_cast<VIPRA::idx>(pos.y / _grid_size);
-    return xSize + ySize * static_cast<VIPRA::idx>(dims.x / _grid_size);
-  }
-
-  [[nodiscard]] static auto get_nearest_goal(VIPRA::f3d pos, const std::vector<VIPRA::f3d>& goals) {
-    return std::min_element(goals.begin(), goals.end(), [&](const auto& left, const auto& right) {
-      return pos.distance_to(left) < pos.distance_to(right);
-    });
   }
 
   void set_end_goals(const Concepts::PedsetModule auto& pedset, const Concepts::MapModule auto& map) {
@@ -217,6 +203,38 @@ class AStar {
         throw std::runtime_error("No goal found for pedestrian");
       }
     }
+  }
+
+  [[nodiscard]] static auto get_index(VIPRA::size gridX, VIPRA::size gridY, VIPRA::size xCount)
+      -> VIPRA::idx {
+    return gridX + (gridY * xCount);
+  }
+
+  [[nodiscard]] static auto get_nearest_goal(VIPRA::f3d pos, const std::vector<VIPRA::f3d>& goals)
+      -> VIPRA::f3dVec::const_iterator {
+    return std::min_element(goals.begin(), goals.end(), [&](const auto& left, const auto& right) {
+      return pos.distance_to(left) < pos.distance_to(right);
+    });
+  }
+
+  [[nodiscard]] auto get_closest_grid_idx(VIPRA::f3d pos) const -> VIPRA::idx {
+    auto gridX = static_cast<VIPRA::idx>(std::floor(pos.x / _grid_size));
+    auto gridY = static_cast<VIPRA::idx>(std::floor(pos.y / _grid_size));
+
+    const auto idx = get_index(gridX, gridY, _xCount);
+
+    if (idx >= _graph.nodes().size()) {
+      throw std::runtime_error("Grid index is out of bounds");
+    }
+
+    return idx;
+  }
+
+  void set_grid_counts(const Concepts::MapModule auto& map) {
+    const VIPRA::f3d dimensions = map.get_dimensions();
+
+    _xCount = static_cast<VIPRA::idx>(std::ceil(dimensions.x / _grid_size) + 1);
+    _yCount = static_cast<VIPRA::idx>(std::ceil(dimensions.y / _grid_size) + 1);
   }
 };
 }  // namespace VIPRA::Goals

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 #include "vipra/concepts/input.hpp"
 #include "vipra/concepts/obstacle_set.hpp"
 
@@ -11,6 +13,7 @@
 #include "vipra/types/idx.hpp"
 #include "vipra/types/parameter.hpp"
 #include "vipra/types/size.hpp"
+#include "vipra/util/debug_do.hpp"
 
 // TODO(rolland): implement quadtree for storing obstacles
 
@@ -30,6 +33,16 @@ class QuadTree {
       _dimensions.y = std::max(_dimensions.y, obstacle.y);
       _dimensions.z = std::max(_dimensions.z, obstacle.z);
     }
+
+    for (const auto& type : types) {
+      for (const auto& object : objects.at(type)) {
+        _dimensions.x = std::max(_dimensions.x, object.x);
+        _dimensions.y = std::max(_dimensions.y, object.y);
+        _dimensions.z = std::max(_dimensions.z, object.z);
+      }
+    }
+
+    Util::debug_do([&]() { std::cerr << "Dimensions: " << _dimensions.to_string() << '\n'; });
   }
 
   template <Concepts::ParamModule params_t>
