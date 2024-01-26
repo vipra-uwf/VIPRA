@@ -12,6 +12,7 @@ Checks: >
   -cppcoreguidelines-pro-type-union-access,
   -misc-no-recursion,
   -google-readability-braces-around-statements,
+  -bugprone-easily-swappable-parameters,
 
 WarningsAsErrors: "*"
 

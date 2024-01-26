@@ -124,7 +124,7 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
     closedset.insert(current);
     for (VIPRA::idx neighborIdx : graph.neighbors(current->self)) {
       if (closedset.find(&nodes[neighborIdx]) == closedset.end()) {
-        Node& neighbor = nodes[neighborIdx];
+        Node neighbor;
         neighbor.self = neighborIdx;
         neighbor.parent = current->self;
         neighbor.distanceFromStart = current->distanceFromStart + distance_func(current->self, neighborIdx);
@@ -132,9 +132,10 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
 
         auto* found = openset.search(neighborIdx);
         if (!found) {
-          openset.push(&neighbor);
+          nodes[neighborIdx] = neighbor;
+          openset.push(&nodes[neighborIdx]);
         } else {
-          if (neighbor.distanceWithHeuristic < found->distanceWithHeuristic) {
+          if (neighbor.distanceFromStart < found->distanceFromStart) {
             found->distanceFromStart = neighbor.distanceFromStart;
             found->distanceWithHeuristic = neighbor.distanceWithHeuristic;
             found->parent = neighbor.parent;

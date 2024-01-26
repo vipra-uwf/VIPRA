@@ -32,7 +32,7 @@ class AStar {
     construct_graph(map);
     set_end_goals(pedset, map);
 
-    for (VIPRA::idx pedIdx = 0; pedIdx < 1; ++pedIdx) {
+    for (VIPRA::idx pedIdx = 0; pedIdx < pedset.num_pedestrians(); ++pedIdx) {
       const auto pos = pedset.ped_coords(pedIdx);
 
       VIPRA::idx startIdx = get_closest_grid_idx(pos);
@@ -54,40 +54,10 @@ class AStar {
       }
     }
 
-    Util::debug_do([&]() {
-      std::printf("{");
-      std::printf("\n\"nodes\": [\n");
-      // for (VIPRA::idx nodeIdx = 0; nodeIdx < _graph.nodes().size(); ++nodeIdx) {
-      //   const auto& node = _graph.data(nodeIdx);
-      //   std::printf(R"(  { "pos": [%0.2f, %0.2f], "traversable": %s)", node.pos.x, node.pos.y,
-      //               node.traversable ? "true" : "false");
-      //   std::printf(", \"neighbors\": [");
-      //   for (const auto& edge : _graph.neighbors(nodeIdx)) {
-      //     std::printf(R"({"pos": [%0.2f, %0.2f]}%c)", _graph.data(edge).pos.x, _graph.data(edge).pos.y,
-      //                 edge == _graph.neighbors(nodeIdx).back() ? ' ' : ',');
-      //   }
-      //   std::printf("]}%c", nodeIdx == _graph.nodes().size() - 1 ? ' ' : ',');
-      // }
-      std::printf("\n],\n");
-      std::printf("\n\"paths\": [\n");
-      for (VIPRA::idx pedIdx = 0; pedIdx < 1; ++pedIdx) {
-        std::printf(R"(  { "pedIdx": %lu, "path": [)", pedIdx);
-        while (!_paths[pedIdx].empty()) {
-          const auto node = _paths[pedIdx].front();
-          _paths[pedIdx].pop();
-          std::printf(R"( { "pos": [%0.2f, %0.2f] }%c)", node.x, node.y,
-                      node == _paths[pedIdx].back() ? ' ' : ',');
-        }
-        std::printf("]}%c", pedIdx == 1 ? ' ' : ',');
-      }
-      std::printf("]}");
-      std::fflush(stdout);
-    });
-
-    // for (VIPRA::idx pedIdx = 0; pedIdx < pedset.num_pedestrians(); ++pedIdx) {
-    //   _currentGoals[pedIdx] = _paths[pedIdx].front();
-    //   _paths[pedIdx].pop();
-    // }
+    for (VIPRA::idx pedIdx = 0; pedIdx < pedset.num_pedestrians(); ++pedIdx) {
+      _currentGoals[pedIdx] = _paths[pedIdx].front();
+      _paths[pedIdx].pop();
+    }
   }
 
   template <Concepts::ParamModule params_t>
@@ -148,6 +118,11 @@ class AStar {
   VIPRA::size                             _xCount;
   VIPRA::size                             _yCount;
 
+  /**
+   * @brief Constructs the graph of grid points
+   * 
+   * @param map 
+   */
   void construct_graph(const Concepts::MapModule auto& map) {
     set_grid_counts(map);
     _graph.reserve(_xCount * _yCount);
@@ -158,6 +133,7 @@ class AStar {
     for (VIPRA::idx currY = 0; currY < _yCount; ++currY) {
       center.x = 0.0F;
       center.y += _grid_size;
+
       for (VIPRA::idx currX = 0; currX < _xCount; ++currX) {
         center.x += _grid_size;
         const VIPRA::idx currIdx =
@@ -167,23 +143,39 @@ class AStar {
           continue;
         }
 
-        // TODO(rolland): move adjacent edge creation to a function
-        if (currX > 1) {
-          if (_graph.data(currIdx - 1).traversable) _graph.add_edge(currIdx, currIdx - 1);
-        }
-        if (currY > 1) {
-          if (_graph.data(currIdx - _xCount).traversable) _graph.add_edge(currIdx, currIdx - _xCount);
-        }
-        if (currX > 1 && currY > 1) {
-          if (_graph.data(currIdx - _xCount - 1).traversable) _graph.add_edge(currIdx, currIdx - _xCount - 1);
-        }
-        if (currX < _xCount - 1 && currY > 1) {
-          if (_graph.data(currIdx - _xCount + 1).traversable) _graph.add_edge(currIdx, currIdx - _xCount + 1);
-        }
+        set_adjacents(currIdx, currX, currY);
       }
     }
   }
 
+  /**
+   * @brief Set the adjacent nodes of the current node
+   * 
+   * @param currIdx 
+   * @param currX 
+   * @param currY 
+   */
+  void set_adjacents(VIPRA::idx currIdx, VIPRA::idx currX, VIPRA::idx currY) {
+    if (currX > 1) {
+      if (_graph.data(currIdx - 1).traversable) _graph.add_edge(currIdx, currIdx - 1);
+    }
+    if (currY > 1) {
+      if (_graph.data(currIdx - _xCount).traversable) _graph.add_edge(currIdx, currIdx - _xCount);
+    }
+    if (currX > 1 && currY > 1) {
+      if (_graph.data(currIdx - _xCount - 1).traversable) _graph.add_edge(currIdx, currIdx - _xCount - 1);
+    }
+    if (currX < _xCount - 1 && currY > 1) {
+      if (_graph.data(currIdx - _xCount + 1).traversable) _graph.add_edge(currIdx, currIdx - _xCount + 1);
+    }
+  }
+
+  /**
+   * @brief Sets the end goals for each pedestrian
+   * 
+   * @param pedset 
+   * @param map 
+   */
   void set_end_goals(const Concepts::PedsetModule auto& pedset, const Concepts::MapModule auto& map) {
     const VIPRA::size pedCnt = pedset.num_pedestrians();
 
@@ -205,11 +197,26 @@ class AStar {
     }
   }
 
+  /**
+   * @brief Gets the index of the grid point
+   * 
+   * @param gridX 
+   * @param gridY 
+   * @param xCount 
+   * @return VIPRA::idx 
+   */
   [[nodiscard]] static auto get_index(VIPRA::size gridX, VIPRA::size gridY, VIPRA::size xCount)
       -> VIPRA::idx {
     return gridX + (gridY * xCount);
   }
 
+  /**
+   * @brief Gets the nearest goal to the pedestrian
+   * 
+   * @param pos 
+   * @param goals 
+   * @return VIPRA::f3dVec::const_iterator 
+   */
   [[nodiscard]] static auto get_nearest_goal(VIPRA::f3d pos, const std::vector<VIPRA::f3d>& goals)
       -> VIPRA::f3dVec::const_iterator {
     return std::min_element(goals.begin(), goals.end(), [&](const auto& left, const auto& right) {
@@ -217,6 +224,12 @@ class AStar {
     });
   }
 
+  /**
+   * @brief Gets the closest grid index to the coordinate
+   * 
+   * @param pos 
+   * @return VIPRA::idx 
+   */
   [[nodiscard]] auto get_closest_grid_idx(VIPRA::f3d pos) const -> VIPRA::idx {
     auto gridX = static_cast<VIPRA::idx>(std::floor(pos.x / _grid_size));
     auto gridY = static_cast<VIPRA::idx>(std::floor(pos.y / _grid_size));
@@ -230,6 +243,11 @@ class AStar {
     return idx;
   }
 
+  /**
+   * @brief Sets the number of grid points in the x and y directions
+   * 
+   * @param map 
+   */
   void set_grid_counts(const Concepts::MapModule auto& map) {
     const VIPRA::f3d dimensions = map.get_dimensions();
 
