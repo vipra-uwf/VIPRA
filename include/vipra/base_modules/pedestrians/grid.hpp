@@ -4,6 +4,7 @@
 
 #include "vipra/concepts/input.hpp"
 #include "vipra/concepts/pedset.hpp"
+#include "vipra/macros/module.hpp"
 #include "vipra/modules.hpp"
 
 #include "vipra/types/f3d.hpp"
@@ -16,7 +17,7 @@
 namespace VIPRA::Pedestrians {
 class Grid {
  public:
-  constexpr static VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::PEDESTRIANS;
+  VIPRA_MODULE_TYPE(PEDESTRIANS);
 
   template <Concepts::InputModule input_t>
   explicit Grid(const input_t& input) {

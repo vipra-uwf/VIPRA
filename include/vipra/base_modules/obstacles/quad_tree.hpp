@@ -19,7 +19,7 @@
 namespace VIPRA::Obstacles {
 class QuadTree {
  public:
-  constexpr static VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::OBSTACLES;
+  VIPRA_MODULE_TYPE(OBSTACLES);
 
   void initialize(const std::vector<VIPRA::f3d>& obstacles, const std::vector<std::string>& types,
                   const std::map<std::string, VIPRA::f3dVec>& objects) {

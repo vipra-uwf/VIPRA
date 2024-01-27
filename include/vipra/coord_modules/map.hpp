@@ -13,7 +13,8 @@ namespace VIPRA::Module {
 template <Concepts::ObstacleModule obstacles_t, Concepts::FieldModule... field_ts>
 class Map {
  public:
-  constexpr static VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::MAP;
+  // NOLINTNEXTLINE
+  constexpr static VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::MAP;
   ;
   /**
    * @brief Construct a new Map object

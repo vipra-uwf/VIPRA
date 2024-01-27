@@ -49,7 +49,7 @@ concept OutputModule = is_module<output_t, VIPRA::Modules::Type::OUTPUT> && can_
 class DummyOutput {
   // NOLINTBEGIN
  public:
-  constexpr static VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::OUTPUT;
+  constexpr static VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::OUTPUT;
 
   using output_data_t = void;
 

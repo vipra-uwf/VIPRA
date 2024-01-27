@@ -25,12 +25,12 @@ concept can_get_params = requires(params_t params, VIPRA::Modules::Type module, 
 
 template <typename params_t>
 concept ParamModule =
-    params_t::MODULE_TYPE ==
+    params_t::_VIPRA_MODULE_TYPE_ ==
     VIPRA::Modules::Type::PARAMETERS&& can_register_param<params_t>&& can_get_params<params_t>;
 
 struct DummyParams {
   // NOLINTBEGIN
-  static constexpr VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::PARAMETERS;
+  static constexpr VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::PARAMETERS;
 
   void register_param(VIPRA::Modules::Type, const std::string&, const std::string&, ParameterType) {}
 

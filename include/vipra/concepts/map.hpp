@@ -23,7 +23,7 @@ class DummyMap {
   // NOLINTBEGIN
 
  public:
-  constexpr static VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::MAP;
+  constexpr static VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::MAP;
 
   template <VIPRA::Concepts::ParamModule params_t>
   void register_params(params_t& params) {}

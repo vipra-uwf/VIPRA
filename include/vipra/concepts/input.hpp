@@ -37,7 +37,7 @@ concept InputModule = is_type<input_t, Modules::Type::INPUT> &&
 class DummyInput {
   // NOLINTBEGIN
  public:
-  constexpr static VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::INPUT;
+  constexpr static VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::INPUT;
 
   explicit DummyInput(std::string_view /*unused*/) {}
 

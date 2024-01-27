@@ -21,7 +21,7 @@ concept parameter_qualified_input = is_type<input_t, Modules::Type::INPUT> && In
 class DummyParameterInput {
   // NOLINTBEGIN
  public:
-  constexpr static VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::INPUT;
+  constexpr static VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::INPUT;
 
   explicit DummyParameterInput(std::string_view /*unused*/) {}
 

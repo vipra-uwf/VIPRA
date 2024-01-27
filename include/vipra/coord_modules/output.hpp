@@ -29,7 +29,8 @@ class Output {
   };
 
  public:
-  constexpr static VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::OUTPUT;
+  // NOLINTNEXTLINE
+  constexpr static VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::OUTPUT;
 
   constexpr explicit Output(output_ts... outputs) : _outputs(std::make_tuple(outputs...)) {}
 

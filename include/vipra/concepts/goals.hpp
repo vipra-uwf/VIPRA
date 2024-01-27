@@ -38,7 +38,7 @@ concept GoalsModule = is_module<goals_t, VIPRA::Modules::Type::GOALS> && can_ini
 class DummyGoals {
   // NOLINTBEGIN
  public:
-  constexpr static VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::GOALS;
+  constexpr static VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::GOALS;
 
   template <VIPRA::Concepts::ParamModule params_t>
   void register_params(params_t& params) {}

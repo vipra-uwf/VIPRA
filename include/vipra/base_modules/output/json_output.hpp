@@ -19,7 +19,7 @@ class JSON {
 
   template <typename params_t>
   void register_params(params_t& params) {
-    params.register_param(MODULE_TYPE, "filepath", ParameterType::REQUIRED);
+    params.register_param(_VIPRA_MODULE_TYPE_, "filepath", ParameterType::REQUIRED);
   }
 
   template <typename params_t>

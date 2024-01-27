@@ -31,7 +31,7 @@ concept ModelModule = is_module<model_t, VIPRA::Modules::Type::MODEL> && has_mod
 class DummyModel {
   // NOLINTBEGIN
  public:
-  constexpr static VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::MODEL;
+  constexpr static VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::MODEL;
 
   template <typename params_t>
   void register_params(params_t&) {}

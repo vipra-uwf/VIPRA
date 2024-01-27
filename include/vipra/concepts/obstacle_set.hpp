@@ -51,7 +51,7 @@ concept ObstacleModule =
 class DummyObsSet {
   // NOLINTBEGIN
  public:
-  constexpr static VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::OBSTACLES;
+  constexpr static VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::OBSTACLES;
 
   template <VIPRA::Concepts::ParamModule params_t>
   void register_params(params_t& params) {}

@@ -8,6 +8,7 @@
 #include "vipra/concepts/parameter_input.hpp"
 #include "vipra/concepts/parameters.hpp"
 
+#include "vipra/macros/module.hpp"
 #include "vipra/modules.hpp"
 #include "vipra/types/parameter.hpp"
 
@@ -16,7 +17,7 @@ namespace VIPRA {
 template <Concepts::parameter_qualified_input input_t>
 class Parameters {
  public:
-  constexpr static VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::PARAMETERS;
+  VIPRA_MODULE_TYPE(PARAMETERS)
 
   explicit Parameters<input_t>(input_t&& input) : _input(input) {}
 

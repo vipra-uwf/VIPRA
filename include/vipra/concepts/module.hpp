@@ -11,7 +11,7 @@
 namespace VIPRA::Concepts {
 
 template <typename module_t, Modules::Type type>
-concept is_type = module_t::MODULE_TYPE == type;
+concept is_type = module_t::_VIPRA_MODULE_TYPE_ == type;
 
 template <typename module_t>
 concept has_parameters = requires(module_t module, DummyParams& params) {

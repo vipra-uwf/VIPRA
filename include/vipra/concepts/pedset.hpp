@@ -48,7 +48,7 @@ class DummyPedSet {
   // NOLINTBEGIN
 
  public:
-  constexpr static VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::PEDESTRIANS;
+  constexpr static VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::PEDESTRIANS;
 
   template <typename params_t>
   void register_params(params_t&) {}
