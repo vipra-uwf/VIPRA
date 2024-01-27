@@ -8,5 +8,4 @@
 #include "vipra/concepts/model.hpp"
 #include "vipra/concepts/obstacle_set.hpp"
 #include "vipra/concepts/output.hpp"
-#include "vipra/concepts/parameters.hpp"
 #include "vipra/concepts/pedset.hpp"

@@ -48,14 +48,16 @@ concept OutputModule = is_module<output_t, VIPRA::Modules::Type::OUTPUT> && can_
 
 class DummyOutput {
   // NOLINTBEGIN
-  VIPRA_MODULE_TYPE(OUTPUT)
  public:
+  constexpr static VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::OUTPUT;
+
   using output_data_t = void;
 
   template <typename params_t>
-  static void register_params() {}
+  void register_params(params_t&) {}
 
-  void setup(auto& /*unused*/) {}
+  void config(auto& /*unused*/) {}
+
   void write() {}
   void sim_value(const char* /*unused*/, auto&& /*unused*/) {}
   void timestep_value(const char* /*unused*/, VIPRA::timestep, auto&& /*unused*/) {}

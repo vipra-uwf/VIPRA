@@ -12,9 +12,9 @@
 namespace VIPRA::Module {
 template <Concepts::ObstacleModule obstacles_t, Concepts::FieldModule... field_ts>
 class Map {
-  VIPRA_MODULE_TYPE(MAP);
-
  public:
+  constexpr static VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::MAP;
+  ;
   /**
    * @brief Construct a new Map object
    * 
@@ -61,7 +61,7 @@ class Map {
    * 
    * @param params 
    */
-  void setup(const auto& params) { _obstacles.setup(params); }
+  void config(const auto& params) { _obstacles.config(params); }
 
   /**
    * @brief Calls register_params on all obstacles modules
@@ -69,9 +69,9 @@ class Map {
    * @tparam params_t
    */
   template <Concepts::ParamModule params_t>
-  static void register_params() {
-    obstacles_t::template register_params<params_t>();
-    (field_ts::template register_params<params_t>(), ...);
+  void register_params(params_t& params) {
+    _obstacles.register_params(params);
+    std::apply([&params](auto&&... fields) { (fields.register_params(params), ...); }, _fields);
   }
 
   [[nodiscard]] inline auto get_object_types() const -> std::vector<std::string> {

@@ -30,15 +30,16 @@ concept ModelModule = is_module<model_t, VIPRA::Modules::Type::MODEL> && has_mod
 
 class DummyModel {
   // NOLINTBEGIN
-  VIPRA_MODULE_TYPE(MODEL)
  public:
+  constexpr static VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::MODEL;
+
   template <typename params_t>
-  static void register_params() {}
+  void register_params(params_t&) {}
 
   template <typename pedset_t>
   void initialize(const pedset_t& /*unused*/) {}
 
-  void setup(auto& /*unused*/) {}
+  void config(auto& /*unused*/) {}
 
   auto timestep(const DummyPedSet& /*unused*/, const DummyMap& /*unused*/, const DummyGoals& /*unused*/,
                 VIPRA::delta_t /*unused*/) -> const VIPRA::State& {

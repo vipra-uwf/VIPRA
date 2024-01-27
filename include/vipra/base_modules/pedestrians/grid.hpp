@@ -15,9 +15,9 @@
 
 namespace VIPRA::Pedestrians {
 class Grid {
-  VIPRA_MODULE_TYPE(PEDESTRIANS)
-
  public:
+  constexpr static VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::PEDESTRIANS;
+
   template <Concepts::InputModule input_t>
   explicit Grid(const input_t& input) {
     auto coords = input.template get_vector<VIPRA::f3d>("coords");
@@ -35,9 +35,9 @@ class Grid {
   }
 
   template <Concepts::ParamModule params_t>
-  static void register_params() {}
+  void register_params(params_t& /*unused*/) {}
 
-  void setup(auto& params) {}
+  void config(const auto& params) {}
 
   [[nodiscard]] auto num_pedestrians() const -> VIPRA::size { return _coords.size(); }
   [[nodiscard]] auto ped_coords(VIPRA::idx pedIdx) const -> VIPRA::f3d { return _coords[pedIdx]; }

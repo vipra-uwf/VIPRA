@@ -55,22 +55,30 @@ constexpr auto simulation(Mode mode, args_t... args) {
 
   auto&& temp = std::forward_as_tuple(args...);
 
+  auto& params = std::get<PARAMS_IDX>(temp);
   SimType<std::remove_reference_t<decltype(std::get<PARAMS_IDX>(temp))>,
           std::remove_reference_t<decltype(std::get<OUTPUT_IDX>(temp))>,
           std::remove_reference_t<decltype(std::get<MODEL_IDX>(temp))>,
           std::remove_reference_t<decltype(std::get<PEDSET_IDX>(temp))>,
           std::remove_reference_t<decltype(std::get<GOALS_IDX>(temp))>,
-          std::remove_reference_t<decltype(std::get<MAP_IDX>(temp))>>::register_params();
+          std::remove_reference_t<decltype(std::get<MAP_IDX>(temp))>>::register_params(params);
+  std::get<OUTPUT_IDX>(temp).register_params(params);
+  std::get<MODEL_IDX>(temp).register_params(params);
+  std::get<PEDSET_IDX>(temp).register_params(params);
+  std::get<GOALS_IDX>(temp).register_params(params);
+  std::get<MAP_IDX>(temp).register_params(params);
 
-  std::get<OUTPUT_IDX>(temp).setup(std::get<PARAMS_IDX>(temp));
-  std::get<MODEL_IDX>(temp).setup(std::get<PARAMS_IDX>(temp));
-  std::get<PEDSET_IDX>(temp).setup(std::get<PARAMS_IDX>(temp));
-  std::get<GOALS_IDX>(temp).setup(std::get<PARAMS_IDX>(temp));
-  std::get<MAP_IDX>(temp).setup(std::get<PARAMS_IDX>(temp));
+  std::get<OUTPUT_IDX>(temp).config(params);
+  std::get<MODEL_IDX>(temp).config(params);
+  std::get<PEDSET_IDX>(temp).config(params);
+  std::get<GOALS_IDX>(temp).config(params);
+  std::get<MAP_IDX>(temp).config(params);
 
   // Returns the SimType object
-  return SimType(mode, std::move(std::get<PARAMS_IDX>(temp)), std::move(std::get<OUTPUT_IDX>(temp)),
-                 std::move(std::get<MODEL_IDX>(temp)), std::move(std::get<PEDSET_IDX>(temp)),
-                 std::move(std::get<GOALS_IDX>(temp)), std::move(std::get<MAP_IDX>(temp)));
+  auto sim = SimType(mode, std::move(std::get<PARAMS_IDX>(temp)), std::move(std::get<OUTPUT_IDX>(temp)),
+                     std::move(std::get<MODEL_IDX>(temp)), std::move(std::get<PEDSET_IDX>(temp)),
+                     std::move(std::get<GOALS_IDX>(temp)), std::move(std::get<MAP_IDX>(temp)));
+
+  return sim;
 }
 }  // namespace VIPRA

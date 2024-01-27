@@ -6,6 +6,7 @@
 #include "vipra/concepts/map.hpp"
 #include "vipra/concepts/module.hpp"
 #include "vipra/concepts/pedset.hpp"
+#include "vipra/macros/parameters.hpp"
 #include "vipra/modules.hpp"
 
 namespace VIPRA::Concepts {
@@ -36,24 +37,27 @@ concept GoalsModule = is_module<goals_t, VIPRA::Modules::Type::GOALS> && can_ini
 
 class DummyGoals {
   // NOLINTBEGIN
-  VIPRA_MODULE_TYPE(GOALS)
  public:
+  constexpr static VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::GOALS;
+
+  template <VIPRA::Concepts::ParamModule params_t>
+  void register_params(params_t& params) {}
+
+  template <VIPRA::Concepts::ParamModule params_t>
+  void config(const params_t& params) {}
+
   template <typename pedset_t, typename map_t>
   void initialize(const pedset_t& /*unused*/, const map_t& /*unused*/) {}
 
   template <typename pedset_t, typename map_t>
   void update(const pedset_t& /*unused*/, const map_t& /*unused*/) {}
 
-  template <typename params_t>
-  static void register_params() {}
-  auto        current_goals() const -> const VIPRA::f3dVec& { return _dummy; }
-  auto        end_goals() const -> const VIPRA::f3dVec& { return _dummy; }
-  auto        current_goal(VIPRA::idx) const -> VIPRA::f3d { return VIPRA::f3d{}; }
-  auto        end_goal(VIPRA::idx) const -> VIPRA::f3d { return VIPRA::f3d{}; }
-  auto        is_goal_met(VIPRA::idx) const -> bool { return false; }
-  auto        is_sim_goal_met() const -> bool { return false; }
-
-  void setup(auto& /*unused*/) {}
+  auto current_goals() const -> const VIPRA::f3dVec& { return _dummy; }
+  auto end_goals() const -> const VIPRA::f3dVec& { return _dummy; }
+  auto current_goal(VIPRA::idx) const -> VIPRA::f3d { return VIPRA::f3d{}; }
+  auto end_goal(VIPRA::idx) const -> VIPRA::f3d { return VIPRA::f3d{}; }
+  auto is_goal_met(VIPRA::idx) const -> bool { return false; }
+  auto is_sim_goal_met() const -> bool { return false; }
 
  private:
   VIPRA::f3dVec _dummy;

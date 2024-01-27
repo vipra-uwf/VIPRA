@@ -3,6 +3,9 @@
 #include "vipra/concepts/module.hpp"
 #include "vipra/concepts/obstacle_set.hpp"
 #include "vipra/concepts/pedset.hpp"
+
+#include "vipra/macros/module.hpp"
+#include "vipra/macros/parameters.hpp"
 #include "vipra/modules.hpp"
 
 namespace VIPRA::Concepts {
@@ -17,16 +20,20 @@ template <typename map_t>
 concept MapModule = is_module<map_t, Modules::Type::MAP> && can_initialize_map<map_t>;
 
 class DummyMap {
-  VIPRA_MODULE_TYPE(MAP);
+  // NOLINTBEGIN
 
  public:
-  template <typename params_t>
-  static void register_params() {}
+  constexpr static VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::MAP;
 
-  void setup(auto& params) {}
+  template <VIPRA::Concepts::ParamModule params_t>
+  void register_params(params_t& params) {}
+
+  template <VIPRA::Concepts::ParamModule params_t>
+  void config(const params_t& params) {}
 
   template <Concepts::PedsetModule pedestrians_t>
   void initialize(const pedestrians_t& pedestrians) {}
+  // NOLINTEND
 };
 
 CHECK_MODULE(MapModule, DummyMap);

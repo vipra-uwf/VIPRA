@@ -6,12 +6,15 @@
 
 #include "vipra/concepts/all_concepts.hpp"
 
+#include "vipra/concepts/parameters.hpp"
 #include "vipra/types/parameter.hpp"
 #include "vipra/types/time.hpp"
 #include "vipra/types/util/result_or_void.hpp"
 
 #include "vipra/util/all_of_type.hpp"
 #include "vipra/util/debug_do.hpp"
+
+// TODO(rolland): go through everything and handle errors more gracefully, currently we just throw
 
 namespace VIPRA {
 
@@ -37,14 +40,10 @@ class SimType {
         _goals(goals),
         _map(obstacles) {}
 
-  static void register_params() {
-    params_t::register_param(Modules::Type::SIMULATION, "max_timestep", ParameterType::REQUIRED);
-    params_t::register_param(Modules::Type::SIMULATION, "timestep_size", ParameterType::REQUIRED);
-    output_t::template register_params<params_t>();
-    model_t::template register_params<params_t>();
-    pedset_t::template register_params<params_t>();
-    goals_t::template register_params<params_t>();
-    map_t::template register_params<params_t>();
+  static void register_params(Concepts::ParamModule auto& params) {
+    params.register_param(Modules::Type::SIMULATION, "main", "max_timestep", ParameterType::REQUIRED);
+    params.register_param(Modules::Type::SIMULATION, "main", "timestep_size", ParameterType::REQUIRED);
+    params.register_param(Modules::Type::SIMULATION, "main", "output_frequency", ParameterType::REQUIRED);
   }
 
   auto operator()() -> output_data_t {
@@ -63,6 +62,8 @@ class SimType {
     _goals.initialize(_pedset, _map);
 
     Util::debug_do([]() { std::cout << "Simulation Starting" << std::endl; });
+
+    // TODO(rolland): modules have no way of reaching output except through simulation, we need to fix this
 
     while (_timestep < maxTimestep) {
       const VIPRA::State& state = _model.timestep(_pedset, _map, _goals, timestepSize);
@@ -91,26 +92,32 @@ class SimType {
   map_t    _map;
 
   VIPRA::timestep _timestep{0};
+  VIPRA::timestep _outputFrequency{0};
 
-  [[nodiscard]] constexpr auto get_sim_params() -> std::pair<VIPRA::f_pnt, VIPRA::f_pnt> {
+  [[nodiscard]] constexpr auto get_sim_params() -> std::tuple<VIPRA::f_pnt, VIPRA::f_pnt> {
     VIPRA::timestep maxTimestep =
         _params.template get_param<VIPRA::timestep>(Modules::Type::SIMULATION, "max_timestep");
     VIPRA::f_pnt timestepSize =
         _params.template get_param<VIPRA::f_pnt>(Modules::Type::SIMULATION, "timestep_size");
+    VIPRA::timestep outputFrequency =
+        _params.template get_param<VIPRA::timestep>(Modules::Type::SIMULATION, "output_frequency");
+
+    if (outputFrequency == 0) throw std::runtime_error("Output frequency must be greater than 0");
+    _outputFrequency = outputFrequency;
 
     return {maxTimestep, timestepSize};
   }
 
   void output_positions() {
+    if (_timestep % _outputFrequency != 0) {
+      return;
+    }
+
     const VIPRA::size pedCnt = _pedset.num_pedestrians();
     const auto&       coords = _pedset.all_coords();
 
     for (VIPRA::idx i = 0; i < pedCnt; ++i) {
-      // Util::debug_do([&]() {
-      //   std::printf("Pedestrian %lu at timestep %lu: %f, %f, %f\n", i, _timestep, coords.at(i).x,
-      //               coords.at(i).y, coords.at(i).z);
-      // });
-      _output.ped_timestep_value(i, _timestep, "position", coords.at(i));
+      _output.ped_timestep_value(i, _timestep / _outputFrequency, "position", coords.at(i));
     }
   }
 };

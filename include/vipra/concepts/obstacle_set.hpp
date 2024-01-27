@@ -49,13 +49,14 @@ concept ObstacleModule =
     can_get_nearest_obs<obstacle_t> && has_collisions<obstacle_t> && can_get_dimensions<obstacle_t>;
 
 class DummyObsSet {
-  VIPRA_MODULE_TYPE(OBSTACLES);
-
+  // NOLINTBEGIN
  public:
-  template <typename params_t>
-  static void register_params() {}
+  constexpr static VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::OBSTACLES;
 
-  void setup(auto& params) {}
+  template <VIPRA::Concepts::ParamModule params_t>
+  void register_params(params_t& params) {}
+  template <VIPRA::Concepts::ParamModule params_t>
+  void config(const params_t& params) {}
 
   // NOLINTBEGIN rolland: Dummy Object that cannot be used, we don't care about errors here
   auto get_dimensions() const -> VIPRA::f3d { return VIPRA::f3d{}; }
@@ -71,6 +72,7 @@ class DummyObsSet {
   VIPRA::f3dVec            _dummy;
   std::vector<std::string> _dummy2;
   DummyObsSet() = default;
+  // NOLINTEND
 };
 
 CHECK_MODULE(ObstacleModule, DummyObsSet)

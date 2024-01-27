@@ -73,8 +73,6 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
                                    distance_f_t&& distance_func, conversion_f_t&& conversion_func = VOID{})
     -> std::vector<
         std::remove_reference_t<Util::invoke_result_or_t<VIPRA::idx, conversion_f_t, VIPRA::idx>>> {
-  // TODO(rolland): implement, and actually check that it's correct
-
   using ret_t =
       std::vector<std::remove_reference_t<Util::invoke_result_or_t<VIPRA::idx, conversion_f_t, VIPRA::idx>>>;
   struct Node {
@@ -92,6 +90,7 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
     };
   };
 
+  // TODO(rolland): look at replacing this with a better data structure
   struct PQueue : public std::priority_queue<Node*, std::vector<Node*>, typename Node::Compare> {
     auto search(VIPRA::idx nodeIdx) -> Node* {
       auto container = this->c;

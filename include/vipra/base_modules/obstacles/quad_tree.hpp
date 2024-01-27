@@ -5,7 +5,6 @@
 #include "vipra/concepts/input.hpp"
 #include "vipra/concepts/obstacle_set.hpp"
 
-#include "vipra/concepts/parameters.hpp"
 #include "vipra/modules.hpp"
 
 #include "vipra/types/f3d.hpp"
@@ -19,9 +18,9 @@
 
 namespace VIPRA::Obstacles {
 class QuadTree {
-  VIPRA_MODULE_TYPE(OBSTACLES);
-
  public:
+  constexpr static VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::OBSTACLES;
+
   void initialize(const std::vector<VIPRA::f3d>& obstacles, const std::vector<std::string>& types,
                   const std::map<std::string, VIPRA::f3dVec>& objects) {
     _obstacles = obstacles;
@@ -41,16 +40,14 @@ class QuadTree {
         _dimensions.z = std::max(_dimensions.z, object.z);
       }
     }
-
-    Util::debug_do([&]() { std::cerr << "Dimensions: " << _dimensions.to_string() << '\n'; });
   }
 
-  template <Concepts::ParamModule params_t>
-  static void register_params() {
-    params_t::register_param(VIPRA::Modules::Type::OBSTACLES, "minGridSize", VIPRA::ParameterType::REQUIRED);
+  template <typename params_t>
+  void register_params(params_t& params) {
+    params.register_param(VIPRA::Modules::Type::OBSTACLES, "minGridSize", VIPRA::ParameterType::REQUIRED);
   }
 
-  void setup(auto& params) {
+  void config(auto& params) {
     _obsDistance = params.template get_param<VIPRA::f_pnt>(VIPRA::Modules::Type::OBSTACLES, "minGridSize");
   }
 

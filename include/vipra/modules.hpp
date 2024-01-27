@@ -43,14 +43,4 @@ inline auto to_string(Type type) -> std::string {
 
   return "unknown";
 }
-
-// NOLINTNEXTLINE(cppcoreguidelines-macro-usage) This is a very simple macro
-#define VIPRA_MODULE_TYPE(type)                                                   \
- public:                                                                          \
-  constexpr static VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::type; \
-                                                                                  \
- private:
-
-// NOLINTNEXTLINE(cppcoreguidelines-macro-usage) This is a very simple macro
-#define CHECK_MODULE(type, ...) static_assert(VIPRA::Concepts::type<__VA_ARGS__>);
 }  // namespace VIPRA::Modules

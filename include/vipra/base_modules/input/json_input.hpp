@@ -23,14 +23,43 @@
 
 namespace VIPRA::Input {
 class JSON {
-  VIPRA_MODULE_TYPE(INPUT)
  public:
-  explicit JSON(std::string_view path) {
-    std::filesystem::path filepath = path;
+  VIPRA_MODULE_TYPE(INPUT)
+  explicit JSON(const std::filesystem::path& filepath) { load_file(filepath); }
+
+  template <Concepts::ParamModule params_t>
+  void config(const params_t& params) {
+    const std::filesystem::path filepath =
+        params.template get_param<std::string>(Modules::Type::INPUT, "filepath");
+  }
+
+  template <typename data_t, typename... key_ts>
+  [[nodiscard]] auto get(key_ts&&... keys) const -> std::optional<data_t> {
+    auto&& keysTuple = std::forward_as_tuple(keys...);
+
+    if constexpr (sizeof...(keys) == 0) {
+      return std::nullopt;
+    } else if constexpr (sizeof...(keys) == 1) {
+      return get_helper_helper<data_t>(keys..., _json);
+    } else {
+      return get_helper<data_t>(std::get<0>(keysTuple), Util::tuple_tail(keysTuple), _json);
+    }
+  }
+
+  template <typename data_t, typename... key_ts>
+  [[nodiscard]] auto get_vector(key_ts&&... keys) const -> std::optional<std::vector<data_t>> {
+    return get<std::vector<data_t>>(keys...);
+  }
+
+ private:
+  nlohmann::json _json;
+
+  void load_file(const std::filesystem::path& filepath) {
     if (!std::filesystem::exists(filepath))
       throw std::runtime_error("File does not exist at: " + filepath.string());
 
-    if (!std::filesystem::is_regular_file(filepath)) throw std::runtime_error("File is not a regular file");
+    if (!std::filesystem::is_regular_file(filepath))
+      throw std::runtime_error("File is not a regular file at: " + filepath.string());
 
     std::ifstream file(filepath);
     if (!file.is_open()) throw std::runtime_error("Could not open file at: " + filepath.string());
@@ -44,36 +73,11 @@ class JSON {
     file.close();
   }
 
-  template <typename data_t, typename... keys_t>
-  [[nodiscard]] auto get(keys_t&&... keys) const -> std::optional<data_t> {
-    auto&& keysTuple = std::forward_as_tuple(keys...);
-
-    if constexpr (sizeof...(keys) == 0) {
-      Util ::debug_do([&]() {
-        std::cout << "Can't Find Empty Key: "
-                  << "\n";
-      });
-      return std::nullopt;
-    } else if constexpr (sizeof...(keys) == 1) {
-      return get_helper_helper<data_t>(keys..., _json);
-    } else {
-      return get_helper<data_t>(std::get<0>(keysTuple), Util::tuple_tail(keysTuple), _json);
-    }
-  }
-
-  template <typename data_t, typename... keys_t>
-  [[nodiscard]] auto get_vector(keys_t&&... keys) const -> std::optional<std::vector<data_t>> {
-    return get<std::vector<data_t>>(keys...);
-  }
-
- private:
-  nlohmann::json _json;
-
   // NOTE: I don't know if I should be disgusted by this or impressed
-  template <typename data_t, typename key_t, typename... keys_t>
-  [[nodiscard]] auto get_helper(const key_t baseKey, std::tuple<keys_t...> keys,
+  template <typename data_t, typename key_t, typename... key_ts>
+  [[nodiscard]] auto get_helper(const key_t baseKey, std::tuple<key_ts...> keys,
                                 const nlohmann::json& value) const -> std::optional<data_t> {
-    if constexpr (std::tuple_size_v<std::tuple<keys_t...>> == 0) {
+    if constexpr (std::tuple_size_v<std::tuple<key_ts...>> == 0) {
       return get_helper_helper<data_t>(baseKey, value);
     } else {
       if (!value.contains(baseKey)) {
@@ -103,6 +107,8 @@ class JSON {
       -> std::optional<Parameter<data_t>> {
     data_t inputData{};
     try {
+      if (!value.contains(key)) return std::nullopt;
+
       if (value[key].is_array()) {
         // discrete, choose random value
         Parameter<data_t> parameter{};
@@ -139,6 +145,8 @@ template <>
     -> std::optional<std::vector<VIPRA::f3d>> {
   VIPRA::f3dVec inputData{};
   try {
+    if (!value.contains(key)) return std::nullopt;
+
     for (const auto& [subkey, value] : value[key].items()) {
       VIPRA::f3d temp{};
       for (const auto& dimension : value.items()) {
@@ -171,9 +179,7 @@ template <>
       }
       inputData.push_back(temp);
     }
-  }
-
-  catch (const nlohmann::json::type_error& e) {
+  } catch (const nlohmann::json::type_error& e) {
     return std::nullopt;
   }
 
@@ -191,6 +197,8 @@ template <>
     -> std::optional<Parameter<std::string>> {
   std::string inputData{};
   try {
+    if (!value.contains(key)) return std::nullopt;
+
     if (value[key].is_array()) {
       // discrete, choose random value
       Parameter<std::string> parameter{};

@@ -7,7 +7,6 @@
 #include "nlohmann/json.hpp"
 
 #include "vipra/concepts/output.hpp"
-#include "vipra/concepts/parameters.hpp"
 #include "vipra/modules.hpp"
 #include "vipra/types/f3d.hpp"
 #include "vipra/types/idx.hpp"
@@ -15,28 +14,26 @@
 
 namespace VIPRA::Output::Trajectories {
 class JSON {
+ public:
   VIPRA_MODULE_TYPE(OUTPUT)
 
- public:
-  template <Concepts::ParamModule params_t>
-  static void register_params() {
-    params_t::register_param(MODULE_TYPE, "filepath", ParameterType::REQUIRED);
+  template <typename params_t>
+  void register_params(params_t& params) {
+    params.register_param(MODULE_TYPE, "filepath", ParameterType::REQUIRED);
   }
 
-  template <Concepts::ParamModule params_t>
-  void setup(params_t& params) {
+  template <typename params_t>
+  void config(const params_t& params) {
     _outputPath = params.template get_param<std::string>(Modules::Type::OUTPUT, "filepath");
   }
 
   void write() {
-    Util::debug_do([&]() { std::printf("Writing JSON output to %s\n", _outputPath.string().c_str()); });
-
     std::ofstream file(_outputPath);
     if (!file.is_open()) {
       throw std::runtime_error("Could not open file for writing: " + _outputPath.string());
     }
 
-    file << _json.dump(2);
+    file << _json.dump();
   }
 
   template <typename data_t>

@@ -9,12 +9,10 @@
 namespace VIPRA::Module {
 template <Concepts::OutputModule... output_ts>
 class Output {
-  VIPRA_MODULE_TYPE(OUTPUT)
-
   // TODO(rolland): decide if we need std::remove_reference
   // TODO(rolland): need to figure out how to get paths for each output
   //                   - if multiple output modules use the same parameter, how do we split them up
-  //                   - maybe require a path parameter for each output module, in their constrcutor?
+  //                   - maybe require a path parameter for each output module, in their constructor?
   //                            - this would require a recompile for changing paths
 
   template <typename output_t>
@@ -31,6 +29,8 @@ class Output {
   };
 
  public:
+  constexpr static VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::OUTPUT;
+
   constexpr explicit Output(output_ts... outputs) : _outputs(std::make_tuple(outputs...)) {}
 
   /**
@@ -45,12 +45,12 @@ class Output {
   }
 
   /**
-   * @brief Calls setup on all output modules
+   * @brief Calls config on all output modules
    * 
    * @param params 
    */
-  void setup(const auto& params) {
-    std::apply([&params](auto&&... outputs) { (outputs.setup(params), ...); }, _outputs);
+  void config(const auto& params) {
+    std::apply([&params](auto&&... outputs) { (outputs.config(params), ...); }, _outputs);
   }
 
   /**
@@ -59,8 +59,9 @@ class Output {
    * @tparam params_t 
    */
   template <Concepts::ParamModule params_t>
-  static void register_params() {
-    (output_ts::template register_params<params_t>(), ...);
+  void register_params(params_t& params) {
+    std::apply([&](auto&&... outputs) { (outputs.template register_params<params_t>(params), ...); },
+               _outputs);
   }
 
   /**

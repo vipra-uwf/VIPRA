@@ -2,6 +2,7 @@
 
 #include "vipra/concepts/input.hpp"
 #include "vipra/concepts/module.hpp"
+
 #include "vipra/modules.hpp"
 
 namespace VIPRA::Concepts {
@@ -19,8 +20,9 @@ concept parameter_qualified_input = is_type<input_t, Modules::Type::INPUT> && In
 
 class DummyParameterInput {
   // NOLINTBEGIN
-  VIPRA_MODULE_TYPE(INPUT)
  public:
+  constexpr static VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::INPUT;
+
   explicit DummyParameterInput(std::string_view /*unused*/) {}
 
   template <typename data_t>

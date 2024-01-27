@@ -2,6 +2,10 @@
 
 namespace VIPRA::Util {
 template <typename func_t>
+/**
+ * @brief Utility Class that executes a function in debug mode only
+ * 
+ */
 // NOLINTNEXTLINE(readability-identifier-naming) utilty class
 struct debug_do {
 #ifndef NDEBUG

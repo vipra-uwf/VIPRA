@@ -46,13 +46,14 @@ concept PedsetModule = is_module<pedset_t, VIPRA::Modules::Type::PEDESTRIANS> &&
 
 class DummyPedSet {
   // NOLINTBEGIN
-  VIPRA_MODULE_TYPE(PEDESTRIANS);
 
  public:
-  template <typename params_t>
-  static void register_params() {}
+  constexpr static VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::PEDESTRIANS;
 
-  void setup(auto& params) {}
+  template <typename params_t>
+  void register_params(params_t&) {}
+
+  void config(auto& params) {}
   void update(const VIPRA::State&) {}
 
   auto num_pedestrians() const -> VIPRA::size { return 1; }
