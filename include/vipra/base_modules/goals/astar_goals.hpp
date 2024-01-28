@@ -43,18 +43,18 @@ class AStar {
         throw std::runtime_error("Start or end index is out of bounds");
       }
 
-      _paths.push_back(VIPRA::Algo::astar(
+      const auto path = VIPRA::Algo::astar(
           startIdx, endIdx, _graph,
           [&](VIPRA::idx left, VIPRA::idx right) -> VIPRA::f_pnt {
             return _graph.data(left).pos.distance_to(_graph.data(right).pos);
           },
-          [&](VIPRA::idx nodeIdx) -> VIPRA::f3d { return _graph.data(nodeIdx).pos; }));
+          [&](VIPRA::idx nodeIdx) -> VIPRA::f3d { return _graph.data(nodeIdx).pos; });
 
-      // TODO(rolland): squash paths where the next point is in the same direction as the current point
-
-      if (_paths.back().empty()) {
+      if (path.empty()) {
         throw std::runtime_error("No path found for pedestrian");
       }
+
+      _paths.push_back(squash_path(path));
     }
 
     for (VIPRA::idx pedIdx = 0; pedIdx < pedset.num_pedestrians(); ++pedIdx) {
@@ -198,6 +198,28 @@ class AStar {
         throw std::runtime_error("No goal found for pedestrian");
       }
     }
+  }
+
+  /**
+   * @brief Squashes the path to remove unnecessary points
+   * 
+   * @param path 
+   * @return std::vector<VIPRA::f3d> 
+   */
+  [[nodiscard]] static auto squash_path(const std::vector<VIPRA::f3d>& path) -> std::vector<VIPRA::f3d> {
+    std::vector<VIPRA::f3d> squashedPath;
+    squashedPath.reserve(path.size() / 2);
+
+    VIPRA::f3d dif;
+    for (VIPRA::idx i = 2; i < path.size(); ++i) {
+      auto currDif = path[i] - path[i - 1];
+      if (currDif != dif) {
+        squashedPath.push_back(path[i - 1]);
+        dif = currDif;
+      }
+    }
+
+    return squashedPath;
   }
 
   /**

@@ -51,23 +51,19 @@ class SimType {
     _output.new_run(_currSimIdx++);
     const auto [maxTimestep, timestepSize] = get_sim_params();
 
-    _model.initialize(_pedset);
     _map.initialize(_pedset);
     _goals.initialize(_pedset, _map);
-
-    Util::debug_do([]() { std::cout << "Simulation Starting" << std::endl; });
+    _model.initialize(_pedset, _map, _goals);
 
     // TODO(rolland): modules have no way of reaching output except through simulation, we need to fix this
 
     while (_timestep < maxTimestep) {
-      const VIPRA::State& state = _model.timestep(_pedset, _map, _goals, timestepSize);
+      const VIPRA::State& state = _model.timestep(_pedset, _map, _goals, timestepSize, _timestep);
       _pedset.update(state);
       _goals.update(_pedset, _map);
       output_positions();
       ++_timestep;
     }
-
-    Util::debug_do([]() { std::cout << "Simulation complete" << std::endl; });
 
     if constexpr (std::is_same_v<output_data_t, void>) {
       _output.write();

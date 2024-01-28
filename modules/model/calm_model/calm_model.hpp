@@ -118,6 +118,10 @@ private:
         if (distance >= nearestDist)
           continue;
 
+        if ((_raceStatuses.at(i) == 0 && _raceStatuses.at(j) == 1) ||
+            std::fabs(distance - equilibriumDistance) < equilibriumResolution)
+          continue;
+
         if (!is_ped_toward_goal(pedCoords, pedGoal, otherCoords))
           continue;
 
@@ -177,12 +181,6 @@ private:
 
       _state.velocities[i] = ((propulsion / mass) * dT) + velocity;
       _state.positions[i] = coord + (_state.velocities[i] * dT);
-
-      // if (goals.timeSinceLastGoal(i) > 0 &&
-      //     goals.timeSinceLastGoal(i) <= slidingGoalTime) {
-      //   _state.velocities[i].x = 0;
-      //   _state.velocities[i].y = 0;
-      // }
     }
   }
 
@@ -215,11 +213,7 @@ private:
     VIPRA::f3d pedDirection = goal - pedCoords;
     VIPRA::f3d secondDirection = otherCoords - pedCoords;
 
-    const float dotProduct = (pedDirection.x * secondDirection.x) +
-                             (pedDirection.y * secondDirection.y) +
-                             (pedDirection.z * secondDirection.z);
-
-    return dotProduct > 0;
+    return pedDirection.dot(secondDirection) > 0;
   }
 
   auto is_path_blocked(VIPRA::idx pedIdx, VIPRA::f3d velocity,

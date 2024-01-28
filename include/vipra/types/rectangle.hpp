@@ -26,7 +26,12 @@ class Rectangle {
    * @return false 
    */
   [[nodiscard]] inline constexpr auto is_point_inside(VIPRA::f3d point) const -> bool {
-    return point.x >= _p1.x && point.x <= _p2.x && point.y >= _p1.y && point.y <= _p4.y;
+    VIPRA::f_pnt areaTri1 = triangle_area(_p1, _p2, point);
+    VIPRA::f_pnt areaTri2 = triangle_area(_p2, _p3, point);
+    VIPRA::f_pnt areaTri3 = triangle_area(_p3, _p4, point);
+    VIPRA::f_pnt areaTri4 = triangle_area(_p4, _p1, point);
+
+    return (areaTri1 += areaTri2 += areaTri3 += areaTri4) <= area() + AREA_ERROR;
   }
 
   /**
@@ -54,9 +59,14 @@ class Rectangle {
   [[nodiscard]] inline constexpr auto rotation() const -> VIPRA::f_pnt {
     return atan2(_p2.y - _p1.y, _p2.x - _p1.x);
   }
+
+  // TODO(rolland): these assume axis aligned
   [[nodiscard]] inline constexpr auto width() const -> VIPRA::f_pnt { return _p2.x - _p1.x; }
   [[nodiscard]] inline constexpr auto height() const -> VIPRA::f_pnt { return _p4.y - _p1.y; }
-  [[nodiscard]] inline constexpr auto area() const -> VIPRA::f_pnt { return width() * height(); }
+
+  [[nodiscard]] inline constexpr auto area() const -> VIPRA::f_pnt {
+    return (triangle_area(_p1, _p2, _p3) + triangle_area(_p1, _p3, _p4));
+  }
   [[nodiscard]] inline constexpr auto center() const -> VIPRA::f3d {
     return VIPRA::f3d(_p1.x + width() / 2, _p1.y + height() / 2, _p1.z);
   }
@@ -103,5 +113,31 @@ class Rectangle {
   VIPRA::f3d _p2{};
   VIPRA::f3d _p3{};
   VIPRA::f3d _p4{};
+
+  static constexpr VIPRA::f_pnt AREA_ERROR = 0.0001;
+
+  /**
+   * @brief Gets the area of a triangle from 3 points
+   * 
+   * @param point1 : tri point 
+   * @param point2 : tri point 
+   * @param point3 : tri point 
+   * @return constexpr VIPRA::f_pnt : triangle area
+   */
+  [[nodiscard]] static inline constexpr auto triangle_area(VIPRA::f3d point1, VIPRA::f3d point2,
+                                                           VIPRA::f3d point3) -> VIPRA::f_pnt {
+    return std::abs((point2.x * point1.y - point1.x * point2.y) +
+                    (point3.x * point2.y - point2.x * point3.y) +
+                    (point1.x * point3.y - point3.x * point1.y)) /
+           2;
+  }
+
+ public:
+  constexpr Rectangle() = default;
+  constexpr Rectangle(const Rectangle&) = default;
+  constexpr Rectangle(Rectangle&&) = default;
+  constexpr auto operator=(const Rectangle&) -> Rectangle& = default;
+  constexpr auto operator=(Rectangle&&) -> Rectangle& = default;
+  constexpr ~Rectangle() = default;
 };
 }  // namespace VIPRA
