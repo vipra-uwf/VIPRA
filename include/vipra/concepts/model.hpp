@@ -14,14 +14,16 @@
 namespace VIPRA::Concepts {
 
 template <typename model_t>
-concept can_initialize_model = requires(model_t model, const DummyPedSet& pedset) {
-  {model.initialize(pedset)};
+concept can_initialize_model = requires(model_t model, const DummyPedSet& pedset, const DummyMap& map,
+                                        const DummyGoals& goals) {
+  {model.initialize(pedset, map, goals)};
 };
 
 template <typename model_t>
 concept has_model_timestep = requires(model_t model, const DummyPedSet& pedset, const DummyMap& map,
-                                      const DummyGoals& goals, VIPRA::delta_t deltaT) {
-  { model.timestep(pedset, map, goals, deltaT) } -> std::same_as<const VIPRA::State&>;
+                                      const DummyGoals& goals, VIPRA::delta_t deltaT,
+                                      VIPRA::timestep timestep) {
+  { model.timestep(pedset, map, goals, deltaT, timestep) } -> std::same_as<const VIPRA::State&>;
 };
 
 template <typename model_t>
@@ -36,13 +38,13 @@ class DummyModel {
   template <typename params_t>
   void register_params(params_t&) {}
 
-  template <typename pedset_t>
-  void initialize(const pedset_t& /*unused*/) {}
+  template <typename pedset_t, typename map_t, typename goals_t>
+  void initialize(const pedset_t&, const map_t&, const goals_t&) {}
 
-  void config(auto& /*unused*/) {}
+  void config(auto&) {}
 
-  auto timestep(const DummyPedSet& /*unused*/, const DummyMap& /*unused*/, const DummyGoals& /*unused*/,
-                VIPRA::delta_t /*unused*/) -> const VIPRA::State& {
+  auto timestep(const DummyPedSet&, const DummyMap&, const DummyGoals&, VIPRA::delta_t, VIPRA::timestep)
+      -> const VIPRA::State& {
     return _state;
   }
 

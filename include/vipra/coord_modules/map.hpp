@@ -9,38 +9,23 @@
 
 #include "vipra/modules.hpp"
 
+// TODO(rolland): update any fields each timestep
+
 namespace VIPRA::Module {
-template <Concepts::ObstacleModule obstacles_t, Concepts::FieldModule... field_ts>
+template <Concepts::InputModule input_t, Concepts::ObstacleModule obstacles_t,
+          Concepts::FieldModule... field_ts>
 class Map {
  public:
   // NOLINTNEXTLINE
   constexpr static VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::MAP;
   ;
   /**
-   * @brief Construct a new Map object
+   * @brief Construct a new Map object, loads obstacles from input file and initializes all fields
    * 
    * @param params 
    */
-  template <Concepts::InputModule input_t>
-  explicit Map(const input_t& input, obstacles_t&& obstacles, field_ts&&... fields)
-      : _obstacles{std::move(obstacles)}, _fields{std::move(fields)...} {
-    // TODO(rolland): replace point obstacles with polygons
-    const auto objTypes = input.template get_vector<std::string>("obj_types");
-    if (!objTypes) throw std::runtime_error("Could not find object types in input file");
-
-    auto objMap = std::map<std::string, std::vector<VIPRA::f3d>>{};
-
-    std::for_each(objTypes->begin(), objTypes->end(), [&](const auto& objType) {
-      const auto objPos = input.template get_vector<VIPRA::f3d>(objType);
-      std::for_each(objPos->begin(), objPos->end(),
-                    [&](const auto& objPos) { objMap[objType].push_back(objPos); });
-    });
-
-    auto obsCoords = input.template get_vector<VIPRA::f3d>("obstacles");
-    if (!obsCoords) throw std::runtime_error("Could not find obstacle coordinates in input file");
-
-    _obstacles.initialize(obsCoords.value(), objTypes.value(), objMap);
-  }
+  explicit Map(input_t&& input, obstacles_t&& obstacles, field_ts&&... fields)
+      : _input(input), _obstacles{std::move(obstacles)}, _fields{std::move(fields)...} {}
 
   /**
    * @brief Initializes all fields with the pedestrians and obstacles
@@ -50,6 +35,7 @@ class Map {
    */
   template <Concepts::PedsetModule pedestrians_t>
   void initialize(const pedestrians_t& pedestrians) {
+    initialize_obstacles();
     std::apply(
         [&](auto&&... fields) {
           (fields.template initialize<obstacles_t, pedestrians_t>(pedestrians, _obstacles), ...);
@@ -62,7 +48,10 @@ class Map {
    * 
    * @param params 
    */
-  void config(const auto& params) { _obstacles.config(params); }
+  void config(const auto& params) {
+    _obstacles.config(params);
+    std::apply([&params](auto&&... fields) { (fields.config(params), ...); }, _fields);
+  }
 
   /**
    * @brief Calls register_params on all obstacles modules
@@ -118,7 +107,27 @@ class Map {
  private:
   obstacles_t             _obstacles{};
   std::tuple<field_ts...> _fields;
+  input_t                 _input;
+
+  void initialize_obstacles() {
+    // TODO(rolland): replace point obstacles with polygons
+    const auto objTypes = _input.template get_vector<std::string>("obj_types");
+    if (!objTypes) throw std::runtime_error("Could not find object types in input file");
+
+    auto objMap = std::map<std::string, std::vector<VIPRA::f3d>>{};
+
+    std::for_each(objTypes->begin(), objTypes->end(), [&](const auto& objType) {
+      const auto objPos = _input.template get_vector<VIPRA::f3d>(objType);
+      std::for_each(objPos->begin(), objPos->end(),
+                    [&](const auto& objPos) { objMap[objType].push_back(objPos); });
+    });
+
+    auto obsCoords = _input.template get_vector<VIPRA::f3d>("obstacles");
+    if (!obsCoords) throw std::runtime_error("Could not find obstacle coordinates in input file");
+
+    _obstacles.initialize(obsCoords.value(), objTypes.value(), objMap);
+  }
 };
 
-CHECK_MODULE(MapModule, Map<Concepts::DummyObsSet, Concepts::DummyField>)
+CHECK_MODULE(MapModule, Map<Concepts::DummyInput, Concepts::DummyObsSet, Concepts::DummyField>)
 }  // namespace VIPRA::Module

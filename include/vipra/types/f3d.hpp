@@ -175,7 +175,7 @@ struct f3d {
     if (x == 0 && y == 0 && z == 0) {
       return f3d{0, 0, 0};
     }
-    return f3d{x, y, z} / magnitude();
+    return f3d{x, y, z} / mag();
   }
 
   /**
@@ -183,7 +183,7 @@ struct f3d {
    * 
    * @return constexpr VIPRA::f_pnt 
    */
-  [[nodiscard]] inline constexpr auto magnitude_sqrd() const noexcept -> VIPRA::f_pnt {
+  [[nodiscard]] inline constexpr auto mag_sqrd() const noexcept -> VIPRA::f_pnt {
     return (x * x) + (y * y) + (z * z);
   }
 
@@ -192,7 +192,7 @@ struct f3d {
    * 
    * @return constexpr VIPRA::f_pnt 
    */
-  [[nodiscard]] inline constexpr auto magnitude() const -> VIPRA::f_pnt {
+  [[nodiscard]] inline constexpr auto mag() const -> VIPRA::f_pnt {
     return std::sqrt((x * x) + (y * y) + (z * z));
   }
 
@@ -204,6 +204,16 @@ struct f3d {
    */
   [[nodiscard]] inline constexpr auto dot(const f3d& other) const noexcept -> VIPRA::f_pnt {
     return (x * other.x) + (y * other.y) + (z * other.z);
+  }
+
+  /**
+   * @brief Returns the cross product between two f3ds
+   * 
+   * @param other 
+   * @return f3d 
+   */
+  [[nodiscard]] inline constexpr auto cross(const f3d& other) const noexcept -> f3d {
+    return f3d{(y * other.z) - (z * other.y), (z * other.x) - (x * other.z), (x * other.y) - (y * other.x)};
   }
 
   /**

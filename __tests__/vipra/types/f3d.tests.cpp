@@ -105,10 +105,10 @@ TEST(Dimensions, Magnitude) {
   VIPRA::f3d sut2{1, 0, 0};
   VIPRA::f3d sut3{0, 1, 0};
   VIPRA::f3d sut4{1, 1, 0};
-  EXPECT_NEAR(sut1.magnitude(), 0, 0.01);
-  EXPECT_NEAR(sut2.magnitude(), 1, 0.01);
-  EXPECT_NEAR(sut3.magnitude(), 1, 0.01);
-  EXPECT_NEAR(sut4.magnitude(), std::sqrt(2), 0.01);
+  EXPECT_NEAR(sut1.mag(), 0, 0.01);
+  EXPECT_NEAR(sut2.mag(), 1, 0.01);
+  EXPECT_NEAR(sut3.mag(), 1, 0.01);
+  EXPECT_NEAR(sut4.mag(), std::sqrt(2), 0.01);
 }
 
 TEST(Dimensions, Binary_Operators_Tests) {

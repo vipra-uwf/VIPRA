@@ -40,10 +40,7 @@ class Output {
 
   void new_run(VIPRA::idx runIdx) {
     _current_output_dir = _base_output_dir / std::to_string(runIdx);
-
-    if (!std::filesystem::create_directory(_current_output_dir)) {
-      throw std::runtime_error("Could not create directory: " + _current_output_dir.string());
-    }
+    create_output_directory(_current_output_dir);
   }
 
   /**
@@ -69,6 +66,8 @@ class Output {
     _base_output_dir =
         params.template get_param<std::string>(VIPRA::Modules::Type::OUTPUT, "coordinator", "output_dir");
     _current_output_dir = _base_output_dir;
+
+    create_output_directory(_current_output_dir);
     std::apply([&params](auto&&... outputs) { (outputs.config(params), ...); }, _outputs);
   }
 
@@ -136,6 +135,21 @@ class Output {
 
   std::filesystem::path _base_output_dir;
   std::filesystem::path _current_output_dir;
+
+  static void create_output_directory(const std::filesystem::path& directory) {
+    if (std::filesystem::exists(directory)) {
+      if (std::filesystem::is_directory(directory)) {
+        return;
+      }
+
+      throw std::runtime_error("Output directory already exists and is not a directory: " +
+                               directory.string());
+    }
+
+    if (!std::filesystem::create_directory(directory)) {
+      throw std::runtime_error("Could not create output directory: " + directory.string());
+    }
+  }
 };
 
 CHECK_MODULE(OutputCoordinator, Output<Concepts::DummyOutput>);

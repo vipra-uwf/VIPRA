@@ -1,14 +1,16 @@
 #pragma once
 
+#include <array>
 #include "vipra/types/f3d.hpp"
+#include "vipra/types/line.hpp"
 #include "vipra/types/size.hpp"
 
 namespace VIPRA {
 class Rectangle {
   // TODO(rolland): implement, currently axis aligned only
   // TODO(rolland): create tests
+
  public:
-  constexpr Rectangle() = default;
   constexpr Rectangle(VIPRA::f3d point1, VIPRA::f3d point2, VIPRA::f3d point3, VIPRA::f3d point4)
       : _p1(point1), _p2(point2), _p3(point3), _p4(point4) {}
   constexpr Rectangle(VIPRA::f3d point1, VIPRA::f3d point3) : _p1(point1), _p3(point3) {
@@ -16,8 +18,36 @@ class Rectangle {
     _p4 = VIPRA::f3d(point1.x, point3.y, point3.z);
   }
 
+  /**
+   * @brief Checks if a point is inside the rectangle.
+   * 
+   * @param point 
+   * @return true 
+   * @return false 
+   */
   [[nodiscard]] inline constexpr auto is_point_inside(VIPRA::f3d point) const -> bool {
     return point.x >= _p1.x && point.x <= _p2.x && point.y >= _p1.y && point.y <= _p4.y;
+  }
+
+  /**
+   * @brief Checks if the rectangle intersects another
+   * 
+   * @param other 
+   * @return true 
+   * @return false 
+   */
+  [[nodiscard]] inline constexpr auto does_intersect(const Rectangle& other) const -> bool {
+    std::array<Line, 4> lines1{Line{_p1, _p2}, {_p2, _p3}, {_p3, _p4}, {_p4, _p1}};
+    std::array<Line, 4> lines2{
+        Line{other._p1, other._p2}, {other._p2, other._p3}, {other._p3, other._p4}, {other._p4, other._p1}};
+
+    for (size_t i = 0; i < 4; i++) {
+      for (size_t j = 0; j < 4; j++) {
+        if (lines1.at(i).does_intersect(lines2.at(j))) return true;
+      }
+    }
+
+    return false;
   }
 
   // ---------- Getters -------------------

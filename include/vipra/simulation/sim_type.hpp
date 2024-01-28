@@ -19,8 +19,6 @@
 
 namespace VIPRA {
 
-enum class Mode { SINGLE, SWEEP };
-
 template <Concepts::ParamModule params_t, Concepts::OutputCoordinator output_t, Concepts::ModelModule model_t,
           Concepts::PedsetModule pedset_t, Concepts::GoalsModule goals_t, Concepts::MapModule map_t>
 class SimType {
@@ -31,15 +29,9 @@ class SimType {
                          void, decltype(std::declval<output_t>().write())>;
 
  public:
-  constexpr SimType(Mode mode, params_t&& params, output_t&& output, model_t&& model, pedset_t&& pedset,
-                    goals_t&& goals, map_t&& obstacles)
-      : _mode(mode),
-        _params(params),
-        _output(output),
-        _model(model),
-        _pedset(pedset),
-        _goals(goals),
-        _map(obstacles) {}
+  constexpr SimType(params_t&& params, output_t&& output, model_t&& model, pedset_t&& pedset, goals_t&& goals,
+                    map_t&& obstacles)
+      : _params(params), _output(output), _model(model), _pedset(pedset), _goals(goals), _map(obstacles) {}
 
   static void register_params(Concepts::ParamModule auto& params) {
     params.register_param(Modules::Type::SIMULATION, "main", "max_timestep", ParameterType::REQUIRED);
@@ -56,7 +48,7 @@ class SimType {
   }
 
   [[nodiscard]] auto run_sim() -> output_data_t {
-    _output.new_run();
+    _output.new_run(_currSimIdx++);
     const auto [maxTimestep, timestepSize] = get_sim_params();
 
     _model.initialize(_pedset);
@@ -85,7 +77,6 @@ class SimType {
   }
 
  private:
-  Mode     _mode{Mode::SINGLE};
   params_t _params;
   output_t _output;
   model_t  _model;
@@ -93,6 +84,7 @@ class SimType {
   goals_t  _goals;
   map_t    _map;
 
+  VIPRA::idx      _currSimIdx{0};
   VIPRA::timestep _timestep{0};
   VIPRA::timestep _outputFrequency{0};
 

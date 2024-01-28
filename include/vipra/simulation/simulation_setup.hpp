@@ -24,7 +24,7 @@ struct FindIndex<index_t, check_t> {
 };
 
 template <typename... args_t>
-constexpr auto simulation(Mode mode, Concepts::ParamModule auto&& params, args_t... args) {
+constexpr auto simulation(Concepts::ParamModule auto&& params, args_t... args) {
   // Finds the index for each module type
   constexpr std::size_t OUTPUT_IDX = FindIndex<0, Checks::OutputCoord, args_t...>::value;
   constexpr std::size_t MODEL_IDX = FindIndex<0, Checks::Model, args_t...>::value;
@@ -70,7 +70,7 @@ constexpr auto simulation(Mode mode, Concepts::ParamModule auto&& params, args_t
   std::get<MAP_IDX>(temp).config(params);
 
   // Returns the SimType object
-  auto sim = SimType(mode, std::forward<decltype(params)>(params), std::move(std::get<OUTPUT_IDX>(temp)),
+  auto sim = SimType(std::forward<decltype(params)>(params), std::move(std::get<OUTPUT_IDX>(temp)),
                      std::move(std::get<MODEL_IDX>(temp)), std::move(std::get<PEDSET_IDX>(temp)),
                      std::move(std::get<GOALS_IDX>(temp)), std::move(std::get<MAP_IDX>(temp)));
 

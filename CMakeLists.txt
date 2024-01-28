@@ -22,7 +22,7 @@ endif()
 add_library(
   ${PROJECT_NAME}
   STATIC
-  src/vipra.cpp
+  ${PROJECT_SOURCE_DIR}/include/vipra/vipra.cpp
 )
 
 target_include_directories(
