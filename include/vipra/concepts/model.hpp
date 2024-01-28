@@ -7,7 +7,11 @@
 #include "vipra/concepts/map.hpp"
 #include "vipra/concepts/obstacle_set.hpp"
 #include "vipra/concepts/pedset.hpp"
+
 #include "vipra/modules.hpp"
+
+#include "vipra/randomization/random.hpp"
+
 #include "vipra/types/state.hpp"
 #include "vipra/types/time.hpp"
 

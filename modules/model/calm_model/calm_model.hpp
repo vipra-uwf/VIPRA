@@ -5,6 +5,7 @@
 #include "calm_collision.hpp"
 #include "calm_model_types.hpp"
 #include "vipra/concepts/goals.hpp"
+#include "vipra/randomization/distributions.hpp"
 
 namespace CALM {
 class Model {
@@ -21,6 +22,7 @@ public:
     VIPRA_REGISTER_PARAM("maxSpeedStdDev", REQUIRED);
     VIPRA_REGISTER_PARAM("meanShoulderLen", REQUIRED);
     VIPRA_REGISTER_PARAM("shoulderLenStdDev", REQUIRED);
+    VIPRA_REGISTER_PARAM("random_seed", REQUIRED)
   }
 
   VIPRA_CONFIG_STEP {
@@ -35,6 +37,7 @@ public:
     _config.meanShoulderLen = VIPRA_GET_PARAM("meanShoulderLen", VIPRA::f_pnt);
     _config.shoulderLenStdDev =
         VIPRA_GET_PARAM("shoulderLenStdDev", VIPRA::f_pnt);
+    _config.randomSeed = VIPRA_GET_PARAM("random_seed", VIPRA::size);
   }
 
   VIPRA_MODEL_INIT_STEP {
@@ -43,13 +46,23 @@ public:
     _collision.initialize(pedset, goals, _peds);
     _collision.assignRaceStatuses(_raceStatuses, _inRace);
 
-    // TODO(rolland): add proper randomization when we have a random module
-    for (VIPRA::idx i = 0; i < _peds.masses.size(); ++i) {
-      _peds.masses[i] = _config.meanMass;
-      _peds.reactionTimes[i] = _config.meanReactionTime;
-      _peds.maxSpeeds[i] = _config.meanMaxSpeed;
-      _peds.shoulderLens[i] = _config.meanShoulderLen;
-    }
+    VIPRA::Random::Engine engine{_config.randomSeed};
+
+    _peds.masses =
+        VIPRA::make_distribution<VIPRA::normal_distribution<VIPRA::f_pnt>>(
+            {_config.meanMass, _config.massStdDev}, _peds.size(), engine);
+    _peds.reactionTimes =
+        VIPRA::make_distribution<VIPRA::normal_distribution<VIPRA::f_pnt>>(
+            {_config.meanReactionTime, _config.reactionTimeStdDev},
+            _peds.size(), engine);
+    _peds.maxSpeeds =
+        VIPRA::make_distribution<VIPRA::normal_distribution<VIPRA::f_pnt>>(
+            {_config.meanMaxSpeed, _config.maxSpeedStdDev}, _peds.size(),
+            engine);
+    _peds.shoulderLens =
+        VIPRA::make_distribution<VIPRA::normal_distribution<VIPRA::f_pnt>>(
+            {_config.meanShoulderLen, _config.shoulderLenStdDev}, _peds.size(),
+            engine);
   }
 
   VIPRA_MODEL_TIMESTEP {

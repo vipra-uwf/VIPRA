@@ -14,6 +14,7 @@ struct ConfigData {
   VIPRA::f_pnt maxSpeedStdDev;
   VIPRA::f_pnt meanShoulderLen;
   VIPRA::f_pnt shoulderLenStdDev;
+  VIPRA::size randomSeed;
 };
 
 struct ModelData {
@@ -24,6 +25,8 @@ struct ModelData {
   std::vector<VIPRA::f_pnt> betas;
   std::vector<VIPRA::f_pnt> nearestDists;
   std::vector<VIPRA::Line> shoulders;
+
+  [[nodiscard]] auto size() const noexcept -> size_t { return masses.size(); }
 
   void resize(size_t size) {
     masses.resize(size);
