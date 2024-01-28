@@ -6,6 +6,7 @@
 
 #include "vipra/concepts/all_concepts.hpp"
 
+#include "vipra/concepts/output_coordinator.hpp"
 #include "vipra/concepts/parameters.hpp"
 #include "vipra/types/parameter.hpp"
 #include "vipra/types/time.hpp"
@@ -20,7 +21,7 @@ namespace VIPRA {
 
 enum class Mode { SINGLE, SWEEP };
 
-template <Concepts::ParamModule params_t, Concepts::OutputModule output_t, Concepts::ModelModule model_t,
+template <Concepts::ParamModule params_t, Concepts::OutputCoordinator output_t, Concepts::ModelModule model_t,
           Concepts::PedsetModule pedset_t, Concepts::GoalsModule goals_t, Concepts::MapModule map_t>
 class SimType {
   using base_output_t = decltype(std::declval<output_t>().write());
@@ -55,6 +56,7 @@ class SimType {
   }
 
   [[nodiscard]] auto run_sim() -> output_data_t {
+    _output.new_run();
     const auto [maxTimestep, timestepSize] = get_sim_params();
 
     _model.initialize(_pedset);
@@ -96,11 +98,11 @@ class SimType {
 
   [[nodiscard]] constexpr auto get_sim_params() -> std::tuple<VIPRA::f_pnt, VIPRA::f_pnt> {
     VIPRA::timestep maxTimestep =
-        _params.template get_param<VIPRA::timestep>(Modules::Type::SIMULATION, "max_timestep");
+        _params.template get_param<VIPRA::timestep>(Modules::Type::SIMULATION, "main", "max_timestep");
     VIPRA::f_pnt timestepSize =
-        _params.template get_param<VIPRA::f_pnt>(Modules::Type::SIMULATION, "timestep_size");
+        _params.template get_param<VIPRA::f_pnt>(Modules::Type::SIMULATION, "main", "timestep_size");
     VIPRA::timestep outputFrequency =
-        _params.template get_param<VIPRA::timestep>(Modules::Type::SIMULATION, "output_frequency");
+        _params.template get_param<VIPRA::timestep>(Modules::Type::SIMULATION, "main", "output_frequency");
 
     if (outputFrequency == 0) throw std::runtime_error("Output frequency must be greater than 0");
     _outputFrequency = outputFrequency;

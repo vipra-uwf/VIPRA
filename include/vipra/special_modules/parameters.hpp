@@ -52,12 +52,11 @@ class Parameters {
   [[nodiscard]] auto get_param(VIPRA::Modules::Type module, const std::string& moduleName,
                                const std::string& paramName) const -> data_t {
     std::string moduleStr = to_string(module);
-    std::transform(moduleStr.begin(), moduleStr.end(), moduleStr.begin(), ::tolower);
 
     if (!contains(module, moduleName, paramName))
       throw std::runtime_error("Parameter: " + paramName + " For Module: " + moduleName + " Not Registered");
 
-    auto value = _input.template get<Parameter<data_t>>(moduleStr, paramName);
+    auto value = _input.template get<Parameter<data_t>>(moduleStr, moduleName, paramName);
     if (!value.has_value()) {
       if (_params.at(module).at(moduleName).at(paramName) == ParameterType::REQUIRED)
         throw std::runtime_error("Required Parameter: " + paramName + " For Module: " + moduleName +

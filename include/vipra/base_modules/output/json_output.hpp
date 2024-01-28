@@ -19,18 +19,20 @@ class JSON {
 
   template <typename params_t>
   void register_params(params_t& params) {
-    params.register_param(_VIPRA_MODULE_TYPE_, "filepath", ParameterType::REQUIRED);
+    params.register_param(_VIPRA_MODULE_TYPE_, "trajectories_json", "filename", ParameterType::REQUIRED);
   }
 
   template <typename params_t>
   void config(const params_t& params) {
-    _outputPath = params.template get_param<std::string>(Modules::Type::OUTPUT, "filepath");
+    _filename =
+        params.template get_param<std::string>(Modules::Type::OUTPUT, "trajectories_json", "filename");
   }
 
-  void write() {
-    std::ofstream file(_outputPath);
+  void write(const std::filesystem::path& outputDir) {
+    std::filesystem::path filepath = outputDir / _filename;
+    std::ofstream         file(filepath);
     if (!file.is_open()) {
-      throw std::runtime_error("Could not open file for writing: " + _outputPath.string());
+      throw std::runtime_error("Could not open file for writing: " + filepath.string());
     }
 
     file << _json.dump();
@@ -57,8 +59,8 @@ class JSON {
   }
 
  private:
-  nlohmann::json        _json;
-  std::filesystem::path _outputPath;
+  nlohmann::json _json;
+  std::string    _filename;
 };
 
 template <>

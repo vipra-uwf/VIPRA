@@ -44,11 +44,13 @@ class QuadTree {
 
   template <typename params_t>
   void register_params(params_t& params) {
-    params.register_param(VIPRA::Modules::Type::OBSTACLES, "minGridSize", VIPRA::ParameterType::REQUIRED);
+    params.register_param(VIPRA::Modules::Type::OBSTACLES, "quad_tree", "minGridSize",
+                          VIPRA::ParameterType::REQUIRED);
   }
 
   void config(auto& params) {
-    _obsDistance = params.template get_param<VIPRA::f_pnt>(VIPRA::Modules::Type::OBSTACLES, "minGridSize");
+    _obsDistance =
+        params.template get_param<VIPRA::f_pnt>(VIPRA::Modules::Type::OBSTACLES, "quad_tree", "minGridSize");
   }
 
   // TODO(rolland): implement

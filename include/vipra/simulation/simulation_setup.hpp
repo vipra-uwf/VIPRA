@@ -24,19 +24,15 @@ struct FindIndex<index_t, check_t> {
 };
 
 template <typename... args_t>
-constexpr auto simulation(Mode mode, args_t... args) {
+constexpr auto simulation(Mode mode, Concepts::ParamModule auto&& params, args_t... args) {
   // Finds the index for each module type
-  constexpr std::size_t PARAMS_IDX = FindIndex<0, Checks::Params, args_t...>::value;
-  constexpr std::size_t OUTPUT_IDX = FindIndex<0, Checks::Output, args_t...>::value;
+  constexpr std::size_t OUTPUT_IDX = FindIndex<0, Checks::OutputCoord, args_t...>::value;
   constexpr std::size_t MODEL_IDX = FindIndex<0, Checks::Model, args_t...>::value;
   constexpr std::size_t PEDSET_IDX = FindIndex<0, Checks::Pedset, args_t...>::value;
   constexpr std::size_t GOALS_IDX = FindIndex<0, Checks::Goals, args_t...>::value;
   constexpr std::size_t MAP_IDX = FindIndex<0, Checks::Map, args_t...>::value;
 
   // Static asserts to ensure that the modules are valid
-  static_assert(PARAMS_IDX != -1,
-                "Params Module does Not conform to the Params Module specification OR A valid Params Module "
-                "was not provided");
   static_assert(OUTPUT_IDX != -1,
                 "Output Module does Not conform to the Output Module specification OR A valid Output Module "
                 "was not provided");
@@ -55,8 +51,7 @@ constexpr auto simulation(Mode mode, args_t... args) {
 
   auto&& temp = std::forward_as_tuple(args...);
 
-  auto& params = std::get<PARAMS_IDX>(temp);
-  SimType<std::remove_reference_t<decltype(std::get<PARAMS_IDX>(temp))>,
+  SimType<std::remove_reference_t<decltype(params)>,
           std::remove_reference_t<decltype(std::get<OUTPUT_IDX>(temp))>,
           std::remove_reference_t<decltype(std::get<MODEL_IDX>(temp))>,
           std::remove_reference_t<decltype(std::get<PEDSET_IDX>(temp))>,
@@ -75,7 +70,7 @@ constexpr auto simulation(Mode mode, args_t... args) {
   std::get<MAP_IDX>(temp).config(params);
 
   // Returns the SimType object
-  auto sim = SimType(mode, std::move(std::get<PARAMS_IDX>(temp)), std::move(std::get<OUTPUT_IDX>(temp)),
+  auto sim = SimType(mode, std::forward<decltype(params)>(params), std::move(std::get<OUTPUT_IDX>(temp)),
                      std::move(std::get<MODEL_IDX>(temp)), std::move(std::get<PEDSET_IDX>(temp)),
                      std::move(std::get<GOALS_IDX>(temp)), std::move(std::get<MAP_IDX>(temp)));
 

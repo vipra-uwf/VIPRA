@@ -31,15 +31,12 @@ concept can_get_values = requires(input_t input, std::string_view key, std::stri
 };
 
 template <typename input_t>
-concept InputModule = is_type<input_t, Modules::Type::INPUT> &&
-    std::constructible_from<input_t, std::string_view> && can_get_values<input_t>;
+concept InputModule = is_type<input_t, VIPRA::Modules::Type::INPUT> && can_get_values<input_t>;
 
 class DummyInput {
   // NOLINTBEGIN
  public:
   constexpr static VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::INPUT;
-
-  explicit DummyInput(std::string_view /*unused*/) {}
 
   template <typename data_t>
   auto get(std::string_view /*unused*/, std::string_view /*unused*/) const -> std::optional<data_t> {

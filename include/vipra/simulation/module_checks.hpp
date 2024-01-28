@@ -7,6 +7,7 @@
 #include "vipra/concepts/model.hpp"
 #include "vipra/concepts/obstacle_set.hpp"
 #include "vipra/concepts/output.hpp"
+#include "vipra/concepts/output_coordinator.hpp"
 #include "vipra/concepts/parameters.hpp"
 #include "vipra/concepts/pedset.hpp"
 
@@ -26,10 +27,10 @@ struct Input {
 };
 
 template <typename type_t>
-struct Output {
+struct OutputCoord {
   static_assert(Concepts::has_type<type_t>::value, "Missing Module Type");
   // NOLINTNEXTLINE(readability-identifier-naming) lowercase is a regular naming convetion here
-  static constexpr bool value = Concepts::OutputModule<type_t>;
+  static constexpr bool value = Concepts::OutputCoordinator<type_t>;
 };
 
 template <typename type_t>

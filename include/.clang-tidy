@@ -13,6 +13,7 @@ Checks: >
   -misc-no-recursion,
   -google-readability-braces-around-statements,
   -bugprone-easily-swappable-parameters,
+  -google-readability-casting,
 
 WarningsAsErrors: "*"
 

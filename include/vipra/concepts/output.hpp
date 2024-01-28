@@ -1,6 +1,7 @@
 #pragma once
 
 #include <concepts>
+#include <filesystem>
 
 #include "vipra/concepts/module.hpp"
 #include "vipra/concepts/not_void.hpp"
@@ -14,8 +15,8 @@
 namespace VIPRA::Concepts {
 
 template <typename output_t>
-concept can_write = requires(output_t output) {
-  {output.write()};
+concept can_write = requires(output_t output, const std::filesystem::path& dir) {
+  {output.write(dir)};
 };
 
 template <typename output_t>
@@ -43,8 +44,11 @@ concept can_write_ped_values = requires(output_t output, VIPRA::idx idx, const c
 };
 
 template <typename output_t>
-concept OutputModule = is_module<output_t, VIPRA::Modules::Type::OUTPUT> && can_write<output_t> &&
+concept BaseOutput = is_module<output_t, VIPRA::Modules::Type::OUTPUT> &&
     can_write_timestep_values<output_t> && can_write_sim_values<output_t> && can_write_ped_values<output_t>;
+
+template <typename output_t>
+concept OutputModule = can_write<output_t> && BaseOutput<output_t>;
 
 class DummyOutput {
   // NOLINTBEGIN
@@ -58,7 +62,7 @@ class DummyOutput {
 
   void config(auto& /*unused*/) {}
 
-  void write() {}
+  void write(const std::filesystem::path&) {}
   void sim_value(const char* /*unused*/, auto&& /*unused*/) {}
   void timestep_value(const char* /*unused*/, VIPRA::timestep, auto&& /*unused*/) {}
   void ped_value(VIPRA::idx /*unused*/, const char* /*unused*/, auto&& /*unused*/) {}

@@ -27,12 +27,6 @@ class JSON {
   VIPRA_MODULE_TYPE(INPUT)
   explicit JSON(const std::filesystem::path& filepath) { load_file(filepath); }
 
-  template <Concepts::ParamModule params_t>
-  void config(const params_t& params) {
-    const std::filesystem::path filepath =
-        params.template get_param<std::string>(Modules::Type::INPUT, "filepath");
-  }
-
   template <typename data_t, typename... key_ts>
   [[nodiscard]] auto get(key_ts&&... keys) const -> std::optional<data_t> {
     auto&& keysTuple = std::forward_as_tuple(keys...);

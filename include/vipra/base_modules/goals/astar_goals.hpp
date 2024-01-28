@@ -65,18 +65,19 @@ class AStar {
 
   template <typename params_t>
   void config(const params_t& params) {
-    _end_goal_type = params.template get_param<std::string>(_VIPRA_MODULE_TYPE_, "endGoalType");
-    _goal_range = params.template get_param<VIPRA::f_pnt>(_VIPRA_MODULE_TYPE_, "goalRange");
-    _grid_size = params.template get_param<VIPRA::f_pnt>(_VIPRA_MODULE_TYPE_, "gridSize");
-    _closest_obstacle = params.template get_param<VIPRA::f_pnt>(_VIPRA_MODULE_TYPE_, "closestObstacle");
+    _end_goal_type = params.template get_param<std::string>(_VIPRA_MODULE_TYPE_, "astar", "endGoalType");
+    _goal_range = params.template get_param<VIPRA::f_pnt>(_VIPRA_MODULE_TYPE_, "astar", "goalRange");
+    _grid_size = params.template get_param<VIPRA::f_pnt>(_VIPRA_MODULE_TYPE_, "astar", "gridSize");
+    _closest_obstacle =
+        params.template get_param<VIPRA::f_pnt>(_VIPRA_MODULE_TYPE_, "astar", "closestObstacle");
   }
 
   template <typename params_t>
   void register_params(params_t& params) {
-    params.register_param(_VIPRA_MODULE_TYPE_, "endGoalType", ParameterType::REQUIRED);
-    params.register_param(_VIPRA_MODULE_TYPE_, "goalRange", ParameterType::REQUIRED);
-    params.register_param(_VIPRA_MODULE_TYPE_, "gridSize", ParameterType::REQUIRED);
-    params.register_param(_VIPRA_MODULE_TYPE_, "closestObstacle", ParameterType::REQUIRED);
+    params.register_param(_VIPRA_MODULE_TYPE_, "astar", "endGoalType", ParameterType::REQUIRED);
+    params.register_param(_VIPRA_MODULE_TYPE_, "astar", "goalRange", ParameterType::REQUIRED);
+    params.register_param(_VIPRA_MODULE_TYPE_, "astar", "gridSize", ParameterType::REQUIRED);
+    params.register_param(_VIPRA_MODULE_TYPE_, "astar", "closestObstacle", ParameterType::REQUIRED);
   }
 
   template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t>

@@ -16,14 +16,17 @@ concept accepts_parameters = requires(input_t input) {
 };
 
 template <typename input_t>
-concept parameter_qualified_input = is_type<input_t, Modules::Type::INPUT> && InputModule<input_t>;
+concept parameter_qualified_input = accepts_parameters<input_t> && InputModule<input_t>;
 
 class DummyParameterInput {
   // NOLINTBEGIN
  public:
   constexpr static VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::INPUT;
 
-  explicit DummyParameterInput(std::string_view /*unused*/) {}
+  template <typename params_t>
+  void register_params(params_t&) {}
+
+  void config(const auto&) {}
 
   template <typename data_t>
   auto get(std::string_view /*unused*/, std::string_view /*unused*/) const -> std::optional<data_t> {
