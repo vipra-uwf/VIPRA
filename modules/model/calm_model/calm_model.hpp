@@ -9,9 +9,35 @@
 namespace CALM {
 class Model {
 public:
-  void initialize(const VIPRA::Concepts::PedsetModule auto &pedset,
-                  const VIPRA::Concepts::MapModule auto & /*unused*/,
-                  const VIPRA::Concepts::GoalsModule auto &goals) {
+  VIPRA_MODULE_NAME("calm_model")
+  VIPRA_MODULE_TYPE(MODEL)
+
+  VIPRA_REGISTER_STEP {
+    VIPRA_REGISTER_PARAM("meanMass", REQUIRED);
+    VIPRA_REGISTER_PARAM("massStdDev", REQUIRED);
+    VIPRA_REGISTER_PARAM("meanReactionTime", REQUIRED);
+    VIPRA_REGISTER_PARAM("reactionTimeStdDev", REQUIRED);
+    VIPRA_REGISTER_PARAM("meanMaxSpeed", REQUIRED);
+    VIPRA_REGISTER_PARAM("maxSpeedStdDev", REQUIRED);
+    VIPRA_REGISTER_PARAM("meanShoulderLen", REQUIRED);
+    VIPRA_REGISTER_PARAM("shoulderLenStdDev", REQUIRED);
+  }
+
+  VIPRA_CONFIG_STEP {
+    _config.meanMass = VIPRA_GET_PARAM("meanMass", VIPRA::f_pnt);
+    _config.massStdDev = VIPRA_GET_PARAM("massStdDev", VIPRA::f_pnt);
+    _config.meanReactionTime =
+        VIPRA_GET_PARAM("meanReactionTime", VIPRA::f_pnt);
+    _config.reactionTimeStdDev =
+        VIPRA_GET_PARAM("reactionTimeStdDev", VIPRA::f_pnt);
+    _config.meanMaxSpeed = VIPRA_GET_PARAM("meanMaxSpeed", VIPRA::f_pnt);
+    _config.maxSpeedStdDev = VIPRA_GET_PARAM("maxSpeedStdDev", VIPRA::f_pnt);
+    _config.meanShoulderLen = VIPRA_GET_PARAM("meanShoulderLen", VIPRA::f_pnt);
+    _config.shoulderLenStdDev =
+        VIPRA_GET_PARAM("shoulderLenStdDev", VIPRA::f_pnt);
+  }
+
+  VIPRA_MODEL_INIT_STEP {
     _peds.resize(pedset.num_pedestrians());
     _state.initialize(pedset);
     _collision.initialize(pedset, goals, _peds);
@@ -26,12 +52,7 @@ public:
     }
   }
 
-  template <VIPRA::Concepts::PedsetModule peds_t,
-            VIPRA::Concepts::MapModule map_t,
-            VIPRA::Concepts::GoalsModule goals_t>
-  auto timestep(const peds_t &pedset, const map_t &map, const goals_t &goals,
-                VIPRA::delta_t deltaT, VIPRA::timestep timestep)
-      -> const VIPRA::State & {
+  VIPRA_MODEL_TIMESTEP {
     calc_shoulders(pedset, goals);
     calc_neighbors(pedset, map, goals);
     calc_betas(pedset);
@@ -43,41 +64,6 @@ public:
     }
 
     return _state;
-  }
-
-  VIPRA_MODULE_NAME("calm_model")
-  VIPRA_MODULE_TYPE(MODEL)
-
-  VIPRA_REGISTER_STEP {
-    VIPRA_REGISTER_PARAM(MODEL, "meanMass", VIPRA::ParameterType::REQUIRED);
-    VIPRA_REGISTER_PARAM(MODEL, "massStdDev", VIPRA::ParameterType::REQUIRED);
-    VIPRA_REGISTER_PARAM(MODEL, "meanReactionTime",
-                         VIPRA::ParameterType::REQUIRED);
-    VIPRA_REGISTER_PARAM(MODEL, "reactionTimeStdDev",
-                         VIPRA::ParameterType::REQUIRED);
-    VIPRA_REGISTER_PARAM(MODEL, "meanMaxSpeed", VIPRA::ParameterType::REQUIRED);
-    VIPRA_REGISTER_PARAM(MODEL, "maxSpeedStdDev",
-                         VIPRA::ParameterType::REQUIRED);
-    VIPRA_REGISTER_PARAM(MODEL, "meanShoulderLen",
-                         VIPRA::ParameterType::REQUIRED);
-    VIPRA_REGISTER_PARAM(MODEL, "shoulderLenStdDev",
-                         VIPRA::ParameterType::REQUIRED);
-  }
-
-  VIPRA_CONFIG_STEP {
-    _config.meanMass = VIPRA_GET_PARAM(MODEL, "meanMass", VIPRA::f_pnt);
-    _config.massStdDev = VIPRA_GET_PARAM(MODEL, "massStdDev", VIPRA::f_pnt);
-    _config.meanReactionTime =
-        VIPRA_GET_PARAM(MODEL, "meanReactionTime", VIPRA::f_pnt);
-    _config.reactionTimeStdDev =
-        VIPRA_GET_PARAM(MODEL, "reactionTimeStdDev", VIPRA::f_pnt);
-    _config.meanMaxSpeed = VIPRA_GET_PARAM(MODEL, "meanMaxSpeed", VIPRA::f_pnt);
-    _config.maxSpeedStdDev =
-        VIPRA_GET_PARAM(MODEL, "maxSpeedStdDev", VIPRA::f_pnt);
-    _config.meanShoulderLen =
-        VIPRA_GET_PARAM(MODEL, "meanShoulderLen", VIPRA::f_pnt);
-    _config.shoulderLenStdDev =
-        VIPRA_GET_PARAM(MODEL, "shoulderLenStdDev", VIPRA::f_pnt);
   }
 
 private:
