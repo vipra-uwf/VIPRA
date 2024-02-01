@@ -8,16 +8,9 @@ project(
   LANGUAGES CXX
 )
 
-option(VIPRA_DEBUG "Build with debug flags" OFF)
-
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
-
-if (VIPRA_DEBUG)
-  message(STATUS "Building VIPRA with debug flags")
-  add_compile_definitions(VIPRA_DEBUG)
-endif()
 
 add_library(
   ${PROJECT_NAME}

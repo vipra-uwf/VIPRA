@@ -127,7 +127,7 @@ class QuadTree {
       return VIPRA::_emptyf3d_;
     }
 
-    return _obstacles.at(nearest);
+    return _obstacles[nearest];
   }
 
   [[nodiscard]] auto get_object_types() const -> const std::vector<std::string>& { return _objectTypes; }

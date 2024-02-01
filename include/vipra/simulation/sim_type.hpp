@@ -56,12 +56,10 @@ class SimType {
 
     _map.initialize(_pedset);
     _goals.initialize(_pedset, _map);
-    _model.initialize(_pedset, _map, _goals);
-
-    // TODO(rolland): modules have no way of reaching output except through simulation, we need to fix this
+    _model.initialize(_pedset, _map, _goals, _output);
 
     while (_timestep < maxTimestep) {
-      const VIPRA::State& state = _model.timestep(_pedset, _map, _goals, timestepSize, _timestep);
+      const VIPRA::State& state = _model.timestep(_pedset, _map, _goals, _output, timestepSize, _timestep);
       _pedset.update(state);
       _goals.update(_pedset, _map);
       output_positions();

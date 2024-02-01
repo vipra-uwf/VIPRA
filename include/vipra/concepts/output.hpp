@@ -44,11 +44,12 @@ concept can_write_ped_values = requires(output_t output, VIPRA::idx idx, const c
 };
 
 template <typename output_t>
-concept BaseOutput = is_module<output_t, VIPRA::Modules::Type::OUTPUT> &&
+concept BaseOutput =
     can_write_timestep_values<output_t> && can_write_sim_values<output_t> && can_write_ped_values<output_t>;
 
 template <typename output_t>
-concept OutputModule = can_write<output_t> && BaseOutput<output_t>;
+concept OutputModule =
+    is_module<output_t, VIPRA::Modules::Type::OUTPUT> && can_write<output_t> && BaseOutput<output_t>;
 
 class DummyOutput {
   // NOLINTBEGIN

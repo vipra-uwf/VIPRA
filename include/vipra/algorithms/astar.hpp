@@ -70,7 +70,8 @@ concept conversion_func = std::is_same_v<func_t, VOID> || requires(func_t func, 
 template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
           AStar::conversion_func conversion_f_t = VOID>
 [[nodiscard]] constexpr auto astar(VIPRA::idx start, VIPRA::idx end, const graph_t& graph,
-                                   distance_f_t&& distance_func, conversion_f_t&& conversion_func = VOID{})
+                                   distance_f_t&&   distance_func,
+                                   conversion_f_t&& conversion_func = VOID{}) noexcept
     -> std::vector<
         std::remove_reference_t<Util::invoke_result_or_t<VIPRA::idx, conversion_f_t, VIPRA::idx>>> {
   using ret_t =

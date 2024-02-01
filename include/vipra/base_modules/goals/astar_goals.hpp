@@ -54,8 +54,11 @@ class AStar {
         throw std::runtime_error("No path found for pedestrian");
       }
 
-      _paths.push_back(squash_path(path));
+      _paths.push_back(path);
+      // _paths.push_back(squash_path(path));
     }
+
+    // debug_output_paths();
 
     for (VIPRA::idx pedIdx = 0; pedIdx < pedset.num_pedestrians(); ++pedIdx) {
       _currentGoals[pedIdx] = _paths[pedIdx].back();
@@ -278,6 +281,19 @@ class AStar {
 
     _xCount = static_cast<VIPRA::idx>(std::ceil(dimensions.x / _grid_size) + 1);
     _yCount = static_cast<VIPRA::idx>(std::ceil(dimensions.y / _grid_size) + 1);
+  }
+
+  void debug_output_paths() {
+    std::printf("{\"paths\": [\n");
+    for (const auto& path : _paths) {
+      std::printf("{ \"points\": [\n");
+      for (const auto& point : path) {
+        std::printf("[%f, %f, %f]%c\n", point.x, point.y, point.z, point == path.back() ? ' ' : ',');
+      }
+      std::printf("]}%c\n", &path == &_paths.back() ? ' ' : ',');
+    }
+    std::printf("]}\n");
+    std::fflush(stdout);
   }
 };
 }  // namespace VIPRA::Goals

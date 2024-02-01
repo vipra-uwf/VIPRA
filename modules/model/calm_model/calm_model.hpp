@@ -102,7 +102,7 @@ private:
       if (goals.is_goal_met(i))
         continue;
 
-      VIPRA::f3d pedCoords = coords.at(i);
+      VIPRA::f3d pedCoords = coords[i];
       VIPRA::f3d pedGoal = goals.current_goal(i);
       VIPRA::Rectangle pedRect = rect_from_shoulders(i, pedCoords, pedGoal);
 
@@ -111,26 +111,26 @@ private:
         if (i == j || goals.is_goal_met(j))
           continue;
 
-        auto otherCoords = coords.at(j);
+        auto otherCoords = coords[j];
         VIPRA::f_pnt distance = pedCoords.distance_to(otherCoords);
 
         if (distance >= nearestDist)
           continue;
 
-        if ((_raceStatuses.at(i) == 0 && _raceStatuses.at(j) == 1) ||
+        if ((_raceStatuses[i] == 0 && _raceStatuses[j] == 1) ||
             std::fabs(distance - equilibriumDistance) < equilibriumResolution)
           continue;
 
         if (!is_ped_toward_goal(pedCoords, pedGoal, otherCoords))
           continue;
 
-        if (!obj_spatial_test(pedRect, _peds.shoulders.at(j).start,
-                              _peds.shoulders.at(j).end))
+        if (!obj_spatial_test(pedRect, _peds.shoulders[j].start,
+                              _peds.shoulders[j].end))
           continue;
 
         nearestDist = distance;
       }
-      _peds.nearestDists.at(i) = nearestDist;
+      _peds.nearestDists[i] = nearestDist;
     }
   }
 
@@ -140,15 +140,15 @@ private:
     const auto &coords = pedset.all_coords();
 
     for (VIPRA::idx i = 0; i < pedCnt; ++i) {
-      VIPRA::f3d coord = coords.at(i);
+      VIPRA::f3d coord = coords[i];
       VIPRA::f3d direction = (goals.current_goal(i) - coord).unit();
 
-      _peds.shoulders.at(i) = {(VIPRA::f3d{-direction.y, direction.x}.unit() *
-                                _peds.shoulderLens.at(i)) +
-                                   coord,
-                               (VIPRA::f3d{direction.y, -direction.x}.unit() *
-                                _peds.shoulderLens.at(i)) +
-                                   coord};
+      _peds.shoulders[i] = {(VIPRA::f3d{-direction.y, direction.x}.unit() *
+                             _peds.shoulderLens[i]) +
+                                coord,
+                            (VIPRA::f3d{direction.y, -direction.x}.unit() *
+                             _peds.shoulderLens[i]) +
+                                coord};
     }
   }
 
@@ -218,7 +218,7 @@ private:
   auto is_path_blocked(VIPRA::idx pedIdx, VIPRA::f3d velocity,
                        VIPRA::f_pnt maxDist,
                        const VIPRA::Concepts::MapModule auto &map) -> float {
-    VIPRA::Line shoulders = _peds.shoulders.at(pedIdx);
+    VIPRA::Line shoulders = _peds.shoulders[pedIdx];
     if (shoulders.start == shoulders.end) {
       return -1;
     }
@@ -240,7 +240,7 @@ private:
 
   auto rect_from_shoulders(VIPRA::idx pedIdx, VIPRA::f3d pedCoords,
                            VIPRA::f3d goal) -> VIPRA::Rectangle {
-    const VIPRA::Line pedShldr = _peds.shoulders.at(pedIdx);
+    const VIPRA::Line pedShldr = _peds.shoulders[pedIdx];
     const VIPRA::f3d range = (goal - pedCoords).unit();
 
     return VIPRA::Rectangle{pedShldr.start, pedShldr.start + range,

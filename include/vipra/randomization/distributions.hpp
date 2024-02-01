@@ -30,10 +30,9 @@ class uniform_distribution {
   constexpr auto operator()(Random::Engine& engine) -> data_t {
     auto val = engine();
     if ((_range.second - _range.first) == 0) return _range.first;
-    return static_cast<data_t>(_range.firsdata_t +
-                               static_cast<double>(val) /
-                                   (static_cast<double>(std::numeric_limits<uint64_t>::max()) /
-                                    static_cast<double>(_range.second - _range.first)));
+    return static_cast<data_t>(_range.first + static_cast<double>(val) /
+                                                  (static_cast<double>(std::numeric_limits<uint64_t>::max()) /
+                                                   static_cast<double>(_range.second - _range.first)));
   }
 
  private:
