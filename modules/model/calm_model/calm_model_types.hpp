@@ -24,7 +24,7 @@ struct ModelData {
   std::vector<VIPRA::f_pnt> shoulderLens;
   std::vector<VIPRA::f_pnt> betas;
   std::vector<VIPRA::f_pnt> nearestDists;
-  std::vector<VIPRA::Line> shoulders;
+  std::vector<VIPRA::Geometry::Line> shoulders;
 
   [[nodiscard]] auto size() const noexcept -> size_t { return masses.size(); }
 

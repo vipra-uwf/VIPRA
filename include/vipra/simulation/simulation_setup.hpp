@@ -46,7 +46,7 @@ constexpr auto simulation(Concepts::ParamModule auto&& params, args_t... args) {
                 "Goals Module does Not conform to the Goals Module specification OR A valid Goals Module was "
                 "not provided");
   static_assert(MAP_IDX != -1,
-                "Obstacle Module does Not conform to the Obstacle Module specification OR A valid Obstacle "
+                "Map Module does Not conform to the Map Module specification OR A valid Map "
                 "Module was not provided");
 
   auto&& temp = std::forward_as_tuple(args...);

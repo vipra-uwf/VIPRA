@@ -7,6 +7,7 @@
 #include "vipra/concepts/map.hpp"
 #include "vipra/concepts/obstacle_set.hpp"
 
+#include "vipra/geometry/circle.hpp"
 #include "vipra/modules.hpp"
 
 // TODO(rolland): update any fields each timestep
@@ -80,18 +81,15 @@ class Map {
     return _obstacles.collision(point);
   }
 
+  [[nodiscard]] constexpr inline auto collision(VIPRA::Geometry::Circle point) const -> bool {
+    return _obstacles.collision(point);
+  }
+
   [[nodiscard]] constexpr inline auto ray_hit(VIPRA::f3d start, VIPRA::f3d end) const -> VIPRA::f_pnt {
     return _obstacles.ray_hit(start, end);
   }
 
-  [[nodiscard]] constexpr inline auto nearest_obstacle(VIPRA::f3d point) const -> VIPRA::f3d {
-    return _obstacles.nearest_obstacle(point);
-  }
-  [[nodiscard]] constexpr inline auto nearest_obstacle_in_direction(VIPRA::f3d point,
-                                                                    VIPRA::f3d direction) const
-      -> VIPRA::f3d {
-    return _obstacles.nearest_obstacle_in_direction(point, direction);
-  }
+  [[nodiscard]] inline auto obstacle_set() const -> obstacles_t const& { return _obstacles; }
 
   // TODO(rolland): decide on what other methods to access fields with
   template <Concepts::FieldModule field_t>

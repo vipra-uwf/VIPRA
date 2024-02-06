@@ -12,7 +12,9 @@
 #include <unordered_set>
 
 #include "vipra/concepts/not_void.hpp"
-#include "vipra/types/f3d.hpp"
+
+#include "vipra/geometry/f3d.hpp"
+
 #include "vipra/types/float.hpp"
 #include "vipra/types/idx.hpp"
 
@@ -103,6 +105,8 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
 
       return *gridPoint;
     }
+    auto begin() -> decltype(this->c.begin()) { return this->c.begin(); }
+    auto end() -> decltype(this->c.end()) { return this->c.end(); }
   };
 
   std::vector<Node>         nodes{graph.nodes().size()};
@@ -131,15 +135,15 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
         neighbor.distanceFromStart = current->distanceFromStart + distance_func(current->self, neighborIdx);
         neighbor.distanceWithHeuristic = neighbor.distanceFromStart + distance_func(neighborIdx, end);
 
-        auto* found = openset.search(neighborIdx);
-        if (!found) {
+        auto found = std::find(openset.begin(), openset.end(), &nodes[neighborIdx]);
+        if (found == openset.end()) {
           nodes[neighborIdx] = neighbor;
           openset.push(&nodes[neighborIdx]);
         } else {
-          if (neighbor.distanceFromStart < found->distanceFromStart) {
-            found->distanceFromStart = neighbor.distanceFromStart;
-            found->distanceWithHeuristic = neighbor.distanceWithHeuristic;
-            found->parent = neighbor.parent;
+          if (neighbor.distanceFromStart < (*found)->distanceFromStart) {
+            (*found)->distanceFromStart = neighbor.distanceFromStart;
+            (*found)->distanceWithHeuristic = neighbor.distanceWithHeuristic;
+            (*found)->parent = neighbor.parent;
           }
         }
       }

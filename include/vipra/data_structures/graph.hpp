@@ -18,22 +18,33 @@ class Graph {
 
   void reserve(VIPRA::idx size) { _nodes.reserve(size); }
 
+  [[nodiscard]] constexpr auto node_count() const -> VIPRA::idx { return _nodes.size(); }
+
   [[nodiscard]] constexpr auto nodes() -> std::vector<Node>& { return _nodes; }
   [[nodiscard]] constexpr auto nodes() const -> const std::vector<Node>& { return _nodes; }
 
   [[nodiscard]] constexpr auto neighbors(VIPRA::idx nodeIdx) -> std::vector<VIPRA::idx>& {
+    assert(nodeIdx < _nodes.size());
     return _nodes[nodeIdx].neighbors;
   }
   [[nodiscard]] constexpr auto neighbors(VIPRA::idx nodeIdx) const -> const std::vector<VIPRA::idx>& {
+    assert(nodeIdx < _nodes.size());
     return _nodes[nodeIdx].neighbors;
   }
 
-  [[nodiscard]] constexpr auto data(VIPRA::idx nodeIdx) -> data_t& { return _nodes[nodeIdx].data; }
+  [[nodiscard]] constexpr auto data(VIPRA::idx nodeIdx) -> data_t& {
+    assert(nodeIdx < _nodes.size());
+    return _nodes[nodeIdx].data;
+  }
   [[nodiscard]] constexpr auto data(VIPRA::idx nodeIdx) const -> const data_t& {
+    assert(nodeIdx < _nodes.size());
     return _nodes[nodeIdx].data;
   }
 
   void add_edge(VIPRA::idx nodeIdx1, VIPRA::idx nodeIdx2) {
+    assert(nodeIdx1 < _nodes.size());
+    assert(nodeIdx2 < _nodes.size());
+
     _nodes[nodeIdx1].neighbors.push_back(nodeIdx2);
     _nodes[nodeIdx2].neighbors.push_back(nodeIdx1);
   }

@@ -16,6 +16,8 @@
 #include "vipra/util/all_of_type.hpp"
 #include "vipra/util/debug_do.hpp"
 
+// TODO(rolland): create type erased wrapper for simulation
+
 // TODO(rolland): go through everything and handle errors more gracefully, currently we just throw
 
 namespace VIPRA {

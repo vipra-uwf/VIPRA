@@ -6,3 +6,5 @@
 #define VIPRA_MODULE_NAME(name) constexpr static const char* _VIPRA_MODULE_NAME_ = name;
 
 #define CHECK_MODULE(type, ...) static_assert(VIPRA::Concepts::type<__VA_ARGS__>);
+
+// TODO(rolland): add macro for naming a new module

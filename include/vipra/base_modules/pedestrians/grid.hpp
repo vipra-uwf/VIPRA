@@ -7,7 +7,7 @@
 #include "vipra/macros/module.hpp"
 #include "vipra/modules.hpp"
 
-#include "vipra/types/f3d.hpp"
+#include "vipra/geometry/f3d.hpp"
 #include "vipra/types/idx.hpp"
 #include "vipra/types/size.hpp"
 #include "vipra/types/state.hpp"
@@ -29,6 +29,8 @@ class Grid {
   }
 
   void update(const VIPRA::State& state) {
+    assert(state.size() == _coords.size());
+
     for (VIPRA::idx pedIdx = 0; pedIdx < state.size(); ++pedIdx) {
       _coords[pedIdx] = state.positions[pedIdx];
       _velocities[pedIdx] = state.velocities[pedIdx];
@@ -41,9 +43,17 @@ class Grid {
   void config(const auto& params) {}
 
   [[nodiscard]] auto num_pedestrians() const -> VIPRA::size { return _coords.size(); }
-  [[nodiscard]] auto ped_coords(VIPRA::idx pedIdx) const -> VIPRA::f3d { return _coords[pedIdx]; }
+  [[nodiscard]] auto ped_coords(VIPRA::idx pedIdx) const -> VIPRA::f3d {
+    assert(pedIdx < _coords.size());
+
+    return _coords[pedIdx];
+  }
   [[nodiscard]] auto all_coords() const -> const std::vector<VIPRA::f3d>& { return _coords; }
-  [[nodiscard]] auto ped_velocity(VIPRA::idx pedIdx) const -> VIPRA::f3d { return _velocities[pedIdx]; }
+  [[nodiscard]] auto ped_velocity(VIPRA::idx pedIdx) const -> VIPRA::f3d {
+    assert(pedIdx < _velocities.size());
+
+    return _velocities[pedIdx];
+  }
   [[nodiscard]] auto all_velocities() const -> const std::vector<VIPRA::f3d>& { return _velocities; }
 
  private:

@@ -5,7 +5,7 @@
 #include "vipra/concepts/module.hpp"
 #include "vipra/modules.hpp"
 
-#include "vipra/types/f3d.hpp"
+#include "vipra/geometry/f3d.hpp"
 #include "vipra/types/idx.hpp"
 #include "vipra/types/size.hpp"
 

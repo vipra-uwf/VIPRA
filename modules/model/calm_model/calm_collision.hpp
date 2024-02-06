@@ -5,9 +5,12 @@
 #include "vipra/concepts/pedset.hpp"
 
 #include "calm_model_types.hpp"
-#include "vipra/types/rectangle.hpp"
+#include "vipra/geometry/rectangle.hpp"
 
 namespace CALM {
+
+using VIPRA::Geometry::Line;
+using VIPRA::Geometry::Rectangle;
 
 class Collision {
 public:
@@ -51,8 +54,7 @@ public:
   void initializeRectangles(const VIPRA::Concepts::PedsetModule auto &pedset,
                             const VIPRA::Concepts::GoalsModule auto &goals,
                             const ModelData &data) {
-    collisionRectangles =
-        std::vector<VIPRA::Rectangle>(pedset.num_pedestrians());
+    collisionRectangles = std::vector<Rectangle>(pedset.num_pedestrians());
     const auto &shldrs = data.shoulderLens;
     for (VIPRA::size i = 0; i < collisionRectangles.size(); i++) {
       auto coords = pedset.ped_coords(i);
@@ -83,7 +85,7 @@ public:
 
 private:
   std::vector<RaceStatus> raceStatuses;
-  std::vector<VIPRA::Rectangle> collisionRectangles;
+  std::vector<Rectangle> collisionRectangles;
   std::vector<std::vector<bool>> inRace;
   std::vector<std::vector<VIPRA::f3d>> intersectionMidpoints;
   std::vector<VIPRA::f3d> velocityDirections;
@@ -119,8 +121,7 @@ private:
         continue;
       }
 
-      const VIPRA::Line shoulders =
-          getShoulderPoints(coords[i], pedVel, shldrs[i]);
+      const Line shoulders = getShoulderPoints(coords[i], pedVel, shldrs[i]);
       const VIPRA::f3d range = (pedVel.unit() * rectangleRange);
       collisionRectangles[i] = {shoulders.start, shoulders.start + range,
                                 shoulders.end + range, shoulders.end};
@@ -140,13 +141,13 @@ private:
     float det = a1 * b2 - a2 * b1;
 
     if (det == 0) {
-      if (VIPRA::Line{p1, q1}.is_point_on(p2))
+      if (Line{p1, q1}.is_point_on(p2))
         intersectionPoints.push_back(p2);
-      if (VIPRA::Line{p1, q1}.is_point_on(q2))
+      if (Line{p1, q1}.is_point_on(q2))
         intersectionPoints.push_back(q2);
-      if (VIPRA::Line{p2, q2}.is_point_on(p1))
+      if (Line{p2, q2}.is_point_on(p1))
         intersectionPoints.push_back(p1);
-      if (VIPRA::Line{p2, q2}.is_point_on(q1))
+      if (Line{p2, q2}.is_point_on(q1))
         intersectionPoints.push_back(q1);
     } else {
       float pX{};
@@ -159,17 +160,17 @@ private:
 
   [[nodiscard]] VIPRA::f3d getCollisionAreaMidpoint(VIPRA::idx index1,
                                                     VIPRA::idx index2) {
-    const VIPRA::Rectangle &r1 = collisionRectangles[index1];
-    const VIPRA::Rectangle &r2 = collisionRectangles[index2];
+    const Rectangle &r1 = collisionRectangles[index1];
+    const Rectangle &r2 = collisionRectangles[index2];
 
-    std::array<VIPRA::Line, 4> s1{VIPRA::Line{r1.p1(), r1.p2()},
-                                  {r1.p2(), r1.p3()},
-                                  {r1.p3(), r1.p4()},
-                                  {r1.p4(), r1.p1()}};
-    std::array<VIPRA::Line, 4> s2{VIPRA::Line{r2.p1(), r2.p2()},
-                                  {r2.p2(), r2.p3()},
-                                  {r2.p3(), r2.p4()},
-                                  {r2.p4(), r2.p1()}};
+    std::array<Line, 4> s1{Line{r1.p1(), r1.p2()},
+                           {r1.p2(), r1.p3()},
+                           {r1.p3(), r1.p4()},
+                           {r1.p4(), r1.p1()}};
+    std::array<Line, 4> s2{Line{r2.p1(), r2.p2()},
+                           {r2.p2(), r2.p3()},
+                           {r2.p3(), r2.p4()},
+                           {r2.p4(), r2.p1()}};
 
     VIPRA::f3dVec intersectionPoints;
     for (size_t i = 0; i < 4; i++) {
@@ -292,8 +293,8 @@ private:
    * @return false
    */
   bool checkIfCollide(VIPRA::idx index1, VIPRA::idx index2) {
-    VIPRA::Rectangle &r1 = collisionRectangles[index1];
-    VIPRA::Rectangle &r2 = collisionRectangles[index2];
+    Rectangle &r1 = collisionRectangles[index1];
+    Rectangle &r2 = collisionRectangles[index2];
     return r1.does_intersect(r2);
   }
 
@@ -303,11 +304,11 @@ private:
    * @param coords : Coordinates of the pedestrian
    * @param velocity : Velocity of the pedestrian
    * @param shoulderWidth : Width of the pedestrian
-   * @return VIPRA::Line : Line containing the shoulder points
+   * @return Line : Line containing the shoulder points
    */
-  [[nodiscard]] inline VIPRA::Line
-  getShoulderPoints(const VIPRA::f3d &coords, const VIPRA::f3d &velocity,
-                    float shoulderWidth) noexcept {
+  [[nodiscard]] inline Line getShoulderPoints(const VIPRA::f3d &coords,
+                                              const VIPRA::f3d &velocity,
+                                              float shoulderWidth) noexcept {
     if (velocity == VIPRA::f3d{0, 0, 0}) {
       return {(VIPRA::f3d{0, shoulderWidth}), (VIPRA::f3d{0, -shoulderWidth})};
     }

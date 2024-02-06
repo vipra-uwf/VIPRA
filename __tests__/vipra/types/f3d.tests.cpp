@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "vipra/types/f3d.hpp"
+#include "vipra/geometry/f3d.hpp"
 
 const float ERROR = 0.001;
 

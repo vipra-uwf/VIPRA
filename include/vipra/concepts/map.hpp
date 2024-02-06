@@ -15,9 +15,15 @@ concept can_initialize_map = requires(map_t map, const DummyPedSet& pedset) {
   {map.initialize(pedset)};
 };
 
+template <typename map_t>
+concept can_get_obstacles = requires(const map_t map) {
+  {map.obstacle_set()};
+};
+
 // TODO(rolland): add in requirement to match obstacle types
 template <typename map_t>
-concept MapModule = is_module<map_t, Modules::Type::MAP> && can_initialize_map<map_t>;
+concept MapModule =
+    is_module<map_t, Modules::Type::MAP> && can_initialize_map<map_t> && can_get_obstacles<map_t>;
 
 class DummyMap {
   // NOLINTBEGIN
@@ -33,6 +39,11 @@ class DummyMap {
 
   template <Concepts::PedsetModule pedestrians_t>
   void initialize(const pedestrians_t& pedestrians) {}
+
+  auto obstacle_set() const -> const DummyObsSet& { return _dummy; }
+
+ private:
+  DummyObsSet _dummy;
   // NOLINTEND
 };
 

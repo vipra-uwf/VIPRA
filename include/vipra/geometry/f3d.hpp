@@ -1,10 +1,12 @@
 #pragma once
 
+#include <cassert>
 #include <cmath>
 #include <limits>
 #include <stdexcept>
 #include <vector>
 
+#include "vipra/concepts/numeric.hpp"
 #include "vipra/types/float.hpp"
 
 namespace VIPRA {
@@ -23,7 +25,7 @@ struct f3d {
   constexpr auto operator=(const f3d& other) noexcept -> f3d& = default;
   constexpr auto operator=(f3d&& other) noexcept -> f3d& = default;
 
-  template <typename data_t, class = typename std::enable_if<std::is_integral<data_t>::value>::type>
+  template <Concepts::Numeric data_t>
   inline constexpr auto operator[](data_t index) -> VIPRA::f_pnt& {
     switch (index) {
       case 0:
@@ -43,7 +45,7 @@ struct f3d {
     }
   }
 
-  template <typename data_t, class = typename std::enable_if<std::is_integral<data_t>::value>::type>
+  template <Concepts::Numeric data_t>
   inline constexpr auto operator[](data_t index) const -> VIPRA::f_pnt {
     switch (index) {
       case 0:
@@ -63,11 +65,11 @@ struct f3d {
     }
   }
 
-  template <typename data_t>
+  template <Concepts::Numeric data_t>
   inline constexpr auto operator*(data_t&& multiplier) const noexcept -> f3d {
     return f3d{x, y, z} *= std::forward<data_t>(multiplier);
   }
-  template <typename data_t>
+  template <Concepts::Numeric data_t>
   inline constexpr auto operator*=(data_t&& multiplier) noexcept -> f3d& {
     x *= multiplier;
     y *= multiplier;
@@ -75,12 +77,16 @@ struct f3d {
     return *this;
   }
 
-  template <typename data_t>
+  template <Concepts::Numeric data_t>
   inline constexpr auto operator/(data_t&& multiplier) const noexcept -> f3d {
+    assert(multiplier != 0);
+
     return f3d{x, y, z} /= std::forward<data_t>(multiplier);
   }
-  template <typename data_t>
+  template <Concepts::Numeric data_t>
   inline constexpr auto operator/=(data_t&& multiplier) noexcept -> f3d& {
+    assert(multiplier != 0);
+
     x /= multiplier;
     y /= multiplier;
     z /= multiplier;
@@ -226,7 +232,7 @@ struct f3d {
   }
 };
 
-template <typename data_t>
+template <Concepts::Numeric data_t>
 inline constexpr auto operator*(data_t&& multiplier, const f3d& other) noexcept -> f3d {
   return f3d{other.x * multiplier, other.y * multiplier, other.z * multiplier};
 }

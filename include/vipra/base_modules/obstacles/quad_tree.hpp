@@ -7,7 +7,7 @@
 
 #include "vipra/modules.hpp"
 
-#include "vipra/types/f3d.hpp"
+#include "vipra/geometry/f3d.hpp"
 #include "vipra/types/float.hpp"
 #include "vipra/types/idx.hpp"
 #include "vipra/types/parameter.hpp"
@@ -61,6 +61,12 @@ class QuadTree {
                        [&](const VIPRA::f3d& obs) { return obs.distance_to(point) < _obsDistance; });
   }
 
+  [[nodiscard]] auto collision(VIPRA::Geometry::Circle circle) const -> bool {
+    return std::any_of(_obstacles.begin(), _obstacles.end(), [&](const VIPRA::f3d& obs) {
+      return obs.distance_to(circle.center()) < circle.radius();
+    });
+  }
+
   [[nodiscard]] auto ray_hit(VIPRA::f3d start, VIPRA::f3d end) const -> VIPRA::f_pnt {
     if (start == end) {
       return -1;
@@ -90,44 +96,6 @@ class QuadTree {
       return -1;
     }
     return nearest;
-  }
-
-  [[nodiscard]] auto nearest_obstacle(VIPRA::f3d point) const -> VIPRA::f3d {
-    const VIPRA::size obCnt = _obstacles.size();
-    VIPRA::idx        closest = VIPRA::INVALID_IDX;
-    VIPRA::f_pnt      cDist = std::numeric_limits<VIPRA::f_pnt>::max();
-
-    for (VIPRA::idx i = 0; i < obCnt; ++i) {
-      VIPRA::f_pnt dist = _obstacles[i].distance_to(point);
-      if (dist < cDist) {
-        cDist = dist;
-        closest = i;
-      }
-    }
-    return _obstacles[closest];
-  }
-
-  [[nodiscard]] auto nearest_obstacle_in_direction(VIPRA::f3d point, VIPRA::f3d direction) const
-      -> VIPRA::f3d {
-    const VIPRA::size obsCnt = _obstacles.size();
-    VIPRA::idx        nearest = VIPRA::INVALID_IDX;
-    VIPRA::f_pnt      cDist = std::numeric_limits<VIPRA::f_pnt>::max();
-
-    for (VIPRA::idx i = 0; i < obsCnt; ++i) {
-      if (direction_test(point, direction, _obstacles[i])) {
-        VIPRA::f_pnt dist = _obstacles[i].distance_to_sqrd(point);
-        if (dist < cDist) {
-          cDist = dist;
-          nearest = i;
-        }
-      }
-    }
-
-    if (nearest == VIPRA::INVALID_IDX) {
-      return VIPRA::_emptyf3d_;
-    }
-
-    return _obstacles[nearest];
   }
 
   [[nodiscard]] auto get_object_types() const -> const std::vector<std::string>& { return _objectTypes; }

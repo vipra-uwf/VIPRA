@@ -1,8 +1,8 @@
 #pragma once
 
-#include "vipra/types/f3d.hpp"
+#include "vipra/geometry/f3d.hpp"
 
-namespace VIPRA {
+namespace VIPRA::Geometry {
 enum class Orientation { COLLINEAR, CLOCKWISE, COUNTERCLOCKWISE };
 
 struct Line {
@@ -10,6 +10,7 @@ struct Line {
   VIPRA::f3d end;
 
   // TODO(rolland): add more to the line class
+  constexpr Line(VIPRA::f3d start, VIPRA::f3d end) : start(start), end(end) {}
 
   /**
    * @brief Calculates the orientation of a point relative to a line.
@@ -19,8 +20,7 @@ struct Line {
    * @param point3 
    * @return 
    */
-  [[nodiscard]] static constexpr auto orientation_to(VIPRA::Line line, VIPRA::f3d point) noexcept
-      -> Orientation {
+  [[nodiscard]] static constexpr auto orientation_to(Line line, VIPRA::f3d point) noexcept -> Orientation {
     VIPRA::f_pnt val = (line.end.y - line.start.y) * (point.x - line.end.x) -
                        (line.end.x - line.start.x) * (point.y - line.end.y);
 
@@ -73,5 +73,12 @@ struct Line {
 
     return false;
   }
+
+  constexpr Line() = default;
+  constexpr ~Line() = default;
+  constexpr Line(const Line&) = default;
+  constexpr Line(Line&&) = default;
+  constexpr auto operator=(const Line&) -> Line& = default;
+  constexpr auto operator=(Line&&) -> Line& = default;
 };
-}  // namespace VIPRA
+}  // namespace VIPRA::Geometry
