@@ -6,6 +6,7 @@
 #include <fstream>
 #include <functional>
 #include <iostream>
+#include <optional>
 #include <tuple>
 #include <type_traits>
 #include <utility>
@@ -61,7 +62,7 @@ class JSON {
   template <typename... key_ts>
   [[nodiscard]] auto load_polygons(key_ts&&... key) const -> std::optional<std::vector<Geometry::Polygon>> {
     auto value = get_value_at_key(key...);
-    if (!value) return {};
+    if (!value) return std::nullopt;
 
     std::vector<Geometry::Polygon> polygons;
     for (const auto& polygon : value.get().get()) {
