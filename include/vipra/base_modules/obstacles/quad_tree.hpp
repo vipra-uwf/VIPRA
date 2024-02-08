@@ -61,7 +61,7 @@ class QuadTree {
 
   [[nodiscard]] auto collision(VIPRA::Geometry::Circle circle) const -> bool {
     return std::any_of(_obstacles.begin(), _obstacles.end(),
-                       [&](auto const& obstacle) { return obstacle.is_point_inside(circle.center()); });
+                       [&](auto const& obstacle) { return obstacle.does_intersect(circle); });
   }
 
   [[nodiscard]] auto ray_hit(VIPRA::f3d start, VIPRA::f3d end) const -> VIPRA::f_pnt {

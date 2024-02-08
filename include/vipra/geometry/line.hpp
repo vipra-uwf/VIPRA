@@ -30,6 +30,20 @@ struct Line {
   }
 
   /**
+   * @brief Calculates the closest point on the line to another point
+   * 
+   * @param point 
+   * @return VIPRA::f3d 
+   */
+  [[nodiscard]] inline constexpr auto closest_point(VIPRA::f3d point) const noexcept -> VIPRA::f3d {
+    // TODO(rolland): verify
+    const VIPRA::f_pnt lineLength = start.distance_to(end);
+    const VIPRA::f_pnt t =
+        std::max(0.0, std::min(1.0, (point - start).dot(end - start) / (lineLength * lineLength)));
+    return start + (end - start) * t;
+  }
+
+  /**
    * @brief Checks if a point is on the line.
    * 
    * @param point 
@@ -48,7 +62,9 @@ struct Line {
    * @return true 
    * @return false 
    */
-  [[nodiscard]] auto does_intersect(Line other) const noexcept -> bool { return do_intersect(*this, other); }
+  [[nodiscard]] constexpr auto does_intersect(Line other) const noexcept -> bool {
+    return do_intersect(*this, other);
+  }
 
   /**
    * @brief Calculates the intersection point of two lines
@@ -57,7 +73,7 @@ struct Line {
    * @param other 
    * @return VIPRA::f3d 
    */
-  [[nodiscard]] auto intersection_point(Line other) const noexcept -> VIPRA::f3d {
+  [[nodiscard]] constexpr auto intersection_point(Line other) const noexcept -> VIPRA::f3d {
     assert(does_intersect(other));
 
     const VIPRA::f_pnt a1 = end.y - start.y;
@@ -86,7 +102,7 @@ struct Line {
    * @return true 
    * @return false 
    */
-  [[nodiscard]] static auto do_intersect(Line line1, Line line2) noexcept -> bool {
+  [[nodiscard]] static constexpr auto do_intersect(Line line1, Line line2) noexcept -> bool {
     const Orientation ori1 = orientation_to(line1, line2.start);
     const Orientation ori2 = orientation_to(line1, line2.end);
     const Orientation ori3 = orientation_to(line2, line1.start);

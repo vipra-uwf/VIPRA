@@ -1,6 +1,7 @@
 #pragma once
 
 #include "vipra/geometry/f3d.hpp"
+#include "vipra/geometry/line.hpp"
 
 namespace VIPRA::Geometry {
 class Circle {
@@ -20,6 +21,10 @@ class Circle {
    */
   [[nodiscard]] inline constexpr auto is_inside(VIPRA::f3d point) const -> bool {
     return (point.distance_to(_center) <= _radius);
+  }
+
+  [[nodiscard]] inline constexpr auto does_intersect(VIPRA::Geometry::Line line) const noexcept -> bool {
+    return line.closest_point(_center).distance_to(_center) <= _radius;
   }
 
  private:

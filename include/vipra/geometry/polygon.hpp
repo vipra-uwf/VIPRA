@@ -1,7 +1,9 @@
 #pragma once
 
+#include <algorithm>
 #include <vector>
 
+#include "vipra/geometry/circle.hpp"
 #include "vipra/geometry/line.hpp"
 
 // TODO(rolland): add in iterators
@@ -47,6 +49,11 @@ struct Polygon {
       }
     }
     return isInside;
+  }
+
+  [[nodiscard]] inline auto does_intersect(VIPRA::Geometry::Circle const& circle) const noexcept -> bool {
+    return std::any_of(edges.begin(), edges.end(),
+                       [&](auto const& edge) { return circle.does_intersect(edge); });
   }
 };
 }  // namespace VIPRA::Geometry

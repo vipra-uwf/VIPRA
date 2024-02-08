@@ -57,9 +57,11 @@ class AStar {
         throw std::runtime_error("No path found for pedestrian");
       }
 
-      _paths.push_back(path);
-      // _paths.push_back(squash_path(path));
+      // _paths.push_back(path);
+      _paths.push_back(squash_path(path));
     }
+
+    // debug_output_paths();
 
     for (VIPRA::idx pedIdx = 0; pedIdx < pedset.num_pedestrians(); ++pedIdx) {
       _currentGoals[pedIdx] = _paths[pedIdx].back();
