@@ -5,7 +5,6 @@
 #include "vipra/geometry/line.hpp"
 
 // TODO(rolland): add in iterators
-
 namespace VIPRA::Geometry {
 struct Polygon {
   std::vector<VIPRA::Geometry::Line> edges;
@@ -18,8 +17,10 @@ struct Polygon {
     }
     edges.emplace_back(points.back(), points.front());
   }
+
   explicit Polygon(std::vector<VIPRA::f3d>&& points) {
     assert(points.size() > 2);
+    // TODO(rolland): may be able to convert in place?
 
     for (size_t i = 0; i < points.size() - 1; ++i) {
       edges.emplace_back(points.at(i), points.at(i + 1));

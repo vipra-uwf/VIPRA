@@ -11,6 +11,7 @@
 
 // TODO(rolland): do we need a 3d point class?
 //                  - we can use a 2d point and in the case of multiple stories we can use a 3d point?
+//                  - maybe an f2d with a small integer for the story?
 
 namespace VIPRA {
 // NOLINTNEXTLINE (rolland) Keeping f3d from before format changes :  ignore(readability-identifier-naming)
