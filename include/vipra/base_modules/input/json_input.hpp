@@ -16,6 +16,7 @@
 #include "vipra/concepts/input.hpp"
 #include "vipra/concepts/numeric.hpp"
 
+#include "vipra/concepts/polygon_input.hpp"
 #include "vipra/modules.hpp"
 #include "vipra/types/float.hpp"
 #include "vipra/types/parameter.hpp"
@@ -32,33 +33,61 @@ class JSON {
   VIPRA_MODULE_TYPE(INPUT)
   explicit JSON(std::filesystem::path const& filepath) { load_file(filepath); }
 
+  /**
+   * @brief Returns the value of the given key from the JSON file
+   * 
+   * @tparam data_t 
+   * @tparam key_ts 
+   * @param keys 
+   * @return std::optional<data_t> 
+   */
   template <typename data_t, typename... key_ts>
   [[nodiscard]] auto get(key_ts&&... keys) const -> std::optional<data_t> {
-    auto value = std::cref(_json);
-
-    bool found = true;
-
-    const auto findKey = [&](std::string const& key) {
-      if (!found) return;
-
-      if (!value.get().contains(key)) {
-        found = false;
-        return;
-      }
-
-      value = std::cref(value.get().at(key));
-    };
-
-    (findKey(keys), ...);
-
-    if (!found) return std::nullopt;
+    auto value = get_value_at_key(keys...);
+    if (!value) return std::nullopt;
 
     return get_value<data_t>(value);
+  }
+
+  /**
+   * @brief Returns polygons from the JSON file
+   * @note Requires the JSON for the polygons to be in the format: {"key": [[{"x": 0, "y": 0}, {"x": 1, "y": 1}, ...], ...]} 
+   *
+   * @tparam data_t 
+   * @tparam key_ts 
+   * @param key 
+   * @return std::vector<Geometry::Polygon> 
+   */
+  template <typename... key_ts>
+  [[nodiscard]] auto load_polygons(key_ts&&... key) const -> std::optional<std::vector<Geometry::Polygon>> {
+    auto value = get_value_at_key(key...);
+    if (!value) return {};
+
+    std::vector<Geometry::Polygon> polygons;
+    for (const auto& polygon : value.get().get()) {
+      if (!polygon.is_array()) return std::nullopt;
+
+      std::vector<VIPRA::f3d> points;
+      for (const auto& point : polygon) {
+        if (!is_f2d(point)) return std::nullopt;
+        points.emplace_back(point.at("x").template get<VIPRA::f_pnt>(),
+                            point.at("y").template get<VIPRA::f_pnt>(), 0);
+      }
+
+      polygons.emplace_back(points);
+    }
+
+    return polygons;
   }
 
  private:
   nlohmann::json _json;
 
+  /**
+   * @brief Loads the JSON file from the given path
+   * 
+   * @param filepath 
+   */
   void load_file(const std::filesystem::path& filepath) {
     if (!std::filesystem::exists(filepath))
       throw std::runtime_error("File does not exist at: " + filepath.string());
@@ -78,6 +107,37 @@ class JSON {
     file.close();
   }
 
+  template <typename... key_ts>
+  [[nodiscard]] auto get_value_at_key(key_ts&&... keys)
+      -> std::optional<std::reference_wrapper<const nlohmann::json>> {
+    auto value = std::cref(_json);
+    bool found = true;
+
+    const auto findKey = [&](std::string const& key) {
+      if (!found) return;
+
+      if (!value.get().contains(key)) {
+        found = false;
+        return;
+      }
+
+      value = std::cref(value.get().at(key));
+    };
+
+    (findKey(keys), ...);
+
+    if (!found) return std::nullopt;
+
+    return value;
+  }
+
+  /**
+   * @brief Routes the value to the correct type getter, if possible, otherwise returns std::nullopt
+   * 
+   * @tparam data_t 
+   * @param value 
+   * @return std::optional<data_t> 
+   */
   template <typename data_t>
   [[nodiscard]] auto get_value(const std::reference_wrapper<const nlohmann::json>& value) const
       -> std::optional<data_t> {
@@ -112,6 +172,13 @@ class JSON {
     return std::nullopt;
   }
 
+  /**
+   * @brief Checks if the JSON value is a valid f3d
+   * 
+   * @param value 
+   * @return true 
+   * @return false 
+   */
   [[nodiscard]] static auto is_f3d(nlohmann::json const& value) -> bool {
     if (!value.is_object()) return false;
     if (!value.contains("x") || !value.contains("y") || !value.contains("z")) return false;
@@ -119,6 +186,13 @@ class JSON {
     return true;
   }
 
+  /**
+   * @brief Checks if the JSON value is a valid f3d, with only x and y
+   * 
+   * @param value 
+   * @return true 
+   * @return false 
+   */
   [[nodiscard]] static auto is_f2d(nlohmann::json const& value) -> bool {
     if (!value.is_object()) return false;
     if (!value.contains("x") || !value.contains("y")) return false;
@@ -126,6 +200,12 @@ class JSON {
     return true;
   }
 
+  /**
+   * @brief Gets an f3d from the JSON value
+   * 
+   * @param value 
+   * @return std::optional<VIPRA::f3d> 
+   */
   [[nodiscard]] static auto get_f3d(const std::reference_wrapper<const nlohmann::json>& value)
       -> std::optional<VIPRA::f3d> {
     if (!is_f3d(value.get())) return std::nullopt;
@@ -134,6 +214,12 @@ class JSON {
                       value.get().at("z").get<VIPRA::f_pnt>());
   }
 
+  /**
+   * @brief Gets an f3dVec from the JSON value
+   * 
+   * @param value 
+   * @return std::optional<VIPRA::f3dVec> 
+   */
   [[nodiscard]] static auto get_f3d_vec(const std::reference_wrapper<const nlohmann::json>& value)
       -> std::optional<VIPRA::f3dVec> {
     if (!value.get().is_array()) return std::nullopt;
@@ -154,6 +240,13 @@ class JSON {
     return f3dVec;
   }
 
+  /**
+   * @brief Gets a vector of data from the JSON value
+   * 
+   * @tparam data_t 
+   * @param value 
+   * @return std::optional<std::vector<data_t>> 
+   */
   template <typename data_t>
   [[nodiscard]] auto get_vector(const std::reference_wrapper<const nlohmann::json>& value) const
       -> std::optional<std::vector<data_t>> {
@@ -168,6 +261,13 @@ class JSON {
     return vec;
   }
 
+  /**
+   * @brief Gets a numeric parameter from the JSON value
+   * 
+   * @tparam data_t 
+   * @param value 
+   * @return std::optional<Parameter<data_t>> 
+   */
   template <typename data_t>
   [[nodiscard]] static auto numeric_parameter_helper(
       std::reference_wrapper<const nlohmann::json> const& value) -> std::optional<Parameter<data_t>> {
@@ -202,6 +302,12 @@ class JSON {
     }
   }
 
+  /**
+   * @brief Gets a string parameter from the JSON value
+   * 
+   * @param value 
+   * @return std::optional<Parameter<std::string>> 
+   */
   [[nodiscard]] static inline auto get_parameter(const std::reference_wrapper<const nlohmann::json>& value)
       -> std::optional<Parameter<std::string>> {
     std::string inputData{};
@@ -238,3 +344,4 @@ class JSON {
 }  // namespace VIPRA::Input
 
 CHECK_MODULE(InputModule, VIPRA::Input::JSON)
+// static_assert(VIPRA::Concepts::PolygonInput<VIPRA::Input::JSON>);

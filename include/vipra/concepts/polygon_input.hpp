@@ -1,5 +1,6 @@
 #pragma once
 
+#include <optional>
 #include <type_traits>
 #include <vector>
 
@@ -11,9 +12,9 @@ namespace VIPRA::Concepts {
 
 template <typename input_t>
 concept can_get_polygons = requires(input_t input) {
-  { input.load_polygons() } -> std::same_as<std::vector<VIPRA::Geometry::Polygon>>;
+  { input.load_polygons("key") } -> std::same_as<std::optional<std::vector<VIPRA::Geometry::Polygon>>>;
 };
 
 template <typename input_t>
-concept PolygonInput = is_module<input_t, Modules::Type::INPUT> && can_get_polygons<input_t>;
+concept PolygonInput = is_type<input_t, Modules::Type::INPUT> && can_get_polygons<input_t>;
 }  // namespace VIPRA::Concepts
