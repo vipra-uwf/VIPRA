@@ -42,7 +42,8 @@ concept can_get_dimensions = requires(obstacle_t obsset) {
 };
 
 template <typename obstacle_t>
-concept ObstacleModule = is_module<obstacle_t, VIPRA::Modules::Type::OBSTACLES> &&
+concept ObstacleModule =
+    is_module<obstacle_t, VIPRA::Modules::Type::OBSTACLES> && can_initialize_obstacles<obstacle_t> &&
     can_get_objects<obstacle_t> && has_collisions<obstacle_t> && can_get_dimensions<obstacle_t>;
 
 class DummyObsSet {
@@ -50,10 +51,13 @@ class DummyObsSet {
  public:
   constexpr static VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::OBSTACLES;
 
+  void initialize(const std::vector<VIPRA::Geometry::Polygon>&, const std::vector<std::string>&,
+                  const std::map<std::string, std::vector<VIPRA::f3d>>&) {}
+
   template <VIPRA::Concepts::ParamModule params_t>
-  void register_params(params_t& params) {}
+  void register_params(params_t&) {}
   template <VIPRA::Concepts::ParamModule params_t>
-  void config(const params_t& params) {}
+  void config(const params_t&) {}
 
   // NOLINTBEGIN rolland: Dummy Object that cannot be used, we don't care about errors here
   auto get_dimensions() const -> VIPRA::f3d { return VIPRA::f3d{}; }

@@ -5,6 +5,7 @@
 #include "vipra/concepts/input.hpp"
 #include "vipra/concepts/obstacle_set.hpp"
 
+#include "vipra/geometry/polygon.hpp"
 #include "vipra/modules.hpp"
 
 #include "vipra/geometry/f3d.hpp"
@@ -21,27 +22,21 @@ class QuadTree {
  public:
   VIPRA_MODULE_TYPE(OBSTACLES);
 
-  void initialize(const std::vector<VIPRA::f3d>& obstacles, const std::vector<std::string>& types,
-                  const std::map<std::string, VIPRA::f3dVec>& objects) {
-    _obstacles = obstacles;
+  void initialize(std::vector<VIPRA::Geometry::Polygon> const& obstacles,
+                  std::vector<std::string> const&              types,
+                  std::map<std::string, VIPRA::f3dVec> const&  objects) {
     _objectTypes = types;
     _objects = objects;
+    _obstacles = obstacles;
 
-    for (const auto& obstacle : _obstacles) {
-      _dimensions.x = std::max(_dimensions.x, obstacle.x);
-      _dimensions.y = std::max(_dimensions.y, obstacle.y);
-      _dimensions.z = std::max(_dimensions.z, obstacle.z);
-    }
-
-    for (const auto& type : types) {
-      if (!objects.contains(type)) {
-        continue;
-      }
-
-      for (const auto& object : objects.at(type)) {
-        _dimensions.x = std::max(_dimensions.x, object.x);
-        _dimensions.y = std::max(_dimensions.y, object.y);
-        _dimensions.z = std::max(_dimensions.z, object.z);
+    for (auto const& obstacle : obstacles) {
+      for (auto const& edge : obstacle.edges) {
+        _dimensions.x = std::max(_dimensions.x, edge.start.x);
+        _dimensions.y = std::max(_dimensions.y, edge.start.y);
+        _dimensions.z = std::max(_dimensions.z, edge.start.z);
+        _dimensions.x = std::max(_dimensions.x, edge.end.x);
+        _dimensions.y = std::max(_dimensions.y, edge.end.y);
+        _dimensions.z = std::max(_dimensions.z, edge.end.z);
       }
     }
   }
@@ -57,49 +52,28 @@ class QuadTree {
         params.template get_param<VIPRA::f_pnt>(VIPRA::Modules::Type::OBSTACLES, "quad_tree", "minGridSize");
   }
 
-  // TODO(rolland): implement
   [[nodiscard]] auto get_dimensions() const -> VIPRA::f3d { return _dimensions; }
 
   [[nodiscard]] auto collision(VIPRA::f3d point) const -> bool {
     return std::any_of(_obstacles.begin(), _obstacles.end(),
-                       [&](const VIPRA::f3d& obs) { return obs.distance_to(point) < _obsDistance; });
+                       [&](auto const& obstacle) { return obstacle.is_point_inside(point); });
   }
 
   [[nodiscard]] auto collision(VIPRA::Geometry::Circle circle) const -> bool {
-    return std::any_of(_obstacles.begin(), _obstacles.end(), [&](const VIPRA::f3d& obs) {
-      return obs.distance_to(circle.center()) < circle.radius();
-    });
+    return std::any_of(_obstacles.begin(), _obstacles.end(),
+                       [&](auto const& obstacle) { return obstacle.is_point_inside(circle.center()); });
   }
 
   [[nodiscard]] auto ray_hit(VIPRA::f3d start, VIPRA::f3d end) const -> VIPRA::f_pnt {
-    if (start == end) {
-      return -1;
-    }
-
-    VIPRA::f_pnt nearest = std::numeric_limits<VIPRA::f_pnt>::max();
-    for (const auto& obstacle : _obstacles) {
-      const VIPRA::f3d vAP = obstacle - start;
-      const VIPRA::f3d vAB = end - start;
-
-      const VIPRA::f_pnt sqDistanceAB = start.distance_to_sqrd(end);
-      const VIPRA::f_pnt abapProduct = vAB.x * vAP.x + vAB.y * vAP.y;
-      const VIPRA::f_pnt amount = abapProduct / sqDistanceAB;
-
-      VIPRA::f3d intersect =
-          VIPRA::f3d{(amount * (end.x - start.x)) + start.x, (amount * (end.y - start.y)) + start.y};
-
-      if (intersect.distance_to_sqrd(obstacle) < _obsDistance * _obsDistance) {
-        const VIPRA::f_pnt dist = intersect.distance_to(start);
-        if (dist < nearest) {
-          nearest = dist;
-        }
+    VIPRA::f_pnt hit = std::numeric_limits<VIPRA::f_pnt>::max();
+    for (auto const& obstacle : _obstacles) {
+      for (auto const& edge : obstacle.edges) {
+        if (!edge.does_intersect({start, end})) continue;
+        auto intersection = edge.intersection_point({start, end});
+        hit = std::min(hit, start.distance_to(intersection));
       }
     }
-
-    if (nearest == std::numeric_limits<VIPRA::f_pnt>::max()) {
-      return -1;
-    }
-    return nearest;
+    return hit;
   }
 
   [[nodiscard]] auto get_object_types() const -> const std::vector<std::string>& { return _objectTypes; }
@@ -109,21 +83,12 @@ class QuadTree {
   }
 
  private:
-  std::vector<std::string>             _objectTypes;
-  std::map<std::string, VIPRA::f3dVec> _objects;
-  std::vector<VIPRA::f3d>              _obstacles;
+  std::vector<std::string>              _objectTypes;
+  std::map<std::string, VIPRA::f3dVec>  _objects;
+  std::vector<VIPRA::Geometry::Polygon> _obstacles;
 
   VIPRA::f_pnt _obsDistance;
   VIPRA::f3d   _dimensions;
-
-  static inline auto direction_test(VIPRA::f3d point, VIPRA::f3d direction, VIPRA::f3d obstacle) -> bool {
-    const VIPRA::f3d displacement = point - obstacle;
-
-    const VIPRA::f_pnt result =
-        (displacement.x * direction.x) + (displacement.y * direction.y) + (displacement.z * direction.z);
-
-    return result <= 0;
-  }
 };
 }  // namespace VIPRA::Obstacles
 

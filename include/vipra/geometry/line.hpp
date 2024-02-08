@@ -51,6 +51,34 @@ struct Line {
   [[nodiscard]] auto does_intersect(Line other) const noexcept -> bool { return do_intersect(*this, other); }
 
   /**
+   * @brief Calculates the intersection point of two lines
+   * @note assumes the lines intersect, check does_intersect before calling
+   * 
+   * @param other 
+   * @return VIPRA::f3d 
+   */
+  [[nodiscard]] auto intersection_point(Line other) const noexcept -> VIPRA::f3d {
+    assert(does_intersect(other));
+
+    const VIPRA::f_pnt a1 = end.y - start.y;
+    const VIPRA::f_pnt b1 = start.x - end.x;
+    const VIPRA::f_pnt c1 = a1 * start.x + b1 * start.y;
+
+    const VIPRA::f_pnt a2 = other.end.y - other.start.y;
+    const VIPRA::f_pnt b2 = other.start.x - other.end.x;
+    const VIPRA::f_pnt c2 = a2 * other.start.x + b2 * other.start.y;
+
+    const VIPRA::f_pnt determinant = a1 * b2 - a2 * b1;
+
+    if (determinant == 0) return VIPRA::f3d{0, 0, 0};
+
+    const VIPRA::f_pnt x = (b2 * c1 - b1 * c2) / determinant;
+    const VIPRA::f_pnt y = (a1 * c2 - a2 * c1) / determinant;
+
+    return VIPRA::f3d{x, y, 0};
+  }
+
+  /**
    * @brief Checks if two lines intersect
    * 
    * @param line1 

@@ -17,4 +17,18 @@ concept can_get_polygons = requires(input_t input) {
 
 template <typename input_t>
 concept PolygonInput = is_type<input_t, Modules::Type::INPUT> && can_get_polygons<input_t>;
+
+class DummyPolygonInput {
+  // NOLINTBEGIN
+ public:
+  constexpr static VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::INPUT;
+
+  auto load_polygons(std::string_view /*unused*/) const
+      -> std::optional<std::vector<VIPRA::Geometry::Polygon>> {
+    return std::nullopt;
+  }
+  // NOLINTEND
+};
+
+static_assert(PolygonInput<DummyPolygonInput>);
 }  // namespace VIPRA::Concepts

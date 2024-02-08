@@ -34,52 +34,10 @@ class JSON {
   VIPRA_MODULE_TYPE(INPUT)
   explicit JSON(std::filesystem::path const& filepath) { load_file(filepath); }
 
-  /**
-   * @brief Returns the value of the given key from the JSON file
-   * 
-   * @tparam data_t 
-   * @tparam key_ts 
-   * @param keys 
-   * @return std::optional<data_t> 
-   */
-  template <typename data_t, typename... key_ts>
-  [[nodiscard]] auto get(key_ts&&... keys) const -> std::optional<data_t> {
-    auto value = get_value_at_key(keys...);
-    if (!value) return std::nullopt;
+  template <typename data_t>
+  [[nodiscard]] auto get(auto&&... keys) const -> std::optional<data_t>;
 
-    return get_value<data_t>(value);
-  }
-
-  /**
-   * @brief Returns polygons from the JSON file
-   * @note Requires the JSON for the polygons to be in the format: {"key": [[{"x": 0, "y": 0}, {"x": 1, "y": 1}, ...], ...]} 
-   *
-   * @tparam data_t 
-   * @tparam key_ts 
-   * @param key 
-   * @return std::vector<Geometry::Polygon> 
-   */
-  template <typename... key_ts>
-  [[nodiscard]] auto load_polygons(key_ts&&... key) const -> std::optional<std::vector<Geometry::Polygon>> {
-    auto value = get_value_at_key(key...);
-    if (!value) return std::nullopt;
-
-    std::vector<Geometry::Polygon> polygons;
-    for (const auto& polygon : value.get().get()) {
-      if (!polygon.is_array()) return std::nullopt;
-
-      std::vector<VIPRA::f3d> points;
-      for (const auto& point : polygon) {
-        if (!is_f2d(point)) return std::nullopt;
-        points.emplace_back(point.at("x").template get<VIPRA::f_pnt>(),
-                            point.at("y").template get<VIPRA::f_pnt>(), 0);
-      }
-
-      polygons.emplace_back(points);
-    }
-
-    return polygons;
-  }
+  auto load_polygons(auto&&... keys) const -> std::optional<std::vector<Geometry::Polygon>>;
 
  private:
   nlohmann::json _json;
@@ -109,7 +67,7 @@ class JSON {
   }
 
   template <typename... key_ts>
-  [[nodiscard]] auto get_value_at_key(key_ts&&... keys)
+  [[nodiscard]] auto get_value_at_key(key_ts&&... keys) const
       -> std::optional<std::reference_wrapper<const nlohmann::json>> {
     auto value = std::cref(_json);
     bool found = true;
@@ -343,6 +301,54 @@ class JSON {
   }
 };
 }  // namespace VIPRA::Input
+
+/**
+   * @brief Returns the value of the given key from the JSON file
+   * 
+   * @tparam data_t 
+   * @tparam key_ts 
+   * @param keys 
+   * @return std::optional<data_t> 
+   */
+template <typename data_t, typename... key_ts>
+auto VIPRA::Input::JSON::get(key_ts&&... keys) const -> std::optional<data_t> {
+  auto value = get_value_at_key(std::forward<key_ts>(keys)...);
+  if (!value) return std::nullopt;
+
+  return get_value<data_t>(value.value());
+}
+
+/**
+   * @brief Returns polygons from the JSON file
+   * @note Requires the JSON for the polygons to be in the format: {"key": [[{"x": 0, "y": 0}, {"x": 1, "y": 1}, ...], ...]} 
+   *
+   * @tparam data_t 
+   * @tparam key_ts 
+   * @param key 
+   * @return std::vector<Geometry::Polygon> 
+   */
+template <typename... key_ts>
+auto VIPRA::Input::JSON::load_polygons(key_ts&&... keys) const
+    -> std::optional<std::vector<Geometry::Polygon>> {
+  auto value = get_value_at_key(std::forward<key_ts>(keys)...);
+  if (!value) return std::nullopt;
+
+  std::vector<Geometry::Polygon> polygons;
+  for (const auto& polygon : value.value().get()) {
+    if (!polygon.is_array()) return std::nullopt;
+
+    std::vector<VIPRA::f3d> points;
+    for (const auto& point : polygon) {
+      if (!is_f2d(point)) return std::nullopt;
+      points.emplace_back(point.at("x").template get<VIPRA::f_pnt>(),
+                          point.at("y").template get<VIPRA::f_pnt>(), 0);
+    }
+
+    polygons.emplace_back(points);
+  }
+
+  return polygons;
+}
 
 CHECK_MODULE(InputModule, VIPRA::Input::JSON)
 // static_assert(VIPRA::Concepts::PolygonInput<VIPRA::Input::JSON>);

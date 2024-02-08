@@ -6,6 +6,7 @@
 #include "vipra/concepts/input.hpp"
 #include "vipra/concepts/map.hpp"
 #include "vipra/concepts/obstacle_set.hpp"
+#include "vipra/concepts/polygon_input.hpp"
 
 #include "vipra/geometry/circle.hpp"
 #include "vipra/modules.hpp"
@@ -13,7 +14,7 @@
 // TODO(rolland): update any fields each timestep
 
 namespace VIPRA::Module {
-template <Concepts::InputModule input_t, Concepts::ObstacleModule obstacles_t,
+template <Concepts::PolygonInput input_t, Concepts::ObstacleModule obstacles_t,
           Concepts::FieldModule... field_ts>
 class Map {
  public:
@@ -117,19 +118,19 @@ class Map {
     std::for_each(objTypes->begin(), objTypes->end(), [&](const auto& objType) {
       const auto positions = _input.template get<std::vector<VIPRA::f3d>>(objType);
       if (!positions) {
-        throw std::runtime_error("Could not find object coordinates in input file");
+        throw std::runtime_error("Could not get object positions from input");
       }
 
       std::for_each(positions->begin(), positions->end(),
                     [&](const auto& objPos) { objMap[objType].push_back(objPos); });
     });
 
-    auto obsCoords = _input.template get<std::vector<VIPRA::f3d>>("obstacles");
-    if (!obsCoords) throw std::runtime_error("Could not find obstacle coordinates in input file");
+    const auto obsCoords = _input.template load_polygons("obstacles");
+    if (!obsCoords) throw std::runtime_error("Could not get obstacle polygons from input");
 
     _obstacles.initialize(obsCoords.value(), objTypes.value(), objMap);
   }
 };
 
-CHECK_MODULE(MapModule, Map<Concepts::DummyInput, Concepts::DummyObsSet, Concepts::DummyField>)
+CHECK_MODULE(MapModule, Map<Concepts::DummyPolygonInput, Concepts::DummyObsSet, Concepts::DummyField>)
 }  // namespace VIPRA::Module

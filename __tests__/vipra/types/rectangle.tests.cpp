@@ -1,6 +1,6 @@
 
 #include <gtest/gtest.h>
 
-#include "vipra/types/rectangle.hpp"
+#include "vipra/geometry/rectangle.hpp"
 
 // TODO(rolland): add tests

@@ -4,6 +4,8 @@
 
 #include "vipra/geometry/line.hpp"
 
+// TODO(rolland): add in iterators
+
 namespace VIPRA::Geometry {
 struct Polygon {
   std::vector<VIPRA::Geometry::Line> edges;

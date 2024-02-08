@@ -9,6 +9,9 @@
 #include "vipra/concepts/numeric.hpp"
 #include "vipra/types/float.hpp"
 
+// TODO(rolland): do we need a 3d point class?
+//                  - we can use a 2d point and in the case of multiple stories we can use a 3d point?
+
 namespace VIPRA {
 // NOLINTNEXTLINE (rolland) Keeping f3d from before format changes :  ignore(readability-identifier-naming)
 struct f3d {

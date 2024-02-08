@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "vipra/types/line.hpp"
+#include "vipra/geometry/line.hpp"
 
 // TODO(rolland): add more tests
 
@@ -19,4 +19,12 @@ TEST(LineTests, DoIntersect) {
   VIPRA::Geometry::Line line5(VIPRA::f3d{0, 0}, VIPRA::f3d{2, 2});
   VIPRA::Geometry::Line line6(VIPRA::f3d{0, 1}, VIPRA::f3d{2, 3});
   ASSERT_FALSE(line5.does_intersect(line6));
+}
+
+TEST(LineTests, IntersectionPoint) {
+  // Test case 1: Lines intersect
+  VIPRA::Geometry::Line line1(VIPRA::f3d{0, 0}, VIPRA::f3d{2, 2});
+  VIPRA::Geometry::Line line2(VIPRA::f3d{1, 0}, VIPRA::f3d{1, 2});
+  auto                  expected1 = VIPRA::f3d{1, 1};
+  ASSERT_EQ(line1.intersection_point(line2), expected1);
 }
