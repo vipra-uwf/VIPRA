@@ -36,6 +36,8 @@ class JSON {
     }
 
     file << _json.dump();
+
+    file.close();
   }
 
   template <typename data_t>

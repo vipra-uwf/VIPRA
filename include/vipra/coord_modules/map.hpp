@@ -109,18 +109,22 @@ class Map {
 
   void initialize_obstacles() {
     // TODO(rolland): replace point obstacles with polygons
-    const auto objTypes = _input.template get_vector<std::string>("obj_types");
+    const auto objTypes = _input.template get<std::vector<std::string>>("obj_types");
     if (!objTypes) throw std::runtime_error("Could not find object types in input file");
 
     auto objMap = std::map<std::string, std::vector<VIPRA::f3d>>{};
 
     std::for_each(objTypes->begin(), objTypes->end(), [&](const auto& objType) {
-      const auto objPos = _input.template get_vector<VIPRA::f3d>(objType);
-      std::for_each(objPos->begin(), objPos->end(),
+      const auto positions = _input.template get<std::vector<VIPRA::f3d>>(objType);
+      if (!positions) {
+        throw std::runtime_error("Could not find object coordinates in input file");
+      }
+
+      std::for_each(positions->begin(), positions->end(),
                     [&](const auto& objPos) { objMap[objType].push_back(objPos); });
     });
 
-    auto obsCoords = _input.template get_vector<VIPRA::f3d>("obstacles");
+    auto obsCoords = _input.template get<std::vector<VIPRA::f3d>>("obstacles");
     if (!obsCoords) throw std::runtime_error("Could not find obstacle coordinates in input file");
 
     _obstacles.initialize(obsCoords.value(), objTypes.value(), objMap);

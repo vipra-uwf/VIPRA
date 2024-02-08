@@ -34,6 +34,10 @@ class QuadTree {
     }
 
     for (const auto& type : types) {
+      if (!objects.contains(type)) {
+        continue;
+      }
+
       for (const auto& object : objects.at(type)) {
         _dimensions.x = std::max(_dimensions.x, object.x);
         _dimensions.y = std::max(_dimensions.y, object.y);

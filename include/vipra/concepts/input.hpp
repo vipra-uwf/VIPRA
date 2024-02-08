@@ -18,16 +18,9 @@ namespace VIPRA::Concepts {
 // TODO(rolland): clean this up and make it more generic/strict
 template <typename input_t>
 concept can_get_values = requires(input_t input, std::string_view key, std::string_view key2) {
-  { input.template get_vector<int>(key) } -> std::same_as<std::optional<std::vector<int>>>;
-  { input.template get_vector<int>(key, key2) } -> std::same_as<std::optional<std::vector<int>>>;
-  { input.template get_vector<std::string>(key) } -> std::same_as<std::optional<std::vector<std::string>>>;
-  {
-    input.template get_vector<std::string>(key, key2)
-    } -> std::same_as<std::optional<std::vector<std::string>>>;
-
-  { input.template get_vector<VIPRA::f3d>(key) } -> std::same_as<std::optional<std::vector<VIPRA::f3d>>>;
   { input.template get<int>("key") } -> std::same_as<std::optional<int>>;
   { input.template get<std::string>("key") } -> std::same_as<std::optional<std::string>>;
+  { input.template get<std::vector<int>>("key") } -> std::same_as<std::optional<std::vector<int>>>;
 };
 
 template <typename input_t>

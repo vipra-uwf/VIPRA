@@ -21,7 +21,7 @@ class Grid {
   VIPRA_MODULE_TYPE(PEDESTRIANS);
 
   explicit Grid(input_t&& input) : _input(input) {
-    auto coords = input.template get_vector<VIPRA::f3d>("coords");
+    auto coords = input.template get<std::vector<VIPRA::f3d>>("coords");
     if (!coords) throw std::runtime_error("Could not find pedestrian coordinates in input file");
 
     _velocities = std::vector<VIPRA::f3d>((*coords).size());

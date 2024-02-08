@@ -1,8 +1,10 @@
 #pragma once
 
+#include <cstddef>
 #include <cstdint>
 #include <filesystem>
 #include <fstream>
+#include <functional>
 #include <iostream>
 #include <tuple>
 #include <type_traits>
@@ -10,6 +12,7 @@
 
 #include <nlohmann/json.hpp>
 
+#include "nlohmann/json_fwd.hpp"
 #include "vipra/concepts/input.hpp"
 #include "vipra/concepts/numeric.hpp"
 
@@ -19,30 +22,38 @@
 #include "vipra/util/get_nth_value.hpp"
 
 #include "vipra/util/debug_do.hpp"
+#include "vipra/util/has_tag.hpp"
+#include "vipra/util/template_specialization.hpp"
 #include "vipra/util/tuple_tail.hpp"
 
 namespace VIPRA::Input {
 class JSON {
  public:
   VIPRA_MODULE_TYPE(INPUT)
-  explicit JSON(const std::filesystem::path& filepath) { load_file(filepath); }
+  explicit JSON(std::filesystem::path const& filepath) { load_file(filepath); }
 
   template <typename data_t, typename... key_ts>
   [[nodiscard]] auto get(key_ts&&... keys) const -> std::optional<data_t> {
-    auto&& keysTuple = std::forward_as_tuple(keys...);
+    auto value = std::cref(_json);
 
-    if constexpr (sizeof...(keys) == 0) {
-      return std::nullopt;
-    } else if constexpr (sizeof...(keys) == 1) {
-      return get_helper_helper<data_t>(keys..., _json);
-    } else {
-      return get_helper<data_t>(std::get<0>(keysTuple), Util::tuple_tail(keysTuple), _json);
-    }
-  }
+    bool found = true;
 
-  template <typename data_t, typename... key_ts>
-  [[nodiscard]] auto get_vector(key_ts&&... keys) const -> std::optional<std::vector<data_t>> {
-    return get<std::vector<data_t>>(keys...);
+    const auto findKey = [&](std::string const& key) {
+      if (!found) return;
+
+      if (!value.get().contains(key)) {
+        found = false;
+        return;
+      }
+
+      value = std::cref(value.get().at(key));
+    };
+
+    (findKey(keys), ...);
+
+    if (!found) return std::nullopt;
+
+    return get_value<data_t>(value);
   }
 
  private:
@@ -67,233 +78,163 @@ class JSON {
     file.close();
   }
 
-  // NOTE: I don't know if I should be disgusted by this or impressed
-  template <typename data_t, typename key_t, typename... key_ts>
-  [[nodiscard]] auto get_helper(const key_t baseKey, std::tuple<key_ts...> keys,
-                                const nlohmann::json& value) const -> std::optional<data_t> {
-    if constexpr (std::tuple_size_v<std::tuple<key_ts...>> == 0) {
-      return get_helper_helper<data_t>(baseKey, value);
-    } else {
-      if (!value.contains(baseKey)) {
-        return std::nullopt;
-      }
-      return get_helper<data_t>(std::get<0>(keys), Util::tuple_tail(keys), value[baseKey]);
-    }
-  }
-
   template <typename data_t>
-  [[nodiscard]] auto get_helper_helper(const std::string_view key, const nlohmann::json& value) const
+  [[nodiscard]] auto get_value(const std::reference_wrapper<const nlohmann::json>& value) const
       -> std::optional<data_t> {
-    if (value.contains(key)) {
+    if constexpr (std::is_same_v<data_t, VIPRA::Parameter<std::string>>) {
+      return get_parameter(value);
+    }
+
+    else if constexpr (std::is_same_v<data_t, VIPRA::f3d>) {
+      return get_f3d(value);
+    }
+
+    else if constexpr (std::is_same_v<data_t, VIPRA::f3dVec>) {
+      return get_f3d_vec(value);
+    }
+
+    else if constexpr (Util::is_specialization<data_t, std::vector>::value) {
+      using value_t = typename Util::get_specialization_internal<data_t>::type;
+      return get_vector<value_t>(value);
+    }
+
+    else if constexpr (Util::is_specialization<data_t, Parameter>::value) {
+      using value_t = typename Util::get_specialization_internal<data_t>::type;
+      return numeric_parameter_helper<value_t>(value);
+    } else {
       try {
-        return value.at(key).get<data_t>();
+        return value.get().get<data_t>();
       } catch (const nlohmann::json::type_error& e) {
-        throw std::runtime_error("Could not parse JSON data at: " + std::string(key) + "\n" + e.what());
+        return std::nullopt;
       }
     }
 
     return std::nullopt;
   }
 
-  template <Concepts::Numeric data_t>
-  [[nodiscard]] inline constexpr auto numeric_parameter_helper(const std::string_view key,
-                                                               const nlohmann::json&  value) const
-      -> std::optional<Parameter<data_t>> {
+  [[nodiscard]] static auto is_f3d(nlohmann::json const& value) -> bool {
+    if (!value.is_object()) return false;
+    if (!value.contains("x") || !value.contains("y") || !value.contains("z")) return false;
+    if (!value.at("x").is_number() || !value.at("y").is_number() || !value.at("z").is_number()) return false;
+    return true;
+  }
+
+  [[nodiscard]] static auto is_f2d(nlohmann::json const& value) -> bool {
+    if (!value.is_object()) return false;
+    if (!value.contains("x") || !value.contains("y")) return false;
+    if (!value.at("x").is_number() || !value.at("y").is_number()) return false;
+    return true;
+  }
+
+  [[nodiscard]] static auto get_f3d(const std::reference_wrapper<const nlohmann::json>& value)
+      -> std::optional<VIPRA::f3d> {
+    if (!is_f3d(value.get())) return std::nullopt;
+
+    return VIPRA::f3d(value.get().at("x").get<VIPRA::f_pnt>(), value.get().at("y").get<VIPRA::f_pnt>(),
+                      value.get().at("z").get<VIPRA::f_pnt>());
+  }
+
+  [[nodiscard]] static auto get_f3d_vec(const std::reference_wrapper<const nlohmann::json>& value)
+      -> std::optional<VIPRA::f3dVec> {
+    if (!value.get().is_array()) return std::nullopt;
+
+    VIPRA::f3dVec f3dVec;
+    for (const auto& f3d : value.get()) {
+      if (!is_f3d(f3d)) {
+        if (!is_f2d(f3d)) return std::nullopt;
+
+        f3dVec.emplace_back(f3d.at("x").get<VIPRA::f_pnt>(), f3d.at("y").get<VIPRA::f_pnt>(), 0);
+        continue;
+      }
+
+      f3dVec.emplace_back(f3d.at("x").get<VIPRA::f_pnt>(), f3d.at("y").get<VIPRA::f_pnt>(),
+                          f3d.at("z").get<VIPRA::f_pnt>());
+    }
+
+    return f3dVec;
+  }
+
+  template <typename data_t>
+  [[nodiscard]] auto get_vector(const std::reference_wrapper<const nlohmann::json>& value) const
+      -> std::optional<std::vector<data_t>> {
+    if (!value.get().is_array()) return std::nullopt;
+
+    std::vector<data_t> vec;
+    for (const auto& element : value.get()) {
+      auto elementValue = get_value<data_t>(std::cref(element));
+      if (elementValue) vec.emplace_back(*elementValue);
+    }
+
+    return vec;
+  }
+
+  template <typename data_t>
+  [[nodiscard]] static auto numeric_parameter_helper(
+      std::reference_wrapper<const nlohmann::json> const& value) -> std::optional<Parameter<data_t>> {
     data_t inputData{};
     try {
-      if (!value.contains(key)) return std::nullopt;
-
-      if (value[key].is_array()) {
+      if (value.get().is_array()) {
         // discrete, choose random value
         Parameter<data_t> parameter{};
         parameter.randomType = Parameter<data_t>::RandomType::DISCRETE;
         // TODO(rolland): This needs to take a random value, currently just hard coded to 0 till randomization is added
-        parameter.value = value[key][0].get<data_t>();
+        parameter.value = value.get()[0].template get<data_t>();
         return parameter;
       }
 
-      if (value[key].is_object()) {
+      if (value.get().is_object()) {
         // range, choose random value
         Parameter<data_t> parameter{};
         parameter.randomType = Parameter<data_t>::RandomType::RANGE;
         // TODO(rolland): This needs to take a random value, currently just hard coded to min till randomization is added
-        parameter.value = value[key]["min"].get<data_t>();
+        parameter.value = value.get()["min"].template get<data_t>();
         return parameter;
       }
 
       // single value
       Parameter<data_t> parameter{};
       parameter.randomType = Parameter<data_t>::RandomType::NONE;
-      parameter.value = value[key].get<data_t>();
+      parameter.value = value.get().template get<data_t>();
       return parameter;
 
     } catch (const nlohmann::json::type_error& e) {
       return std::nullopt;
     }
   }
-};
 
-template <>
-[[nodiscard]] inline auto JSON::get_helper_helper<std::vector<VIPRA::f3d>>(std::string_view      key,
-                                                                           const nlohmann::json& value) const
-    -> std::optional<std::vector<VIPRA::f3d>> {
-  VIPRA::f3dVec inputData{};
-  try {
-    if (!value.contains(key)) return std::nullopt;
-
-    for (const auto& [subkey, value] : value[key].items()) {
-      VIPRA::f3d temp{};
-      for (const auto& dimension : value.items()) {
-        temp[dimension.key()[0]] = dimension.value().get<VIPRA::f_pnt>();
+  [[nodiscard]] static inline auto get_parameter(const std::reference_wrapper<const nlohmann::json>& value)
+      -> std::optional<Parameter<std::string>> {
+    std::string inputData{};
+    try {
+      if (value.get().is_array()) {
+        // discrete, choose random value
+        Parameter<std::string> parameter{};
+        parameter.randomType = Parameter<std::string>::RandomType::DISCRETE;
+        // TODO(rolland): This needs to take a random value, currently just hard coded to 0 till randomization is added
+        parameter.value = value.get()[0].get<std::string>();
+        return parameter;
       }
-      inputData.push_back(temp);
-    }
-  } catch (const nlohmann::json::type_error& e) {
-    return std::nullopt;
-  }
 
-  if (inputData.empty()) {
-    Util ::debug_do([&]() { std::cout << "Can't Find: " << key << "\n"; });
-    return std::nullopt;
-  }
-
-  return inputData;
-}
-
-template <>
-[[nodiscard]] inline auto JSON::get_helper_helper<VIPRA::f3d>(std::string_view      key,
-                                                              const nlohmann::json& value) const
-    -> std::optional<VIPRA::f3d> {
-  VIPRA::f3dVec inputData{};
-  try {
-    for (const auto& [subkey, value] : value[key].items()) {
-      VIPRA::f3d temp{};
-      for (const auto& dimension : value.items()) {
-        temp[dimension.key()[0]] = dimension.value().get<VIPRA::f_pnt>();
-      }
-      inputData.push_back(temp);
-    }
-  } catch (const nlohmann::json::type_error& e) {
-    return std::nullopt;
-  }
-
-  if (inputData.empty()) {
-    Util ::debug_do([&]() { std::cout << "Can't Find: " << key << "\n"; });
-    return std::nullopt;
-  }
-
-  return inputData[0];
-}
-
-template <>
-[[nodiscard]] inline auto JSON::get_helper_helper<Parameter<std::string>>(std::string_view      key,
-                                                                          const nlohmann::json& value) const
-    -> std::optional<Parameter<std::string>> {
-  std::string inputData{};
-  try {
-    if (!value.contains(key)) return std::nullopt;
-
-    if (value[key].is_array()) {
-      // discrete, choose random value
       Parameter<std::string> parameter{};
-      parameter.randomType = Parameter<std::string>::RandomType::DISCRETE;
+      parameter.randomType = Parameter<std::string>::RandomType::NONE;
       // TODO(rolland): This needs to take a random value, currently just hard coded to 0 till randomization is added
-      parameter.value = value[key][0].get<std::string>();
+      parameter.value = value.get().get<std::string>();
       return parameter;
+    } catch (const nlohmann::json::type_error& e) {
+      return std::nullopt;
     }
 
+    if (inputData.empty()) {
+      return std::nullopt;
+    }
+
+    // single value
     Parameter<std::string> parameter{};
     parameter.randomType = Parameter<std::string>::RandomType::NONE;
-    // TODO(rolland): This needs to take a random value, currently just hard coded to 0 till randomization is added
-    parameter.value = value[key].get<std::string>();
+    parameter.value = inputData;
     return parameter;
-  } catch (const nlohmann::json::type_error& e) {
-    return std::nullopt;
   }
-
-  if (inputData.empty()) {
-    return std::nullopt;
-  }
-
-  // single value
-  Parameter<std::string> parameter{};
-  parameter.randomType = Parameter<std::string>::RandomType::NONE;
-  parameter.value = inputData;
-  return parameter;
-}
-
-// ----------------------- Numeric Parrameter Getters -----------------------
-
-template <>
-[[nodiscard]] inline auto JSON::get_helper_helper<Parameter<int>>(std::string_view      key,
-                                                                  const nlohmann::json& value) const
-    -> std::optional<Parameter<int>> {
-  return numeric_parameter_helper<int>(key, value);
-}
-
-template <>
-[[nodiscard]] inline auto JSON::get_helper_helper<Parameter<float>>(std::string_view      key,
-                                                                    const nlohmann::json& value) const
-    -> std::optional<Parameter<float>> {
-  return numeric_parameter_helper<float>(key, value);
-}
-
-template <>
-[[nodiscard]] inline auto JSON::get_helper_helper<Parameter<double>>(std::string_view      key,
-                                                                     const nlohmann::json& value) const
-    -> std::optional<Parameter<double>> {
-  return numeric_parameter_helper<double>(key, value);
-}
-
-template <>
-[[nodiscard]] inline auto JSON::get_helper_helper<Parameter<uint64_t>>(std::string_view      key,
-                                                                       const nlohmann::json& value) const
-    -> std::optional<Parameter<uint64_t>> {
-  return numeric_parameter_helper<uint64_t>(key, value);
-}
-
-template <>
-[[nodiscard]] inline auto JSON::get_helper_helper<Parameter<uint32_t>>(std::string_view      key,
-                                                                       const nlohmann::json& value) const
-    -> std::optional<Parameter<uint32_t>> {
-  return numeric_parameter_helper<uint32_t>(key, value);
-}
-
-template <>
-[[nodiscard]] inline auto JSON::get_helper_helper<Parameter<uint16_t>>(std::string_view      key,
-                                                                       const nlohmann::json& value) const
-    -> std::optional<Parameter<uint16_t>> {
-  return numeric_parameter_helper<uint16_t>(key, value);
-}
-
-template <>
-[[nodiscard]] inline auto JSON::get_helper_helper<Parameter<uint8_t>>(std::string_view      key,
-                                                                      const nlohmann::json& value) const
-    -> std::optional<Parameter<uint8_t>> {
-  return numeric_parameter_helper<uint8_t>(key, value);
-}
-
-template <>
-[[nodiscard]] inline auto JSON::get_helper_helper<Parameter<int64_t>>(std::string_view      key,
-                                                                      const nlohmann::json& value) const
-    -> std::optional<Parameter<int64_t>> {
-  return numeric_parameter_helper<int64_t>(key, value);
-}
-
-template <>
-[[nodiscard]] inline auto JSON::get_helper_helper<Parameter<int16_t>>(std::string_view      key,
-                                                                      const nlohmann::json& value) const
-    -> std::optional<Parameter<int16_t>> {
-  return numeric_parameter_helper<int16_t>(key, value);
-}
-
-template <>
-[[nodiscard]] inline auto JSON::get_helper_helper<Parameter<int8_t>>(std::string_view      key,
-                                                                     const nlohmann::json& value) const
-    -> std::optional<Parameter<int8_t>> {
-  return numeric_parameter_helper<int8_t>(key, value);
-}
-
+};
 }  // namespace VIPRA::Input
 
 CHECK_MODULE(InputModule, VIPRA::Input::JSON)
