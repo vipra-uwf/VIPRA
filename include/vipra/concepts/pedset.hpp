@@ -17,6 +17,7 @@ namespace VIPRA::Concepts {
 
 // TODO(rolland): add getting distance between pedestrians
 // TODO(rolland): add getting direction between pedestrians ?
+// TODO(rolland): add getting nearest pedestrian that meets a condition ?
 
 template <typename pedset_t>
 concept can_get_num_peds = requires(const pedset_t pedset) {
