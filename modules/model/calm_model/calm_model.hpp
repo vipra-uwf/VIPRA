@@ -27,15 +27,15 @@ class Model {
   }
 
   VIPRA_CONFIG_STEP {
-    _config.meanMass = VIPRA_GET_PARAM("meanMass", VIPRA::f_pnt);
-    _config.massStdDev = VIPRA_GET_PARAM("massStdDev", VIPRA::f_pnt);
-    _config.meanReactionTime = VIPRA_GET_PARAM("meanReactionTime", VIPRA::f_pnt);
-    _config.reactionTimeStdDev = VIPRA_GET_PARAM("reactionTimeStdDev", VIPRA::f_pnt);
-    _config.meanMaxSpeed = VIPRA_GET_PARAM("meanMaxSpeed", VIPRA::f_pnt);
-    _config.maxSpeedStdDev = VIPRA_GET_PARAM("maxSpeedStdDev", VIPRA::f_pnt);
-    _config.meanShoulderLen = VIPRA_GET_PARAM("meanShoulderLen", VIPRA::f_pnt);
-    _config.shoulderLenStdDev = VIPRA_GET_PARAM("shoulderLenStdDev", VIPRA::f_pnt);
-    _config.randomSeed = VIPRA_GET_PARAM("random_seed", VIPRA::size);
+    VIPRA_GET_PARAM("meanMass", _config.meanMass);
+    VIPRA_GET_PARAM("massStdDev", _config.massStdDev);
+    VIPRA_GET_PARAM("meanReactionTime", _config.meanReactionTime);
+    VIPRA_GET_PARAM("reactionTimeStdDev", _config.reactionTimeStdDev);
+    VIPRA_GET_PARAM("meanMaxSpeed", _config.meanMaxSpeed);
+    VIPRA_GET_PARAM("maxSpeedStdDev", _config.maxSpeedStdDev);
+    VIPRA_GET_PARAM("meanShoulderLen", _config.meanShoulderLen);
+    VIPRA_GET_PARAM("shoulderLenStdDev", _config.shoulderLenStdDev);
+    VIPRA_GET_PARAM("random_seed", _config.randomSeed);
   }
 
   // NOLINTNEXTLINE(misc-unused-parameters)

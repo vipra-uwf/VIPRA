@@ -24,6 +24,15 @@ target_include_directories(
   ${PROJECT_SOURCE_DIR}/include
 )
 
+target_include_directories(
+  ${PROJECT_NAME}
+  PRIVATE
+  ${PROJECT_SOURCE_DIR}/include/vipra/vipra_behaviors
+)
+
+add_subdirectory(src/)
+add_subdirectory(include/vipra/vipra_behaviors)
+
 include(FetchContent)
 message(STATUS "Getting nlohmann_json")
 FetchContent_Declare(nlohmann_json URL https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz)

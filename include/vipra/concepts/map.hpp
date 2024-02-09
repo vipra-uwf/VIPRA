@@ -1,5 +1,6 @@
 #pragma once
 
+#include <concepts>
 #include "vipra/concepts/module.hpp"
 #include "vipra/concepts/obstacle_set.hpp"
 #include "vipra/concepts/pedset.hpp"
@@ -29,6 +30,7 @@ class DummyMap {
   // NOLINTBEGIN
 
  public:
+  DummyMap() = default;
   constexpr static VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::MAP;
 
   template <VIPRA::Concepts::ParamModule params_t>

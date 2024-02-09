@@ -40,6 +40,39 @@ class Parameters {
   }
 
   /**
+   * @brief Returns true if the parameter exists, otherwise false
+   * 
+   * @param module 
+   * @param moduleName 
+   * @param paramName 
+   * @return true 
+   * @return false 
+   */
+  [[nodiscard]] auto has_param(VIPRA::Modules::Type module, const std::string& moduleName,
+                               const std::string& paramName) const -> bool {
+    return contains(module, moduleName, paramName);
+  }
+
+  /**
+   * @brief Returns true if the parameter exists, otherwise false
+   * 
+   * @param module 
+   * @param moduleName 
+   * @param paramName 
+   * @return true 
+   * @return false 
+   */
+  [[nodiscard]] auto has_required_param(VIPRA::Modules::Type module, const std::string& moduleName,
+                                        const std::string& paramName) const -> bool {
+    if (!contains(module, moduleName, paramName)) {
+      if (_params.at(module).at(moduleName).at(paramName) == ParameterType::REQUIRED)
+        throw std::runtime_error("Required Parameter: " + paramName + " For Module: " + moduleName +
+                                 " Not Provided In Input");
+    }
+    return true;
+  }
+
+  /**
    * @brief Returns the value of the parameter if it exists, otherwise throws an error
    * 
    * @tparam data_t 

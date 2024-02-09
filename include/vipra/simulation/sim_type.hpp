@@ -9,6 +9,7 @@
 #include "vipra/concepts/output_coordinator.hpp"
 #include "vipra/concepts/parameters.hpp"
 #include "vipra/randomization/random.hpp"
+#include "vipra/special_modules/behavior_model.hpp"
 #include "vipra/types/parameter.hpp"
 #include "vipra/types/time.hpp"
 #include "vipra/types/util/result_or_void.hpp"
@@ -26,6 +27,7 @@ template <Concepts::ParamModule params_t, Concepts::OutputCoordinator output_t, 
           Concepts::PedsetModule pedset_t, Concepts::GoalsModule goals_t, Concepts::MapModule map_t>
 class SimType {
   using base_output_t = decltype(std::declval<output_t>().write());
+  // TODO(rolland): break this out
   using output_data_t =
       std::conditional_t<std::is_same_v<base_output_t, void> || std::is_same_v<base_output_t, VOID> ||
                              Util::all_of_type_v<VOID, base_output_t>,
@@ -41,6 +43,7 @@ class SimType {
     params.register_param(Modules::Type::SIMULATION, "main", "timestep_size", ParameterType::REQUIRED);
     params.register_param(Modules::Type::SIMULATION, "main", "output_frequency", ParameterType::REQUIRED);
     params.register_param(Modules::Type::SIMULATION, "main", "random_seed", ParameterType::REQUIRED);
+    BehaviorModel::register_params(params);
   }
 
   auto operator()() -> output_data_t {
@@ -59,6 +62,7 @@ class SimType {
     _map.initialize(_pedset);
     _goals.initialize(_pedset, _map);
     _model.initialize(_pedset, _map, _goals, _output);
+    _behaviorModel.initialize(_pedset, _goals, _map);
 
     while (_timestep < maxTimestep) {
       const VIPRA::State& state = _model.timestep(_pedset, _map, _goals, _output, timestepSize, _timestep);
@@ -76,12 +80,13 @@ class SimType {
   }
 
  private:
-  params_t _params;
-  output_t _output;
-  model_t  _model;
-  pedset_t _pedset;
-  goals_t  _goals;
-  map_t    _map;
+  params_t      _params;
+  output_t      _output;
+  model_t       _model;
+  pedset_t      _pedset;
+  goals_t       _goals;
+  map_t         _map;
+  BehaviorModel _behaviorModel;
 
   VIPRA::Random::Engine _engine{};
 

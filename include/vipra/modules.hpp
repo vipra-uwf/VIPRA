@@ -15,6 +15,7 @@ enum class Type {
   FIELD,
   OBSTACLES,
   SIMULATION,
+  BEHAVIOR_MODEL,
 };
 
 inline auto to_string(Type type) -> std::string {
@@ -39,6 +40,8 @@ inline auto to_string(Type type) -> std::string {
       return "map";
     case Type::FIELD:
       return "field";
+    case Type::BEHAVIOR_MODEL:
+      return "behavior_model";
   }
 
   return "unknown";
