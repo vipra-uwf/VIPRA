@@ -8,7 +8,7 @@
 
 #include "vipra/concepts/numeric.hpp"
 
-#include "vipra/randomization/random.hpp"
+#include "vipra/random/random.hpp"
 #include "vipra/types/float.hpp"
 #include "vipra/types/size.hpp"
 

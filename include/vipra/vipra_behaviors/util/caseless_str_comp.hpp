@@ -1,5 +1,4 @@
-#ifndef VIPRA_BHVR_CASELESS_STR_COMP_HPP
-#define VIPRA_BHVR_CASELESS_STR_COMP_HPP
+#pragma once
 
 #include <cstring>
 #include <string>
@@ -47,5 +46,3 @@ struct CaselessStrCompare {
  private:
   static constexpr char SPACE_ASCII = 32;
 };
-
-#endif

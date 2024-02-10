@@ -1,11 +1,10 @@
-#ifndef VIPRA_BEHAVIORS_DECLARATION_COMPONENTS_HPP
-#define VIPRA_BEHAVIORS_DECLARATION_COMPONENTS_HPP
+#pragma once
 
 #include <string>
 
 #include <generated/BehaviorParser.h>
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 using evEnd = BehaviorParser::Event_endContext*;
 using evStart = BehaviorParser::Event_startContext*;
 using evName = std::string;
@@ -22,6 +21,4 @@ using slRequired = BehaviorParser::Selector_requiredContext*;
 
 using lcName = BehaviorParser::Loc_nameContext*;
 using lcDimensions = BehaviorParser::Loc_dimensionsContext*;
-}  // namespace BHVR
-
-#endif
+}  // namespace VIPRA::Behaviors

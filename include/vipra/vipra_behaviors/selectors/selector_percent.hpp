@@ -3,7 +3,7 @@
 
 #include <selectors/selector.hpp>
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 /**
  * @brief Selects a percentage of a group to be a type
  * 
@@ -14,10 +14,10 @@ struct SelectorPercent {
   MOVEABLE(SelectorPercent)
 
   float percentage;
-  auto  operator()(const std::vector<VIPRA::idx>&, const std::vector<VIPRA::idx>&, Simpack) const
+  auto  operator()(std::vector<VIPRA::idx> const&, std::vector<VIPRA::idx> const&, Simpack) const
       -> SelectorResult;
 };
 
-}  // namespace BHVR
+}  // namespace VIPRA::Behaviors
 
 #endif

@@ -1,21 +1,15 @@
-#ifndef VIPRA_ACTION_ATOM_HPP
-#define VIPRA_ACTION_ATOM_HPP
+#pragma once
 
 #include <functional>
 
-#include "definitions/behavior_context.hpp"
-#include "definitions/sim_pack.hpp"
+#include "vipra/vipra_behaviors/definitions/behavior_context.hpp"
+#include "vipra/vipra_behaviors/definitions/sim_pack.hpp"
 
-#include "goals/goals.hpp"
-#include "obstacle_set/obstacle_set.hpp"
-#include "pedestrian_set/pedestrian_set.hpp"
+#include "vipra/vipra_behaviors/targets/target.hpp"
 
-#include "targets/target.hpp"
+namespace VIPRA::Behaviors {
 
-namespace BHVR {
-
-using Atom =
-    std::function<void(Simpack, const VIPRA::idxVec&, const std::vector<bool>&, const std::vector<Target>&)>;
-}  // namespace BHVR
-
-#endif
+template <typename simpack_t>
+using Atom = std::function<void(simpack_t, VIPRA::idxVec const&, std::vector<bool> const&,
+                                std::vector<Target> const&)>;
+}  // namespace VIPRA::Behaviors

@@ -1,10 +1,8 @@
-#ifndef VIPRA_BEHAVIORS_SELF_SELECTOR_HPP
-#define VIPRA_BEHAVIORS_SELF_SELECTOR_HPP
+#pragma once
 
-#include <definitions/sim_pack.hpp>
-#include <targets/target.hpp>
+#include "vipra/vipra_behaviors/targets/target.hpp"
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 
 /**
  * @brief Returns the target that calls this
@@ -15,8 +13,6 @@ struct TargetSelf {
   COPYABLE(TargetSelf)
   MOVEABLE(TargetSelf)
 
-  inline auto operator()(Simpack /*unused*/, Self self) -> Target { return self.target; }
+  inline auto get(auto /*unused*/, Self self) -> Target { return self.target; }
 };
-}  // namespace BHVR
-
-#endif
+}  // namespace VIPRA::Behaviors

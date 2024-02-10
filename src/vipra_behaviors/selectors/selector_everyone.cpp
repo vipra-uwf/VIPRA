@@ -3,7 +3,7 @@
 
 #include "selectors/selector_everyone.hpp"
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 /**
  * @brief Selects all pedestrians from a group
  * 
@@ -17,4 +17,4 @@ auto SelectorEveryone::operator()(const VIPRA::idxVec& /*unused*/, const VIPRA::
   return {false, vec};
 }
 
-}  // namespace BHVR
+}  // namespace VIPRA::Behaviors

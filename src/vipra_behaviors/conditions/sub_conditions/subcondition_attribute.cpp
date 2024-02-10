@@ -5,7 +5,7 @@
 #include <definitions/dimensions.hpp>
 #include "conditions/sub_condition.hpp"
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 SubConditionAttribute::SubConditionAttribute(Attribute type, CAttributeValue val, bool negative)
     : _type(type), _value(val), _not(negative) {}
 
@@ -14,8 +14,8 @@ SubConditionAttribute::SubConditionAttribute(Attribute type, CAttributeValue val
  * 
  */
 void SubConditionAttribute::operator()(Simpack pack, const VIPRA::idxVec& peds,
-                                       const std::vector<Target>& targets, std::vector<bool>& met,
-                                       const std::vector<bool>& /*unused*/, BoolOp /*unused*/) const {
+                                       std::vector<Target> const& targets, std::vector<bool>& met,
+                                       std::vector<bool> const& /*unused*/, BoolOp /*unused*/) const {
   for (auto ped : peds) {
     auto attr = AttributeHandling::get_value(targets[ped], _type, pack);
 
@@ -58,7 +58,7 @@ inline auto SubConditionAttribute::towards_location_compare(CAttributeValue& att
                                                             VIPRA::idx self) const -> bool {
   attr.type_check(Type::COORD);
   const VIPRA::f3d selfPos = pack.get_pedset().getPedCoords(self);
-  const auto&      loc = pack.get_context().locations.at(_value.as<VIPRA::idx>());
+  auto const&      loc = pack.get_context().locations.at(_value.as<VIPRA::idx>());
 
   VIPRA::f3d checkDiff;
   VIPRA::f3d endDiff;
@@ -95,4 +95,4 @@ inline auto SubConditionAttribute::towards_attribute_compare(CAttributeValue&, S
   return false;
 }
 
-}  // namespace BHVR
+}  // namespace VIPRA::Behaviors

@@ -1,13 +1,14 @@
-#ifndef VIPRA_BHVR_PEDESTRIAN_TYPES_HPP
-#define VIPRA_BHVR_PEDESTRIAN_TYPES_HPP
+#pragma once
 
 #include <cstdint>
 #include <functional>
 
 #include "vipra/geometry/f3d.hpp"
-#include "util/class_types.hpp"
+#include "vipra/types/size.hpp"
 
-namespace BHVR {
+#include "vipra/vipra_behaviors/util/class_types.hpp"
+
+namespace VIPRA::Behaviors {
 
 /**
  * @brief typeUID is used to identify a single pedestrian type, should only be powers of 2
@@ -50,7 +51,7 @@ class Ptype {
    * 
    * @param func : function to apply to each type
    */
-  void for_each_type(const std::function<void(typeUID)>& func) const {
+  void for_each_type(std::function<void(typeUID)> const& func) const {
     typeUID type = fullType;
     typeUID check = 1;
     while (check <= type) {
@@ -177,6 +178,4 @@ class Ptype {
    */
   inline constexpr auto operator!=(Ptype type) const noexcept -> bool { return fullType != type.fullType; }
 };
-}  // namespace BHVR
-
-#endif
+}  // namespace VIPRA::Behaviors

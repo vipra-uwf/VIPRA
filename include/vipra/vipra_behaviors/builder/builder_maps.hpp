@@ -1,5 +1,4 @@
-#ifndef VIPRA_BEHAVIORS_BUILDER_MAPS_HPP
-#define VIPRA_BEHAVIORS_BUILDER_MAPS_HPP
+#pragma once
 
 #include <string>
 #include <unordered_map>
@@ -8,15 +7,13 @@
 #include <definitions/pedestrian_types.hpp>
 #include <util/caseless_str_comp.hpp>
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 using StateMap =
-    std::unordered_map<std::string, BHVR::stateUID, CaselessStrCompare::Hash, CaselessStrCompare::Comp>;
+    std::unordered_map<std::string, Behaviors::stateUID, CaselessStrCompare::Hash, CaselessStrCompare::Comp>;
 using TypeMap =
-    std::unordered_map<std::string, BHVR::typeUID, CaselessStrCompare::Hash, CaselessStrCompare::Comp>;
+    std::unordered_map<std::string, Behaviors::typeUID, CaselessStrCompare::Hash, CaselessStrCompare::Comp>;
 using EventMap =
     std::unordered_map<std::string, VIPRA::idx, CaselessStrCompare::Hash, CaselessStrCompare::Comp>;
 using LocationMap =
     std::unordered_map<std::string, VIPRA::idx, CaselessStrCompare::Hash, CaselessStrCompare::Comp>;
-}  // namespace BHVR
-
-#endif
+}  // namespace VIPRA::Behaviors

@@ -15,19 +15,15 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
 add_library(
   ${PROJECT_NAME}
   STATIC
-  ${PROJECT_SOURCE_DIR}/include/vipra/vipra.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/vipra/vipra.cpp
 )
 
 target_include_directories(
   ${PROJECT_NAME}
   PUBLIC
-  ${PROJECT_SOURCE_DIR}/include
-)
-
-target_include_directories(
-  ${PROJECT_NAME}
-  PRIVATE
-  ${PROJECT_SOURCE_DIR}/include/vipra/vipra_behaviors
+  ${CMAKE_CURRENT_SOURCE_DIR}/include
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/vipra/vipra_behaviors
+  ${ANTLR4CPP_INCLUDE_DIRS}
 )
 
 add_subdirectory(src/)
@@ -43,4 +39,5 @@ target_link_libraries(
   ${PROJECT_NAME}
   PUBLIC
   nlohmann_json::nlohmann_json
+  antlr4_shared
 )

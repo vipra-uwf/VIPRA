@@ -1,5 +1,4 @@
-#ifndef VIPRA_BEHAVIORS_TARGET_NEAREST_SELECTOR_HPP
-#define VIPRA_BEHAVIORS_TARGET_NEAREST_SELECTOR_HPP
+#pragma once
 
 #include <limits>
 #include <optional>
@@ -10,7 +9,7 @@
 #include "targets/target_modifier.hpp"
 #include "vipra/geometry/f3d.hpp"
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 /**
   * @brief Selects the nearest pedestrian with any of the given types
   * 
@@ -92,6 +91,4 @@ struct TargetNearest {
     return {shortest, nearest};
   }
 };
-}  // namespace BHVR
-
-#endif
+}  // namespace VIPRA::Behaviors

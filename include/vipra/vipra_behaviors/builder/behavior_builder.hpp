@@ -1,11 +1,10 @@
-#ifndef VIPRA_BEHAVIORS_BEHAVIOR_BUILDER_HPP
-#define VIPRA_BEHAVIORS_BEHAVIOR_BUILDER_HPP
+#pragma once
 
 #include <filesystem>
 #include <stdexcept>
 
-#include "vipra/vipra_behaviors/generated/BehaviorBaseVisitor.h"
-#include "vipra/vipra_behaviors/generated/BehaviorParser.h"
+// #include "vipra/vipra_behaviors/_grammar/generated/BehaviorBaseVisitor.h"
+// #include "vipra/vipra_behaviors/_grammar/generated/BehaviorParser.h"
 
 #include "vipra/vipra_behaviors/conditions/subconditions/subcondition_attribute.hpp"
 #include "vipra/vipra_behaviors/conditions/subconditions/subcondition_elapsed_time.hpp"
@@ -19,26 +18,26 @@
 #include "vipra/vipra_behaviors/conditions/subconditions/subcondition_leave.hpp"
 #include "vipra/vipra_behaviors/conditions/subconditions/subcondition_spatial.hpp"
 
-#include "selectors/subselector.hpp"
+#include "vipra/vipra_behaviors/selectors/subselector.hpp"
 
-#include "behavior/human_behavior.hpp"
-#include "builder/behavior_error_listener.hpp"
+#include "vipra/vipra_behaviors/behavior/human_behavior.hpp"
+#include "vipra/vipra_behaviors/builder/behavior_error_listener.hpp"
 
-#include "events/event.hpp"
-#include "locations/location.hpp"
+#include "vipra/vipra_behaviors/events/event.hpp"
+#include "vipra/vipra_behaviors/locations/location.hpp"
 
-#include "attributes/attributes.hpp"
-#include "conditions/condition.hpp"
-#include "definitions/dsl_types.hpp"
-#include "time/time.hpp"
-#include "values/values.hpp"
+#include "vipra/vipra_behaviors/attributes/attributes.hpp"
+#include "vipra/vipra_behaviors/conditions/condition.hpp"
+#include "vipra/vipra_behaviors/definitions/dsl_types.hpp"
+#include "vipra/vipra_behaviors/time/time.hpp"
+#include "vipra/vipra_behaviors/values/values.hpp"
 
-#include "builder/builder_maps.hpp"
-#include "builder/declaration_components.hpp"
-#include "targets/target_modifier.hpp"
-#include "values/direction.hpp"
+#include "vipra/vipra_behaviors/builder/builder_maps.hpp"
+#include "vipra/vipra_behaviors/builder/declaration_components.hpp"
+#include "vipra/vipra_behaviors/targets/target_modifier.hpp"
+#include "vipra/vipra_behaviors/values/direction.hpp"
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 /**
  * @brief Parses Behavior Files and Creates the Runtime Functionality they describe
  * 
@@ -49,7 +48,7 @@ class BehaviorBuilder : public BehaviorBaseVisitor {
   MOVEABLE(BehaviorBuilder)
 
  public:
-  [[nodiscard]] auto build(std::string, std::filesystem::path const&, BHVR::seed) -> HumanBehavior;
+  [[nodiscard]] auto build(std::string, std::filesystem::path const&, Behaviors::seed) -> HumanBehavior;
 
  private:
   BehaviorErrorListener _errorListener;
@@ -63,11 +62,11 @@ class BehaviorBuilder : public BehaviorBaseVisitor {
   Event         _startEvent;
   HumanBehavior _currentBehavior;
 
-  BHVR::stateUID _currState{};
-  BHVR::typeUID  _currType{};
-  BHVR::seed     _currSeed{};
+  Behaviors::stateUID _currState{};
+  Behaviors::typeUID  _currType{};
+  Behaviors::seed     _currSeed{};
 
-  void initial_behavior_setup(std::string const&, BHVR::seed);
+  void initial_behavior_setup(std::string const&, Behaviors::seed);
   void initialize_types();
   void initialize_events();
   void initialize_states();
@@ -90,20 +89,21 @@ class BehaviorBuilder : public BehaviorBaseVisitor {
   [[nodiscard]] auto build_sub_selector(slType, slSelector, std::optional<slGroup>, bool) -> SubSelector;
 
   [[nodiscard]] auto get_location(std::string const&) const -> std::optional<VIPRA::idx>;
-  [[nodiscard]] auto get_state(std::string const&) const -> std::optional<BHVR::stateUID>;
+  [[nodiscard]] auto get_state(std::string const&) const -> std::optional<Behaviors::stateUID>;
   [[nodiscard]] auto get_event(std::string const&) const -> std::optional<VIPRA::idx>;
   [[nodiscard]] auto get_range(BehaviorParser::Value_numberContext*) const -> VIPRA::time_range_s;
-  [[nodiscard]] auto get_type(std::string const&) const -> std::optional<BHVR::typeUID>;
-  [[nodiscard]] auto get_group(std::optional<slGroup>) const -> std::pair<BHVR::typeUID, std::string>;
-  [[nodiscard]] auto get_composite_type(std::vector<antlr4::tree::TerminalNode*> const&) const -> BHVR::Ptype;
-  [[nodiscard]] static auto get_attribute(std::string) -> BHVR::Attribute;
+  [[nodiscard]] auto get_type(std::string const&) const -> std::optional<Behaviors::typeUID>;
+  [[nodiscard]] auto get_group(std::optional<slGroup>) const -> std::pair<Behaviors::typeUID, std::string>;
+  [[nodiscard]] auto get_composite_type(std::vector<antlr4::tree::TerminalNode*> const&) const
+      -> Behaviors::Ptype;
+  [[nodiscard]] static auto get_attribute(std::string) -> Behaviors::Attribute;
 
   [[nodiscard]] auto get_check_location(std::string const&) const -> VIPRA::idx;
-  [[nodiscard]] auto get_check_state(std::string const&) const -> BHVR::stateUID;
+  [[nodiscard]] auto get_check_state(std::string const&) const -> Behaviors::stateUID;
   [[nodiscard]] auto get_check_event(std::string const&) const -> VIPRA::idx;
-  [[nodiscard]] auto get_check_type(std::string const&) const -> BHVR::typeUID;
+  [[nodiscard]] auto get_check_type(std::string const&) const -> Behaviors::typeUID;
 
-  [[nodiscard]] auto        make_attribute_value(BehaviorParser::Attr_valueContext*) -> BHVR::CAttributeValue;
+  [[nodiscard]] auto make_attribute_value(BehaviorParser::Attr_valueContext*) -> Behaviors::CAttributeValue;
   [[nodiscard]] static auto make_attribute_str(BehaviorParser::AttributeContext*) -> std::string;
   [[nodiscard]] static auto make_list_strs(std::vector<antlr4::tree::TerminalNode*> const&)
       -> std::vector<std::string>;
@@ -296,6 +296,4 @@ class BehaviorBuilder : public BehaviorBaseVisitor {
     return std::nullopt;
   }
 };
-}  // namespace BHVR
-
-#endif
+}  // namespace VIPRA::Behaviors

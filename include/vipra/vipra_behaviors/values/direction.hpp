@@ -1,11 +1,8 @@
-#ifndef VIPRA_BEHAVIORS_DIRECTION_HPP
-#define VIPRA_BEHAVIORS_DIRECTION_HPP
+#pragma once
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 enum class Direction {
   FRONT,
   BEHIND,
 };
-}  // namespace BHVR
-
-#endif
+}  // namespace VIPRA::Behaviors

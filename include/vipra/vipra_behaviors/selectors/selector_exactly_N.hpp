@@ -1,11 +1,10 @@
 
-#ifndef VIPRA_EXACTLY_N_RANDOM_SELECTOR_H
-#define VIPRA_EXACTLY_N_RANDOM_SELECTOR_H
+#pragma once
 
 #include <selectors/selector.hpp>
 #include <values/numeric_value.hpp>
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 /**
  * @brief Selects an exact number of pedestrians
  * 
@@ -18,6 +17,4 @@ struct SelectorExactlyN {
   NumericValue selectCount;
   auto         operator()(const VIPRA::idxVec&, const VIPRA::idxVec&, Simpack) const -> SelectorResult;
 };
-}  // namespace BHVR
-
-#endif  //VIPRA_EXACTLY_N_RANDOM_SELECTOR_H
+}  // namespace VIPRA::Behaviors

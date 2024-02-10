@@ -1,11 +1,10 @@
-#ifndef VIPRA_BEHAVIORS_MODIFIER_DIRECTION_HPP
-#define VIPRA_BEHAVIORS_MODIFIER_DIRECTION_HPP
+#pragma once
 
 #include "definitions/sim_pack.hpp"
 #include "values/direction.hpp"
 #include "values/numeric_value.hpp"
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 /**
  * @brief Target Modifier for direction to target
  * 
@@ -28,9 +27,9 @@ class ModifierDirection {
    * @return false : if not in direction
    */
   auto operator()(Simpack pack, VIPRA::idx targetIdx, VIPRA::idx selfIdx) const -> bool {
-    const auto& goalCoord = pack.get_goals().getCurrentGoal(selfIdx);
-    const auto& selfCoord = pack.get_pedset().getPedCoords(selfIdx);
-    const auto& targetCoord = pack.get_pedset().getPedCoords(targetIdx);
+    auto const& goalCoord = pack.get_goals().getCurrentGoal(selfIdx);
+    auto const& selfCoord = pack.get_pedset().getPedCoords(selfIdx);
+    auto const& targetCoord = pack.get_pedset().getPedCoords(targetIdx);
 
     auto forward = goalCoord - selfCoord;
     auto dif = targetCoord - selfCoord;
@@ -47,6 +46,4 @@ class ModifierDirection {
 
   static constexpr float RANGE = 0.1F;
 };
-}  // namespace BHVR
-
-#endif
+}  // namespace VIPRA::Behaviors

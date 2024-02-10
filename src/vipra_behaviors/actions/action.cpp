@@ -1,16 +1,16 @@
 
 
-#include <actions/action.hpp>
-#include <definitions/sim_pack.hpp>
-#include <definitions/type_definitions.hpp>
-#include <targets/target.hpp>
-#include <time/time.hpp>
-#include <util/timed_latch.hpp>
 #include <utility>
-#include <values/numeric_value.hpp>
-#include "targets/target_selector.hpp"
 
-namespace BHVR {
+#include "vipra/vipra_behaviors/actions/action.hpp"
+#include "vipra/vipra_behaviors/definitions/sim_pack.hpp"
+#include "vipra/vipra_behaviors/targets/target.hpp"
+#include "vipra/vipra_behaviors/targets/target_selector.hpp"
+#include "vipra/vipra_behaviors/time/time.hpp"
+#include "vipra/vipra_behaviors/util/timed_latch.hpp"
+#include "vipra/vipra_behaviors/values/numeric_value.hpp"
+
+namespace VIPRA::Behaviors {
 
 /**
  * @brief Initializes the actions duration container
@@ -69,7 +69,7 @@ void Action::add_atom(Atom const& atom) { _atoms.emplace_back(atom); }
  * 
  * @param range
  */
-void Action::add_duration(const BHVR::NumericValue& dur) { _duration = TimedLatchCollection(dur); }
+void Action::add_duration(Behaviors::NumericValue const& dur) { _duration = TimedLatchCollection(dur); }
 
 /**
  * @brief Sets the target selector for the action
@@ -78,4 +78,4 @@ void Action::add_duration(const BHVR::NumericValue& dur) { _duration = TimedLatc
  */
 void Action::add_target(TargetSelector&& target) { _targets = target; }
 
-}  // namespace BHVR
+}  // namespace VIPRA::Behaviors

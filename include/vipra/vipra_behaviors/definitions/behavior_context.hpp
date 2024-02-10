@@ -4,25 +4,26 @@
 #include <memory>
 #include <vector>
 
-#include "dsl_types.hpp"
-#include "pedestrian_types.hpp"
-
-#include "locations/location.hpp"
 #include "vipra/geometry/f3d.hpp"
-#include "vipra/randomization/random.hpp"
+#include "vipra/random/random.hpp"
+#include "vipra/types/time.hpp"
 
-namespace BHVR {
-class Event;
-class Location;
+#include "vipra/vipra_behaviors/definitions/dsl_types.hpp"
+#include "vipra/vipra_behaviors/definitions/pedestrian_types.hpp"
+
+#include "vipra/vipra_behaviors/locations/location.hpp"
+
+namespace VIPRA::Behaviors {
+
+template <typename event_t>
 struct BehaviorContext {
-  VIPRA::delta_t              elapsedTime = 0;
-  VIPRA::pRNG_Engine          engine;
-  BHVR::stateUID              environmentState;
-  std::vector<BHVR::stateUID> pedStates;
-  std::vector<BHVR::typeUID>  types;
-  std::vector<BHVR::Event>    events;
-  std::vector<BHVR::Location> locations;
+  VIPRA::delta_t                   elapsedTime = 0;
+  VIPRA::Random::Engine            engine;
+  std::vector<Behaviors::stateUID> pedStates;
+  std::vector<Behaviors::typeUID>  types;
+  std::vector<event_t>             events;
+  std::vector<Behaviors::Location> locations;
 };
-}  // namespace BHVR
+}  // namespace VIPRA::Behaviors
 
 #endif

@@ -13,7 +13,7 @@
 #include "selectors/selector.hpp"
 #include "targets/target.hpp"
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 
 /**
  * @brief Returns the name of the behavior
@@ -42,7 +42,7 @@ void HumanBehavior::add_sub_selector(SubSelector const& subSelector) {
 }
 
 /**
- * @brief Sets the BHVR selectors allTypes
+ * @brief Sets the Behaviors selectors allTypes
  * 
  */
 void HumanBehavior::set_all_ped_types(Ptype types) {
@@ -62,8 +62,8 @@ void HumanBehavior::initialize(const VIPRA::PedestrianSet& pedSet, const VIPRA::
   VIPRA::State dummyState;
 
   _context.engine = VIPRA::pRNG_Engine{_seedNum};
-  _context.pedStates = std::vector<BHVR::stateUID>(pedSet.getNumPedestrians());
-  _context.types = std::vector<BHVR::typeUID>(pedSet.getNumPedestrians());
+  _context.pedStates = std::vector<Behaviors::stateUID>(pedSet.getNumPedestrians());
+  _context.types = std::vector<Behaviors::typeUID>(pedSet.getNumPedestrians());
 
   _conditionMet.resize(pedSet.getNumPedestrians(), false);
   _targets.resize(pedSet.getNumPedestrians());
@@ -153,7 +153,7 @@ auto HumanBehavior::action_count() const -> VIPRA::size {
  * 
  * @param s : randomization seed
  */
-void HumanBehavior::set_seed(BHVR::seed bSeed) {
+void HumanBehavior::set_seed(Behaviors::seed bSeed) {
   _context.engine.reseed(bSeed);
   _seedNum = bSeed;
 }
@@ -216,4 +216,4 @@ void HumanBehavior::apply_actions(VIPRA::PedestrianSet& pedSet, VIPRA::ObstacleS
 HumanBehavior::HumanBehavior(std::string behaviorName) : _name(std::move(behaviorName)), _context() {}
 
 // ------------------------------------------ END CONSTRUCTORS ------------------------------------------------------------------------
-}  // namespace BHVR
+}  // namespace VIPRA::Behaviors

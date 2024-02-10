@@ -1,33 +1,30 @@
-#ifndef VIPRA_SUBCONDITION_ELAPSED_TIME
-#define VIPRA_SUBCONDITION_ELAPSED_TIME
+#pragma once
 
-#include "conditions/sub_condition.hpp"
-#include "definitions/dsl_types.hpp"
-#include "definitions/sim_pack.hpp"
-#include "events/event.hpp"
-#include "time/time.hpp"
-#include "util/class_types.hpp"
-#include "util/timed_latch.hpp"
-#include "values/numeric_value.hpp"
 #include "vipra/geometry/f3d.hpp"
 
-namespace BHVR {
+#include "vipra/vipra_behaviors/conditions/sub_condition.hpp"
+#include "vipra/vipra_behaviors/definitions/dsl_types.hpp"
+#include "vipra/vipra_behaviors/events/event.hpp"
+#include "vipra/vipra_behaviors/time/time.hpp"
+#include "vipra/vipra_behaviors/util/class_types.hpp"
+#include "vipra/vipra_behaviors/util/timed_latch.hpp"
+#include "vipra/vipra_behaviors/values/numeric_value.hpp"
+
+namespace VIPRA::Behaviors {
 class SubConditionElapsedTimeFromEvent {
   NON_DEFAULT_CONSTRUCTIBLE(SubConditionElapsedTimeFromEvent)
   COPYABLE(SubConditionElapsedTimeFromEvent)
   MOVEABLE(SubConditionElapsedTimeFromEvent)
  public:
-  SubConditionElapsedTimeFromEvent(BHVR::NumericValue time, VIPRA::idx event)
+  SubConditionElapsedTimeFromEvent(Behaviors::NumericValue time, VIPRA::idx event)
       : _event(event), _requiredTime(std::move(time)) {}
 
-  void operator()(Simpack, const VIPRA::idxVec&, std::vector<Target> const&, std::vector<bool>&,
+  void operator()(auto pack, const VIPRA::idxVec&, std::vector<Target> const&, std::vector<bool>&,
                   std::vector<bool> const&, BoolOp);
 
  private:
-  VIPRA::idx         _event{};
-  BHVR::NumericValue _requiredTime{};
-  VIPRA::time_s      _startTime{};
+  VIPRA::idx              _event{};
+  Behaviors::NumericValue _requiredTime{};
+  VIPRA::time_s           _startTime{};
 };
-}  // namespace BHVR
-
-#endif
+}  // namespace VIPRA::Behaviors

@@ -1,7 +1,6 @@
-#ifndef VIPRA_BEHAVIORS_EVENT_STATUS_HPP
-#define VIPRA_BEHAVIORS_EVENT_STATUS_HPP
+#pragma once
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 /**
  * @brief Holds the current status of an event
  * 
@@ -12,6 +11,4 @@ enum class EventStatus {
   ENDING,
   NOT_OCCURRING,
 };
-}  // namespace BHVR
-
-#endif
+}  // namespace VIPRA::Behaviors

@@ -1,16 +1,16 @@
-#ifndef VIPRA_BEHAVIORS_RANDOM_HPP
-#define VIPRA_BEHAVIORS_RANDOM_HPP
+#pragma once
 
 #include <cstdint>
 #include <limits>
 
-#include "definitions/dsl_types.hpp"
 #include "vipra/geometry/f3d.hpp"
+#include "vipra/random/distributions.hpp"
+#include "vipra/random/random.hpp"
+#include "vipra/types/idx.hpp"
 
-#include "distributions/distributions.hpp"
-#include "randomization/random.hpp"
+#include "vipra/vipra_behaviors/definitions/dsl_types.hpp"
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 
 struct Min {
   float val;
@@ -25,21 +25,19 @@ class DRNG {
   * @brief Gets the random float between min and max that is assigned to the pedestrian at pedIdx
   * 
   */
-  [[nodiscard]] static inline auto ped_random_float(BHVR::seed seed, VIPRA::idx pedIdx, Min min, Max max)
+  [[nodiscard]] static inline auto ped_random_float(Behaviors::seed seed, VIPRA::idx pedIdx, Min min, Max max)
       -> float {
     VIPRA::uniform_distribution<float> distr{min.val, max.val};
-    return distr(get_engine(BHVR::seed{seed + (pedIdx * PED_MULT_VAL)}));
+    return distr(get_engine(Behaviors::seed{seed + (pedIdx * PED_MULT_VAL)}));
   }
 
  private:
   static constexpr uint64_t PED_MULT_VAL{10037};
 
-  static inline auto get_engine(BHVR::seed seed) -> VIPRA::pRNG_Engine& {
-    static VIPRA::pRNG_Engine gen{};
+  static inline auto get_engine(Behaviors::seed seed) -> VIPRA::Random::Engine& {
+    static VIPRA::Random::Engine gen{};
     gen.reseed(seed);
     return gen;
   }
 };
-}  // namespace BHVR
-
-#endif
+}  // namespace VIPRA::Behaviors

@@ -1,12 +1,13 @@
-#ifndef VIPRA_BHVR_PEDESTRIAN_GROUPS_HPP
-#define VIPRA_BHVR_PEDESTRIAN_GROUPS_HPP
+#pragma once
 
 #include <vector>
 
-#include "definitions/pedestrian_types.hpp"
 #include "vipra/geometry/f3d.hpp"
 
-namespace BHVR {
+#include "vipra/types/idx.hpp"
+#include "vipra/vipra_behaviors/definitions/pedestrian_types.hpp"
+
+namespace VIPRA::Behaviors {
 
 /**
  * @brief Holds the indexes for pedestrians in each type group
@@ -44,7 +45,7 @@ class GroupsContainer {
 
   [[nodiscard]] auto size() const -> VIPRA::size;
 
-  [[nodiscard]] auto at(VIPRA::idx) const -> const VIPRA::idxVec&;
+  [[nodiscard]] auto at(VIPRA::idx) const -> VIPRA::idxVec const&;
   [[nodiscard]] auto operator[](VIPRA::idx) -> VIPRA::idxVec&;
 
   [[nodiscard]] auto get_group(typeUID) const -> const VIPRA::idxVec&;
@@ -58,9 +59,7 @@ class GroupsContainer {
   [[nodiscard]] auto is_used(VIPRA::idx, typeUID) const -> bool;
 
  private:
-  std::vector<VIPRA::idxVec>     _groups;
+  std::vector<VIPRA::idxVec>     _groups{};
   std::vector<std::vector<bool>> _used;
 };
-}  // namespace BHVR
-
-#endif
+}  // namespace VIPRA::Behaviors

@@ -2,7 +2,7 @@
 
 #include <builder/behavior_error_listener.hpp>
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 void BehaviorErrorListener::syntaxError(antlr4::Recognizer*, antlr4::Token*, size_t line,
                                         size_t charPositionInLine, std::string const& msg,
                                         std::exception_ptr) {
@@ -23,4 +23,4 @@ void BehaviorErrorListener::reportAttemptingFullContext(antlr4::Parser*, antlr4:
 
 void BehaviorErrorListener::reportContextSensitivity(antlr4::Parser*, antlr4::dfa::DFA const&, size_t, size_t,
                                                      size_t, antlr4::atn::ATNConfigSet*) {}
-}  // namespace BHVR
+}  // namespace VIPRA::Behaviors

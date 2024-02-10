@@ -1,10 +1,12 @@
-#ifndef VIPRA_BEHAVIORS_TIME_HPP
-#define VIPRA_BEHAVIORS_TIME_HPP
+#pragma once
 
 #include <string>
 #include <utility>
+
 #include "vipra/geometry/f3d.hpp"
-namespace BHVR {
+#include "vipra/types/time.hpp"
+
+namespace VIPRA::Behaviors {
 using RandomVal = std::pair<float, float>;
 class Duration {
  public:
@@ -17,6 +19,4 @@ class Duration {
  private:
   VIPRA::time_range_s _range;
 };
-}  // namespace BHVR
-
-#endif
+}  // namespace VIPRA::Behaviors

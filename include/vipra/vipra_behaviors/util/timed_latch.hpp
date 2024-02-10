@@ -1,13 +1,14 @@
-#ifndef VIPRA_BEHAVIORS_TIME_LATCH_HPP
-#define VIPRA_BEHAVIORS_TIME_LATCH_HPP
+#pragma once
 
 #include <utility>
 
-#include "definitions/dsl_types.hpp"
-#include "values/numeric_value.hpp"
 #include "vipra/geometry/f3d.hpp"
+#include "vipra/types/time.hpp"
 
-namespace BHVR {
+#include "vipra/vipra_behaviors/definitions/dsl_types.hpp"
+#include "vipra/vipra_behaviors/values/numeric_value.hpp"
+
+namespace VIPRA::Behaviors {
 
 /**
  * @brief Holds time released latches
@@ -15,7 +16,7 @@ namespace BHVR {
  */
 class TimedLatchCollection {
  public:
-  explicit TimedLatchCollection(BHVR::NumericValue value) : _duration(std::move(value)) {}
+  explicit TimedLatchCollection(Behaviors::NumericValue value) : _duration(std::move(value)) {}
 
   /**
    * @brief Sets the size of the container
@@ -49,12 +50,7 @@ class TimedLatchCollection {
     if (_startTimes[pedIdx] == -1) return false;
 
     float val = _duration.value(pedIdx);
-    if (currTime - _startTimes[pedIdx] >= val) {
-      _startTimes[pedIdx] = -1;
-      return false;
-    }
-
-    return true;
+    return !(currTime - _startTimes[pedIdx] >= val);
   }
 
   /**
@@ -66,7 +62,7 @@ class TimedLatchCollection {
   auto get_duration(VIPRA::idx pedIdx) -> float { return _duration.value(pedIdx); }
 
  private:
-  BHVR::NumericValue         _duration;
+  Behaviors::NumericValue    _duration;
   std::vector<VIPRA::time_s> _startTimes;
 
   /**
@@ -85,6 +81,4 @@ class TimedLatchCollection {
     return (currTime > left && currTime < right);
   }
 };
-}  // namespace BHVR
-
-#endif
+}  // namespace VIPRA::Behaviors

@@ -3,7 +3,7 @@
 
 #include <selectors/selector.hpp>
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 /**
   * @brief Selects every pedestrian
   * 
@@ -16,6 +16,6 @@ struct SelectorEveryone {
   auto operator()(const VIPRA::idxVec&, const VIPRA::idxVec&, Simpack) -> SelectorResult;
 };
 
-}  // namespace BHVR
+}  // namespace VIPRA::Behaviors
 
 #endif

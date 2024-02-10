@@ -6,7 +6,7 @@
 #include "calm_model_types.hpp"
 #include "vipra/concepts/goals.hpp"
 #include "vipra/geometry/f3d.hpp"
-#include "vipra/randomization/distributions.hpp"
+#include "vipra/random/distributions.hpp"
 
 namespace CALM {
 class Model {

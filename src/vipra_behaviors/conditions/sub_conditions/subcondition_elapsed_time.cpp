@@ -10,13 +10,13 @@ inline constexpr auto in_time_step(VIPRA::time_s currTime, VIPRA::time_s checkTi
 }
 }  // namespace
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 void SubConditionElapsedTimeFromEvent::operator()(Simpack pack, const VIPRA::idxVec& peds,
-                                                  const std::vector<Target>& /*unused*/,
-                                                  std::vector<bool>& met, const std::vector<bool>& /*unused*/,
+                                                  std::vector<Target> const& /*unused*/,
+                                                  std::vector<bool>& met, std::vector<bool> const& /*unused*/,
                                                   BoolOp /*unused*/) {
   for (auto ped : peds) {
-    const auto& event = pack.get_context().events[_event];
+    auto const& event = pack.get_context().events[_event];
     if (event.is_starting()) {
       _startTime = pack.get_context().elapsedTime;
     }
@@ -26,4 +26,4 @@ void SubConditionElapsedTimeFromEvent::operator()(Simpack pack, const VIPRA::idx
     met[ped] = in_time_step(pack.get_context().elapsedTime, checkTime, pack.dT);
   }
 }
-}  // namespace BHVR
+}  // namespace VIPRA::Behaviors

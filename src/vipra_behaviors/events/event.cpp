@@ -6,7 +6,7 @@
 #include "events/event_status.hpp"
 #include "targets/target.hpp"
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 
 /**
  * @brief Evaluates whether an event should start or end based on its conditions
@@ -120,4 +120,4 @@ Event::Event(std::string evName) : _name(std::move(evName)) {}
 
 // ---------------------------------- END CONSTRUCTORS -----------------------------------------------------------
 
-}  // namespace BHVR
+}  // namespace VIPRA::Behaviors

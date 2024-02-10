@@ -1,12 +1,11 @@
-#ifndef VIPRA_DSL_TYPES_HPP
-#define VIPRA_DSL_TYPES_HPP
+#pragma once
 
 #include <cstdint>
 #include <utility>
 
 #include "vipra/geometry/f3d.hpp"
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 /**
   * @brief Seed for randomization
   * 
@@ -39,6 +38,4 @@ constexpr inline auto operator++(stateUID& val, int) noexcept -> stateUID {
   return tmp;
 }
 
-}  // namespace BHVR
-
-#endif
+}  // namespace VIPRA::Behaviors

@@ -10,7 +10,7 @@
 #include "selectors/pedestrian_groups.hpp"
 #include "selectors/subselector.hpp"
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 
 /**
  * @brief Combines/Organizes SubSelectors to select pedestrians for types
@@ -46,6 +46,6 @@ class Selector {
   void update_ped_groups(const VIPRA::idxVec&, SubSelector&, BehaviorContext&, std::string const&);
   void sort_groups();
 };
-}  // namespace BHVR
+}  // namespace VIPRA::Behaviors
 
 #endif

@@ -3,61 +3,58 @@
 
 #include <optional>
 
-#include "definitions/behavior_context.hpp"
-#include "definitions/sim_pack.hpp"
 #include "vipra/geometry/f3d.hpp"
 
-#include "goals/goals.hpp"
-#include "obstacle_set/obstacle_set.hpp"
-#include "pedestrian_set/pedestrian_set.hpp"
+#include "vipra/vipra_behaviors/definitions/behavior_context.hpp"
+#include "vipra/vipra_behaviors/definitions/sim_pack.hpp"
 
-#include "actions/atom.hpp"
-#include "conditions/condition.hpp"
+#include "vipra/vipra_behaviors/actions/atom.hpp"
+#include "vipra/vipra_behaviors/conditions/condition.hpp"
 
-#include "targets/target_selector.hpp"
-#include "targets/target_selectors/target_self.hpp"
+#include "vipra/vipra_behaviors/targets/target_selector.hpp"
+#include "vipra/vipra_behaviors/targets/target_selectors/target_self.hpp"
 
-#include "time/time.hpp"
+#include "vipra/vipra_behaviors/time/time.hpp"
 
-#include "util/class_types.hpp"
-#include "util/timed_latch.hpp"
+#include "vipra/vipra_behaviors/util/class_types.hpp"
+#include "vipra/vipra_behaviors/util/timed_latch.hpp"
 
-#include "values/numeric_value.hpp"
+#include "vipra/vipra_behaviors/values/numeric_value.hpp"
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
+template <typename atom_t, typename condition_t, typename target_t>
 class Action {
   DEFAULT_CONSTRUCTIBLE(Action)
   COPYABLE(Action)
   MOVEABLE(Action)
 
  public:
-  void initialize(Simpack pack);
+  void initialize(auto pack);
 
-  void perform_action(Simpack pack, VIPRA::idxVec&, std::vector<Target> const&);
-  void perform_action(Simpack pack, const VIPRA::idxVec&, std::vector<bool> const&,
-                      std::vector<Target> const&);
+  void perform_action(auto pack, VIPRA::idxVec&, std::vector<Target> const&);
+  void perform_action(auto pack, const VIPRA::idxVec&, std::vector<bool> const&, std::vector<Target> const&);
 
-  void add_condition(Condition const&);
-  void add_atom(Atom const&);
-  void add_duration(const BHVR::NumericValue&);
-  void add_target(TargetSelector&&);
+  void add_condition(condition_t const&);
+  void add_atom(atom_t const&);
+  void add_duration(Behaviors::NumericValue const&);
+  void add_target(target_t&&);
 
   [[nodiscard]] auto has_condition() -> bool { return _condition.has_value(); }
-  [[nodiscard]] auto condition() -> std::optional<Condition>& { return _condition; }
+  [[nodiscard]] auto condition() -> std::optional<condition_t>& { return _condition; }
 
   [[nodiscard]] auto has_duration() -> bool { return _duration.has_value(); }
   [[nodiscard]] auto duration() -> std::optional<TimedLatchCollection>& { return _duration; }
 
   [[nodiscard]] auto has_target() -> bool { return _targets.has_value(); }
-  [[nodiscard]] auto targets() -> std::optional<TargetSelector>& { return _targets; }
+  [[nodiscard]] auto targets() -> std::optional<target_t>& { return _targets; }
 
  private:
-  std::vector<Atom>                   _atoms;
-  std::optional<Condition>            _condition;
+  std::vector<atom_t>                 _atoms;
+  std::optional<condition_t>          _condition;
   std::optional<TimedLatchCollection> _duration;
-  std::optional<TargetSelector>       _targets;
+  std::optional<target_t>             _targets;
 };
 
-}  // namespace BHVR
+}  // namespace VIPRA::Behaviors
 
 #endif

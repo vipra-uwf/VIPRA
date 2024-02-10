@@ -1,21 +1,22 @@
-#ifndef VIPRA_BEHAVIORS_TARGET_MODIFIER_HPP
-#define VIPRA_BEHAVIORS_TARGET_MODIFIER_HPP
+#pragma once
 
-#include "definitions/sim_pack.hpp"
-#include "targets/target.hpp"
+#include "vipra/vipra_behaviors/definitions/sim_pack.hpp"
+#include "vipra/vipra_behaviors/targets/target.hpp"
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 
 /**
  * @brief Modifier function for targets, returns if the target matches a condition
  * 
  */
-using Modifier = std::function<bool(Simpack, VIPRA::idx, VIPRA::idx)>;
+template <typename pack_t>
+using Modifier = std::function<bool(pack_t, VIPRA::idx, VIPRA::idx)>;
 
 /**
  * @brief Modifies who can be a target for an action, by distance, direction, etc.
  * 
  */
+template <typename modifier_t>
 class TargetModifier {
   DEFAULT_CONSTRUCTIBLE(TargetModifier)
   COPYABLE(TargetModifier)
@@ -31,9 +32,9 @@ class TargetModifier {
    * @return true : if target passes check
    * @return false : if target does NOT pass check
    */
-  [[nodiscard]] auto check(Simpack pack, VIPRA::idx self, VIPRA::idx target) const -> bool {
+  [[nodiscard]] auto check(auto pack, VIPRA::idx self, VIPRA::idx target) const -> bool {
     return std::all_of(_checks.begin(), _checks.end(),
-                       [&](const Modifier& modifier) { return modifier(pack, target, self); });
+                       [&](modifier_t const& modifier) { return modifier(pack, target, self); });
   }
 
   /**
@@ -41,11 +42,9 @@ class TargetModifier {
    * 
    * @param check : check to add
    */
-  void add_check(Modifier check) { _checks.emplace_back(check); }
+  void add_check(modifier_t&& check) { _checks.emplace_back(check); }
 
  private:
-  std::vector<Modifier> _checks;
+  std::vector<modifier_t> _checks;
 };
-}  // namespace BHVR
-
-#endif
+}  // namespace VIPRA::Behaviors

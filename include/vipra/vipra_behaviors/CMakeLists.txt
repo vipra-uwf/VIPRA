@@ -5,8 +5,3 @@ include( ExternalAntlr4Cpp )
 link_directories( ${ANTLR4CPP_LIBS} )
 message(STATUS "Done Setting Up ANTLR")
 
-target_link_libraries(
-  ${PROJECT_NAME}
-  PUBLIC
-  antlr4_static
-)

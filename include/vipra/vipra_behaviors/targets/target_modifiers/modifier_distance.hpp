@@ -1,5 +1,4 @@
-#ifndef VIPRA_BEHAVIORS_MODIFIER_DISTANCE_HPP
-#define VIPRA_BEHAVIORS_MODIFIER_DISTANCE_HPP
+#pragma once
 
 #include <utility>
 
@@ -7,7 +6,7 @@
 #include "util/class_types.hpp"
 #include "values/numeric_value.hpp"
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 /**
   * @brief Target modifier for distance to target
   * 
@@ -37,6 +36,4 @@ class ModifierDistance {
  private:
   NumericValue _dist;
 };
-}  // namespace BHVR
-
-#endif
+}  // namespace VIPRA::Behaviors

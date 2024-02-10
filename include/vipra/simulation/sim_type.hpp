@@ -8,7 +8,7 @@
 
 #include "vipra/concepts/output_coordinator.hpp"
 #include "vipra/concepts/parameters.hpp"
-#include "vipra/randomization/random.hpp"
+#include "vipra/random/random.hpp"
 #include "vipra/special_modules/behavior_model.hpp"
 #include "vipra/types/parameter.hpp"
 #include "vipra/types/time.hpp"
@@ -56,7 +56,7 @@ class SimType {
 
   [[nodiscard]] auto run_sim() -> output_data_t {
     _output.new_run(_currSimIdx++);
-    const auto [maxTimestep, timestepSize, outputFreq, randomseed] = get_sim_params();
+    auto const [maxTimestep, timestepSize, outputFreq, randomseed] = get_sim_params();
     set_params(outputFreq, randomseed);
 
     _map.initialize(_pedset);
@@ -119,7 +119,7 @@ class SimType {
     }
 
     const VIPRA::size pedCnt = _pedset.num_pedestrians();
-    const auto&       coords = _pedset.all_coords();
+    auto const&       coords = _pedset.all_coords();
 
     for (VIPRA::idx i = 0; i < pedCnt; ++i) {
       _output.ped_timestep_value(i, _timestep / _outputFrequency, "position", coords.at(i));

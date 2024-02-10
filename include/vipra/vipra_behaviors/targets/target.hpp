@@ -1,17 +1,15 @@
-#ifndef VIPRA_BEHAVIORS_TARGET_HPP
-#define VIPRA_BEHAVIORS_TARGET_HPP
+#pragma once
 
 #include <functional>
 
-#include <definitions/behavior_context.hpp>
-#include <definitions/sim_pack.hpp>
-#include <goals/goals.hpp>
-#include <obstacle_set/obstacle_set.hpp>
-#include <pedestrian_set/pedestrian_set.hpp>
-#include <random/random.hpp>
 #include "vipra/geometry/f3d.hpp"
+#include "vipra/types/idx.hpp"
 
-namespace BHVR {
+#include "vipra/vipra_behaviors/definitions/behavior_context.hpp"
+#include "vipra/vipra_behaviors/definitions/sim_pack.hpp"
+#include "vipra/vipra_behaviors/random/random.hpp"
+
+namespace VIPRA::Behaviors {
 enum class TargetType {
   INVALID,
   PEDESTRIAN,
@@ -36,11 +34,10 @@ struct Self {
   Target target;
 };
 
+template <typename simpack_t>
 /**
  * @brief Function for selecting targets
  * 
  */
-using TargetFunc = std::function<Target(Simpack, Self)>;
-}  // namespace BHVR
-
-#endif
+using TargetFunc = std::function<Target(simpack_t, Self)>;
+}  // namespace VIPRA::Behaviors

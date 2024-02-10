@@ -11,10 +11,10 @@ namespace {
  * @param allTypes : Ptype to get count of
  * @return VIPRA::size 
  */
-inline auto get_type_count(BHVR::Ptype allTypes) -> VIPRA::size {
+inline auto get_type_count(Behaviors::Ptype allTypes) -> VIPRA::size {
   VIPRA::size typeCnt = 1;
   while (allTypes.fullType != 0) {
-    BHVR::typeUID currType = allTypes.fullType & (allTypes.fullType - 1);
+    Behaviors::typeUID currType = allTypes.fullType & (allTypes.fullType - 1);
     allTypes.fullType = currType;
     ++typeCnt;
   }
@@ -22,7 +22,7 @@ inline auto get_type_count(BHVR::Ptype allTypes) -> VIPRA::size {
 }
 }  // namespace
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 
 /**
  * @brief Initializes the _groups, starting with all pedestrians in group 0
@@ -88,7 +88,7 @@ auto GroupsContainer::set_used(VIPRA::idx pedIdx, typeUID type) -> bool {
  * @param type : group to get _used pedestrians from
  * @return const std::vector<bool>& 
  */
-auto GroupsContainer::get_used(typeUID type) const -> const std::vector<bool>& { return _used[index(type)]; }
+auto GroupsContainer::get_used(typeUID type) const -> std::vector<bool> const& { return _used[index(type)]; }
 
 /**
  * @brief Resets _used status of all pedestrians
@@ -135,4 +135,4 @@ auto GroupsContainer::at(VIPRA::idx index) const -> const VIPRA::idxVec& { retur
  * @return VIPRA::size 
  */
 auto GroupsContainer::size() const -> VIPRA::size { return _groups.size(); }
-}  // namespace BHVR
+}  // namespace VIPRA::Behaviors

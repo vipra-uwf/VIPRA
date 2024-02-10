@@ -61,7 +61,7 @@
 #include "values/numeric_value.hpp"
 #include "values/values.hpp"
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 
 // NOLINTNEXTLINE
 std::vector<CAttributeValue> AttributeHandling::valueStore{};
@@ -75,7 +75,7 @@ std::vector<CAttributeValue> AttributeHandling::valueStore{};
  * @return HumanBehavior&&
  */
 auto BehaviorBuilder::build(std::string behaviorName, std::filesystem::path const& filepath,
-                            BHVR::seed seedNum) -> HumanBehavior {
+                            Behaviors::seed seedNum) -> HumanBehavior {
   if (!std::filesystem::exists(filepath)) {
     // spdlog::error("Behavior \"{}\" Does NOT Exist at {}", behaviorName, filepath.c_str());
     BuilderException::error();
@@ -111,7 +111,7 @@ auto BehaviorBuilder::build(std::string behaviorName, std::filesystem::path cons
  * @param behaviorName : name of new behavior
  * @param seedNum : randomization seed for behavior
  */
-void BehaviorBuilder::initial_behavior_setup(std::string const& behaviorName, BHVR::seed seedNum) {
+void BehaviorBuilder::initial_behavior_setup(std::string const& behaviorName, Behaviors::seed seedNum) {
   _currentBehavior = HumanBehavior(behaviorName);
   _currentBehavior.set_seed(seedNum);
   _currSeed = seedNum;
@@ -144,7 +144,7 @@ void BehaviorBuilder::initialize_events() {
  */
 void BehaviorBuilder::initialize_states() {
   _states.clear();
-  _currState = BHVR::stateUID{1};
+  _currState = Behaviors::stateUID{1};
 }
 
 /**
@@ -415,9 +415,10 @@ auto BehaviorBuilder::get_type(std::string const& type) const -> std::optional<t
  * @brief Gets the typeUID of the group for a selector
  * 
  * @param ctx : 
- * @return BHVR::typeUID 
+ * @return Behaviors::typeUID 
  */
-auto BehaviorBuilder::get_group(std::optional<slGroup> group) const -> std::pair<BHVR::typeUID, std::string> {
+auto BehaviorBuilder::get_group(std::optional<slGroup> group) const
+    -> std::pair<Behaviors::typeUID, std::string> {
   if (group) {
     auto* ctx = group.value()->group();
     if (!(ctx->PEDESTRIAN() || ctx->PEDESTRIANS())) {
@@ -435,7 +436,7 @@ auto BehaviorBuilder::get_group(std::optional<slGroup> group) const -> std::pair
  * @param state : name of state
  * @return stateUID 
  */
-auto BehaviorBuilder::get_state(std::string const& state) const -> std::optional<BHVR::stateUID> {
+auto BehaviorBuilder::get_state(std::string const& state) const -> std::optional<Behaviors::stateUID> {
   if (_states.find(state) == _states.end()) return std::nullopt;
   return _states.at(state);
 }
@@ -444,10 +445,10 @@ auto BehaviorBuilder::get_state(std::string const& state) const -> std::optional
  * @brief Combines a list of types into one type
  * 
  * @param types : id_list vector
- * @return BHVR::Ptype 
+ * @return Behaviors::Ptype 
  */
 auto BehaviorBuilder::get_composite_type(std::vector<antlr4::tree::TerminalNode*> const& types) const
-    -> BHVR::Ptype {
+    -> Behaviors::Ptype {
   Ptype compType;
   for (auto* type : types) {
     const std::string tStr = type->toString();
@@ -523,9 +524,9 @@ auto BehaviorBuilder::get_check_location(std::string const& locName) const -> VI
  * @brief Gets the state index and checks that it exists, throwing an error if not defined
  * 
  * @param stateName 
- * @return BHVR::stateUID 
+ * @return Behaviors::stateUID 
  */
-auto BehaviorBuilder::get_check_state(std::string const& stateName) const -> BHVR::stateUID {
+auto BehaviorBuilder::get_check_state(std::string const& stateName) const -> Behaviors::stateUID {
   auto state = get_state(stateName);
   if (!state) error("Behavior Error: Attempt To Use Undeclared State: \"{}\"", stateName);
   return state.value();
@@ -547,9 +548,9 @@ auto BehaviorBuilder::get_check_event(std::string const& eventName) const -> VIP
  * @brief Gets the type index and checks that it exists, throwing an error if not defined
  * 
  * @param typeName 
- * @return BHVR::typeUID 
+ * @return Behaviors::typeUID 
  */
-auto BehaviorBuilder::get_check_type(std::string const& typeName) const -> BHVR::typeUID {
+auto BehaviorBuilder::get_check_type(std::string const& typeName) const -> Behaviors::typeUID {
   auto type = get_type(typeName);
   if (!type) error("Behavior Error: Attempt To Use Undeclared Type: \"{}\"", typeName);
   return type.value();
@@ -577,21 +578,22 @@ auto BehaviorBuilder::make_dimensions(BehaviorParser::Loc_dimensionsContext* ctx
  * @brief Creates a new CAttributeValue from an attribute value context
  * 
  * @param ctx : attribute value context
- * @return BHVR::CAttributeValue 
+ * @return Behaviors::CAttributeValue 
  */
-auto BehaviorBuilder::make_attribute_value(BehaviorParser::Attr_valueContext* ctx) -> BHVR::CAttributeValue {
+auto BehaviorBuilder::make_attribute_value(BehaviorParser::Attr_valueContext* ctx)
+    -> Behaviors::CAttributeValue {
   if (ctx->value_coord()) {
     return AttributeHandling::store_value<VIPRA::f3d>(Type::COORD, get_coord(ctx->value_coord(), _currSeed));
   }
 
   if (ctx->STATE_VAL()) {
-    return AttributeHandling::store_value<BHVR::stateUID>(Type::STATE,
-                                                          get_check_state(ctx->STATE_VAL()->toString()));
+    return AttributeHandling::store_value<Behaviors::stateUID>(Type::STATE,
+                                                               get_check_state(ctx->STATE_VAL()->toString()));
   }
 
   if (ctx->value_numeric()) {
-    return AttributeHandling::store_value<BHVR::NumericValue>(Type::NUMBER,
-                                                              get_numeric(ctx->value_numeric(), _currSeed));
+    return AttributeHandling::store_value<Behaviors::NumericValue>(
+        Type::NUMBER, get_numeric(ctx->value_numeric(), _currSeed));
   }
 
   if (ctx->LOC_NAME()) {
@@ -901,8 +903,8 @@ auto BehaviorBuilder::build_exit_subcond(BehaviorParser::Condition_Exit_Location
  */
 auto BehaviorBuilder::build_time_elapsed_subcond(
     BehaviorParser::Condition_Time_Elapsed_From_EventContext* ctx) -> SubConditionElapsedTimeFromEvent {
-  BHVR::NumericValue dur = get_numeric(ctx->value_numeric(), _currSeed);
-  std::string        evName = ctx->EVNT()->toString();
+  Behaviors::NumericValue dur = get_numeric(ctx->value_numeric(), _currSeed);
+  std::string             evName = ctx->EVNT()->toString();
   // spdlog::debug(R"(Behavior "{}": Adding SubCondition: Elapsed Time From "{}" Event)",
                 _currentBehavior.get_name(), evName);
                 auto event = get_check_event(evName);
@@ -1190,4 +1192,4 @@ auto BehaviorBuilder::build_location_selector(slType type, slSelector selector, 
 
 // ------------------------------- END SUBSELECTORS -----------------------------------------------------------------------------------------
 
-}  // namespace BHVR
+}  // namespace VIPRA::Behaviors

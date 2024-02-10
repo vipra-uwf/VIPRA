@@ -1,11 +1,11 @@
 
 #include "conditions/subconditions/subcondition_leave.hpp"
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 
 void SubConditionLeave::operator()(Simpack pack, const VIPRA::idxVec& peds,
-                                   const std::vector<Target>& targets, std::vector<bool>& met,
-                                   const std::vector<bool>& /*unused*/, BoolOp /*unused*/) {
+                                   std::vector<Target> const& targets, std::vector<bool>& met,
+                                   std::vector<bool> const& /*unused*/, BoolOp /*unused*/) {
   for (auto idx : peds) {
     if (_left.size() < pack.get_pedset().getNumPedestrians())
       _left.resize(pack.get_pedset().getNumPedestrians());
@@ -26,4 +26,4 @@ void SubConditionLeave::operator()(Simpack pack, const VIPRA::idxVec& peds,
   }
 }
 
-}  // namespace BHVR
+}  // namespace VIPRA::Behaviors

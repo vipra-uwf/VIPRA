@@ -4,7 +4,7 @@
 
 #include "selectors/selector_location.hpp"
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 /**
    * @brief Selects an exact number of pedestrians from a group
    * 
@@ -28,4 +28,4 @@ auto SelectorLocation::operator()(const VIPRA::idxVec& /*unused*/, const VIPRA::
 
   return {false, groupPeds};
 }
-}  // namespace BHVR
+}  // namespace VIPRA::Behaviors

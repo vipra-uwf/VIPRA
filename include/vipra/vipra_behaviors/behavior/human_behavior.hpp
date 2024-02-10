@@ -1,21 +1,19 @@
-#ifndef VIPRA_HUMAN_BEHAVIOR_HPP
-#define VIPRA_HUMAN_BEHAVIOR_HPP
+#pragma once
 
-#include "definitions/behavior_context.hpp"
-#include "definitions/dsl_types.hpp"
+#include "vipra/concepts/goals.hpp"
+#include "vipra/concepts/map.hpp"
 #include "vipra/concepts/pedset.hpp"
+
 #include "vipra/geometry/f3d.hpp"
 
-#include "actions/action.hpp"
-#include "events/event.hpp"
-#include "goals/goals.hpp"
-#include "locations/location.hpp"
-#include "obstacle_set/obstacle_set.hpp"
-#include "pedestrian_set/pedestrian_set.hpp"
-#include "randomization/random.hpp"
-#include "selectors/selector.hpp"
+#include "vipra/vipra_behaviors/actions/action.hpp"
+#include "vipra/vipra_behaviors/definitions/behavior_context.hpp"
+#include "vipra/vipra_behaviors/definitions/dsl_types.hpp"
+#include "vipra/vipra_behaviors/events/event.hpp"
+#include "vipra/vipra_behaviors/locations/location.hpp"
+#include "vipra/vipra_behaviors/selectors/selector.hpp"
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 /**
  * Describes a specific human behavior. Implementations can either define the behavior directly in C++ or use a DSL.
  */
@@ -29,8 +27,10 @@ class HumanBehavior {
 
   [[nodiscard]] auto get_name() const noexcept -> std::string const&;
 
-  void initialize(VIPRA::Concepts::PedsetModule auto const&, const VIPRA::ObstacleSet&, VIPRA::Goals&);
-  void timestep(VIPRA::PedestrianSet&, VIPRA::ObstacleSet&, VIPRA::Goals&, VIPRA::State&, VIPRA::delta_t);
+  void initialize(Concepts::PedsetModule auto const&, Concepts::MapModule auto const&,
+                  Concepts::GoalsModule auto&);
+  void timestep(Concepts::PedsetModule&, Concepts::MapModule auto&, Concepts::GoalsModule auto&,
+                VIPRA::State&, VIPRA::delta_t);
 
   void set_all_ped_types(Ptype);
   void add_sub_selector(SubSelector const&);
@@ -42,10 +42,10 @@ class HumanBehavior {
   [[nodiscard]] auto selector_count() const -> VIPRA::size;
   [[nodiscard]] auto action_count() const -> VIPRA::size;
 
-  void set_seed(BHVR::seed);
+  void set_seed(Behaviors::seed);
 
  private:
-  BHVR::seed _seedNum{};
+  Behaviors::seed _seedNum{};
 
   std::string     _name;
   BehaviorContext _context;
@@ -57,10 +57,9 @@ class HumanBehavior {
   std::vector<bool>                _conditionMet;
   std::vector<Target>              _targets;
 
-  void evaluate_events(VIPRA::PedestrianSet&, VIPRA::ObstacleSet&, VIPRA::Goals&, VIPRA::delta_t);
-  void apply_actions(VIPRA::PedestrianSet&, VIPRA::ObstacleSet&, VIPRA::Goals&, VIPRA::State&,
-                     VIPRA::delta_t);
+  void evaluate_events(Concepts::PedsetModule&, Concepts::MapModule auto&, Concepts::GoalsModule auto&,
+                       VIPRA::delta_t);
+  void apply_actions(Concepts::PedsetModule&, Concepts::MapModule auto&, Concepts::GoalsModule auto&,
+                     VIPRA::State&, VIPRA::delta_t);
 };
-}  // namespace BHVR
-
-#endif
+}  // namespace VIPRA::Behaviors

@@ -1,11 +1,12 @@
-#ifndef VIPRA_SUBCONDITION_ATTRIBUTE_HPP
-#define VIPRA_SUBCONDITION_ATTRIBUTE_HPP
+#pragma once
 
-#include "attributes/attributes.hpp"
-#include "conditions/sub_condition.hpp"
-#include "util/class_types.hpp"
+#include "vipra/types/idx.hpp"
 
-namespace BHVR {
+#include "vipra/vipra_behaviors/attributes/attributes.hpp"
+#include "vipra/vipra_behaviors/conditions/sub_condition.hpp"
+#include "vipra/vipra_behaviors/util/class_types.hpp"
+
+namespace VIPRA::Behaviors {
 /**
  * @brief SubCondition for target attribute to equal a value
  * 
@@ -18,10 +19,10 @@ class SubConditionAttribute {
  public:
   explicit SubConditionAttribute(Attribute, CAttributeValue, bool);
 
-  void operator()(Simpack, const VIPRA::idxVec&, const std::vector<Target>&, std::vector<bool>&,
-                  const std::vector<bool>&, BoolOp) const;
+  void operator()(auto, const VIPRA::idxVec&, std::vector<Target> const&, std::vector<bool>&,
+                  std::vector<bool> const&, BoolOp) const;
 
-  [[nodiscard]] auto individual(Simpack, VIPRA::idx, Target) const -> bool;
+  [[nodiscard]] auto individual(auto, VIPRA::idx, Target) const -> bool;
 
  private:
   Attribute       _type;
@@ -30,10 +31,8 @@ class SubConditionAttribute {
 
   static constexpr float TOWARDS_THRESHOLD = 0.5F;
 
-  [[nodiscard]] inline auto towards_compare(CAttributeValue&, Simpack, VIPRA::idx) const -> bool;
-  [[nodiscard]] inline auto towards_location_compare(CAttributeValue&, Simpack, VIPRA::idx) const -> bool;
-  [[nodiscard]] inline auto towards_attribute_compare(CAttributeValue&, Simpack, VIPRA::idx) const -> bool;
+  [[nodiscard]] inline auto towards_compare(CAttributeValue&, auto, VIPRA::idx) const -> bool;
+  [[nodiscard]] inline auto towards_location_compare(CAttributeValue&, auto, VIPRA::idx) const -> bool;
+  [[nodiscard]] inline auto towards_attribute_compare(CAttributeValue&, auto, VIPRA::idx) const -> bool;
 };
-}  // namespace BHVR
-
-#endif
+}  // namespace VIPRA::Behaviors

@@ -1,15 +1,15 @@
 
 #include "conditions/subconditions/subcondition_exists.hpp"
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 void SubConditionExists::operator()(Simpack pack, const VIPRA::idxVec&                        peds,
-                                    const std::vector<Target>& /*unused*/, std::vector<bool>& met,
-                                    const std::vector<bool>& prevMet, BoolOp oper) const {
+                                    std::vector<Target> const& /*unused*/, std::vector<bool>& met,
+                                    std::vector<bool> const& prevMet, BoolOp oper) const {
   for (auto selfidx : peds) {
     if (short_circuit(selfidx, met, prevMet, oper)) continue;
 
     met[selfidx] = false;
-    const auto& group = pack.get_groups().at(0);
+    auto const& group = pack.get_groups().at(0);
 
     for (auto idx : pack.get_groups().at(0)) {
       if (_modifier.check(pack, selfidx, idx) &&
@@ -20,4 +20,4 @@ void SubConditionExists::operator()(Simpack pack, const VIPRA::idxVec&          
     }
   }
 }
-}  // namespace BHVR
+}  // namespace VIPRA::Behaviors

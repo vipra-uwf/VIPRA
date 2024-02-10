@@ -6,7 +6,7 @@
 #include "behavior/exceptions.hpp"
 #include "definitions/sim_pack.hpp"
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 
 /**
  * @brief Initializes the pedestrian groups, and runs the sub selectors over them
@@ -210,4 +210,4 @@ auto Selector::get_groups() -> GroupsContainer& { return _pedGroups; }
 
 // ----------------- END GETTERS/SETTERS --------------------------------------------------------------------
 
-}  // namespace BHVR
+}  // namespace VIPRA::Behaviors

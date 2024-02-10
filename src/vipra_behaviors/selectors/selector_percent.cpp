@@ -3,7 +3,7 @@
 #include <randomization/random.hpp>
 #include <selectors/selector_percent.hpp>
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 /**
  * @brief Selects (numpeds * ratio) pedestrians for the simulation
  * 
@@ -28,4 +28,4 @@ auto SelectorPercent::operator()(const VIPRA::idxVec& fullGroup, const VIPRA::id
 
   return {starved, groupPeds};
 }
-}  // namespace BHVR
+}  // namespace VIPRA::Behaviors

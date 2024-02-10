@@ -5,9 +5,9 @@
 #include "conditions/sub_condition.hpp"
 #include "util/timed_latch.hpp"
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 
-void Condition::initialize(const Simpack& pack) {
+void Condition::initialize(Simpack const& pack) {
   if (_conditions.size() > 1) {
     _temp.resize(pack.get_pedset().getNumPedestrians());
     std::fill(_temp.begin(), _temp.end(), false);
@@ -27,7 +27,7 @@ void Condition::initialize(const Simpack& pack) {
  * @return false
  */
 void Condition::evaluate(Simpack pack, const VIPRA::idxVec& peds, std::vector<bool>& met,
-                         const std::vector<Target>& targets, std::optional<TimedLatchCollection>&) {
+                         std::vector<Target> const& targets, std::optional<TimedLatchCollection>&) {
   std::fill(_temp.begin(), _temp.end(), false);
   _conditions[0](pack, peds, targets, met, _temp, BoolOp::OR);
 
@@ -43,4 +43,4 @@ void Condition::evaluate(Simpack pack, const VIPRA::idxVec& peds, std::vector<bo
     }
   }
 }
-}  // namespace BHVR
+}  // namespace VIPRA::Behaviors

@@ -1,7 +1,6 @@
-#ifndef VIPRA_BEHAVIORS_CLASS_TYPES_HPP
-#define VIPRA_BEHAVIORS_CLASS_TYPES_HPP
+#pragma once
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 #define DEFAULT_CONSTRUCTIBLE(T) \
  public:                         \
   T() = default;                 \
@@ -43,6 +42,4 @@ namespace BHVR {
  public:           \
   T() = default;   \
   virtual ~T() = default;
-}  // namespace BHVR
-
-#endif
+}  // namespace VIPRA::Behaviors

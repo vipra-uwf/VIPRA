@@ -1,20 +1,20 @@
-#ifndef VIPRA_BEHAVIORS_NUMERIC_VALUE
-#define VIPRA_BEHAVIORS_NUMERIC_VALUE
+#pragma once
 
 #include <cmath>
 #include <functional>
 #include <utility>
 
-#include "definitions/dsl_types.hpp"
-#include "random/random.hpp"
 #include "vipra/geometry/f3d.hpp"
 
-namespace BHVR {
+#include "vipra/vipra_behaviors/definitions/dsl_types.hpp"
+#include "vipra/vipra_behaviors/random/random.hpp"
+
+namespace VIPRA::Behaviors {
 /**
  * @brief Function for getting the value of a numeric
  * 
  */
-using ValueFunc = std::function<float(BHVR::seed, VIPRA::idx)>;
+using ValueFunc = std::function<float(Behaviors::seed, VIPRA::idx)>;
 
 /**
  * @brief Numeric Values hold runtime float values taken from Behaviors
@@ -22,13 +22,13 @@ using ValueFunc = std::function<float(BHVR::seed, VIPRA::idx)>;
  */
 class NumericValue {
  public:
-  explicit NumericValue(BHVR::seed seedNum, ValueFunc func) : _seed(seedNum), _val(std::move(func)) {}
+  explicit NumericValue(Behaviors::seed seedNum, ValueFunc func) : _seed(seedNum), _val(std::move(func)) {}
 
   [[nodiscard]] inline auto value(VIPRA::idx pedIdx) const -> float { return _val(_seed, pedIdx); }
 
  private:
-  BHVR::seed _seed{};
-  ValueFunc  _val;
+  Behaviors::seed _seed{};
+  ValueFunc       _val;
 
  public:
   NumericValue() = default;
@@ -40,7 +40,7 @@ class NumericValue {
  */
 struct ExactValue {
   float       value;
-  inline auto operator()(BHVR::seed /*unused*/, VIPRA::idx /*unused*/) const -> float { return value; }
+  inline auto operator()(Behaviors::seed /*unused*/, VIPRA::idx /*unused*/) const -> float { return value; }
 };
 
 /**
@@ -51,8 +51,8 @@ struct RandomFloatValue {
   float min{};
   float max{};
 
-  inline auto operator()(BHVR::seed seed, VIPRA::idx pedIdx) const -> float {
-    return BHVR::DRNG::ped_random_float(seed, pedIdx, Min{min}, Max{max});
+  inline auto operator()(Behaviors::seed seed, VIPRA::idx pedIdx) const -> float {
+    return Behaviors::DRNG::ped_random_float(seed, pedIdx, Min{min}, Max{max});
   }
 };
 
@@ -64,11 +64,9 @@ struct RandomNumberValue {
   float min{};
   float max{};
 
-  inline auto operator()(BHVR::seed seed, VIPRA::idx pedIdx) const -> float {
-    return std::round(BHVR::DRNG::ped_random_float(seed, pedIdx, Min{min}, Max{max}));
+  inline auto operator()(Behaviors::seed seed, VIPRA::idx pedIdx) const -> float {
+    return std::round(Behaviors::DRNG::ped_random_float(seed, pedIdx, Min{min}, Max{max}));
   }
 };
 
-}  // namespace BHVR
-
-#endif
+}  // namespace VIPRA::Behaviors

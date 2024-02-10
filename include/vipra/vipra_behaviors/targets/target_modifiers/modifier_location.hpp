@@ -1,5 +1,4 @@
-#ifndef VIPRA_BEHAVIORS_MODIFIER_LOCATION_HPP
-#define VIPRA_BEHAVIORS_MODIFIER_LOCATION_HPP
+#pragma once
 
 #include <utility>
 
@@ -8,7 +7,7 @@
 
 #include "util/class_types.hpp"
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 /**
   * @brief Target modifier for location
   * 
@@ -31,13 +30,11 @@ class ModifierLocation {
    * @return false : if NOT inside the location
    */
   auto operator()(Simpack pack, VIPRA::idx targetIdx, VIPRA::idx selfIdx) const -> bool {
-    const auto targetPos = pack.get_pedset().getPedCoords(targetIdx);
+    auto const targetPos = pack.get_pedset().getPedCoords(targetIdx);
     return pack.get_context().locations[_location].contains(targetPos);
   }
 
  private:
   VIPRA::idx _location;
 };
-}  // namespace BHVR
-
-#endif
+}  // namespace VIPRA::Behaviors

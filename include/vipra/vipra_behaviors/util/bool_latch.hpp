@@ -1,10 +1,10 @@
-#ifndef VIPRA_BEHAVIORS_BOOL_LATCH_HPP
-#define VIPRA_BEHAVIORS_BOOL_LATCH_HPP
+#pragma once
 
-#include "util/class_types.hpp"
 #include "vipra/geometry/f3d.hpp"
 
-namespace BHVR {
+#include "vipra/vipra_behaviors/util/class_types.hpp"
+
+namespace VIPRA::Behaviors {
 /**
    * @brief Literally a boolean with extra syntax
    * 
@@ -23,6 +23,4 @@ class Latch {
  private:
   bool _set = false;
 };
-}  // namespace BHVR
-
-#endif
+}  // namespace VIPRA::Behaviors

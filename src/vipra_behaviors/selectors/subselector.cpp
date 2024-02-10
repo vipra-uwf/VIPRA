@@ -2,7 +2,7 @@
 
 #include <selectors/subselector.hpp>
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 
 /**
  * @brief Runs the select function to select pedestrians
@@ -25,4 +25,4 @@ auto SubSelector::select_peds(const VIPRA::idxVec& totalGroup, const VIPRA::idxV
 SubSelector::SubSelector(typeUID grp, Ptype typ, bool req, SelectorFunc sel)
     : group(grp), type(typ), required(req), _select(std::move(sel)) {}
 
-}  // namespace BHVR
+}  // namespace VIPRA::Behaviors

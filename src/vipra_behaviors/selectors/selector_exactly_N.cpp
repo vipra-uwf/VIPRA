@@ -4,10 +4,9 @@
 #include "randomization/random.hpp"
 #include "vipra/geometry/f3d.hpp"
 
-
 #include "selectors/selector_exactly_N.hpp"
 
-namespace BHVR {
+namespace VIPRA::Behaviors {
 /**
    * @brief Selects an exact number of pedestrians from a group
    * 
@@ -34,4 +33,4 @@ auto SelectorExactlyN::operator()(const VIPRA::idxVec& /*unused*/, const VIPRA::
 
   return {starved, groupPeds};
 }
-}  // namespace BHVR
+}  // namespace VIPRA::Behaviors
