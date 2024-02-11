@@ -124,11 +124,11 @@ class AStar {
 
   [[nodiscard]] auto end_goals() const -> VIPRA::f3dVec const& { return _endGoals; }
   [[nodiscard]] auto current_goals() const -> VIPRA::f3dVec const& { return _currentGoals; }
-  [[nodiscard]] auto current_goal(VIPRA::idx pedIdx) const -> VIPRA::f3d {
+  [[nodiscard]] auto current_goal(VIPRA::idx pedIdx) const -> VIPRA::f3d const& {
     assert(pedIdx < _currentGoals.size());
     return _currentGoals[pedIdx];
   }
-  [[nodiscard]] auto end_goal(VIPRA::idx pedIdx) const -> VIPRA::f3d {
+  [[nodiscard]] auto end_goal(VIPRA::idx pedIdx) const -> VIPRA::f3d const& {
     assert(pedIdx < _endGoals.size());
     return _endGoals[pedIdx];
   }
@@ -199,6 +199,7 @@ class AStar {
    * @param currX 
    * @param currY 
    */
+  // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
   void set_adjacents(VIPRA::idx currIdx, VIPRA::idx currX, VIPRA::idx currY) {
     assert(currIdx < _graph.nodes().size());
     assert(currX < _xCount && currY < _yCount);

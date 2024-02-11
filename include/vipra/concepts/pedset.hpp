@@ -26,18 +26,18 @@ concept can_get_num_peds = requires(const pedset_t pedset) {
 
 template <typename pedset_t>
 concept can_get_ped_coords = requires(const pedset_t pedset, VIPRA::idx idx) {
-  { pedset.ped_coords(idx) } -> std::same_as<VIPRA::f3d>;
-  { pedset.all_coords() } -> std::same_as<const std::vector<VIPRA::f3d>&>;
+  { pedset.ped_coords(idx) } -> std::same_as<VIPRA::f3d const&>;
+  { pedset.all_coords() } -> std::same_as<std::vector<VIPRA::f3d> const&>;
 };
 
 template <typename pedset_t>
 concept can_get_ped_velocity = requires(const pedset_t pedset, VIPRA::idx idx) {
-  { pedset.ped_velocity(idx) } -> std::same_as<VIPRA::f3d>;
-  { pedset.all_velocities() } -> std::same_as<const std::vector<VIPRA::f3d>&>;
+  { pedset.ped_velocity(idx) } -> std::same_as<VIPRA::f3d const&>;
+  { pedset.all_velocities() } -> std::same_as<std::vector<VIPRA::f3d> const&>;
 };
 
 template <typename pedset_t>
-concept can_update_pedset = requires(pedset_t pedset, const State& state) {
+concept can_update_pedset = requires(pedset_t pedset, State const& state) {
   {pedset.update(state)};
 };
 
@@ -58,13 +58,14 @@ class DummyPedSet {
   void update(const VIPRA::State&) {}
 
   auto num_pedestrians() const -> VIPRA::size { return 1; }
-  auto ped_coords(VIPRA::idx /*unused*/) const -> VIPRA::f3d { return VIPRA::f3d{0}; }
-  auto all_coords() const -> const std::vector<VIPRA::f3d>& { return _dummy; }
-  auto ped_velocity(VIPRA::idx /*unused*/) const -> VIPRA::f3d { return VIPRA::f3d{0}; }
-  auto all_velocities() const -> const std::vector<VIPRA::f3d>& { return _dummy; }
+  auto ped_coords(VIPRA::idx /*unused*/) const -> VIPRA::f3d const& { return _dummy2; }
+  auto all_coords() const -> std::vector<VIPRA::f3d> const& { return _dummy; }
+  auto ped_velocity(VIPRA::idx /*unused*/) const -> VIPRA::f3d const& { return _dummy2; }
+  auto all_velocities() const -> std::vector<VIPRA::f3d> const& { return _dummy; }
 
  private:
   VIPRA::f3dVec _dummy;
+  VIPRA::f3d    _dummy2;
   // NOLINTEND
 };
 

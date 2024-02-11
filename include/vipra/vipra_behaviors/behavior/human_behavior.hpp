@@ -44,7 +44,7 @@ class HumanBehavior {
 
   using event_t = Event<cond_t>;
 
-  explicit HumanBehavior(std::string);
+  explicit HumanBehavior(std::string behaviorName) : _name(std::move(behaviorName)), _context() {}
 
   void initialize(pedset_t const& pedset, map_t const& map, goals_t& goals);
   void timestep(pedset_t& pedset, map_t& map, goals_t& goals, VIPRA::State& state, VIPRA::delta_t deltaT);

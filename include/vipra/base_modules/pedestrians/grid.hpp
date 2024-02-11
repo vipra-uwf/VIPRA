@@ -40,21 +40,21 @@ class Grid {
   template <Concepts::ParamModule params_t>
   void register_params(params_t& params) {}
 
-  void config(const auto& params) {}
+  void config(auto const& params) {}
 
   [[nodiscard]] auto num_pedestrians() const -> VIPRA::size { return _coords.size(); }
-  [[nodiscard]] auto ped_coords(VIPRA::idx pedIdx) const -> VIPRA::f3d {
+  [[nodiscard]] auto ped_coords(VIPRA::idx pedIdx) const -> VIPRA::f3d const& {
     assert(pedIdx < _coords.size());
 
     return _coords[pedIdx];
   }
-  [[nodiscard]] auto all_coords() const -> const std::vector<VIPRA::f3d>& { return _coords; }
-  [[nodiscard]] auto ped_velocity(VIPRA::idx pedIdx) const -> VIPRA::f3d {
+  [[nodiscard]] auto all_coords() const -> std::vector<VIPRA::f3d> const& { return _coords; }
+  [[nodiscard]] auto ped_velocity(VIPRA::idx pedIdx) const -> VIPRA::f3d const& {
     assert(pedIdx < _velocities.size());
 
     return _velocities[pedIdx];
   }
-  [[nodiscard]] auto all_velocities() const -> const std::vector<VIPRA::f3d>& { return _velocities; }
+  [[nodiscard]] auto all_velocities() const -> std::vector<VIPRA::f3d> const& { return _velocities; }
 
  private:
   VIPRA::f3dVec _coords;

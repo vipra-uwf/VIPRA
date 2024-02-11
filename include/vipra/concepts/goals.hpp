@@ -15,8 +15,8 @@ template <typename goals_t>
 concept can_get_goals = requires(const goals_t goals) {
   { goals.current_goals() } -> std::same_as<std::vector<VIPRA::f3d> const&>;
   { goals.end_goals() } -> std::same_as<std::vector<VIPRA::f3d> const&>;
-  { goals.current_goal(VIPRA::idx{}) } -> std::same_as<VIPRA::f3d>;
-  { goals.end_goal(VIPRA::idx{}) } -> std::same_as<VIPRA::f3d>;
+  { goals.current_goal(VIPRA::idx{}) } -> std::same_as<VIPRA::f3d const&>;
+  { goals.end_goal(VIPRA::idx{}) } -> std::same_as<VIPRA::f3d const&>;
   { goals.is_goal_met(VIPRA::idx{}) } -> std::same_as<bool>;
   { goals.is_sim_goal_met() } -> std::same_as<bool>;
 };
@@ -57,13 +57,14 @@ class DummyGoals {
 
   auto current_goals() const -> const VIPRA::f3dVec& { return _dummy; }
   auto end_goals() const -> const VIPRA::f3dVec& { return _dummy; }
-  auto current_goal(VIPRA::idx) const -> VIPRA::f3d { return VIPRA::f3d{}; }
-  auto end_goal(VIPRA::idx) const -> VIPRA::f3d { return VIPRA::f3d{}; }
+  auto current_goal(VIPRA::idx) const -> VIPRA::f3d const& { return _dummy2; }
+  auto end_goal(VIPRA::idx) const -> VIPRA::f3d const& { return _dummy2; }
   auto is_goal_met(VIPRA::idx) const -> bool { return false; }
   auto is_sim_goal_met() const -> bool { return false; }
 
  private:
   VIPRA::f3dVec _dummy;
+  VIPRA::f3d    _dummy2;
   // NOLINTEND
 };
 

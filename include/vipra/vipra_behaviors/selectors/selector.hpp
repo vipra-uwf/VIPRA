@@ -21,12 +21,13 @@ class Selector {
  public:
   void initialize(std::string const& /*behaviorName*/, auto pack);
 
-  void set_all_types(Ptype);
-  void add_sub_selector(select_t const&);
+  void set_all_types(Ptype types) { _allTypes = types; }
+  void add_sub_selector(select_t const& subselector) { _subSelectors.push_back(subselector); }
 
-  [[nodiscard]] auto get_groups() -> GroupsContainer&;
+  [[nodiscard]] auto get_groups() -> GroupsContainer& { return _pedGroups; }
+  [[nodiscard]] auto get_groups() const -> GroupsContainer const& { return _pedGroups; }
 
-  [[nodiscard]] auto selector_count() const -> VIPRA::size;
+  [[nodiscard]] auto selector_count() const -> VIPRA::size { return _subSelectors.size(); }
 
  private:
   Ptype                 _allTypes;
