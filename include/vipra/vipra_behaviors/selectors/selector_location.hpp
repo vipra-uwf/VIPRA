@@ -18,14 +18,15 @@ struct SelectorLocation {
   explicit SelectorLocation(VIPRA::idx loc) : location(loc) {}
 
   VIPRA::idx location;
-  auto       operator()(const VIPRA::idxVec&, const VIPRA::idxVec& group, auto pack) const -> SelectorResult {
-    auto const&   loc = pack.get_context().locations[location];
+  auto       operator()(const VIPRA::idxVec& /*unused*/, const VIPRA::idxVec& group, auto pack) const
+      -> SelectorResult {
+    auto const&   loc = pack.context.locations[location];
     size_t        pedCnt = 0;
     VIPRA::idxVec groupPeds;
 
     for (auto idx : group) {
-            if (loc.contains(pack.get_pedset().getPedCoords(idx))) {
-              groupPeds.push_back(idx);
+      if (loc.contains(pack.pedset.ped_coords(idx))) {
+        groupPeds.push_back(idx);
       }
     }
 

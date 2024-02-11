@@ -23,17 +23,16 @@ class SubConditionEnter {
 
   void operator()(auto pack, const VIPRA::idxVec& peds, std::vector<Target> const& targets,
                   std::vector<bool>& met, std::vector<bool> const& /*unused*/, BoolOp /*unused*/) {
-    if (_entered.size() < pack.get_pedset().getNumPedestrians())
-      _entered.resize(pack.get_pedset().getNumPedestrians());
+    if (_entered.size() < pack.pedset.num_pedestrians()) _entered.resize(pack.pedset.num_pedestrians());
 
     for (auto ped : peds) {
       if (_entered[targets[ped].targetIdx]) {
         met[ped] = false;
       }
 
-      Location& loc = pack.get_context().locations[_location];
-      bool      enter = loc.contains(pack.get_state().coords[targets[ped].targetIdx]) &&
-                   !loc.contains(pack.get_pedset().getPedCoords(targets[ped].targetIdx));
+      Location& loc = pack.context.locations[_location];
+      bool      enter = loc.contains(pack.state.positions[targets[ped].targetIdx]) &&
+                   !loc.contains(pack.pedset.ped_coords(targets[ped].targetIdx));
 
       if (enter) {
         _entered[targets[ped].targetIdx] = true;

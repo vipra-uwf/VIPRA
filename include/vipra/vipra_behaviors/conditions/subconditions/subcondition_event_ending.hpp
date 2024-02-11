@@ -15,7 +15,7 @@ class SubConditionEventEnding {
 
   void operator()(auto pack, const VIPRA::idxVec& /*unused*/, std::vector<Target> const& /*unused*/,
                   std::vector<bool>& met, std::vector<bool> const& /*unused*/, BoolOp /*unused*/) const {
-    std::fill(met.begin(), met.end(), pack.get_context().events[_event].is_ending());
+    std::fill(met.begin(), met.end(), pack.context.events[_event].is_ending());
   }
 
  private:

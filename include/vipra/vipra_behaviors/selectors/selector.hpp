@@ -59,7 +59,7 @@ class Selector {
  */
 template <typename select_t, typename context_t>
 void Selector<select_t, context_t>::initialize(std::string const& behaviorName, auto pack) {
-  _pedGroups.initialize(_allTypes, pack.get_pedset().getNumPedestrians());
+  _pedGroups.initialize(_allTypes, pack.pedset.num_pedestrians());
 
   auto selectorIdxs = order_selectors();
   run_selectors(selectorIdxs, behaviorName, pack);
@@ -87,7 +87,7 @@ void Selector<select_t, context_t>::run_selectors(const VIPRA::idxVec& selectorI
     update_ped_groups(selectedPeds, selector, pack.context, behaviorName);
   });
 
-  _pedGroups[0].resize(pack.get_pedset().getNumPedestrians());
+  _pedGroups[0].resize(pack.pedset.num_pedestrians());
   std::iota(_pedGroups[0].begin(), _pedGroups[0].end(), 0);
 }
 

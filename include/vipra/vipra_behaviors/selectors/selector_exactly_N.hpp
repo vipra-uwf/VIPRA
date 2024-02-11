@@ -32,7 +32,7 @@ struct SelectorExactlyN {
 
     // spdlog::debug("Selector Exaclty N: Selecting {} Pedestrians", pedCnt);
 
-    std::shuffle(groupPeds.begin(), groupPeds.end(), pack.get_context().engine);
+    std::shuffle(groupPeds.begin(), groupPeds.end(), pack.context.engine);
     groupPeds.resize(pedCnt);
 
     return {starved, groupPeds};

@@ -29,9 +29,9 @@ class SubConditionExists {
       if (short_circuit(selfidx, met, prevMet, oper)) continue;
 
       met[selfidx] = false;
-      auto const& group = pack.get_groups().at(0);
+      auto const& group = pack.groups.at(0);
 
-      for (auto idx : pack.get_groups().at(0)) {
+      for (auto idx : pack.groups.at(0)) {
         if (_modifier.check(pack, selfidx, idx) &&
             _attributeCond.individual(pack, selfidx, {TargetType::PEDESTRIAN, idx})) {
           met[selfidx] = true;

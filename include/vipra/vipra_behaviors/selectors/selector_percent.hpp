@@ -31,7 +31,7 @@ struct SelectorPercent {
 
     // spdlog::debug("Selector Percent: Selecting {} Pedestrians", count);
 
-    std::shuffle(groupPeds.begin(), groupPeds.end(), pack.get_context().engine);
+    std::shuffle(groupPeds.begin(), groupPeds.end(), pack.context.engine);
     groupPeds.resize(count);
 
     return {starved, groupPeds};

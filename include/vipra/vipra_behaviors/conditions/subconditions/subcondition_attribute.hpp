@@ -69,8 +69,8 @@ class SubConditionAttribute {
   [[nodiscard]] inline auto towards_location_compare(CAttributeValue& attr, auto pack, VIPRA::idx self) const
       -> bool {
     attr.type_check(Type::COORD);
-    const VIPRA::f3d selfPos = pack.get_pedset().getPedCoords(self);
-    auto const&      loc = pack.get_context().locations.at(_value.as<VIPRA::idx>());
+    const VIPRA::f3d selfPos = pack.pedset.ped_coords(self);
+    auto const&      loc = pack.context.locations.at(_value.as<VIPRA::idx>());
 
     VIPRA::f3d checkDiff;
     VIPRA::f3d endDiff;
