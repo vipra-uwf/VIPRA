@@ -38,9 +38,13 @@ class SubSelector {
   MOVEABLE(SubSelector)
 
  public:
-  SubSelector(typeUID, Ptype, bool, selector_t);
+  SubSelector(typeUID grp, Ptype typ, bool req, selector_t sel)
+      : group(grp), type(typ), required(req), _select(std::move(sel)) {}
 
-  auto select_peds(const VIPRA::idxVec&, const VIPRA::idxVec&, auto pack) -> SelectorResult;
+  auto select_peds(const VIPRA::idxVec& totalGroup, const VIPRA::idxVec& usableGroup, auto pack)
+      -> SelectorResult {
+    return _select(totalGroup, usableGroup, pack);
+  }
 
   // NOLINTBEGIN - (rolland) Having these public increases readability   : ignoring (cppcoreguidelines-non-private-member-variables-in-classes)
   typeUID group;

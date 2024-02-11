@@ -18,6 +18,24 @@ struct SelectorExactlyN {
   explicit SelectorExactlyN(NumericValue count) : selectCount(std::move(count)) {}
 
   NumericValue selectCount;
-  auto         operator()(const VIPRA::idxVec&, const VIPRA::idxVec&, auto) const -> SelectorResult;
+  auto         operator()(const VIPRA::idxVec& /*unused*/, const VIPRA::idxVec& group, auto pack) const
+      -> SelectorResult {
+    auto groupPeds = group;
+
+    auto pedCnt = static_cast<VIPRA::size>(std::round(selectCount.value(0)));
+
+    bool starved = false;
+    if (pedCnt > group.size()) {
+      starved = true;
+      pedCnt = group.size();
+    }
+
+    // spdlog::debug("Selector Exaclty N: Selecting {} Pedestrians", pedCnt);
+
+    std::shuffle(groupPeds.begin(), groupPeds.end(), pack.get_context().engine);
+    groupPeds.resize(pedCnt);
+
+    return {starved, groupPeds};
+  }
 };
 }  // namespace VIPRA::Behaviors

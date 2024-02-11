@@ -13,7 +13,12 @@ struct SelectorEveryone {
   COPYABLE(SelectorEveryone)
   MOVEABLE(SelectorEveryone)
 
-  auto operator()(const VIPRA::idxVec&, const VIPRA::idxVec&, auto) -> SelectorResult;
+  auto operator()(const VIPRA::idxVec& /*unused*/, const VIPRA::idxVec& group, auto /*unused*/)
+      -> SelectorResult {
+    auto vec = VIPRA::idxVec(group.size());
+    std::iota(vec.begin(), vec.end(), 0);
+    return {false, vec};
+  }
 };
 
 }  // namespace VIPRA::Behaviors

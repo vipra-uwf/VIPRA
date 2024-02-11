@@ -16,8 +16,26 @@ struct SelectorPercent {
   explicit SelectorPercent(VIPRA::f_pnt pnt) : percentage(pnt) {}
 
   VIPRA::f_pnt percentage;
-  auto         operator()(std::vector<VIPRA::idx> const&, std::vector<VIPRA::idx> const&, auto) const
-      -> SelectorResult;
+  auto         operator()(std::vector<VIPRA::idx> const& fullGroup, std::vector<VIPRA::idx> const& group,
+                  auto pack) const -> SelectorResult {
+    auto groupPeds = group;
+
+    auto count =
+        static_cast<VIPRA::size>(std::floor(percentage * static_cast<VIPRA::f_pnt>(fullGroup.size())));
+
+    bool starved = false;
+    if (count > group.size()) {
+              starved = true;
+              count = group.size();
+    }
+
+    // spdlog::debug("Selector Percent: Selecting {} Pedestrians", count);
+
+    std::shuffle(groupPeds.begin(), groupPeds.end(), pack.get_context().engine);
+    groupPeds.resize(count);
+
+    return {starved, groupPeds};
+  }
 };
 
 }  // namespace VIPRA::Behaviors

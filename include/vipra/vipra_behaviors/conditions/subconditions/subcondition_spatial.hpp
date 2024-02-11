@@ -14,8 +14,13 @@ class SubConditionSpatial {
  public:
   explicit SubConditionSpatial(NumericValue value) : _within(std::move(value)) {}
 
-  void operator()(auto pack, const VIPRA::idxVec&, std::vector<Target> const&, std::vector<bool>&,
-                  std::vector<bool> const&, BoolOp) const;
+  void operator()(auto pack, const VIPRA::idxVec& peds, std::vector<Target> const& targets,
+                  std::vector<bool>& met, std::vector<bool> const& /*unused*/, BoolOp /*unused*/) const {
+    for (auto idx : peds) {
+      auto const& coords = pack.get_pedset().getCoordinates();
+      met[idx] = coords[idx].distanceTo(coords[targets[idx].targetIdx]) <= _within.value(idx);
+    }
+  }
 
  private:
   NumericValue _within;

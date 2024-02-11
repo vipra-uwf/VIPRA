@@ -18,6 +18,20 @@ struct SelectorLocation {
   explicit SelectorLocation(VIPRA::idx loc) : location(loc) {}
 
   VIPRA::idx location;
-  auto       operator()(const VIPRA::idxVec&, const VIPRA::idxVec&, auto) const -> SelectorResult;
+  auto       operator()(const VIPRA::idxVec&, const VIPRA::idxVec& group, auto pack) const -> SelectorResult {
+    auto const&   loc = pack.get_context().locations[location];
+    size_t        pedCnt = 0;
+    VIPRA::idxVec groupPeds;
+
+    for (auto idx : group) {
+            if (loc.contains(pack.get_pedset().getPedCoords(idx))) {
+              groupPeds.push_back(idx);
+      }
+    }
+
+    // spdlog::debug("Selector Exaclty N: Selecting {} Pedestrians", pedCnt);
+
+    return {false, groupPeds};
+  }
 };
 }  // namespace VIPRA::Behaviors

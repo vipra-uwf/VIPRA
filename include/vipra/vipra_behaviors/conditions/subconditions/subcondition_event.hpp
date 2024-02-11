@@ -18,8 +18,10 @@ class SubConditionEventOccurred {
  public:
   explicit SubConditionEventOccurred(VIPRA::idx event) : _event(event) {}
 
-  void operator()(auto pack, const VIPRA::idxVec&, std::vector<Target> const&, std::vector<bool>&,
-                  std::vector<bool> const&, BoolOp) const;
+  void operator()(auto pack, const VIPRA::idxVec& /*unused*/, std::vector<Target> const& /*unused*/,
+                  std::vector<bool>& met, std::vector<bool> const& /*unused*/, BoolOp /*unused*/) const {
+    std::fill(met.begin(), met.end(), pack.get_context().events[_event].has_occurred());
+  }
 
  private:
   VIPRA::idx _event;

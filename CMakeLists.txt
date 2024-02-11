@@ -18,8 +18,6 @@ add_library(
   ${PROJECT_SOURCE_DIR}/include/vipra/vipra.cpp
 )
 
-add_subdirectory(src/)
-
 include(FetchContent)
 message(STATUS "Getting nlohmann_json")
 FetchContent_Declare(nlohmann_json URL https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz)
