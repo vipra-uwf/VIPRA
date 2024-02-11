@@ -1,7 +1,9 @@
 #pragma once
 
-#include "selectors/selector.hpp"
-#include "values/numeric_value.hpp"
+#include "vipra/types/idx.hpp"
+#include "vipra/vipra_behaviors/selectors/selector.hpp"
+#include "vipra/vipra_behaviors/selectors/subselector.hpp"
+#include "vipra/vipra_behaviors/values/numeric_value.hpp"
 
 namespace VIPRA::Behaviors {
 /**
@@ -13,7 +15,9 @@ struct SelectorLocation {
   COPYABLE(SelectorLocation)
   MOVEABLE(SelectorLocation)
 
+  explicit SelectorLocation(VIPRA::idx loc) : location(loc) {}
+
   VIPRA::idx location;
-  auto       operator()(const VIPRA::idxVec&, const VIPRA::idxVec&, Simpack) const -> SelectorResult;
+  auto       operator()(const VIPRA::idxVec&, const VIPRA::idxVec&, auto) const -> SelectorResult;
 };
 }  // namespace VIPRA::Behaviors

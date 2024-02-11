@@ -6,6 +6,7 @@
 #include "vipra/vipra_behaviors/util/class_types.hpp"
 
 namespace VIPRA::Behaviors {
+
 class SubConditionEventOccurring {
   NON_DEFAULT_CONSTRUCTIBLE(SubConditionEventOccurring)
   COPYABLE(SubConditionEventOccurring)

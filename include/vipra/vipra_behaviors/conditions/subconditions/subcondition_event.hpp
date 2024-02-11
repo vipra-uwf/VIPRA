@@ -6,6 +6,11 @@
 #include "vipra/vipra_behaviors/util/class_types.hpp"
 
 namespace VIPRA::Behaviors {
+
+/**
+ * @brief SubCondition for target attribute to equal a value
+ * 
+ */
 class SubConditionEventOccurred {
   NON_DEFAULT_CONSTRUCTIBLE(SubConditionEventOccurred)
   COPYABLE(SubConditionEventOccurred)

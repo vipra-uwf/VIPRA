@@ -3,9 +3,11 @@
 #include <string>
 #include <unordered_map>
 
-#include <definitions/dsl_types.hpp>
-#include <definitions/pedestrian_types.hpp>
-#include <util/caseless_str_comp.hpp>
+#include "vipra/types/idx.hpp"
+
+#include "vipra/vipra_behaviors/definitions/dsl_types.hpp"
+#include "vipra/vipra_behaviors/definitions/pedestrian_types.hpp"
+#include "vipra/vipra_behaviors/util/caseless_str_comp.hpp"
 
 namespace VIPRA::Behaviors {
 using StateMap =

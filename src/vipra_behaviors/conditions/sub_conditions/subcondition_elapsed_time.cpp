@@ -21,8 +21,8 @@ void SubConditionElapsedTimeFromEvent::operator()(Simpack pack, const VIPRA::idx
       _startTime = pack.get_context().elapsedTime;
     }
 
-    float reqTime = _requiredTime.value(ped);
-    float checkTime = _startTime + reqTime;
+    VIPRA::f_pnt reqTime = _requiredTime.value(ped);
+    VIPRA::f_pnt checkTime = _startTime + reqTime;
     met[ped] = in_time_step(pack.get_context().elapsedTime, checkTime, pack.dT);
   }
 }

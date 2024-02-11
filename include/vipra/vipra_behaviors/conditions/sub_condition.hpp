@@ -2,8 +2,6 @@
 
 #include <functional>
 
-#include "vipra/vipra_behaviors/definitions/behavior_context.hpp"
-#include "vipra/vipra_behaviors/definitions/sim_pack.hpp"
 #include "vipra/vipra_behaviors/targets/target.hpp"
 
 namespace VIPRA::Behaviors {
@@ -24,6 +22,6 @@ inline constexpr auto short_circuit(VIPRA::idx idx, std::vector<bool>& met, std:
 }
 
 template <typename simpack_t>
-using SubCondition = std::function<void(simpack_t, const VIPRA::idxVec&, std::vector<Target> const&,
+using SubCondition = std::function<void(simpack_t, VIPRA::idxVec const&, std::vector<Target> const&,
                                         std::vector<bool>&, std::vector<bool> const&, BoolOp)>;
 }  // namespace VIPRA::Behaviors

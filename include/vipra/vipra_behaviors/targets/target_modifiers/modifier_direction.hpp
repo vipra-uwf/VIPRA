@@ -1,8 +1,8 @@
 #pragma once
 
-#include "definitions/sim_pack.hpp"
-#include "values/direction.hpp"
-#include "values/numeric_value.hpp"
+#include "vipra/vipra_behaviors/definitions/sim_pack.hpp"
+#include "vipra/vipra_behaviors/values/direction.hpp"
+#include "vipra/vipra_behaviors/values/numeric_value.hpp"
 
 namespace VIPRA::Behaviors {
 /**
@@ -26,10 +26,10 @@ class ModifierDirection {
    * @return true : if in direction
    * @return false : if not in direction
    */
-  auto operator()(Simpack pack, VIPRA::idx targetIdx, VIPRA::idx selfIdx) const -> bool {
-    auto const& goalCoord = pack.get_goals().getCurrentGoal(selfIdx);
-    auto const& selfCoord = pack.get_pedset().getPedCoords(selfIdx);
-    auto const& targetCoord = pack.get_pedset().getPedCoords(targetIdx);
+  auto operator()(auto pack, VIPRA::idx targetIdx, VIPRA::idx selfIdx) const -> bool {
+    auto const& goalCoord = pack.goals.current_goal(selfIdx);
+    auto const& selfCoord = pack.pedset.ped_coords(selfIdx);
+    auto const& targetCoord = pack.pedset.ped_coords(targetIdx);
 
     auto forward = goalCoord - selfCoord;
     auto dif = targetCoord - selfCoord;
@@ -44,6 +44,6 @@ class ModifierDirection {
  private:
   Direction _direction;
 
-  static constexpr float RANGE = 0.1F;
+  static constexpr VIPRA::f_pnt RANGE = 0.1F;
 };
 }  // namespace VIPRA::Behaviors

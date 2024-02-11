@@ -13,8 +13,8 @@ namespace VIPRA::Concepts {
 
 template <typename goals_t>
 concept can_get_goals = requires(const goals_t goals) {
-  { goals.current_goals() } -> std::same_as<const std::vector<VIPRA::f3d>&>;
-  { goals.end_goals() } -> std::same_as<const std::vector<VIPRA::f3d>&>;
+  { goals.current_goals() } -> std::same_as<std::vector<VIPRA::f3d> const&>;
+  { goals.end_goals() } -> std::same_as<std::vector<VIPRA::f3d> const&>;
   { goals.current_goal(VIPRA::idx{}) } -> std::same_as<VIPRA::f3d>;
   { goals.end_goal(VIPRA::idx{}) } -> std::same_as<VIPRA::f3d>;
   { goals.is_goal_met(VIPRA::idx{}) } -> std::same_as<bool>;
@@ -22,13 +22,14 @@ concept can_get_goals = requires(const goals_t goals) {
 };
 
 template <typename goals_t>
-concept can_initialize_goals = requires(goals_t goals, const DummyPedSet& pedset, const DummyMap& map) {
+concept can_initialize_goals = requires(goals_t goals, DummyPedSet const& pedset, DummyMap const& map) {
   {goals.initialize(pedset, map)};
 };
 
 template <typename goals_t>
-concept can_update_goals = requires(goals_t goals, const DummyPedSet& pedset, const DummyMap& map) {
+concept can_update_goals = requires(goals_t goals, DummyPedSet const& pedset, DummyMap const& map) {
   {goals.update(pedset, map)};
+  {goals.change_end_goal(VIPRA::idx{}, VIPRA::f3d{})};
 };
 
 template <typename goals_t>
@@ -44,13 +45,15 @@ class DummyGoals {
   void register_params(params_t& params) {}
 
   template <VIPRA::Concepts::ParamModule params_t>
-  void config(const params_t& params) {}
+  void config(params_t const& params) {}
 
   template <typename pedset_t, typename map_t>
-  void initialize(const pedset_t& /*unused*/, const map_t& /*unused*/) {}
+  void initialize(pedset_t const& /*unused*/, map_t const& /*unused*/) {}
 
   template <typename pedset_t, typename map_t>
-  void update(const pedset_t& /*unused*/, const map_t& /*unused*/) {}
+  void update(pedset_t const& /*unused*/, map_t const& /*unused*/) {}
+
+  void change_end_goal(VIPRA::idx /*unused*/, VIPRA::f3d /*unused*/) {}
 
   auto current_goals() const -> const VIPRA::f3dVec& { return _dummy; }
   auto end_goals() const -> const VIPRA::f3dVec& { return _dummy; }

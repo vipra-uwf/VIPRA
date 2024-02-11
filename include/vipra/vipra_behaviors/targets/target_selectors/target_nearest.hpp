@@ -3,25 +3,30 @@
 #include <limits>
 #include <optional>
 
-#include "definitions/pedestrian_types.hpp"
-#include "definitions/sim_pack.hpp"
-#include "targets/target.hpp"
-#include "targets/target_modifier.hpp"
 #include "vipra/geometry/f3d.hpp"
+
+#include "vipra/vipra_behaviors/definitions/pedestrian_types.hpp"
+#include "vipra/vipra_behaviors/definitions/sim_pack.hpp"
+#include "vipra/vipra_behaviors/targets/target.hpp"
+#include "vipra/vipra_behaviors/targets/target_modifier.hpp"
 
 namespace VIPRA::Behaviors {
 /**
   * @brief Selects the nearest pedestrian with any of the given types
   * 
   */
+template <typename modifier_t>
 struct TargetNearest {
   NON_DEFAULT_CONSTRUCTIBLE(TargetNearest)
   COPYABLE(TargetNearest)
   MOVEABLE(TargetNearest)
 
-  Ptype                         type;
-  bool                          allPeds;
-  std::optional<TargetModifier> modifier;
+  Ptype                     type;
+  bool                      allPeds;
+  std::optional<modifier_t> modifier;
+
+  explicit TargetNearest(Ptype type, bool allPeds = false, std::optional<modifier_t> modifier = std::nullopt)
+      : type(type), allPeds(allPeds), modifier(modifier) {}
 
   /**
    * @brief Returns the nearest pedestrian that has any of the target types
@@ -30,26 +35,26 @@ struct TargetNearest {
    * @param self : pedestrain calling the function
    * @return Target 
    */
-  inline auto operator()(Simpack pack, Self self) const -> Target {
+  inline auto operator()(auto pack, Self self) const -> Target {
     if (allPeds) {
-      auto curr = nearest_in_group(pack, self.target.targetIdx, pack.get_groups().get_group(0));
-      if (curr.second == VIPRA::idx_INVALID) return Target{TargetType::INVALID, 0};
+      auto curr = nearest_in_group(pack, self.target.targetIdx, pack.groups.get_group(0));
+      if (curr.second == VIPRA::INVALID_IDX) return Target{TargetType::INVALID, 0};
       return {TargetType::PEDESTRIAN, curr.second};
     }
 
-    VIPRA::dist shortest = std::numeric_limits<VIPRA::dist>::max();
-    VIPRA::idx  nearest = VIPRA::idx_INVALID;
+    VIPRA::f_pnt shortest = std::numeric_limits<VIPRA::f_pnt>::max();
+    VIPRA::idx   nearest = VIPRA::INVALID_IDX;
 
     type.for_each_type([&](typeUID type) {
       VIPRA::idx groupIdx = GroupsContainer::index(type);
-      auto       curr = nearest_in_group(pack, self.target.targetIdx, pack.get_groups().get_group(groupIdx));
+      auto       curr = nearest_in_group(pack, self.target.targetIdx, pack.groups.get_group(groupIdx));
       if (curr.first < shortest) {
         shortest = curr.first;
         nearest = curr.second;
       }
     });
 
-    if (nearest == VIPRA::idx_INVALID) {
+    if (nearest == VIPRA::INVALID_IDX) {
       return Target{TargetType::INVALID, 0};
     }
 
@@ -65,12 +70,12 @@ struct TargetNearest {
    * @param idxs : vector of pedestrian indexes in group
    * @return std::pair<VIPRA::dist, VIPRA::idx> : nearest distance and nearest pedestrian index
    */
-  [[nodiscard]] inline auto nearest_in_group(Simpack pack, VIPRA::idx self, const VIPRA::idxVec& idxs) const
-      -> std::pair<VIPRA::dist, VIPRA::idx> {
-    VIPRA::dist shortest = std::numeric_limits<VIPRA::dist>::max();
-    VIPRA::idx  nearest = VIPRA::idx_INVALID;
+  [[nodiscard]] inline auto nearest_in_group(auto pack, VIPRA::idx self, VIPRA::idxVec const& idxs) const
+      -> std::pair<VIPRA::f_pnt, VIPRA::idx> {
+    VIPRA::f_pnt shortest = std::numeric_limits<VIPRA::f_pnt>::max();
+    VIPRA::idx   nearest = VIPRA::INVALID_IDX;
 
-    auto const&      coords = pack.get_pedset().getCoordinates();
+    auto const&      coords = pack.pedset.all_coords();
     const VIPRA::f3d currCoords = coords[self];
 
     for (VIPRA::idx pedIdx : idxs) {
@@ -80,9 +85,9 @@ struct TargetNearest {
         if (!modifier->check(pack, pedIdx, self)) continue;
       }
 
-      if (pack.get_obsset().rayHit(currCoords, coords[pedIdx]) != -1) continue;
+      if (pack.obsset.ray_hit(currCoords, coords[pedIdx]) != -1) continue;
 
-      VIPRA::dist curr = currCoords.distanceTo(coords[pedIdx]);
+      VIPRA::f_pnt curr = currCoords.distance_to(coords[pedIdx]);
       if (curr < shortest) {
         shortest = curr;
         nearest = pedIdx;

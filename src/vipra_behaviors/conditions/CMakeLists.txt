@@ -3,7 +3,6 @@
 target_sources(
   ${PROJECT_NAME}
   PRIVATE
-  condition.cpp
   sub_conditions/subcondition_attribute.cpp
   sub_conditions/subcondition_elapsed_time.cpp
   sub_conditions/subcondition_enter.cpp

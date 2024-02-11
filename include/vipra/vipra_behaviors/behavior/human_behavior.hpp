@@ -7,59 +7,175 @@
 #include "vipra/geometry/f3d.hpp"
 
 #include "vipra/vipra_behaviors/actions/action.hpp"
+#include "vipra/vipra_behaviors/conditions/sub_condition.hpp"
 #include "vipra/vipra_behaviors/definitions/behavior_context.hpp"
 #include "vipra/vipra_behaviors/definitions/dsl_types.hpp"
 #include "vipra/vipra_behaviors/events/event.hpp"
 #include "vipra/vipra_behaviors/locations/location.hpp"
 #include "vipra/vipra_behaviors/selectors/selector.hpp"
+#include "vipra/vipra_behaviors/selectors/subselector.hpp"
+#include "vipra/vipra_behaviors/targets/target.hpp"
+#include "vipra/vipra_behaviors/targets/target_modifier.hpp"
 
 namespace VIPRA::Behaviors {
 /**
  * Describes a specific human behavior. Implementations can either define the behavior directly in C++ or use a DSL.
  */
+template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
 class HumanBehavior {
   DEFAULT_CONSTRUCTIBLE(HumanBehavior)
   COPYABLE(HumanBehavior)
   MOVEABLE(HumanBehavior)
 
  public:
+  using pack_t = Simpack<pedset_t, map_t, goals_t>;
+  using context_t = BehaviorContext<pedset_t, map_t, goals_t>;
+  using cond_t = Condition<SubCondition<pack_t>>;
+
+  using targetfunc_t = TargetFunc<pack_t>;
+  using targetmodifier_t = TargetModifier<Modifier<pack_t>>;
+  using targetselector_t = TargetSelector<TargetFunc<pack_t>>;
+  using atom_t = Atom<pack_t>;
+  using action_t = Action<atom_t, cond_t, targetselector_t>;
+
+  using selectorfunc_t = SelectorFunc<pack_t>;
+  using subselector_t = SubSelector<SelectorFunc<pack_t>, cond_t>;
+  using selector_t = Selector<subselector_t, context_t>;
+
+  using event_t = Event<cond_t>;
+
   explicit HumanBehavior(std::string);
 
-  [[nodiscard]] auto get_name() const noexcept -> std::string const&;
+  void initialize(pedset_t const& pedset, map_t const& map, goals_t& goals);
+  void timestep(pedset_t& pedset, map_t& map, goals_t& goals, VIPRA::State& state, VIPRA::delta_t deltaT);
 
-  void initialize(Concepts::PedsetModule auto const&, Concepts::MapModule auto const&,
-                  Concepts::GoalsModule auto&);
-  void timestep(Concepts::PedsetModule&, Concepts::MapModule auto&, Concepts::GoalsModule auto&,
-                VIPRA::State&, VIPRA::delta_t);
+  void set_all_ped_types(Ptype type) { _selector.set_all_types(type); }
+  void add_sub_selector(auto const& subSelector) { _selector.add_sub_selector(subSelector); }
+  void add_action(typeUID type, auto const& action) { _actions[type].emplace_back(action); }
+  auto add_event(event_t const& evnt) -> VIPRA::idx {
+    _context.events.push_back(evnt);
+    return _context.events.size() - 1;
+  }
+  auto add_location(Location const& loc) -> VIPRA::idx {
+    _context.locations.emplace_back(loc);
+    return _context.locations.size() - 1;
+  }
 
-  void set_all_ped_types(Ptype);
-  void add_sub_selector(SubSelector const&);
-  void add_action(typeUID, Action const&);
-  auto add_event(Event const&) -> VIPRA::idx;
-  auto add_location(Location const&) -> VIPRA::idx;
+  [[nodiscard]] auto get_name() const noexcept -> std::string const& { return _name; }
+  [[nodiscard]] auto event_count() const noexcept -> VIPRA::size { return _context.events.size(); }
+  [[nodiscard]] auto location_count() const noexcept -> VIPRA::size { return _context.locations.size(); }
+  [[nodiscard]] auto selector_count() noexcept -> VIPRA::size { return _selector.get_groups().size(); }
+  [[nodiscard]] auto action_count() const noexcept -> VIPRA::size {
+    return std::accumulate(_actions.begin(), _actions.end(), 0,
+                           [](VIPRA::size sum, auto const& group) { return sum + group.size(); });
+  }
 
-  [[nodiscard]] auto event_count() const -> VIPRA::size;
-  [[nodiscard]] auto selector_count() const -> VIPRA::size;
-  [[nodiscard]] auto action_count() const -> VIPRA::size;
-
-  void set_seed(Behaviors::seed);
+  void set_seed(VIPRA::seed seed) { _seedNum = seed; }
 
  private:
-  Behaviors::seed _seedNum{};
+  VIPRA::seed _seedNum{};
 
-  std::string     _name;
-  BehaviorContext _context;
+  std::string _name;
+  context_t   _context;
 
-  Selector                         _selector;
-  std::vector<Event>               _events;
-  std::vector<Location*>           _locations;
-  std::vector<std::vector<Action>> _actions;
-  std::vector<bool>                _conditionMet;
-  std::vector<Target>              _targets;
+  Selector<subselector_t, context_t> _selector;
+  std::vector<std::vector<action_t>> _actions;
+  std::vector<bool>                  _conditionMet;
+  std::vector<Target>                _targets;
 
-  void evaluate_events(Concepts::PedsetModule&, Concepts::MapModule auto&, Concepts::GoalsModule auto&,
-                       VIPRA::delta_t);
-  void apply_actions(Concepts::PedsetModule&, Concepts::MapModule auto&, Concepts::GoalsModule auto&,
-                     VIPRA::State&, VIPRA::delta_t);
+  void evaluate_events(pedset_t& pedset, map_t& map, goals_t& goals, VIPRA::delta_t deltaT);
+  void apply_actions(pedset_t& pedset, map_t& map, goals_t& goals, VIPRA::State& state,
+                     VIPRA::delta_t deltaT);
 };
+
+/**
+ * @brief initializes behavior selector
+ *
+ * @param pedSet : pedestrian set object
+ * @param obsSet : obstacle set object
+ * @param goals : goals object
+ */
+template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+void HumanBehavior<pedset_t, map_t, goals_t>::initialize(pedset_t const& pedset, map_t const& map,
+                                                         goals_t& goals) {
+  VIPRA::State dummyState;
+
+  _context.engine = VIPRA::Random::Engine{_seedNum};
+  _context.pedStates = std::vector<Behaviors::stateUID>(pedset.num_pedestrians());
+  _context.types = std::vector<Behaviors::typeUID>(pedset.num_pedestrians());
+
+  _conditionMet.resize(pedset.num_pedestrians(), false);
+  _targets.resize(pedset.num_pedestrians());
+  for (VIPRA::idx i = 0; i < pedset.num_pedestrians(); ++i) {
+    _targets[i] = Target{TargetType::PEDESTRIAN, i};
+  }
+
+  Simpack<pedset_t, map_t, goals_t> pack{pedset, map, goals, _selector.get_groups(), _context, dummyState, 0};
+  _selector.initialize(_name, pack);
+
+  for (auto& actionGroup : _actions) {
+    for (auto& action : actionGroup) {
+      action.initialize(pack);
+    }
+  }
+}
+
+/**
+ * @brief Evaluates behavior events, and performs actions of pedestrians
+ * 
+ * @tparam pedset_t 
+ * @tparam map_t 
+ * @tparam goals_t 
+ * @param pedset 
+ * @param map 
+ * @param goals 
+ * @param state 
+ * @param deltaT 
+ */
+template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+void HumanBehavior<pedset_t, map_t, goals_t>::timestep(pedset_t& pedset, map_t& map, goals_t& goals,
+                                                       VIPRA::State& state, VIPRA::delta_t deltaT) {
+  evaluate_events(pedset, map, goals, deltaT);
+  apply_actions(pedset, map, goals, state, deltaT);
+  _context.elapsedTime += deltaT;
+}
+
+template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+void HumanBehavior<pedset_t, map_t, goals_t>::evaluate_events(pedset_t& pedset, map_t& map, goals_t& goals,
+                                                              VIPRA::delta_t deltaT) {
+  VIPRA::State dummyState;
+  for (auto& event : _context.events) {
+    event.evaluate({pedset, map, goals, dummyState, _selector.get_groups(), deltaT});
+  }
+}
+
+template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+void HumanBehavior<pedset_t, map_t, goals_t>::apply_actions(pedset_t& pedset, map_t& map, goals_t& goals,
+                                                            VIPRA::State& state, VIPRA::delta_t deltaT) {
+  GroupsContainer&  groups = _selector.get_groups();
+  const VIPRA::size groupCnt = groups.size();
+  Simpack           pack{pedset, map, goals, state, _selector.get_groups(), deltaT};
+
+  for (VIPRA::idx i = 0; i < groupCnt; ++i) {
+    auto& pedestrians = groups[i];
+    pedestrians.erase(std::remove_if(pedestrians.begin(), pedestrians.end(),
+                                     [&](VIPRA::idx ped) { return goals.isPedestianGoalMet(ped); }),
+                      pedestrians.end());
+
+    std::for_each(_actions[i].begin(), _actions[i].end(), [&](auto& action) {
+      if (action.has_target()) {
+        action.targets()->get_targets(pack, pedestrians, _targets);
+        // TODO(rolland): this needs to go back to self, if there is an action that changes it
+      }
+
+      if (action.has_condition()) {
+        action.condition()->evaluate(pack, pedestrians, _conditionMet, _targets, action.duration());
+        action.perform_action(pack, pedestrians, _conditionMet, _targets);
+      } else {
+        action.perform_action(pack, pedestrians, _targets);
+      }
+    });
+  }
+}
+
 }  // namespace VIPRA::Behaviors

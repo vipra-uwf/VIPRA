@@ -11,6 +11,10 @@
 #include "vipra/vipra_behaviors/values/numeric_value.hpp"
 
 namespace VIPRA::Behaviors {
+/**
+ * @brief SubCondition for target attribute to equal a value
+ * 
+ */
 class SubConditionElapsedTimeFromEvent {
   NON_DEFAULT_CONSTRUCTIBLE(SubConditionElapsedTimeFromEvent)
   COPYABLE(SubConditionElapsedTimeFromEvent)

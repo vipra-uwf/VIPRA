@@ -1,7 +1,7 @@
-#ifndef EVERYONE_SELECTOR_HPP
-#define EVERYONE_SELECTOR_HPP
+#pragma once
 
-#include <selectors/selector.hpp>
+#include "vipra/vipra_behaviors/selectors/selector.hpp"
+#include "vipra/vipra_behaviors/selectors/subselector.hpp"
 
 namespace VIPRA::Behaviors {
 /**
@@ -13,9 +13,7 @@ struct SelectorEveryone {
   COPYABLE(SelectorEveryone)
   MOVEABLE(SelectorEveryone)
 
-  auto operator()(const VIPRA::idxVec&, const VIPRA::idxVec&, Simpack) -> SelectorResult;
+  auto operator()(const VIPRA::idxVec&, const VIPRA::idxVec&, auto) -> SelectorResult;
 };
 
 }  // namespace VIPRA::Behaviors
-
-#endif

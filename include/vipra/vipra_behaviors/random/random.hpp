@@ -13,28 +13,28 @@
 namespace VIPRA::Behaviors {
 
 struct Min {
-  float val;
+  VIPRA::f_pnt val;
 };
 struct Max {
-  float val;
+  VIPRA::f_pnt val;
 };
 
 class DRNG {
  public:
   /**
-  * @brief Gets the random float between min and max that is assigned to the pedestrian at pedIdx
+  * @brief Gets the random VIPRA::f_pnt between min and max that is assigned to the pedestrian at pedIdx
   * 
   */
-  [[nodiscard]] static inline auto ped_random_float(Behaviors::seed seed, VIPRA::idx pedIdx, Min min, Max max)
-      -> float {
-    VIPRA::uniform_distribution<float> distr{min.val, max.val};
-    return distr(get_engine(Behaviors::seed{seed + (pedIdx * PED_MULT_VAL)}));
+  [[nodiscard]] static inline auto ped_random_float(VIPRA::seed seed, VIPRA::idx pedIdx, Min min, Max max)
+      -> VIPRA::f_pnt {
+    VIPRA::uniform_distribution<VIPRA::f_pnt> distr{min.val, max.val};
+    return distr(get_engine(VIPRA::seed{seed + (pedIdx * PED_MULT_VAL)}));
   }
 
  private:
   static constexpr uint64_t PED_MULT_VAL{10037};
 
-  static inline auto get_engine(Behaviors::seed seed) -> VIPRA::Random::Engine& {
+  static inline auto get_engine(VIPRA::seed seed) -> VIPRA::Random::Engine& {
     static VIPRA::Random::Engine gen{};
     gen.reseed(seed);
     return gen;

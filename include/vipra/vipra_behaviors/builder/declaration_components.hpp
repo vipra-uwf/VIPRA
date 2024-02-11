@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include <generated/BehaviorParser.h>
+#include "vipra/vipra_behaviors/_grammar/generated/BehaviorParser.h"
 
 namespace VIPRA::Behaviors {
 using evEnd = BehaviorParser::Event_endContext*;

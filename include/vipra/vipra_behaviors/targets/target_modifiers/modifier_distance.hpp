@@ -2,9 +2,9 @@
 
 #include <utility>
 
-#include "definitions/sim_pack.hpp"
-#include "util/class_types.hpp"
-#include "values/numeric_value.hpp"
+#include "vipra/vipra_behaviors/definitions/sim_pack.hpp"
+#include "vipra/vipra_behaviors/util/class_types.hpp"
+#include "vipra/vipra_behaviors/values/numeric_value.hpp"
 
 namespace VIPRA::Behaviors {
 /**
@@ -28,8 +28,8 @@ class ModifierDistance {
    * @return true : if within distance
    * @return false : if NOT within distance
    */
-  auto operator()(Simpack pack, VIPRA::idx targetIdx, VIPRA::idx selfIdx) const -> bool {
-    return pack.get_pedset().getPedCoords(selfIdx).distanceTo(pack.get_pedset().getPedCoords(targetIdx)) <=
+  auto operator()(auto pack, VIPRA::idx targetIdx, VIPRA::idx selfIdx) const -> bool {
+    return pack.pedset.ped_coords(selfIdx).distance_to(pack.pedset.ped_coords(targetIdx)) <=
            _dist.value(selfIdx);
   }
 

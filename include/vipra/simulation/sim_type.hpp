@@ -43,7 +43,7 @@ class SimType {
     params.register_param(Modules::Type::SIMULATION, "main", "timestep_size", ParameterType::REQUIRED);
     params.register_param(Modules::Type::SIMULATION, "main", "output_frequency", ParameterType::REQUIRED);
     params.register_param(Modules::Type::SIMULATION, "main", "random_seed", ParameterType::REQUIRED);
-    BehaviorModel::register_params(params);
+    BehaviorModel<pedset_t, map_t, goals_t>::register_params(params);
   }
 
   auto operator()() -> output_data_t {
@@ -62,7 +62,7 @@ class SimType {
     _map.initialize(_pedset);
     _goals.initialize(_pedset, _map);
     _model.initialize(_pedset, _map, _goals, _output);
-    _behaviorModel.initialize(_pedset, _goals, _map);
+    _behaviorModel.initialize(_pedset, _goals, _map, randomseed);
 
     while (_timestep < maxTimestep) {
       const VIPRA::State& state = _model.timestep(_pedset, _map, _goals, _output, timestepSize, _timestep);
@@ -80,13 +80,13 @@ class SimType {
   }
 
  private:
-  params_t      _params;
-  output_t      _output;
-  model_t       _model;
-  pedset_t      _pedset;
-  goals_t       _goals;
-  map_t         _map;
-  BehaviorModel _behaviorModel;
+  params_t                                _params;
+  output_t                                _output;
+  model_t                                 _model;
+  pedset_t                                _pedset;
+  goals_t                                 _goals;
+  map_t                                   _map;
+  BehaviorModel<pedset_t, map_t, goals_t> _behaviorModel;
 
   VIPRA::Random::Engine _engine{};
 

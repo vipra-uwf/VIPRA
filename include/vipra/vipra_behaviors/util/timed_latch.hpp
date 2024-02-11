@@ -49,7 +49,7 @@ class TimedLatchCollection {
   auto check(VIPRA::time_s currTime, VIPRA::idx pedIdx) -> bool {
     if (_startTimes[pedIdx] == -1) return false;
 
-    float val = _duration.value(pedIdx);
+    VIPRA::f_pnt val = _duration.value(pedIdx);
     return !(currTime - _startTimes[pedIdx] >= val);
   }
 
@@ -57,9 +57,9 @@ class TimedLatchCollection {
    * @brief Returns the duration for a pedestrians latch
    * 
    * @param pedIdx : pedestrian index to get duration of
-   * @return float 
+   * @return VIPRA::f_pnt 
    */
-  auto get_duration(VIPRA::idx pedIdx) -> float { return _duration.value(pedIdx); }
+  auto get_duration(VIPRA::idx pedIdx) -> VIPRA::f_pnt { return _duration.value(pedIdx); }
 
  private:
   Behaviors::NumericValue    _duration;

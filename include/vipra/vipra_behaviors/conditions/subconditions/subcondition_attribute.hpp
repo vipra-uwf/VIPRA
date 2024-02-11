@@ -29,7 +29,7 @@ class SubConditionAttribute {
   CAttributeValue _value;
   bool            _not;
 
-  static constexpr float TOWARDS_THRESHOLD = 0.5F;
+  static constexpr VIPRA::f_pnt TOWARDS_THRESHOLD = 0.5F;
 
   [[nodiscard]] inline auto towards_compare(CAttributeValue&, auto, VIPRA::idx) const -> bool;
   [[nodiscard]] inline auto towards_location_compare(CAttributeValue&, auto, VIPRA::idx) const -> bool;

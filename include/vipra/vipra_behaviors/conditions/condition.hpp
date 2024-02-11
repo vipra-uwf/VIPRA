@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <memory>
 #include <optional>
 #include <vector>
@@ -19,10 +20,33 @@ class Condition {
   COPYABLE(Condition)
   MOVEABLE(Condition)
  public:
-  void initialize(auto const&);
+  template <typename pack_t>
+  void initialize(pack_t pack) {
+    if (_conditions.size() > 1) {
+      _temp.resize(pack.pedset.num_pedestrians());
+      std::fill(_temp.begin(), _temp.end(), false);
+    }
+  }
 
-  void evaluate(auto, const VIPRA::idxVec&, std::vector<bool>&, std::vector<Target> const&,
-                std::optional<TimedLatchCollection>&);
+  template <typename pack_t>
+  void evaluate(pack_t pack, VIPRA::idxVec const& peds, std::vector<bool>& met,
+                std::vector<Target> const& targets, std::optional<TimedLatchCollection>& /*latches*/) {
+    // TODO(rolland): add in latch checks
+    std::fill(_temp.begin(), _temp.end(), false);
+    _conditions[0](pack, peds, targets, met, _temp, BoolOp::OR);
+
+    for (VIPRA::idx i = 1; i < _conditions.size(); ++i) {
+      _conditions[i](pack, peds, targets, _temp, met, _steps[i - 1]);
+      switch (_steps[i - 1]) {
+        case BoolOp::AND:
+          std::transform(met.begin(), met.end(), _temp.begin(), met.begin(), std::logical_and<>());
+          break;
+        case BoolOp::OR:
+          std::transform(met.begin(), met.end(), _temp.begin(), met.begin(), std::logical_or<>());
+          break;
+      }
+    }
+  }
 
   void add_operation(BoolOp oper) { _steps.emplace_back(oper); }
   void add_subcondition(subcond_t&& condition) { _conditions.emplace_back(condition); }

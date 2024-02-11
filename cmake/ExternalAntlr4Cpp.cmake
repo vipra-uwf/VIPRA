@@ -20,11 +20,11 @@ endif()
 file(MAKE_DIRECTORY "${ANTLR4_INCLUDE_DIRS}")
 
 if(${CMAKE_GENERATOR} MATCHES "Visual Studio.*")
-  set(ANTLR4_OUTPUT_DIR ${ANTLR4_ROOT}/runtime/Cpp/dist/$(Configuration))
+  set(ANTLR4_OUTPUT_DIR ${ANTLR4_ROOT}/runtime/Cpp/runtime/$(Configuration))
 elseif(${CMAKE_GENERATOR} MATCHES "Xcode.*")
-  set(ANTLR4_OUTPUT_DIR ${ANTLR4_ROOT}/runtime/Cpp/dist/$(CONFIGURATION))
+  set(ANTLR4_OUTPUT_DIR ${ANTLR4_ROOT}/runtime/Cpp/runtime/$(CONFIGURATION))
 else()
-  set(ANTLR4_OUTPUT_DIR ${ANTLR4_ROOT}/runtime/Cpp/dist)
+  set(ANTLR4_OUTPUT_DIR ${ANTLR4_ROOT}/runtime/Cpp/runtime)
 endif()
 
 if(MSVC)
@@ -46,7 +46,7 @@ else()
     set(ANTLR4_SHARED_LIBRARIES
         ${ANTLR4_OUTPUT_DIR}/libantlr4-runtime.dll.a)
     set(ANTLR4_RUNTIME_LIBRARIES
-        ${ANTLR4_OUTPUT_DIR}/cygantlr4-runtime-4.12.0.dll)
+        ${ANTLR4_OUTPUT_DIR}/cygantlr4-runtime-4.13.1.dll)
   elseif(APPLE)
     set(ANTLR4_RUNTIME_LIBRARIES
         ${ANTLR4_OUTPUT_DIR}/libantlr4-runtime.dylib)
@@ -89,7 +89,6 @@ if(ANTLR4_ZIP_REPOSITORY)
       PREFIX antlr4_runtime
       URL ${ANTLR4_ZIP_REPOSITORY}
       DOWNLOAD_DIR ${CMAKE_CURRENT_BINARY_DIR}
-      UPDATE_COMMAND ""
       BUILD_COMMAND ""
       BUILD_IN_SOURCE 1
       SOURCE_DIR ${ANTLR4_ROOT}
@@ -99,7 +98,7 @@ if(ANTLR4_ZIP_REPOSITORY)
           -DWITH_STATIC_CRT:BOOL=${ANTLR4_WITH_STATIC_CRT}
           -DDISABLE_WARNINGS:BOOL=ON
           # -DCMAKE_CXX_STANDARD:STRING=17 # if desired, compile the runtime with a different C++ standard
-          -DCMAKE_CXX_STANDARD:STRING=${CMAKE_CXX_STANDARD} # alternatively, compile the runtime with the same C++ standard as the outer project
+          # -DCMAKE_CXX_STANDARD:STRING=${CMAKE_CXX_STANDARD} # alternatively, compile the runtime with the same C++ standard as the outer project
       INSTALL_COMMAND ""
       EXCLUDE_FROM_ALL 1)
 else()
@@ -109,7 +108,6 @@ else()
       GIT_REPOSITORY ${ANTLR4_GIT_REPOSITORY}
       GIT_TAG ${ANTLR4_TAG}
       DOWNLOAD_DIR ${CMAKE_CURRENT_BINARY_DIR}
-      UPDATE_COMMAND ""
       BUILD_COMMAND ""
       BUILD_IN_SOURCE 1
       SOURCE_DIR ${ANTLR4_ROOT}

@@ -1,8 +1,9 @@
 
 #pragma once
 
-#include <selectors/selector.hpp>
-#include <values/numeric_value.hpp>
+#include "vipra/vipra_behaviors/selectors/selector.hpp"
+#include "vipra/vipra_behaviors/selectors/subselector.hpp"
+#include "vipra/vipra_behaviors/values/numeric_value.hpp"
 
 namespace VIPRA::Behaviors {
 /**
@@ -14,7 +15,9 @@ struct SelectorExactlyN {
   COPYABLE(SelectorExactlyN)
   MOVEABLE(SelectorExactlyN)
 
+  explicit SelectorExactlyN(NumericValue count) : selectCount(std::move(count)) {}
+
   NumericValue selectCount;
-  auto         operator()(const VIPRA::idxVec&, const VIPRA::idxVec&, Simpack) const -> SelectorResult;
+  auto         operator()(const VIPRA::idxVec&, const VIPRA::idxVec&, auto) const -> SelectorResult;
 };
 }  // namespace VIPRA::Behaviors

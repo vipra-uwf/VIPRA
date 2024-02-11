@@ -13,7 +13,7 @@ auto SelectorPercent::operator()(const VIPRA::idxVec& fullGroup, const VIPRA::id
                                  Simpack pack) const -> SelectorResult {
   auto groupPeds = group;
 
-  auto count = static_cast<VIPRA::size>(std::floor(percentage * static_cast<float>(fullGroup.size())));
+  auto count = static_cast<VIPRA::size>(std::floor(percentage * static_cast<VIPRA::f_pnt>(fullGroup.size())));
 
   bool starved = false;
   if (count > group.size()) {

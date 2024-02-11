@@ -1,6 +1,7 @@
 #pragma once
 
 #include "vipra/vipra_behaviors/targets/target.hpp"
+#include "vipra/vipra_behaviors/util/class_types.hpp"
 
 namespace VIPRA::Behaviors {
 
@@ -13,6 +14,6 @@ struct TargetSelf {
   COPYABLE(TargetSelf)
   MOVEABLE(TargetSelf)
 
-  inline auto get(auto /*unused*/, Self self) -> Target { return self.target; }
+  inline auto operator()(auto /*unused*/, Self self) -> Target { return self.target; }
 };
 }  // namespace VIPRA::Behaviors

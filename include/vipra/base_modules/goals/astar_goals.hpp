@@ -37,7 +37,7 @@ class AStar {
     set_end_goals(pedset, map);
 
     for (VIPRA::idx pedIdx = 0; pedIdx < pedset.num_pedestrians(); ++pedIdx) {
-      const auto pos = pedset.ped_coords(pedIdx);
+      auto const pos = pedset.ped_coords(pedIdx);
 
       VIPRA::idx startIdx = get_closest_grid_idx(pos);
       VIPRA::idx endIdx = get_closest_grid_idx(_endGoals[pedIdx]);
@@ -46,7 +46,7 @@ class AStar {
         throw std::runtime_error("Start or end index is out of bounds");
       }
 
-      const auto path = VIPRA::Algo::astar(
+      auto const path = VIPRA::Algo::astar(
           startIdx, endIdx, _graph,
           [&](VIPRA::idx left, VIPRA::idx right) -> VIPRA::f_pnt {
             return _graph.data(left).pos.distance_to(_graph.data(right).pos);
@@ -95,7 +95,7 @@ class AStar {
     assert(pedset.num_pedestrians() > 0);
 
     for (VIPRA::idx pedIdx = 0; pedIdx < pedset.num_pedestrians(); ++pedIdx) {
-      const auto pos = pedset.ped_coords(pedIdx);
+      auto const pos = pedset.ped_coords(pedIdx);
       if (pos.distance_to(_currentGoals[pedIdx]) < _goal_range) {
         if (!_paths[pedIdx].empty()) {
           _currentGoals[pedIdx] = _paths[pedIdx].back();
@@ -103,6 +103,23 @@ class AStar {
         }
       }
     }
+  }
+
+  void change_end_goal(VIPRA::idx pedIdx, VIPRA::f3d newGoal) {
+    assert(pedIdx < _endGoals.size());
+    _endGoals[pedIdx] = newGoal;
+    _paths[pedIdx] = VIPRA::Algo::astar(
+        get_closest_grid_idx(_currentGoals[pedIdx]), get_closest_grid_idx(_endGoals[pedIdx]), _graph,
+        [&](VIPRA::idx left, VIPRA::idx right) -> VIPRA::f_pnt {
+          return _graph.data(left).pos.distance_to(_graph.data(right).pos);
+        },
+        [&](VIPRA::idx nodeIdx) -> VIPRA::f3d { return _graph.data(nodeIdx).pos; });
+
+    if (_paths[pedIdx].empty()) {
+      throw std::runtime_error("No path found for pedestrian");
+    }
+
+    _currentGoals[pedIdx] = _paths[pedIdx].back();
   }
 
   [[nodiscard]] auto end_goals() const -> VIPRA::f3dVec const& { return _endGoals; }
@@ -120,7 +137,7 @@ class AStar {
     return _paths[pedIdx].empty();
   }
   [[nodiscard]] auto is_sim_goal_met() const -> bool {
-    return std::all_of(_paths.begin(), _paths.end(), [](const auto& path) { return path.empty(); });
+    return std::all_of(_paths.begin(), _paths.end(), [](auto const& path) { return path.empty(); });
   }
 
  private:
@@ -212,15 +229,15 @@ class AStar {
 
     const VIPRA::size pedCnt = pedset.num_pedestrians();
 
-    const auto& objects = map.get_objects(_end_goal_type);
+    auto const& objects = map.get_objects(_end_goal_type);
     if (objects.empty()) {
       throw std::runtime_error("No objects of type " + _end_goal_type + " found in map");
     }
 
     for (VIPRA::idx pedIdx = 0; pedIdx < pedCnt; ++pedIdx) {
-      const auto pos = pedset.ped_coords(pedIdx);
+      auto const pos = pedset.ped_coords(pedIdx);
 
-      const auto nearestGoal = get_nearest_goal(pos, objects);
+      auto const nearestGoal = get_nearest_goal(pos, objects);
 
       if (nearestGoal != objects.end()) {
         _endGoals[pedIdx] = *nearestGoal;
@@ -274,11 +291,11 @@ class AStar {
    * @param goals 
    * @return VIPRA::f3dVec::const_iterator 
    */
-  [[nodiscard]] static auto get_nearest_goal(VIPRA::f3d pos, const std::vector<VIPRA::f3d>& goals)
+  [[nodiscard]] static auto get_nearest_goal(VIPRA::f3d pos, std::vector<VIPRA::f3d> const& goals)
       -> VIPRA::f3dVec::const_iterator {
     assert(goals.empty() == false);
 
-    return std::min_element(goals.begin(), goals.end(), [&](const auto& left, const auto& right) {
+    return std::min_element(goals.begin(), goals.end(), [&](auto const& left, auto const& right) {
       return pos.distance_to(left) < pos.distance_to(right);
     });
   }
@@ -293,7 +310,7 @@ class AStar {
     auto gridX = static_cast<VIPRA::idx>(std::floor(pos.x / _grid_size));
     auto gridY = static_cast<VIPRA::idx>(std::floor(pos.y / _grid_size));
 
-    const auto idx = get_index(gridX, gridY, _xCount);
+    auto const idx = get_index(gridX, gridY, _xCount);
 
     if (idx >= _graph.nodes().size()) {
       throw std::runtime_error("Grid index is out of bounds");

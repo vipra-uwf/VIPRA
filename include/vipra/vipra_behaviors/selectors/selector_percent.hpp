@@ -1,7 +1,7 @@
-#ifndef ID_RATIO_SELECTOR_HPP
-#define ID_RATIO_SELECTOR_HPP
+#pragma once
 
-#include <selectors/selector.hpp>
+#include "vipra/vipra_behaviors/selectors/selector.hpp"
+#include "vipra/vipra_behaviors/selectors/subselector.hpp"
 
 namespace VIPRA::Behaviors {
 /**
@@ -13,11 +13,11 @@ struct SelectorPercent {
   COPYABLE(SelectorPercent)
   MOVEABLE(SelectorPercent)
 
-  float percentage;
-  auto  operator()(std::vector<VIPRA::idx> const&, std::vector<VIPRA::idx> const&, Simpack) const
+  explicit SelectorPercent(VIPRA::f_pnt pnt) : percentage(pnt) {}
+
+  VIPRA::f_pnt percentage;
+  auto         operator()(std::vector<VIPRA::idx> const&, std::vector<VIPRA::idx> const&, auto) const
       -> SelectorResult;
 };
 
 }  // namespace VIPRA::Behaviors
-
-#endif

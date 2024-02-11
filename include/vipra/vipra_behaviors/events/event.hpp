@@ -1,9 +1,8 @@
 #pragma once
 
 #include <functional>
+#include <optional>
 
-#include "vipra/vipra_behaviors/conditions/condition.hpp"
-#include "vipra/vipra_behaviors/definitions/behavior_context.hpp"
 #include "vipra/vipra_behaviors/events/event_status.hpp"
 #include "vipra/vipra_behaviors/util/bool_latch.hpp"
 
@@ -43,7 +42,7 @@ class Event {
   bool        _occurred = false;
 
   Latch                 _latch;
-  cond_t                _startCondition;
+  cond_t                _startcond_t;
   std::optional<cond_t> _endCondition;
 };
 }  // namespace VIPRA::Behaviors

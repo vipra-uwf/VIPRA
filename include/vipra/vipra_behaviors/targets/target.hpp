@@ -5,10 +5,6 @@
 #include "vipra/geometry/f3d.hpp"
 #include "vipra/types/idx.hpp"
 
-#include "vipra/vipra_behaviors/definitions/behavior_context.hpp"
-#include "vipra/vipra_behaviors/definitions/sim_pack.hpp"
-#include "vipra/vipra_behaviors/random/random.hpp"
-
 namespace VIPRA::Behaviors {
 enum class TargetType {
   INVALID,

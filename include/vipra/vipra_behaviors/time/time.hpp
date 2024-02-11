@@ -7,12 +7,11 @@
 #include "vipra/types/time.hpp"
 
 namespace VIPRA::Behaviors {
-using RandomVal = std::pair<float, float>;
 class Duration {
  public:
-  explicit Duration(float dur) : _range(dur, dur) {}
-  explicit Duration(RandomVal rnd) : _range(std::move(rnd)) {}
-  Duration(float start, float end) : _range(start, end) {}
+  explicit Duration(VIPRA::f_pnt dur) : _range(dur, dur) {}
+  explicit Duration(std::pair<VIPRA::f_pnt, VIPRA::f_pnt> rnd) : _range(std::move(rnd)) {}
+  Duration(VIPRA::f_pnt start, VIPRA::f_pnt end) : _range(start, end) {}
 
   [[nodiscard]] static auto duration_str() -> std::string { return ""; }
 

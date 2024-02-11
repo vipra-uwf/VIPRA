@@ -50,37 +50,37 @@ void HumanBehavior::set_all_ped_types(Ptype types) {
   _actions.resize(types.type_count() + 1);
 }
 
-/**
- * @brief initializes behavior selector
- * 
- * @param pedSet : pedestrian set object
- * @param obsSet : obstacle set object
- * @param goals : goals object
- */
-void HumanBehavior::initialize(const VIPRA::PedestrianSet& pedSet, const VIPRA::ObstacleSet& obsSet,
-                               VIPRA::Goals& goals) {
-  VIPRA::State dummyState;
+// /**
+//  * @brief initializes behavior selector
+//  *
+//  * @param pedSet : pedestrian set object
+//  * @param obsSet : obstacle set object
+//  * @param goals : goals object
+//  */
+// void HumanBehavior::initialize(const VIPRA::PedestrianSet& pedSet, const VIPRA::ObstacleSet& obsSet,
+//                                VIPRA::Goals& goals) {
+//   VIPRA::State dummyState;
 
-  _context.engine = VIPRA::pRNG_Engine{_seedNum};
-  _context.pedStates = std::vector<Behaviors::stateUID>(pedSet.getNumPedestrians());
-  _context.types = std::vector<Behaviors::typeUID>(pedSet.getNumPedestrians());
+//   _context.engine = VIPRA::pRNG_Engine{_seedNum};
+//   _context.pedStates = std::vector<Behaviors::stateUID>(pedSet.getNumPedestrians());
+//   _context.types = std::vector<Behaviors::typeUID>(pedSet.getNumPedestrians());
 
-  _conditionMet.resize(pedSet.getNumPedestrians(), false);
-  _targets.resize(pedSet.getNumPedestrians());
-  for (VIPRA::idx i = 0; i < pedSet.getNumPedestrians(); ++i) {
-    _targets[i] = Target{TargetType::PEDESTRIAN, i};
-  }
+//   _conditionMet.resize(pedSet.getNumPedestrians(), false);
+//   _targets.resize(pedSet.getNumPedestrians());
+//   for (VIPRA::idx i = 0; i < pedSet.getNumPedestrians(); ++i) {
+//     _targets[i] = Target{TargetType::PEDESTRIAN, i};
+//   }
 
-  Simpack pack{pedSet, obsSet, goals, dummyState, _context, _selector.get_groups(), 0};
-  // spdlog::debug("Initializing {} Selectors, Seed: {}", _selector.selector_count(), _seedNum);
-  _selector.initialize(_name, pack);
+//   Simpack pack{pedSet, obsSet, goals, dummyState, _context, _selector.get_groups(), 0};
+//   // spdlog::debug("Initializing {} Selectors, Seed: {}", _selector.selector_count(), _seedNum);
+//   _selector.initialize(_name, pack);
 
-  for (auto& actionGroup : _actions) {
-    for (auto& action : actionGroup) {
-      action.initialize(pack);
-    }
-  }
-}
+//   for (auto& actionGroup : _actions) {
+//     for (auto& action : actionGroup) {
+//       action.initialize(pack);
+//     }
+//   }
+// }
 
 /**
  * @brief Evaluates behavior events, and performs actions of pedestrians
@@ -153,7 +153,7 @@ auto HumanBehavior::action_count() const -> VIPRA::size {
  * 
  * @param s : randomization seed
  */
-void HumanBehavior::set_seed(Behaviors::seed bSeed) {
+void HumanBehavior::set_seed(VIPRA::seed bSeed) {
   _context.engine.reseed(bSeed);
   _seedNum = bSeed;
 }

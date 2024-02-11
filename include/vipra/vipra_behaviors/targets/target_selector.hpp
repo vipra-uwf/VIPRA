@@ -12,14 +12,14 @@ namespace VIPRA::Behaviors {
  * @brief Used to grab a target for either conditions or actions
  * 
  */
-template <typename target_t>
+template <typename targetfunc_t>
 class TargetSelector {
   DEFAULT_CONSTRUCTIBLE(TargetSelector)
   COPYABLE(TargetSelector)
   MOVEABLE(TargetSelector)
 
  public:
-  explicit TargetSelector(target_t&& func) : _select(func) {}
+  explicit TargetSelector(targetfunc_t&& func) : _select(func) {}
 
   void get_targets(auto pack, const VIPRA::idxVec& peds, std::vector<Target>& targets) {
     if (!_select) {
@@ -35,6 +35,6 @@ class TargetSelector {
   }
 
  private:
-  std::optional<target_t> _select;
+  std::optional<targetfunc_t> _select;
 };
 }  // namespace VIPRA::Behaviors
