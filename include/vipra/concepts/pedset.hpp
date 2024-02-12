@@ -5,39 +5,69 @@
 #include "vipra/concepts/module.hpp"
 #include "vipra/modules.hpp"
 
-#include "vipra/types/f3d.hpp"
+#include "vipra/geometry/f3d.hpp"
 #include "vipra/types/idx.hpp"
 #include "vipra/types/size.hpp"
 
+namespace VIPRA {
+struct State;
+}
+
 namespace VIPRA::Concepts {
+
+// TODO(rolland): add getting distance between pedestrians
+// TODO(rolland): add getting direction between pedestrians ?
+// TODO(rolland): add getting nearest pedestrian that meets a condition ?
+
 template <typename pedset_t>
-concept PedsetModule = Module<pedset_t, VIPRA::Modules::Type::PEDESTRIANS> && requires(pedset_t pedset) {
+concept can_get_num_peds = requires(const pedset_t pedset) {
   { pedset.num_pedestrians() } -> std::same_as<VIPRA::size>;
-  { pedset.ped_coords(VIPRA::idx{}) } -> std::same_as<VIPRA::f3d>;
-  { pedset.all_coords() } -> std::same_as<const std::vector<VIPRA::f3d>&>;
-  { pedset.ped_velocity(VIPRA::idx{}) } -> std::same_as<VIPRA::f3d>;
-  { pedset.all_velocities() } -> std::same_as<const std::vector<VIPRA::f3d>&>;
 };
 
+template <typename pedset_t>
+concept can_get_ped_coords = requires(const pedset_t pedset, VIPRA::idx idx) {
+  { pedset.ped_coords(idx) } -> std::same_as<VIPRA::f3d const&>;
+  { pedset.all_coords() } -> std::same_as<std::vector<VIPRA::f3d> const&>;
+};
+
+template <typename pedset_t>
+concept can_get_ped_velocity = requires(const pedset_t pedset, VIPRA::idx idx) {
+  { pedset.ped_velocity(idx) } -> std::same_as<VIPRA::f3d const&>;
+  { pedset.all_velocities() } -> std::same_as<std::vector<VIPRA::f3d> const&>;
+};
+
+template <typename pedset_t>
+concept can_update_pedset = requires(pedset_t pedset, State const& state) {
+  {pedset.update(state)};
+};
+
+template <typename pedset_t>
+concept PedsetModule = is_module<pedset_t, VIPRA::Modules::Type::PEDESTRIANS> && can_get_num_peds<pedset_t> &&
+    can_get_ped_coords<pedset_t> && can_get_ped_velocity<pedset_t> && can_update_pedset<pedset_t>;
+
 class DummyPedSet {
-  VIPRA_MODULE_TYPE(PEDESTRIANS);
+  // NOLINTBEGIN
 
  public:
+  constexpr static VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::PEDESTRIANS;
+
   template <typename params_t>
-  static void register_params() {}
+  void register_params(params_t&) {}
 
-  void setup(auto& params) {}
+  void config(auto& params) {}
+  void update(const VIPRA::State&) {}
 
-  static auto num_pedestrians() -> VIPRA::size { return 1; }
-  static auto ped_coords(VIPRA::idx /*unused*/) -> VIPRA::f3d { return VIPRA::f3d{0}; }
-  auto        all_coords() -> const std::vector<VIPRA::f3d>& { return _dummy; }
-  static auto ped_velocity(VIPRA::idx /*unused*/) -> VIPRA::f3d { return VIPRA::f3d{0}; }
-  auto        all_velocities() -> const std::vector<VIPRA::f3d>& { return _dummy; }
+  auto num_pedestrians() const -> VIPRA::size { return 1; }
+  auto ped_coords(VIPRA::idx /*unused*/) const -> VIPRA::f3d const& { return _dummy2; }
+  auto all_coords() const -> std::vector<VIPRA::f3d> const& { return _dummy; }
+  auto ped_velocity(VIPRA::idx /*unused*/) const -> VIPRA::f3d const& { return _dummy2; }
+  auto all_velocities() const -> std::vector<VIPRA::f3d> const& { return _dummy; }
 
  private:
   VIPRA::f3dVec _dummy;
-  DummyPedSet() = default;
+  VIPRA::f3d    _dummy2;
+  // NOLINTEND
 };
 
-static_assert(PedsetModule<DummyPedSet>);
+CHECK_MODULE(PedsetModule, DummyPedSet);
 }  // namespace VIPRA::Concepts

@@ -9,3 +9,4 @@ ReflowComments:  false
 IncludeBlocks: Preserve
 AlignConsecutiveDeclarations: true
 DerivePointerAlignment: false
+QualifierAlignment: Right

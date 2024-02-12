@@ -3,14 +3,60 @@
 #include <concepts>
 #include <utility>
 
+#include "vipra/concepts/goals.hpp"
+#include "vipra/concepts/map.hpp"
 #include "vipra/concepts/obstacle_set.hpp"
+#include "vipra/concepts/output.hpp"
+#include "vipra/concepts/output_coordinator.hpp"
 #include "vipra/concepts/pedset.hpp"
+
 #include "vipra/modules.hpp"
 
+#include "vipra/random/random.hpp"
+
+#include "vipra/types/state.hpp"
+#include "vipra/types/time.hpp"
+
 namespace VIPRA::Concepts {
+
 template <typename model_t>
-concept ModelModule = Module<model_t, VIPRA::Modules::Type::MODEL> &&
-    requires(model_t model, const DummyPedSet& pedset, const DummyObsSet& obsset) {
-  { model.timestep(pedset, obsset) } -> std::same_as<void>;
+concept can_initialize_model = requires(model_t model, DummyPedSet const& pedset, DummyMap const& map,
+                                        DummyGoals const& goals, DummyOutput& output) {
+  {model.initialize(pedset, map, goals, output)};
 };
+
+template <typename model_t>
+concept has_model_timestep = requires(model_t model, DummyPedSet const& pedset, DummyMap const& map,
+                                      DummyGoals const& goals, DummyOutput& output, VIPRA::State& state,
+                                      VIPRA::delta_t deltaT, VIPRA::timestep timestep) {
+  { model.timestep(pedset, map, goals, output, state, deltaT, timestep) } -> std::same_as<void>;
+};
+
+template <typename model_t>
+concept ModelModule = is_module<model_t, VIPRA::Modules::Type::MODEL> && has_model_timestep<model_t> &&
+    can_initialize_model<model_t>;
+
+class DummyModel {
+  // NOLINTBEGIN
+ public:
+  constexpr static VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::MODEL;
+
+  template <typename params_t>
+  void register_params(params_t&) {}
+
+  template <typename pedset_t, typename map_t, typename goals_t, typename output_t>
+  void initialize(pedset_t const&, map_t const&, goals_t const&, output_t&) {}
+
+  void config(auto&) {}
+
+  void timestep(DummyPedSet const&, DummyMap const&, DummyGoals const&, DummyOutput const&, VIPRA::State&,
+                VIPRA::delta_t, VIPRA::timestep) {}
+
+ private:
+  VIPRA::State _state;
+  // NOLINTEND
+};
+
+CHECK_MODULE(ModelModule, DummyModel);
+
 }  // namespace VIPRA::Concepts

@@ -11,37 +11,39 @@ enum class Type {
   OUTPUT,
   PEDESTRIANS,
   PARAMETERS,
+  MAP,
+  FIELD,
   OBSTACLES,
   SIMULATION,
+  BEHAVIOR_MODEL,
 };
 
 inline auto to_string(Type type) -> std::string {
   switch (type) {
     case Type::MODEL:
-      return "MODEL";
+      return "model";
     case Type::GOALS:
-      return "GOALS";
+      return "goals";
     case Type::INPUT:
-      return "INPUT";
+      return "input";
     case Type::OUTPUT:
-      return "OUTPUT";
+      return "output";
     case Type::PEDESTRIANS:
-      return "PEDESTRIANS";
+      return "pedestrians";
     case Type::PARAMETERS:
-      return "PARAMETERS";
+      return "parameters";
     case Type::OBSTACLES:
-      return "OBSTACLES";
+      return "obstacles";
     case Type::SIMULATION:
-      return "SIMULATION";
+      return "simulation";
+    case Type::MAP:
+      return "map";
+    case Type::FIELD:
+      return "field";
+    case Type::BEHAVIOR_MODEL:
+      return "behavior_model";
   }
+
+  return "unknown";
 }
-
-// NOLINTNEXTLINE(cppcoreguidelines-macro-usage) This is a very simple macro
-#define VIPRA_MODULE_TYPE(type)                                                   \
- public:                                                                          \
-  constexpr static VIPRA::Modules::Type MODULE_TYPE = VIPRA::Modules::Type::type; \
-                                                                                  \
- private:
-
-#define CHECK_MODULE(type, name) static_assert(VIPRA::Concepts::type<name>);
 }  // namespace VIPRA::Modules
