@@ -39,10 +39,10 @@ class SimType {
       : _params(params), _output(output), _model(model), _pedset(pedset), _goals(goals), _map(obstacles) {}
 
   static void register_params(Concepts::ParamModule auto& params) {
-    params.register_param(Modules::Type::SIMULATION, "main", "max_timestep", ParameterType::REQUIRED);
-    params.register_param(Modules::Type::SIMULATION, "main", "timestep_size", ParameterType::REQUIRED);
-    params.register_param(Modules::Type::SIMULATION, "main", "output_frequency", ParameterType::REQUIRED);
-    params.register_param(Modules::Type::SIMULATION, "main", "random_seed", ParameterType::REQUIRED);
+    params.register_param(Modules::Type::SIMULATION, "main", "max_timestep");
+    params.register_param(Modules::Type::SIMULATION, "main", "timestep_size");
+    params.register_param(Modules::Type::SIMULATION, "main", "output_frequency");
+    params.register_param(Modules::Type::SIMULATION, "main", "random_seed");
     BehaviorModel<pedset_t, map_t, goals_t>::register_params(params);
   }
 
@@ -59,15 +59,21 @@ class SimType {
     auto const [maxTimestep, timestepSize, outputFreq, randomseed] = get_sim_params();
     set_params(outputFreq, randomseed);
 
+    _behaviorModel.config(_params);
+
     _map.initialize(_pedset);
     _goals.initialize(_pedset, _map);
     _model.initialize(_pedset, _map, _goals, _output);
-    _behaviorModel.initialize(_pedset, _goals, _map, randomseed);
 
+    _behaviorModel.initialize(_pedset, _map, _goals, randomseed);
+
+    VIPRA::State state;
+    state.initialize(_pedset);
     while (_timestep < maxTimestep) {
-      const VIPRA::State& state = _model.timestep(_pedset, _map, _goals, _output, timestepSize, _timestep);
+      _model.timestep(_pedset, _map, _goals, _output, state, timestepSize, _timestep);
+      _behaviorModel.timestep(_pedset, _map, _goals, state, timestepSize);
       _pedset.update(state);
-      _goals.update(_pedset, _map);
+      _goals.update(_pedset, _map, timestepSize);
       output_positions();
       ++_timestep;
     }

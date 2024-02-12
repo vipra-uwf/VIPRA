@@ -3,9 +3,8 @@
 #define VIPRA_MODEL_TIMESTEP                                                                    \
   template <VIPRA::Concepts::PedsetModule peds_t, VIPRA::Concepts::MapModule map_t,             \
             VIPRA::Concepts::GoalsModule goals_t, VIPRA::Concepts::BaseOutput output_t>         \
-  auto timestep(const peds_t& pedset, const map_t& map, const goals_t& goals, output_t& output, \
-                VIPRA::delta_t deltaT, VIPRA::timestep timestep)                                \
-      ->const VIPRA::State&
+  void timestep(peds_t const& pedset, map_t const& map, goals_t const& goals, output_t& output, \
+                VIPRA::State& state, VIPRA::delta_t deltaT, VIPRA::timestep timestep)
 
 #define VIPRA_MODEL_INIT_STEP                                                                       \
   void initialize(                                                                                  \

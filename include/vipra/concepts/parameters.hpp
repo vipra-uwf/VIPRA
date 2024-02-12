@@ -1,7 +1,9 @@
 #pragma once
 
 #include <concepts>
+#include <optional>
 #include <string>
+#include <vector>
 
 #include "vipra/macros/module.hpp"
 #include "vipra/modules.hpp"
@@ -12,15 +14,17 @@ namespace VIPRA::Concepts {
 
 template <typename params_t>
 concept can_register_param = requires(params_t params, VIPRA::Modules::Type module,
-                                      const std::string& moduleName, const std::string& paramName,
-                                      ParameterType param) {
-  { params.register_param(module, moduleName, paramName, param) } -> std::same_as<void>;
+                                      std::string const& moduleName, std::string const& paramName) {
+  { params.register_param(module, moduleName, paramName) } -> std::same_as<void>;
 };
 
 template <typename params_t>
-concept can_get_params = requires(params_t params, VIPRA::Modules::Type module, const std::string& moduleName,
-                                  const std::string& paramName) {
+concept can_get_params = requires(params_t params, VIPRA::Modules::Type module, std::string const& moduleName,
+                                  std::string const& paramName) {
   { params.template get_param<int>(module, moduleName, paramName) } -> std::same_as<int>;
+  {
+    params.template get_array_param<std::vector<int>>(module, moduleName, paramName)
+    } -> std::same_as<std::vector<int>>;
 };
 
 template <typename params_t>
@@ -32,10 +36,13 @@ struct DummyParams {
   // NOLINTBEGIN
   static constexpr VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::PARAMETERS;
 
-  void register_param(VIPRA::Modules::Type, const std::string&, const std::string&, ParameterType) {}
+  void register_param(VIPRA::Modules::Type, std::string const&, std::string const&) {}
 
   template <typename data_t>
-  auto get_param(VIPRA::Modules::Type, const std::string&, const std::string&) const -> data_t {}
+  auto get_param(VIPRA::Modules::Type, std::string const&, std::string const&) const -> data_t {}
+
+  template <typename data_t>
+  auto get_array_param(VIPRA::Modules::Type, std::string const&, std::string const&) const -> data_t {}
   // NOLINTEND
 };
 

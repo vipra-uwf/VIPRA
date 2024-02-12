@@ -27,9 +27,9 @@ concept can_initialize_model = requires(model_t model, DummyPedSet const& pedset
 
 template <typename model_t>
 concept has_model_timestep = requires(model_t model, DummyPedSet const& pedset, DummyMap const& map,
-                                      DummyGoals const& goals, DummyOutput& output, VIPRA::delta_t deltaT,
-                                      VIPRA::timestep timestep) {
-  { model.timestep(pedset, map, goals, output, deltaT, timestep) } -> std::same_as<const VIPRA::State&>;
+                                      DummyGoals const& goals, DummyOutput& output, VIPRA::State& state,
+                                      VIPRA::delta_t deltaT, VIPRA::timestep timestep) {
+  { model.timestep(pedset, map, goals, output, state, deltaT, timestep) } -> std::same_as<void>;
 };
 
 template <typename model_t>
@@ -49,10 +49,8 @@ class DummyModel {
 
   void config(auto&) {}
 
-  auto timestep(DummyPedSet const&, DummyMap const&, DummyGoals const&, DummyOutput const&, VIPRA::delta_t,
-                VIPRA::timestep) -> const VIPRA::State& {
-    return _state;
-  }
+  void timestep(DummyPedSet const&, DummyMap const&, DummyGoals const&, DummyOutput const&, VIPRA::State&,
+                VIPRA::delta_t, VIPRA::timestep) {}
 
  private:
   VIPRA::State _state;

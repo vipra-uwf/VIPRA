@@ -18,36 +18,31 @@ namespace VIPRA {
 template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
 class BehaviorModel {
  public:
-  VIPRA_MODULE_NAME("behavior_model");
+  VIPRA_MODULE_NAME("main");
   VIPRA_MODULE_TYPE(BEHAVIOR_MODEL);
 
   // NOLINTNEXTLINE(misc-unused-parameters)
   static void register_params(Concepts::ParamModule auto& params) {
-    std::cout << "Wot\n";
-    VIPRA_REGISTER_PARAM("behaviors_dir", REQUIRED);
-    VIPRA_REGISTER_PARAM("behaviors", OPTIONAL);
+    VIPRA_REGISTER_PARAM("behaviors_dir");
+    VIPRA_REGISTER_PARAM("behaviors");
   }
 
   // NOLINTNEXTLINE(misc-unused-parameters)
   VIPRA_CONFIG_STEP {
-    if (!params.has_required_param(_VIPRA_MODULE_TYPE_, _VIPRA_MODULE_NAME_, "behaviors_dir")) {
-      throw std ::runtime_error(
-          "Required Parameter: "
-          "behaviors_dir"
-          " For Module: " +
-          to_string(_VIPRA_MODULE_TYPE_) + " Not Provide in Input");
-    }
-    _behaviorsDir = params.template get_param<std ::remove_cv_t<decltype(_behaviorsDir)>>(
-        _VIPRA_MODULE_TYPE_, _VIPRA_MODULE_NAME_, "behaviors_dir");
-    ;
-    VIPRA_GET_PARAM("behaviors", _behaviorNames);
+    VIPRA_GET_PARAM("behaviors_dir", _behaviorsDir);
+    VIPRA_GET_ARRAY_PARAM("behaviors", _behaviorNames);
   }
 
-  void initialize(Concepts::PedsetModule auto const& pedset, Concepts::GoalsModule auto& goals,
-                  Concepts::MapModule auto const& map, VIPRA::seed seed) {
+  void initialize(pedset_t& pedset, map_t& map, goals_t& goals, VIPRA::seed seed) {
     load_behaviors(seed);
     for (auto& behavior : _behaviors) {
       behavior.initialize(pedset, map, goals);
+    }
+  }
+
+  void timestep(pedset_t& pedset, map_t& map, goals_t& goals, VIPRA::State& state, VIPRA::delta_t deltaT) {
+    for (auto& behavior : _behaviors) {
+      behavior.timestep(pedset, map, goals, state, deltaT);
     }
   }
 

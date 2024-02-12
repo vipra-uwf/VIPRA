@@ -49,7 +49,10 @@ class HumanBehavior {
   void initialize(pedset_t const& pedset, map_t const& map, goals_t& goals);
   void timestep(pedset_t& pedset, map_t& map, goals_t& goals, VIPRA::State& state, VIPRA::delta_t deltaT);
 
-  void set_all_ped_types(Ptype type) { _selector.set_all_types(type); }
+  void set_all_ped_types(Ptype types) {
+    _selector.set_all_types(types);
+    _actions.resize(types.type_count() + 1);
+  }
   void add_sub_selector(auto const& subSelector) { _selector.add_sub_selector(subSelector); }
   void add_action(typeUID type, auto const& action) { _actions[type].emplace_back(action); }
   auto add_event(event_t const& evnt) -> VIPRA::idx {
@@ -64,7 +67,7 @@ class HumanBehavior {
   [[nodiscard]] auto get_name() const noexcept -> std::string const& { return _name; }
   [[nodiscard]] auto event_count() const noexcept -> VIPRA::size { return _context.events.size(); }
   [[nodiscard]] auto location_count() const noexcept -> VIPRA::size { return _context.locations.size(); }
-  [[nodiscard]] auto selector_count() noexcept -> VIPRA::size { return _selector.get_groups().size(); }
+  [[nodiscard]] auto selector_count() noexcept -> VIPRA::size { return _selector.selector_count(); }
   [[nodiscard]] auto action_count() const noexcept -> VIPRA::size {
     return std::accumulate(_actions.begin(), _actions.end(), 0,
                            [](VIPRA::size sum, auto const& group) { return sum + group.size(); });
@@ -145,21 +148,23 @@ void HumanBehavior<pedset_t, map_t, goals_t>::evaluate_events(pedset_t& pedset, 
                                                               VIPRA::delta_t deltaT) {
   VIPRA::State dummyState;
   for (auto& event : _context.events) {
-    event.evaluate({pedset, map, goals, dummyState, _selector.get_groups(), deltaT});
+    event.evaluate(HumanBehavior<pedset_t, map_t, goals_t>::pack_t{pedset, map, goals, _selector.get_groups(),
+                                                                   _context, dummyState, deltaT});
   }
 }
 
 template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
 void HumanBehavior<pedset_t, map_t, goals_t>::apply_actions(pedset_t& pedset, map_t& map, goals_t& goals,
                                                             VIPRA::State& state, VIPRA::delta_t deltaT) {
-  GroupsContainer&  groups = _selector.get_groups();
-  const VIPRA::size groupCnt = groups.size();
-  Simpack           pack{pedset, map, goals, state, _selector.get_groups(), deltaT};
+  GroupsContainer&                                groups = _selector.get_groups();
+  const VIPRA::size                               groupCnt = groups.size();
+  HumanBehavior<pedset_t, map_t, goals_t>::pack_t pack{pedset,   map,   goals, _selector.get_groups(),
+                                                       _context, state, deltaT};
 
   for (VIPRA::idx i = 0; i < groupCnt; ++i) {
     auto& pedestrians = groups[i];
     pedestrians.erase(std::remove_if(pedestrians.begin(), pedestrians.end(),
-                                     [&](VIPRA::idx ped) { return goals.isPedestianGoalMet(ped); }),
+                                     [&](VIPRA::idx ped) { return goals.is_goal_met(ped); }),
                       pedestrians.end());
 
     std::for_each(_actions[i].begin(), _actions[i].end(), [&](auto& action) {

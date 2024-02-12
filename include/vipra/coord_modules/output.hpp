@@ -22,7 +22,7 @@ class Output {
   template <typename output_t>
   // NOLINTNEXTLINE(readability-identifier-naming) helper struct
   struct write_helper {
-    static auto write(output_t& output, const std::filesystem::path& dir) {
+    static auto write(output_t& output, std::filesystem::path const& dir) {
       if constexpr (std::is_same_v<result_or_VOID_t<decltype(std::declval<output_t>().write(dir))>, VOID>) {
         output.write(dir);
         return VOID{};
@@ -62,7 +62,7 @@ class Output {
    * 
    * @param params 
    */
-  void config(const auto& params) {
+  void config(auto const& params) {
     _base_output_dir =
         params.template get_param<std::string>(VIPRA::Modules::Type::OUTPUT, "coordinator", "output_dir");
     _current_output_dir = _base_output_dir;
@@ -78,7 +78,7 @@ class Output {
    */
   template <Concepts::ParamModule params_t>
   void register_params(params_t& params) {
-    params.register_param(VIPRA::Modules::Type::OUTPUT, "coordinator", "output_dir", ParameterType::REQUIRED);
+    params.register_param(VIPRA::Modules::Type::OUTPUT, "coordinator", "output_dir");
     std::apply([&](auto&&... outputs) { (outputs.template register_params<params_t>(params), ...); },
                _outputs);
   }
@@ -89,7 +89,7 @@ class Output {
    * @param key 
    * @param value 
    */
-  void sim_value(const char* key, auto&& value) {
+  void sim_value(char const* key, auto&& value) {
     std::apply([&key, &value](auto&&... outputs) { (outputs.sim_value(key, value), ...); }, _outputs);
   }
 
@@ -99,7 +99,7 @@ class Output {
    * @param key 
    * @param value 
    */
-  void timestep_value(const char* key, VIPRA::timestep timestep, auto&& value) {
+  void timestep_value(char const* key, VIPRA::timestep timestep, auto&& value) {
     std::apply(
         [&key, &timestep, &value](auto&&... outputs) { (outputs.timestep_value(key, timestep, value), ...); },
         _outputs);
@@ -112,7 +112,7 @@ class Output {
    * @param key 
    * @param value 
    */
-  void ped_value(VIPRA::idx pedIdx, const char* key, auto&& value) {
+  void ped_value(VIPRA::idx pedIdx, char const* key, auto&& value) {
     std::apply([&pedIdx, &key, &value](auto&&... outputs) { (outputs.ped_value(pedIdx, key, value), ...); },
                _outputs);
   }
@@ -124,7 +124,7 @@ class Output {
    * @param key 
    * @param value 
    */
-  void ped_timestep_value(VIPRA::idx pedIdx, VIPRA::timestep timestep, const char* key, auto&& value) {
+  void ped_timestep_value(VIPRA::idx pedIdx, VIPRA::timestep timestep, char const* key, auto&& value) {
     std::apply([&pedIdx, &timestep, &key, &value](
                    auto&&... outputs) { (outputs.ped_timestep_value(pedIdx, timestep, key, value), ...); },
                _outputs);
@@ -136,7 +136,7 @@ class Output {
   std::filesystem::path _base_output_dir;
   std::filesystem::path _current_output_dir;
 
-  static void create_output_directory(const std::filesystem::path& directory) {
+  static void create_output_directory(std::filesystem::path const& directory) {
     if (std::filesystem::exists(directory)) {
       if (std::filesystem::is_directory(directory)) {
         return;

@@ -3,8 +3,6 @@
 #include <cstddef>
 #include "vipra/types/tags.hpp"
 namespace VIPRA {
-enum class ParameterType { REQUIRED, OPTIONAL };
-
 template <typename data_t>
 struct Parameter {
   enum class RandomType { NONE, RANGE, DISCRETE };

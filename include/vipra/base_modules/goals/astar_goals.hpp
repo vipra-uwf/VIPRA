@@ -19,6 +19,7 @@
 #include "vipra/types/parameter.hpp"
 #include "vipra/types/size.hpp"
 
+#include "vipra/types/time.hpp"
 #include "vipra/util/debug_do.hpp"
 
 namespace VIPRA::Goals {
@@ -30,13 +31,16 @@ class AStar {
   void initialize(pedset_t const& pedset, map_t const& map) {
     assert(pedset.num_pedestrians() > 0);
 
-    _currentGoals.resize(pedset.num_pedestrians());
-    _endGoals.resize(pedset.num_pedestrians());
+    auto const pedCnt = pedset.num_pedestrians();
+
+    _currentGoals.resize(pedCnt);
+    _endGoals.resize(pedCnt);
+    _timeSinceLastGoal = std::vector<VIPRA::f_pnt>(pedCnt, 0);
 
     construct_graph(map);
     set_end_goals(pedset, map);
 
-    for (VIPRA::idx pedIdx = 0; pedIdx < pedset.num_pedestrians(); ++pedIdx) {
+    for (VIPRA::idx pedIdx = 0; pedIdx < pedCnt; ++pedIdx) {
       auto const pos = pedset.ped_coords(pedIdx);
 
       VIPRA::idx startIdx = get_closest_grid_idx(pos);
@@ -53,24 +57,21 @@ class AStar {
           },
           [&](VIPRA::idx nodeIdx) -> VIPRA::f3d { return _graph.data(nodeIdx).pos; });
 
-      if (path.empty()) {
+      if (!path) {
         throw std::runtime_error("No path found for pedestrian");
       }
 
-      // _paths.push_back(path);
-      _paths.push_back(squash_path(path));
+      _paths.push_back(squash_path(path.value()));
     }
 
-    // debug_output_paths();
-
-    for (VIPRA::idx pedIdx = 0; pedIdx < pedset.num_pedestrians(); ++pedIdx) {
+    for (VIPRA::idx pedIdx = 0; pedIdx < pedCnt; ++pedIdx) {
       _currentGoals[pedIdx] = _paths[pedIdx].back();
-      _paths[pedIdx].pop_back();
     }
 
-    assert(_currentGoals.size() == pedset.num_pedestrians());
-    assert(_endGoals.size() == pedset.num_pedestrians());
-    assert(_paths.size() == pedset.num_pedestrians());
+    assert(_timeSinceLastGoal.size() == pedCnt);
+    assert(_currentGoals.size() == pedCnt);
+    assert(_endGoals.size() == pedCnt);
+    assert(_paths.size() == pedCnt);
   }
 
   template <typename params_t>
@@ -84,22 +85,24 @@ class AStar {
 
   template <typename params_t>
   void register_params(params_t& params) {
-    params.register_param(_VIPRA_MODULE_TYPE_, "astar", "endGoalType", ParameterType::REQUIRED);
-    params.register_param(_VIPRA_MODULE_TYPE_, "astar", "goalRange", ParameterType::REQUIRED);
-    params.register_param(_VIPRA_MODULE_TYPE_, "astar", "gridSize", ParameterType::REQUIRED);
-    params.register_param(_VIPRA_MODULE_TYPE_, "astar", "closestObstacle", ParameterType::REQUIRED);
+    params.register_param(_VIPRA_MODULE_TYPE_, "astar", "endGoalType");
+    params.register_param(_VIPRA_MODULE_TYPE_, "astar", "goalRange");
+    params.register_param(_VIPRA_MODULE_TYPE_, "astar", "gridSize");
+    params.register_param(_VIPRA_MODULE_TYPE_, "astar", "closestObstacle");
   }
 
   template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t>
-  void update(pedset_t const& pedset, map_t const& /*unused*/) {
+  void update(pedset_t const& pedset, map_t const& /*unused*/, VIPRA::delta_t deltaT) {
     assert(pedset.num_pedestrians() > 0);
 
     for (VIPRA::idx pedIdx = 0; pedIdx < pedset.num_pedestrians(); ++pedIdx) {
       auto const pos = pedset.ped_coords(pedIdx);
+      _timeSinceLastGoal[pedIdx] += deltaT;
       if (pos.distance_to(_currentGoals[pedIdx]) < _goal_range) {
         if (!_paths[pedIdx].empty()) {
           _currentGoals[pedIdx] = _paths[pedIdx].back();
           _paths[pedIdx].pop_back();
+          _timeSinceLastGoal[pedIdx] = 0.0F;
         }
       }
     }
@@ -108,17 +111,18 @@ class AStar {
   void change_end_goal(VIPRA::idx pedIdx, VIPRA::f3d newGoal) {
     assert(pedIdx < _endGoals.size());
     _endGoals[pedIdx] = newGoal;
-    _paths[pedIdx] = VIPRA::Algo::astar(
+    auto const path = VIPRA::Algo::astar(
         get_closest_grid_idx(_currentGoals[pedIdx]), get_closest_grid_idx(_endGoals[pedIdx]), _graph,
         [&](VIPRA::idx left, VIPRA::idx right) -> VIPRA::f_pnt {
           return _graph.data(left).pos.distance_to(_graph.data(right).pos);
         },
         [&](VIPRA::idx nodeIdx) -> VIPRA::f3d { return _graph.data(nodeIdx).pos; });
 
-    if (_paths[pedIdx].empty()) {
+    if (!path) {
       throw std::runtime_error("No path found for pedestrian");
     }
 
+    _paths[pedIdx] = squash_path(*path);
     _currentGoals[pedIdx] = _paths[pedIdx].back();
   }
 
@@ -140,6 +144,11 @@ class AStar {
     return std::all_of(_paths.begin(), _paths.end(), [](auto const& path) { return path.empty(); });
   }
 
+  [[nodiscard]] auto time_since_last_goal(VIPRA::idx pedIdx) const -> VIPRA::f_pnt {
+    assert(_timeSinceLastGoal.size() > pedIdx);
+    return _timeSinceLastGoal[pedIdx];
+  }
+
  private:
   struct GridPoint {
     VIPRA::f3d pos;
@@ -151,8 +160,9 @@ class AStar {
   VIPRA::f_pnt _grid_size;
   VIPRA::f_pnt _closest_obstacle;
 
-  VIPRA::f3dVec _currentGoals;
-  VIPRA::f3dVec _endGoals;
+  VIPRA::f3dVec             _currentGoals;
+  VIPRA::f3dVec             _endGoals;
+  std::vector<VIPRA::f_pnt> _timeSinceLastGoal;
 
   std::vector<std::vector<VIPRA::f3d>>    _paths;
   VIPRA::DataStructures::Graph<GridPoint> _graph;
@@ -261,7 +271,7 @@ class AStar {
     squashedPath.reserve(path.size() / 2);
 
     VIPRA::f3d dif;
-    for (VIPRA::idx i = 2; i < path.size(); ++i) {
+    for (VIPRA::idx i = 1; i < path.size(); ++i) {
       auto currDif = path[i] - path[i - 1];
       if (currDif != dif) {
         squashedPath.push_back(path[i - 1]);
@@ -337,9 +347,9 @@ class AStar {
 
   // void debug_output_paths() {
   //   std::printf("{\"paths\": [\n");
-  //   for (const auto& path : _paths) {
+  //   for (auto const& path : _paths) {
   //     std::printf("{ \"points\": [\n");
-  //     for (const auto& point : path) {
+  //     for (auto const& point : path) {
   //       std::printf("[%f, %f, %f]%c\n", point.x, point.y, point.z, point == path.back() ? ' ' : ',');
   //     }
   //     std::printf("]}%c\n", &path == &_paths.back() ? ' ' : ',');

@@ -33,7 +33,7 @@ namespace AStar {
  */
 template <typename graph_t>
 concept Graph = requires(const graph_t graph, VIPRA::idx idx) {
-  { graph.neighbors(idx) } -> std::same_as<const std::vector<VIPRA::idx>&>;
+  { graph.neighbors(idx) } -> std::same_as<std::vector<VIPRA::idx> const&>;
 };
 
 /**
@@ -71,11 +71,11 @@ concept conversion_func = std::is_same_v<func_t, VOID> || requires(func_t func, 
  */
 template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
           AStar::conversion_func conversion_f_t = VOID>
-[[nodiscard]] constexpr auto astar(VIPRA::idx start, VIPRA::idx end, const graph_t& graph,
+[[nodiscard]] constexpr auto astar(VIPRA::idx start, VIPRA::idx end, graph_t const& graph,
                                    distance_f_t&&   distance_func,
                                    conversion_f_t&& conversion_func = VOID{}) noexcept
-    -> std::vector<
-        std::remove_reference_t<Util::invoke_result_or_t<VIPRA::idx, conversion_f_t, VIPRA::idx>>> {
+    -> std::optional<std::vector<
+        std::remove_reference_t<Util::invoke_result_or_t<VIPRA::idx, conversion_f_t, VIPRA::idx>>>> {
   using ret_t =
       std::vector<std::remove_reference_t<Util::invoke_result_or_t<VIPRA::idx, conversion_f_t, VIPRA::idx>>>;
   struct Node {
@@ -84,7 +84,7 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
     VIPRA::f_pnt distanceFromStart;
     VIPRA::f_pnt distanceWithHeuristic;
 
-    auto operator==(const Node& other) const -> bool { return self == other.self; }
+    auto operator==(Node const& other) const -> bool { return self == other.self; }
 
     struct Compare {
       auto operator()(Node* left, Node* right) const -> bool {
@@ -150,16 +150,25 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
     }
   }
 
+  if (current->self != end) {
+    return std::nullopt;
+  }
+
   ret_t path;
   while (current->self != start) {
     if constexpr (std::is_same_v<conversion_f_t, VOID>) {
       path.push_back(current->self);
     } else {
-      const auto converted = conversion_func(current->self);
-      path.push_back(converted);
+      path.push_back(conversion_func(current->self));
     }
 
     current = &nodes[current->parent];
+  }
+
+  if constexpr (std::is_same_v<conversion_f_t, VOID>) {
+    path.push_back(start);
+  } else {
+    path.push_back(conversion_func(start));
   }
 
   return path;

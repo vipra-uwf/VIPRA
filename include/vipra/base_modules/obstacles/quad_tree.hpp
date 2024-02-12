@@ -43,8 +43,7 @@ class QuadTree {
 
   template <typename params_t>
   void register_params(params_t& params) {
-    params.register_param(VIPRA::Modules::Type::OBSTACLES, "quad_tree", "minGridSize",
-                          VIPRA::ParameterType::REQUIRED);
+    params.register_param(VIPRA::Modules::Type::OBSTACLES, "quad_tree", "minGridSize");
   }
 
   void config(auto& params) {
@@ -76,9 +75,9 @@ class QuadTree {
     return hit;
   }
 
-  [[nodiscard]] auto get_object_types() const -> const std::vector<std::string>& { return _objectTypes; }
+  [[nodiscard]] auto get_object_types() const -> std::vector<std::string> const& { return _objectTypes; }
 
-  [[nodiscard]] auto get_objects(const std::string& objType) const -> const VIPRA::f3dVec& {
+  [[nodiscard]] auto get_objects(std::string const& objType) const -> const VIPRA::f3dVec& {
     return _objects.at(objType);
   }
 

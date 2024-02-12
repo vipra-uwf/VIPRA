@@ -15,15 +15,15 @@ class Model {
   VIPRA_MODULE_TYPE(MODEL)
 
   VIPRA_REGISTER_STEP {
-    VIPRA_REGISTER_PARAM("meanMass", REQUIRED);
-    VIPRA_REGISTER_PARAM("massStdDev", REQUIRED);
-    VIPRA_REGISTER_PARAM("meanReactionTime", REQUIRED);
-    VIPRA_REGISTER_PARAM("reactionTimeStdDev", REQUIRED);
-    VIPRA_REGISTER_PARAM("meanMaxSpeed", REQUIRED);
-    VIPRA_REGISTER_PARAM("maxSpeedStdDev", REQUIRED);
-    VIPRA_REGISTER_PARAM("meanShoulderLen", REQUIRED);
-    VIPRA_REGISTER_PARAM("shoulderLenStdDev", REQUIRED);
-    VIPRA_REGISTER_PARAM("random_seed", REQUIRED);
+    VIPRA_REGISTER_PARAM("meanMass");
+    VIPRA_REGISTER_PARAM("massStdDev");
+    VIPRA_REGISTER_PARAM("meanReactionTime");
+    VIPRA_REGISTER_PARAM("reactionTimeStdDev");
+    VIPRA_REGISTER_PARAM("meanMaxSpeed");
+    VIPRA_REGISTER_PARAM("maxSpeedStdDev");
+    VIPRA_REGISTER_PARAM("meanShoulderLen");
+    VIPRA_REGISTER_PARAM("shoulderLenStdDev");
+    VIPRA_REGISTER_PARAM("random_seed");
   }
 
   VIPRA_CONFIG_STEP {
@@ -41,7 +41,6 @@ class Model {
   // NOLINTNEXTLINE(misc-unused-parameters)
   VIPRA_MODEL_INIT_STEP {
     _peds.resize(pedset.num_pedestrians());
-    _state.initialize(pedset);
     _collision.initialize(pedset, goals, _peds);
     _collision.assignRaceStatuses(_raceStatuses, _inRace);
 
@@ -62,20 +61,17 @@ class Model {
     calc_shoulders(pedset.all_coords(), goals.current_goals());
     calc_neighbors(pedset, map, goals);
     calc_betas();
-    update_state(pedset, goals, deltaT);
+    update_state(pedset, goals, state, deltaT);
 
     if (timestep > 0) {
       _collision.raceDetection(pedset, _peds, goals, timestep, map);
       _collision.assignRaceStatuses(_raceStatuses, _inRace);
     }
-
-    return _state;
   }
 
  private:
   ModelData       _peds;
   ConfigData      _config;
-  VIPRA::State    _state;
   CALM::Collision _collision;
 
   std::vector<RaceStatus>        _raceStatuses;
@@ -89,7 +85,8 @@ class Model {
                       VIPRA::Concepts::MapModule auto const& /*map*/,
                       VIPRA::Concepts::GoalsModule auto const& goals);
   void update_state(VIPRA::Concepts::PedsetModule auto const& pedset,
-                    VIPRA::Concepts::GoalsModule auto const& goals, VIPRA::delta_t deltaT);
+                    VIPRA::Concepts::GoalsModule auto const& goals, VIPRA::State& state,
+                    VIPRA::delta_t deltaT);
   auto is_path_blocked(VIPRA::idx pedIdx, VIPRA::f3d veloc, VIPRA::f_pnt maxDist,
                        const VIPRA::Concepts::MapModule auto& map) -> VIPRA::f_pnt;
 
@@ -143,14 +140,20 @@ void Model::calc_neighbors(VIPRA::Concepts::PedsetModule auto const& pedset,
 }
 
 void Model::update_state(VIPRA::Concepts::PedsetModule auto const& pedset,
-                         VIPRA::Concepts::GoalsModule auto const& goals, VIPRA::delta_t deltaT) {
+                         VIPRA::Concepts::GoalsModule auto const& goals, VIPRA::State& state,
+                         VIPRA::delta_t deltaT) {
   const VIPRA::size pedCnt = pedset.num_pedestrians();
   auto const&       velocities = pedset.all_velocities();
   auto const&       coords = pedset.all_coords();
 
   for (VIPRA::idx i = 0; i < pedCnt; ++i) {
     if (goals.is_goal_met(i) || _collision.status(i) == WAIT) {
-      _state.velocities[i] = VIPRA::f3d{};
+      state.velocities[i] = VIPRA::f3d{};
+      continue;
+    }
+    if (goals.time_since_last_goal(i) > 0 && goals.time_since_last_goal(i) <= SLIDING_GOAL_TIME) {
+      state.velocities[i].x = 0;
+      state.velocities[i].y = 0;
       continue;
     }
 
@@ -165,8 +168,8 @@ void Model::update_state(VIPRA::Concepts::PedsetModule auto const& pedset,
 
     const VIPRA::f3d propulsion = ((direction.unit() * desiredSpeed * beta - velocity) * mass) / reactionTime;
 
-    _state.velocities[i] = ((propulsion / mass) * deltaT) + velocity;
-    _state.positions[i] = coord + (_state.velocities[i] * deltaT);
+    state.velocities[i] = ((propulsion / mass) * deltaT) + velocity;
+    state.positions[i] = coord + (state.velocities[i] * deltaT);
   }
 }
 

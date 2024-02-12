@@ -13,6 +13,8 @@
 
 // TODO(rolland): Check that range values make sense (min < max)
 
+// TODO(rolland): fix parsing of range values (10-15) fails
+
 namespace VIPRA::Behaviors {
 
 using RandomVal = std::pair<VIPRA::f_pnt, VIPRA::f_pnt>;
