@@ -12,7 +12,7 @@
 namespace VIPRA::Concepts {
 
 template <typename map_t>
-concept can_initialize_map = requires(map_t map, const DummyPedSet& pedset) {
+concept can_initialize_map = requires(map_t map, DummyPedSet const& pedset) {
   {map.initialize(pedset)};
 };
 
@@ -37,12 +37,12 @@ class DummyMap {
   void register_params(params_t& params) {}
 
   template <VIPRA::Concepts::ParamModule params_t>
-  void config(const params_t& params) {}
+  void config(params_t const& params, VIPRA::Random::Engine&) {}
 
   template <Concepts::PedsetModule pedestrians_t>
-  void initialize(const pedestrians_t& pedestrians) {}
+  void initialize(pedestrians_t const& pedestrians) {}
 
-  auto obstacle_set() const -> const DummyObsSet& { return _dummy; }
+  auto obstacle_set() const -> DummyObsSet const& { return _dummy; }
 
  private:
   DummyObsSet _dummy;

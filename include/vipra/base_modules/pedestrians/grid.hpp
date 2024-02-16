@@ -40,7 +40,7 @@ class Grid {
   template <Concepts::ParamModule params_t>
   void register_params(params_t& params) {}
 
-  void config(auto const& params) {}
+  void config(auto const& params, VIPRA::Random::Engine& /*unused*/) {}
 
   [[nodiscard]] auto num_pedestrians() const -> VIPRA::size { return _coords.size(); }
   [[nodiscard]] auto ped_coords(VIPRA::idx pedIdx) const -> VIPRA::f3d const& {

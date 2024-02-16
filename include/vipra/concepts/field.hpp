@@ -5,11 +5,12 @@
 #include "vipra/concepts/pedset.hpp"
 #include "vipra/macros/parameters.hpp"
 #include "vipra/modules.hpp"
+#include "vipra/random/random.hpp"
 
 namespace VIPRA::Concepts {
 
 template <typename field_t>
-concept can_initialize_field = requires(field_t field, const DummyPedSet& pedset, const DummyObsSet& obsset) {
+concept can_initialize_field = requires(field_t field, DummyPedSet const& pedset, DummyObsSet const& obsset) {
   {field.initialize(pedset, obsset)};
 };
 
@@ -23,13 +24,13 @@ class DummyField {
   constexpr static VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::FIELD;
   ;
   template <Concepts::ObstacleModule obstacles_t, Concepts::PedsetModule pedestrians_t>
-  void initialize(const pedestrians_t& pedestrians, const obstacles_t& obstacles) {}
+  void initialize(pedestrians_t const& pedestrians, obstacles_t const& obstacles) {}
 
   template <VIPRA::Concepts::ParamModule params_t>
   void register_params(params_t& params) {}
 
   template <VIPRA::Concepts::ParamModule params_t>
-  void config(const params_t& params) {}
+  void config(params_t const& params, VIPRA::Random::Engine&) {}
   // NOLINTEND
 };
 

@@ -54,12 +54,19 @@ class SimType {
     }
   }
 
-  [[nodiscard]] auto run_sim() -> output_data_t {
+  void reconfig() {
+    _output.config(_params, _engine);
+    _model.config(_params, _engine);
+    _pedset.config(_params, _engine);
+    _goals.config(_params, _engine);
+    _map.config(_params, _engine);
+    _behaviorModel.config(_params, _engine);
+  }
+
+  auto run_sim() -> output_data_t {
     _output.new_run(_currSimIdx++);
     auto const [maxTimestep, timestepSize, outputFreq, randomseed] = get_sim_params();
     set_params(outputFreq, randomseed);
-
-    _behaviorModel.config(_params);
 
     _map.initialize(_pedset);
     _goals.initialize(_pedset, _map);
@@ -94,12 +101,15 @@ class SimType {
   map_t                                   _map;
   BehaviorModel<pedset_t, map_t, goals_t> _behaviorModel;
 
+  // TODO(rolland): create a sim id and update output to use it
+
   VIPRA::Random::Engine _engine{};
 
   VIPRA::idx      _currSimIdx{0};
   VIPRA::timestep _timestep{0};
   VIPRA::timestep _outputFrequency{0};
 
+  // NOLINTNEXTLINE
   void set_params(VIPRA::timestep outputFrequency, VIPRA::size randomSeed) {
     _outputFrequency = outputFrequency;
     _engine.reseed(randomSeed);
@@ -107,14 +117,14 @@ class SimType {
 
   [[nodiscard]] constexpr auto get_sim_params()
       -> std::tuple<VIPRA::f_pnt, VIPRA::f_pnt, VIPRA::timestep, VIPRA::size> {
-    VIPRA::timestep maxTimestep =
-        _params.template get_param<VIPRA::timestep>(Modules::Type::SIMULATION, "main", "max_timestep");
+    VIPRA::timestep maxTimestep = _params.template get_param<VIPRA::timestep>(
+        Modules::Type::SIMULATION, "main", "max_timestep", _engine);
     VIPRA::f_pnt timestepSize =
-        _params.template get_param<VIPRA::f_pnt>(Modules::Type::SIMULATION, "main", "timestep_size");
-    VIPRA::timestep outputFrequency =
-        _params.template get_param<VIPRA::timestep>(Modules::Type::SIMULATION, "main", "output_frequency");
+        _params.template get_param<VIPRA::f_pnt>(Modules::Type::SIMULATION, "main", "timestep_size", _engine);
+    VIPRA::timestep outputFrequency = _params.template get_param<VIPRA::timestep>(
+        Modules::Type::SIMULATION, "main", "output_frequency", _engine);
     VIPRA::size randomSeed =
-        _params.template get_param<VIPRA::size>(Modules::Type::SIMULATION, "main", "random_seed");
+        _params.template get_param<VIPRA::size>(Modules::Type::SIMULATION, "main", "random_seed", _engine);
 
     return {maxTimestep, timestepSize, outputFrequency, randomSeed};
   }

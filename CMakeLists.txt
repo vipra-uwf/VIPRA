@@ -18,7 +18,7 @@ add_library(
   ${PROJECT_SOURCE_DIR}/include/vipra/vipra.cpp
 )
 
-add_subdirectory(${PROJECT_SOURCE_DIR}/include/vipra/vipra_behaviors/)
+add_subdirectory(${PROJECT_SOURCE_DIR}/include/vipra)
 
 include(FetchContent)
 message(STATUS "Getting nlohmann_json")
@@ -30,11 +30,14 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 include(ExternalAntlr4Cpp)
 include_directories(${ANTLR4_INCLUDE_DIRS})
 
+find_package(MPI REQUIRED)
+
 target_link_libraries(
   ${PROJECT_NAME}
   PUBLIC
   nlohmann_json::nlohmann_json
   antlr4_static
+  MPI::MPI_CXX
 )
 
 target_include_directories(

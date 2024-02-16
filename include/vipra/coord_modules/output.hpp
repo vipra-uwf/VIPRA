@@ -5,6 +5,7 @@
 #include <type_traits>
 #include "vipra/concepts/output.hpp"
 #include "vipra/concepts/output_coordinator.hpp"
+#include "vipra/random/random.hpp"
 #include "vipra/types/idx.hpp"
 #include "vipra/types/util/result_or_void.hpp"
 
@@ -62,13 +63,13 @@ class Output {
    * 
    * @param params 
    */
-  void config(auto const& params) {
-    _base_output_dir =
-        params.template get_param<std::string>(VIPRA::Modules::Type::OUTPUT, "coordinator", "output_dir");
+  void config(auto const& params, VIPRA::Random::Engine& engine) {
+    _base_output_dir = params.template get_param<std::string>(VIPRA::Modules::Type::OUTPUT, "coordinator",
+                                                              "output_dir", engine);
     _current_output_dir = _base_output_dir;
 
     create_output_directory(_current_output_dir);
-    std::apply([&params](auto&&... outputs) { (outputs.config(params), ...); }, _outputs);
+    std::apply([&](auto&&... outputs) { (outputs.config(params, engine), ...); }, _outputs);
   }
 
   /**

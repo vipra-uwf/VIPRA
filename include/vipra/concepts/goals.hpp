@@ -8,6 +8,7 @@
 #include "vipra/concepts/pedset.hpp"
 #include "vipra/macros/parameters.hpp"
 #include "vipra/modules.hpp"
+#include "vipra/random/random.hpp"
 #include "vipra/types/time.hpp"
 
 namespace VIPRA::Concepts {
@@ -47,7 +48,7 @@ class DummyGoals {
   void register_params(params_t& params) {}
 
   template <VIPRA::Concepts::ParamModule params_t>
-  void config(params_t const& params) {}
+  void config(params_t const& params, VIPRA::Random::Engine&) {}
 
   template <typename pedset_t, typename map_t>
   void initialize(pedset_t const& /*unused*/, map_t const& /*unused*/) {}

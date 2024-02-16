@@ -19,8 +19,8 @@ concept has_parameters = requires(module_t module, DummyParams& params) {
 };
 
 template <typename module_t>
-concept has_config = requires(module_t module, const DummyParams& params) {
-  { module.config(params) } -> std::same_as<void>;
+concept has_config = requires(module_t module, DummyParams const& params, VIPRA::Random::Engine& engine) {
+  { module.config(params, engine) } -> std::same_as<void>;
 };
 
 template <typename module_t, Modules::Type type>

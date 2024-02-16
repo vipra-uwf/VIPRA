@@ -6,6 +6,7 @@
 #include "vipra/modules.hpp"
 
 #include "vipra/geometry/f3d.hpp"
+#include "vipra/random/random.hpp"
 #include "vipra/types/idx.hpp"
 #include "vipra/types/size.hpp"
 
@@ -54,7 +55,7 @@ class DummyPedSet {
   template <typename params_t>
   void register_params(params_t&) {}
 
-  void config(auto& params) {}
+  void config(auto& params, VIPRA::Random::Engine&) {}
   void update(const VIPRA::State&) {}
 
   auto num_pedestrians() const -> VIPRA::size { return 1; }

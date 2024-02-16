@@ -47,7 +47,7 @@ class DummyModel {
   template <typename pedset_t, typename map_t, typename goals_t, typename output_t>
   void initialize(pedset_t const&, map_t const&, goals_t const&, output_t&) {}
 
-  void config(auto&) {}
+  void config(auto&, VIPRA::Random::Engine&) {}
 
   void timestep(DummyPedSet const&, DummyMap const&, DummyGoals const&, DummyOutput const&, VIPRA::State&,
                 VIPRA::delta_t, VIPRA::timestep) {}

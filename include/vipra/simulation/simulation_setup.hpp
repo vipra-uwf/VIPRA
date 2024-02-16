@@ -63,16 +63,12 @@ constexpr auto simulation(Concepts::ParamModule auto&& params, args_t... args) {
   std::get<GOALS_IDX>(temp).register_params(params);
   std::get<MAP_IDX>(temp).register_params(params);
 
-  std::get<OUTPUT_IDX>(temp).config(params);
-  std::get<MODEL_IDX>(temp).config(params);
-  std::get<PEDSET_IDX>(temp).config(params);
-  std::get<GOALS_IDX>(temp).config(params);
-  std::get<MAP_IDX>(temp).config(params);
-
   // Returns the SimType object
   auto sim = SimType(std::forward<decltype(params)>(params), std::move(std::get<OUTPUT_IDX>(temp)),
                      std::move(std::get<MODEL_IDX>(temp)), std::move(std::get<PEDSET_IDX>(temp)),
                      std::move(std::get<GOALS_IDX>(temp)), std::move(std::get<MAP_IDX>(temp)));
+
+  sim.reconfig();
 
   return sim;
 }

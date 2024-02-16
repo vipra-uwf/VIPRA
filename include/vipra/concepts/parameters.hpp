@@ -8,6 +8,7 @@
 #include "vipra/macros/module.hpp"
 #include "vipra/modules.hpp"
 
+#include "vipra/random/random.hpp"
 #include "vipra/types/parameter.hpp"
 
 namespace VIPRA::Concepts {
@@ -20,8 +21,8 @@ concept can_register_param = requires(params_t params, VIPRA::Modules::Type modu
 
 template <typename params_t>
 concept can_get_params = requires(params_t params, VIPRA::Modules::Type module, std::string const& moduleName,
-                                  std::string const& paramName) {
-  { params.template get_param<int>(module, moduleName, paramName) } -> std::same_as<int>;
+                                  std::string const& paramName, VIPRA::Random::Engine& engine) {
+  { params.template get_param<int>(module, moduleName, paramName, engine) } -> std::same_as<int>;
   {
     params.template get_array_param<std::vector<int>>(module, moduleName, paramName)
     } -> std::same_as<std::vector<int>>;
@@ -39,7 +40,8 @@ struct DummyParams {
   void register_param(VIPRA::Modules::Type, std::string const&, std::string const&) {}
 
   template <typename data_t>
-  auto get_param(VIPRA::Modules::Type, std::string const&, std::string const&) const -> data_t {}
+  auto get_param(VIPRA::Modules::Type, std::string const&, std::string const&, VIPRA::Random::Engine&) const
+      -> data_t {}
 
   template <typename data_t>
   auto get_array_param(VIPRA::Modules::Type, std::string const&, std::string const&) const -> data_t {}

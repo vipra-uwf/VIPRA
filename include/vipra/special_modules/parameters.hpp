@@ -11,6 +11,7 @@
 
 #include "vipra/macros/module.hpp"
 #include "vipra/modules.hpp"
+#include "vipra/random/random.hpp"
 #include "vipra/types/parameter.hpp"
 
 // TODO(rolland): Check that all required parameters are provided
@@ -83,7 +84,7 @@ class Parameters {
    */
   template <typename data_t>
   [[nodiscard]] auto get_param(VIPRA::Modules::Type module, std::string const& moduleName,
-                               std::string const& paramName) const -> data_t {
+                               std::string const& paramName, VIPRA::Random::Engine& engine) const -> data_t {
     std::string moduleStr = to_string(module);
 
     if (!contains(module, moduleName, paramName))
@@ -96,7 +97,7 @@ class Parameters {
                                " Module: " + moduleName + " Not Provided In Input");
     }
 
-    return randomize_parameter(value.value());
+    return randomize_parameter(value.value(), engine);
   }
 
   template <typename array_t>
@@ -121,7 +122,7 @@ class Parameters {
   input_t                                                                      _input;
   std::map<VIPRA::Modules::Type, std::map<std::string, std::set<std::string>>> _params;
 
-  [[nodiscard]] constexpr auto randomize_parameter(auto&& paramVal) const {
+  [[nodiscard]] constexpr auto randomize_parameter(auto&& paramVal, VIPRA::Random::Engine& /*engine*/) const {
     // TODO(rolland): randomize parameter, currently just pass through
     return paramVal.value;
   }
