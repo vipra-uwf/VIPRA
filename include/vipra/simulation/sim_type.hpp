@@ -71,7 +71,6 @@ class SimType {
     _map.initialize(_pedset);
     _goals.initialize(_pedset, _map);
     _model.initialize(_pedset, _map, _goals, _output);
-
     _behaviorModel.initialize(_pedset, _map, _goals, randomseed);
 
     VIPRA::State state;

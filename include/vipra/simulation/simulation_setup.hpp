@@ -57,6 +57,7 @@ constexpr auto simulation(Concepts::ParamModule auto&& params, args_t... args) {
           std::remove_reference_t<decltype(std::get<PEDSET_IDX>(temp))>,
           std::remove_reference_t<decltype(std::get<GOALS_IDX>(temp))>,
           std::remove_reference_t<decltype(std::get<MAP_IDX>(temp))>>::register_params(params);
+
   std::get<OUTPUT_IDX>(temp).register_params(params);
   std::get<MODEL_IDX>(temp).register_params(params);
   std::get<PEDSET_IDX>(temp).register_params(params);
