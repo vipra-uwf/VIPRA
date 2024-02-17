@@ -147,8 +147,11 @@ class Output {
                                directory.string());
     }
 
+    std::printf("Creating Directory %s\n", directory.c_str());
+    std::fflush(stdout);
     if (!std::filesystem::create_directory(directory)) {
-      throw std::runtime_error("Could not create output directory: " + directory.string());
+      if (!std::filesystem::exists(directory))
+        throw std::runtime_error("Could not create output directory: " + directory.string());
     }
   }
 };

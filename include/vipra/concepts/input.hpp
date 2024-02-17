@@ -13,6 +13,8 @@
 #include "vipra/geometry/f3d.hpp"
 #include "vipra/types/parameter.hpp"
 
+// TODO(rolland): remember to add in documentation that inputs should hold off on loading until their load() method is called
+
 namespace VIPRA::Concepts {
 
 // TODO(rolland): clean this up and make it more generic/strict

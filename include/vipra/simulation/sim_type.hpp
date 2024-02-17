@@ -8,6 +8,7 @@
 
 #include "vipra/concepts/output_coordinator.hpp"
 #include "vipra/concepts/parameters.hpp"
+#include "vipra/parameter_sweep/parameter_sweep.hpp"
 #include "vipra/random/random.hpp"
 #include "vipra/special_modules/behavior_model.hpp"
 #include "vipra/types/parameter.hpp"
@@ -42,7 +43,11 @@ class SimType {
    * @return output_data_t Tuple of the output data
    */
   auto operator()(Concepts::ParamModule auto&& params) -> output_data_t {
+    // TODO(rolland): this assumes that a only a single node should ever run this function, there may be sitations where this isn't user friendly?
+    if (!ParameterSweep::is_root()) return;
+
     params.load();
+
     if constexpr (std::is_same_v<output_data_t, void>) {
       run_sim(std::forward<decltype(params)>(params));
     } else {
@@ -60,6 +65,8 @@ class SimType {
     }
   }
 
+  void set_sim_id(VIPRA::idx idx) { _currSimIdx = idx; }
+
  private:
   output_t                                _output;
   model_t                                 _model;
@@ -68,7 +75,7 @@ class SimType {
   map_t                                   _map;
   BehaviorModel<pedset_t, map_t, goals_t> _behaviorModel;
 
-  // TODO(rolland): create a sim id and update output to use it
+  // TODO(rolland): NEXT create a sim id and update output to use it
 
   VIPRA::Random::Engine _engine{};
 

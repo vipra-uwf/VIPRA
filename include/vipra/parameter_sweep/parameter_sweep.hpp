@@ -26,9 +26,12 @@ class ParameterSweep {
   template <typename sim_t, typename params_t, typename callback_t = VIPRA::VOID>
   static void run(sim_t&& sim, params_t&& params, size_t count, callback_t&& callback = VOID{}) {
     load_params(params);
-    count = sim_count(count);
+    size_t localCount = sim_count(count);
 
-    for (size_t i = 0; i < count; ++i) {
+    //TODO(rolland): NEXT this doesn't account for counts that aren't evenly divisble
+    sim.set_sim_id(sim_id(count));
+
+    for (size_t i = 0; i < localCount; ++i) {
       if constexpr (std::is_same_v<callback_t, VIPRA::VOID>) {
         sim.parallel_run(params);
       } else {
@@ -41,10 +44,15 @@ class ParameterSweep {
         }
       }
     }
+
+    sim.set_sim_id(count);
+    MPI_Barrier(MPI_COMM_WORLD);
   }
 
   [[nodiscard]] static auto get_rank() -> int { return rank; }
   [[nodiscard]] static auto get_size() -> int { return size; }
+  [[nodiscard]] static auto is_parallel() -> bool { return size > 1; }
+  [[nodiscard]] static auto is_root() -> bool { return rank == 0; }
 
  private:
   struct DeferedFinalize {
@@ -94,7 +102,18 @@ class ParameterSweep {
     if (rank < count % size) {
       ++localCount;
     }
+
+    std::printf("rank: %d, localCount: %zu\n", rank, localCount);
     return localCount;
+  }
+
+  static auto sim_id(size_t count) -> size_t {
+    size_t idx = rank * sim_count(count);
+    if (rank > count % size) {
+      idx += count % size;
+    }
+
+    return idx;
   }
 };
 }  // namespace VIPRA
