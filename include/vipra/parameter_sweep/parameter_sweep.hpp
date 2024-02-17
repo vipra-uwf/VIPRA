@@ -28,8 +28,7 @@ class ParameterSweep {
     load_params(params);
     size_t localCount = sim_count(count);
 
-    //TODO(rolland): NEXT this doesn't account for counts that aren't evenly divisble
-    sim.set_sim_id(sim_id(count));
+    sim.add_sim_id(sim_id(count));
 
     for (size_t i = 0; i < localCount; ++i) {
       if constexpr (std::is_same_v<callback_t, VIPRA::VOID>) {
@@ -103,7 +102,6 @@ class ParameterSweep {
       ++localCount;
     }
 
-    std::printf("rank: %d, localCount: %zu\n", rank, localCount);
     return localCount;
   }
 

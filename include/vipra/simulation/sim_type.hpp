@@ -66,6 +66,7 @@ class SimType {
   }
 
   void set_sim_id(VIPRA::idx idx) { _currSimIdx = idx; }
+  void add_sim_id(VIPRA::idx idx) { _currSimIdx += idx; }
 
  private:
   output_t                                _output;
