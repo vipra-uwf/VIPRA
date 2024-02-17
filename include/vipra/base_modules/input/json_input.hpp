@@ -18,6 +18,7 @@
 #include "vipra/concepts/numeric.hpp"
 
 #include "vipra/concepts/polygon_input.hpp"
+#include "vipra/concepts/serializable_input.hpp"
 #include "vipra/modules.hpp"
 #include "vipra/types/float.hpp"
 #include "vipra/types/parameter.hpp"
@@ -32,16 +33,21 @@ namespace VIPRA::Input {
 class JSON {
  public:
   VIPRA_MODULE_TYPE(INPUT)
-  explicit JSON(std::filesystem::path const& filepath) { load_file(filepath); }
+  explicit JSON(std::filesystem::path filepath) : _filepath(std::move(filepath)) {}
+
+  void load();
 
   template <typename data_t>
   [[nodiscard]] auto get(auto&&... keys) const -> std::optional<data_t>;
   [[nodiscard]] auto load_polygons(auto&&... keys) const -> std::optional<std::vector<Geometry::Polygon>>;
 
- private:
-  nlohmann::json _json;
+  [[nodiscard]] auto serialize() -> std::string;
+  void               deserialize(std::string const& data);
 
-  void load_file(std::filesystem::path const& filepath);
+ private:
+  nlohmann::json        _json;
+  std::filesystem::path _filepath;
+  bool                  _loaded{false};
 
   template <typename... key_ts>
   [[nodiscard]] auto get_value_at_key(key_ts&&... keys) const
@@ -73,6 +79,7 @@ class JSON {
 
 CHECK_MODULE(InputModule, VIPRA::Input::JSON)
 static_assert(VIPRA::Concepts::PolygonInput<VIPRA::Input::JSON>);
+static_assert(VIPRA::Concepts::serializable_input<VIPRA::Input::JSON>);
 
 // ---------------------------------------------------- IMPLEMENTATION ---------------------------------------------------- //
 
@@ -86,6 +93,8 @@ static_assert(VIPRA::Concepts::PolygonInput<VIPRA::Input::JSON>);
    */
 template <typename data_t, typename... key_ts>
 auto VIPRA::Input::JSON::get(key_ts&&... keys) const -> std::optional<data_t> {
+  assert(_loaded);
+
   auto value = get_value_at_key(std::forward<key_ts>(keys)...);
   if (!value) return std::nullopt;
 
@@ -104,6 +113,8 @@ auto VIPRA::Input::JSON::get(key_ts&&... keys) const -> std::optional<data_t> {
 template <typename... key_ts>
 [[nodiscard]] auto VIPRA::Input::JSON::load_polygons(key_ts&&... keys) const
     -> std::optional<std::vector<Geometry::Polygon>> {
+  assert(_loaded);
+
   auto value = get_value_at_key(std::forward<key_ts>(keys)...);
   if (!value) return std::nullopt;
 
@@ -214,6 +225,8 @@ template <typename data_t>
 template <typename data_t>
 [[nodiscard]] auto VIPRA::Input::JSON::get_vector(
     std::reference_wrapper<const nlohmann::json> const& value) const -> std::optional<std::vector<data_t>> {
+  assert(_loaded);
+
   if (!value.get().is_array()) return std::nullopt;
 
   std::vector<data_t> vec;
@@ -270,20 +283,22 @@ template <typename data_t>
    * 
    * @param filepath 
    */
-inline void VIPRA::Input::JSON::load_file(std::filesystem::path const& filepath) {
-  if (!std::filesystem::exists(filepath))
-    throw std::runtime_error("File does not exist at: " + filepath.string());
+inline void VIPRA::Input::JSON::load() {
+  if (_loaded) return;
 
-  if (!std::filesystem::is_regular_file(filepath))
-    throw std::runtime_error("File is not a regular file at: " + filepath.string());
+  if (!std::filesystem::exists(_filepath))
+    throw std::runtime_error("File does not exist at: " + _filepath.string());
 
-  std::ifstream file(filepath);
-  if (!file.is_open()) throw std::runtime_error("Could not open file at: " + filepath.string());
+  if (!std::filesystem::is_regular_file(_filepath))
+    throw std::runtime_error("File is not a regular file at: " + _filepath.string());
+
+  std::ifstream file(_filepath, std::ios::in);
+  if (!file.is_open()) throw std::runtime_error("Could not open file at: " + _filepath.string());
 
   try {
     _json = nlohmann::json::parse(file);
   } catch (nlohmann::json::parse_error const& e) {
-    throw std::runtime_error("Could not parse JSON file at: " + filepath.string() + "\n" + e.what());
+    throw std::runtime_error("Could not parse JSON file at: " + _filepath.string() + "\n" + e.what());
   }
 
   file.close();
@@ -380,4 +395,15 @@ template <typename data_t>
   if (!value.contains("x") || !value.contains("y")) return false;
   if (!value.at("x").is_number() || !value.at("y").is_number()) return false;
   return true;
+}
+
+inline auto VIPRA::Input::JSON::serialize() -> std::string { return _json.dump(); }
+
+inline void VIPRA::Input::JSON::deserialize(std::string const& data) {
+  try {
+    _json = nlohmann::json::parse(data);
+    _loaded = true;
+  } catch (nlohmann::json::parse_error const& e) {
+    throw std::runtime_error("Could not parse JSON data\n");
+  }
 }

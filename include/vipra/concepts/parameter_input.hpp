@@ -26,7 +26,9 @@ class DummyParameterInput {
   template <typename params_t>
   void register_params(params_t&) {}
 
-  void config(const auto&) {}
+  void config(auto const&) {}
+
+  void load() {}
 
   template <typename data_t>
   auto get(std::string_view /*unused*/, std::string_view /*unused*/) const -> std::optional<data_t> {

@@ -3,6 +3,7 @@
 #include <concepts>
 #include <optional>
 #include <string>
+#include <type_traits>
 #include <vector>
 
 #include "vipra/macros/module.hpp"
@@ -10,6 +11,8 @@
 
 #include "vipra/random/random.hpp"
 #include "vipra/types/parameter.hpp"
+
+// TODO(rolland): add remove_cvref_t to all the concepts
 
 namespace VIPRA::Concepts {
 
@@ -29,15 +32,24 @@ concept can_get_params = requires(params_t params, VIPRA::Modules::Type module, 
 };
 
 template <typename params_t>
+concept can_get_input = requires(params_t params, VIPRA::Modules::Type module, std::string const& moduleName,
+                                 std::string const& paramName) {
+  {params.get_input()};
+};
+
+template <typename params_t>
 concept ParamModule =
-    params_t::_VIPRA_MODULE_TYPE_ ==
-    VIPRA::Modules::Type::PARAMETERS&& can_register_param<params_t>&& can_get_params<params_t>;
+    std::remove_cvref_t<params_t>::_VIPRA_MODULE_TYPE_ ==
+    VIPRA::Modules::Type::PARAMETERS&& can_register_param<std::remove_cvref_t<params_t>>&&
+        can_get_params<std::remove_cvref_t<params_t>>&& can_get_input<std::remove_cvref_t<params_t>>;
 
 struct DummyParams {
   // NOLINTBEGIN
   static constexpr VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::PARAMETERS;
 
   void register_param(VIPRA::Modules::Type, std::string const&, std::string const&) {}
+
+  auto get_input() -> std::string { return ""; }
 
   template <typename data_t>
   auto get_param(VIPRA::Modules::Type, std::string const&, std::string const&, VIPRA::Random::Engine&) const

@@ -22,6 +22,7 @@ class Map {
   // NOLINTNEXTLINE
   constexpr static VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::MAP;
   ;
+
   /**
    * @brief Construct a new Map object, loads obstacles from input file and initializes all fields
    * 
@@ -38,6 +39,7 @@ class Map {
    */
   template <Concepts::PedsetModule pedestrians_t>
   void initialize(pedestrians_t const& pedestrians) {
+    _input.load();
     initialize_obstacles();
     std::apply(
         [&](auto&&... fields) {

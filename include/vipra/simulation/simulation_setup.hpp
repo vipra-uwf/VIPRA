@@ -24,7 +24,7 @@ struct FindIndex<index_t, check_t> {
 };
 
 template <typename... args_t>
-constexpr auto simulation(Concepts::ParamModule auto&& params, args_t... args) {
+constexpr auto simulation(args_t... args) {
   // Finds the index for each module type
   constexpr std::size_t OUTPUT_IDX = FindIndex<0, Checks::OutputCoord, args_t...>::value;
   constexpr std::size_t MODEL_IDX = FindIndex<0, Checks::Model, args_t...>::value;
@@ -51,25 +51,12 @@ constexpr auto simulation(Concepts::ParamModule auto&& params, args_t... args) {
 
   auto&& temp = std::forward_as_tuple(args...);
 
-  SimType<std::remove_reference_t<decltype(params)>,
-          std::remove_reference_t<decltype(std::get<OUTPUT_IDX>(temp))>,
-          std::remove_reference_t<decltype(std::get<MODEL_IDX>(temp))>,
-          std::remove_reference_t<decltype(std::get<PEDSET_IDX>(temp))>,
-          std::remove_reference_t<decltype(std::get<GOALS_IDX>(temp))>,
-          std::remove_reference_t<decltype(std::get<MAP_IDX>(temp))>>::register_params(params);
-
-  std::get<OUTPUT_IDX>(temp).register_params(params);
-  std::get<MODEL_IDX>(temp).register_params(params);
-  std::get<PEDSET_IDX>(temp).register_params(params);
-  std::get<GOALS_IDX>(temp).register_params(params);
-  std::get<MAP_IDX>(temp).register_params(params);
-
   // Returns the SimType object
-  auto sim = SimType(std::forward<decltype(params)>(params), std::move(std::get<OUTPUT_IDX>(temp)),
-                     std::move(std::get<MODEL_IDX>(temp)), std::move(std::get<PEDSET_IDX>(temp)),
-                     std::move(std::get<GOALS_IDX>(temp)), std::move(std::get<MAP_IDX>(temp)));
+  auto sim = SimType(std::move(std::get<OUTPUT_IDX>(temp)), std::move(std::get<MODEL_IDX>(temp)),
+                     std::move(std::get<PEDSET_IDX>(temp)), std::move(std::get<GOALS_IDX>(temp)),
+                     std::move(std::get<MAP_IDX>(temp)));
 
-  sim.reconfig();
+  // sim.reconfig();
 
   return sim;
 }
