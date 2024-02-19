@@ -60,7 +60,11 @@ class ParameterSweep {
     auto operator=(DeferedFinalize const&) -> DeferedFinalize& = default;
     auto operator=(DeferedFinalize&&) -> DeferedFinalize& = default;
     DeferedFinalize() = default;
-    ~DeferedFinalize() { MPI_Finalize(); }
+    ~DeferedFinalize() {
+      int flag = 0;
+      MPI_Initialized(&flag);
+      if (flag) MPI_Finalize();
+    }
   };
 
   // NOLINTBEGIN

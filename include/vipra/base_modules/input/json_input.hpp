@@ -301,6 +301,7 @@ inline void VIPRA::Input::JSON::load() {
     throw std::runtime_error("Could not parse JSON file at: " + _filepath.string() + "\n" + e.what());
   }
 
+  _loaded = true;
   file.close();
 }
 

@@ -44,9 +44,9 @@ class SimType {
    */
   auto operator()(Concepts::ParamModule auto&& params) -> output_data_t {
     // TODO(rolland): this assumes that a only a single node should ever run this function, there may be sitations where this isn't user friendly?
-    if (!ParameterSweep::is_root()) return;
+    if (!ParameterSweep::is_root()) return {};
 
-    params.load();
+    params.get_input().load();
 
     if constexpr (std::is_same_v<output_data_t, void>) {
       run_sim(std::forward<decltype(params)>(params));
@@ -87,6 +87,7 @@ class SimType {
   auto run_sim(Concepts::ParamModule auto&& params) -> output_data_t {
     auto [maxTimestep, timestepSize, randomseed, state] = initialize(params);
     _output.new_run(_currSimIdx++);
+    _timestep = 0;
 
     while (_timestep < maxTimestep && !_goals.is_sim_goal_met()) {
       _model.timestep(_pedset, _map, _goals, _output, state, timestepSize, _timestep);
