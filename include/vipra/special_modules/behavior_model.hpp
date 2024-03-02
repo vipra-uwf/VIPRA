@@ -67,6 +67,11 @@ class BehaviorModel {
   }
 
  public:
+  BehaviorModel() = default;
+  BehaviorModel(BehaviorModel const&) = default;
+  auto operator=(BehaviorModel const&) -> BehaviorModel& = default;
+  BehaviorModel(BehaviorModel&&) noexcept = default;
+  auto operator=(BehaviorModel&&) noexcept -> BehaviorModel& = default;
   ~BehaviorModel() { Behaviors::AttributeHandling::cleanup(); };
 };
 }  // namespace VIPRA
