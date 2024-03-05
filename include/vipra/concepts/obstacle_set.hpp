@@ -36,6 +36,7 @@ concept has_collisions = requires(const obstacle_t obsset) {
   { obsset.ray_hit(VIPRA::f3d{}, VIPRA::f3d{}) } -> std::same_as<VIPRA::f_pnt>;
 };
 
+// TODO: returning an f3d means we expect every map to start at the origin
 template <typename obstacle_t>
 concept can_get_dimensions = requires(obstacle_t obsset) {
   { obsset.get_dimensions() } -> std::same_as<VIPRA::f3d>;

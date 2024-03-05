@@ -18,6 +18,10 @@
 // TODO(rolland): implement quadtree for storing obstacles
 
 namespace VIPRA::Obstacles {
+/**
+ * @brief Obstacle module that uses a quadtree to store obstacles
+ * 
+ */
 class QuadTree {
  public:
   VIPRA_MODULE_TYPE(OBSTACLES);

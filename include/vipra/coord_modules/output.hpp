@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <tuple>
 #include <type_traits>
+
 #include "vipra/concepts/output.hpp"
 #include "vipra/concepts/output_coordinator.hpp"
 #include "vipra/random/random.hpp"

@@ -14,7 +14,14 @@
 
 #include "vipra/util/debug_do.hpp"
 
+// TODO(rolland): implement grid for storing pedestrians
+
 namespace VIPRA::Pedestrians {
+
+/**
+ * @brief Pedestrian module that uses a grid to store pedestrians
+ * 
+ */
 template <Concepts::InputModule input_t>
 class Grid {
  public:

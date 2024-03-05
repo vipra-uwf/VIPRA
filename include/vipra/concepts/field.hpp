@@ -9,6 +9,8 @@
 
 namespace VIPRA::Concepts {
 
+// TODO(rolland): do we need a field module? The model itself my just hold it?
+
 template <typename field_t>
 concept can_initialize_field = requires(field_t field, DummyPedSet const& pedset, DummyObsSet const& obsset) {
   {field.initialize(pedset, obsset)};

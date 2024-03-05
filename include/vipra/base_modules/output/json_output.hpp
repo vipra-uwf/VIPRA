@@ -13,6 +13,10 @@
 #include "vipra/util/debug_do.hpp"
 
 namespace VIPRA::Output::Trajectories {
+/**
+ * @brief JSON output module for writing trajectories to a JSON file
+ * 
+ */
 class JSON {
  public:
   VIPRA_MODULE_TYPE(OUTPUT)

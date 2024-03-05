@@ -30,6 +30,11 @@
 #include "vipra/util/tuple_tail.hpp"
 
 namespace VIPRA::Input {
+/**
+  * @brief Parameter and Polygon qualified JSON input module
+  * 
+  * 
+  */
 class JSON {
  public:
   VIPRA_MODULE_TYPE(INPUT)

@@ -23,6 +23,10 @@
 #include "vipra/util/debug_do.hpp"
 
 namespace VIPRA::Goals {
+/**
+ * @brief Goals module that uses the A* algorithm to find the path to the goal
+ * 
+ */
 class AStar {
  public:
   VIPRA_MODULE_TYPE(GOALS);
