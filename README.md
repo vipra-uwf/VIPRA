@@ -3,10 +3,10 @@
 
 - [Usage](#usage) <!-- TODO -->
   - [Simulation Construction](#simulation-construction) <!-- TODO -->
+    - [Example Simulation](#example-simulation)
+    - [Example Parameter Sweep](#example-parameter-sweep)
+    - [Base Modules](#base-modules) <!-- TODO -->
   - [Module Parameters](#module-parameters) <!-- TODO -->
-  - [Example Simulation](#example-simulation)
-  - [Example Parameter Sweep](#example-parameter-sweep)
-  - [Base Modules](#base-modules) <!-- TODO -->
 
 - [Common Errors](#common-errors) <!-- TODO -->
 
@@ -116,39 +116,6 @@ There are several base modules included with VIPRA.
 <!-- TODO -->
 
 
-## Module Parameters
-
-Parameters are loaded into each module before they are initizalized. The exact steps are showing in [`Simluation Steps`](#simulation-steps). 
-
-Parameters can use any [`Parameter Input`](#parameter-input-implementation) module, by default a [`JSON`](#json-input) input module is provided.
-
-The format for which is:
-```JSON
-{
-  "module type": {
-    "module name": {
-      "parameter name": "parameter value"
-    }
-  },
-  ...
-}
-```
-
-```JSON
-{
-  ...
-  "goals": {                  // Module Type
-    "astar": {                // Module Name
-      "endGoalType": "exit",  // Parameter values
-      "gridSize": 0.1,
-      "closestObstacle": 0.25,
-      "goalRange": 0.05
-    }
-  },
-  ...
-}
-```
-
 ## Example Simulation
 
 Below is an example main that uses some of the module implementations that are shipped with VIPRA.
@@ -216,6 +183,41 @@ auto main(int argc, char** argv) -> int {
   );
 }
 ```
+
+## Module Parameters
+
+Parameters are loaded into each module before they are initizalized. The exact steps are showing in [`Simluation Steps`](#simulation-steps). 
+
+Parameters can use any [`Parameter Input`](#parameter-input-implementation) module, by default a [`JSON`](#json-input) input module is provided.
+
+The format for which is:
+```JSON
+{
+  "module type": {
+    "module name": {
+      "parameter name": "parameter value"
+    }
+  },
+  ...
+}
+```
+
+```JSON
+{
+  ...
+  "goals": {                  // Module Type
+    "astar": {                // Module Name
+      "endGoalType": "exit",  // Parameter values
+      "gridSize": 0.1,
+      "closestObstacle": 0.25,
+      "goalRange": 0.05
+    }
+  },
+  ...
+}
+```
+
+
 ---
 
 # Common Errors
