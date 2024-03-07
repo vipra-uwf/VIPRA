@@ -1,8 +1,14 @@
 
 - [Introduction](#introduction)
 
-- [Usage](#usage)
+- [Usage](#usage) <!-- TODO -->
+  - [Simulation Construction](#simulation-construction) <!-- TODO -->
+  - [Module Parameters](#module-parameters) <!-- TODO -->
+  - [Example Simulation](#example-simulation)
+  - [Example Parameter Sweep](#example-parameter-sweep)
+  - [Base Modules](#base-modules) <!-- TODO -->
 
+- [Common Errors](#common-errors) <!-- TODO -->
 
 - [Development](#development)
   - [Overview](#overview)
@@ -42,13 +48,193 @@ This project includes a modular pedestrian dynamics code to which input from dif
 
 # Usage
 
+Currently, VIPRA requires the user to define their own main and handle any command line arguments.
 
+A basic skeleton will be provided in the future for ease of use.
+
+## Simulation Construction
+
+Simulations are created by combining the several different [Module Types](#module-types).
+
+A utility function for creating simulations is provided that allows the modules to be passed in in any order:
+```C++
+template <typename... module_ts>
+auto VIPRA::simulation(module_ts&&...) -> VIPRA::SimType;
+```
+
+### Required Modules
+
+Each simulation requires the following modules:
+- `Model`
+- `Goals`
+- `Pedestrian Set`
+- `Map`
+  - `Obstacle Set`
+  - `Polygon Input`
+- `Output Coordinator`
+  - `Output`
+
+
+## Base Modules
+
+There are several base modules included with VIPRA.
+
+**Model**:
+- [`Calm Model`](#calm-model)
+
+**Goals**:
+- [`AStar`](#astar-goals)
+
+**Obstacle Set**:
+- [`QuadTree`](#quadtree-obstalce-set)
+
+**Pedestrian Set**:
+- [`Grid`](#grid-pedestrian-set)
+
+**Input**:
+- [`JSON`](#json-input)
+
+**Output**:
+- [`JSON`](#json-output)
+
+### Calm Model
+<!-- TODO -->
+
+### AStar Goals
+<!-- TODO -->
+
+### QuadTree Obstalce Set 
+<!-- TODO -->
+
+### Grid Pedestrian Set
+<!-- TODO -->
+
+### JSON Input
+<!-- TODO -->
+
+### JSON Output
+<!-- TODO -->
+
+
+## Module Parameters
+
+Parameters are loaded into each module before they are initizalized. The exact steps are showing in [`Simluation Steps`](#simulation-steps). 
+
+Parameters can use any [`Parameter Input`](#parameter-input-implementation) module, by default a [`JSON`](#json-input) input module is provided.
+
+The format for which is:
+```JSON
+{
+  "module type": {
+    "module name": {
+      "parameter name": "parameter value"
+    }
+  },
+  ...
+}
+```
+
+```JSON
+{
+  ...
+  "goals": {                  // Module Type
+    "astar": {                // Module Name
+      "endGoalType": "exit",  // Parameter values
+      "gridSize": 0.1,
+      "closestObstacle": 0.25,
+      "goalRange": 0.05
+    }
+  },
+  ...
+}
+```
+
+## Example Simulation
+
+Below is an example main that uses some of the module implementations that are shipped with VIPRA.
+
+```C++
+#include <vipra.hpp>
+
+#include "modules/model/calm_model/calm_model.hpp"
+
+auto main() -> int {
+  // Create the simulation, modules can be placed in any order so long as all are provided/valid
+  auto sim = VIPRA::simulation(
+      CALM::Model{},                          // Pedestrian Dynamics Model
+      VIPRA::Goals::AStar{},                  // Goals Module
+      VIPRA::Pedestrians::Grid{               // Pedestrian Set Module
+          VIPRA::Input::JSON{"maps/pedestrians/a320/a320_144_pedestrians.json"}, // Input Module
+      },
+      VIPRA::Module::Output{                  // Output Coordinator
+        VIPRA::Output::Trajectories::JSON{}   // Output Module
+      },
+      VIPRA::Module::Map{                     // Map Coordinator
+        VIPRA::Input::JSON{"maps/obstacles/a320/a320_polygons.json"}, // Input Module (Polygon Input)
+        VIPRA::Obstacles::QuadTree{}          // Obstacle Set Module
+      }
+  );
+
+  // Run the simulation
+  sim((VIPRA::Parameters{VIPRA::Input::JSON{"module_params.json"}}));
+}
+```
+
+## Example Parameter Sweep
+
+```C++
+#include <vipra.hpp>
+
+#include "modules/model/calm_model/calm_model.hpp"
+
+auto main(int argc, char** argv) -> int {
+  VIPRA::ParameterSweep::initialize(argc, argv);  // Initialize the parameter sweep engine
+
+  if (argc != 2) {      // Read in the command line arguments for the number of simulations to run
+    std::cerr << "Usage: " << argv[0] << " <simCount>" << std::endl;
+    return 1;
+  }
+  size_t simCount = std::stoul(argv[1]);
+
+  auto sim = VIPRA::simulation(     // Create the simulation
+      CALM::Model{}, 
+      VIPRA::Goals::AStar{},
+      VIPRA::Pedestrians::Grid{
+          VIPRA::Input::JSON{"maps/pedestrians/a320/a320_144_pedestrians.json"},
+      },
+      VIPRA::Module::Output{VIPRA::Output::Trajectories::JSON{}},
+      VIPRA::Module::Map{
+        VIPRA::Input::JSON{"maps/obstacles/a320/a320_polygons.json"},
+        VIPRA::Obstacles::QuadTree{}
+      });
+
+  VIPRA::ParameterSweep::run(    // Run a parameter sweep
+      sim,                       // Simulation to run
+      VIPRA::Parameters{VIPRA::Input::JSON{"module_params.json"}}, // Module Parameters
+      simCount,                  // Number of simulations
+      []() { std::cout << "Simulation complete on: " << VIPRA::ParameterSweep::get_rank() << std::endl; } // Optional: callback for each simulation run
+  );
+}
+```
+---
+
+# Common Errors
+
+<!-- TODO -->
+
+---
 
 # Development
 
 # Overview
 
+<!-- TODO -->
+
 ## Simulation
+
+### Simulation Steps
+
+<!-- TODO -->
 
 ## Module Types
 
@@ -79,6 +265,14 @@ This project includes a modular pedestrian dynamics code to which input from dif
 
 [`Output`](#output-implementation) modules handle producing output from the simulation
 
+**Map**
+
+The [`Map`](#map) module is a coordinator, it accepts one [`Obstacle Set`](#obstacle-set-implementation) and one [`Polygon Input`](#polygon-input-implementation).
+
+**Output Coordinator**
+
+The [`Output Coordinator`](#output-coordinator) module handles coordinating any number of [`Output`](#output-implementation) modules.
+
 ## Parameter Sweep
 
 <!-- TODO: Add in parameter sweep stuff -->
@@ -93,10 +287,9 @@ This project includes a modular pedestrian dynamics code to which input from dif
 
 # Module Implementation
 
-### !!! Important Notes:
-- These modules are implemented using templates; this means that any method that accepts a module as a parameter is required to be defined in a header file
-
-- Every module has helper macros for their required methods, see [Macros](#macros)
+> !!! Important Notes:
+> - These modules are implemented using templates; this means that any method that accepts a module as a parameter is required to be defined in a header file
+> - Every module has helper macros for their required methods, see [Macros](#macros)
 
 # Base Module Implementation
 
@@ -208,7 +401,7 @@ void update(VIPRA::State const&);
 
 # Input Implementation
 
-### !!! Important Note: Inputs should hold off on loading their input until their `load` method is called. This reduces the amount of I/O during parallel runs.
+> !!! Important Note: Inputs should hold off on loading their input until their `load` method is called. This reduces the amount of I/O during parallel runs.
 
 ### Interface
 
@@ -240,6 +433,7 @@ template <typename data_t, typename... key_ts>
 auto get<VIPRA::Parameter<data_t>>(key_ts const&...) -> std::optional<VIPRA::Parameter<data_t>>;
 ```
 
+<!-- TODO: add in how the values should be handled -->
 
 #### Polygon Input Implementation
 
