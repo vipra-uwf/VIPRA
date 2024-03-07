@@ -48,19 +48,21 @@ This project includes a modular pedestrian dynamics code to which input from dif
 
 # Usage
 
-Currently, VIPRA requires the user to define their own main and handle any command line arguments.
+VIPRA is a template framework this means it requires the user to define their own main and handle any command line arguments.
 
 A basic skeleton will be provided in the future for ease of use.
 
 ## Simulation Construction
 
-Simulations are created by combining the several different [Module Types](#module-types).
+Simulations are created by choosing which implementations to use for the several different [Module Types](#module-types).
 
 A utility function for creating simulations is provided that allows the modules to be passed in in any order:
 ```C++
 template <typename... module_ts>
 auto VIPRA::simulation(module_ts&&...) -> VIPRA::SimType;
 ```
+
+There is an [Example Simulation](#example-simulation) below.
 
 ### Required Modules
 
@@ -73,6 +75,8 @@ Each simulation requires the following modules:
   - `Polygon Input`
 - `Output Coordinator`
   - `Output`
+
+`Maps` and `Output Coordinators` are special in that they require modules themselves (denoted by the additional indent)
 
 
 ## Base Modules
@@ -98,19 +102,117 @@ There are several base modules included with VIPRA.
 - [`JSON`](#json-output)
 
 ### Calm Model
-<!-- TODO -->
+
+This `Model` module implements the [Calm Model](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0229690)
+
+#### Use:
+```C++
+#include "modules/model/calm_model/calm_model.hpp"
+
+VIPRA::simulation(
+  ...
+  CALM::Model{},
+  ...
+);
+```
+
+#### Parameters:
+- `meanMass` : Mean mass for population
+- `massStdDev` : Standard Deviation for mass
+- `meanReactionTime` : Mean reaction time for population
+- `reactionTimeStdDev` : Standard Deviation for reaction time
+- `meanMaxSpeed` : Mean max speed for population
+- `maxSpeedStdDev` : Standard deviation for max speed
+- `meanShoulderLen` : Mean shoulder length for population
+- `shoulderLenStdDev` : Standard deviation for shoulder length
 
 ### AStar Goals
-<!-- TODO -->
+
+This `Goals` module uses the [A* algorithm](#astar-algorithm) to find paths for each pedestrian.
+
+#### Use:
+```C++
+#include "vipra.hpp"
+
+VIPRA::simulation(
+  ...
+  VIPRA::Goals::AStar{},
+  ...
+);
+```
+
+#### Parameters:
+- `endGoalType` : Name of object in map each pedestrian tries to reach (e.g. "exit")
+- `goalRange` : Range, in meters, before a goal is counted as "reached" (e.g. 0.05)
+- `gridSize` : Length of each side, in meters, of each grid in the pathing graph (e.g. 0.1)
+- `closestObstacle` : Closest a grid center can be to an obstacle before being considered non-traversable
 
 ### QuadTree Obstalce Set 
-<!-- TODO -->
+
+This `Obstacle Set` module uses the [Quad Tree](#quadtree-datastructure) to hold the map geometry.
+
+#### Use:
+```C++
+#include "vipra.hpp"
+
+VIPRA::simulation(
+  ...
+  VIPRA::Module::Map{
+    ...
+    VIPRA::Obstacles::QuadTree{} // Obstacle sets go inside the Map module
+    ...
+  }
+  ...
+)
+```
+
+#### Parameters:
+
+- `minQuadSize` : Size at which quads stop being subdivided
 
 ### Grid Pedestrian Set
-<!-- TODO -->
+
+This `Pedestrian Set` module holds pedestrians in a grid of cells, allowing for more efficient lookup of nearest neighbors
+
+#### Use:
+```C++
+#include "vipra.hpp"
+
+VIPRA::simulation(
+  ...
+  VIPRA::Pedestrians::Grid{},
+  ...
+);
+```
+
+#### Parameters:
+
+- `gridSize`: Size of each grid cell
 
 ### JSON Input
-<!-- TODO -->
+
+This `Input` module loads JSON data, using [nlohmann JSON](https://github.com/nlohmann/json).
+- Qualifies as a:
+  - Polygon Input
+  - Parameter Input
+
+#### Use:
+
+```C++
+#include "vipra.hpp"
+
+VIPRA::simulation(
+  ...
+  VIPRA::Module::Map {
+    VIPRA::Input::JSON{"filepath"} // Input modules are usually used in other modules
+    ...
+  }
+);
+
+sim(VIPRA::Parameters{
+  VIPRA::Input::JSON{"filepath"} // Or for loading parameters
+});
+```
 
 ### JSON Output
 <!-- TODO -->

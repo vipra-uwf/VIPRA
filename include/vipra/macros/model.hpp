@@ -6,7 +6,8 @@
   void timestep(peds_t const& pedset, map_t const& map, goals_t const& goals, output_t& output, \
                 VIPRA::State& state, VIPRA::delta_t deltaT, VIPRA::timestep timestep)
 
-#define VIPRA_MODEL_INIT_STEP                                                                       \
-  void initialize(                                                                                  \
-      const VIPRA::Concepts::PedsetModule auto& pedset, const VIPRA::Concepts::MapModule auto& map, \
-      const VIPRA::Concepts::GoalsModule auto& goals, const VIPRA::Concepts::BaseOutput auto& output)
+#define VIPRA_MODEL_INIT_STEP                                       \
+  void initialize(const VIPRA::Concepts::PedsetModule auto& pedset, \
+                  const VIPRA::Concepts::MapModule auto&    map,    \
+                  const VIPRA::Concepts::GoalsModule auto&  goals,  \
+                  const VIPRA::Concepts::BaseOutput auto& output, VIPRA::Random::Engine& engine)

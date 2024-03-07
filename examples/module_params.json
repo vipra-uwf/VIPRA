@@ -16,8 +16,7 @@
       "meanMaxSpeed": 1.0,
       "meanShoulderLen": 0.2,
       "maxSpeedStdDev": 0.1,
-      "shoulderLenStdDev": 0.05,
-      "random_seed": 12345
+      "shoulderLenStdDev": 0.05
     }
   },
   "goals": {
@@ -28,10 +27,14 @@
       "goalRange": 0.05
     }
   },
-  "pedset": {},
+  "pedset": {
+    "grid": {
+      "gridSize": 0.5
+    }
+  },
   "obstacles": {
     "quad_tree": {
-      "minGridSize": 0.05
+      "minQuadSize": 0.05
     }
   },
   "output": {

@@ -21,8 +21,9 @@ namespace VIPRA::Concepts {
 
 template <typename model_t>
 concept can_initialize_model = requires(model_t model, DummyPedSet const& pedset, DummyMap const& map,
-                                        DummyGoals const& goals, DummyOutput& output) {
-  {model.initialize(pedset, map, goals, output)};
+                                        DummyGoals const& goals, DummyOutput& output,
+                                        VIPRA::Random::Engine& engine) {
+  {model.initialize(pedset, map, goals, output, engine)};
 };
 
 template <typename model_t>
@@ -45,7 +46,7 @@ class DummyModel {
   void register_params(params_t&) {}
 
   template <typename pedset_t, typename map_t, typename goals_t, typename output_t>
-  void initialize(pedset_t const&, map_t const&, goals_t const&, output_t&) {}
+  void initialize(pedset_t const&, map_t const&, goals_t const&, output_t&, VIPRA::Random::Engine&) {}
 
   void config(auto&, VIPRA::Random::Engine&) {}
 

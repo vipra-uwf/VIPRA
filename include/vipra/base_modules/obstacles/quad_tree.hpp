@@ -47,12 +47,12 @@ class QuadTree {
 
   template <typename params_t>
   void register_params(params_t& params) {
-    params.register_param(VIPRA::Modules::Type::OBSTACLES, "quad_tree", "minGridSize");
+    params.register_param(VIPRA::Modules::Type::OBSTACLES, "quad_tree", "minQuadSize");
   }
 
   void config(auto& params, VIPRA::Random::Engine& engine) {
     _obsDistance = params.template get_param<VIPRA::f_pnt>(VIPRA::Modules::Type::OBSTACLES, "quad_tree",
-                                                           "minGridSize", engine);
+                                                           "minQuadSize", engine);
   }
 
   [[nodiscard]] auto get_dimensions() const -> VIPRA::f3d { return _dimensions; }

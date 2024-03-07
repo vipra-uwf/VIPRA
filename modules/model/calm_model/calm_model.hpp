@@ -35,7 +35,6 @@ class Model {
     VIPRA_GET_PARAM("maxSpeedStdDev", _config.maxSpeedStdDev);
     VIPRA_GET_PARAM("meanShoulderLen", _config.meanShoulderLen);
     VIPRA_GET_PARAM("shoulderLenStdDev", _config.shoulderLenStdDev);
-    VIPRA_GET_PARAM("random_seed", _config.randomSeed);
   }
 
   // NOLINTNEXTLINE(misc-unused-parameters)
@@ -43,8 +42,6 @@ class Model {
     _peds.resize(pedset.num_pedestrians());
     _collision.initialize(pedset, goals, _peds);
     _collision.assignRaceStatuses(_raceStatuses, _inRace);
-
-    VIPRA::Random::Engine engine{_config.randomSeed};
 
     _peds.masses = VIPRA::make_distribution<VIPRA::normal_distribution<>>(
         {_config.meanMass, _config.massStdDev}, _peds.size(), engine);

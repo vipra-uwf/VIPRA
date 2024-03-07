@@ -26,6 +26,7 @@ template <Concepts::InputModule input_t>
 class Grid {
  public:
   VIPRA_MODULE_TYPE(PEDESTRIANS);
+  VIPRA_MODULE_NAME("grid")
 
   explicit Grid(input_t&& input) : _input(input) {
     input.load();
@@ -46,7 +47,9 @@ class Grid {
   }
 
   template <Concepts::ParamModule params_t>
-  void register_params(params_t& params) {}
+  void register_params(params_t& params) {
+    params.template register_param(VIPRA::Modules::Type::PEDESTRIANS, "grid", "gridSize");
+  }
 
   void config(auto const& params, VIPRA::Random::Engine& /*unused*/) {}
 
