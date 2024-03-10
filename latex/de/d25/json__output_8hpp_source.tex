@@ -1,0 +1,116 @@
+\doxysection{json\+\_\+output.\+hpp}
+\hypertarget{json__output_8hpp_source}{}\label{json__output_8hpp_source}\index{include/vipra/base\_modules/output/json\_output.hpp@{include/vipra/base\_modules/output/json\_output.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <cstdio>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}nlohmann/json.hpp"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/output.hpp"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}vipra/geometry/f3d.hpp"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}vipra/modules.hpp"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}vipra/types/idx.hpp"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}vipra/util/debug\_do.hpp"{}}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{namespace\ }VIPRA::Output::Trajectories\ \{}
+\DoxyCodeLine{00020\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVIPRA_1_1Output_1_1Trajectories_1_1JSON}{JSON}}\ \{}
+\DoxyCodeLine{00021\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00022\ \ \ VIPRA\_MODULE\_TYPE(OUTPUT)}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ params\_t>}
+\DoxyCodeLine{00025\ \ \ \textcolor{keywordtype}{void}\ register\_params(params\_t\&\ params)\ \{}
+\DoxyCodeLine{00026\ \ \ \ \ params.register\_param(\_VIPRA\_MODULE\_TYPE\_,\ \textcolor{stringliteral}{"{}trajectories\_json"{}},\ \textcolor{stringliteral}{"{}filename"{}});}
+\DoxyCodeLine{00027\ \ \ \}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ params\_t>}
+\DoxyCodeLine{00030\ \ \ \textcolor{keywordtype}{void}\ config(params\_t\ \textcolor{keyword}{const}\&\ params,\ \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{VIPRA::Random::Engine}}\&\ engine)\ \{}
+\DoxyCodeLine{00031\ \ \ \ \ \_filename\ =\ params.template\ get\_param<std::string>(Modules::Type::OUTPUT,\ \textcolor{stringliteral}{"{}trajectories\_json"{}},\ \textcolor{stringliteral}{"{}filename"{}},}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ engine);}
+\DoxyCodeLine{00033\ \ \ \}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \textcolor{keywordtype}{void}\ write(std::filesystem::path\ \textcolor{keyword}{const}\&\ outputDir)\ \{}
+\DoxyCodeLine{00036\ \ \ \ \ std::filesystem::path\ filepath\ =\ outputDir\ /\ \_filename;}
+\DoxyCodeLine{00037\ \ \ \ \ std::ofstream\ \ \ \ \ \ \ \ \ file(filepath);}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordflow}{if}\ (!file.is\_open())\ \{}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::runtime\_error(\textcolor{stringliteral}{"{}Could\ not\ open\ file\ for\ writing:\ "{}}\ +\ filepath.string());}
+\DoxyCodeLine{00040\ \ \ \ \ \}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ file\ <<\ \_json.dump();}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ file.close();}
+\DoxyCodeLine{00045\ \ \ \}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \textcolor{comment}{//\ auto\ write(std::filesystem::path\ const\&\ outputDir)\ -\/>\ nlohmann::json\ const\&\ \{}}
+\DoxyCodeLine{00048\ \ \ \textcolor{comment}{//\ \ \ std::filesystem::path\ filepath\ =\ outputDir\ /\ \_filename;}}
+\DoxyCodeLine{00049\ \ \ \textcolor{comment}{//\ \ \ std::ofstream\ \ \ \ \ \ \ \ \ file(filepath);}}
+\DoxyCodeLine{00050\ \ \ \textcolor{comment}{//\ \ \ if\ (!file.is\_open())\ \{}}
+\DoxyCodeLine{00051\ \ \ \textcolor{comment}{//\ \ \ \ \ throw\ std::runtime\_error("{}Could\ not\ open\ file\ for\ writing:\ "{}\ +\ filepath.string());}}
+\DoxyCodeLine{00052\ \ \ \textcolor{comment}{//\ \ \ \}}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \textcolor{comment}{//\ \ \ file\ <<\ \_json.dump();}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \textcolor{comment}{//\ \ \ file.close();}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \textcolor{comment}{//\ \ \ return\ \_json;}}
+\DoxyCodeLine{00059\ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ data\_t>}
+\DoxyCodeLine{00062\ \ \ \textcolor{keywordtype}{void}\ sim\_value(\textcolor{keywordtype}{char}\ \textcolor{keyword}{const}*\ key,\ data\_t\&\&\ value)\ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \_json[key]\ =\ std::forward<data\_t>(value);}
+\DoxyCodeLine{00064\ \ \ \}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ data\_t>}
+\DoxyCodeLine{00067\ \ \ \textcolor{keywordtype}{void}\ timestep\_value(\textcolor{keywordtype}{char}\ \textcolor{keyword}{const}*\ key,\ VIPRA::idx\ timestep,\ data\_t\&\&\ value)\ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \_json[\textcolor{stringliteral}{"{}timesteps"{}}][timestep][key]\ =\ std::forward<data\_t>(value);}
+\DoxyCodeLine{00069\ \ \ \}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ data\_t>}
+\DoxyCodeLine{00072\ \ \ \textcolor{keywordtype}{void}\ ped\_value(VIPRA::idx\ pedIdx,\ \textcolor{keywordtype}{char}\ \textcolor{keyword}{const}*\ key,\ data\_t\&\&\ value)\ \{}
+\DoxyCodeLine{00073\ \ \ \ \ \_json[\textcolor{stringliteral}{"{}pedestrians"{}}].at(pedIdx)[key]\ =\ std::forward<data\_t>(value);}
+\DoxyCodeLine{00074\ \ \ \}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ data\_t>}
+\DoxyCodeLine{00077\ \ \ \textcolor{keywordtype}{void}\ ped\_timestep\_value(VIPRA::idx\ pedIdx,\ VIPRA::idx\ timestep,\ \textcolor{keywordtype}{char}\ \textcolor{keyword}{const}*\ key,\ data\_t\&\&\ value)\ \{}
+\DoxyCodeLine{00078\ \ \ \ \ \_json[\textcolor{stringliteral}{"{}timesteps"{}}][timestep][\textcolor{stringliteral}{"{}pedestrians"{}}][pedIdx][key]\ =\ std::forward<data\_t>(value);}
+\DoxyCodeLine{00079\ \ \ \}}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00082\ \ \ nlohmann::json\ \_json;}
+\DoxyCodeLine{00083\ \ \ std::string\ \ \ \ \_filename;}
+\DoxyCodeLine{00084\ \};}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{00087\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ Output::Trajectories::JSON::ped\_value(VIPRA::idx\ pedIdx,\ \textcolor{keywordtype}{char}\ \textcolor{keyword}{const}*\ key,\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\&\&\ value)\ \{}
+\DoxyCodeLine{00088\ \ \ \_json[\textcolor{stringliteral}{"{}pedestrians"{}}].at(pedIdx)[key]\ =\ nlohmann::json(\{value.x,\ value.y,\ value.z\});}
+\DoxyCodeLine{00089\ \}}
+\DoxyCodeLine{00090\ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{00091\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ Output::Trajectories::JSON::ped\_value(VIPRA::idx\ pedIdx,\ \textcolor{keywordtype}{char}\ \textcolor{keyword}{const}*\ key,\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\&\ value)\ \{}
+\DoxyCodeLine{00092\ \ \ \_json[\textcolor{stringliteral}{"{}pedestrians"{}}].at(pedIdx)[key]\ =\ nlohmann::json(\{value.x,\ value.y,\ value.z\});}
+\DoxyCodeLine{00093\ \}}
+\DoxyCodeLine{00094\ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{00095\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ Output::Trajectories::JSON::ped\_value(VIPRA::idx\ pedIdx,\ \textcolor{keywordtype}{char}\ \textcolor{keyword}{const}*\ key,}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\&\ value)\ \{}
+\DoxyCodeLine{00097\ \ \ \_json[\textcolor{stringliteral}{"{}pedestrians"{}}].at(pedIdx)[key]\ =\ nlohmann::json(\{value.x,\ value.y,\ value.z\});}
+\DoxyCodeLine{00098\ \}}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{00101\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ Output::Trajectories::JSON::ped\_timestep\_value(VIPRA::idx\ pedIdx,\ VIPRA::idx\ timestep,}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ \textcolor{keyword}{const}*\ key,\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\&\&\ value)\ \{}
+\DoxyCodeLine{00103\ \ \ \_json[\textcolor{stringliteral}{"{}timesteps"{}}][timestep][\textcolor{stringliteral}{"{}pedestrians"{}}][pedIdx][key]\ =\ nlohmann::json(\{value.x,\ value.y,\ value.z\});}
+\DoxyCodeLine{00104\ \}}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{00107\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ Output::Trajectories::JSON::ped\_timestep\_value(VIPRA::idx\ pedIdx,\ VIPRA::idx\ timestep,}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ \textcolor{keyword}{const}*\ key,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\&\ value)\ \{}
+\DoxyCodeLine{00109\ \ \ \_json[\textcolor{stringliteral}{"{}timesteps"{}}][timestep][\textcolor{stringliteral}{"{}pedestrians"{}}][pedIdx][key]\ =\ nlohmann::json(\{value.x,\ value.y,\ value.z\});}
+\DoxyCodeLine{00110\ \}}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA::Output::Trajectories}}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ CHECK\_MODULE(OutputModule,\ \mbox{\hyperlink{classVIPRA_1_1Output_1_1Trajectories_1_1JSON}{VIPRA::Output::Trajectories::JSON}})}
+
+\end{DoxyCode}

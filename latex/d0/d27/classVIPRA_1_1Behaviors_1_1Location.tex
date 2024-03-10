@@ -1,0 +1,95 @@
+\doxysection{VIPRA\+::Behaviors\+::Location Class Reference}
+\hypertarget{classVIPRA_1_1Behaviors_1_1Location}{}\label{classVIPRA_1_1Behaviors_1_1Location}\index{VIPRA::Behaviors::Location@{VIPRA::Behaviors::Location}}
+
+
+A Location is an area in the map that is either predefined, such as the bathroom, or defined by a behavior created by the user.  
+
+
+
+
+{\ttfamily \#include $<$location.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Location_a8808b4b3f59a9f8e5b061ca76cece3ac}\label{classVIPRA_1_1Behaviors_1_1Location_a8808b4b3f59a9f8e5b061ca76cece3ac} 
+constexpr {\bfseries Location} (\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} center, \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} dims)
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Location_a5d68ce9c44b0f83403e31bf19aaf9f21}\label{classVIPRA_1_1Behaviors_1_1Location_a5d68ce9c44b0f83403e31bf19aaf9f21} 
+constexpr {\bfseries Location} (\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} center, \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} dims, VIPRA\+::f\+\_\+pnt rot)
+\item 
+constexpr auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Location_a8a74cb8824d5a186e2c73f0dbe953c5c}{area}} () const -\/$>$ VIPRA\+::f\+\_\+pnt
+\begin{DoxyCompactList}\small\item\em Returns the area of the rectangle. \end{DoxyCompactList}\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Location_a001b3ed7f2df6dc912703894588c3be0}\label{classVIPRA_1_1Behaviors_1_1Location_a001b3ed7f2df6dc912703894588c3be0} 
+constexpr auto {\bfseries center} () -\/$>$ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} \&
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Location_aee49745dc7e29cafff2af9e8288fe12c}\label{classVIPRA_1_1Behaviors_1_1Location_aee49745dc7e29cafff2af9e8288fe12c} 
+constexpr auto {\bfseries center} () const -\/$>$ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}}
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Location_a57b32f970ea7c63b359fd4edcd3cb9d1}\label{classVIPRA_1_1Behaviors_1_1Location_a57b32f970ea7c63b359fd4edcd3cb9d1} 
+constexpr auto {\bfseries dims} () -\/$>$ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} \&
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Location_ac9c9d3dca5fd37aab203c695fe081668}\label{classVIPRA_1_1Behaviors_1_1Location_ac9c9d3dca5fd37aab203c695fe081668} 
+constexpr auto {\bfseries dims} () const -\/$>$ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}}
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Location_a99072f2a113b19699feca99536faca91}\label{classVIPRA_1_1Behaviors_1_1Location_a99072f2a113b19699feca99536faca91} 
+constexpr auto {\bfseries rotation} () -\/$>$ VIPRA\+::f\+\_\+pnt \&
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Location_a582a5469655375c33f173e11c4382d32}\label{classVIPRA_1_1Behaviors_1_1Location_a582a5469655375c33f173e11c4382d32} 
+constexpr auto {\bfseries rotation} () const -\/$>$ VIPRA\+::f\+\_\+pnt
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Location_a447272c1301e8f05f65740cac9f41424}\label{classVIPRA_1_1Behaviors_1_1Location_a447272c1301e8f05f65740cac9f41424} 
+constexpr auto {\bfseries random\+\_\+point} (\mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{VIPRA\+::\+Random\+::\+Engine}} \&eng) const -\/$>$ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}}
+\item 
+constexpr auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Location_a68b53f7f4f5a4c017313d31298ca0d3e}{contains}} (\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} point) const -\/$>$ bool
+\begin{DoxyCompactList}\small\item\em Returns if the point is inside the rectangle. \end{DoxyCompactList}\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Location_a3252f4983716f0fd5c7d1d262b0fb14c}\label{classVIPRA_1_1Behaviors_1_1Location_a3252f4983716f0fd5c7d1d262b0fb14c} 
+void {\bfseries set\+\_\+center} (\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} center)
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Location_ab3cc75e70ec8a4304e4e35fc4a6daad7}\label{classVIPRA_1_1Behaviors_1_1Location_ab3cc75e70ec8a4304e4e35fc4a6daad7} 
+void {\bfseries set\+\_\+dims} (\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} dims)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A Location is an area in the map that is either predefined, such as the bathroom, or defined by a behavior created by the user. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Location_a8a74cb8824d5a186e2c73f0dbe953c5c}\label{classVIPRA_1_1Behaviors_1_1Location_a8a74cb8824d5a186e2c73f0dbe953c5c} 
+\index{VIPRA::Behaviors::Location@{VIPRA::Behaviors::Location}!area@{area}}
+\index{area@{area}!VIPRA::Behaviors::Location@{VIPRA::Behaviors::Location}}
+\doxysubsubsection{\texorpdfstring{area()}{area()}}
+{\footnotesize\ttfamily constexpr auto VIPRA\+::\+Behaviors\+::\+Location\+::area (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const -\/$>$ VIPRA\+::f\+\_\+pnt \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}}
+
+
+
+Returns the area of the rectangle. 
+
+\begin{DoxyReturn}{Returns}
+constexpr VIPRA\+::f\+\_\+pnt \+: area 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Location_a68b53f7f4f5a4c017313d31298ca0d3e}\label{classVIPRA_1_1Behaviors_1_1Location_a68b53f7f4f5a4c017313d31298ca0d3e} 
+\index{VIPRA::Behaviors::Location@{VIPRA::Behaviors::Location}!contains@{contains}}
+\index{contains@{contains}!VIPRA::Behaviors::Location@{VIPRA::Behaviors::Location}}
+\doxysubsubsection{\texorpdfstring{contains()}{contains()}}
+{\footnotesize\ttfamily constexpr auto VIPRA\+::\+Behaviors\+::\+Location\+::contains (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}}}]{point }\end{DoxyParamCaption}) const -\/$>$ bool \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}}
+
+
+
+Returns if the point is inside the rectangle. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em point} & \+: point to check \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true \+: if inside rectangle 
+
+false \+: if NOT inside rectangle 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/vipra/vipra\+\_\+behaviors/locations/location.\+hpp\end{DoxyCompactItemize}

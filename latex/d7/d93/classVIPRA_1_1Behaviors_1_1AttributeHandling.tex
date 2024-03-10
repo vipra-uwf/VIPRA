@@ -1,0 +1,233 @@
+\doxysection{VIPRA\+::Behaviors\+::Attribute\+Handling Class Reference}
+\hypertarget{classVIPRA_1_1Behaviors_1_1AttributeHandling}{}\label{classVIPRA_1_1Behaviors_1_1AttributeHandling}\index{VIPRA::Behaviors::AttributeHandling@{VIPRA::Behaviors::AttributeHandling}}
+
+
+Handles all getting/setting of attributes in Behaviors.  
+
+
+
+
+{\ttfamily \#include $<$attributes.\+hpp$>$}
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1AttributeHandling_1_1DeferedCleanup}{Defered\+Cleanup}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1AttributeHandling_ad83435c0020218b0423f05ea4b65aaa0}{get\+\_\+value}} (\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1Target}{Target}} target, Attribute attr, auto pack) -\/$>$ \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1CAttributeValue}{CAttribute\+Value}}
+\begin{DoxyCompactList}\small\item\em Returns the specified attribute value of the target. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1AttributeHandling_aac21db59e7afcb7b7d8927e272f2274d}{set\+\_\+value}} (\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1Target}{Target}} target, Attribute attr, auto pack, \mbox{\hyperlink{structVIPRA_1_1State}{VIPRA\+::\+State}} \&state, \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1CAttributeValue}{CAttribute\+Value}} value)
+\begin{DoxyCompactList}\small\item\em Sets a targets attribute value. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1AttributeHandling_a9c97e29640cead7f37e9bf8ea18d2b0b}{scale\+\_\+value}} (\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1Target}{Target}} target, Attribute attr, auto pack, \mbox{\hyperlink{structVIPRA_1_1State}{VIPRA\+::\+State}} \&state, \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1CAttributeValue}{CAttribute\+Value}} value)
+\begin{DoxyCompactList}\small\item\em Scales a targets attribute value. \end{DoxyCompactList}\item 
+static auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1AttributeHandling_a2637cc7ce6cacbdfe35c80a9b101b640}{is\+\_\+coord\+\_\+loc\+\_\+compare}} (\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1CAttributeValue}{CAttribute\+Value}} value1, \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1CAttributeValue}{CAttribute\+Value}} value2) -\/$>$ bool
+\begin{DoxyCompactList}\small\item\em Checks if the values are a coordinate and a value, returns true if so. \end{DoxyCompactList}\item 
+static auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1AttributeHandling_ae3dd5ead8aa2096a39ed94a8a6daf3ac}{coord\+\_\+loc\+\_\+compare}} (\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1CAttributeValue}{CAttribute\+Value}} value1, \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1CAttributeValue}{CAttribute\+Value}} value2, auto pack) -\/$>$ bool
+\begin{DoxyCompactList}\small\item\em Compares a coordinate and location, returns true if the coordinate is in the location. \end{DoxyCompactList}\item 
+static auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1AttributeHandling_a7f605c6b98e7e0156c8d42361983d991}{is\+\_\+equal}} (\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1CAttributeValue}{CAttribute\+Value}} value1, \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1CAttributeValue}{CAttribute\+Value}} value2, auto pack) -\/$>$ bool
+\begin{DoxyCompactList}\small\item\em Checks if two Attribute\+Values are equal. \end{DoxyCompactList}\item 
+static auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1AttributeHandling_ae534d13fab37898338187d0fa434ec52}{is\+\_\+not\+\_\+equal}} (\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1CAttributeValue}{CAttribute\+Value}} value1, \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1CAttributeValue}{CAttribute\+Value}} value2, auto pack) -\/$>$ bool
+\begin{DoxyCompactList}\small\item\em Checks if two Attribute\+Values are not equal. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename value\+\_\+t $>$ }\\static auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1AttributeHandling_afce65558b870ba3378be30fa2fee792d}{store\+\_\+value}} (Type type, value\+\_\+t \&\&value) -\/$>$ \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1CAttributeValue}{CAttribute\+Value}}
+\begin{DoxyCompactList}\small\item\em Adds an attribute value to the value store, for later use in atoms. \end{DoxyCompactList}\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1AttributeHandling_a6959fa6776ed482023879202dfcc2935}\label{classVIPRA_1_1Behaviors_1_1AttributeHandling_a6959fa6776ed482023879202dfcc2935} 
+static void {\bfseries cleanup} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Handles all getting/setting of attributes in Behaviors. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1AttributeHandling_ae3dd5ead8aa2096a39ed94a8a6daf3ac}\label{classVIPRA_1_1Behaviors_1_1AttributeHandling_ae3dd5ead8aa2096a39ed94a8a6daf3ac} 
+\index{VIPRA::Behaviors::AttributeHandling@{VIPRA::Behaviors::AttributeHandling}!coord\_loc\_compare@{coord\_loc\_compare}}
+\index{coord\_loc\_compare@{coord\_loc\_compare}!VIPRA::Behaviors::AttributeHandling@{VIPRA::Behaviors::AttributeHandling}}
+\doxysubsubsection{\texorpdfstring{coord\_loc\_compare()}{coord\_loc\_compare()}}
+{\footnotesize\ttfamily static auto VIPRA\+::\+Behaviors\+::\+Attribute\+Handling\+::coord\+\_\+loc\+\_\+compare (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1CAttributeValue}{CAttribute\+Value}}}]{value1,  }\item[{\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1CAttributeValue}{CAttribute\+Value}}}]{value2,  }\item[{auto}]{pack }\end{DoxyParamCaption}) -\/$>$ bool \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Compares a coordinate and location, returns true if the coordinate is in the location. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & \+: first value \\
+\hline
+{\em value2} & \+: second value \\
+\hline
+{\em pack} & \+: simulation pack \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true \+: if coordinate is in location 
+
+false \+: if not 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1AttributeHandling_ad83435c0020218b0423f05ea4b65aaa0}\label{classVIPRA_1_1Behaviors_1_1AttributeHandling_ad83435c0020218b0423f05ea4b65aaa0} 
+\index{VIPRA::Behaviors::AttributeHandling@{VIPRA::Behaviors::AttributeHandling}!get\_value@{get\_value}}
+\index{get\_value@{get\_value}!VIPRA::Behaviors::AttributeHandling@{VIPRA::Behaviors::AttributeHandling}}
+\doxysubsubsection{\texorpdfstring{get\_value()}{get\_value()}}
+{\footnotesize\ttfamily static auto VIPRA\+::\+Behaviors\+::\+Attribute\+Handling\+::get\+\_\+value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1Target}{Target}}}]{target,  }\item[{Attribute}]{attr,  }\item[{auto}]{pack }\end{DoxyParamCaption}) -\/$>$ \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1CAttributeValue}{CAttribute\+Value}} \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Returns the specified attribute value of the target. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em target} & \+: target to get attribute from \\
+\hline
+{\em attr} & \+: attribute type to get \\
+\hline
+{\em pack} & \+: simulation pack \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+CAttribute\+Value 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1AttributeHandling_a2637cc7ce6cacbdfe35c80a9b101b640}\label{classVIPRA_1_1Behaviors_1_1AttributeHandling_a2637cc7ce6cacbdfe35c80a9b101b640} 
+\index{VIPRA::Behaviors::AttributeHandling@{VIPRA::Behaviors::AttributeHandling}!is\_coord\_loc\_compare@{is\_coord\_loc\_compare}}
+\index{is\_coord\_loc\_compare@{is\_coord\_loc\_compare}!VIPRA::Behaviors::AttributeHandling@{VIPRA::Behaviors::AttributeHandling}}
+\doxysubsubsection{\texorpdfstring{is\_coord\_loc\_compare()}{is\_coord\_loc\_compare()}}
+{\footnotesize\ttfamily static auto VIPRA\+::\+Behaviors\+::\+Attribute\+Handling\+::is\+\_\+coord\+\_\+loc\+\_\+compare (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1CAttributeValue}{CAttribute\+Value}}}]{value1,  }\item[{\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1CAttributeValue}{CAttribute\+Value}}}]{value2 }\end{DoxyParamCaption}) -\/$>$ bool \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Checks if the values are a coordinate and a value, returns true if so. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & \+: first value \\
+\hline
+{\em value2} & \+: second value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true \+: if one is a coordinate and the other is a location 
+
+false \+: if not 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1AttributeHandling_a7f605c6b98e7e0156c8d42361983d991}\label{classVIPRA_1_1Behaviors_1_1AttributeHandling_a7f605c6b98e7e0156c8d42361983d991} 
+\index{VIPRA::Behaviors::AttributeHandling@{VIPRA::Behaviors::AttributeHandling}!is\_equal@{is\_equal}}
+\index{is\_equal@{is\_equal}!VIPRA::Behaviors::AttributeHandling@{VIPRA::Behaviors::AttributeHandling}}
+\doxysubsubsection{\texorpdfstring{is\_equal()}{is\_equal()}}
+{\footnotesize\ttfamily static auto VIPRA\+::\+Behaviors\+::\+Attribute\+Handling\+::is\+\_\+equal (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1CAttributeValue}{CAttribute\+Value}}}]{value1,  }\item[{\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1CAttributeValue}{CAttribute\+Value}}}]{value2,  }\item[{auto}]{pack }\end{DoxyParamCaption}) -\/$>$ bool \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Checks if two Attribute\+Values are equal. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & \+: first value \\
+\hline
+{\em value2} & \+: second value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true \+: if equal 
+
+false \+: if not equal or not same type 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1AttributeHandling_ae534d13fab37898338187d0fa434ec52}\label{classVIPRA_1_1Behaviors_1_1AttributeHandling_ae534d13fab37898338187d0fa434ec52} 
+\index{VIPRA::Behaviors::AttributeHandling@{VIPRA::Behaviors::AttributeHandling}!is\_not\_equal@{is\_not\_equal}}
+\index{is\_not\_equal@{is\_not\_equal}!VIPRA::Behaviors::AttributeHandling@{VIPRA::Behaviors::AttributeHandling}}
+\doxysubsubsection{\texorpdfstring{is\_not\_equal()}{is\_not\_equal()}}
+{\footnotesize\ttfamily static auto VIPRA\+::\+Behaviors\+::\+Attribute\+Handling\+::is\+\_\+not\+\_\+equal (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1CAttributeValue}{CAttribute\+Value}}}]{value1,  }\item[{\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1CAttributeValue}{CAttribute\+Value}}}]{value2,  }\item[{auto}]{pack }\end{DoxyParamCaption}) -\/$>$ bool \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Checks if two Attribute\+Values are not equal. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value1} & \+: first value \\
+\hline
+{\em value2} & \+: second value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true \+: if not equal 
+
+false \+: if equal or not same type 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1AttributeHandling_a9c97e29640cead7f37e9bf8ea18d2b0b}\label{classVIPRA_1_1Behaviors_1_1AttributeHandling_a9c97e29640cead7f37e9bf8ea18d2b0b} 
+\index{VIPRA::Behaviors::AttributeHandling@{VIPRA::Behaviors::AttributeHandling}!scale\_value@{scale\_value}}
+\index{scale\_value@{scale\_value}!VIPRA::Behaviors::AttributeHandling@{VIPRA::Behaviors::AttributeHandling}}
+\doxysubsubsection{\texorpdfstring{scale\_value()}{scale\_value()}}
+{\footnotesize\ttfamily static void VIPRA\+::\+Behaviors\+::\+Attribute\+Handling\+::scale\+\_\+value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1Target}{Target}}}]{target,  }\item[{Attribute}]{attr,  }\item[{auto}]{pack,  }\item[{\mbox{\hyperlink{structVIPRA_1_1State}{VIPRA\+::\+State}} \&}]{state,  }\item[{\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1CAttributeValue}{CAttribute\+Value}}}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Scales a targets attribute value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em target} & \+: target to scale the attribute of \\
+\hline
+{\em attr} & \+: attribute to scale \\
+\hline
+{\em pack} & \+: simulation pack \\
+\hline
+{\em state} & \+: timestep state \\
+\hline
+{\em value} & \+: value to scale attribute by \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1AttributeHandling_aac21db59e7afcb7b7d8927e272f2274d}\label{classVIPRA_1_1Behaviors_1_1AttributeHandling_aac21db59e7afcb7b7d8927e272f2274d} 
+\index{VIPRA::Behaviors::AttributeHandling@{VIPRA::Behaviors::AttributeHandling}!set\_value@{set\_value}}
+\index{set\_value@{set\_value}!VIPRA::Behaviors::AttributeHandling@{VIPRA::Behaviors::AttributeHandling}}
+\doxysubsubsection{\texorpdfstring{set\_value()}{set\_value()}}
+{\footnotesize\ttfamily static void VIPRA\+::\+Behaviors\+::\+Attribute\+Handling\+::set\+\_\+value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1Target}{Target}}}]{target,  }\item[{Attribute}]{attr,  }\item[{auto}]{pack,  }\item[{\mbox{\hyperlink{structVIPRA_1_1State}{VIPRA\+::\+State}} \&}]{state,  }\item[{\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1CAttributeValue}{CAttribute\+Value}}}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Sets a targets attribute value. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em target} & \+: target to set the attribute of \\
+\hline
+{\em attr} & \+: attribute to set \\
+\hline
+{\em pack} & \+: simulation pack \\
+\hline
+{\em state} & \+: timestep state \\
+\hline
+{\em value} & \+: value to set attribute to \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1AttributeHandling_afce65558b870ba3378be30fa2fee792d}\label{classVIPRA_1_1Behaviors_1_1AttributeHandling_afce65558b870ba3378be30fa2fee792d} 
+\index{VIPRA::Behaviors::AttributeHandling@{VIPRA::Behaviors::AttributeHandling}!store\_value@{store\_value}}
+\index{store\_value@{store\_value}!VIPRA::Behaviors::AttributeHandling@{VIPRA::Behaviors::AttributeHandling}}
+\doxysubsubsection{\texorpdfstring{store\_value()}{store\_value()}}
+{\footnotesize\ttfamily template$<$typename value\+\_\+t $>$ \\
+static auto VIPRA\+::\+Behaviors\+::\+Attribute\+Handling\+::store\+\_\+value (\begin{DoxyParamCaption}\item[{Type}]{type,  }\item[{value\+\_\+t \&\&}]{value }\end{DoxyParamCaption}) -\/$>$ \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1CAttributeValue}{CAttribute\+Value}} \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Adds an attribute value to the value store, for later use in atoms. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & \+: value type \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em type} & \+: attribute type \\
+\hline
+{\em value} & \+: attribute value \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+CAttribute\+Value 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/vipra/vipra\+\_\+behaviors/attributes/attributes.\+hpp\end{DoxyCompactItemize}

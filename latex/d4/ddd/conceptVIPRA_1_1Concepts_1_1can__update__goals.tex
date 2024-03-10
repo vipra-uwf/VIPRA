@@ -1,0 +1,31 @@
+\doxysection{VIPRA\+::Concepts\+::can\+\_\+update\+\_\+goals Concept Reference}
+\hypertarget{conceptVIPRA_1_1Concepts_1_1can__update__goals}{}\label{conceptVIPRA_1_1Concepts_1_1can__update__goals}\index{VIPRA::Concepts::can\_update\_goals@{VIPRA::Concepts::can\_update\_goals}}
+
+
+Checks that a type can be updated following the goals interface.  
+
+
+
+
+{\ttfamily \#include $<$goals.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ goals\_t>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__update__goals}{VIPRA::Concepts::can\_update\_goals}}\ =\ \ \textcolor{keyword}{requires}(goals\_t\ goals,\ DummyPedSet\ \textcolor{keyword}{const}\&\ pedset,\ DummyMap\ \textcolor{keyword}{const}\&\ map)\ \{}
+\DoxyCodeLine{\ \ \{goals.update(pedset,\ map,\ VIPRA::delta\_t\{\})\};}
+\DoxyCodeLine{\ \ \{goals.change\_end\_goal(VIPRA::idx\{\},\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\{\})\};}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Checks that a type can be updated following the goals interface. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em goals\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}

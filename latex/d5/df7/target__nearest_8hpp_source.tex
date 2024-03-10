@@ -1,0 +1,86 @@
+\doxysection{target\+\_\+nearest.\+hpp}
+\hypertarget{target__nearest_8hpp_source}{}\label{target__nearest_8hpp_source}\index{include/vipra/vipra\_behaviors/targets/target\_selectors/target\_nearest.hpp@{include/vipra/vipra\_behaviors/targets/target\_selectors/target\_nearest.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <limits>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <optional>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}vipra/geometry/f3d.hpp"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/definitions/pedestrian\_types.hpp"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/definitions/sim\_pack.hpp"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/targets/target.hpp"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/targets/target\_modifier.hpp"{}}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }VIPRA::Behaviors\ \{}
+\DoxyCodeLine{00018\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ modifier\_t>}
+\DoxyCodeLine{00019\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1TargetNearest}{TargetNearest}}\ \{}
+\DoxyCodeLine{00020\ \ \ NON\_DEFAULT\_CONSTRUCTIBLE(\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1TargetNearest}{TargetNearest}})}
+\DoxyCodeLine{00021\ \ \ COPYABLE(\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1TargetNearest}{TargetNearest}})}
+\DoxyCodeLine{00022\ \ \ MOVEABLE(\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1TargetNearest}{TargetNearest}})}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ type;}
+\DoxyCodeLine{00025\ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ allPeds;}
+\DoxyCodeLine{00026\ \ \ std::optional<modifier\_t>\ modifier;}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1TargetNearest}{TargetNearest}}(\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}}\ type,\ \textcolor{keywordtype}{bool}\ allPeds\ =\ \textcolor{keyword}{false},\ std::optional<modifier\_t>\ modifier\ =\ std::nullopt)}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ :\ type(type),\ allPeds(allPeds),\ modifier(modifier)\ \{\}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00038\ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1TargetNearest_a3d5f608671bc82c408ee808a7a835865}{operator()}}(\textcolor{keyword}{auto}\ pack,\ \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1Self}{Self}}\ self)\ \textcolor{keyword}{const}\ -\/>\ \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1Target}{Target}}\ \{}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordflow}{if}\ (allPeds)\ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \textcolor{keyword}{auto}\ curr\ =\ nearest\_in\_group(pack,\ self.target.targetIdx,\ pack.groups.get\_group(0));}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (curr.second\ ==\ VIPRA::INVALID\_IDX)\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1Target}{Target}}\{TargetType::INVALID,\ 0\};}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{TargetType::PEDESTRIAN,\ curr.second\};}
+\DoxyCodeLine{00043\ \ \ \ \ \}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ VIPRA::f\_pnt\ shortest\ =\ std::numeric\_limits<VIPRA::f\_pnt>::max();}
+\DoxyCodeLine{00046\ \ \ \ \ VIPRA::idx\ \ \ nearest\ =\ VIPRA::INVALID\_IDX;}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ type.\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype_af16ee80987f84f82fe96a2c46d828790}{for\_each\_type}}([\&](typeUID\ type)\ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ VIPRA::idx\ groupIdx\ =\ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1GroupsContainer_ab9f0753e471101b2bd77c4749420181f}{GroupsContainer::index}}(type);}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \ \ \ \ \ \ curr\ =\ nearest\_in\_group(pack,\ self.target.targetIdx,\ pack.groups.get\_group(groupIdx));}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (curr.first\ <\ shortest)\ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ shortest\ =\ curr.first;}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ nearest\ =\ curr.second;}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00055\ \ \ \ \ \});}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordflow}{if}\ (nearest\ ==\ VIPRA::INVALID\_IDX)\ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1Target}{Target}}\{TargetType::INVALID,\ 0\};}
+\DoxyCodeLine{00059\ \ \ \ \ \}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1Target}{Target}}\{TargetType::PEDESTRIAN,\ nearest\};}
+\DoxyCodeLine{00062\ \ \ \}}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00073\ \ \ [[nodiscard]]\ \textcolor{keyword}{inline}\ \textcolor{keyword}{auto}\ nearest\_in\_group(\textcolor{keyword}{auto}\ pack,\ VIPRA::idx\ self,\ VIPRA::idxVec\ \textcolor{keyword}{const}\&\ idxs)\ \textcolor{keyword}{const}}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ -\/>\ std::pair<VIPRA::f\_pnt,\ VIPRA::idx>\ \{}
+\DoxyCodeLine{00075\ \ \ \ \ VIPRA::f\_pnt\ shortest\ =\ std::numeric\_limits<VIPRA::f\_pnt>::max();}
+\DoxyCodeLine{00076\ \ \ \ \ VIPRA::idx\ \ \ nearest\ =\ VIPRA::INVALID\_IDX;}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&\ \ \ \ \ \ coords\ =\ pack.pedset.all\_coords();}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ currCoords\ =\ coords[self];}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordflow}{for}\ (VIPRA::idx\ pedIdx\ :\ idxs)\ \{}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pedIdx\ ==\ self)\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (modifier)\ \{}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!modifier-\/>check(pack,\ pedIdx,\ self))\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pack.obsset.ray\_hit(currCoords,\ coords[pedIdx])\ !=\ -\/1)\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ \ \ VIPRA::f\_pnt\ curr\ =\ currCoords.distance\_to(coords[pedIdx]);}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (curr\ <\ shortest)\ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ shortest\ =\ curr;}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ nearest\ =\ pedIdx;}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00095\ \ \ \ \ \}}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordflow}{return}\ \{shortest,\ nearest\};}
+\DoxyCodeLine{00097\ \ \ \}}
+\DoxyCodeLine{00098\ \};}
+\DoxyCodeLine{00099\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA::Behaviors}}
+
+\end{DoxyCode}

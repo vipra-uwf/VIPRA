@@ -1,0 +1,30 @@
+\doxysection{VIPRA\+::Concepts\+::can\+\_\+initialize\+\_\+map Concept Reference}
+\hypertarget{conceptVIPRA_1_1Concepts_1_1can__initialize__map}{}\label{conceptVIPRA_1_1Concepts_1_1can__initialize__map}\index{VIPRA::Concepts::can\_initialize\_map@{VIPRA::Concepts::can\_initialize\_map}}
+
+
+Checks that a type can be initialized following the map module interface.  
+
+
+
+
+{\ttfamily \#include $<$map.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ map\_t>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__initialize__map}{VIPRA::Concepts::can\_initialize\_map}}\ =\ \ \textcolor{keyword}{requires}(map\_t\ map,\ DummyPedSet\ \textcolor{keyword}{const}\&\ pedset)\ \{}
+\DoxyCodeLine{\ \ \{map.initialize(pedset)\};}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Checks that a type can be initialized following the map module interface. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em map\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}

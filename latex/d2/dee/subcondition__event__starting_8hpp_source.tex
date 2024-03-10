@@ -1,0 +1,30 @@
+\doxysection{subcondition\+\_\+event\+\_\+starting.\+hpp}
+\hypertarget{subcondition__event__starting_8hpp_source}{}\label{subcondition__event__starting_8hpp_source}\index{include/vipra/vipra\_behaviors/conditions/subconditions/subcondition\_event\_starting.hpp@{include/vipra/vipra\_behaviors/conditions/subconditions/subcondition\_event\_starting.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/conditions/sub\_condition.hpp"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/definitions/sim\_pack.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/events/event.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/util/class\_types.hpp"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }VIPRA::Behaviors\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1SubConditionEventStarting}{SubConditionEventStarting}}\ \{}
+\DoxyCodeLine{00010\ \ \ NON\_DEFAULT\_CONSTRUCTIBLE(\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1SubConditionEventStarting}{SubConditionEventStarting}})}
+\DoxyCodeLine{00011\ \ \ COPYABLE(\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1SubConditionEventStarting}{SubConditionEventStarting}})}
+\DoxyCodeLine{00012\ \ \ MOVEABLE(\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1SubConditionEventStarting}{SubConditionEventStarting}})}
+\DoxyCodeLine{00013\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1SubConditionEventStarting}{SubConditionEventStarting}}(VIPRA::idx\ event)\ :\ \_event(event)\ \{\}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \textcolor{keywordtype}{void}\ operator()(\textcolor{keyword}{auto}\ pack,\ \textcolor{keyword}{const}\ VIPRA::idxVec\&\ \textcolor{comment}{/*unused*/},\ std::vector<Target>\ \textcolor{keyword}{const}\&\ \textcolor{comment}{/*unused*/},}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<bool>\&\ met,\ std::vector<bool>\ \textcolor{keyword}{const}\&\ \textcolor{comment}{/*unused*/},\ BoolOp\ \textcolor{comment}{/*unused*/})\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00018\ \ \ \ \ std::fill(met.begin(),\ met.end(),\ pack.context.events[\_event].is\_starting());}
+\DoxyCodeLine{00019\ \ \ \}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00022\ \ \ VIPRA::idx\ \_event;}
+\DoxyCodeLine{00023\ \};}
+\DoxyCodeLine{00024\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA::Behaviors}}
+
+\end{DoxyCode}

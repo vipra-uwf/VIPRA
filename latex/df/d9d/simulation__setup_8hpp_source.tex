@@ -1,0 +1,54 @@
+\doxysection{simulation\+\_\+setup.\+hpp}
+\hypertarget{simulation__setup_8hpp_source}{}\label{simulation__setup_8hpp_source}\index{include/vipra/simulation/simulation\_setup.hpp@{include/vipra/simulation/simulation\_setup.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/parameters.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}vipra/simulation/module\_checks.hpp"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}vipra/simulation/sim\_type.hpp"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}vipra/util/find\_index.hpp"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }VIPRA\ \{}
+\DoxyCodeLine{00011\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}...\ args\_t>}
+\DoxyCodeLine{00012\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ simulation(args\_t...\ args)\ \{}
+\DoxyCodeLine{00013\ \ \ \textcolor{comment}{//\ Finds\ the\ index\ for\ each\ module\ type}}
+\DoxyCodeLine{00014\ \ \ \textcolor{keyword}{constexpr}\ std::size\_t\ OUTPUT\_IDX\ =\ Util::FindIndex<0,\ Checks::OutputCoord,\ args\_t...>::value;}
+\DoxyCodeLine{00015\ \ \ \textcolor{keyword}{constexpr}\ std::size\_t\ MODEL\_IDX\ =\ Util::FindIndex<0,\ Checks::Model,\ args\_t...>::value;}
+\DoxyCodeLine{00016\ \ \ \textcolor{keyword}{constexpr}\ std::size\_t\ PEDSET\_IDX\ =\ Util::FindIndex<0,\ Checks::Pedset,\ args\_t...>::value;}
+\DoxyCodeLine{00017\ \ \ \textcolor{keyword}{constexpr}\ std::size\_t\ GOALS\_IDX\ =\ Util::FindIndex<0,\ Checks::Goals,\ args\_t...>::value;}
+\DoxyCodeLine{00018\ \ \ \textcolor{keyword}{constexpr}\ std::size\_t\ MAP\_IDX\ =\ Util::FindIndex<0,\ Checks::Map,\ args\_t...>::value;}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \textcolor{comment}{//\ Static\ asserts\ to\ ensure\ that\ the\ modules\ are\ valid}}
+\DoxyCodeLine{00021\ \ \ \textcolor{keyword}{static\_assert}(OUTPUT\_IDX\ !=\ -\/1,}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Output\ Module\ does\ Not\ conform\ to\ the\ Output\ Module\ specification\ OR\ A\ valid\ Output\ Module\ "{}}}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}was\ not\ provided"{}});}
+\DoxyCodeLine{00024\ \ \ \textcolor{keyword}{static\_assert}(MODEL\_IDX\ !=\ -\/1,}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Model\ Module\ does\ Not\ conform\ to\ the\ Model\ Module\ specification\ OR\ A\ valid\ Model\ Module\ was\ "{}}}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}not\ provided"{}});}
+\DoxyCodeLine{00027\ \ \ \textcolor{keyword}{static\_assert}(PEDSET\_IDX\ !=\ -\/1,}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Pedset\ Module\ does\ Not\ conform\ to\ the\ Pedset\ Module\ specification\ OR\ A\ valid\ Pedset\ Module\ "{}}}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}was\ not\ provided"{}});}
+\DoxyCodeLine{00030\ \ \ \textcolor{keyword}{static\_assert}(GOALS\_IDX\ !=\ -\/1,}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Goals\ Module\ does\ Not\ conform\ to\ the\ Goals\ Module\ specification\ OR\ A\ valid\ Goals\ Module\ was\ "{}}}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}not\ provided"{}});}
+\DoxyCodeLine{00033\ \ \ \textcolor{keyword}{static\_assert}(MAP\_IDX\ !=\ -\/1,}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Map\ Module\ does\ Not\ conform\ to\ the\ Map\ Module\ specification\ OR\ A\ valid\ Map\ "{}}}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Module\ was\ not\ provided"{}});}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \textcolor{keyword}{auto}\&\&\ temp\ =\ std::forward\_as\_tuple(args...);}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \textcolor{comment}{//\ Returns\ the\ SimType\ object}}
+\DoxyCodeLine{00040\ \ \ \textcolor{keyword}{auto}\ sim\ =\ SimType(std::move(std::get<OUTPUT\_IDX>(temp)),\ std::move(std::get<MODEL\_IDX>(temp)),}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::move(std::get<PEDSET\_IDX>(temp)),\ std::move(std::get<GOALS\_IDX>(temp)),}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::move(std::get<MAP\_IDX>(temp)));}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \textcolor{comment}{//\ sim.reconfig();}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \textcolor{keywordflow}{return}\ sim;}
+\DoxyCodeLine{00047\ \}}
+\DoxyCodeLine{00048\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA}}
+
+\end{DoxyCode}

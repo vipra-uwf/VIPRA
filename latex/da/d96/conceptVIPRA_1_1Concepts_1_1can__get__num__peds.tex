@@ -1,0 +1,30 @@
+\doxysection{VIPRA\+::Concepts\+::can\+\_\+get\+\_\+num\+\_\+peds Concept Reference}
+\hypertarget{conceptVIPRA_1_1Concepts_1_1can__get__num__peds}{}\label{conceptVIPRA_1_1Concepts_1_1can__get__num__peds}\index{VIPRA::Concepts::can\_get\_num\_peds@{VIPRA::Concepts::can\_get\_num\_peds}}
+
+
+Checks that a type can get the number of pedestrians.  
+
+
+
+
+{\ttfamily \#include $<$pedset.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ pedset\_t>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__get__num__peds}{VIPRA::Concepts::can\_get\_num\_peds}}\ =\ \ \textcolor{keyword}{requires}(\textcolor{keyword}{const}\ pedset\_t\ pedset)\ \{}
+\DoxyCodeLine{\ \ \{\ pedset.num\_pedestrians()\ \}\ -\/>\ std::same\_as<VIPRA::size>;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Checks that a type can get the number of pedestrians. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em pedset\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}

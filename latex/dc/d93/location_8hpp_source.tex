@@ -1,0 +1,135 @@
+\doxysection{location.\+hpp}
+\hypertarget{location_8hpp_source}{}\label{location_8hpp_source}\index{include/vipra/vipra\_behaviors/locations/location.hpp@{include/vipra/vipra\_behaviors/locations/location.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}vipra/geometry/f3d.hpp"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}vipra/random/distributions.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}vipra/random/random.hpp"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/util/class\_types.hpp"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }VIPRA::Behaviors\ \{}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Location}{Location}}\ \{}
+\DoxyCodeLine{00016\ \ \ NON\_DEFAULT\_CONSTRUCTIBLE(\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Location}{Location}})}
+\DoxyCodeLine{00017\ \ \ COPYABLE(\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Location}{Location}})}
+\DoxyCodeLine{00018\ \ \ MOVEABLE(\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Location}{Location}})}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00021\ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Location}{Location}}(\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ center,\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ dims)\ :\ \_center(center),\ \_dims(dims),\ \_area(0)\ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \_p1.x\ =\ center.x\ +\ (dims.x\ /\ 2);}
+\DoxyCodeLine{00023\ \ \ \ \ \_p1.y\ =\ center.y\ +\ (dims.y\ /\ 2);}
+\DoxyCodeLine{00024\ \ \ \ \ \_p2.x\ =\ center.x\ -\/\ (dims.x\ /\ 2);}
+\DoxyCodeLine{00025\ \ \ \ \ \_p2.y\ =\ center.y\ +\ (dims.y\ /\ 2);}
+\DoxyCodeLine{00026\ \ \ \ \ \_p3.x\ =\ center.x\ -\/\ (dims.x\ /\ 2);}
+\DoxyCodeLine{00027\ \ \ \ \ \_p3.y\ =\ center.y\ -\/\ (dims.y\ /\ 2);}
+\DoxyCodeLine{00028\ \ \ \ \ \_p4.x\ =\ center.x\ +\ (dims.x\ /\ 2);}
+\DoxyCodeLine{00029\ \ \ \ \ \_p4.y\ =\ center.y\ -\/\ (dims.y\ /\ 2);}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{comment}{//\ NOLINTNEXTLINE\ incorrect\ error}}
+\DoxyCodeLine{00031\ \ \ \ \ \_area\ =\ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Location_a8a74cb8824d5a186e2c73f0dbe953c5c}{area}}()\ +\ AREA\_ERROR;}
+\DoxyCodeLine{00032\ \ \ \}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Location}{Location}}(\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ center,\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ dims,\ VIPRA::f\_pnt\ rot)}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ :\ \_center(center),\ \_dims(dims),\ \_rot(rot),\ \_area(0)\ \{}
+\DoxyCodeLine{00036\ \ \ \ \ \_p1.x\ =\ center.x\ +\ ((dims.x\ /\ 2)\ *\ std::cos(rot))\ -\/\ ((dims.y\ /\ 2)\ *\ std::sin(rot));}
+\DoxyCodeLine{00037\ \ \ \ \ \_p1.y\ =\ center.y\ +\ ((dims.x\ /\ 2)\ *\ std::sin(rot))\ +\ ((dims.y\ /\ 2)\ *\ std::cos(rot));}
+\DoxyCodeLine{00038\ \ \ \ \ \_p2.x\ =\ center.x\ -\/\ ((dims.x\ /\ 2)\ *\ std::cos(rot))\ -\/\ ((dims.y\ /\ 2)\ *\ std::sin(rot));}
+\DoxyCodeLine{00039\ \ \ \ \ \_p2.y\ =\ center.y\ -\/\ ((dims.x\ /\ 2)\ *\ std::sin(rot))\ +\ ((dims.y\ /\ 2)\ *\ std::cos(rot));}
+\DoxyCodeLine{00040\ \ \ \ \ \_p3.x\ =\ center.x\ -\/\ ((dims.x\ /\ 2)\ *\ std::cos(rot))\ +\ ((dims.y\ /\ 2)\ *\ std::sin(rot));}
+\DoxyCodeLine{00041\ \ \ \ \ \_p3.y\ =\ center.y\ -\/\ ((dims.x\ /\ 2)\ *\ std::sin(rot))\ -\/\ ((dims.y\ /\ 2)\ *\ std::cos(rot));}
+\DoxyCodeLine{00042\ \ \ \ \ \_p4.x\ =\ center.x\ +\ ((dims.x\ /\ 2)\ *\ std::cos(rot))\ +\ ((dims.y\ /\ 2)\ *\ std::sin(rot));}
+\DoxyCodeLine{00043\ \ \ \ \ \_p4.y\ =\ center.y\ +\ ((dims.x\ /\ 2)\ *\ std::sin(rot))\ -\/\ ((dims.y\ /\ 2)\ *\ std::cos(rot));}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{comment}{//\ NOLINTNEXTLINE\ incorrect\ error}}
+\DoxyCodeLine{00045\ \ \ \ \ \_area\ =\ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Location_a8a74cb8824d5a186e2c73f0dbe953c5c}{area}}()\ +\ AREA\_ERROR;}
+\DoxyCodeLine{00046\ \ \ \}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00053\ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Location_a8a74cb8824d5a186e2c73f0dbe953c5c}{area}}()\ const\ -\/>\ VIPRA::f\_pnt\ \{}
+\DoxyCodeLine{00054\ \ \ \ \ VIPRA::f\_pnt\ area1\ =\ triangle\_area(\_p1,\ \_p2,\ \_p3);}
+\DoxyCodeLine{00055\ \ \ \ \ VIPRA::f\_pnt\ area2\ =\ triangle\_area(\_p1,\ \_p3,\ \_p4);}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordflow}{return}\ (area1\ +=\ area2);}
+\DoxyCodeLine{00058\ \ \ \}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ center()\ -\/>\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\&\ \{\ \textcolor{keywordflow}{return}\ \_center;\ \}}
+\DoxyCodeLine{00061\ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ center()\ const\ -\/>\ VIPRA::\mbox{\hyperlink{structVIPRA_1_1f3d}{f3d}}\ \{\ \textcolor{keywordflow}{return}\ \_center;\ \}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ dims()\ -\/>\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\&\ \{\ \textcolor{keywordflow}{return}\ \_dims;\ \}}
+\DoxyCodeLine{00064\ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ dims()\ const\ -\/>\ VIPRA::f3d\ \{\ \textcolor{keywordflow}{return}\ \_dims;\ \}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ rotation()\ -\/>\ VIPRA::f\_pnt\&\ \{\ \textcolor{keywordflow}{return}\ \_rot;\ \}}
+\DoxyCodeLine{00067\ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ rotation()\ const\ -\/>\ VIPRA::f\_pnt\ \{\ \textcolor{keywordflow}{return}\ \_rot;\ \}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ random\_point(\mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{VIPRA::Random::Engine}}\&\ eng)\ \textcolor{keyword}{const}\ -\/>\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ \{}
+\DoxyCodeLine{00070\ \ \ \ \ \mbox{\hyperlink{classVIPRA_1_1Random_1_1uniform__distribution}{VIPRA::Random::uniform\_distribution<>}}\ wDistr\{0,\ \_dims.x\};}
+\DoxyCodeLine{00071\ \ \ \ \ \mbox{\hyperlink{classVIPRA_1_1Random_1_1uniform__distribution}{VIPRA::Random::uniform\_distribution<>}}\ hDistr\{0,\ \_dims.y\};}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ VIPRA::f\_pnt\ rotSin\ =\ std::sin(\_rot);}
+\DoxyCodeLine{00074\ \ \ \ \ VIPRA::f\_pnt\ rotCos\ =\ std::cos(\_rot);}
+\DoxyCodeLine{00075\ \ \ \ \ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ \ \ point\{wDistr(eng),\ hDistr(eng)\};}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ point.x\ =\ (point.x\ *\ rotCos\ -\/\ point.y\ *\ rotSin)\ +\ \_center.x;}
+\DoxyCodeLine{00078\ \ \ \ \ point.y\ =\ (point.x\ *\ rotSin\ +\ point.y\ *\ rotCos)\ +\ \_center.y;}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordflow}{return}\ point;}
+\DoxyCodeLine{00081\ \ \ \}}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00090\ \ \ [[nodiscard]]\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Location_a68b53f7f4f5a4c017313d31298ca0d3e}{contains}}(\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ point)\ \textcolor{keyword}{const}\ -\/>\ \textcolor{keywordtype}{bool}\ \{}
+\DoxyCodeLine{00091\ \ \ \ \ VIPRA::f\_pnt\ areaTri1\ =\ triangle\_area(\_p1,\ \_p2,\ point);}
+\DoxyCodeLine{00092\ \ \ \ \ VIPRA::f\_pnt\ areaTri2\ =\ triangle\_area(\_p2,\ \_p3,\ point);}
+\DoxyCodeLine{00093\ \ \ \ \ VIPRA::f\_pnt\ areaTri3\ =\ triangle\_area(\_p3,\ \_p4,\ point);}
+\DoxyCodeLine{00094\ \ \ \ \ VIPRA::f\_pnt\ areaTri4\ =\ triangle\_area(\_p4,\ \_p1,\ point);}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordflow}{return}\ (areaTri1\ +=\ areaTri2\ +=\ areaTri3\ +=\ areaTri4)\ <=\ \_area;}
+\DoxyCodeLine{00097\ \ \ \}}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \ \ \textcolor{keywordtype}{void}\ set\_center(\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ center)\ \{}
+\DoxyCodeLine{00100\ \ \ \ \ \_center\ =\ center;}
+\DoxyCodeLine{00101\ \ \ \ \ \_p1.x\ =\ center.x\ +\ (\_dims.x\ /\ 2);}
+\DoxyCodeLine{00102\ \ \ \ \ \_p1.y\ =\ center.y\ +\ (\_dims.y\ /\ 2);}
+\DoxyCodeLine{00103\ \ \ \ \ \_p2.x\ =\ center.x\ -\/\ (\_dims.x\ /\ 2);}
+\DoxyCodeLine{00104\ \ \ \ \ \_p2.y\ =\ center.y\ +\ (\_dims.y\ /\ 2);}
+\DoxyCodeLine{00105\ \ \ \ \ \_p3.x\ =\ center.x\ -\/\ (\_dims.x\ /\ 2);}
+\DoxyCodeLine{00106\ \ \ \ \ \_p3.y\ =\ center.y\ -\/\ (\_dims.y\ /\ 2);}
+\DoxyCodeLine{00107\ \ \ \ \ \_p4.x\ =\ center.x\ +\ (\_dims.x\ /\ 2);}
+\DoxyCodeLine{00108\ \ \ \ \ \_p4.y\ =\ center.y\ -\/\ (\_dims.y\ /\ 2);}
+\DoxyCodeLine{00109\ \ \ \}}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \ \ \textcolor{keywordtype}{void}\ set\_dims(\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ dims)\ \{}
+\DoxyCodeLine{00112\ \ \ \ \ \_dims\ =\ dims;}
+\DoxyCodeLine{00113\ \ \ \ \ \_p1.x\ =\ \_center.x\ +\ (\_dims.x\ /\ 2);}
+\DoxyCodeLine{00114\ \ \ \ \ \_p1.y\ =\ \_center.y\ +\ (\_dims.y\ /\ 2);}
+\DoxyCodeLine{00115\ \ \ \ \ \_p2.x\ =\ \_center.x\ -\/\ (\_dims.x\ /\ 2);}
+\DoxyCodeLine{00116\ \ \ \ \ \_p2.y\ =\ \_center.y\ +\ (\_dims.y\ /\ 2);}
+\DoxyCodeLine{00117\ \ \ \ \ \_p3.x\ =\ \_center.x\ -\/\ (\_dims.x\ /\ 2);}
+\DoxyCodeLine{00118\ \ \ \ \ \_p3.y\ =\ \_center.y\ -\/\ (\_dims.y\ /\ 2);}
+\DoxyCodeLine{00119\ \ \ \ \ \_p4.x\ =\ \_center.x\ +\ (\_dims.x\ /\ 2);}
+\DoxyCodeLine{00120\ \ \ \ \ \_p4.y\ =\ \_center.y\ -\/\ (\_dims.y\ /\ 2);}
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{comment}{//\ NOLINTNEXTLINE\ incorrect\ error}}
+\DoxyCodeLine{00122\ \ \ \ \ \_area\ =\ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Location_a8a74cb8824d5a186e2c73f0dbe953c5c}{area}}()\ +\ AREA\_ERROR;}
+\DoxyCodeLine{00123\ \ \ \}}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00126\ \ \ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ \ \ \_p1;}
+\DoxyCodeLine{00127\ \ \ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ \ \ \_p2;}
+\DoxyCodeLine{00128\ \ \ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ \ \ \_p3;}
+\DoxyCodeLine{00129\ \ \ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ \ \ \_p4;}
+\DoxyCodeLine{00130\ \ \ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ \ \ \_center;}
+\DoxyCodeLine{00131\ \ \ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ \ \ \_dims;}
+\DoxyCodeLine{00132\ \ \ VIPRA::f\_pnt\ \_rot\{\};}
+\DoxyCodeLine{00133\ \ \ VIPRA::f\_pnt\ \_area;}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ VIPRA::f\_pnt\ AREA\_ERROR\ =\ 0.0001;}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00145\ \ \ [[nodiscard]]\ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ triangle\_area(\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ point1,\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ point2,\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ point3)}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ -\/>\ VIPRA::f\_pnt\ \{}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keywordflow}{return}\ std::abs((point2.x\ *\ point1.y\ -\/\ point1.x\ *\ point2.y)\ +}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (point3.x\ *\ point2.y\ -\/\ point2.x\ *\ point3.y)\ +}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (point1.x\ *\ point3.y\ -\/\ point3.x\ *\ point1.y))\ /}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ 2;}
+\DoxyCodeLine{00151\ \ \ \}}
+\DoxyCodeLine{00152\ \};}
+\DoxyCodeLine{00153\ \}\ \ \textcolor{comment}{//namespace\ VIPRA::Behaviors}}
+
+\end{DoxyCode}

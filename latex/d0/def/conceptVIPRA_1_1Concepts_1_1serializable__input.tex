@@ -1,0 +1,28 @@
+\doxysection{VIPRA\+::Concepts\+::serializable\+\_\+input Concept Reference}
+\hypertarget{conceptVIPRA_1_1Concepts_1_1serializable__input}{}\label{conceptVIPRA_1_1Concepts_1_1serializable__input}\index{VIPRA::Concepts::serializable\_input@{VIPRA::Concepts::serializable\_input}}
+
+
+Checks that a type is a serializable input module.  
+
+
+
+
+{\ttfamily \#include $<$serializable\+\_\+input.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ input\_t>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1serializable__input}{VIPRA::Concepts::serializable\_input}}\ =\ \ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1InputModule}{InputModule<input\_t>}}\ \&\&\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1serializable}{serializable<input\_t>}}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Checks that a type is a serializable input module. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em input\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}

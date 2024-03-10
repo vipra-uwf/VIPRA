@@ -1,0 +1,117 @@
+\doxysection{VIPRA\+::Random\+::Engine Class Reference}
+\hypertarget{classVIPRA_1_1Random_1_1Engine}{}\label{classVIPRA_1_1Random_1_1Engine}\index{VIPRA::Random::Engine@{VIPRA::Random::Engine}}
+
+
+Psuedo Random number engine.  
+
+
+
+
+{\ttfamily \#include $<$random.\+hpp$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classVIPRA_1_1Random_1_1Engine_a2b7064325adcad56455dc97dc43a1d8b}\label{classVIPRA_1_1Random_1_1Engine_a2b7064325adcad56455dc97dc43a1d8b} 
+using {\bfseries result\+\_\+type} = uint64\+\_\+t
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classVIPRA_1_1Random_1_1Engine_ab89dc1e2ffef0ed68ba0b5f2128167bc}\label{classVIPRA_1_1Random_1_1Engine_ab89dc1e2ffef0ed68ba0b5f2128167bc} 
+{\bfseries Engine} (uint64\+\_\+t seed\+Val)
+\item 
+auto \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine_a6ede0ac74268d511e148682b3fbe114c}{operator()}} () noexcept -\/$>$ uint64\+\_\+t
+\begin{DoxyCompactList}\small\item\em Produces the next pseudo random number in the sequence, uses Lehmer\textquotesingle{}s generator. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine_a49e677f0a9609ce76b96a0e855da75e1}{reseed}} (uint64\+\_\+t seed\+Num) noexcept
+\begin{DoxyCompactList}\small\item\em Restarts the number generator with a new seed. \end{DoxyCompactList}\item 
+\Hypertarget{classVIPRA_1_1Random_1_1Engine_afe965afddb3b7b59969fefbccd4c63bd}\label{classVIPRA_1_1Random_1_1Engine_afe965afddb3b7b59969fefbccd4c63bd} 
+{\bfseries Engine} (const \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{Engine}} \&)=default
+\item 
+\Hypertarget{classVIPRA_1_1Random_1_1Engine_a144e5f5d48e32957a5554ae57b70a3c4}\label{classVIPRA_1_1Random_1_1Engine_a144e5f5d48e32957a5554ae57b70a3c4} 
+{\bfseries Engine} (\mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{Engine}} \&\&) noexcept=default
+\item 
+\Hypertarget{classVIPRA_1_1Random_1_1Engine_ac511b9d91085be582ade3368772a86a3}\label{classVIPRA_1_1Random_1_1Engine_ac511b9d91085be582ade3368772a86a3} 
+auto {\bfseries operator=} (const \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{Engine}} \&) -\/$>$ \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{Engine}} \&=default
+\item 
+\Hypertarget{classVIPRA_1_1Random_1_1Engine_adc46a94f1b175157367112e622d11c6a}\label{classVIPRA_1_1Random_1_1Engine_adc46a94f1b175157367112e622d11c6a} 
+auto {\bfseries operator=} (\mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{Engine}} \&\&) noexcept -\/$>$ \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{Engine}} \&=default
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr auto \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine_a3caead5675755726b36dfc14dad6c0ba}{min}} () noexcept -\/$>$ uint64\+\_\+t
+\begin{DoxyCompactList}\small\item\em Returns the minimum number possible. \end{DoxyCompactList}\item 
+static constexpr auto \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine_a709ce38c547084a3a17861b8772c002e}{max}} () noexcept -\/$>$ uint64\+\_\+t
+\begin{DoxyCompactList}\small\item\em Returns the maximum number possible. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classVIPRA_1_1Random_1_1Engine_a0d7ac3710a18bbcbeeda27c20e2825ca}\label{classVIPRA_1_1Random_1_1Engine_a0d7ac3710a18bbcbeeda27c20e2825ca} 
+static constexpr uint64\+\_\+t {\bfseries DEFAULT\+\_\+\+SEED} = 12345
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Psuedo Random number engine. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classVIPRA_1_1Random_1_1Engine_a709ce38c547084a3a17861b8772c002e}\label{classVIPRA_1_1Random_1_1Engine_a709ce38c547084a3a17861b8772c002e} 
+\index{VIPRA::Random::Engine@{VIPRA::Random::Engine}!max@{max}}
+\index{max@{max}!VIPRA::Random::Engine@{VIPRA::Random::Engine}}
+\doxysubsubsection{\texorpdfstring{max()}{max()}}
+{\footnotesize\ttfamily static constexpr auto VIPRA\+::\+Random\+::\+Engine\+::max (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) -\/$>$ uint64\+\_\+t \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Returns the maximum number possible. 
+
+\begin{DoxyReturn}{Returns}
+constexpr uint64\+\_\+t 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Random_1_1Engine_a3caead5675755726b36dfc14dad6c0ba}\label{classVIPRA_1_1Random_1_1Engine_a3caead5675755726b36dfc14dad6c0ba} 
+\index{VIPRA::Random::Engine@{VIPRA::Random::Engine}!min@{min}}
+\index{min@{min}!VIPRA::Random::Engine@{VIPRA::Random::Engine}}
+\doxysubsubsection{\texorpdfstring{min()}{min()}}
+{\footnotesize\ttfamily static constexpr auto VIPRA\+::\+Random\+::\+Engine\+::min (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) -\/$>$ uint64\+\_\+t \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Returns the minimum number possible. 
+
+\begin{DoxyReturn}{Returns}
+constexpr uint64\+\_\+t 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Random_1_1Engine_a6ede0ac74268d511e148682b3fbe114c}\label{classVIPRA_1_1Random_1_1Engine_a6ede0ac74268d511e148682b3fbe114c} 
+\index{VIPRA::Random::Engine@{VIPRA::Random::Engine}!operator()@{operator()}}
+\index{operator()@{operator()}!VIPRA::Random::Engine@{VIPRA::Random::Engine}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily auto VIPRA\+::\+Random\+::\+Engine\+::operator() (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) -\/$>$ uint64\+\_\+t \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+Produces the next pseudo random number in the sequence, uses Lehmer\textquotesingle{}s generator. 
+
+\begin{DoxyReturn}{Returns}
+uint64\+\_\+t 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Random_1_1Engine_a49e677f0a9609ce76b96a0e855da75e1}\label{classVIPRA_1_1Random_1_1Engine_a49e677f0a9609ce76b96a0e855da75e1} 
+\index{VIPRA::Random::Engine@{VIPRA::Random::Engine}!reseed@{reseed}}
+\index{reseed@{reseed}!VIPRA::Random::Engine@{VIPRA::Random::Engine}}
+\doxysubsubsection{\texorpdfstring{reseed()}{reseed()}}
+{\footnotesize\ttfamily void VIPRA\+::\+Random\+::\+Engine\+::reseed (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{seed\+Num }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+Restarts the number generator with a new seed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em seed\+Num} & \+: \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/vipra/random/random.\+hpp\end{DoxyCompactItemize}

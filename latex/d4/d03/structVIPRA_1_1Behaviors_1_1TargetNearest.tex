@@ -1,0 +1,75 @@
+\doxysection{VIPRA\+::Behaviors\+::Target\+Nearest\texorpdfstring{$<$}{<} modifier\+\_\+t \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{structVIPRA_1_1Behaviors_1_1TargetNearest}{}\label{structVIPRA_1_1Behaviors_1_1TargetNearest}\index{VIPRA::Behaviors::TargetNearest$<$ modifier\_t $>$@{VIPRA::Behaviors::TargetNearest$<$ modifier\_t $>$}}
+
+
+Selects the nearest pedestrian with any of the given types.  
+
+
+
+
+{\ttfamily \#include $<$target\+\_\+nearest.\+hpp$>$}
+
+
+
+Collaboration diagram for VIPRA\+::Behaviors\+::Target\+Nearest\texorpdfstring{$<$}{<} modifier\+\_\+t \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=206pt]{db/d0f/structVIPRA_1_1Behaviors_1_1TargetNearest__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structVIPRA_1_1Behaviors_1_1TargetNearest_a425073d453ade681072d9d89c23befe2}\label{structVIPRA_1_1Behaviors_1_1TargetNearest_a425073d453ade681072d9d89c23befe2} 
+{\bfseries Target\+Nearest} (\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}} type, bool all\+Peds=false, std\+::optional$<$ modifier\+\_\+t $>$ modifier=std\+::nullopt)
+\item 
+auto \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1TargetNearest_a3d5f608671bc82c408ee808a7a835865}{operator()}} (auto pack, \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1Self}{Self}} self) const -\/$>$ \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1Target}{Target}}
+\begin{DoxyCompactList}\small\item\em Returns the nearest pedestrian that has any of the target types. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structVIPRA_1_1Behaviors_1_1TargetNearest_a9eba6b210d95144d249970a161115ead}\label{structVIPRA_1_1Behaviors_1_1TargetNearest_a9eba6b210d95144d249970a161115ead} 
+\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}} {\bfseries type}
+\item 
+\Hypertarget{structVIPRA_1_1Behaviors_1_1TargetNearest_aba1b1b4f4024018101362668a3085a1d}\label{structVIPRA_1_1Behaviors_1_1TargetNearest_aba1b1b4f4024018101362668a3085a1d} 
+bool {\bfseries all\+Peds}
+\item 
+\Hypertarget{structVIPRA_1_1Behaviors_1_1TargetNearest_a62a11a47df3b407d73ebd23235cb1602}\label{structVIPRA_1_1Behaviors_1_1TargetNearest_a62a11a47df3b407d73ebd23235cb1602} 
+std\+::optional$<$ modifier\+\_\+t $>$ {\bfseries modifier}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename modifier\+\_\+t$>$\newline
+struct VIPRA\+::\+Behaviors\+::\+Target\+Nearest$<$ modifier\+\_\+t $>$}
+Selects the nearest pedestrian with any of the given types. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structVIPRA_1_1Behaviors_1_1TargetNearest_a3d5f608671bc82c408ee808a7a835865}\label{structVIPRA_1_1Behaviors_1_1TargetNearest_a3d5f608671bc82c408ee808a7a835865} 
+\index{VIPRA::Behaviors::TargetNearest$<$ modifier\_t $>$@{VIPRA::Behaviors::TargetNearest$<$ modifier\_t $>$}!operator()@{operator()}}
+\index{operator()@{operator()}!VIPRA::Behaviors::TargetNearest$<$ modifier\_t $>$@{VIPRA::Behaviors::TargetNearest$<$ modifier\_t $>$}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily template$<$typename modifier\+\_\+t $>$ \\
+auto \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1TargetNearest}{VIPRA\+::\+Behaviors\+::\+Target\+Nearest}}$<$ modifier\+\_\+t $>$\+::operator() (\begin{DoxyParamCaption}\item[{auto}]{pack,  }\item[{\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1Self}{Self}}}]{self }\end{DoxyParamCaption}) const -\/$>$ \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1Target}{Target}} \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the nearest pedestrian that has any of the target types. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pack} & \+: simulation pack \\
+\hline
+{\em self} & \+: pedestrain calling the function \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Target 
+\end{DoxyReturn}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/vipra/vipra\+\_\+behaviors/targets/target\+\_\+selectors/target\+\_\+nearest.\+hpp\end{DoxyCompactItemize}

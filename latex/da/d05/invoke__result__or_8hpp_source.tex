@@ -1,0 +1,23 @@
+\doxysection{invoke\+\_\+result\+\_\+or.\+hpp}
+\hypertarget{invoke__result__or_8hpp_source}{}\label{invoke__result__or_8hpp_source}\index{include/vipra/util/invoke\_result\_or.hpp@{include/vipra/util/invoke\_result\_or.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}vipra/types/util/result\_or\_void.hpp"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }VIPRA::Util\ \{}
+\DoxyCodeLine{00015\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ result\_t,\ \textcolor{keyword}{typename}\ func\_t,\ \textcolor{keyword}{typename}...\ arg\_ts>}
+\DoxyCodeLine{00016\ \textcolor{comment}{//\ NOLINTNEXTLINE(readability-\/identifier-\/naming)\ utility\ struct}}
+\DoxyCodeLine{00017\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structVIPRA_1_1Util_1_1invoke__result__or}{invoke\_result\_or}}\ \{}
+\DoxyCodeLine{00018\ \ \ \textcolor{keyword}{using\ }type\ =}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ std::conditional<std::is\_same\_v<func\_t,\ VOID>,\ result\_t,\ std::invoke\_result\_t<func\_t,\ arg\_ts...>>::type;}
+\DoxyCodeLine{00020\ \};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00029\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ result\_t,\ \textcolor{keyword}{typename}\ func\_t,\ \textcolor{keyword}{typename}...\ arg\_ts>}
+\DoxyCodeLine{00030\ \textcolor{keyword}{using\ }invoke\_result\_or\_t\ =\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structVIPRA_1_1Util_1_1invoke__result__or}{invoke\_result\_or}}<result\_t,\ func\_t,\ arg\_ts...>::type;}
+\DoxyCodeLine{00031\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA::Util}}
+
+\end{DoxyCode}

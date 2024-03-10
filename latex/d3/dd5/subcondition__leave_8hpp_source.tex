@@ -1,0 +1,50 @@
+\doxysection{subcondition\+\_\+leave.\+hpp}
+\hypertarget{subcondition__leave_8hpp_source}{}\label{subcondition__leave_8hpp_source}\index{include/vipra/vipra\_behaviors/conditions/subconditions/subcondition\_leave.hpp@{include/vipra/vipra\_behaviors/conditions/subconditions/subcondition\_leave.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/conditions/sub\_condition.hpp"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/definitions/sim\_pack.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/locations/location.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/util/class\_types.hpp"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }VIPRA::Behaviors\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1SubConditionLeave}{SubConditionLeave}}\ \{}
+\DoxyCodeLine{00010\ \ \ NON\_DEFAULT\_CONSTRUCTIBLE(\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1SubConditionLeave}{SubConditionLeave}})}
+\DoxyCodeLine{00011\ \ \ COPYABLE(\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1SubConditionLeave}{SubConditionLeave}})}
+\DoxyCodeLine{00012\ \ \ MOVEABLE(\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1SubConditionLeave}{SubConditionLeave}})}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00015\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1SubConditionLeave}{SubConditionLeave}}(VIPRA::idx\ location)\ :\ \_location\{location\}\ \{\}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \textcolor{keywordtype}{void}\ operator()(\textcolor{keyword}{auto}\ pack,\ \textcolor{keyword}{const}\ VIPRA::idxVec\&\ peds,\ std::vector<Target>\ \textcolor{keyword}{const}\&\ targets,}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<bool>\&\ met,\ std::vector<bool>\ \textcolor{keyword}{const}\&\ \textcolor{comment}{/*unused*/},\ BoolOp\ \textcolor{comment}{/*unused*/})\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ idx\ :\ peds)\ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\_left.size()\ <\ pack.pedset.num\_pedestrians())\ \_left.resize(pack.pedset.num\_pedestrians());}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\_left[targets[idx].targetIdx])\ \{}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ met[idx]\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Location}{Location}}\&\ loc\ =\ pack.context.locations[\_location];}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ leave\ =\ !loc.\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Location_a68b53f7f4f5a4c017313d31298ca0d3e}{contains}}(pack.state.positions[targets[idx].targetIdx])\ \&\&}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ loc.\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Location_a68b53f7f4f5a4c017313d31298ca0d3e}{contains}}(pack.pedset.ped\_coords(targets[idx].targetIdx));}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (leave)\ \{}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \_left[targets[idx].targetIdx]\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \ \ met[idx]\ =\ leave;}
+\DoxyCodeLine{00035\ \ \ \ \ \}}
+\DoxyCodeLine{00036\ \ \ \}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00039\ \ \ VIPRA::idx\ \_location;}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \textcolor{comment}{//\ TODO(rolland):\ temporary\ fix\ for\ not\ having\ pedestrian\ memory}}
+\DoxyCodeLine{00042\ \ \ std::vector<bool>\ \_left;}
+\DoxyCodeLine{00043\ \};}
+\DoxyCodeLine{00044\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA::Behaviors}}
+
+\end{DoxyCode}

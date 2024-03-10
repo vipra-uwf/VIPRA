@@ -1,0 +1,36 @@
+\doxysection{VIPRA\+::Concepts\+::can\+\_\+get\+\_\+goals Concept Reference}
+\hypertarget{conceptVIPRA_1_1Concepts_1_1can__get__goals}{}\label{conceptVIPRA_1_1Concepts_1_1can__get__goals}\index{VIPRA::Concepts::can\_get\_goals@{VIPRA::Concepts::can\_get\_goals}}
+
+
+Checks that a type can provide goals.  
+
+
+
+
+{\ttfamily \#include $<$goals.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ goals\_t>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__get__goals}{VIPRA::Concepts::can\_get\_goals}}\ =\ \ \textcolor{keyword}{requires}(\textcolor{keyword}{const}\ goals\_t\ goals)\ \{}
+\DoxyCodeLine{\ \ \{\ goals.current\_goals()\ \}\ -\/>\ std::same\_as<std::vector<VIPRA::f3d>\ \textcolor{keyword}{const}\&>;}
+\DoxyCodeLine{\ \ \{\ goals.end\_goals()\ \}\ -\/>\ std::same\_as<std::vector<VIPRA::f3d>\ \textcolor{keyword}{const}\&>;}
+\DoxyCodeLine{\ \ \{\ goals.current\_goal(VIPRA::idx\{\})\ \}\ -\/>\ std::same\_as<VIPRA::f3d\ const\&>;}
+\DoxyCodeLine{\ \ \{\ goals.end\_goal(VIPRA::idx\{\})\ \}\ -\/>\ std::same\_as<VIPRA::f3d\ const\&>;}
+\DoxyCodeLine{\ \ \{\ goals.is\_goal\_met(VIPRA::idx\{\})\ \}\ -\/>\ std::same\_as<bool>;}
+\DoxyCodeLine{\ \ \{\ goals.is\_sim\_goal\_met()\ \}\ -\/>\ std::same\_as<bool>;}
+\DoxyCodeLine{\ \ \{\ goals.time\_since\_last\_goal(VIPRA::idx\{\})\ \}\ -\/>\ std::same\_as<VIPRA::f\_pnt>;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Checks that a type can provide goals. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em goals\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}

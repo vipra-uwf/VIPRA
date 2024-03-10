@@ -1,0 +1,29 @@
+\doxysection{VIPRA\+::Concepts\+::Map\+Module Concept Reference}
+\hypertarget{conceptVIPRA_1_1Concepts_1_1MapModule}{}\label{conceptVIPRA_1_1Concepts_1_1MapModule}\index{VIPRA::Concepts::MapModule@{VIPRA::Concepts::MapModule}}
+
+
+Checks that a type is a map module.  
+
+
+
+
+{\ttfamily \#include $<$map.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ map\_t>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1MapModule}{VIPRA::Concepts::MapModule}}\ =\ }
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1is__module}{is\_module<map\_t,\ Modules::Type::MAP>}}\ \&\&\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__initialize__map}{can\_initialize\_map<map\_t>}}\ \&\&\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__get__obstacles}{can\_get\_obstacles<map\_t>}}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Checks that a type is a map module. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em map\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}

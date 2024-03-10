@@ -1,0 +1,111 @@
+\doxysection{VIPRA\+::Behaviors\+::Timed\+Latch\+Collection Class Reference}
+\hypertarget{classVIPRA_1_1Behaviors_1_1TimedLatchCollection}{}\label{classVIPRA_1_1Behaviors_1_1TimedLatchCollection}\index{VIPRA::Behaviors::TimedLatchCollection@{VIPRA::Behaviors::TimedLatchCollection}}
+
+
+Holds time released latches.  
+
+
+
+
+{\ttfamily \#include $<$timed\+\_\+latch.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1TimedLatchCollection_a113ce8688028656e8c3c8f91a4e2be9c}\label{classVIPRA_1_1Behaviors_1_1TimedLatchCollection_a113ce8688028656e8c3c8f91a4e2be9c} 
+{\bfseries Timed\+Latch\+Collection} (\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1NumericValue}{Behaviors\+::\+Numeric\+Value}} value)
+\item 
+void \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1TimedLatchCollection_afb5b9d07d65794368b933e2f633439ce}{resize}} (VIPRA\+::size latch\+Cnt)
+\begin{DoxyCompactList}\small\item\em Sets the size of the container. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1TimedLatchCollection_a5b22b1e0b1bc68a8ddce4d8479c02d63}{latch}} (VIPRA\+::time\+\_\+s start\+Time, VIPRA\+::idx ped\+Idx)
+\begin{DoxyCompactList}\small\item\em Sets the latch for pedestrian at ped\+Idx. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1TimedLatchCollection_a4e679d7971b4d22d20adf662c02c6f80}{check}} (VIPRA\+::time\+\_\+s curr\+Time, VIPRA\+::idx ped\+Idx) -\/$>$ bool
+\begin{DoxyCompactList}\small\item\em Checks if the latches duration time has passed since it was latched. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1TimedLatchCollection_af08c024755ec8eafd0b00efadd3d5b38}{get\+\_\+duration}} (VIPRA\+::idx ped\+Idx) -\/$>$ VIPRA\+::f\+\_\+pnt
+\begin{DoxyCompactList}\small\item\em Returns the duration for a pedestrians latch. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Holds time released latches. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1TimedLatchCollection_a4e679d7971b4d22d20adf662c02c6f80}\label{classVIPRA_1_1Behaviors_1_1TimedLatchCollection_a4e679d7971b4d22d20adf662c02c6f80} 
+\index{VIPRA::Behaviors::TimedLatchCollection@{VIPRA::Behaviors::TimedLatchCollection}!check@{check}}
+\index{check@{check}!VIPRA::Behaviors::TimedLatchCollection@{VIPRA::Behaviors::TimedLatchCollection}}
+\doxysubsubsection{\texorpdfstring{check()}{check()}}
+{\footnotesize\ttfamily auto VIPRA\+::\+Behaviors\+::\+Timed\+Latch\+Collection\+::check (\begin{DoxyParamCaption}\item[{VIPRA\+::time\+\_\+s}]{curr\+Time,  }\item[{VIPRA\+::idx}]{ped\+Idx }\end{DoxyParamCaption}) -\/$>$ bool \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Checks if the latches duration time has passed since it was latched. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em curr\+Time} & \+: current simulation time \\
+\hline
+{\em ped\+Idx} & \+: pedestrian index latch to check \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true \+: if the latch is set and the duration has not elapsed 
+
+false \+: if the latch is NOT set or the time has elapsed 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1TimedLatchCollection_af08c024755ec8eafd0b00efadd3d5b38}\label{classVIPRA_1_1Behaviors_1_1TimedLatchCollection_af08c024755ec8eafd0b00efadd3d5b38} 
+\index{VIPRA::Behaviors::TimedLatchCollection@{VIPRA::Behaviors::TimedLatchCollection}!get\_duration@{get\_duration}}
+\index{get\_duration@{get\_duration}!VIPRA::Behaviors::TimedLatchCollection@{VIPRA::Behaviors::TimedLatchCollection}}
+\doxysubsubsection{\texorpdfstring{get\_duration()}{get\_duration()}}
+{\footnotesize\ttfamily auto VIPRA\+::\+Behaviors\+::\+Timed\+Latch\+Collection\+::get\+\_\+duration (\begin{DoxyParamCaption}\item[{VIPRA\+::idx}]{ped\+Idx }\end{DoxyParamCaption}) -\/$>$ VIPRA\+::f\+\_\+pnt \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the duration for a pedestrians latch. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ped\+Idx} & \+: pedestrian index to get duration of \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+VIPRA\+::f\+\_\+pnt 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1TimedLatchCollection_a5b22b1e0b1bc68a8ddce4d8479c02d63}\label{classVIPRA_1_1Behaviors_1_1TimedLatchCollection_a5b22b1e0b1bc68a8ddce4d8479c02d63} 
+\index{VIPRA::Behaviors::TimedLatchCollection@{VIPRA::Behaviors::TimedLatchCollection}!latch@{latch}}
+\index{latch@{latch}!VIPRA::Behaviors::TimedLatchCollection@{VIPRA::Behaviors::TimedLatchCollection}}
+\doxysubsubsection{\texorpdfstring{latch()}{latch()}}
+{\footnotesize\ttfamily void VIPRA\+::\+Behaviors\+::\+Timed\+Latch\+Collection\+::latch (\begin{DoxyParamCaption}\item[{VIPRA\+::time\+\_\+s}]{start\+Time,  }\item[{VIPRA\+::idx}]{ped\+Idx }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the latch for pedestrian at ped\+Idx. 
+
+\begin{DoxyNote}{Note}
+subsequent calls do not update the latched time, until the latch is unlatched
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em start\+Time} & \+: current simulation time \\
+\hline
+{\em ped\+Idx} & \+: pedestrian index to latch \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1TimedLatchCollection_afb5b9d07d65794368b933e2f633439ce}\label{classVIPRA_1_1Behaviors_1_1TimedLatchCollection_afb5b9d07d65794368b933e2f633439ce} 
+\index{VIPRA::Behaviors::TimedLatchCollection@{VIPRA::Behaviors::TimedLatchCollection}!resize@{resize}}
+\index{resize@{resize}!VIPRA::Behaviors::TimedLatchCollection@{VIPRA::Behaviors::TimedLatchCollection}}
+\doxysubsubsection{\texorpdfstring{resize()}{resize()}}
+{\footnotesize\ttfamily void VIPRA\+::\+Behaviors\+::\+Timed\+Latch\+Collection\+::resize (\begin{DoxyParamCaption}\item[{VIPRA\+::size}]{latch\+Cnt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sets the size of the container. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em latch\+Cnt} & \+: number of latches \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/vipra/vipra\+\_\+behaviors/util/timed\+\_\+latch.\+hpp\end{DoxyCompactItemize}

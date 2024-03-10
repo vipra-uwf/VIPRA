@@ -1,0 +1,30 @@
+\doxysection{VIPRA\+::Concepts\+::can\+\_\+get\+\_\+obstacles Concept Reference}
+\hypertarget{conceptVIPRA_1_1Concepts_1_1can__get__obstacles}{}\label{conceptVIPRA_1_1Concepts_1_1can__get__obstacles}\index{VIPRA::Concepts::can\_get\_obstacles@{VIPRA::Concepts::can\_get\_obstacles}}
+
+
+Checks that a type has an obstacle set method.  
+
+
+
+
+{\ttfamily \#include $<$map.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ map\_t>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__get__obstacles}{VIPRA::Concepts::can\_get\_obstacles}}\ =\ \ \textcolor{keyword}{requires}(\textcolor{keyword}{const}\ map\_t\ map)\ \{}
+\DoxyCodeLine{\ \ \{map.obstacle\_set()\};}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Checks that a type has an obstacle set method. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em map\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}

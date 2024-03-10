@@ -1,0 +1,17 @@
+\doxysection{has\+\_\+type.\+hpp}
+\hypertarget{has__type_8hpp_source}{}\label{has__type_8hpp_source}\index{include/vipra/concepts/has\_type.hpp@{include/vipra/concepts/has\_type.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{keyword}{namespace\ }VIPRA::Concepts\ \{}
+\DoxyCodeLine{00006\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ type\_t,\ \textcolor{keyword}{typename}\ =\ \textcolor{keywordtype}{void}>}
+\DoxyCodeLine{00007\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structVIPRA_1_1Concepts_1_1has__type}{has\_type}}\ :\ std::false\_type\ \{\};}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ type\_t>}
+\DoxyCodeLine{00010\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structVIPRA_1_1Concepts_1_1has__type}{has\_type}}<type\_t,\ std::void\_t<decltype(type\_t::\_VIPRA\_MODULE\_TYPE\_)>>\ :\ std::true\_type\ \{\};}
+\DoxyCodeLine{00011\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA::Concepts}}
+
+\end{DoxyCode}

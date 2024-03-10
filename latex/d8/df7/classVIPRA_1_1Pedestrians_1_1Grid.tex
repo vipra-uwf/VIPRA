@@ -1,0 +1,54 @@
+\doxysection{VIPRA\+::Pedestrians\+::Grid\texorpdfstring{$<$}{<} input\+\_\+t \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classVIPRA_1_1Pedestrians_1_1Grid}{}\label{classVIPRA_1_1Pedestrians_1_1Grid}\index{VIPRA::Pedestrians::Grid$<$ input\_t $>$@{VIPRA::Pedestrians::Grid$<$ input\_t $>$}}
+
+
+Pedestrian module that uses a grid to store pedestrians.  
+
+
+
+
+{\ttfamily \#include $<$grid.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classVIPRA_1_1Pedestrians_1_1Grid_aa85be3706d6047fd62efd156b1516070}\label{classVIPRA_1_1Pedestrians_1_1Grid_aa85be3706d6047fd62efd156b1516070} 
+{\bfseries VIPRA\+\_\+\+MODULE\+\_\+\+TYPE} (PEDESTRIANS)
+\item 
+\Hypertarget{classVIPRA_1_1Pedestrians_1_1Grid_a5c246c811433fb8a55f1e4121946fc6f}\label{classVIPRA_1_1Pedestrians_1_1Grid_a5c246c811433fb8a55f1e4121946fc6f} 
+{\bfseries Grid} (input\+\_\+t \&\&input)
+\item 
+\Hypertarget{classVIPRA_1_1Pedestrians_1_1Grid_a4ae9cb8699a149fd6a72861053a4165e}\label{classVIPRA_1_1Pedestrians_1_1Grid_a4ae9cb8699a149fd6a72861053a4165e} 
+void {\bfseries update} (const \mbox{\hyperlink{structVIPRA_1_1State}{VIPRA\+::\+State}} \&state)
+\item 
+\Hypertarget{classVIPRA_1_1Pedestrians_1_1Grid_a574bc9e87dead778bf9d8798921adfe2}\label{classVIPRA_1_1Pedestrians_1_1Grid_a574bc9e87dead778bf9d8798921adfe2} 
+{\footnotesize template$<$Concepts\+::\+Param\+Module params\+\_\+t$>$ }\\void {\bfseries register\+\_\+params} (params\+\_\+t \&params)
+\item 
+\Hypertarget{classVIPRA_1_1Pedestrians_1_1Grid_a05c734e7c9219b6a90ff765b1ad10a9e}\label{classVIPRA_1_1Pedestrians_1_1Grid_a05c734e7c9219b6a90ff765b1ad10a9e} 
+void {\bfseries config} (auto const \&params, \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{VIPRA\+::\+Random\+::\+Engine}} \&)
+\item 
+\Hypertarget{classVIPRA_1_1Pedestrians_1_1Grid_ae1349dab27b741810f1fbc5c97e5031e}\label{classVIPRA_1_1Pedestrians_1_1Grid_ae1349dab27b741810f1fbc5c97e5031e} 
+auto {\bfseries num\+\_\+pedestrians} () const -\/$>$ VIPRA\+::size
+\item 
+\Hypertarget{classVIPRA_1_1Pedestrians_1_1Grid_acdf1e9c530967afc3ecf027bf4913c8c}\label{classVIPRA_1_1Pedestrians_1_1Grid_acdf1e9c530967afc3ecf027bf4913c8c} 
+auto {\bfseries ped\+\_\+coords} (VIPRA\+::idx ped\+Idx) const -\/$>$ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} const \&
+\item 
+\Hypertarget{classVIPRA_1_1Pedestrians_1_1Grid_a2274f52912073856da7db31a3318a0df}\label{classVIPRA_1_1Pedestrians_1_1Grid_a2274f52912073856da7db31a3318a0df} 
+auto {\bfseries all\+\_\+coords} () const -\/$>$ std\+::vector$<$ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} $>$ const \&
+\item 
+\Hypertarget{classVIPRA_1_1Pedestrians_1_1Grid_a6ed67927ea4bc2574fa0cdd1673ccc80}\label{classVIPRA_1_1Pedestrians_1_1Grid_a6ed67927ea4bc2574fa0cdd1673ccc80} 
+auto {\bfseries ped\+\_\+velocity} (VIPRA\+::idx ped\+Idx) const -\/$>$ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} const \&
+\item 
+\Hypertarget{classVIPRA_1_1Pedestrians_1_1Grid_aef9ce9d147cf3ee1778e39466dad7a2a}\label{classVIPRA_1_1Pedestrians_1_1Grid_aef9ce9d147cf3ee1778e39466dad7a2a} 
+auto {\bfseries all\+\_\+velocities} () const -\/$>$ std\+::vector$<$ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} $>$ const \&
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$Concepts\+::\+Input\+Module input\+\_\+t$>$\newline
+class VIPRA\+::\+Pedestrians\+::\+Grid$<$ input\+\_\+t $>$}
+Pedestrian module that uses a grid to store pedestrians. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/vipra/base\+\_\+modules/pedestrians/grid.\+hpp\end{DoxyCompactItemize}

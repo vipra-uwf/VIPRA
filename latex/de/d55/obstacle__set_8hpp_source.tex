@@ -1,0 +1,86 @@
+\doxysection{obstacle\+\_\+set.\+hpp}
+\hypertarget{obstacle__set_8hpp_source}{}\label{obstacle__set_8hpp_source}\index{include/vipra/concepts/obstacle\_set.hpp@{include/vipra/concepts/obstacle\_set.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <concepts>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/module.hpp"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}vipra/geometry/circle.hpp"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}vipra/geometry/polygon.hpp"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}vipra/modules.hpp"{}}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}vipra/geometry/f3d.hpp"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}vipra/types/float.hpp"{}}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{namespace\ }VIPRA::Concepts\ \{}
+\DoxyCodeLine{00022\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ obstacle\_t>}
+\DoxyCodeLine{00023\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__initialize__obstacles}{can\_initialize\_obstacles}}\ =\ \textcolor{keyword}{requires}(obstacle\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obsset,}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<VIPRA::Geometry::Polygon>\ \textcolor{keyword}{const}\&\ \ \ \ \ \ \ \ \ \ obstacles,}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<std::string>\ \textcolor{keyword}{const}\&\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ types,}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::map<std::string,\ std::vector<VIPRA::f3d>>\ \textcolor{keyword}{const}\&\ objects)\ \{}
+\DoxyCodeLine{00027\ \ \ \{obsset.initialize(obstacles,\ types,\ objects)\};}
+\DoxyCodeLine{00028\ \};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00035\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ obstacle\_t>}
+\DoxyCodeLine{00036\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__get__objects}{can\_get\_objects}}\ =\ \textcolor{keyword}{requires}(\textcolor{keyword}{const}\ obstacle\_t\ obsset,\ std::string\ \textcolor{keyword}{const}\&\ type)\ \{}
+\DoxyCodeLine{00037\ \ \ \{\ obsset.get\_object\_types()\ \}\ -\/>\ std::same\_as<std::vector<std::string>\ \textcolor{keyword}{const}\&>;}
+\DoxyCodeLine{00038\ \ \ \{\ obsset.get\_objects(type)\ \}\ -\/>\ std::same\_as<const\ VIPRA::f3dVec\&>;}
+\DoxyCodeLine{00039\ \};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00046\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ obstacle\_t>}
+\DoxyCodeLine{00047\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1has__collisions}{has\_collisions}}\ =\ \textcolor{keyword}{requires}(\textcolor{keyword}{const}\ obstacle\_t\ obsset)\ \{}
+\DoxyCodeLine{00048\ \ \ \{\ obsset.collision(\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\{\})\ \}\ -\/>\ std::same\_as<bool>;}
+\DoxyCodeLine{00049\ \ \ \{\ obsset.collision(\mbox{\hyperlink{classVIPRA_1_1Geometry_1_1Circle}{VIPRA::Geometry::Circle}}\{\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\{\},\ 1.0F\})\ \}\ -\/>\ std::same\_as<bool>;}
+\DoxyCodeLine{00050\ \ \ \{\ obsset.ray\_hit(\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\{\},\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\{\})\ \}\ -\/>\ std::same\_as<VIPRA::f\_pnt>;}
+\DoxyCodeLine{00051\ \};}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{comment}{//\ TODO(rolland):\ returning\ an\ f3d\ means\ we\ expect\ every\ map\ to\ start\ at\ the\ origin}}
+\DoxyCodeLine{00059\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ obstacle\_t>}
+\DoxyCodeLine{00060\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__get__dimensions}{can\_get\_dimensions}}\ =\ \textcolor{keyword}{requires}(obstacle\_t\ obsset)\ \{}
+\DoxyCodeLine{00061\ \ \ \{\ obsset.get\_dimensions()\ \}\ -\/>\ std::same\_as<VIPRA::f3d>;}
+\DoxyCodeLine{00062\ \};}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00069\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ obstacle\_t>}
+\DoxyCodeLine{00070\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1ObstacleModule}{ObstacleModule}}\ =}
+\DoxyCodeLine{00071\ \ \ \ \ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1is__module}{is\_module<obstacle\_t,\ VIPRA::Modules::Type::OBSTACLES>}}\ \&\&\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__initialize__obstacles}{can\_initialize\_obstacles<obstacle\_t>}}\ \&\&}
+\DoxyCodeLine{00072\ \ \ \ \ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__get__objects}{can\_get\_objects<obstacle\_t>}}\ \&\&\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1has__collisions}{has\_collisions<obstacle\_t>}}\ \&\&\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__get__dimensions}{can\_get\_dimensions<obstacle\_t>}};}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00078\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVIPRA_1_1Concepts_1_1DummyObsSet}{DummyObsSet}}\ \{}
+\DoxyCodeLine{00079\ \ \ \textcolor{comment}{//\ NOLINTBEGIN}}
+\DoxyCodeLine{00080\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00081\ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ VIPRA::Modules::Type\ \_VIPRA\_MODULE\_TYPE\_\ =\ VIPRA::Modules::Type::OBSTACLES;}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \textcolor{keywordtype}{void}\ initialize(std::vector<VIPRA::Geometry::Polygon>\ \textcolor{keyword}{const}\&,\ std::vector<std::string>\ \textcolor{keyword}{const}\&,}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::map<std::string,\ std::vector<VIPRA::f3d>>\ \textcolor{keyword}{const}\&)\ \{\}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \textcolor{keyword}{template}\ <VIPRA::Concepts::ParamModule\ params\_t>}
+\DoxyCodeLine{00087\ \ \ \textcolor{keywordtype}{void}\ register\_params(params\_t\&)\ \{\}}
+\DoxyCodeLine{00088\ \ \ \textcolor{keyword}{template}\ <VIPRA::Concepts::ParamModule\ params\_t>}
+\DoxyCodeLine{00089\ \ \ \textcolor{keywordtype}{void}\ config(params\_t\ \textcolor{keyword}{const}\&,\ \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{VIPRA::Random::Engine}}\&)\ \{\}}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \textcolor{comment}{//\ NOLINTBEGIN\ rolland:\ Dummy\ Object\ that\ cannot\ be\ used,\ we\ don't\ care\ about\ errors\ here}}
+\DoxyCodeLine{00092\ \ \ \textcolor{keyword}{auto}\ get\_dimensions()\ \textcolor{keyword}{const}\ -\/>\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\{\};\ \}}
+\DoxyCodeLine{00093\ \ \ \textcolor{keyword}{auto}\ collision(\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}})\ \textcolor{keyword}{const}\ -\/>\ \textcolor{keywordtype}{bool}\ \{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \}}
+\DoxyCodeLine{00094\ \ \ \textcolor{keyword}{auto}\ collision(\mbox{\hyperlink{classVIPRA_1_1Geometry_1_1Circle}{VIPRA::Geometry::Circle}})\ \textcolor{keyword}{const}\ -\/>\ \textcolor{keywordtype}{bool}\ \{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \}}
+\DoxyCodeLine{00095\ \ \ \textcolor{keyword}{auto}\ ray\_hit(\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}},\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}})\ \textcolor{keyword}{const}\ -\/>\ VIPRA::f\_pnt\ \{\ \textcolor{keywordflow}{return}\ 1.0F;\ \}}
+\DoxyCodeLine{00096\ \ \ \textcolor{keyword}{auto}\ get\_object\_types()\ \textcolor{keyword}{const}\ -\/>\ std::vector<std::string>\ \textcolor{keyword}{const}\&\ \{\ \textcolor{keywordflow}{return}\ \_dummy2;\ \}}
+\DoxyCodeLine{00097\ \ \ \textcolor{keyword}{auto}\ get\_objects(std::string\ \textcolor{keyword}{const}\&)\ \textcolor{keyword}{const}\ -\/>\ \textcolor{keyword}{const}\ VIPRA::f3dVec\&\ \{\ \textcolor{keywordflow}{return}\ \_dummy;\ \}}
+\DoxyCodeLine{00098\ \ \ \textcolor{comment}{//\ NOLINTEND}}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00101\ \ \ VIPRA::f3dVec\ \ \ \ \ \ \ \ \ \ \ \ \_dummy;}
+\DoxyCodeLine{00102\ \ \ std::vector<std::string>\ \_dummy2;}
+\DoxyCodeLine{00103\ \ \ \mbox{\hyperlink{classVIPRA_1_1Concepts_1_1DummyObsSet}{DummyObsSet}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00104\ \ \ \textcolor{comment}{//\ NOLINTEND}}
+\DoxyCodeLine{00105\ \};}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ CHECK\_MODULE(\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1ObstacleModule}{ObstacleModule}},\ \mbox{\hyperlink{classVIPRA_1_1Concepts_1_1DummyObsSet}{DummyObsSet}})}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA::Concepts}}
+
+\end{DoxyCode}

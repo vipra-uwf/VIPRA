@@ -1,0 +1,29 @@
+\doxysection{VIPRA\+::Concepts\+::Pedset\+Module Concept Reference}
+\hypertarget{conceptVIPRA_1_1Concepts_1_1PedsetModule}{}\label{conceptVIPRA_1_1Concepts_1_1PedsetModule}\index{VIPRA::Concepts::PedsetModule@{VIPRA::Concepts::PedsetModule}}
+
+
+Checks that a type is a pedestrian set module.  
+
+
+
+
+{\ttfamily \#include $<$pedset.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ pedset\_t>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1PedsetModule}{VIPRA::Concepts::PedsetModule}}\ =\ \ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1is__module}{is\_module<pedset\_t,\ VIPRA::Modules::Type::PEDESTRIANS>}}\ \&\&\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__get__num__peds}{can\_get\_num\_peds<pedset\_t>}}\ \&\&}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__get__ped__coords}{can\_get\_ped\_coords<pedset\_t>}}\ \&\&\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__get__ped__velocity}{can\_get\_ped\_velocity<pedset\_t>}}\ \&\&\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__update__pedset}{can\_update\_pedset<pedset\_t>}}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Checks that a type is a pedestrian set module. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em pedset\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}

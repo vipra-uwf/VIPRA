@@ -1,0 +1,72 @@
+\doxysection{VIPRA\+::Behaviors\+::Target\+Modifier\texorpdfstring{$<$}{<} modifier\+\_\+t \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classVIPRA_1_1Behaviors_1_1TargetModifier}{}\label{classVIPRA_1_1Behaviors_1_1TargetModifier}\index{VIPRA::Behaviors::TargetModifier$<$ modifier\_t $>$@{VIPRA::Behaviors::TargetModifier$<$ modifier\_t $>$}}
+
+
+Modifies who can be a target for an action, by distance, direction, etc.  
+
+
+
+
+{\ttfamily \#include $<$target\+\_\+modifier.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1TargetModifier_a5d1900e4f8aedd0287800f38ffb80114}{check}} (auto pack, VIPRA\+::idx self, VIPRA\+::idx target) const -\/$>$ bool
+\begin{DoxyCompactList}\small\item\em Checks that a pedestrian passes all modifier checks. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1TargetModifier_a66cd764fe1b54d75d31331b7690055df}{add\+\_\+check}} (modifier\+\_\+t \&\&\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1TargetModifier_a5d1900e4f8aedd0287800f38ffb80114}{check}})
+\begin{DoxyCompactList}\small\item\em Adds another modifier check to the target modifier. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename modifier\+\_\+t$>$\newline
+class VIPRA\+::\+Behaviors\+::\+Target\+Modifier$<$ modifier\+\_\+t $>$}
+Modifies who can be a target for an action, by distance, direction, etc. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1TargetModifier_a66cd764fe1b54d75d31331b7690055df}\label{classVIPRA_1_1Behaviors_1_1TargetModifier_a66cd764fe1b54d75d31331b7690055df} 
+\index{VIPRA::Behaviors::TargetModifier$<$ modifier\_t $>$@{VIPRA::Behaviors::TargetModifier$<$ modifier\_t $>$}!add\_check@{add\_check}}
+\index{add\_check@{add\_check}!VIPRA::Behaviors::TargetModifier$<$ modifier\_t $>$@{VIPRA::Behaviors::TargetModifier$<$ modifier\_t $>$}}
+\doxysubsubsection{\texorpdfstring{add\_check()}{add\_check()}}
+{\footnotesize\ttfamily template$<$typename modifier\+\_\+t $>$ \\
+void \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1TargetModifier}{VIPRA\+::\+Behaviors\+::\+Target\+Modifier}}$<$ modifier\+\_\+t $>$\+::add\+\_\+check (\begin{DoxyParamCaption}\item[{modifier\+\_\+t \&\&}]{check }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Adds another modifier check to the target modifier. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em check} & \+: check to add \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1TargetModifier_a5d1900e4f8aedd0287800f38ffb80114}\label{classVIPRA_1_1Behaviors_1_1TargetModifier_a5d1900e4f8aedd0287800f38ffb80114} 
+\index{VIPRA::Behaviors::TargetModifier$<$ modifier\_t $>$@{VIPRA::Behaviors::TargetModifier$<$ modifier\_t $>$}!check@{check}}
+\index{check@{check}!VIPRA::Behaviors::TargetModifier$<$ modifier\_t $>$@{VIPRA::Behaviors::TargetModifier$<$ modifier\_t $>$}}
+\doxysubsubsection{\texorpdfstring{check()}{check()}}
+{\footnotesize\ttfamily template$<$typename modifier\+\_\+t $>$ \\
+auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1TargetModifier}{VIPRA\+::\+Behaviors\+::\+Target\+Modifier}}$<$ modifier\+\_\+t $>$\+::check (\begin{DoxyParamCaption}\item[{auto}]{pack,  }\item[{VIPRA\+::idx}]{self,  }\item[{VIPRA\+::idx}]{target }\end{DoxyParamCaption}) const -\/$>$ bool \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Checks that a pedestrian passes all modifier checks. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pack} & \+: simulation pack \\
+\hline
+{\em target} & \+: target to check \\
+\hline
+{\em self} & \+: pedestrian looking for target \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true \+: if target passes check 
+
+false \+: if target does NOT pass check 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/vipra/vipra\+\_\+behaviors/targets/target\+\_\+modifier.\+hpp\end{DoxyCompactItemize}

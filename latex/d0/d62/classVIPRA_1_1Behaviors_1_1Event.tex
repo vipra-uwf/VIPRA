@@ -1,0 +1,58 @@
+\doxysection{VIPRA\+::Behaviors\+::Event\texorpdfstring{$<$}{<} cond\+\_\+t \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classVIPRA_1_1Behaviors_1_1Event}{}\label{classVIPRA_1_1Behaviors_1_1Event}\index{VIPRA::Behaviors::Event$<$ cond\_t $>$@{VIPRA::Behaviors::Event$<$ cond\_t $>$}}
+
+
+An Event is something that occurs during a simulation, when an event starts it notifies it\textquotesingle{}s subscribing functions and same when it ends.  
+
+
+
+
+{\ttfamily \#include $<$event.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Event_a2fcbff4a775ecd41dfc7b40081554ad3}\label{classVIPRA_1_1Behaviors_1_1Event_a2fcbff4a775ecd41dfc7b40081554ad3} 
+{\bfseries Event} (std\+::string name)
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Event_a3f761406a8fc773314f867ba846d31ee}\label{classVIPRA_1_1Behaviors_1_1Event_a3f761406a8fc773314f867ba846d31ee} 
+void {\bfseries evaluate} (auto pack)
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Event_ad6db92e8c738a16919cf2ae1a9c45ecc}\label{classVIPRA_1_1Behaviors_1_1Event_ad6db92e8c738a16919cf2ae1a9c45ecc} 
+void {\bfseries set\+\_\+start\+\_\+condition} (cond\+\_\+t const \&condition)
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Event_a269336018c49b79d855d553eb1db94d4}\label{classVIPRA_1_1Behaviors_1_1Event_a269336018c49b79d855d553eb1db94d4} 
+void {\bfseries set\+\_\+end\+\_\+condition} (cond\+\_\+t const \&condition)
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Event_ac3f18f5ebeb453b958be3458de9d85b8}\label{classVIPRA_1_1Behaviors_1_1Event_ac3f18f5ebeb453b958be3458de9d85b8} 
+auto {\bfseries is\+\_\+occurring} () const -\/$>$ bool
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Event_ad2c48e578dd5a296a05f2e12a4750679}\label{classVIPRA_1_1Behaviors_1_1Event_ad2c48e578dd5a296a05f2e12a4750679} 
+auto {\bfseries has\+\_\+occurred} () const -\/$>$ bool
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Event_a9eb4d5be049467ab20f5a82a91366072}\label{classVIPRA_1_1Behaviors_1_1Event_a9eb4d5be049467ab20f5a82a91366072} 
+auto {\bfseries is\+\_\+starting} () const -\/$>$ bool
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Event_a366f3cdc7ce26f811548ee4b09d9547f}\label{classVIPRA_1_1Behaviors_1_1Event_a366f3cdc7ce26f811548ee4b09d9547f} 
+auto {\bfseries is\+\_\+ending} () const -\/$>$ bool
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Event_a0cfb33fdf770f289a51252309c77c85f}\label{classVIPRA_1_1Behaviors_1_1Event_a0cfb33fdf770f289a51252309c77c85f} 
+void {\bfseries set\+\_\+status} (Event\+Status status)
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Event_a20691127b023ca5c9f2797cc171cf63c}\label{classVIPRA_1_1Behaviors_1_1Event_a20691127b023ca5c9f2797cc171cf63c} 
+auto {\bfseries get\+\_\+status} () const -\/$>$ Event\+Status const \&
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Event_a10c5796c7c1f01ac6880a6e71fa14cb8}\label{classVIPRA_1_1Behaviors_1_1Event_a10c5796c7c1f01ac6880a6e71fa14cb8} 
+auto {\bfseries get\+\_\+name} () const -\/$>$ std\+::string const \&
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename cond\+\_\+t$>$\newline
+class VIPRA\+::\+Behaviors\+::\+Event$<$ cond\+\_\+t $>$}
+An Event is something that occurs during a simulation, when an event starts it notifies it\textquotesingle{}s subscribing functions and same when it ends. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/vipra/vipra\+\_\+behaviors/definitions/behavior\+\_\+context.\+hpp\item 
+include/vipra/vipra\+\_\+behaviors/events/event.\+hpp\end{DoxyCompactItemize}

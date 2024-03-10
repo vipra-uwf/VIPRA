@@ -1,0 +1,31 @@
+\doxysection{VIPRA\+::Concepts\+::can\+\_\+get\+\_\+objects Concept Reference}
+\hypertarget{conceptVIPRA_1_1Concepts_1_1can__get__objects}{}\label{conceptVIPRA_1_1Concepts_1_1can__get__objects}\index{VIPRA::Concepts::can\_get\_objects@{VIPRA::Concepts::can\_get\_objects}}
+
+
+Checks that a type has a get\+\_\+objects method.  
+
+
+
+
+{\ttfamily \#include $<$obstacle\+\_\+set.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ obstacle\_t>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__get__objects}{VIPRA::Concepts::can\_get\_objects}}\ =\ \ \textcolor{keyword}{requires}(\textcolor{keyword}{const}\ obstacle\_t\ obsset,\ std::string\ \textcolor{keyword}{const}\&\ type)\ \{}
+\DoxyCodeLine{\ \ \{\ obsset.get\_object\_types()\ \}\ -\/>\ std::same\_as<std::vector<std::string>\ \textcolor{keyword}{const}\&>;}
+\DoxyCodeLine{\ \ \{\ obsset.get\_objects(type)\ \}\ -\/>\ std::same\_as<const\ VIPRA::f3dVec\&>;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Checks that a type has a get\+\_\+objects method. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em obstacle\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}

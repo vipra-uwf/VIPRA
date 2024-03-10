@@ -1,0 +1,177 @@
+\doxysection{selector.\+hpp}
+\hypertarget{selector_8hpp_source}{}\label{selector_8hpp_source}\index{include/vipra/vipra\_behaviors/selectors/selector.hpp@{include/vipra/vipra\_behaviors/selectors/selector.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <stdexcept>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/actions/action.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/definitions/behavior\_context.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/definitions/pedestrian\_types.hpp"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/selectors/pedestrian\_groups.hpp"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }VIPRA::Behaviors\ \{}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ select\_t,\ \textcolor{keyword}{typename}\ context\_t>}
+\DoxyCodeLine{00016\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Selector}{Selector}}\ \{}
+\DoxyCodeLine{00017\ \ \ DEFAULT\_CONSTRUCTIBLE(\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Selector}{Selector}})}
+\DoxyCodeLine{00018\ \ \ COPYABLE(\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Selector}{Selector}})}
+\DoxyCodeLine{00019\ \ \ MOVEABLE(\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Selector}{Selector}})}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00022\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Selector_ab8809433efe3d1bdf95744b4beb3a6eb}{initialize}}(std::string\ \textcolor{keyword}{const}\&\ \textcolor{comment}{/*behaviorName*/},\ \textcolor{keyword}{auto}\ pack);}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \textcolor{keywordtype}{void}\ set\_all\_types(\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}}\ types)\ \{\ \_allTypes\ =\ types;\ \}}
+\DoxyCodeLine{00025\ \ \ \textcolor{keywordtype}{void}\ add\_sub\_selector(select\_t\ \textcolor{keyword}{const}\&\ subselector)\ \{\ \_subSelectors.push\_back(subselector);\ \}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ [[nodiscard]]\ \textcolor{keyword}{auto}\ get\_groups()\ -\/>\ GroupsContainer\&\ \{\ \textcolor{keywordflow}{return}\ \_pedGroups;\ \}}
+\DoxyCodeLine{00028\ \ \ [[nodiscard]]\ \textcolor{keyword}{auto}\ get\_groups()\ const\ -\/>\ GroupsContainer\ const\&\ \{\ \textcolor{keywordflow}{return}\ \_pedGroups;\ \}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ [[nodiscard]]\ \textcolor{keyword}{auto}\ selector\_count()\ const\ -\/>\ VIPRA::size\ \{\ \textcolor{keywordflow}{return}\ \_subSelectors.size();\ \}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00033\ \ \ Ptype\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_allTypes;}
+\DoxyCodeLine{00034\ \ \ std::vector<select\_t>\ \_subSelectors;}
+\DoxyCodeLine{00035\ \ \ GroupsContainer\ \ \ \ \ \ \ \_pedGroups;}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ [[nodiscard]]\ \textcolor{keyword}{auto}\ select\_peds\_from\_group(select\_t\&\ \textcolor{comment}{/*selector*/},\ \textcolor{keyword}{auto}\ pack,\ std::string\ \textcolor{keyword}{const}\&\ \textcolor{comment}{/*unused*/})}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ -\/>\ VIPRA::idxVec;}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \textcolor{keywordtype}{void}\ check\_for\_duplicates(\textcolor{keyword}{const}\ VIPRA::idxVec\&\ order);}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ [[nodiscard]]\ \textcolor{keyword}{auto}\ \ \ \ \ \ \ \ order\_selectors()\ -\/>\ VIPRA::idxVec;}
+\DoxyCodeLine{00043\ \ \ [[nodiscard]]\ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ filter\_used\_peds(\textcolor{keyword}{const}\ VIPRA::idxVec\&\ \textcolor{comment}{/*peds*/},\ std::vector<bool>\ \textcolor{keyword}{const}\&\ \textcolor{comment}{/*used*/})}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ -\/>\ VIPRA::idxVec;}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \textcolor{keywordtype}{void}\ run\_selectors(\textcolor{keyword}{const}\ VIPRA::idxVec\&\ \textcolor{comment}{/*selectorIdxs*/},\ std::string\ \textcolor{keyword}{const}\&\ \textcolor{comment}{/*behaviorName*/},\ \textcolor{keyword}{auto}\ pack);}
+\DoxyCodeLine{00047\ \ \ \textcolor{keywordtype}{void}\ update\_ped\_groups(\textcolor{keyword}{const}\ VIPRA::idxVec\&\ \textcolor{comment}{/*selectedPeds*/},\ select\_t\&\ \textcolor{comment}{/*selector*/},}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ context\_t\&\ \textcolor{comment}{/*context*/},\ std::string\ \textcolor{keyword}{const}\&\ \textcolor{comment}{/*unused*/});}
+\DoxyCodeLine{00049\ \ \ \textcolor{keywordtype}{void}\ sort\_groups();}
+\DoxyCodeLine{00050\ \};}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00061\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ select\_t,\ \textcolor{keyword}{typename}\ context\_t>}
+\DoxyCodeLine{00062\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Selector_ab8809433efe3d1bdf95744b4beb3a6eb}{Selector<select\_t,\ context\_t>::initialize}}(std::string\ \textcolor{keyword}{const}\&\ behaviorName,\ \textcolor{keyword}{auto}\ pack)\ \{}
+\DoxyCodeLine{00063\ \ \ \_pedGroups.initialize(\_allTypes,\ pack.pedset.num\_pedestrians());}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \textcolor{keyword}{auto}\ selectorIdxs\ =\ order\_selectors();}
+\DoxyCodeLine{00066\ \ \ run\_selectors(selectorIdxs,\ behaviorName,\ pack);}
+\DoxyCodeLine{00067\ \ \ sort\_groups();}
+\DoxyCodeLine{00068\ \ \ \_pedGroups.clean\_used();}
+\DoxyCodeLine{00069\ \}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00082\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ select\_t,\ \textcolor{keyword}{typename}\ context\_t>}
+\DoxyCodeLine{00083\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Selector}{Selector<select\_t,\ context\_t>::run\_selectors}}(\textcolor{keyword}{const}\ VIPRA::idxVec\&\ selectorIdxs,}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ \textcolor{keyword}{const}\&\ behaviorName,\ \textcolor{keyword}{auto}\ pack)\ \{}
+\DoxyCodeLine{00085\ \ \ std::for\_each(selectorIdxs.begin(),\ selectorIdxs.end(),\ [\&](VIPRA::idx\ index)\ \{}
+\DoxyCodeLine{00086\ \ \ \ \ auto\&\ selector\ =\ \_subSelectors[index];}
+\DoxyCodeLine{00087\ \ \ \ \ auto\ \ selectedPeds\ =\ select\_peds\_from\_group(selector,\ pack,\ behaviorName);}
+\DoxyCodeLine{00088\ \ \ \ \ update\_ped\_groups(selectedPeds,\ selector,\ pack.context,\ behaviorName);}
+\DoxyCodeLine{00089\ \ \ \});}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \_pedGroups[0].resize(pack.pedset.num\_pedestrians());}
+\DoxyCodeLine{00092\ \ \ std::iota(\_pedGroups[0].begin(),\ \_pedGroups[0].end(),\ 0);}
+\DoxyCodeLine{00093\ \}}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00106\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ select\_t,\ \textcolor{keyword}{typename}\ context\_t>}
+\DoxyCodeLine{00107\ \textcolor{keyword}{auto}\ Selector<select\_t,\ context\_t>::select\_peds\_from\_group(select\_t\&\ selector,\ \textcolor{keyword}{auto}\ pack,}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ \textcolor{keyword}{const}\&\ \textcolor{comment}{/*unused*/})\ -\/>\ VIPRA::idxVec\ \{}
+\DoxyCodeLine{00109\ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&\ fullGroup\ =\ \_pedGroups.get\_group(selector.group);}
+\DoxyCodeLine{00110\ \ \ \textcolor{keyword}{auto}\ \ \ \ \ \ \ \ usablegroup\ =\ filter\_used\_peds(fullGroup,\ \_pedGroups.get\_used(selector.group));}
+\DoxyCodeLine{00111\ \ \ \textcolor{keyword}{auto}\ \ \ \ \ \ \ \ result\ =\ selector.select\_peds(fullGroup,\ usablegroup,\ pack);}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ \textcolor{keywordflow}{if}\ (!result.starved)\ \{}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordflow}{return}\ result.group;}
+\DoxyCodeLine{00115\ \ \ \}}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \ \ \textcolor{keywordflow}{if}\ (selector.required)\ \{}
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{comment}{//\ spdlog::error("{}Behavior:\ \{\},\ Required\ Selector\ Starved\ For\ Type:\ \{\}\ From\ Group:\ \{\}"{},\ behaviorName,}}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{comment}{//\ selector.type.fullType,\ selector.group);}}
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keywordflow}{throw}\ std::runtime\_error(\textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00121\ \ \ \}}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \ \ \textcolor{comment}{//\ spdlog::warn("{}Behavior:\ \{\},\ Starved\ Selector\ For\ Type:\ \{\}\ From\ Group:\ \{\}"{},\ behaviorName,}}
+\DoxyCodeLine{00124\ \ \ \textcolor{comment}{//\ \ selector.type.fullType,\ selector.group);}}
+\DoxyCodeLine{00125\ \ \ \textcolor{keywordflow}{return}\ result.group;}
+\DoxyCodeLine{00126\ \}}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00136\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ select\_t,\ \textcolor{keyword}{typename}\ context\_t>}
+\DoxyCodeLine{00137\ \textcolor{keywordtype}{void}\ Selector<select\_t,\ context\_t>::update\_ped\_groups(\textcolor{keyword}{const}\ VIPRA::idxVec\&\ selectedPeds,\ select\_t\&\ selector,}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ context\_t\&\ context,\ std::string\ \textcolor{keyword}{const}\&\ \textcolor{comment}{/*unused*/})\ \{}
+\DoxyCodeLine{00139\ \ \ std::for\_each(selectedPeds.begin(),\ selectedPeds.end(),\ [\&](\textcolor{keyword}{auto}\&\ pedIdx)\ \{}
+\DoxyCodeLine{00140\ \ \ \ \ selector.type.for\_each\_type([\&](typeUID\ type)\ \{}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \textcolor{comment}{//\ spdlog::debug("{}Behavior:\ \{\},\ Selecting\ Ped\ \{\}\ for\ Type:\ \{\}"{},\ behaviorName,\ pedIdx,\ type);}}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ context.types[pedIdx]\ +=\ type;}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \_pedGroups.add\_ped(pedIdx,\ type);}
+\DoxyCodeLine{00144\ \ \ \ \ \});}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \ \ \ \ \_pedGroups.set\_used(pedIdx,\ selector.group);}
+\DoxyCodeLine{00147\ \ \ \});}
+\DoxyCodeLine{00148\ \}}
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00157\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ select\_t,\ \textcolor{keyword}{typename}\ context\_t>}
+\DoxyCodeLine{00158\ \textcolor{keyword}{auto}\ Selector<select\_t,\ context\_t>::filter\_used\_peds(\textcolor{keyword}{const}\ VIPRA::idxVec\&\ peds,\ std::vector<bool>\ \textcolor{keyword}{const}\&\ used)}
+\DoxyCodeLine{00159\ \ \ \ \ -\/>\ VIPRA::idxVec\ \{}
+\DoxyCodeLine{00160\ \ \ VIPRA::idxVec\ ret;}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00162\ \ \ \textcolor{keywordflow}{for}\ (VIPRA::idx\ i\ =\ 0;\ i\ <\ peds.size();\ ++i)\ \{}
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keywordflow}{if}\ (!used[i])\ \{}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ ret.push\_back(peds[i]);}
+\DoxyCodeLine{00165\ \ \ \ \ \}}
+\DoxyCodeLine{00166\ \ \ \}}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00168\ \ \ \textcolor{keywordflow}{return}\ ret;}
+\DoxyCodeLine{00169\ \}}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00175\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ select\_t,\ \textcolor{keyword}{typename}\ context\_t>}
+\DoxyCodeLine{00176\ \textcolor{keywordtype}{void}\ Selector<select\_t,\ context\_t>::sort\_groups()\ \{}
+\DoxyCodeLine{00177\ \ \ \textcolor{keyword}{const}\ VIPRA::size\ groupCnt\ =\ \_pedGroups.size();}
+\DoxyCodeLine{00178\ \ \ \textcolor{keywordflow}{for}\ (VIPRA::idx\ i\ =\ 1;\ i\ <\ groupCnt;\ ++i)\ \{}
+\DoxyCodeLine{00179\ \ \ \ \ std::sort(\_pedGroups[i].begin(),\ \_pedGroups[i].end());}
+\DoxyCodeLine{00180\ \ \ \}}
+\DoxyCodeLine{00181\ \}}
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00189\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ select\_t,\ \textcolor{keyword}{typename}\ context\_t>}
+\DoxyCodeLine{00190\ \textcolor{keywordtype}{void}\ Selector<select\_t,\ context\_t>::check\_for\_duplicates(\textcolor{keyword}{const}\ VIPRA::idxVec\&\ order)\ \{}
+\DoxyCodeLine{00191\ \ \ \textcolor{keywordflow}{for}\ (VIPRA::idx\ i\ =\ 0;\ i\ <\ order.size();\ ++i)\ \{}
+\DoxyCodeLine{00192\ \ \ \ \ \textcolor{keywordflow}{for}\ (VIPRA::idx\ j\ =\ i\ +\ 1;\ j\ <\ order.size();\ ++j)\ \{}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (order[i]\ ==\ order[j])\ \{}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ spdlog::error("{}Duplicate\ Selector\ in\ Selectors"{});}}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::runtime\_error(\textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00197\ \ \ \ \ \}}
+\DoxyCodeLine{00198\ \ \ \}}
+\DoxyCodeLine{00199\ \}}
+\DoxyCodeLine{00200\ }
+\DoxyCodeLine{00206\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ select\_t,\ \textcolor{keyword}{typename}\ context\_t>}
+\DoxyCodeLine{00207\ \textcolor{keyword}{auto}\ Selector<select\_t,\ context\_t>::order\_selectors()\ -\/>\ VIPRA::idxVec\ \{}
+\DoxyCodeLine{00208\ \ \ VIPRA::idxVec\ order;}
+\DoxyCodeLine{00209\ }
+\DoxyCodeLine{00210\ \ \ \textcolor{keywordflow}{for}\ (VIPRA::idx\ selIdx\ =\ 0;\ selIdx\ <\ \_subSelectors.size();\ ++selIdx)\ \{}
+\DoxyCodeLine{00211\ \ \ \ \ \textcolor{keywordflow}{if}\ (\_subSelectors[selIdx].group\ ==\ 0)\ \{}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ order.push\_back(selIdx);}
+\DoxyCodeLine{00213\ \ \ \ \ \}}
+\DoxyCodeLine{00214\ \ \ \}}
+\DoxyCodeLine{00215\ }
+\DoxyCodeLine{00216\ \ \ \_allTypes.for\_each\_type([\&](typeUID\ type)\ \{}
+\DoxyCodeLine{00217\ \ \ \ \ \textcolor{keywordflow}{for}\ (VIPRA::idx\ selIdx\ =\ 0;\ selIdx\ <\ \_subSelectors.size();\ ++selIdx)\ \{}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\_subSelectors[selIdx].group\ ==\ type)\ \{}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ order.push\_back(selIdx);}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00221\ \ \ \ \ \}}
+\DoxyCodeLine{00222\ \ \ \});}
+\DoxyCodeLine{00223\ }
+\DoxyCodeLine{00224\ \ \ \textcolor{keywordflow}{for}\ (VIPRA::idx\ selIdx\ =\ 0;\ selIdx\ <\ \_subSelectors.size();\ ++selIdx)\ \{}
+\DoxyCodeLine{00225\ \ \ \ \ \textcolor{keywordtype}{bool}\ notInGraph\ =\ std::find\_if(order.begin(),\ order.end(),}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [\&](VIPRA::idx\ index)\ \{\ return\ index\ ==\ selIdx;\ \})\ ==\ order.end();}
+\DoxyCodeLine{00227\ \ \ \ \ \textcolor{keywordflow}{if}\ (notInGraph)\ \{}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ order.push\_back(selIdx);}
+\DoxyCodeLine{00229\ \ \ \ \ \}}
+\DoxyCodeLine{00230\ \ \ \}}
+\DoxyCodeLine{00231\ }
+\DoxyCodeLine{00232\ \ \ check\_for\_duplicates(order);}
+\DoxyCodeLine{00233\ \ \ \textcolor{keywordflow}{return}\ order;}
+\DoxyCodeLine{00234\ \}}
+\DoxyCodeLine{00235\ }
+\DoxyCodeLine{00236\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA::Behaviors}}
+
+\end{DoxyCode}

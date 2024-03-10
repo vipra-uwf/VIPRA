@@ -1,0 +1,65 @@
+\doxysection{condition.\+hpp}
+\hypertarget{condition_8hpp_source}{}\label{condition_8hpp_source}\index{include/vipra/vipra\_behaviors/conditions/condition.hpp@{include/vipra/vipra\_behaviors/conditions/condition.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <optional>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}vipra/geometry/f3d.hpp"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/conditions/sub\_condition.hpp"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/definitions/sim\_pack.hpp"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/targets/target.hpp"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/util/class\_types.hpp"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/util/timed\_latch.hpp"{}}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{namespace\ }VIPRA::Behaviors\ \{}
+\DoxyCodeLine{00017\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ subcond\_t>}
+\DoxyCodeLine{00018\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Condition}{Condition}}\ \{}
+\DoxyCodeLine{00019\ \ \ DEFAULT\_CONSTRUCTIBLE(\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Condition}{Condition}})}
+\DoxyCodeLine{00020\ \ \ COPYABLE(\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Condition}{Condition}})}
+\DoxyCodeLine{00021\ \ \ MOVEABLE(\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Condition}{Condition}})}
+\DoxyCodeLine{00022\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00023\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ pack\_t>}
+\DoxyCodeLine{00024\ \ \ \textcolor{keywordtype}{void}\ initialize(pack\_t\ pack)\ \{}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordflow}{if}\ (\_conditions.size()\ >\ 1)\ \{}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \_temp.resize(pack.pedset.num\_pedestrians());}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ std::fill(\_temp.begin(),\ \_temp.end(),\ \textcolor{keyword}{false});}
+\DoxyCodeLine{00028\ \ \ \ \ \}}
+\DoxyCodeLine{00029\ \ \ \}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ pack\_t>}
+\DoxyCodeLine{00032\ \ \ \textcolor{keywordtype}{void}\ evaluate(pack\_t\ pack,\ VIPRA::idxVec\ \textcolor{keyword}{const}\&\ peds,\ std::vector<bool>\&\ met,}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<Target>\ \textcolor{keyword}{const}\&\ targets,\ std::optional<TimedLatchCollection>\&\ \textcolor{comment}{/*latches*/})\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{comment}{//\ TODO(rolland):\ add\ in\ latch\ checks}}
+\DoxyCodeLine{00035\ \ \ \ \ std::fill(\_temp.begin(),\ \_temp.end(),\ \textcolor{keyword}{false});}
+\DoxyCodeLine{00036\ \ \ \ \ \_conditions[0](pack,\ peds,\ targets,\ met,\ \_temp,\ BoolOp::OR);}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordflow}{for}\ (VIPRA::idx\ i\ =\ 1;\ i\ <\ \_conditions.size();\ ++i)\ \{}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \_conditions[i](pack,\ peds,\ targets,\ \_temp,\ met,\ \_steps[i\ -\/\ 1]);}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (\_steps[i\ -\/\ 1])\ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ BoolOp::AND:}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ std::transform(met.begin(),\ met.end(),\ \_temp.begin(),\ met.begin(),\ std::logical\_and<>());}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ BoolOp::OR:}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ std::transform(met.begin(),\ met.end(),\ \_temp.begin(),\ met.begin(),\ std::logical\_or<>());}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00048\ \ \ \ \ \}}
+\DoxyCodeLine{00049\ \ \ \}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \textcolor{keywordtype}{void}\ add\_operation(BoolOp\ oper)\ \{\ \_steps.emplace\_back(oper);\ \}}
+\DoxyCodeLine{00052\ \ \ \textcolor{keywordtype}{void}\ add\_subcondition(subcond\_t\&\&\ condition)\ \{\ \_conditions.emplace\_back(condition);\ \}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00055\ \ \ std::vector<subcond\_t>\ \_conditions;}
+\DoxyCodeLine{00056\ \ \ std::vector<BoolOp>\ \ \ \ \_steps;}
+\DoxyCodeLine{00057\ \ \ std::vector<bool>\ \ \ \ \ \ \_temp;}
+\DoxyCodeLine{00058\ \};}
+\DoxyCodeLine{00059\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA::Behaviors}}
+
+\end{DoxyCode}

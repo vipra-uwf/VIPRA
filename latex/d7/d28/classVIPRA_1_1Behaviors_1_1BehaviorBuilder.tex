@@ -1,0 +1,105 @@
+\doxysection{VIPRA\+::Behaviors\+::Behavior\+Builder\texorpdfstring{$<$}{<} pedset\+\_\+t, map\+\_\+t, goals\+\_\+t \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classVIPRA_1_1Behaviors_1_1BehaviorBuilder}{}\label{classVIPRA_1_1Behaviors_1_1BehaviorBuilder}\index{VIPRA::Behaviors::BehaviorBuilder$<$ pedset\_t, map\_t, goals\_t $>$@{VIPRA::Behaviors::BehaviorBuilder$<$ pedset\_t, map\_t, goals\_t $>$}}
+
+
+Parses Behavior Files and Creates the Runtime Functionality they describe.  
+
+
+
+
+{\ttfamily \#include $<$behavior\+\_\+builder.\+hpp$>$}
+
+
+
+Inheritance diagram for VIPRA\+::Behaviors\+::Behavior\+Builder\texorpdfstring{$<$}{<} pedset\+\_\+t, map\+\_\+t, goals\+\_\+t \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=217pt]{dd/da7/classVIPRA_1_1Behaviors_1_1BehaviorBuilder__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for VIPRA\+::Behaviors\+::Behavior\+Builder\texorpdfstring{$<$}{<} pedset\+\_\+t, map\+\_\+t, goals\+\_\+t \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=217pt]{dc/dbd/classVIPRA_1_1Behaviors_1_1BehaviorBuilder__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1BehaviorBuilder_a7039897e73a2ebcd23e0d1ca1174e34d}\label{classVIPRA_1_1Behaviors_1_1BehaviorBuilder_a7039897e73a2ebcd23e0d1ca1174e34d} 
+using {\bfseries Human\+Behavior} = \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1HumanBehavior}{VIPRA\+::\+Behaviors\+::\+Human\+Behavior}}$<$pedset\+\_\+t, map\+\_\+t, goals\+\_\+t$>$
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1BehaviorBuilder_a8938ffc3a1b3395d6b2f06bc530644fe}\label{classVIPRA_1_1Behaviors_1_1BehaviorBuilder_a8938ffc3a1b3395d6b2f06bc530644fe} 
+using {\bfseries Behavior\+Context} = \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1BehaviorContext}{Human\+Behavior\+::context\+\_\+t}}
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1BehaviorBuilder_a260d7d087cdc822fa483f12bbc6d9093}\label{classVIPRA_1_1Behaviors_1_1BehaviorBuilder_a260d7d087cdc822fa483f12bbc6d9093} 
+using {\bfseries Event} = \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Event}{Human\+Behavior\+::event\+\_\+t}}
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1BehaviorBuilder_a736a4684c5ccb1b1f3de01a2165c04f3}\label{classVIPRA_1_1Behaviors_1_1BehaviorBuilder_a736a4684c5ccb1b1f3de01a2165c04f3} 
+using {\bfseries Sim\+Pack} = \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1Simpack}{Human\+Behavior\+::pack\+\_\+t}}
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1BehaviorBuilder_ad54381c2b813d1b4ba4fbd0ba70a8082}\label{classVIPRA_1_1Behaviors_1_1BehaviorBuilder_ad54381c2b813d1b4ba4fbd0ba70a8082} 
+using {\bfseries Condition} = \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Condition}{Human\+Behavior\+::cond\+\_\+t}}
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1BehaviorBuilder_a7c523ce3c40d634f781f458dfae92651}\label{classVIPRA_1_1Behaviors_1_1BehaviorBuilder_a7c523ce3c40d634f781f458dfae92651} 
+using {\bfseries Sub\+Selector} = \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1SubSelector}{Human\+Behavior\+::subselector\+\_\+t}}
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1BehaviorBuilder_a311fec4e0560b87638ceb41e287373b6}\label{classVIPRA_1_1Behaviors_1_1BehaviorBuilder_a311fec4e0560b87638ceb41e287373b6} 
+using {\bfseries Selector} = \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Selector}{Human\+Behavior\+::selector\+\_\+t}}
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1BehaviorBuilder_ad7dd2f44d887e806fd40236af602c002}\label{classVIPRA_1_1Behaviors_1_1BehaviorBuilder_ad7dd2f44d887e806fd40236af602c002} 
+using {\bfseries Target\+Func} = Human\+Behavior\+::targetfunc\+\_\+t
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1BehaviorBuilder_a5aad1e966b0410e658bc5abe6129626d}\label{classVIPRA_1_1Behaviors_1_1BehaviorBuilder_a5aad1e966b0410e658bc5abe6129626d} 
+using {\bfseries Target\+Modifier} = \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1TargetModifier}{Human\+Behavior\+::targetmodifier\+\_\+t}}
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1BehaviorBuilder_a64eabd6b1543f97f9230b29ff85cb654}\label{classVIPRA_1_1Behaviors_1_1BehaviorBuilder_a64eabd6b1543f97f9230b29ff85cb654} 
+using {\bfseries Action} = \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Action}{Human\+Behavior\+::action\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1BehaviorBuilder_ab03b3bc5f3cd33d58b30d66608425ba3}{build}} (std\+::string name, std\+::filesystem\+::path const \&filepath, VIPRA\+::seed seed) -\/$>$ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1HumanBehavior}{Human\+Behavior}}
+\begin{DoxyCompactList}\small\item\em Parses the behavior file at filepath, returns the behavior it describes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$Concepts\+::\+Pedset\+Module pedset\+\_\+t, Concepts\+::\+Map\+Module map\+\_\+t, Concepts\+::\+Goals\+Module goals\+\_\+t$>$\newline
+class VIPRA\+::\+Behaviors\+::\+Behavior\+Builder$<$ pedset\+\_\+t, map\+\_\+t, goals\+\_\+t $>$}
+Parses Behavior Files and Creates the Runtime Functionality they describe. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1BehaviorBuilder_ab03b3bc5f3cd33d58b30d66608425ba3}\label{classVIPRA_1_1Behaviors_1_1BehaviorBuilder_ab03b3bc5f3cd33d58b30d66608425ba3} 
+\index{VIPRA::Behaviors::BehaviorBuilder$<$ pedset\_t, map\_t, goals\_t $>$@{VIPRA::Behaviors::BehaviorBuilder$<$ pedset\_t, map\_t, goals\_t $>$}!build@{build}}
+\index{build@{build}!VIPRA::Behaviors::BehaviorBuilder$<$ pedset\_t, map\_t, goals\_t $>$@{VIPRA::Behaviors::BehaviorBuilder$<$ pedset\_t, map\_t, goals\_t $>$}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}}
+{\footnotesize\ttfamily template$<$Concepts\+::\+Pedset\+Module pedset\+\_\+t, Concepts\+::\+Map\+Module map\+\_\+t, Concepts\+::\+Goals\+Module goals\+\_\+t$>$ \\
+auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1BehaviorBuilder}{VIPRA\+::\+Behaviors\+::\+Behavior\+Builder}}$<$ pedset\+\_\+t, map\+\_\+t, goals\+\_\+t $>$\+::build (\begin{DoxyParamCaption}\item[{std\+::string}]{behavior\+Name,  }\item[{std\+::filesystem\+::path const \&}]{filepath,  }\item[{VIPRA\+::seed}]{seed }\end{DoxyParamCaption}) -\/$>$ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1HumanBehavior}{Human\+Behavior}}}
+
+
+
+Parses the behavior file at filepath, returns the behavior it describes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em behavior\+Name} & \+: name of the behavior \\
+\hline
+{\em filepath} & \+: path to the behavior file \\
+\hline
+{\em seed\+Num} & \+: seed for randomization \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Human\+Behavior\&\& 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/vipra/vipra\+\_\+behaviors/builder/behavior\+\_\+builder.\+hpp\end{DoxyCompactItemize}

@@ -1,0 +1,54 @@
+\doxysection{VIPRA\+::Behaviors\+::Modifier\+Location Class Reference}
+\hypertarget{classVIPRA_1_1Behaviors_1_1ModifierLocation}{}\label{classVIPRA_1_1Behaviors_1_1ModifierLocation}\index{VIPRA::Behaviors::ModifierLocation@{VIPRA::Behaviors::ModifierLocation}}
+
+
+Target modifier for location.  
+
+
+
+
+{\ttfamily \#include $<$modifier\+\_\+location.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1ModifierLocation_a7b35dbdc5f2367227046ffe487744bb3}\label{classVIPRA_1_1Behaviors_1_1ModifierLocation_a7b35dbdc5f2367227046ffe487744bb3} 
+{\bfseries Modifier\+Location} (VIPRA\+::idx location)
+\item 
+auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1ModifierLocation_a35c98d5ea7029b42ed2bb5e75aca167b}{operator()}} (auto pack, VIPRA\+::idx target\+Idx, VIPRA\+::idx self\+Idx) const -\/$>$ bool
+\begin{DoxyCompactList}\small\item\em Returns if target is within the location. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Target modifier for location. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1ModifierLocation_a35c98d5ea7029b42ed2bb5e75aca167b}\label{classVIPRA_1_1Behaviors_1_1ModifierLocation_a35c98d5ea7029b42ed2bb5e75aca167b} 
+\index{VIPRA::Behaviors::ModifierLocation@{VIPRA::Behaviors::ModifierLocation}!operator()@{operator()}}
+\index{operator()@{operator()}!VIPRA::Behaviors::ModifierLocation@{VIPRA::Behaviors::ModifierLocation}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily auto VIPRA\+::\+Behaviors\+::\+Modifier\+Location\+::operator() (\begin{DoxyParamCaption}\item[{auto}]{pack,  }\item[{VIPRA\+::idx}]{target\+Idx,  }\item[{VIPRA\+::idx}]{self\+Idx }\end{DoxyParamCaption}) const -\/$>$ bool \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns if target is within the location. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pack} & \+: simulation pack \\
+\hline
+{\em target\+Idx} & \+: target to check \\
+\hline
+{\em self\+Idx} & \+: pedsetrian looking for target \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true \+: if inside the location 
+
+false \+: if NOT inside the location 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/vipra/vipra\+\_\+behaviors/targets/target\+\_\+modifiers/modifier\+\_\+location.\+hpp\end{DoxyCompactItemize}

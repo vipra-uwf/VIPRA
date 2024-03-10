@@ -1,0 +1,19 @@
+\doxysection{model.\+hpp}
+\hypertarget{macros_2model_8hpp_source}{}\label{macros_2model_8hpp_source}\index{include/vipra/macros/model.hpp@{include/vipra/macros/model.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#define\ VIPRA\_MODEL\_TIMESTEP\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\ \ template\ <VIPRA::Concepts::PedsetModule\ peds\_t,\ VIPRA::Concepts::MapModule\ map\_t,\ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ VIPRA::Concepts::GoalsModule\ goals\_t,\ VIPRA::Concepts::BaseOutput\ output\_t>\ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\ \ void\ timestep(peds\_t\ const\&\ pedset,\ map\_t\ const\&\ map,\ goals\_t\ const\&\ goals,\ output\_t\&\ output,\ \(\backslash\)}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ VIPRA::State\&\ state,\ VIPRA::delta\_t\ deltaT,\ VIPRA::timestep\ timestep)}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#define\ VIPRA\_MODEL\_INIT\_STEP\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\ \ void\ initialize(const\ VIPRA::Concepts::PedsetModule\ auto\&\ pedset,\ \(\backslash\)}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ const\ VIPRA::Concepts::MapModule\ auto\&\ \ \ \ map,\ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ const\ VIPRA::Concepts::GoalsModule\ auto\&\ \ goals,\ \ \(\backslash\)}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ const\ VIPRA::Concepts::BaseOutput\ auto\&\ output,\ VIPRA::Random::Engine\&\ engine)}}
+
+\end{DoxyCode}

@@ -1,0 +1,80 @@
+\doxysection{input.\+hpp}
+\hypertarget{input_8hpp_source}{}\label{input_8hpp_source}\index{include/vipra/concepts/input.hpp@{include/vipra/concepts/input.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <concepts>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <optional>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <string\_view>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/module.hpp"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}vipra/modules.hpp"{}}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}vipra/geometry/f3d.hpp"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}vipra/types/parameter.hpp"{}}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{comment}{//\ TODO(rolland):\ remember\ to\ add\ in\ documentation\ that\ inputs\ should\ hold\ off\ on\ loading\ until\ their\ load()\ method\ is\ called}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{namespace\ }VIPRA::Concepts\ \{}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{comment}{//\ TODO(rolland):\ clean\ this\ up\ and\ make\ it\ more\ generic/strict}}
+\DoxyCodeLine{00026\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ input\_t>}
+\DoxyCodeLine{00027\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__get__values}{can\_get\_values}}\ =\ \textcolor{keyword}{requires}(input\_t\ input,\ std::string\_view\ key,\ std::string\_view\ key2)\ \{}
+\DoxyCodeLine{00028\ \ \ \{\ input.template\ get<int>(\textcolor{stringliteral}{"{}key"{}})\ \}\ -\/>\ std::same\_as<std::optional<int>>;}
+\DoxyCodeLine{00029\ \ \ \{\ input.template\ get<std::string>(\textcolor{stringliteral}{"{}key"{}})\ \}\ -\/>\ std::same\_as<std::optional<std::string>>;}
+\DoxyCodeLine{00030\ \ \ \{\ input.template\ get<std::vector<int>>(\textcolor{stringliteral}{"{}key"{}})\ \}\ -\/>\ std::same\_as<std::optional<std::vector<int>>>;}
+\DoxyCodeLine{00031\ \};}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{comment}{//\ TODO(rolland):\ this\ is\ a\ sort\ of\ work\ around\ for\ making\ sure\ that\ inputs\ aren't\ loaded\ on\ every\ node\ for\ a\ parameter\ sweep}}
+\DoxyCodeLine{00034\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ -\/\ input\ should\ only\ be\ loaded\ when\ this\ function\ is\ called}}
+\DoxyCodeLine{00035\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ -\/\ but\ nothing\ is\ stopping\ implementers\ from\ loading\ parameters\ in\ the\ constructor/elsewhere}}
+\DoxyCodeLine{00036\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ -\/\ not\ sure\ if\ there\ is\ a\ good\ way\ to\ only\ load\ parameters\ on\ one\ node\ while\ still\ allowing\ any\ input\ to\ be\ used\ for\ parameters}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00043\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ input\_t>}
+\DoxyCodeLine{00044\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1delayed__load}{delayed\_load}}\ =\ \textcolor{keyword}{requires}(input\_t\ input)\ \{}
+\DoxyCodeLine{00045\ \ \ \{\ input.load()\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{00046\ \};}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00053\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ input\_t>}
+\DoxyCodeLine{00054\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1InputModule}{InputModule}}\ =}
+\DoxyCodeLine{00055\ \ \ \ \ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1is__type}{is\_type<input\_t,\ VIPRA::Modules::Type::INPUT>}}\ \&\&\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__get__values}{can\_get\_values<input\_t>}}\ \&\&\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1delayed__load}{delayed\_load<input\_t>}};}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00061\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVIPRA_1_1Concepts_1_1DummyInput}{DummyInput}}\ \{}
+\DoxyCodeLine{00062\ \ \ \textcolor{comment}{//\ NOLINTBEGIN}}
+\DoxyCodeLine{00063\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00064\ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ VIPRA::Modules::Type\ \_VIPRA\_MODULE\_TYPE\_\ =\ VIPRA::Modules::Type::INPUT;}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \textcolor{keywordtype}{void}\ load()\ \{\}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ data\_t>}
+\DoxyCodeLine{00069\ \ \ \textcolor{keyword}{auto}\ get(std::string\_view\ \textcolor{comment}{/*unused*/},\ std::string\_view\ \textcolor{comment}{/*unused*/})\ \textcolor{keyword}{const}\ -\/>\ std::optional<data\_t>\ \{}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordflow}{return}\ std::nullopt;}
+\DoxyCodeLine{00071\ \ \ \}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ data\_t>}
+\DoxyCodeLine{00074\ \ \ \textcolor{keyword}{auto}\ get(std::string\_view\ \textcolor{comment}{/*unused*/})\ \textcolor{keyword}{const}\ -\/>\ std::optional<data\_t>\ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordflow}{return}\ std::nullopt;}
+\DoxyCodeLine{00076\ \ \ \}}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ data\_t>}
+\DoxyCodeLine{00079\ \ \ \textcolor{keyword}{auto}\ get\_vector(std::string\_view\ \textcolor{comment}{/*unused*/},\ std::string\_view\ \textcolor{comment}{/*unused*/})\ \textcolor{keyword}{const}}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ -\/>\ std::optional<std::vector<data\_t>>\ \{}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordflow}{return}\ std::nullopt;}
+\DoxyCodeLine{00082\ \ \ \}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ data\_t>}
+\DoxyCodeLine{00085\ \ \ \textcolor{keyword}{auto}\ get\_vector(std::string\_view\ \textcolor{comment}{/*unused*/})\ \textcolor{keyword}{const}\ -\/>\ std::optional<std::vector<data\_t>>\ \{}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordflow}{return}\ std::nullopt;}
+\DoxyCodeLine{00087\ \ \ \}}
+\DoxyCodeLine{00088\ \ \ \textcolor{comment}{//\ NOLINTEND}}
+\DoxyCodeLine{00089\ \};}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ CHECK\_MODULE(\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1InputModule}{InputModule}},\ \mbox{\hyperlink{classVIPRA_1_1Concepts_1_1DummyInput}{DummyInput}});}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA::Concepts}}
+
+\end{DoxyCode}

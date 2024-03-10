@@ -1,0 +1,30 @@
+\doxysection{VIPRA\+::Algo\+::AStar\+::conversion\+\_\+func Concept Reference}
+\hypertarget{conceptVIPRA_1_1Algo_1_1AStar_1_1conversion__func}{}\label{conceptVIPRA_1_1Algo_1_1AStar_1_1conversion__func}\index{VIPRA::Algo::AStar::conversion\_func@{VIPRA::Algo::AStar::conversion\_func}}
+
+
+Concept for a function that converts a node index to a desired type.  
+
+
+
+
+{\ttfamily \#include $<$astar.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ func\_t>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Algo_1_1AStar_1_1conversion__func}{VIPRA::Algo::AStar::conversion\_func}}\ =\ \ std::is\_same\_v<func\_t,\ VOID>\ ||\ \textcolor{keyword}{requires}(func\_t\ func,\ VIPRA::idx\ idx1)\ \{}
+\DoxyCodeLine{\ \ \{func(idx1)\};}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Concept for a function that converts a node index to a desired type. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em func\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}

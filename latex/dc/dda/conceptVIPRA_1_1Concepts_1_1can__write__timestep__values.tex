@@ -1,0 +1,35 @@
+\doxysection{VIPRA\+::Concepts\+::can\+\_\+write\+\_\+timestep\+\_\+values Concept Reference}
+\hypertarget{conceptVIPRA_1_1Concepts_1_1can__write__timestep__values}{}\label{conceptVIPRA_1_1Concepts_1_1can__write__timestep__values}\index{VIPRA::Concepts::can\_write\_timestep\_values@{VIPRA::Concepts::can\_write\_timestep\_values}}
+
+
+Checks that a type can write timestep values to an output.  
+
+
+
+
+{\ttfamily \#include $<$output.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ output\_t>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__write__timestep__values}{VIPRA::Concepts::can\_write\_timestep\_values}}\ =\ \ \textcolor{keyword}{requires}(output\_t\ output,\ \textcolor{keywordtype}{char}\ \textcolor{keyword}{const}*\ key,\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ value)\ \{}
+\DoxyCodeLine{\ \ \{output.timestep\_value(key,\ VIPRA::timestep\{\},\ value)\};}
+\DoxyCodeLine{\ \ \{\ output.timestep\_value(key,\ VIPRA::timestep\{\},\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\{\})\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{\ \ \{\ output.timestep\_value(key,\ VIPRA::timestep\{\},\ std::string\{\})\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{\ \ \{output.ped\_timestep\_value(VIPRA::idx\{\},\ VIPRA::timestep\{\},\ key,\ value)\};}
+\DoxyCodeLine{\ \ \{\ output.ped\_timestep\_value(VIPRA::idx\{\},\ VIPRA::timestep\{\},\ key,\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\{\})\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{\ \ \{\ output.ped\_timestep\_value(VIPRA::idx\{\},\ VIPRA::timestep\{\},\ key,\ std::string\{\})\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Checks that a type can write timestep values to an output. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em output\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}

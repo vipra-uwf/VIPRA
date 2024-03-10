@@ -1,0 +1,69 @@
+\doxysection{module\+\_\+checks.\+hpp}
+\hypertarget{module__checks_8hpp_source}{}\label{module__checks_8hpp_source}\index{include/vipra/simulation/module\_checks.hpp@{include/vipra/simulation/module\_checks.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/goals.hpp"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/has\_type.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/input.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/map.hpp"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/model.hpp"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/obstacle\_set.hpp"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/output.hpp"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/output\_coordinator.hpp"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/parameters.hpp"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/pedset.hpp"{}}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }VIPRA::Checks\ \{}
+\DoxyCodeLine{00015\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ type\_t>}
+\DoxyCodeLine{00016\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structVIPRA_1_1Checks_1_1Params}{Params}}\ \{}
+\DoxyCodeLine{00017\ \ \ \textcolor{keyword}{static\_assert}(\mbox{\hyperlink{structVIPRA_1_1Concepts_1_1has__type}{Concepts::has\_type<type\_t>::value}},\ \textcolor{stringliteral}{"{}Missing\ Module\ Type"{}});}
+\DoxyCodeLine{00018\ \ \ \textcolor{comment}{//\ NOLINTNEXTLINE(readability-\/identifier-\/naming)\ lowercase\ is\ a\ regular\ naming\ convetion\ here}}
+\DoxyCodeLine{00019\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ value\ =\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1ParamModule}{Concepts::ParamModule<type\_t>}};}
+\DoxyCodeLine{00020\ \};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ type\_t>}
+\DoxyCodeLine{00023\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structVIPRA_1_1Checks_1_1Input}{Input}}\ \{}
+\DoxyCodeLine{00024\ \ \ \textcolor{keyword}{static\_assert}(\mbox{\hyperlink{structVIPRA_1_1Concepts_1_1has__type}{Concepts::has\_type<type\_t>::value}},\ \textcolor{stringliteral}{"{}Missing\ Module\ Type"{}});}
+\DoxyCodeLine{00025\ \ \ \textcolor{comment}{//\ NOLINTNEXTLINE(readability-\/identifier-\/naming)\ lowercase\ is\ a\ regular\ naming\ convetion\ here}}
+\DoxyCodeLine{00026\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ value\ =\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1InputModule}{Concepts::InputModule<type\_t>}};}
+\DoxyCodeLine{00027\ \};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ type\_t>}
+\DoxyCodeLine{00030\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structVIPRA_1_1Checks_1_1OutputCoord}{OutputCoord}}\ \{}
+\DoxyCodeLine{00031\ \ \ \textcolor{keyword}{static\_assert}(\mbox{\hyperlink{structVIPRA_1_1Concepts_1_1has__type}{Concepts::has\_type<type\_t>::value}},\ \textcolor{stringliteral}{"{}Missing\ Module\ Type"{}});}
+\DoxyCodeLine{00032\ \ \ \textcolor{comment}{//\ NOLINTNEXTLINE(readability-\/identifier-\/naming)\ lowercase\ is\ a\ regular\ naming\ convetion\ here}}
+\DoxyCodeLine{00033\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ value\ =\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1OutputCoordinator}{Concepts::OutputCoordinator<type\_t>}};}
+\DoxyCodeLine{00034\ \};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ type\_t>}
+\DoxyCodeLine{00037\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structVIPRA_1_1Checks_1_1Model}{Model}}\ \{}
+\DoxyCodeLine{00038\ \ \ \textcolor{keyword}{static\_assert}(\mbox{\hyperlink{structVIPRA_1_1Concepts_1_1has__type}{Concepts::has\_type<type\_t>::value}},\ \textcolor{stringliteral}{"{}Missing\ Module\ Type"{}});}
+\DoxyCodeLine{00039\ \ \ \textcolor{comment}{//\ NOLINTNEXTLINE(readability-\/identifier-\/naming)\ lowercase\ is\ a\ regular\ naming\ convetion\ here}}
+\DoxyCodeLine{00040\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ value\ =\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1ModelModule}{Concepts::ModelModule<type\_t>}};}
+\DoxyCodeLine{00041\ \};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ type\_t>}
+\DoxyCodeLine{00044\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structVIPRA_1_1Checks_1_1Pedset}{Pedset}}\ \{}
+\DoxyCodeLine{00045\ \ \ \textcolor{keyword}{static\_assert}(\mbox{\hyperlink{structVIPRA_1_1Concepts_1_1has__type}{Concepts::has\_type<type\_t>::value}},\ \textcolor{stringliteral}{"{}Missing\ Module\ Type"{}});}
+\DoxyCodeLine{00046\ \ \ \textcolor{comment}{//\ NOLINTNEXTLINE(readability-\/identifier-\/naming)\ lowercase\ is\ a\ regular\ naming\ convetion\ here}}
+\DoxyCodeLine{00047\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ value\ =\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1PedsetModule}{Concepts::PedsetModule<type\_t>}};}
+\DoxyCodeLine{00048\ \};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ type\_t>}
+\DoxyCodeLine{00051\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structVIPRA_1_1Checks_1_1Goals}{Goals}}\ \{}
+\DoxyCodeLine{00052\ \ \ \textcolor{keyword}{static\_assert}(\mbox{\hyperlink{structVIPRA_1_1Concepts_1_1has__type}{Concepts::has\_type<type\_t>::value}},\ \textcolor{stringliteral}{"{}Missing\ Module\ Type"{}});}
+\DoxyCodeLine{00053\ \ \ \textcolor{comment}{//\ NOLINTNEXTLINE(readability-\/identifier-\/naming)\ lowercase\ is\ a\ regular\ naming\ convetion\ here}}
+\DoxyCodeLine{00054\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ value\ =\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1GoalsModule}{Concepts::GoalsModule<type\_t>}};}
+\DoxyCodeLine{00055\ \};}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ type\_t>}
+\DoxyCodeLine{00058\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structVIPRA_1_1Checks_1_1Map}{Map}}\ \{}
+\DoxyCodeLine{00059\ \ \ \textcolor{keyword}{static\_assert}(\mbox{\hyperlink{structVIPRA_1_1Concepts_1_1has__type}{Concepts::has\_type<type\_t>::value}},\ \textcolor{stringliteral}{"{}Missing\ Module\ Type"{}});}
+\DoxyCodeLine{00060\ \ \ \textcolor{comment}{//\ NOLINTNEXTLINE(readability-\/identifier-\/naming)\ lowercase\ is\ a\ regular\ naming\ convetion\ here}}
+\DoxyCodeLine{00061\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ value\ =\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1MapModule}{Concepts::MapModule<type\_t>}};}
+\DoxyCodeLine{00062\ \};}
+\DoxyCodeLine{00063\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA::Checks}}
+
+\end{DoxyCode}

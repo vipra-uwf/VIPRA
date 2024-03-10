@@ -1,0 +1,130 @@
+\doxysection{VIPRA\+::Geometry\+::Rectangle Class Reference}
+\hypertarget{classVIPRA_1_1Geometry_1_1Rectangle}{}\label{classVIPRA_1_1Geometry_1_1Rectangle}\index{VIPRA::Geometry::Rectangle@{VIPRA::Geometry::Rectangle}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classVIPRA_1_1Geometry_1_1Rectangle_ab5a3c63bdd66fd9b0d611c889c4ea5a6}\label{classVIPRA_1_1Geometry_1_1Rectangle_ab5a3c63bdd66fd9b0d611c889c4ea5a6} 
+constexpr {\bfseries Rectangle} (\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} point1, \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} point2, \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} point3, \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} point4)
+\item 
+\Hypertarget{classVIPRA_1_1Geometry_1_1Rectangle_ae8bb7a08b09e1434e1ef92e851cdda10}\label{classVIPRA_1_1Geometry_1_1Rectangle_ae8bb7a08b09e1434e1ef92e851cdda10} 
+constexpr {\bfseries Rectangle} (\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} point1, \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} point3)
+\item 
+constexpr auto \mbox{\hyperlink{classVIPRA_1_1Geometry_1_1Rectangle_a436fa147ca56028ad5276b426ed05f81}{is\+\_\+point\+\_\+inside}} (\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} point) const noexcept -\/$>$ bool
+\begin{DoxyCompactList}\small\item\em Checks if a point is inside the rectangle. \end{DoxyCompactList}\item 
+constexpr auto \mbox{\hyperlink{classVIPRA_1_1Geometry_1_1Rectangle_a5b55ae2af71c3e47c6683b0829abbfc6}{does\+\_\+intersect}} (\mbox{\hyperlink{classVIPRA_1_1Geometry_1_1Rectangle}{Rectangle}} const \&other) const noexcept -\/$>$ bool
+\begin{DoxyCompactList}\small\item\em Checks if the rectangle intersects another. \end{DoxyCompactList}\item 
+constexpr auto \mbox{\hyperlink{classVIPRA_1_1Geometry_1_1Rectangle_a17b5c0653f23bb0da0bbb684b3abfd46}{does\+\_\+intersect}} (\mbox{\hyperlink{structVIPRA_1_1Geometry_1_1Line}{Line}} const \&other) const noexcept -\/$>$ bool
+\begin{DoxyCompactList}\small\item\em Checks if the rectangle intersects another. \end{DoxyCompactList}\item 
+\Hypertarget{classVIPRA_1_1Geometry_1_1Rectangle_a840562ca2dbb010bd3b7b60c5335635e}\label{classVIPRA_1_1Geometry_1_1Rectangle_a840562ca2dbb010bd3b7b60c5335635e} 
+constexpr auto {\bfseries rotation} () const noexcept -\/$>$ VIPRA\+::f\+\_\+pnt
+\item 
+\Hypertarget{classVIPRA_1_1Geometry_1_1Rectangle_abdd10c950b8d4bc30aa092dc1f268ea3}\label{classVIPRA_1_1Geometry_1_1Rectangle_abdd10c950b8d4bc30aa092dc1f268ea3} 
+constexpr auto {\bfseries width} () const noexcept -\/$>$ VIPRA\+::f\+\_\+pnt
+\item 
+\Hypertarget{classVIPRA_1_1Geometry_1_1Rectangle_a71cd1b1262c8c89651b585917860b371}\label{classVIPRA_1_1Geometry_1_1Rectangle_a71cd1b1262c8c89651b585917860b371} 
+constexpr auto {\bfseries height} () const noexcept -\/$>$ VIPRA\+::f\+\_\+pnt
+\item 
+\Hypertarget{classVIPRA_1_1Geometry_1_1Rectangle_a4e57c64435e7f6cbd53a6fed5ebe4f7d}\label{classVIPRA_1_1Geometry_1_1Rectangle_a4e57c64435e7f6cbd53a6fed5ebe4f7d} 
+constexpr auto {\bfseries area} () const noexcept -\/$>$ VIPRA\+::f\+\_\+pnt
+\item 
+\Hypertarget{classVIPRA_1_1Geometry_1_1Rectangle_a8cb37065800abcf4203060d78db4cb0c}\label{classVIPRA_1_1Geometry_1_1Rectangle_a8cb37065800abcf4203060d78db4cb0c} 
+constexpr auto {\bfseries center} () const noexcept -\/$>$ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}}
+\item 
+\Hypertarget{classVIPRA_1_1Geometry_1_1Rectangle_ac561674166cc56373eff1166e7b9159a}\label{classVIPRA_1_1Geometry_1_1Rectangle_ac561674166cc56373eff1166e7b9159a} 
+constexpr auto {\bfseries p1} () const noexcept -\/$>$ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}}
+\item 
+\Hypertarget{classVIPRA_1_1Geometry_1_1Rectangle_a65af93e998ed11502e5d34c64ba17ccb}\label{classVIPRA_1_1Geometry_1_1Rectangle_a65af93e998ed11502e5d34c64ba17ccb} 
+constexpr auto {\bfseries p2} () const noexcept -\/$>$ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}}
+\item 
+\Hypertarget{classVIPRA_1_1Geometry_1_1Rectangle_a8697bdd6eec5121c504c74fcb6c71206}\label{classVIPRA_1_1Geometry_1_1Rectangle_a8697bdd6eec5121c504c74fcb6c71206} 
+constexpr auto {\bfseries p3} () const noexcept -\/$>$ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}}
+\item 
+\Hypertarget{classVIPRA_1_1Geometry_1_1Rectangle_af3a4a372d7ff7039f09212a9ef53a4b5}\label{classVIPRA_1_1Geometry_1_1Rectangle_af3a4a372d7ff7039f09212a9ef53a4b5} 
+constexpr auto {\bfseries p4} () const noexcept -\/$>$ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}}
+\item 
+\Hypertarget{classVIPRA_1_1Geometry_1_1Rectangle_aa8daff377839d709f13a303dc99e3708}\label{classVIPRA_1_1Geometry_1_1Rectangle_aa8daff377839d709f13a303dc99e3708} 
+constexpr auto {\bfseries operator\mbox{[}$\,$\mbox{]}} (VIPRA\+::size idx) -\/$>$ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} \&
+\item 
+\Hypertarget{classVIPRA_1_1Geometry_1_1Rectangle_ac32d2828b38cee593dfaa1da760cf275}\label{classVIPRA_1_1Geometry_1_1Rectangle_ac32d2828b38cee593dfaa1da760cf275} 
+constexpr auto {\bfseries at} (VIPRA\+::size idx) const -\/$>$ const \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} \&
+\item 
+\Hypertarget{classVIPRA_1_1Geometry_1_1Rectangle_a8147f359a19e9cd9051bcfe4c1f4cf26}\label{classVIPRA_1_1Geometry_1_1Rectangle_a8147f359a19e9cd9051bcfe4c1f4cf26} 
+constexpr {\bfseries Rectangle} (\mbox{\hyperlink{classVIPRA_1_1Geometry_1_1Rectangle}{Rectangle}} const \&)=default
+\item 
+\Hypertarget{classVIPRA_1_1Geometry_1_1Rectangle_aa1a1ec2d0191da0fa8e0481babdde12f}\label{classVIPRA_1_1Geometry_1_1Rectangle_aa1a1ec2d0191da0fa8e0481babdde12f} 
+constexpr {\bfseries Rectangle} (\mbox{\hyperlink{classVIPRA_1_1Geometry_1_1Rectangle}{Rectangle}} \&\&)=default
+\item 
+\Hypertarget{classVIPRA_1_1Geometry_1_1Rectangle_a529aff60fa151407da38307c1326d167}\label{classVIPRA_1_1Geometry_1_1Rectangle_a529aff60fa151407da38307c1326d167} 
+constexpr auto {\bfseries operator=} (\mbox{\hyperlink{classVIPRA_1_1Geometry_1_1Rectangle}{Rectangle}} const \&) -\/$>$ \mbox{\hyperlink{classVIPRA_1_1Geometry_1_1Rectangle}{Rectangle}} \&=default
+\item 
+\Hypertarget{classVIPRA_1_1Geometry_1_1Rectangle_a6c037538efca5df88e7e22d7468dbf67}\label{classVIPRA_1_1Geometry_1_1Rectangle_a6c037538efca5df88e7e22d7468dbf67} 
+constexpr auto {\bfseries operator=} (\mbox{\hyperlink{classVIPRA_1_1Geometry_1_1Rectangle}{Rectangle}} \&\&) -\/$>$ \mbox{\hyperlink{classVIPRA_1_1Geometry_1_1Rectangle}{Rectangle}} \&=default
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classVIPRA_1_1Geometry_1_1Rectangle_a17b5c0653f23bb0da0bbb684b3abfd46}\label{classVIPRA_1_1Geometry_1_1Rectangle_a17b5c0653f23bb0da0bbb684b3abfd46} 
+\index{VIPRA::Geometry::Rectangle@{VIPRA::Geometry::Rectangle}!does\_intersect@{does\_intersect}}
+\index{does\_intersect@{does\_intersect}!VIPRA::Geometry::Rectangle@{VIPRA::Geometry::Rectangle}}
+\doxysubsubsection{\texorpdfstring{does\_intersect()}{does\_intersect()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily constexpr auto VIPRA\+::\+Geometry\+::\+Rectangle\+::does\+\_\+intersect (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVIPRA_1_1Geometry_1_1Line}{Line}} const \&}]{other }\end{DoxyParamCaption}) const -\/$>$ bool \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Checks if the rectangle intersects another. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true 
+
+false 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Geometry_1_1Rectangle_a5b55ae2af71c3e47c6683b0829abbfc6}\label{classVIPRA_1_1Geometry_1_1Rectangle_a5b55ae2af71c3e47c6683b0829abbfc6} 
+\index{VIPRA::Geometry::Rectangle@{VIPRA::Geometry::Rectangle}!does\_intersect@{does\_intersect}}
+\index{does\_intersect@{does\_intersect}!VIPRA::Geometry::Rectangle@{VIPRA::Geometry::Rectangle}}
+\doxysubsubsection{\texorpdfstring{does\_intersect()}{does\_intersect()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily constexpr auto VIPRA\+::\+Geometry\+::\+Rectangle\+::does\+\_\+intersect (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classVIPRA_1_1Geometry_1_1Rectangle}{Rectangle}} const \&}]{other }\end{DoxyParamCaption}) const -\/$>$ bool \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Checks if the rectangle intersects another. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true 
+
+false 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Geometry_1_1Rectangle_a436fa147ca56028ad5276b426ed05f81}\label{classVIPRA_1_1Geometry_1_1Rectangle_a436fa147ca56028ad5276b426ed05f81} 
+\index{VIPRA::Geometry::Rectangle@{VIPRA::Geometry::Rectangle}!is\_point\_inside@{is\_point\_inside}}
+\index{is\_point\_inside@{is\_point\_inside}!VIPRA::Geometry::Rectangle@{VIPRA::Geometry::Rectangle}}
+\doxysubsubsection{\texorpdfstring{is\_point\_inside()}{is\_point\_inside()}}
+{\footnotesize\ttfamily constexpr auto VIPRA\+::\+Geometry\+::\+Rectangle\+::is\+\_\+point\+\_\+inside (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}}}]{point }\end{DoxyParamCaption}) const -\/$>$ bool \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Checks if a point is inside the rectangle. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em point} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true 
+
+false 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/vipra/geometry/rectangle.\+hpp\end{DoxyCompactItemize}

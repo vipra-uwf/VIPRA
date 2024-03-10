@@ -1,0 +1,52 @@
+\doxysection{VIPRA\+::Concepts\+::Dummy\+Ped\+Set Class Reference}
+\hypertarget{classVIPRA_1_1Concepts_1_1DummyPedSet}{}\label{classVIPRA_1_1Concepts_1_1DummyPedSet}\index{VIPRA::Concepts::DummyPedSet@{VIPRA::Concepts::DummyPedSet}}
+
+
+Dummy pedestrian set for use in other concepts.  
+
+
+
+
+{\ttfamily \#include $<$pedset.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyPedSet_a16d7d3807d39550cefda3bb6479eb0ce}\label{classVIPRA_1_1Concepts_1_1DummyPedSet_a16d7d3807d39550cefda3bb6479eb0ce} 
+{\footnotesize template$<$typename params\+\_\+t $>$ }\\void {\bfseries register\+\_\+params} (params\+\_\+t \&)
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyPedSet_a4a52107374bbfaa7637ee965b7b03f86}\label{classVIPRA_1_1Concepts_1_1DummyPedSet_a4a52107374bbfaa7637ee965b7b03f86} 
+void {\bfseries config} (auto \&params, \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{VIPRA\+::\+Random\+::\+Engine}} \&)
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyPedSet_a82e8ede9521977c8ef82b62d5eda5406}\label{classVIPRA_1_1Concepts_1_1DummyPedSet_a82e8ede9521977c8ef82b62d5eda5406} 
+void {\bfseries update} (const \mbox{\hyperlink{structVIPRA_1_1State}{VIPRA\+::\+State}} \&)
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyPedSet_a1f89e4dce21c8d3d15bc07251b735d41}\label{classVIPRA_1_1Concepts_1_1DummyPedSet_a1f89e4dce21c8d3d15bc07251b735d41} 
+auto {\bfseries num\+\_\+pedestrians} () const -\/$>$ VIPRA\+::size
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyPedSet_acbf4d49737e94f0b11b105cbd3d546b6}\label{classVIPRA_1_1Concepts_1_1DummyPedSet_acbf4d49737e94f0b11b105cbd3d546b6} 
+auto {\bfseries ped\+\_\+coords} (VIPRA\+::idx) const -\/$>$ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} const \&
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyPedSet_a20656a028c1d1caf57b327e379f481ad}\label{classVIPRA_1_1Concepts_1_1DummyPedSet_a20656a028c1d1caf57b327e379f481ad} 
+auto {\bfseries all\+\_\+coords} () const -\/$>$ std\+::vector$<$ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} $>$ const \&
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyPedSet_ac7ccf52bf18e74a2b414c29afeff21df}\label{classVIPRA_1_1Concepts_1_1DummyPedSet_ac7ccf52bf18e74a2b414c29afeff21df} 
+auto {\bfseries ped\+\_\+velocity} (VIPRA\+::idx) const -\/$>$ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} const \&
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyPedSet_a86c0faf66cb35f34e14f59fb17de05d5}\label{classVIPRA_1_1Concepts_1_1DummyPedSet_a86c0faf66cb35f34e14f59fb17de05d5} 
+auto {\bfseries all\+\_\+velocities} () const -\/$>$ std\+::vector$<$ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} $>$ const \&
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyPedSet_ab0fb309b7ff0842c7363b9927507fbdf}\label{classVIPRA_1_1Concepts_1_1DummyPedSet_ab0fb309b7ff0842c7363b9927507fbdf} 
+static constexpr VIPRA\+::\+Modules\+::\+Type {\bfseries \+\_\+\+VIPRA\+\_\+\+MODULE\+\_\+\+TYPE\+\_\+} = VIPRA\+::\+Modules\+::\+Type\+::\+PEDESTRIANS
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Dummy pedestrian set for use in other concepts. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/vipra/concepts/pedset.\+hpp\end{DoxyCompactItemize}

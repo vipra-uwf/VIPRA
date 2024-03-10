@@ -1,0 +1,30 @@
+\doxysection{VIPRA\+::Algo\+::AStar\+::distance\+\_\+func Concept Reference}
+\hypertarget{conceptVIPRA_1_1Algo_1_1AStar_1_1distance__func}{}\label{conceptVIPRA_1_1Algo_1_1AStar_1_1distance__func}\index{VIPRA::Algo::AStar::distance\_func@{VIPRA::Algo::AStar::distance\_func}}
+
+
+Concept for a function that returns the distance between two nodes.  
+
+
+
+
+{\ttfamily \#include $<$astar.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ func\_t>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Algo_1_1AStar_1_1distance__func}{VIPRA::Algo::AStar::distance\_func}}\ =\ \ \textcolor{keyword}{requires}(func\_t\ func,\ VIPRA::idx\ idx1,\ VIPRA::idx\ idx2)\ \{}
+\DoxyCodeLine{\ \ \{\ func(idx1,\ idx2)\ \}\ -\/>\ std::same\_as<VIPRA::f\_pnt>;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Concept for a function that returns the distance between two nodes. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em func\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}

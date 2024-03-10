@@ -1,0 +1,69 @@
+\doxysection{model.\+hpp}
+\hypertarget{concepts_2model_8hpp_source}{}\label{concepts_2model_8hpp_source}\index{include/vipra/concepts/model.hpp@{include/vipra/concepts/model.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <concepts>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/goals.hpp"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/map.hpp"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/obstacle\_set.hpp"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/output.hpp"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/output\_coordinator.hpp"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/pedset.hpp"{}}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}vipra/modules.hpp"{}}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}vipra/random/random.hpp"{}}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}vipra/types/state.hpp"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}vipra/types/time.hpp"{}}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{namespace\ }VIPRA::Concepts\ \{}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00027\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ model\_t>}
+\DoxyCodeLine{00028\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__initialize__model}{can\_initialize\_model}}\ =\ \textcolor{keyword}{requires}(model\_t\ model,\ DummyPedSet\ \textcolor{keyword}{const}\&\ pedset,\ DummyMap\ \textcolor{keyword}{const}\&\ map,}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ DummyGoals\ \textcolor{keyword}{const}\&\ goals,\ DummyOutput\&\ output,}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{VIPRA::Random::Engine}}\&\ engine)\ \{}
+\DoxyCodeLine{00031\ \ \ \{model.initialize(pedset,\ map,\ goals,\ output,\ engine)\};}
+\DoxyCodeLine{00032\ \};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00039\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ model\_t>}
+\DoxyCodeLine{00040\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1has__model__timestep}{has\_model\_timestep}}\ =\ \textcolor{keyword}{requires}(model\_t\ model,\ DummyPedSet\ \textcolor{keyword}{const}\&\ pedset,\ DummyMap\ \textcolor{keyword}{const}\&\ map,}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ DummyGoals\ \textcolor{keyword}{const}\&\ goals,\ DummyOutput\&\ output,\ \mbox{\hyperlink{structVIPRA_1_1State}{VIPRA::State}}\&\ state,}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ VIPRA::delta\_t\ deltaT,\ VIPRA::timestep\ timestep)\ \{}
+\DoxyCodeLine{00043\ \ \ \{\ model.timestep(pedset,\ map,\ goals,\ output,\ state,\ deltaT,\ timestep)\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{00044\ \};}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00051\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ model\_t>}
+\DoxyCodeLine{00052\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1ModelModule}{ModelModule}}\ =\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1is__module}{is\_module<model\_t,\ VIPRA::Modules::Type::MODEL>}}\ \&\&\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1has__model__timestep}{has\_model\_timestep<model\_t>}}\ \&\&}
+\DoxyCodeLine{00053\ \ \ \ \ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__initialize__model}{can\_initialize\_model<model\_t>}};}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00059\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVIPRA_1_1Concepts_1_1DummyModel}{DummyModel}}\ \{}
+\DoxyCodeLine{00060\ \ \ \textcolor{comment}{//\ NOLINTBEGIN}}
+\DoxyCodeLine{00061\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00062\ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ VIPRA::Modules::Type\ \_VIPRA\_MODULE\_TYPE\_\ =\ VIPRA::Modules::Type::MODEL;}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ params\_t>}
+\DoxyCodeLine{00065\ \ \ \textcolor{keywordtype}{void}\ register\_params(params\_t\&)\ \{\}}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ pedset\_t,\ \textcolor{keyword}{typename}\ map\_t,\ \textcolor{keyword}{typename}\ goals\_t,\ \textcolor{keyword}{typename}\ output\_t>}
+\DoxyCodeLine{00068\ \ \ \textcolor{keywordtype}{void}\ initialize(pedset\_t\ \textcolor{keyword}{const}\&,\ map\_t\ \textcolor{keyword}{const}\&,\ goals\_t\ \textcolor{keyword}{const}\&,\ output\_t\&,\ \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{VIPRA::Random::Engine}}\&)\ \{\}}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \textcolor{keywordtype}{void}\ config(\textcolor{keyword}{auto}\&,\ \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{VIPRA::Random::Engine}}\&)\ \{\}}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \textcolor{keywordtype}{void}\ timestep(\mbox{\hyperlink{classVIPRA_1_1Concepts_1_1DummyPedSet}{DummyPedSet}}\ \textcolor{keyword}{const}\&,\ \mbox{\hyperlink{classVIPRA_1_1Concepts_1_1DummyMap}{DummyMap}}\ \textcolor{keyword}{const}\&,\ \mbox{\hyperlink{classVIPRA_1_1Concepts_1_1DummyGoals}{DummyGoals}}\ \textcolor{keyword}{const}\&,\ \mbox{\hyperlink{classVIPRA_1_1Concepts_1_1DummyOutput}{DummyOutput}}\ \textcolor{keyword}{const}\&,\ \mbox{\hyperlink{structVIPRA_1_1State}{VIPRA::State}}\&,}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ VIPRA::delta\_t,\ VIPRA::timestep)\ \{\}}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00076\ \ \ \mbox{\hyperlink{structVIPRA_1_1State}{VIPRA::State}}\ \_state;}
+\DoxyCodeLine{00077\ \ \ \textcolor{comment}{//\ NOLINTEND}}
+\DoxyCodeLine{00078\ \};}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ CHECK\_MODULE(\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1ModelModule}{ModelModule}},\ \mbox{\hyperlink{classVIPRA_1_1Concepts_1_1DummyModel}{DummyModel}});}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA::Concepts}}
+
+\end{DoxyCode}

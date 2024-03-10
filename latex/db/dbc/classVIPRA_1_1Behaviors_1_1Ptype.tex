@@ -1,0 +1,304 @@
+\doxysection{VIPRA\+::Behaviors\+::Ptype Class Reference}
+\hypertarget{classVIPRA_1_1Behaviors_1_1Ptype}{}\label{classVIPRA_1_1Behaviors_1_1Ptype}\index{VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}}
+
+
+Pedestrian Type, used as a composite of type\+UIDs.  
+
+
+
+
+{\ttfamily \#include $<$pedestrian\+\_\+types.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Ptype_a0b736990f8449e3579d279a74674bae8}\label{classVIPRA_1_1Behaviors_1_1Ptype_a0b736990f8449e3579d279a74674bae8} 
+constexpr {\bfseries Ptype} (type\+UID tid) noexcept
+\item 
+constexpr auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype_adb9a2ccc37a5a0f9aa2d1f83b3337076}{type\+\_\+count}} () const -\/$>$ VIPRA\+::size
+\begin{DoxyCompactList}\small\item\em Returns the number of different types, excluding the base type (0) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype_af16ee80987f84f82fe96a2c46d828790}{for\+\_\+each\+\_\+type}} (std\+::function$<$ void(type\+UID)$>$ const \&func) const
+\begin{DoxyCompactList}\small\item\em Loops through each individual type, starting from 1, calling func with the type. example(1, 2, 4, 8) \end{DoxyCompactList}\item 
+constexpr auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype_a97a77ef6ad365592c2d63114e1a036b7}{is\+\_\+type}} (type\+UID type) const noexcept -\/$>$ bool
+\begin{DoxyCompactList}\small\item\em Checks if the Ptype has the given type. \end{DoxyCompactList}\item 
+constexpr auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype_aa94e441230704804c1b2f5701987cdf2}{has\+\_\+type}} (type\+UID type) const noexcept -\/$>$ bool
+\begin{DoxyCompactList}\small\item\em Checks if the Ptype has the given type. \end{DoxyCompactList}\item 
+constexpr auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype_a94167cabb75fd6ead63dc9f952167cfe}{operator+}} (type\+UID type) const noexcept -\/$>$ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}}
+\begin{DoxyCompactList}\small\item\em Returns they union of the ptype and the type provided. \end{DoxyCompactList}\item 
+constexpr auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype_a352728f7328e7fdde17806c00fb8b21f}{operator+=}} (type\+UID type) noexcept -\/$>$ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}} \&
+\begin{DoxyCompactList}\small\item\em Adds a type to the ptype. \end{DoxyCompactList}\item 
+constexpr auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype_abcc877d13e190017783558ba2962bce6}{operator+}} (\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}} type) const noexcept -\/$>$ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}}
+\begin{DoxyCompactList}\small\item\em Returns the union of the two ptypes. \end{DoxyCompactList}\item 
+constexpr auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype_a2e8fa3e2beb5a7be5c636dc3c91a82c6}{operator+=}} (\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}} type) noexcept -\/$>$ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}} \&
+\begin{DoxyCompactList}\small\item\em Adds the given ptype. \end{DoxyCompactList}\item 
+constexpr auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype_a40ac12cf54cecd427ba59498ee80189b}{operator-\/}} (type\+UID type) const noexcept -\/$>$ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}}
+\begin{DoxyCompactList}\small\item\em Returns a ptype without the given type. \end{DoxyCompactList}\item 
+constexpr auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype_ace9058c940fd7f70c29c82555a7393cc}{operator-\/=}} (type\+UID type) noexcept -\/$>$ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}} \&
+\begin{DoxyCompactList}\small\item\em Removes the type from the ptype. \end{DoxyCompactList}\item 
+constexpr auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype_a007550dc3355ab359e8bd6db83550339}{operator-\/}} (\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}} type) const noexcept -\/$>$ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}}
+\begin{DoxyCompactList}\small\item\em Returns the difference of the two ptypes. \end{DoxyCompactList}\item 
+constexpr auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype_a0db5a21be40ed5166b2a5f14add71a58}{operator-\/=}} (\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}} type) noexcept -\/$>$ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}} \&
+\begin{DoxyCompactList}\small\item\em Sets the ptype as the difference of the two types. \end{DoxyCompactList}\item 
+constexpr auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype_a7c692a65d238c56be2fe0cc7fd1199f0}{operator==}} (\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}} type) const noexcept -\/$>$ bool
+\begin{DoxyCompactList}\small\item\em Checks if two ptypes are the same. \end{DoxyCompactList}\item 
+constexpr auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype_af3e58af15b0639ed91e154bad5e9d1f5}{operator!=}} (\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}} type) const noexcept -\/$>$ bool
+\begin{DoxyCompactList}\small\item\em Checks if two ptypes are different. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Ptype_a096bb43a905f130ac78e8a0a073edc25}\label{classVIPRA_1_1Behaviors_1_1Ptype_a096bb43a905f130ac78e8a0a073edc25} 
+type\+UID {\bfseries full\+Type} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Pedestrian Type, used as a composite of type\+UIDs. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Ptype_af16ee80987f84f82fe96a2c46d828790}\label{classVIPRA_1_1Behaviors_1_1Ptype_af16ee80987f84f82fe96a2c46d828790} 
+\index{VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}!for\_each\_type@{for\_each\_type}}
+\index{for\_each\_type@{for\_each\_type}!VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}}
+\doxysubsubsection{\texorpdfstring{for\_each\_type()}{for\_each\_type()}}
+{\footnotesize\ttfamily void VIPRA\+::\+Behaviors\+::\+Ptype\+::for\+\_\+each\+\_\+type (\begin{DoxyParamCaption}\item[{std\+::function$<$ void(type\+UID)$>$ const \&}]{func }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Loops through each individual type, starting from 1, calling func with the type. example(1, 2, 4, 8) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em func} & \+: function to apply to each type \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Ptype_aa94e441230704804c1b2f5701987cdf2}\label{classVIPRA_1_1Behaviors_1_1Ptype_aa94e441230704804c1b2f5701987cdf2} 
+\index{VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}!has\_type@{has\_type}}
+\index{has\_type@{has\_type}!VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}}
+\doxysubsubsection{\texorpdfstring{has\_type()}{has\_type()}}
+{\footnotesize\ttfamily constexpr auto VIPRA\+::\+Behaviors\+::\+Ptype\+::has\+\_\+type (\begin{DoxyParamCaption}\item[{type\+UID}]{type }\end{DoxyParamCaption}) const -\/$>$ bool \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Checks if the Ptype has the given type. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & \+: type to check for \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Ptype_a97a77ef6ad365592c2d63114e1a036b7}\label{classVIPRA_1_1Behaviors_1_1Ptype_a97a77ef6ad365592c2d63114e1a036b7} 
+\index{VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}!is\_type@{is\_type}}
+\index{is\_type@{is\_type}!VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}}
+\doxysubsubsection{\texorpdfstring{is\_type()}{is\_type()}}
+{\footnotesize\ttfamily constexpr auto VIPRA\+::\+Behaviors\+::\+Ptype\+::is\+\_\+type (\begin{DoxyParamCaption}\item[{type\+UID}]{type }\end{DoxyParamCaption}) const -\/$>$ bool \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Checks if the Ptype has the given type. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & \+: type to check for \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Ptype_af3e58af15b0639ed91e154bad5e9d1f5}\label{classVIPRA_1_1Behaviors_1_1Ptype_af3e58af15b0639ed91e154bad5e9d1f5} 
+\index{VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}}
+\doxysubsubsection{\texorpdfstring{operator"!=()}{operator!=()}}
+{\footnotesize\ttfamily constexpr auto VIPRA\+::\+Behaviors\+::\+Ptype\+::operator!= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}}}]{type }\end{DoxyParamCaption}) const -\/$>$ bool \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Checks if two ptypes are different. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & \+: \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true 
+
+false 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Ptype_abcc877d13e190017783558ba2962bce6}\label{classVIPRA_1_1Behaviors_1_1Ptype_abcc877d13e190017783558ba2962bce6} 
+\index{VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}!operator+@{operator+}}
+\index{operator+@{operator+}!VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}}
+\doxysubsubsection{\texorpdfstring{operator+()}{operator+()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily constexpr auto VIPRA\+::\+Behaviors\+::\+Ptype\+::operator+ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}}}]{type }\end{DoxyParamCaption}) const -\/$>$ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}} \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Returns the union of the two ptypes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & \+: ptype to union \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+constexpr Ptype 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Ptype_a94167cabb75fd6ead63dc9f952167cfe}\label{classVIPRA_1_1Behaviors_1_1Ptype_a94167cabb75fd6ead63dc9f952167cfe} 
+\index{VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}!operator+@{operator+}}
+\index{operator+@{operator+}!VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}}
+\doxysubsubsection{\texorpdfstring{operator+()}{operator+()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily constexpr auto VIPRA\+::\+Behaviors\+::\+Ptype\+::operator+ (\begin{DoxyParamCaption}\item[{type\+UID}]{type }\end{DoxyParamCaption}) const -\/$>$ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}} \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Returns they union of the ptype and the type provided. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & \+: type to union with \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+constexpr Ptype 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Ptype_a2e8fa3e2beb5a7be5c636dc3c91a82c6}\label{classVIPRA_1_1Behaviors_1_1Ptype_a2e8fa3e2beb5a7be5c636dc3c91a82c6} 
+\index{VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}!operator+=@{operator+=}}
+\index{operator+=@{operator+=}!VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}}
+\doxysubsubsection{\texorpdfstring{operator+=()}{operator+=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily constexpr auto VIPRA\+::\+Behaviors\+::\+Ptype\+::operator+= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}}}]{type }\end{DoxyParamCaption}) -\/$>$ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}}\& \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Adds the given ptype. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & \+: ptype to add \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+constexpr Ptype\& 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Ptype_a352728f7328e7fdde17806c00fb8b21f}\label{classVIPRA_1_1Behaviors_1_1Ptype_a352728f7328e7fdde17806c00fb8b21f} 
+\index{VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}!operator+=@{operator+=}}
+\index{operator+=@{operator+=}!VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}}
+\doxysubsubsection{\texorpdfstring{operator+=()}{operator+=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily constexpr auto VIPRA\+::\+Behaviors\+::\+Ptype\+::operator+= (\begin{DoxyParamCaption}\item[{type\+UID}]{type }\end{DoxyParamCaption}) -\/$>$ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}}\& \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Adds a type to the ptype. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & \+: type to add \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+constexpr Ptype\& 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Ptype_a007550dc3355ab359e8bd6db83550339}\label{classVIPRA_1_1Behaviors_1_1Ptype_a007550dc3355ab359e8bd6db83550339} 
+\index{VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}}
+\doxysubsubsection{\texorpdfstring{operator-\/()}{operator-()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily constexpr auto VIPRA\+::\+Behaviors\+::\+Ptype\+::operator-\/ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}}}]{type }\end{DoxyParamCaption}) const -\/$>$ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}} \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Returns the difference of the two ptypes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & \+: ptype to compare \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+constexpr Ptype 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Ptype_a40ac12cf54cecd427ba59498ee80189b}\label{classVIPRA_1_1Behaviors_1_1Ptype_a40ac12cf54cecd427ba59498ee80189b} 
+\index{VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}!operator-\/@{operator-\/}}
+\index{operator-\/@{operator-\/}!VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}}
+\doxysubsubsection{\texorpdfstring{operator-\/()}{operator-()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily constexpr auto VIPRA\+::\+Behaviors\+::\+Ptype\+::operator-\/ (\begin{DoxyParamCaption}\item[{type\+UID}]{type }\end{DoxyParamCaption}) const -\/$>$ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}} \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Returns a ptype without the given type. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & \+: type to remove \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+constexpr Ptype 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Ptype_a0db5a21be40ed5166b2a5f14add71a58}\label{classVIPRA_1_1Behaviors_1_1Ptype_a0db5a21be40ed5166b2a5f14add71a58} 
+\index{VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}!operator-\/=@{operator-\/=}}
+\index{operator-\/=@{operator-\/=}!VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}}
+\doxysubsubsection{\texorpdfstring{operator-\/=()}{operator-=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily constexpr auto VIPRA\+::\+Behaviors\+::\+Ptype\+::operator-\/= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}}}]{type }\end{DoxyParamCaption}) -\/$>$ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}}\& \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Sets the ptype as the difference of the two types. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & \+: type to compare \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+constexpr Ptype\& 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Ptype_ace9058c940fd7f70c29c82555a7393cc}\label{classVIPRA_1_1Behaviors_1_1Ptype_ace9058c940fd7f70c29c82555a7393cc} 
+\index{VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}!operator-\/=@{operator-\/=}}
+\index{operator-\/=@{operator-\/=}!VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}}
+\doxysubsubsection{\texorpdfstring{operator-\/=()}{operator-=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily constexpr auto VIPRA\+::\+Behaviors\+::\+Ptype\+::operator-\/= (\begin{DoxyParamCaption}\item[{type\+UID}]{type }\end{DoxyParamCaption}) -\/$>$ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}}\& \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Removes the type from the ptype. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & \+: type to remove \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+constexpr Ptype\& 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Ptype_a7c692a65d238c56be2fe0cc7fd1199f0}\label{classVIPRA_1_1Behaviors_1_1Ptype_a7c692a65d238c56be2fe0cc7fd1199f0} 
+\index{VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}!operator==@{operator==}}
+\index{operator==@{operator==}!VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily constexpr auto VIPRA\+::\+Behaviors\+::\+Ptype\+::operator== (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}}}]{type }\end{DoxyParamCaption}) const -\/$>$ bool \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}, {\ttfamily [noexcept]}}
+
+
+
+Checks if two ptypes are the same. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & \+: ptype to compare \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true 
+
+false 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1Ptype_adb9a2ccc37a5a0f9aa2d1f83b3337076}\label{classVIPRA_1_1Behaviors_1_1Ptype_adb9a2ccc37a5a0f9aa2d1f83b3337076} 
+\index{VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}!type\_count@{type\_count}}
+\index{type\_count@{type\_count}!VIPRA::Behaviors::Ptype@{VIPRA::Behaviors::Ptype}}
+\doxysubsubsection{\texorpdfstring{type\_count()}{type\_count()}}
+{\footnotesize\ttfamily constexpr auto VIPRA\+::\+Behaviors\+::\+Ptype\+::type\+\_\+count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const -\/$>$ VIPRA\+::size \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [constexpr]}}
+
+
+
+Returns the number of different types, excluding the base type (0) 
+
+\begin{DoxyReturn}{Returns}
+constexpr VIPRA\+::size 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/vipra/vipra\+\_\+behaviors/definitions/pedestrian\+\_\+types.\+hpp\end{DoxyCompactItemize}

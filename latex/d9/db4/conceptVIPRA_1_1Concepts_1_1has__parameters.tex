@@ -1,0 +1,30 @@
+\doxysection{VIPRA\+::Concepts\+::has\+\_\+parameters Concept Reference}
+\hypertarget{conceptVIPRA_1_1Concepts_1_1has__parameters}{}\label{conceptVIPRA_1_1Concepts_1_1has__parameters}\index{VIPRA::Concepts::has\_parameters@{VIPRA::Concepts::has\_parameters}}
+
+
+Checks that a type has a register\+\_\+params method.  
+
+
+
+
+{\ttfamily \#include $<$module.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ module\_t>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1has__parameters}{VIPRA::Concepts::has\_parameters}}\ =\ \ \textcolor{keyword}{requires}(module\_t\ module,\ DummyParams\&\ params)\ \{}
+\DoxyCodeLine{\ \ \{\ \textcolor{keyword}{module}.register\_params(params)\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Checks that a type has a register\+\_\+params method. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em module\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}

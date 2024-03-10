@@ -1,0 +1,54 @@
+\doxysection{VIPRA\+::Behaviors\+::Modifier\+Direction Class Reference}
+\hypertarget{classVIPRA_1_1Behaviors_1_1ModifierDirection}{}\label{classVIPRA_1_1Behaviors_1_1ModifierDirection}\index{VIPRA::Behaviors::ModifierDirection@{VIPRA::Behaviors::ModifierDirection}}
+
+
+Target Modifier for direction to target.  
+
+
+
+
+{\ttfamily \#include $<$modifier\+\_\+direction.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1ModifierDirection_a91b8cdf689b6d58f7b62d660d3214623}\label{classVIPRA_1_1Behaviors_1_1ModifierDirection_a91b8cdf689b6d58f7b62d660d3214623} 
+{\bfseries Modifier\+Direction} (Direction direction)
+\item 
+auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1ModifierDirection_a14511052d21487ee5bde78269e3efa11}{operator()}} (auto pack, VIPRA\+::idx target\+Idx, VIPRA\+::idx self\+Idx) const -\/$>$ bool
+\begin{DoxyCompactList}\small\item\em Returns true if the target is in the desired direction. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Target Modifier for direction to target. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1ModifierDirection_a14511052d21487ee5bde78269e3efa11}\label{classVIPRA_1_1Behaviors_1_1ModifierDirection_a14511052d21487ee5bde78269e3efa11} 
+\index{VIPRA::Behaviors::ModifierDirection@{VIPRA::Behaviors::ModifierDirection}!operator()@{operator()}}
+\index{operator()@{operator()}!VIPRA::Behaviors::ModifierDirection@{VIPRA::Behaviors::ModifierDirection}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily auto VIPRA\+::\+Behaviors\+::\+Modifier\+Direction\+::operator() (\begin{DoxyParamCaption}\item[{auto}]{pack,  }\item[{VIPRA\+::idx}]{target\+Idx,  }\item[{VIPRA\+::idx}]{self\+Idx }\end{DoxyParamCaption}) const -\/$>$ bool \hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns true if the target is in the desired direction. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pack} & \+: simulation pack \\
+\hline
+{\em target\+Idx} & \+: target to check \\
+\hline
+{\em self\+Idx} & \+: pedestrain looking for target \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true \+: if in direction 
+
+false \+: if not in direction 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/vipra/vipra\+\_\+behaviors/targets/target\+\_\+modifiers/modifier\+\_\+direction.\+hpp\end{DoxyCompactItemize}
