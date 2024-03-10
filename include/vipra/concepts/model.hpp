@@ -19,6 +19,11 @@
 
 namespace VIPRA::Concepts {
 
+/**
+ * @brief Checks that a type can be initialized following the model module interface
+ * 
+ * @tparam model_t 
+ */
 template <typename model_t>
 concept can_initialize_model = requires(model_t model, DummyPedSet const& pedset, DummyMap const& map,
                                         DummyGoals const& goals, DummyOutput& output,
@@ -26,6 +31,11 @@ concept can_initialize_model = requires(model_t model, DummyPedSet const& pedset
   {model.initialize(pedset, map, goals, output, engine)};
 };
 
+/**
+ * @brief Checks that a type has a pedestrian dynamics timestep method
+ * 
+ * @tparam model_t 
+ */
 template <typename model_t>
 concept has_model_timestep = requires(model_t model, DummyPedSet const& pedset, DummyMap const& map,
                                       DummyGoals const& goals, DummyOutput& output, VIPRA::State& state,
@@ -33,10 +43,19 @@ concept has_model_timestep = requires(model_t model, DummyPedSet const& pedset, 
   { model.timestep(pedset, map, goals, output, state, deltaT, timestep) } -> std::same_as<void>;
 };
 
+/**
+ * @brief Checks that a type is a model module
+ * 
+ * @tparam model_t 
+ */
 template <typename model_t>
 concept ModelModule = is_module<model_t, VIPRA::Modules::Type::MODEL> && has_model_timestep<model_t> &&
     can_initialize_model<model_t>;
 
+/**
+ * @brief Dummy model for use in other concepts
+ * 
+ */
 class DummyModel {
   // NOLINTBEGIN
  public:

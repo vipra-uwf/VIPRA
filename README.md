@@ -5,8 +5,8 @@
   - [Simulation Construction](#simulation-construction) <!-- TODO -->
     - [Example Simulation](#example-simulation)
     - [Example Parameter Sweep](#example-parameter-sweep)
-    - [Base Modules](#base-modules) <!-- TODO -->
   - [Module Parameters](#module-parameters) <!-- TODO -->
+  - [Included Modules](#included-modules) <!-- TODO -->
 
 - [Common Errors](#common-errors) <!-- TODO -->
 
@@ -52,6 +52,8 @@ VIPRA is a template framework this means it requires the user to define their ow
 
 A basic skeleton will be provided in the future for ease of use.
 
+There is an [Example Simulation](#example-simulation) below.
+
 ## Simulation Construction
 
 Simulations are created by choosing which implementations to use for the several different [Module Types](#module-types).
@@ -61,8 +63,6 @@ A utility function for creating simulations is provided that allows the modules 
 template <typename... module_ts>
 auto VIPRA::simulation(module_ts&&...) -> VIPRA::SimType;
 ```
-
-There is an [Example Simulation](#example-simulation) below.
 
 ### Required Modules
 
@@ -78,8 +78,115 @@ Each simulation requires the following modules:
 
 `Maps` and `Output Coordinators` are special in that they require modules themselves (denoted by the additional indent)
 
+---
 
-## Base Modules
+## Example Simulation
+
+Below is an example main that uses some of the module implementations that are shipped with VIPRA.
+
+```C++
+#include <vipra.hpp>
+
+#include "modules/model/calm_model/calm_model.hpp"
+
+auto main() -> int {
+  // Create the simulation, modules can be placed in any order so long as all are provided/valid
+  auto sim = VIPRA::simulation(
+      CALM::Model{},                          // Pedestrian Dynamics Model
+      VIPRA::Goals::AStar{},                  // Goals Module
+      VIPRA::Pedestrians::Grid{               // Pedestrian Set Module
+          VIPRA::Input::JSON{"maps/pedestrians/a320/a320_144_pedestrians.json"}, // Input Module
+      },
+      VIPRA::Module::Output{                  // Output Coordinator
+        VIPRA::Output::Trajectories::JSON{}   // Output Module
+      },
+      VIPRA::Module::Map{                     // Map Coordinator
+        VIPRA::Input::JSON{"maps/obstacles/a320/a320_polygons.json"}, // Input Module (Polygon Input)
+        VIPRA::Obstacles::QuadTree{}          // Obstacle Set Module
+      }
+  );
+
+  // Run the simulation
+  sim((VIPRA::Parameters{VIPRA::Input::JSON{"module_params.json"}}));
+}
+```
+
+## Example Parameter Sweep
+
+This example uses the parameter sweep engine.
+
+It takes in the total number of simulations to run as a command line argument.
+
+```C++
+#include <vipra.hpp>
+
+#include "modules/model/calm_model/calm_model.hpp"
+
+auto main(int argc, char** argv) -> int {
+  VIPRA::ParameterSweep::initialize(argc, argv);  // Initialize the parameter sweep engine
+
+  if (argc != 2) {      // Read in the command line arguments for the number of simulations to run
+    std::cerr << "Usage: " << argv[0] << " <simCount>" << std::endl;
+    return 1;
+  }
+  size_t simCount = std::stoul(argv[1]);
+
+  auto sim = VIPRA::simulation(     // Create the simulation
+      CALM::Model{}, 
+      VIPRA::Goals::AStar{},
+      VIPRA::Pedestrians::Grid{
+          VIPRA::Input::JSON{"maps/pedestrians/a320/a320_144_pedestrians.json"},
+      },
+      VIPRA::Module::Output{VIPRA::Output::Trajectories::JSON{}},
+      VIPRA::Module::Map{
+        VIPRA::Input::JSON{"maps/obstacles/a320/a320_polygons.json"},
+        VIPRA::Obstacles::QuadTree{}
+      });
+
+  VIPRA::ParameterSweep::run(    // Run a parameter sweep
+      sim,                       // Simulation to run
+      VIPRA::Parameters{VIPRA::Input::JSON{"module_params.json"}}, // Module Parameters
+      simCount,                  // Number of simulations
+      []() { std::cout << "Simulation complete on: " << VIPRA::ParameterSweep::get_rank() << std::endl; } // Optional: callback for each simulation run
+  );
+}
+```
+
+## Module Parameters
+
+Parameters are loaded into each module before they are initizalized. The exact steps are showing in [`Simluation Steps`](#simulation-steps).
+
+Parameters can use any [`Parameter Input`](#parameter-input-implementation) module, by default a [`JSON`](#json-input) input module is provided.
+
+The format for which is:
+```JSON
+{
+  "module type": {
+    "module name": {
+      "parameter name": "parameter value"
+    }
+  },
+  ...
+}
+```
+
+```JSON
+{
+  ...
+  "goals": {                  // Module Type
+    "astar": {                // Module Name
+      "endGoalType": "exit",  // Parameter values
+      "gridSize": 0.1,
+      "closestObstacle": 0.25,
+      "goalRange": 0.05
+    }
+  },
+  ...
+}
+```
+---
+
+## Included Modules
 
 There are several base modules included with VIPRA.
 
@@ -100,6 +207,8 @@ There are several base modules included with VIPRA.
 
 **Output**:
 - [`JSON`](#json-output)
+
+---
 
 ### Calm Model
 
@@ -216,108 +325,6 @@ sim(VIPRA::Parameters{
 
 ### JSON Output
 <!-- TODO -->
-
-
-## Example Simulation
-
-Below is an example main that uses some of the module implementations that are shipped with VIPRA.
-
-```C++
-#include <vipra.hpp>
-
-#include "modules/model/calm_model/calm_model.hpp"
-
-auto main() -> int {
-  // Create the simulation, modules can be placed in any order so long as all are provided/valid
-  auto sim = VIPRA::simulation(
-      CALM::Model{},                          // Pedestrian Dynamics Model
-      VIPRA::Goals::AStar{},                  // Goals Module
-      VIPRA::Pedestrians::Grid{               // Pedestrian Set Module
-          VIPRA::Input::JSON{"maps/pedestrians/a320/a320_144_pedestrians.json"}, // Input Module
-      },
-      VIPRA::Module::Output{                  // Output Coordinator
-        VIPRA::Output::Trajectories::JSON{}   // Output Module
-      },
-      VIPRA::Module::Map{                     // Map Coordinator
-        VIPRA::Input::JSON{"maps/obstacles/a320/a320_polygons.json"}, // Input Module (Polygon Input)
-        VIPRA::Obstacles::QuadTree{}          // Obstacle Set Module
-      }
-  );
-
-  // Run the simulation
-  sim((VIPRA::Parameters{VIPRA::Input::JSON{"module_params.json"}}));
-}
-```
-
-## Example Parameter Sweep
-
-```C++
-#include <vipra.hpp>
-
-#include "modules/model/calm_model/calm_model.hpp"
-
-auto main(int argc, char** argv) -> int {
-  VIPRA::ParameterSweep::initialize(argc, argv);  // Initialize the parameter sweep engine
-
-  if (argc != 2) {      // Read in the command line arguments for the number of simulations to run
-    std::cerr << "Usage: " << argv[0] << " <simCount>" << std::endl;
-    return 1;
-  }
-  size_t simCount = std::stoul(argv[1]);
-
-  auto sim = VIPRA::simulation(     // Create the simulation
-      CALM::Model{}, 
-      VIPRA::Goals::AStar{},
-      VIPRA::Pedestrians::Grid{
-          VIPRA::Input::JSON{"maps/pedestrians/a320/a320_144_pedestrians.json"},
-      },
-      VIPRA::Module::Output{VIPRA::Output::Trajectories::JSON{}},
-      VIPRA::Module::Map{
-        VIPRA::Input::JSON{"maps/obstacles/a320/a320_polygons.json"},
-        VIPRA::Obstacles::QuadTree{}
-      });
-
-  VIPRA::ParameterSweep::run(    // Run a parameter sweep
-      sim,                       // Simulation to run
-      VIPRA::Parameters{VIPRA::Input::JSON{"module_params.json"}}, // Module Parameters
-      simCount,                  // Number of simulations
-      []() { std::cout << "Simulation complete on: " << VIPRA::ParameterSweep::get_rank() << std::endl; } // Optional: callback for each simulation run
-  );
-}
-```
-
-## Module Parameters
-
-Parameters are loaded into each module before they are initizalized. The exact steps are showing in [`Simluation Steps`](#simulation-steps). 
-
-Parameters can use any [`Parameter Input`](#parameter-input-implementation) module, by default a [`JSON`](#json-input) input module is provided.
-
-The format for which is:
-```JSON
-{
-  "module type": {
-    "module name": {
-      "parameter name": "parameter value"
-    }
-  },
-  ...
-}
-```
-
-```JSON
-{
-  ...
-  "goals": {                  // Module Type
-    "astar": {                // Module Name
-      "endGoalType": "exit",  // Parameter values
-      "gridSize": 0.1,
-      "closestObstacle": 0.25,
-      "goalRange": 0.05
-    }
-  },
-  ...
-}
-```
 
 
 ---
@@ -472,7 +479,7 @@ Along with the [Base Module](#base-module-implementation) interface, Obstacle Se
 Helper macros can be found in [Obstacle Set Macros](#obstacle-set-macros)
 
 ```C++
-void initialize(std::vector<VIPRA::Geometry::Polygon> const&,std::vector<std::string> const&,std::map<std::string, std::vector<VIPRA::f3d>> const&);
+void initialize(std::vector<VIPRA::Geometry::Polygon> const&, std::vector<std::string> const&, std::map<std::string, std::vector<VIPRA::f3d>> const&);
 
 auto get_object_types() -> std::vector<std::string> const&;
 auto get_objects(std::string const&) -> std::vector<VIPRA::f3d> const&;

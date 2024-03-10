@@ -18,6 +18,11 @@
 namespace VIPRA::Concepts {
 
 // TODO(rolland): clean this up and make it more generic/strict
+/**
+ * @brief Checks that a type can provide values for a given key
+ * 
+ * @tparam input_t 
+ */
 template <typename input_t>
 concept can_get_values = requires(input_t input, std::string_view key, std::string_view key2) {
   { input.template get<int>("key") } -> std::same_as<std::optional<int>>;
@@ -29,15 +34,30 @@ concept can_get_values = requires(input_t input, std::string_view key, std::stri
 //                  - input should only be loaded when this function is called
 //                  - but nothing is stopping implementers from loading parameters in the constructor/elsewhere
 //                  - not sure if there is a good way to only load parameters on one node while still allowing any input to be used for parameters
+
+/**
+ * @brief Checks that a type has a load function
+ * 
+ * @tparam input_t 
+ */
 template <typename input_t>
 concept delayed_load = requires(input_t input) {
   { input.load() } -> std::same_as<void>;
 };
 
+/**
+ * @brief Checks that a type is an input module
+ * 
+ * @tparam input_t 
+ */
 template <typename input_t>
 concept InputModule =
     is_type<input_t, VIPRA::Modules::Type::INPUT> && can_get_values<input_t> && delayed_load<input_t>;
 
+/**
+ * @brief A dummy input module for use in other concepts
+ * 
+ */
 class DummyInput {
   // NOLINTBEGIN
  public:

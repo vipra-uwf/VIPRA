@@ -16,12 +16,22 @@
 
 namespace VIPRA::Concepts {
 
+/**
+ * @brief Checks that a type can register parameters
+ * 
+ * @tparam params_t 
+ */
 template <typename params_t>
 concept can_register_param = requires(params_t params, VIPRA::Modules::Type module,
                                       std::string const& moduleName, std::string const& paramName) {
   { params.register_param(module, moduleName, paramName) } -> std::same_as<void>;
 };
 
+/**
+ * @brief Checks that a type can get parameters
+ * 
+ * @tparam params_t 
+ */
 template <typename params_t>
 concept can_get_params = requires(params_t params, VIPRA::Modules::Type module, std::string const& moduleName,
                                   std::string const& paramName, VIPRA::Random::Engine& engine) {
@@ -31,18 +41,32 @@ concept can_get_params = requires(params_t params, VIPRA::Modules::Type module, 
     } -> std::same_as<std::vector<int>>;
 };
 
+/**
+ * @brief Checks that a type can return its input
+ * 
+ * @tparam params_t 
+ */
 template <typename params_t>
 concept can_get_input = requires(params_t params, VIPRA::Modules::Type module, std::string const& moduleName,
                                  std::string const& paramName) {
   {params.get_input()};
 };
 
+/**
+ * @brief Checks that a type is a parameter module
+ * 
+ * @tparam params_t 
+ */
 template <typename params_t>
 concept ParamModule =
     std::remove_cvref_t<params_t>::_VIPRA_MODULE_TYPE_ ==
     VIPRA::Modules::Type::PARAMETERS&& can_register_param<std::remove_cvref_t<params_t>>&&
         can_get_params<std::remove_cvref_t<params_t>>&& can_get_input<std::remove_cvref_t<params_t>>;
 
+/**
+ * @brief Dummy parameters for use in other concepts
+ * 
+ */
 struct DummyParams {
   // NOLINTBEGIN
   static constexpr VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::PARAMETERS;

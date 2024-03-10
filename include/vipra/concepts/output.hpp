@@ -13,12 +13,21 @@
 #include "vipra/types/time.hpp"
 
 namespace VIPRA::Concepts {
-
+/**
+ * @brief Checks that a type has a write method
+ * 
+ * @tparam output_t 
+ */
 template <typename output_t>
 concept can_write = requires(output_t output, std::filesystem::path const& dir) {
   {output.write(dir)};
 };
 
+/**
+ * @brief Checks that a type can write timestep values to an output
+ * 
+ * @tparam output_t 
+ */
 template <typename output_t>
 concept can_write_timestep_values = requires(output_t output, char const* key, VIPRA::f3d value) {
   {output.timestep_value(key, VIPRA::timestep{}, value)};
@@ -29,6 +38,11 @@ concept can_write_timestep_values = requires(output_t output, char const* key, V
   { output.ped_timestep_value(VIPRA::idx{}, VIPRA::timestep{}, key, std::string{}) } -> std::same_as<void>;
 };
 
+/**
+ * @brief Checks that a type can write simulation values to an output
+ * 
+ * @tparam output_t 
+ */
 template <typename output_t>
 concept can_write_sim_values = requires(output_t output, char const* key, VIPRA::f3d value) {
   {output.sim_value(key, value)};
@@ -36,6 +50,11 @@ concept can_write_sim_values = requires(output_t output, char const* key, VIPRA:
   { output.sim_value(key, std::string{}) } -> std::same_as<void>;
 };
 
+/**
+ * @brief Checks that a type can write pedestrian values to an output
+ * 
+ * @tparam output_t 
+ */
 template <typename output_t>
 concept can_write_ped_values = requires(output_t output, VIPRA::idx idx, char const* key, VIPRA::f3d value) {
   {output.ped_value(idx, key, value)};
@@ -47,10 +66,19 @@ template <typename output_t>
 concept BaseOutput =
     can_write_timestep_values<output_t> && can_write_sim_values<output_t> && can_write_ped_values<output_t>;
 
+/**
+ * @brief Checks that a type is an output module
+ * 
+ * @tparam output_t 
+ */
 template <typename output_t>
 concept OutputModule =
     is_module<output_t, VIPRA::Modules::Type::OUTPUT> && can_write<output_t> && BaseOutput<output_t>;
 
+/**
+ * @brief Dummy output for use in other concepts
+ * 
+ */
 class DummyOutput {
   // NOLINTBEGIN
  public:

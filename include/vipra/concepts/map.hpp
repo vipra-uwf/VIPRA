@@ -11,21 +11,40 @@
 
 namespace VIPRA::Concepts {
 
+/**
+ * @brief Checks that a type can be initialized following the map module interface
+ * 
+ * @tparam map_t 
+ */
 template <typename map_t>
 concept can_initialize_map = requires(map_t map, DummyPedSet const& pedset) {
   {map.initialize(pedset)};
 };
 
+/**
+ * @brief Checks that a type has an obstacle set method
+ * 
+ * @tparam map_t 
+ */
 template <typename map_t>
 concept can_get_obstacles = requires(const map_t map) {
   {map.obstacle_set()};
 };
 
 // TODO(rolland): add in requirement to match obstacle types
+/**
+ * @brief Checks that a type is a map module
+ * 
+ * @tparam map_t 
+ */
 template <typename map_t>
 concept MapModule =
     is_module<map_t, Modules::Type::MAP> && can_initialize_map<map_t> && can_get_obstacles<map_t>;
 
+/**
+ * @brief Dummy map for use in other concepts
+ * 
+ */
 class DummyMap {
   // NOLINTBEGIN
 
