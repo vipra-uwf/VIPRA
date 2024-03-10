@@ -12,7 +12,7 @@
 #include "vipra/types/float.hpp"
 #include "vipra/types/size.hpp"
 
-namespace VIPRA {
+namespace VIPRA::Random {
 
 /**
  * @brief produces a uniform random distribution
@@ -94,4 +94,4 @@ inline auto make_distribution(dist_t&& distr, VIPRA::size count, VIPRA::Random::
 
   return ret;
 }
-}  // namespace VIPRA
+}  // namespace VIPRA::Random

@@ -27,7 +27,7 @@ class DRNG {
   */
   [[nodiscard]] static inline auto ped_random_float(VIPRA::seed seed, VIPRA::idx pedIdx, Min min, Max max)
       -> VIPRA::f_pnt {
-    VIPRA::uniform_distribution<VIPRA::f_pnt> distr{min.val, max.val};
+    VIPRA::Random::uniform_distribution<VIPRA::f_pnt> distr{min.val, max.val};
     return distr(get_engine(VIPRA::seed{seed + (pedIdx * PED_MULT_VAL)}));
   }
 

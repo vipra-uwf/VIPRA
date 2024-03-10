@@ -4,7 +4,6 @@
 #include <filesystem>
 
 #include "vipra/concepts/module.hpp"
-#include "vipra/concepts/not_void.hpp"
 #include "vipra/modules.hpp"
 
 #include "vipra/geometry/f3d.hpp"

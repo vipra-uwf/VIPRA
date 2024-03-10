@@ -6,6 +6,11 @@
 #include "vipra/util/all_of_type.hpp"
 
 namespace VIPRA {
+/**
+ * @brief Helper struct to get the type of the output of the write function of the output_t
+ * 
+ * @tparam output_t 
+ */
 template <typename output_t>
 // NOLINTNEXTLINE(readability-identifier-naming) lowercase is a regular naming convetion here
 struct sim_output {

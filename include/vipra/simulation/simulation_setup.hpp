@@ -5,32 +5,17 @@
 #include "vipra/concepts/parameters.hpp"
 #include "vipra/simulation/module_checks.hpp"
 #include "vipra/simulation/sim_type.hpp"
+#include "vipra/util/find_index.hpp"
 
 namespace VIPRA {
-template <std::size_t index_t, template <typename> typename check_t, typename... types_t>
-struct FindIndex;
-
-template <std::size_t index_t, template <typename> typename check_t, typename type_t, typename... types_t>
-struct FindIndex<index_t, check_t, type_t, types_t...> {
-  // NOLINTNEXTLINE(readability-identifier-naming) lowercase is a regular naming convetion here
-  static constexpr std::size_t value =
-      check_t<type_t>::value ? index_t : FindIndex<index_t + 1, check_t, types_t...>::value;
-};
-
-template <std::size_t index_t, template <typename> typename check_t>
-struct FindIndex<index_t, check_t> {
-  // NOLINTNEXTLINE(readability-identifier-naming) lowercase is a regular naming convetion here
-  static constexpr std::size_t value = -1;
-};
-
 template <typename... args_t>
 constexpr auto simulation(args_t... args) {
   // Finds the index for each module type
-  constexpr std::size_t OUTPUT_IDX = FindIndex<0, Checks::OutputCoord, args_t...>::value;
-  constexpr std::size_t MODEL_IDX = FindIndex<0, Checks::Model, args_t...>::value;
-  constexpr std::size_t PEDSET_IDX = FindIndex<0, Checks::Pedset, args_t...>::value;
-  constexpr std::size_t GOALS_IDX = FindIndex<0, Checks::Goals, args_t...>::value;
-  constexpr std::size_t MAP_IDX = FindIndex<0, Checks::Map, args_t...>::value;
+  constexpr std::size_t OUTPUT_IDX = Util::FindIndex<0, Checks::OutputCoord, args_t...>::value;
+  constexpr std::size_t MODEL_IDX = Util::FindIndex<0, Checks::Model, args_t...>::value;
+  constexpr std::size_t PEDSET_IDX = Util::FindIndex<0, Checks::Pedset, args_t...>::value;
+  constexpr std::size_t GOALS_IDX = Util::FindIndex<0, Checks::Goals, args_t...>::value;
+  constexpr std::size_t MAP_IDX = Util::FindIndex<0, Checks::Map, args_t...>::value;
 
   // Static asserts to ensure that the modules are valid
   static_assert(OUTPUT_IDX != -1,

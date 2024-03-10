@@ -25,7 +25,8 @@ class Output {
   // NOLINTNEXTLINE(readability-identifier-naming) helper struct
   struct write_helper {
     static auto write(output_t& output, std::filesystem::path const& dir) {
-      if constexpr (std::is_same_v<result_or_VOID_t<decltype(std::declval<output_t>().write(dir))>, VOID>) {
+      if constexpr (std::is_same_v<Util::result_or_VOID_t<decltype(std::declval<output_t>().write(dir))>,
+                                   VOID>) {
         output.write(dir);
         return VOID{};
       } else {
@@ -48,10 +49,10 @@ class Output {
   /**
    * @brief Calls write on all outputs, returning a tuple of the results or VOID
    * 
-   * @return result_or_VOID_tuple<std::tuple<output_ts...>>::type 
+   * @return Util::result_or_VOID_tuple<std::tuple<output_ts...>>::type 
    */
-  auto write() -> std::tuple<
-      result_or_VOID_t<decltype(std::declval<output_ts>().write(std::declval<std::filesystem::path>()))>...> {
+  auto write() -> std::tuple<Util::result_or_VOID_t<
+      decltype(std::declval<output_ts>().write(std::declval<std::filesystem::path>()))>...> {
     return std::apply(
         [&](auto&&... outputs) {
           return std::make_tuple(write_helper<decltype(outputs)>::write(outputs, _current_output_dir)...);

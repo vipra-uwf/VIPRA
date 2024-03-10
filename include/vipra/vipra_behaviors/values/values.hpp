@@ -30,8 +30,8 @@ using RangeVal = std::pair<VIPRA::f_pnt, VIPRA::f_pnt>;
  */
 [[nodiscard]] inline auto collapse_range_value(VIPRA::seed seed, VIPRA::f_pnt min, VIPRA::f_pnt max)
     -> VIPRA::f_pnt {
-  VIPRA::Random::Engine                     eng{seed};
-  VIPRA::uniform_distribution<VIPRA::f_pnt> distr{min, max};
+  VIPRA::Random::Engine                             eng{seed};
+  VIPRA::Random::uniform_distribution<VIPRA::f_pnt> distr{min, max};
   return distr(eng);
 }
 

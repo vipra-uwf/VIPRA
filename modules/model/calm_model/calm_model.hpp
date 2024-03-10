@@ -43,13 +43,13 @@ class Model {
     _collision.initialize(pedset, goals, _peds);
     _collision.assignRaceStatuses(_raceStatuses, _inRace);
 
-    _peds.masses = VIPRA::make_distribution<VIPRA::normal_distribution<>>(
+    _peds.masses = VIPRA::Random::make_distribution<VIPRA::Random::normal_distribution<>>(
         {_config.meanMass, _config.massStdDev}, _peds.size(), engine);
-    _peds.reactionTimes = VIPRA::make_distribution<VIPRA::normal_distribution<>>(
+    _peds.reactionTimes = VIPRA::Random::make_distribution<VIPRA::Random::normal_distribution<>>(
         {_config.meanReactionTime, _config.reactionTimeStdDev}, _peds.size(), engine);
-    _peds.maxSpeeds = VIPRA::make_distribution<VIPRA::normal_distribution<>>(
+    _peds.maxSpeeds = VIPRA::Random::make_distribution<VIPRA::Random::normal_distribution<>>(
         {_config.meanMaxSpeed, _config.maxSpeedStdDev}, _peds.size(), engine);
-    _peds.shoulderLens = VIPRA::make_distribution<VIPRA::normal_distribution<>>(
+    _peds.shoulderLens = VIPRA::Random::make_distribution<VIPRA::Random::normal_distribution<>>(
         {_config.meanShoulderLen, _config.shoulderLenStdDev}, _peds.size(), engine);
   }
 
