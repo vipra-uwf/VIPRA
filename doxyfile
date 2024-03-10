@@ -1,9 +1,11 @@
 
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = "VIPRA Documentation"
-USE_MDFILE_AS_MAINPAGE = ./README.md
+USE_MDFILE_AS_MAINPAGE = ./docs/docs.md
 
+OUTPUT_DIRECTORY       = ./docs
 
+HTML_STYLESHEET        = ./docs/doxygen.css
 
 EXCLUDE_PATTERNS       += */maps/*
 EXCLUDE_PATTERNS       += */cmake/*
@@ -16,7 +18,6 @@ EXCLUDE_PATTERNS       += */generated/*
 PROJECT_NUMBER         =
 PROJECT_BRIEF          =
 PROJECT_LOGO           =
-OUTPUT_DIRECTORY       =
 CREATE_SUBDIRS         = YES
 ALLOW_UNICODE_NAMES    = NO
 OUTPUT_LANGUAGE        = English
@@ -197,8 +198,6 @@ HTML_OUTPUT            = html
 HTML_FILE_EXTENSION    = .html
 HTML_HEADER            =
 HTML_FOOTER            =
-HTML_STYLESHEET        =
-HTML_EXTRA_STYLESHEET  =
 HTML_EXTRA_FILES       =
 HTML_COLORSTYLE_HUE    = 220
 HTML_COLORSTYLE_SAT    = 100

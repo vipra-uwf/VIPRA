@@ -1,37 +1,4 @@
-- [Introduction](#introduction)
-
-- [Usage](#usage) <!-- TODO -->
-  - [Simulation Construction](#simulation-construction) <!-- TODO -->
-    - [Example Simulation](#example-simulation)
-    - [Example Parameter Sweep](#example-parameter-sweep)
-  - [Module Parameters](#module-parameters) <!-- TODO -->
-  - [Included Modules](#included-modules) <!-- TODO -->
-
-- [Common Errors](#common-errors) <!-- TODO -->
-
-- [Development](#development)
-  - [Overview](#overview)
-    - [Simulation](#simulation) <!-- TODO -->
-    - [Module Types](#module-types)
-    - [Parameter Sweep](#parameter-sweeps) <!-- TODO -->
-    - [Randomization](#randomization) <!-- TODO -->
-    - [VIPRA Types](#vipra-types) <!-- TODO -->
-
-  - [Module Implementation](#module-implementation)
-    - [Model Implementation](#model-implementation) <!-- TODO -->
-    - [Goals Implementation](#goals-implementation) <!-- TODO -->
-    - [Obstacle Set Implementation](#obstacle-set-implementation) <!-- TODO -->
-    - [Pedestrian Set Implementation](#pedestrian-set-implementation) <!-- TODO -->
-    - [Input Implementation](#input-implementation) <!-- TODO -->
-    - [Output Implementation](#output_implementation) <!-- TODO -->
-
-  - [Parameter Sweep Usage](#parameter-sweep-usage) <!-- TODO -->
-
-  - [Macros](#macros) <!-- TODO -->
-
-  - [Utilities](#utilities) <!-- TODO -->
-    - [Algorithms](#algorithms) <!-- TODO -->
-    - [Data Structures](#data-structures) <!-- TODO -->
+\tableofcontents
 
 # Usage
 
@@ -157,6 +124,7 @@ The format for which is:
 }
 ```
 
+Example:
 ```JSON
 {
   ...
@@ -171,6 +139,8 @@ The format for which is:
   ...
 }
 ```
+
+
 ---
 
 ## Included Modules
