@@ -8,10 +8,16 @@
 #include "vipra/concepts/pedset.hpp"
 #include "vipra/macros/parameters.hpp"
 #include "vipra/modules.hpp"
+#include "vipra/random/random.hpp"
 #include "vipra/types/time.hpp"
 
 namespace VIPRA::Concepts {
 
+/**
+ * @brief Checks that a type can provide goals
+ * 
+ * @tparam goals_t 
+ */
 template <typename goals_t>
 concept can_get_goals = requires(const goals_t goals) {
   { goals.current_goals() } -> std::same_as<std::vector<VIPRA::f3d> const&>;
@@ -23,21 +29,40 @@ concept can_get_goals = requires(const goals_t goals) {
   { goals.time_since_last_goal(VIPRA::idx{}) } -> std::same_as<VIPRA::f_pnt>;
 };
 
+/**
+ * @brief Checks that a type can be initialized following the goals interface
+ * 
+ * @tparam goals_t 
+ */
 template <typename goals_t>
 concept can_initialize_goals = requires(goals_t goals, DummyPedSet const& pedset, DummyMap const& map) {
   {goals.initialize(pedset, map)};
 };
 
+/**
+ * @brief Checks that a type can be updated following the goals interface
+ * 
+ * @tparam goals_t 
+ */
 template <typename goals_t>
 concept can_update_goals = requires(goals_t goals, DummyPedSet const& pedset, DummyMap const& map) {
   {goals.update(pedset, map, VIPRA::delta_t{})};
   {goals.change_end_goal(VIPRA::idx{}, VIPRA::f3d{})};
 };
 
+/**
+ * @brief Checks that a type is a goals module
+ * 
+ * @tparam goals_t 
+ */
 template <typename goals_t>
 concept GoalsModule = is_module<goals_t, VIPRA::Modules::Type::GOALS> && can_initialize_goals<goals_t> &&
     can_get_goals<goals_t> && can_update_goals<goals_t>;
 
+/**
+ * @brief Dummy Goals module for use in other concepts
+ * 
+ */
 class DummyGoals {
   // NOLINTBEGIN
  public:
@@ -47,7 +72,7 @@ class DummyGoals {
   void register_params(params_t& params) {}
 
   template <VIPRA::Concepts::ParamModule params_t>
-  void config(params_t const& params) {}
+  void config(params_t const& params, VIPRA::Random::Engine&) {}
 
   template <typename pedset_t, typename map_t>
   void initialize(pedset_t const& /*unused*/, map_t const& /*unused*/) {}

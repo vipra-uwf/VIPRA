@@ -23,7 +23,7 @@ auto Model::obj_spatial_test(const VIPRA::Geometry::Rectangle& collisionRect, VI
 
   VIPRA::f3d center = (objLeft + objRight) /= 2;
 
-  return collisionRect.is_point_inside(objLeft) || collisionRect.is_point_inside(center) ||
+  return collisionRect.is_point_inside(center) || collisionRect.is_point_inside(objLeft) ||
          collisionRect.is_point_inside(objRight);
 }
 

@@ -3,13 +3,15 @@
 #include <cstring>
 #include <string>
 
+namespace VIPRA::Behaviors {
+
 /**
  * @brief Struct for caseless look up in a std::map
  * 
  */
 struct CaselessStrCompare {
   struct Comp {
-    auto operator()(const std::string& str1, const std::string& str2) const -> bool {
+    auto operator()(std::string const& str1, std::string const& str2) const -> bool {
       const size_t cnt = str1.size();
       if (cnt != str2.size()) {
         return false;
@@ -34,7 +36,7 @@ struct CaselessStrCompare {
     }
   };
   struct Hash {
-    auto operator()(const std::string& str) const -> size_t {
+    auto operator()(std::string const& str) const -> size_t {
       std::string temp{str};
       for (char& chr : temp) {
         chr = static_cast<char>(std::tolower(chr));
@@ -46,3 +48,5 @@ struct CaselessStrCompare {
  private:
   static constexpr char SPACE_ASCII = 32;
 };
+
+}  // namespace VIPRA::Behaviors

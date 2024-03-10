@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdexcept>
+#include <type_traits>
 
 #include "vipra/geometry/f3d.hpp"
 
@@ -300,7 +301,7 @@ class AttributeHandling {
   template <typename value_t>
   [[nodiscard]] inline static auto store_value(Type type, value_t&& value) -> CAttributeValue {
     auto& valueStore = get_value_store();
-    valueStore.emplace_back(type, new std::decay_t<value_t>(std::forward<value_t>(value)));
+    valueStore.emplace_back(type, new std::remove_cvref_t<value_t>(std::forward<value_t>(value)));
     return valueStore.back();
   }
 
@@ -309,7 +310,7 @@ class AttributeHandling {
       // NOLINTBEGIN(cppcoreguidelines-owning-memory)
       switch (data.type) {
         case Type::INVALID:
-          throw std::runtime_error("Invalid Type");
+          // throw std::runtime_error("Invalid Type");
           break;
         case Type::NUMBER:
           delete data.as_ptr<VIPRA::f_pnt>();
@@ -331,12 +332,28 @@ class AttributeHandling {
         case Type::TOWARDS_ATTR:
           delete data.as_ptr<Attribute>();
           break;
+        default:
+          // throw std::runtime_error("Cleanup Error: Unknown Type");
+          break;
       }
       // NOLINTEND(cppcoreguidelines-owning-memory)
     }
+
+    get_value_store().clear();
   }
 
+  struct DeferedCleanup {
+    DeferedCleanup(DeferedCleanup const&) = default;
+    DeferedCleanup(DeferedCleanup&&) = default;
+    auto operator=(DeferedCleanup const&) -> DeferedCleanup& = default;
+    auto operator=(DeferedCleanup&&) -> DeferedCleanup& = default;
+    DeferedCleanup() = default;
+    ~DeferedCleanup() { AttributeHandling::cleanup(); }
+  };
+
  private:
+  static const DeferedCleanup CLEANUP;
+
   // NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables) Bug in clang-tidy (https://bugs.llvm.org/show_bug.cgi?id=48040)
   static inline auto get_value_store() -> std::vector<CAttributeValue>& {
     static std::vector<CAttributeValue> valueStore;

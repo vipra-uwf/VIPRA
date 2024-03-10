@@ -3,8 +3,10 @@
 #include <filesystem>
 #include <tuple>
 #include <type_traits>
+
 #include "vipra/concepts/output.hpp"
 #include "vipra/concepts/output_coordinator.hpp"
+#include "vipra/random/random.hpp"
 #include "vipra/types/idx.hpp"
 #include "vipra/types/util/result_or_void.hpp"
 
@@ -23,7 +25,8 @@ class Output {
   // NOLINTNEXTLINE(readability-identifier-naming) helper struct
   struct write_helper {
     static auto write(output_t& output, std::filesystem::path const& dir) {
-      if constexpr (std::is_same_v<result_or_VOID_t<decltype(std::declval<output_t>().write(dir))>, VOID>) {
+      if constexpr (std::is_same_v<Util::result_or_VOID_t<decltype(std::declval<output_t>().write(dir))>,
+                                   VOID>) {
         output.write(dir);
         return VOID{};
       } else {
@@ -46,10 +49,10 @@ class Output {
   /**
    * @brief Calls write on all outputs, returning a tuple of the results or VOID
    * 
-   * @return result_or_VOID_tuple<std::tuple<output_ts...>>::type 
+   * @return Util::result_or_VOID_tuple<std::tuple<output_ts...>>::type 
    */
-  auto write() -> std::tuple<
-      result_or_VOID_t<decltype(std::declval<output_ts>().write(std::declval<std::filesystem::path>()))>...> {
+  auto write() -> std::tuple<Util::result_or_VOID_t<
+      decltype(std::declval<output_ts>().write(std::declval<std::filesystem::path>()))>...> {
     return std::apply(
         [&](auto&&... outputs) {
           return std::make_tuple(write_helper<decltype(outputs)>::write(outputs, _current_output_dir)...);
@@ -62,13 +65,13 @@ class Output {
    * 
    * @param params 
    */
-  void config(auto const& params) {
-    _base_output_dir =
-        params.template get_param<std::string>(VIPRA::Modules::Type::OUTPUT, "coordinator", "output_dir");
+  void config(auto const& params, VIPRA::Random::Engine& engine) {
+    _base_output_dir = params.template get_param<std::string>(VIPRA::Modules::Type::OUTPUT, "coordinator",
+                                                              "output_dir", engine);
     _current_output_dir = _base_output_dir;
 
     create_output_directory(_current_output_dir);
-    std::apply([&params](auto&&... outputs) { (outputs.config(params), ...); }, _outputs);
+    std::apply([&](auto&&... outputs) { (outputs.config(params, engine), ...); }, _outputs);
   }
 
   /**
@@ -147,7 +150,8 @@ class Output {
     }
 
     if (!std::filesystem::create_directory(directory)) {
-      throw std::runtime_error("Could not create output directory: " + directory.string());
+      if (!std::filesystem::exists(directory))
+        throw std::runtime_error("Could not create output directory: " + directory.string());
     }
   }
 };

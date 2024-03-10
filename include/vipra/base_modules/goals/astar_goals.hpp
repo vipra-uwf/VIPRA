@@ -23,6 +23,10 @@
 #include "vipra/util/debug_do.hpp"
 
 namespace VIPRA::Goals {
+/**
+ * @brief Goals module that uses the A* algorithm to find the path to the goal
+ * 
+ */
 class AStar {
  public:
   VIPRA_MODULE_TYPE(GOALS);
@@ -75,12 +79,13 @@ class AStar {
   }
 
   template <typename params_t>
-  void config(params_t const& params) {
-    _end_goal_type = params.template get_param<std::string>(_VIPRA_MODULE_TYPE_, "astar", "endGoalType");
-    _goal_range = params.template get_param<VIPRA::f_pnt>(_VIPRA_MODULE_TYPE_, "astar", "goalRange");
-    _grid_size = params.template get_param<VIPRA::f_pnt>(_VIPRA_MODULE_TYPE_, "astar", "gridSize");
+  void config(params_t const& params, VIPRA::Random::Engine& engine) {
+    _end_goal_type =
+        params.template get_param<std::string>(_VIPRA_MODULE_TYPE_, "astar", "endGoalType", engine);
+    _goal_range = params.template get_param<VIPRA::f_pnt>(_VIPRA_MODULE_TYPE_, "astar", "goalRange", engine);
+    _grid_size = params.template get_param<VIPRA::f_pnt>(_VIPRA_MODULE_TYPE_, "astar", "gridSize", engine);
     _closest_obstacle =
-        params.template get_param<VIPRA::f_pnt>(_VIPRA_MODULE_TYPE_, "astar", "closestObstacle");
+        params.template get_param<VIPRA::f_pnt>(_VIPRA_MODULE_TYPE_, "astar", "closestObstacle", engine);
   }
 
   template <typename params_t>

@@ -10,6 +10,7 @@
 
 #include "vipra/geometry/circle.hpp"
 #include "vipra/modules.hpp"
+#include "vipra/random/random.hpp"
 
 // TODO(rolland): update any fields each timestep
 
@@ -21,6 +22,7 @@ class Map {
   // NOLINTNEXTLINE
   constexpr static VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::MAP;
   ;
+
   /**
    * @brief Construct a new Map object, loads obstacles from input file and initializes all fields
    * 
@@ -36,7 +38,8 @@ class Map {
    * @param pedestrians 
    */
   template <Concepts::PedsetModule pedestrians_t>
-  void initialize(const pedestrians_t& pedestrians) {
+  void initialize(pedestrians_t const& pedestrians) {
+    _input.load();
     initialize_obstacles();
     std::apply(
         [&](auto&&... fields) {
@@ -50,9 +53,9 @@ class Map {
    * 
    * @param params 
    */
-  void config(const auto& params) {
-    _obstacles.config(params);
-    std::apply([&params](auto&&... fields) { (fields.config(params), ...); }, _fields);
+  void config(auto const& params, VIPRA::Random::Engine& engine) {
+    _obstacles.config(params, engine);
+    std::apply([&](auto&&... fields) { (fields.config(params, engine), ...); }, _fields);
   }
 
   /**
@@ -70,7 +73,7 @@ class Map {
     return _obstacles.get_object_types();
   }
 
-  [[nodiscard]] constexpr inline auto get_objects(const std::string& type) const -> const VIPRA::f3dVec& {
+  [[nodiscard]] constexpr inline auto get_objects(std::string const& type) const -> const VIPRA::f3dVec& {
     return _obstacles.get_objects(type);
   }
 
@@ -99,7 +102,7 @@ class Map {
   }
 
   template <Concepts::FieldModule field_t>
-  [[nodiscard]] constexpr inline auto field() const -> const field_t& {
+  [[nodiscard]] constexpr inline auto field() const -> field_t const& {
     return std::get<field_t>(_fields);
   }
 
@@ -110,12 +113,12 @@ class Map {
 
   void initialize_obstacles() {
     // TODO(rolland): replace point obstacles with polygons
-    const auto objTypes = _input.template get<std::vector<std::string>>("obj_types");
+    auto const objTypes = _input.template get<std::vector<std::string>>("obj_types");
     if (!objTypes) throw std::runtime_error("Could not find object types in input file");
 
     auto objMap = std::map<std::string, std::vector<VIPRA::f3d>>{};
 
-    std::for_each(objTypes->begin(), objTypes->end(), [&](const auto& objType) {
+    std::for_each(objTypes->begin(), objTypes->end(), [&](auto const& objType) {
       const auto positions = _input.template get<std::vector<VIPRA::f3d>>(objType);
       if (!positions) {
         throw std::runtime_error("Could not get object positions from input");
@@ -125,7 +128,7 @@ class Map {
                     [&](const auto& objPos) { objMap[objType].push_back(objPos); });
     });
 
-    const auto obsCoords = _input.template load_polygons("obstacles");
+    auto const obsCoords = _input.template load_polygons("obstacles");
     if (!obsCoords) throw std::runtime_error("Could not get obstacle polygons from input");
 
     _obstacles.initialize(obsCoords.value(), objTypes.value(), objMap);

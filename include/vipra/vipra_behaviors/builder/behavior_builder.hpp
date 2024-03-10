@@ -55,6 +55,8 @@
 #include "vipra/vipra_behaviors/values/numeric_value.hpp"
 #include "vipra/vipra_behaviors/values/values.hpp"
 
+// TODO(rolland): give proper errors and logging
+
 namespace VIPRA::Behaviors {
 /**
  * @brief Parses Behavior Files and Creates the Runtime Functionality they describe

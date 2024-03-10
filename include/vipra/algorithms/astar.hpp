@@ -11,8 +11,6 @@
 #include <iostream>
 #include <unordered_set>
 
-#include "vipra/concepts/not_void.hpp"
-
 #include "vipra/geometry/f3d.hpp"
 
 #include "vipra/types/float.hpp"

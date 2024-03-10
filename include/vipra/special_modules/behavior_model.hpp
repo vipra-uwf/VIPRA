@@ -7,6 +7,7 @@
 
 #include "vipra/macros/parameters.hpp"
 #include "vipra/types/seed.hpp"
+#include "vipra/vipra_behaviors/attributes/attributes.hpp"
 #include "vipra/vipra_behaviors/behavior/human_behavior.hpp"
 #include "vipra/vipra_behaviors/builder/behavior_builder.hpp"
 
@@ -34,6 +35,11 @@ class BehaviorModel {
   }
 
   void initialize(pedset_t& pedset, map_t& map, goals_t& goals, VIPRA::seed seed) {
+    // TODO(rolland): figure out why it errors when duplicating behaviors
+
+    _behaviors.clear();
+    Behaviors::AttributeHandling::cleanup();
+
     load_behaviors(seed);
     for (auto& behavior : _behaviors) {
       behavior.initialize(pedset, map, goals);
@@ -59,5 +65,13 @@ class BehaviorModel {
                      return builder.build(name, filePath, seed);
                    });
   }
+
+ public:
+  BehaviorModel() = default;
+  BehaviorModel(BehaviorModel const&) = default;
+  auto operator=(BehaviorModel const&) -> BehaviorModel& = default;
+  BehaviorModel(BehaviorModel&&) noexcept = default;
+  auto operator=(BehaviorModel&&) noexcept -> BehaviorModel& = default;
+  ~BehaviorModel() { Behaviors::AttributeHandling::cleanup(); };
 };
 }  // namespace VIPRA

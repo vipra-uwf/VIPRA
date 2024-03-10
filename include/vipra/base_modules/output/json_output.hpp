@@ -13,6 +13,10 @@
 #include "vipra/util/debug_do.hpp"
 
 namespace VIPRA::Output::Trajectories {
+/**
+ * @brief JSON output module for writing trajectories to a JSON file
+ * 
+ */
 class JSON {
  public:
   VIPRA_MODULE_TYPE(OUTPUT)
@@ -23,9 +27,9 @@ class JSON {
   }
 
   template <typename params_t>
-  void config(params_t const& params) {
-    _filename =
-        params.template get_param<std::string>(Modules::Type::OUTPUT, "trajectories_json", "filename");
+  void config(params_t const& params, VIPRA::Random::Engine& engine) {
+    _filename = params.template get_param<std::string>(Modules::Type::OUTPUT, "trajectories_json", "filename",
+                                                       engine);
   }
 
   void write(std::filesystem::path const& outputDir) {
@@ -39,6 +43,20 @@ class JSON {
 
     file.close();
   }
+
+  // auto write(std::filesystem::path const& outputDir) -> nlohmann::json const& {
+  //   std::filesystem::path filepath = outputDir / _filename;
+  //   std::ofstream         file(filepath);
+  //   if (!file.is_open()) {
+  //     throw std::runtime_error("Could not open file for writing: " + filepath.string());
+  //   }
+
+  //   file << _json.dump();
+
+  //   file.close();
+
+  //   return _json;
+  // }
 
   template <typename data_t>
   void sim_value(char const* key, data_t&& value) {

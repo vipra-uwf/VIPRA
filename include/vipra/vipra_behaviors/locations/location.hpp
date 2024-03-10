@@ -67,8 +67,8 @@ class Location {
   [[nodiscard]] constexpr auto rotation() const -> VIPRA::f_pnt { return _rot; }
 
   [[nodiscard]] constexpr auto random_point(VIPRA::Random::Engine& eng) const -> VIPRA::f3d {
-    VIPRA::uniform_distribution<> wDistr{0, _dims.x};
-    VIPRA::uniform_distribution<> hDistr{0, _dims.y};
+    VIPRA::Random::uniform_distribution<> wDistr{0, _dims.x};
+    VIPRA::Random::uniform_distribution<> hDistr{0, _dims.y};
 
     VIPRA::f_pnt rotSin = std::sin(_rot);
     VIPRA::f_pnt rotCos = std::cos(_rot);

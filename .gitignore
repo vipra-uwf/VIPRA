@@ -45,4 +45,7 @@ temp
 
 # Behaviors
 .antlr
-generated
+
+# Doxygen
+latex
+html

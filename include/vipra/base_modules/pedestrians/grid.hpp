@@ -14,13 +14,22 @@
 
 #include "vipra/util/debug_do.hpp"
 
+// TODO(rolland): implement grid for storing pedestrians
+
 namespace VIPRA::Pedestrians {
+
+/**
+ * @brief Pedestrian module that uses a grid to store pedestrians
+ * 
+ */
 template <Concepts::InputModule input_t>
 class Grid {
  public:
   VIPRA_MODULE_TYPE(PEDESTRIANS);
+  VIPRA_MODULE_NAME("grid")
 
   explicit Grid(input_t&& input) : _input(input) {
+    input.load();
     auto coords = input.template get<std::vector<VIPRA::f3d>>("coords");
     if (!coords) throw std::runtime_error("Could not find pedestrian coordinates in input file");
 
@@ -38,9 +47,11 @@ class Grid {
   }
 
   template <Concepts::ParamModule params_t>
-  void register_params(params_t& params) {}
+  void register_params(params_t& params) {
+    params.template register_param(VIPRA::Modules::Type::PEDESTRIANS, "grid", "gridSize");
+  }
 
-  void config(auto const& params) {}
+  void config(auto const& params, VIPRA::Random::Engine& /*unused*/) {}
 
   [[nodiscard]] auto num_pedestrians() const -> VIPRA::size { return _coords.size(); }
   [[nodiscard]] auto ped_coords(VIPRA::idx pedIdx) const -> VIPRA::f3d const& {

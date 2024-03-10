@@ -11,9 +11,13 @@
 
 #include "vipra/macros/module.hpp"
 #include "vipra/modules.hpp"
+#include "vipra/random/random.hpp"
 #include "vipra/types/parameter.hpp"
 
-// TODO(rolland): Check that all required parameters are provided
+// TODO(rolland): Check that all required parameters are provided (maybe not needed, they are checked when the module tries to get it)
+// TODO(rolland): No way of checking what a parameter was, once get_param is called the random engine moves on
+//                  - this is needed for outputing the parameters used in a simulation run
+
 namespace VIPRA {
 template <Concepts::parameter_qualified_input input_t>
 class Parameters {
@@ -34,9 +38,9 @@ class Parameters {
    */
   void register_param(VIPRA::Modules::Type module, std::string const& moduleName,
                       std::string const& paramName) {
-    if (contains(module, moduleName, paramName))
-      throw std::runtime_error("Parameter: " + paramName + " For Module: " + moduleName +
-                               " Registered Twice, Check for Duplicate Parameter Names");
+    // TODO(rolland): maybe warn if a parameter is registered twice?
+    if (contains(module, moduleName, paramName)) return;
+
     _params[module][moduleName].insert(paramName);
   }
 
@@ -83,7 +87,7 @@ class Parameters {
    */
   template <typename data_t>
   [[nodiscard]] auto get_param(VIPRA::Modules::Type module, std::string const& moduleName,
-                               std::string const& paramName) const -> data_t {
+                               std::string const& paramName, VIPRA::Random::Engine& engine) const -> data_t {
     std::string moduleStr = to_string(module);
 
     if (!contains(module, moduleName, paramName))
@@ -96,7 +100,7 @@ class Parameters {
                                " Module: " + moduleName + " Not Provided In Input");
     }
 
-    return randomize_parameter(value.value());
+    return randomize_parameter(value.value(), engine);
   }
 
   template <typename array_t>
@@ -117,11 +121,13 @@ class Parameters {
     return value.value();
   }
 
+  [[nodiscard]] auto get_input() -> input_t& { return _input; }
+
  private:
   input_t                                                                      _input;
   std::map<VIPRA::Modules::Type, std::map<std::string, std::set<std::string>>> _params;
 
-  [[nodiscard]] constexpr auto randomize_parameter(auto&& paramVal) const {
+  [[nodiscard]] constexpr auto randomize_parameter(auto&& paramVal, VIPRA::Random::Engine& /*engine*/) const {
     // TODO(rolland): randomize parameter, currently just pass through
     return paramVal.value;
   }

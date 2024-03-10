@@ -8,11 +8,14 @@
 
 #include "vipra/concepts/output_coordinator.hpp"
 #include "vipra/concepts/parameters.hpp"
+#include "vipra/parameter_sweep/parameter_sweep.hpp"
 #include "vipra/random/random.hpp"
 #include "vipra/special_modules/behavior_model.hpp"
 #include "vipra/types/parameter.hpp"
 #include "vipra/types/time.hpp"
+
 #include "vipra/types/util/result_or_void.hpp"
+#include "vipra/types/util/sim_output.hpp"
 
 #include "vipra/util/all_of_type.hpp"
 #include "vipra/util/debug_do.hpp"
@@ -23,53 +26,70 @@
 
 namespace VIPRA {
 
-template <Concepts::ParamModule params_t, Concepts::OutputCoordinator output_t, Concepts::ModelModule model_t,
+template <Concepts::OutputCoordinator output_t, Concepts::ModelModule model_t,
           Concepts::PedsetModule pedset_t, Concepts::GoalsModule goals_t, Concepts::MapModule map_t>
 class SimType {
   using base_output_t = decltype(std::declval<output_t>().write());
-  // TODO(rolland): break this out
-  using output_data_t =
-      std::conditional_t<std::is_same_v<base_output_t, void> || std::is_same_v<base_output_t, VOID> ||
-                             Util::all_of_type_v<VOID, base_output_t>,
-                         void, decltype(std::declval<output_t>().write())>;
+  using output_data_t = VIPRA::sim_output_t<output_t>;
 
  public:
-  constexpr SimType(params_t&& params, output_t&& output, model_t&& model, pedset_t&& pedset, goals_t&& goals,
-                    map_t&& obstacles)
-      : _params(params), _output(output), _model(model), _pedset(pedset), _goals(goals), _map(obstacles) {}
+  constexpr SimType(output_t&& output, model_t&& model, pedset_t&& pedset, goals_t&& goals, map_t&& obstacles)
+      : _output(output), _model(model), _pedset(pedset), _goals(goals), _map(obstacles) {}
 
-  static void register_params(Concepts::ParamModule auto& params) {
-    params.register_param(Modules::Type::SIMULATION, "main", "max_timestep");
-    params.register_param(Modules::Type::SIMULATION, "main", "timestep_size");
-    params.register_param(Modules::Type::SIMULATION, "main", "output_frequency");
-    params.register_param(Modules::Type::SIMULATION, "main", "random_seed");
-    BehaviorModel<pedset_t, map_t, goals_t>::register_params(params);
-  }
+  /**
+   * @brief Runs the simulation with the given parameters
+   * 
+   * @param params parameter module to use for the simulation
+   * @return output_data_t Tuple of the output data
+   */
+  auto operator()(Concepts::ParamModule auto&& params) -> output_data_t {
+    // TODO(rolland): this assumes that a only a single node should ever run this function, there may be sitations where this isn't user friendly?
+    if (!ParameterSweep::is_root()) return {};
 
-  auto operator()() -> output_data_t {
+    params.get_input().load();
+
     if constexpr (std::is_same_v<output_data_t, void>) {
-      run_sim();
+      run_sim(std::forward<decltype(params)>(params));
     } else {
-      return run_sim();
+      return run_sim(std::forward<decltype(params)>(params));
     }
   }
 
-  [[nodiscard]] auto run_sim() -> output_data_t {
+  // TODO(rolland): the simulation shouldn't have to know that it is being run in parallel
+  //                  - this is needed because of the delayed loading of parameters, with the operator() every node would load the parameters when they've already been updated
+  auto parallel_run(Concepts::ParamModule auto&& params) -> output_data_t {
+    if constexpr (std::is_same_v<output_data_t, void>) {
+      run_sim(std::forward<decltype(params)>(params));
+    } else {
+      return run_sim(std::forward<decltype(params)>(params));
+    }
+  }
+
+  void set_sim_id(VIPRA::idx idx) { _currSimIdx = idx; }
+  void add_sim_id(VIPRA::idx idx) { _currSimIdx += idx; }
+
+ private:
+  output_t                                _output;
+  model_t                                 _model;
+  pedset_t                                _pedset;
+  goals_t                                 _goals;
+  map_t                                   _map;
+  BehaviorModel<pedset_t, map_t, goals_t> _behaviorModel;
+
+  // TODO(rolland): NEXT create a sim id and update output to use it
+
+  VIPRA::Random::Engine _engine{};
+
+  VIPRA::idx      _currSimIdx{0};
+  VIPRA::timestep _timestep{0};
+  VIPRA::timestep _outputFrequency{0};
+
+  auto run_sim(Concepts::ParamModule auto&& params) -> output_data_t {
+    auto [maxTimestep, timestepSize, randomseed, state] = initialize(params);
     _output.new_run(_currSimIdx++);
-    auto const [maxTimestep, timestepSize, outputFreq, randomseed] = get_sim_params();
-    set_params(outputFreq, randomseed);
+    _timestep = 0;
 
-    _behaviorModel.config(_params);
-
-    _map.initialize(_pedset);
-    _goals.initialize(_pedset, _map);
-    _model.initialize(_pedset, _map, _goals, _output);
-
-    _behaviorModel.initialize(_pedset, _map, _goals, randomseed);
-
-    VIPRA::State state;
-    state.initialize(_pedset);
-    while (_timestep < maxTimestep) {
+    while (_timestep < maxTimestep && !_goals.is_sim_goal_met()) {
       _model.timestep(_pedset, _map, _goals, _output, state, timestepSize, _timestep);
       _behaviorModel.timestep(_pedset, _map, _goals, state, timestepSize);
       _pedset.update(state);
@@ -85,40 +105,69 @@ class SimType {
     }
   }
 
- private:
-  params_t                                _params;
-  output_t                                _output;
-  model_t                                 _model;
-  pedset_t                                _pedset;
-  goals_t                                 _goals;
-  map_t                                   _map;
-  BehaviorModel<pedset_t, map_t, goals_t> _behaviorModel;
+  /**
+   * @brief Initializes the simulation and all of its modules with the given parameters
+   * 
+   * @param params parameter module to use for the simulation
+   * @return auto Tuple of the max timestep, timestep size, random seed, and the initial state
+   */
+  auto initialize(Concepts::ParamModule auto& params) {
+    register_params(params);
 
-  VIPRA::Random::Engine _engine{};
+    VIPRA::timestep maxTimestep = params.template get_param<VIPRA::timestep>(Modules::Type::SIMULATION,
+                                                                             "main", "max_timestep", _engine);
+    VIPRA::timestep timestepSize = params.template get_param<VIPRA::timestep>(
+        Modules::Type::SIMULATION, "main", "timestep_size", _engine);
+    VIPRA::timestep randomseed =
+        params.template get_param<VIPRA::timestep>(Modules::Type::SIMULATION, "main", "random_seed", _engine);
 
-  VIPRA::idx      _currSimIdx{0};
-  VIPRA::timestep _timestep{0};
-  VIPRA::timestep _outputFrequency{0};
+    _engine.reseed(randomseed);
 
-  void set_params(VIPRA::timestep outputFrequency, VIPRA::size randomSeed) {
-    _outputFrequency = outputFrequency;
-    _engine.reseed(randomSeed);
+    config(params);
+    _map.initialize(_pedset);
+    _goals.initialize(_pedset, _map);
+    _model.initialize(_pedset, _map, _goals, _output, _engine);
+    _behaviorModel.initialize(_pedset, _map, _goals, randomseed);
+
+    VIPRA::State state;
+    state.initialize(_pedset);
+
+    return std::make_tuple(maxTimestep, timestepSize, randomseed, state);
   }
 
-  [[nodiscard]] constexpr auto get_sim_params()
-      -> std::tuple<VIPRA::f_pnt, VIPRA::f_pnt, VIPRA::timestep, VIPRA::size> {
-    VIPRA::timestep maxTimestep =
-        _params.template get_param<VIPRA::timestep>(Modules::Type::SIMULATION, "main", "max_timestep");
-    VIPRA::f_pnt timestepSize =
-        _params.template get_param<VIPRA::f_pnt>(Modules::Type::SIMULATION, "main", "timestep_size");
-    VIPRA::timestep outputFrequency =
-        _params.template get_param<VIPRA::timestep>(Modules::Type::SIMULATION, "main", "output_frequency");
-    VIPRA::size randomSeed =
-        _params.template get_param<VIPRA::size>(Modules::Type::SIMULATION, "main", "random_seed");
-
-    return {maxTimestep, timestepSize, outputFrequency, randomSeed};
+  /**
+   * @brief Registers the parameters for the simulation and all of its modules
+   * 
+   * @param params parameter module to register the parameters with
+   */
+  void register_params(Concepts::ParamModule auto& params) {
+    _output.register_params(params);
+    _model.register_params(params);
+    _pedset.register_params(params);
+    _goals.register_params(params);
+    _map.register_params(params);
+    params.register_param(Modules::Type::SIMULATION, "main", "max_timestep");
+    params.register_param(Modules::Type::SIMULATION, "main", "timestep_size");
+    params.register_param(Modules::Type::SIMULATION, "main", "output_frequency");
+    params.register_param(Modules::Type::SIMULATION, "main", "random_seed");
+    BehaviorModel<pedset_t, map_t, goals_t>::register_params(params);
   }
 
+  void config(Concepts::ParamModule auto& params) {
+    _output.config(params, _engine);
+    _model.config(params, _engine);
+    _pedset.config(params, _engine);
+    _goals.config(params, _engine);
+    _map.config(params, _engine);
+    _behaviorModel.config(params, _engine);
+    _outputFrequency = params.template get_param<VIPRA::timestep>(Modules::Type::SIMULATION, "main",
+                                                                  "output_frequency", _engine);
+  }
+
+  /**
+   * @brief Adds pedestrian trajectories to the output
+   * 
+   */
   void output_positions() {
     if (_timestep % _outputFrequency != 0) {
       return;

@@ -1,0 +1,56 @@
+{
+  "simulation": {
+    "main": {
+      "max_timestep": 40000,
+      "timestep_size": 0.005,
+      "output_frequency": 100,
+      "random_seed": 12345
+    }
+  },
+  "model": {
+    "calm_model": {
+      "meanMass": 1.0,
+      "massStdDev": 0.1,
+      "meanReactionTime": 0.4,
+      "reactionTimeStdDev": 0.05,
+      "meanMaxSpeed": 1.0,
+      "meanShoulderLen": 0.2,
+      "maxSpeedStdDev": 0.1,
+      "shoulderLenStdDev": 0.05
+    }
+  },
+  "goals": {
+    "astar": {
+      "endGoalType": "exit",
+      "gridSize": 0.1,
+      "closestObstacle": 0.25,
+      "goalRange": 0.05
+    }
+  },
+  "pedset": {
+    "grid": {
+      "gridSize": 0.5
+    }
+  },
+  "obstacles": {
+    "quad_tree": {
+      "minQuadSize": 0.05
+    }
+  },
+  "output": {
+    "coordinator": {
+      "output_dir": "./output"
+    },
+    "trajectories_json": {
+      "filename": "trajectories.json"
+    }
+  },
+  "behavior_model": {
+    "main": {
+      "behaviors_dir": "./behaviors",
+      "behaviors": [
+        "disembark"
+      ]
+    }
+  }
+}
