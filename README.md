@@ -1,17 +1,19 @@
 - [Introduction](#introduction)
 
-- [Usage](#usage) <!-- TODO -->
-  - [Simulation Construction](#simulation-construction) <!-- TODO -->
+- [Usage](#usage)
+  - [Simulation Construction](#simulation-construction)
     - [Example Simulation](#example-simulation)
     - [Example Parameter Sweep](#example-parameter-sweep)
-  - [Module Parameters](#module-parameters) <!-- TODO -->
-  - [Included Modules](#included-modules) <!-- TODO -->
+  - [Module Parameters](#module-parameters)
+  - [Included Modules](#included-modules)
+  - [DSL Behaviors](#behavior-usage) <!-- TODO -->
 
 - [Common Errors](#common-errors) <!-- TODO -->
 
 - [Development](#development)
   - [Overview](#overview)
     - [Simulation](#simulation) <!-- TODO -->
+      - [Simulation Steps](#simulation-steps)
     - [Module Types](#module-types)
     - [Parameter Sweep](#parameter-sweeps) <!-- TODO -->
     - [Randomization](#randomization) <!-- TODO -->
@@ -61,7 +63,7 @@ Each simulation requires the following modules:
   - `Obstacle Set`
   - `Polygon Input`
 - `Output Coordinator`
-  - `Output`
+  - `Output` (Can have any number of Output modules)
 
 `Maps` and `Output Coordinators` are special in that they require modules themselves (denoted by the additional indent)
 
@@ -93,8 +95,12 @@ auto main() -> int {
       }
   );
 
-  // Run the simulation
-  sim((VIPRA::Parameters{VIPRA::Input::JSON{"module_params.json"}}));
+  // Run the simulation, passing in parameters
+  sim(
+    VIPRA::Parameters{
+      VIPRA::Input::JSON{"module_params.json"}
+    }
+  );
 }
 ```
 
@@ -141,11 +147,11 @@ auto main(int argc, char** argv) -> int {
 
 ## Module Parameters
 
-Parameters are loaded into each module before they are initizalized. The exact steps are showing in [`Simluation Steps`](#simulation-steps).
+Parameters are loaded into each module before they are initizalized. The exact steps of a simulation run are shown in [`Simluation Steps`](#simulation-steps).
 
-Parameters can use any [`Parameter Input`](#parameter-input-implementation) module, by default a [`JSON`](#json-input) input module is provided.
+Parameters can use any [`Parameter Input`](#parameter-input-implementation) module, the [`JSON`](#json-input) input module provided works for this.
 
-The format for which is:
+The format for JSON parameters is:
 ```JSON
 {
   "module type": {
@@ -157,6 +163,7 @@ The format for which is:
 }
 ```
 
+Example of a [`Goals`](#goals-implementation) module parameters:
 ```JSON
 {
   ...
@@ -175,7 +182,7 @@ The format for which is:
 
 ## Included Modules
 
-There are several base modules included with VIPRA.
+There are several modules included with VIPRA.
 
 **Model**:
 - [`Calm Model`](#calm-model)
@@ -243,7 +250,7 @@ VIPRA::simulation(
 - `gridSize` : Length of each side, in meters, of each grid in the pathing graph (e.g. 0.1)
 - `closestObstacle` : Closest a grid center can be to an obstacle before being considered non-traversable
 
-### QuadTree Obstalce Set 
+### QuadTree Obstacle Set 
 
 This `Obstacle Set` module uses the [Quad Tree](#quadtree-datastructure) to hold the map geometry.
 
@@ -254,9 +261,8 @@ This `Obstacle Set` module uses the [Quad Tree](#quadtree-datastructure) to hold
 VIPRA::simulation(
   ...
   VIPRA::Module::Map{
-    ...
+    VIPRA::Input::JSON{"filepath"} // Map requires an Input module
     VIPRA::Obstacles::QuadTree{} // Obstacle sets go inside the Map module
-    ...
   }
   ...
 )
@@ -310,9 +316,29 @@ sim(VIPRA::Parameters{
 });
 ```
 
-### JSON Output
-<!-- TODO -->
+#### Parameters:
 
+- NONE
+
+### JSON Output
+
+This `Output` module creates a JSON file containing the positions of each pedestrian for each timestep that matches the output frequency in the simulation module parameters.
+
+#### Use:
+
+```C++
+VIPRA::simulation(
+  ...
+  VIPRA::Module::Output{
+    VIPRA::Output::Trajectories::JSON{}
+  },
+  ...
+)
+```
+
+#### Parameters:
+
+- `filename`: Name of the output file
 
 ---
 
@@ -332,7 +358,55 @@ sim(VIPRA::Parameters{
 
 ### Simulation Steps
 
-<!-- TODO -->
+These are the general steps taken when a simulation is run.
+
+#### 1. VIPRA::simulation
+
+First a Simulation is constructed using the `VIPRA::simulation` utility method.
+
+#### 2. Run Sim
+
+The simulation is started using either `operator()` or `run_sim()`.
+
+These both take a [`Parameter Module`](#parameter-module) as their argument.
+
+#### 3. Parameters Loaded
+
+The [`Parameter Module`](#parameter-module) calls `load()` on it's [`Parameter Input`](#parameter-input-implementation) module.
+
+#### 4. Parameters Registered
+
+Each Module has its `register_params()` method called.
+
+This is used to tell the simulation which parameters are required by each module.
+
+#### 5. Modules Configured
+
+Each Module has its `config()` method called.
+
+The loaded parameters are passed in to each module.
+
+
+#### 6. Modules Initialized
+
+The [`Map`](#map-module), [`Goals`](#goals-implementation), [`Model`](#model-implementation), and [`Behavior Model`](#behaviors) have their `initialize()` methods called.
+
+This allows each module to setup any necessary pre-simulation work.
+
+#### 7. Simulation Run
+
+The following is run until the [`Goals`](#goals-implementation) module simulation goal is met, or until the simulation `max_timestep` is reached.
+
+```
+model.timestep();
+behaviors.timestep();
+pedestrian_set.update();
+goals.update();
+```
+
+#### 8. Output
+
+Finally, each of the [`Output`](#output-implementation) modules `write()` method is called.
 
 ## Module Types
 
@@ -388,8 +462,11 @@ The [`Output Coordinator`](#output-coordinator) module handles coordinating any 
 > !!! Important Notes:
 > - These modules are implemented using templates; this means that any method that accepts a module as a parameter is required to be defined in a header file
 > - Every module has helper macros for their required methods, see [Macros](#macros)
+> - For these Interfaces, assume `using namespace VIPRA::Concepts`
 
 # Base Module Implementation
+
+Each module is required to implement the following:
 
 ### Interface
 
