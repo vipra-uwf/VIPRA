@@ -1,9 +1,0 @@
-<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" title=" " alt="" coords="5,115,104,140"/>
-<area shape="rect" id="Node000001" href="$d7/dd8/structVIPRA_1_1Concepts_1_1has__type_3_01type__t_00_01std_1_1void__t_3_01decltype_07type__t_1_1_7e69423e83fdcb12b6eee970cf74a1a1.html" title=" " alt="" coords="154,5,338,76"/>
-<area shape="poly" id="edge8_Node000000_Node000001" title=" " alt="" coords="98,105,165,74,168,79,100,110"/>
-<area shape="rect" id="Node000002" href="$da/d0b/structVIPRA_1_1Util_1_1has__tag_3_01type__t_00_01decltype_07_07void_08_01type__t_1_1tag_00_010_08_4.html" title=" " alt="" coords="167,100,325,155"/>
-<area shape="poly" id="edge9_Node000000_Node000002" title=" " alt="" coords="119,125,166,125,166,130,119,130"/>
-<area shape="rect" id="Node000003" href="$dc/d8b/structVIPRA_1_1Util_1_1is__specialization_3_01ref__t_3_01arg__ts_8_8_8_01_4_00_01ref__t_01_4.html" title=" " alt="" coords="152,179,340,220"/>
-<area shape="poly" id="edge10_Node000000_Node000003" title=" " alt="" coords="102,144,153,165,183,176,181,181,151,170,100,149"/>
-</map>

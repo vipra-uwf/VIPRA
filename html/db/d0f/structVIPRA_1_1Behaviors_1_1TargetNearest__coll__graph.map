@@ -1,5 +1,0 @@
-<map id="VIPRA::Behaviors::TargetNearest&lt; modifier_t &gt;" name="VIPRA::Behaviors::TargetNearest&lt; modifier_t &gt;">
-<area shape="rect" id="Node000001" title="Selects the nearest pedestrian with any of the given types." alt="" coords="5,94,174,135"/>
-<area shape="rect" id="Node000002" href="$db/dbc/classVIPRA_1_1Behaviors_1_1Ptype.html" title="Pedestrian Type, used as a composite of typeUIDs." alt="" coords="7,5,172,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="92,46,92,93,87,93,87,46"/>
-</map>
