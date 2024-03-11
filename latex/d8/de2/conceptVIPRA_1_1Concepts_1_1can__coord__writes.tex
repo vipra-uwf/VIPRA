@@ -1,0 +1,30 @@
+\doxysection{VIPRA\+::Concepts\+::can\+\_\+coord\+\_\+writes Concept Reference}
+\hypertarget{conceptVIPRA_1_1Concepts_1_1can__coord__writes}{}\label{conceptVIPRA_1_1Concepts_1_1can__coord__writes}\index{VIPRA::Concepts::can\_coord\_writes@{VIPRA::Concepts::can\_coord\_writes}}
+
+
+Checks that a type can write to an output.  
+
+
+
+
+{\ttfamily \#include $<$output\+\_\+coordinator.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ output\_t>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__coord__writes}{VIPRA::Concepts::can\_coord\_writes}}\ =\ \ \textcolor{keyword}{requires}(output\_t\ output)\ \{}
+\DoxyCodeLine{\ \ \{output.write()\};}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Checks that a type can write to an output. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em output\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}

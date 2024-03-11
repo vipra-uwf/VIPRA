@@ -1,0 +1,128 @@
+\doxysection{VIPRA\+::Module\+::Map\texorpdfstring{$<$}{<} input\+\_\+t, obstacles\+\_\+t, field\+\_\+ts \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classVIPRA_1_1Module_1_1Map}{}\label{classVIPRA_1_1Module_1_1Map}\index{VIPRA::Module::Map$<$ input\_t, obstacles\_t, field\_ts $>$@{VIPRA::Module::Map$<$ input\_t, obstacles\_t, field\_ts $>$}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classVIPRA_1_1Module_1_1Map_a1ad4ea5d4c3c32d25d95b9991cc3ac20}{Map}} (input\+\_\+t \&\&input, obstacles\+\_\+t \&\&obstacles, field\+\_\+ts \&\&... fields)
+\begin{DoxyCompactList}\small\item\em Construct a new Map object, loads obstacles from input file and initializes all fields. \end{DoxyCompactList}\item 
+{\footnotesize template$<$Concepts\+::\+Pedset\+Module pedestrians\+\_\+t$>$ }\\void \mbox{\hyperlink{classVIPRA_1_1Module_1_1Map_a58d2ca6ffd8c8f6f24fe26e48c3a77c4}{initialize}} (pedestrians\+\_\+t const \&pedestrians)
+\begin{DoxyCompactList}\small\item\em Initializes all fields with the pedestrians and obstacles. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classVIPRA_1_1Module_1_1Map_ae11b691940b401f6ea6702d7c77bbfff}{config}} (auto const \&params, \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{VIPRA\+::\+Random\+::\+Engine}} \&engine)
+\begin{DoxyCompactList}\small\item\em Calls setup on all obstacles modules. \end{DoxyCompactList}\item 
+{\footnotesize template$<$Concepts\+::\+Param\+Module params\+\_\+t$>$ }\\void \mbox{\hyperlink{classVIPRA_1_1Module_1_1Map_a7708398f48201c2aaa7f822310f5733f}{register\+\_\+params}} (params\+\_\+t \&params)
+\begin{DoxyCompactList}\small\item\em Calls register\+\_\+params on all obstacles modules. \end{DoxyCompactList}\item 
+\Hypertarget{classVIPRA_1_1Module_1_1Map_a4a4d390ee3337b76a8a8fdad39224c07}\label{classVIPRA_1_1Module_1_1Map_a4a4d390ee3337b76a8a8fdad39224c07} 
+auto {\bfseries get\+\_\+object\+\_\+types} () const -\/$>$ std\+::vector$<$ std\+::string $>$
+\item 
+\Hypertarget{classVIPRA_1_1Module_1_1Map_a2587554cc68f241e73b42565920e35f5}\label{classVIPRA_1_1Module_1_1Map_a2587554cc68f241e73b42565920e35f5} 
+constexpr auto {\bfseries get\+\_\+objects} (std\+::string const \&type) const -\/$>$ const VIPRA\+::f3d\+Vec \&
+\item 
+\Hypertarget{classVIPRA_1_1Module_1_1Map_a21a532a6cd17a632fba13373c78c2c8a}\label{classVIPRA_1_1Module_1_1Map_a21a532a6cd17a632fba13373c78c2c8a} 
+constexpr auto {\bfseries get\+\_\+dimensions} () const -\/$>$ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}}
+\item 
+\Hypertarget{classVIPRA_1_1Module_1_1Map_ab293a30be3c83cfd28591543c8e5772d}\label{classVIPRA_1_1Module_1_1Map_ab293a30be3c83cfd28591543c8e5772d} 
+constexpr auto {\bfseries collision} (\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} point) const -\/$>$ bool
+\item 
+\Hypertarget{classVIPRA_1_1Module_1_1Map_a24938ec97652dd1aaa5d6dfd4d40fd46}\label{classVIPRA_1_1Module_1_1Map_a24938ec97652dd1aaa5d6dfd4d40fd46} 
+constexpr auto {\bfseries collision} (\mbox{\hyperlink{classVIPRA_1_1Geometry_1_1Circle}{VIPRA\+::\+Geometry\+::\+Circle}} point) const -\/$>$ bool
+\item 
+\Hypertarget{classVIPRA_1_1Module_1_1Map_abf636570214bde9baea1a6ec8cd3625f}\label{classVIPRA_1_1Module_1_1Map_abf636570214bde9baea1a6ec8cd3625f} 
+constexpr auto {\bfseries ray\+\_\+hit} (\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} start, \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} end) const -\/$>$ VIPRA\+::f\+\_\+pnt
+\item 
+\Hypertarget{classVIPRA_1_1Module_1_1Map_ab929b24820055a056f9d33269229a228}\label{classVIPRA_1_1Module_1_1Map_ab929b24820055a056f9d33269229a228} 
+auto {\bfseries obstacle\+\_\+set} () const -\/$>$ obstacles\+\_\+t const \&
+\item 
+\Hypertarget{classVIPRA_1_1Module_1_1Map_a6160436dc0d1f4651be7cb7184d21d28}\label{classVIPRA_1_1Module_1_1Map_a6160436dc0d1f4651be7cb7184d21d28} 
+{\footnotesize template$<$Concepts\+::\+Field\+Module field\+\_\+t$>$ }\\constexpr auto {\bfseries field} () -\/$>$ field\+\_\+t \&
+\item 
+\Hypertarget{classVIPRA_1_1Module_1_1Map_aefa92ffc0ff28ff4fddbc1d7ebfca308}\label{classVIPRA_1_1Module_1_1Map_aefa92ffc0ff28ff4fddbc1d7ebfca308} 
+{\footnotesize template$<$Concepts\+::\+Field\+Module field\+\_\+t$>$ }\\constexpr auto {\bfseries field} () const -\/$>$ field\+\_\+t const \&
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classVIPRA_1_1Module_1_1Map_a0c4ab2a85efded49d2ed15ab45c553a6}\label{classVIPRA_1_1Module_1_1Map_a0c4ab2a85efded49d2ed15ab45c553a6} 
+static constexpr VIPRA\+::\+Modules\+::\+Type {\bfseries \+\_\+\+VIPRA\+\_\+\+MODULE\+\_\+\+TYPE\+\_\+} = VIPRA\+::\+Modules\+::\+Type\+::\+MAP
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classVIPRA_1_1Module_1_1Map_a1ad4ea5d4c3c32d25d95b9991cc3ac20}\label{classVIPRA_1_1Module_1_1Map_a1ad4ea5d4c3c32d25d95b9991cc3ac20} 
+\index{VIPRA::Module::Map$<$ input\_t, obstacles\_t, field\_ts $>$@{VIPRA::Module::Map$<$ input\_t, obstacles\_t, field\_ts $>$}!Map@{Map}}
+\index{Map@{Map}!VIPRA::Module::Map$<$ input\_t, obstacles\_t, field\_ts $>$@{VIPRA::Module::Map$<$ input\_t, obstacles\_t, field\_ts $>$}}
+\doxysubsubsection{\texorpdfstring{Map()}{Map()}}
+{\footnotesize\ttfamily template$<$Concepts\+::\+Polygon\+Input input\+\_\+t, Concepts\+::\+Obstacle\+Module obstacles\+\_\+t, Concepts\+::\+Field\+Module... field\+\_\+ts$>$ \\
+\mbox{\hyperlink{classVIPRA_1_1Module_1_1Map}{VIPRA\+::\+Module\+::\+Map}}$<$ input\+\_\+t, obstacles\+\_\+t, field\+\_\+ts $>$\+::\+Map (\begin{DoxyParamCaption}\item[{input\+\_\+t \&\&}]{input,  }\item[{obstacles\+\_\+t \&\&}]{obstacles,  }\item[{field\+\_\+ts \&\&...}]{fields }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Construct a new Map object, loads obstacles from input file and initializes all fields. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classVIPRA_1_1Module_1_1Map_ae11b691940b401f6ea6702d7c77bbfff}\label{classVIPRA_1_1Module_1_1Map_ae11b691940b401f6ea6702d7c77bbfff} 
+\index{VIPRA::Module::Map$<$ input\_t, obstacles\_t, field\_ts $>$@{VIPRA::Module::Map$<$ input\_t, obstacles\_t, field\_ts $>$}!config@{config}}
+\index{config@{config}!VIPRA::Module::Map$<$ input\_t, obstacles\_t, field\_ts $>$@{VIPRA::Module::Map$<$ input\_t, obstacles\_t, field\_ts $>$}}
+\doxysubsubsection{\texorpdfstring{config()}{config()}}
+{\footnotesize\ttfamily template$<$Concepts\+::\+Polygon\+Input input\+\_\+t, Concepts\+::\+Obstacle\+Module obstacles\+\_\+t, Concepts\+::\+Field\+Module... field\+\_\+ts$>$ \\
+void \mbox{\hyperlink{classVIPRA_1_1Module_1_1Map}{VIPRA\+::\+Module\+::\+Map}}$<$ input\+\_\+t, obstacles\+\_\+t, field\+\_\+ts $>$\+::config (\begin{DoxyParamCaption}\item[{auto const \&}]{params,  }\item[{\mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{VIPRA\+::\+Random\+::\+Engine}} \&}]{engine }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Calls setup on all obstacles modules. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em params} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classVIPRA_1_1Module_1_1Map_a58d2ca6ffd8c8f6f24fe26e48c3a77c4}\label{classVIPRA_1_1Module_1_1Map_a58d2ca6ffd8c8f6f24fe26e48c3a77c4} 
+\index{VIPRA::Module::Map$<$ input\_t, obstacles\_t, field\_ts $>$@{VIPRA::Module::Map$<$ input\_t, obstacles\_t, field\_ts $>$}!initialize@{initialize}}
+\index{initialize@{initialize}!VIPRA::Module::Map$<$ input\_t, obstacles\_t, field\_ts $>$@{VIPRA::Module::Map$<$ input\_t, obstacles\_t, field\_ts $>$}}
+\doxysubsubsection{\texorpdfstring{initialize()}{initialize()}}
+{\footnotesize\ttfamily template$<$Concepts\+::\+Polygon\+Input input\+\_\+t, Concepts\+::\+Obstacle\+Module obstacles\+\_\+t, Concepts\+::\+Field\+Module... field\+\_\+ts$>$ \\
+template$<$Concepts\+::\+Pedset\+Module pedestrians\+\_\+t$>$ \\
+void \mbox{\hyperlink{classVIPRA_1_1Module_1_1Map}{VIPRA\+::\+Module\+::\+Map}}$<$ input\+\_\+t, obstacles\+\_\+t, field\+\_\+ts $>$\+::initialize (\begin{DoxyParamCaption}\item[{pedestrians\+\_\+t const \&}]{pedestrians }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Initializes all fields with the pedestrians and obstacles. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em pedestrians\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em pedestrians} & \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classVIPRA_1_1Module_1_1Map_a7708398f48201c2aaa7f822310f5733f}\label{classVIPRA_1_1Module_1_1Map_a7708398f48201c2aaa7f822310f5733f} 
+\index{VIPRA::Module::Map$<$ input\_t, obstacles\_t, field\_ts $>$@{VIPRA::Module::Map$<$ input\_t, obstacles\_t, field\_ts $>$}!register\_params@{register\_params}}
+\index{register\_params@{register\_params}!VIPRA::Module::Map$<$ input\_t, obstacles\_t, field\_ts $>$@{VIPRA::Module::Map$<$ input\_t, obstacles\_t, field\_ts $>$}}
+\doxysubsubsection{\texorpdfstring{register\_params()}{register\_params()}}
+{\footnotesize\ttfamily template$<$Concepts\+::\+Polygon\+Input input\+\_\+t, Concepts\+::\+Obstacle\+Module obstacles\+\_\+t, Concepts\+::\+Field\+Module... field\+\_\+ts$>$ \\
+template$<$Concepts\+::\+Param\+Module params\+\_\+t$>$ \\
+void \mbox{\hyperlink{classVIPRA_1_1Module_1_1Map}{VIPRA\+::\+Module\+::\+Map}}$<$ input\+\_\+t, obstacles\+\_\+t, field\+\_\+ts $>$\+::register\+\_\+params (\begin{DoxyParamCaption}\item[{params\+\_\+t \&}]{params }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Calls register\+\_\+params on all obstacles modules. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em params\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/vipra/coord\+\_\+modules/map.\+hpp\end{DoxyCompactItemize}

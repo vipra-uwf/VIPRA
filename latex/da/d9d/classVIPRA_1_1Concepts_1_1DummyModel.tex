@@ -1,0 +1,40 @@
+\doxysection{VIPRA\+::Concepts\+::Dummy\+Model Class Reference}
+\hypertarget{classVIPRA_1_1Concepts_1_1DummyModel}{}\label{classVIPRA_1_1Concepts_1_1DummyModel}\index{VIPRA::Concepts::DummyModel@{VIPRA::Concepts::DummyModel}}
+
+
+Dummy model for use in other concepts.  
+
+
+
+
+{\ttfamily \#include $<$model.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyModel_ad84df5484c39aab128ecba50d4edf6be}\label{classVIPRA_1_1Concepts_1_1DummyModel_ad84df5484c39aab128ecba50d4edf6be} 
+{\footnotesize template$<$typename params\+\_\+t $>$ }\\void {\bfseries register\+\_\+params} (params\+\_\+t \&)
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyModel_a97829f696c179345640a1414ca626bf3}\label{classVIPRA_1_1Concepts_1_1DummyModel_a97829f696c179345640a1414ca626bf3} 
+{\footnotesize template$<$typename pedset\+\_\+t , typename map\+\_\+t , typename goals\+\_\+t , typename output\+\_\+t $>$ }\\void {\bfseries initialize} (pedset\+\_\+t const \&, map\+\_\+t const \&, goals\+\_\+t const \&, output\+\_\+t \&, \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{VIPRA\+::\+Random\+::\+Engine}} \&)
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyModel_aa9718e6fb78e1f1c4359375076883db0}\label{classVIPRA_1_1Concepts_1_1DummyModel_aa9718e6fb78e1f1c4359375076883db0} 
+void {\bfseries config} (auto \&, \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{VIPRA\+::\+Random\+::\+Engine}} \&)
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyModel_af64bc873bc321ef4e7ca81db41291051}\label{classVIPRA_1_1Concepts_1_1DummyModel_af64bc873bc321ef4e7ca81db41291051} 
+void {\bfseries timestep} (\mbox{\hyperlink{classVIPRA_1_1Concepts_1_1DummyPedSet}{Dummy\+Ped\+Set}} const \&, \mbox{\hyperlink{classVIPRA_1_1Concepts_1_1DummyMap}{Dummy\+Map}} const \&, \mbox{\hyperlink{classVIPRA_1_1Concepts_1_1DummyGoals}{Dummy\+Goals}} const \&, \mbox{\hyperlink{classVIPRA_1_1Concepts_1_1DummyOutput}{Dummy\+Output}} const \&, \mbox{\hyperlink{structVIPRA_1_1State}{VIPRA\+::\+State}} \&, VIPRA\+::delta\+\_\+t, VIPRA\+::timestep)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyModel_a6c1bcee3bcb49808fe3c80be2cecb613}\label{classVIPRA_1_1Concepts_1_1DummyModel_a6c1bcee3bcb49808fe3c80be2cecb613} 
+static constexpr VIPRA\+::\+Modules\+::\+Type {\bfseries \+\_\+\+VIPRA\+\_\+\+MODULE\+\_\+\+TYPE\+\_\+} = VIPRA\+::\+Modules\+::\+Type\+::\+MODEL
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Dummy model for use in other concepts. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/vipra/concepts/model.\+hpp\end{DoxyCompactItemize}

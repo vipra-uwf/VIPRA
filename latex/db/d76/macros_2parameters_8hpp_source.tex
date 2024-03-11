@@ -1,0 +1,30 @@
+\doxysection{parameters.\+hpp}
+\hypertarget{macros_2parameters_8hpp_source}{}\label{macros_2parameters_8hpp_source}\index{include/vipra/macros/parameters.hpp@{include/vipra/macros/parameters.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/parameters.hpp"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ VIPRA\_REGISTER\_STEP\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\ \ template\ <VIPRA::Concepts::ParamModule\ params\_t>\ \(\backslash\)}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\ \ void\ register\_params(params\_t\&\ params)}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#define\ VIPRA\_REGISTER\_PARAM(paramName)\ \(\backslash\)}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\ \ params.register\_param(\_VIPRA\_MODULE\_TYPE\_,\ \_VIPRA\_MODULE\_NAME\_,\ paramName);}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#define\ VIPRA\_CONFIG\_STEP\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\ \ template\ <VIPRA::Concepts::ParamModule\ params\_t>\ \(\backslash\)}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\ \ void\ config(params\_t\ const\&\ params,\ VIPRA::Random::Engine\&\ engine)}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#define\ VIPRA\_GET\_PARAM(paramName,\ output)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\ \ output\ =\ params.template\ get\_param<std::remove\_cv\_t<decltype(output)>>(\ \(\backslash\)}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\ \ \ \ \ \ \_VIPRA\_MODULE\_TYPE\_,\ \_VIPRA\_MODULE\_NAME\_,\ paramName,\ engine);}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#define\ VIPRA\_GET\_ARRAY\_PARAM(paramName,\ output)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\ \ output\ =\ params.template\ get\_array\_param<std::remove\_cv\_t<decltype(output)>>(\ \(\backslash\)}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\ \ \ \ \ \ \_VIPRA\_MODULE\_TYPE\_,\ \_VIPRA\_MODULE\_NAME\_,\ paramName);}}
+
+\end{DoxyCode}

@@ -1,0 +1,25 @@
+\doxysection{serializable\+\_\+input.\+hpp}
+\hypertarget{serializable__input_8hpp_source}{}\label{serializable__input_8hpp_source}\index{include/vipra/concepts/serializable\_input.hpp@{include/vipra/concepts/serializable\_input.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <concepts>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/input.hpp"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/parameters.hpp"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }VIPRA::Concepts\ \{}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ input\_t>}
+\DoxyCodeLine{00017\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1serializable}{serializable}}\ =\ \textcolor{keyword}{requires}(input\_t\ input)\ \{}
+\DoxyCodeLine{00018\ \ \ \{\ input.serialize()\ \}\ -\/>\ std::same\_as<std::string>;}
+\DoxyCodeLine{00019\ \ \ \{\ input.deserialize(std::declval<std::string>())\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{00020\ \};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00027\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ input\_t>}
+\DoxyCodeLine{00028\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1serializable__input}{serializable\_input}}\ =\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1InputModule}{InputModule<input\_t>}}\ \&\&\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1serializable}{serializable<input\_t>}};}
+\DoxyCodeLine{00029\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA::Concepts}}
+
+\end{DoxyCode}

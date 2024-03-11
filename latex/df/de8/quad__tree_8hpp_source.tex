@@ -1,0 +1,100 @@
+\doxysection{quad\+\_\+tree.\+hpp}
+\hypertarget{quad__tree_8hpp_source}{}\label{quad__tree_8hpp_source}\index{include/vipra/base\_modules/obstacles/quad\_tree.hpp@{include/vipra/base\_modules/obstacles/quad\_tree.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/input.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/obstacle\_set.hpp"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}vipra/geometry/polygon.hpp"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}vipra/modules.hpp"{}}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}vipra/geometry/f3d.hpp"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}vipra/types/float.hpp"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}vipra/types/idx.hpp"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}vipra/types/parameter.hpp"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}vipra/types/size.hpp"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}vipra/util/debug\_do.hpp"{}}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{comment}{//\ TODO(rolland):\ implement\ quadtree\ for\ storing\ obstacles}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{namespace\ }VIPRA::Obstacles\ \{}
+\DoxyCodeLine{00025\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVIPRA_1_1Obstacles_1_1QuadTree}{QuadTree}}\ \{}
+\DoxyCodeLine{00026\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00027\ \ \ VIPRA\_MODULE\_TYPE(OBSTACLES);}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \textcolor{keywordtype}{void}\ initialize(std::vector<VIPRA::Geometry::Polygon>\ \textcolor{keyword}{const}\&\ obstacles,}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<std::string>\ \textcolor{keyword}{const}\&\ \ \ \ \ \ \ \ \ \ \ \ \ \ types,}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::map<std::string,\ VIPRA::f3dVec>\ \textcolor{keyword}{const}\&\ \ objects)\ \{}
+\DoxyCodeLine{00032\ \ \ \ \ \_objectTypes\ =\ types;}
+\DoxyCodeLine{00033\ \ \ \ \ \_objects\ =\ objects;}
+\DoxyCodeLine{00034\ \ \ \ \ \_obstacles\ =\ obstacles;}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&\ obstacle\ :\ obstacles)\ \{}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&\ edge\ :\ obstacle.edges)\ \{}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \_dimensions.x\ =\ std::max(\_dimensions.x,\ edge.start.x);}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \_dimensions.y\ =\ std::max(\_dimensions.y,\ edge.start.y);}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \_dimensions.z\ =\ std::max(\_dimensions.z,\ edge.start.z);}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \_dimensions.x\ =\ std::max(\_dimensions.x,\ edge.end.x);}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \_dimensions.y\ =\ std::max(\_dimensions.y,\ edge.end.y);}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \_dimensions.z\ =\ std::max(\_dimensions.z,\ edge.end.z);}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00045\ \ \ \ \ \}}
+\DoxyCodeLine{00046\ \ \ \}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ params\_t>}
+\DoxyCodeLine{00049\ \ \ \textcolor{keywordtype}{void}\ register\_params(params\_t\&\ params)\ \{}
+\DoxyCodeLine{00050\ \ \ \ \ params.register\_param(VIPRA::Modules::Type::OBSTACLES,\ \textcolor{stringliteral}{"{}quad\_tree"{}},\ \textcolor{stringliteral}{"{}minQuadSize"{}});}
+\DoxyCodeLine{00051\ \ \ \}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \textcolor{keywordtype}{void}\ config(\textcolor{keyword}{auto}\&\ params,\ \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{VIPRA::Random::Engine}}\&\ engine)\ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \_obsDistance\ =\ params.template\ get\_param<VIPRA::f\_pnt>(VIPRA::Modules::Type::OBSTACLES,\ \textcolor{stringliteral}{"{}quad\_tree"{}},}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}minQuadSize"{}},\ engine);}
+\DoxyCodeLine{00056\ \ \ \}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ [[nodiscard]]\ \textcolor{keyword}{auto}\ get\_dimensions()\ \textcolor{keyword}{const}\ -\/>\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ \{\ \textcolor{keywordflow}{return}\ \_dimensions;\ \}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ [[nodiscard]]\ \textcolor{keyword}{auto}\ collision(\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ point)\ \textcolor{keyword}{const}\ -\/>\ \textcolor{keywordtype}{bool}\ \{}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordflow}{return}\ std::any\_of(\_obstacles.begin(),\ \_obstacles.end(),}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [\&](\textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&\ obstacle)\ \{\ return\ obstacle.is\_point\_inside(point);\ \});}
+\DoxyCodeLine{00063\ \ \ \}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ [[nodiscard]]\ \textcolor{keyword}{auto}\ collision(\mbox{\hyperlink{classVIPRA_1_1Geometry_1_1Circle}{VIPRA::Geometry::Circle}}\ circle)\ \textcolor{keyword}{const}\ -\/>\ \textcolor{keywordtype}{bool}\ \{}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordflow}{return}\ std::any\_of(\_obstacles.begin(),\ \_obstacles.end(),}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [\&](\textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&\ obstacle)\ \{\ return\ obstacle.does\_intersect(circle);\ \});}
+\DoxyCodeLine{00068\ \ \ \}}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ [[nodiscard]]\ \textcolor{keyword}{auto}\ ray\_hit(\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ start,\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ end)\ \textcolor{keyword}{const}\ -\/>\ VIPRA::f\_pnt\ \{}
+\DoxyCodeLine{00071\ \ \ \ \ VIPRA::f\_pnt\ hit\ =\ std::numeric\_limits<VIPRA::f\_pnt>::max();}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&\ obstacle\ :\ \_obstacles)\ \{}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&\ edge\ :\ obstacle.edges)\ \{}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!edge.does\_intersect(\{start,\ end\}))\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ intersection\ =\ edge.intersection\_point(\{start,\ end\});}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ hit\ =\ std::min(hit,\ start.distance\_to(intersection));}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00078\ \ \ \ \ \}}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordflow}{return}\ hit;}
+\DoxyCodeLine{00080\ \ \ \}}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \ \ [[nodiscard]]\ \textcolor{keyword}{auto}\ get\_object\_types()\ \textcolor{keyword}{const}\ -\/>\ std::vector<std::string>\ \textcolor{keyword}{const}\&\ \{\ \textcolor{keywordflow}{return}\ \_objectTypes;\ \}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ [[nodiscard]]\ \textcolor{keyword}{auto}\ get\_objects(std::string\ \textcolor{keyword}{const}\&\ objType)\ \textcolor{keyword}{const}\ -\/>\ \textcolor{keyword}{const}\ VIPRA::f3dVec\&\ \{}
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordflow}{return}\ \_objects.at(objType);}
+\DoxyCodeLine{00086\ \ \ \}}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00089\ \ \ std::vector<std::string>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \_objectTypes;}
+\DoxyCodeLine{00090\ \ \ std::map<std::string,\ VIPRA::f3dVec>\ \ \_objects;}
+\DoxyCodeLine{00091\ \ \ std::vector<VIPRA::Geometry::Polygon>\ \_obstacles;}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ VIPRA::f\_pnt\ \_obsDistance;}
+\DoxyCodeLine{00094\ \ \ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ \ \ \_dimensions;}
+\DoxyCodeLine{00095\ \};}
+\DoxyCodeLine{00096\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA::Obstacles}}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ CHECK\_MODULE(ObstacleModule,\ \mbox{\hyperlink{classVIPRA_1_1Obstacles_1_1QuadTree}{VIPRA::Obstacles::QuadTree}});}
+
+\end{DoxyCode}

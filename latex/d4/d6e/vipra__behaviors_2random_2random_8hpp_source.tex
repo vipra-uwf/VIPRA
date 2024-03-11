@@ -1,0 +1,45 @@
+\doxysection{random.\+hpp}
+\hypertarget{vipra__behaviors_2random_2random_8hpp_source}{}\label{vipra__behaviors_2random_2random_8hpp_source}\index{include/vipra/vipra\_behaviors/random/random.hpp@{include/vipra/vipra\_behaviors/random/random.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <limits>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}vipra/geometry/f3d.hpp"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}vipra/random/distributions.hpp"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}vipra/random/random.hpp"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}vipra/types/idx.hpp"{}}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/definitions/dsl\_types.hpp"{}}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{namespace\ }VIPRA::Behaviors\ \{}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1Min}{Min}}\ \{}
+\DoxyCodeLine{00016\ \ \ VIPRA::f\_pnt\ val;}
+\DoxyCodeLine{00017\ \};}
+\DoxyCodeLine{00018\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1Max}{Max}}\ \{}
+\DoxyCodeLine{00019\ \ \ VIPRA::f\_pnt\ val;}
+\DoxyCodeLine{00020\ \};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1DRNG}{DRNG}}\ \{}
+\DoxyCodeLine{00023\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00028\ \ \ [[nodiscard]]\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1DRNG_acd85b757a43f7ca4ce0be5eba1a8137e}{ped\_random\_float}}(VIPRA::seed\ seed,\ VIPRA::idx\ pedIdx,\ \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1Min}{Min}}\ min,\ \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1Max}{Max}}\ max)}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ -\/>\ VIPRA::f\_pnt\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{classVIPRA_1_1Random_1_1uniform__distribution}{VIPRA::Random::uniform\_distribution<VIPRA::f\_pnt>}}\ distr\{min.val,\ max.val\};}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordflow}{return}\ distr(get\_engine(VIPRA::seed\{seed\ +\ (pedIdx\ *\ PED\_MULT\_VAL)\}));}
+\DoxyCodeLine{00032\ \ \ \}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00035\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ uint64\_t\ PED\_MULT\_VAL\{10037\};}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keyword}{auto}\ get\_engine(VIPRA::seed\ seed)\ -\/>\ \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{VIPRA::Random::Engine}}\&\ \{}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{VIPRA::Random::Engine}}\ gen\{\};}
+\DoxyCodeLine{00039\ \ \ \ \ gen.\mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine_a49e677f0a9609ce76b96a0e855da75e1}{reseed}}(seed);}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordflow}{return}\ gen;}
+\DoxyCodeLine{00041\ \ \ \}}
+\DoxyCodeLine{00042\ \};}
+\DoxyCodeLine{00043\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA::Behaviors}}
+
+\end{DoxyCode}

@@ -1,0 +1,88 @@
+\doxysection{event.\+hpp}
+\hypertarget{event_8hpp_source}{}\label{event_8hpp_source}\index{include/vipra/vipra\_behaviors/events/event.hpp@{include/vipra/vipra\_behaviors/events/event.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <optional>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}vipra/types/idx.hpp"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/events/event\_status.hpp"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/util/bool\_latch.hpp"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/util/timed\_latch.hpp"{}}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }VIPRA::Behaviors\ \{}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ cond\_t>}
+\DoxyCodeLine{00018\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Event}{Event}}\ \{}
+\DoxyCodeLine{00019\ \ \ DEFAULT\_CONSTRUCTIBLE(\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Event}{Event}})}
+\DoxyCodeLine{00020\ \ \ COPYABLE(\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Event}{Event}})}
+\DoxyCodeLine{00021\ \ \ MOVEABLE(\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Event}{Event}})}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00024\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Event}{Event}}(std::string\ name)\ :\ \_name(std::move(name))\ \{\}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \textcolor{keywordtype}{void}\ evaluate(\textcolor{keyword}{auto}\ pack);}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \textcolor{keywordtype}{void}\ set\_start\_condition(cond\_t\ \textcolor{keyword}{const}\&\ condition)\ \{\ \_startCondition\ =\ condition;\ \}}
+\DoxyCodeLine{00029\ \ \ \textcolor{keywordtype}{void}\ set\_end\_condition(cond\_t\ \textcolor{keyword}{const}\&\ condition)\ \{\ \_endCondition\ =\ condition;\ \}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ [[nodiscard]]\ \textcolor{keyword}{auto}\ is\_occurring()\ \textcolor{keyword}{const}\ -\/>\ \textcolor{keywordtype}{bool}\ \{}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordflow}{return}\ \_status\ ==\ EventStatus::OCCURRING\ ||\ \_status\ ==\ EventStatus::STARTING;}
+\DoxyCodeLine{00033\ \ \ \}}
+\DoxyCodeLine{00034\ \ \ [[nodiscard]]\ \textcolor{keyword}{auto}\ has\_occurred()\ \textcolor{keyword}{const}\ -\/>\ \textcolor{keywordtype}{bool}\ \{\ \textcolor{keywordflow}{return}\ \_occurred;\ \}}
+\DoxyCodeLine{00035\ \ \ [[nodiscard]]\ \textcolor{keyword}{auto}\ is\_starting()\ \textcolor{keyword}{const}\ -\/>\ \textcolor{keywordtype}{bool}\ \{\ \textcolor{keywordflow}{return}\ \_status\ ==\ EventStatus::STARTING;\ \}}
+\DoxyCodeLine{00036\ \ \ [[nodiscard]]\ \textcolor{keyword}{auto}\ is\_ending()\ \textcolor{keyword}{const}\ -\/>\ \textcolor{keywordtype}{bool}\ \{\ \textcolor{keywordflow}{return}\ \_status\ ==\ EventStatus::ENDING;\ \}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ set\_status(EventStatus\ status)\ \{\ \_status\ =\ status;\ \}}
+\DoxyCodeLine{00039\ \ \ [[nodiscard]]\ \textcolor{keyword}{auto}\ get\_status()\ \textcolor{keyword}{const}\ -\/>\ EventStatus\ \textcolor{keyword}{const}\&\ \{\ \textcolor{keywordflow}{return}\ \_status;\ \}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ [[nodiscard]]\ \textcolor{keyword}{auto}\ get\_name()\ \textcolor{keyword}{const}\ -\/>\ std::string\ \textcolor{keyword}{const}\&\ \{\ \textcolor{keywordflow}{return}\ \_name;\ \}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00044\ \ \ std::string\ \_name;}
+\DoxyCodeLine{00045\ \ \ EventStatus\ \_status\{EventStatus::NOT\_OCCURRING\};}
+\DoxyCodeLine{00046\ \ \ \textcolor{keywordtype}{bool}\ \ \ \ \ \ \ \ \_occurred\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Latch}{Latch}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_latch;}
+\DoxyCodeLine{00049\ \ \ cond\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_startCondition;}
+\DoxyCodeLine{00050\ \ \ std::optional<cond\_t>\ \_endCondition;}
+\DoxyCodeLine{00051\ \};}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ cond\_t>}
+\DoxyCodeLine{00054\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Event}{Event<cond\_t>::evaluate}}(\textcolor{keyword}{auto}\ pack)\ \{}
+\DoxyCodeLine{00055\ \ \ \textcolor{keywordflow}{if}\ (\_status\ ==\ EventStatus::ENDING)\ \{}
+\DoxyCodeLine{00056\ \ \ \ \ \_status\ =\ EventStatus::NOT\_OCCURRING;}
+\DoxyCodeLine{00057\ \ \ \}}
+\DoxyCodeLine{00058\ \ \ \textcolor{keywordflow}{if}\ (\_status\ ==\ EventStatus::STARTING)\ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \_status\ =\ EventStatus::OCCURRING;}
+\DoxyCodeLine{00060\ \ \ \}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ std::vector<VIPRA::idx>\ \ \ \ \ \ \ \ \ \ \ \ \ peds\{0\};}
+\DoxyCodeLine{00063\ \ \ std::vector<bool>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ met\{\textcolor{keyword}{false}\};}
+\DoxyCodeLine{00064\ \ \ std::optional<TimedLatchCollection>\ temp;}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \textcolor{comment}{//\ TODO\ (rolland)\ :\ These\ might\ need\ target\ selectors?}}
+\DoxyCodeLine{00067\ \ \ \textcolor{keywordflow}{if}\ (\_status\ ==\ EventStatus::OCCURRING)\ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordflow}{if}\ (\_endCondition)\ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \_endCondition.value().evaluate(pack,\ peds,\ met,\ \{\},\ temp);}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (met[0])\ \{}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ spdlog::info("{}Event\ \{\}\ is\ Ending"{},\ \_name);}}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \_status\ =\ EventStatus::ENDING;}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00074\ \ \ \ \ \}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00077\ \ \ \}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \_startCondition.evaluate(pack,\ peds,\ met,\ \{\},\ temp);}
+\DoxyCodeLine{00080\ \ \ \textcolor{keywordflow}{if}\ (met[0])\ \{}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{comment}{//\ spdlog::info("{}Event\ \{\}\ is\ Starting"{},\ \_name);}}
+\DoxyCodeLine{00082\ \ \ \ \ \_occurred\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00083\ \ \ \ \ \_status\ =\ EventStatus::STARTING;}
+\DoxyCodeLine{00084\ \ \ \}}
+\DoxyCodeLine{00085\ \}}
+\DoxyCodeLine{00086\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA::Behaviors}}
+
+\end{DoxyCode}

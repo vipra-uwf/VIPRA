@@ -1,0 +1,31 @@
+\doxysection{VIPRA\+::Concepts\+::can\+\_\+get\+\_\+ped\+\_\+coords Concept Reference}
+\hypertarget{conceptVIPRA_1_1Concepts_1_1can__get__ped__coords}{}\label{conceptVIPRA_1_1Concepts_1_1can__get__ped__coords}\index{VIPRA::Concepts::can\_get\_ped\_coords@{VIPRA::Concepts::can\_get\_ped\_coords}}
+
+
+Checks that a type can get pedestrian coordinates.  
+
+
+
+
+{\ttfamily \#include $<$pedset.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ pedset\_t>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__get__ped__coords}{VIPRA::Concepts::can\_get\_ped\_coords}}\ =\ \ \textcolor{keyword}{requires}(\textcolor{keyword}{const}\ pedset\_t\ pedset,\ VIPRA::idx\ idx)\ \{}
+\DoxyCodeLine{\ \ \{\ pedset.ped\_coords(idx)\ \}\ -\/>\ std::same\_as<VIPRA::f3d\ const\&>;}
+\DoxyCodeLine{\ \ \{\ pedset.all\_coords()\ \}\ -\/>\ std::same\_as<std::vector<VIPRA::f3d>\ \textcolor{keyword}{const}\&>;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Checks that a type can get pedestrian coordinates. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em pedset\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}

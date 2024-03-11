@@ -1,0 +1,33 @@
+\doxysection{modifier\+\_\+location.\+hpp}
+\hypertarget{modifier__location_8hpp_source}{}\label{modifier__location_8hpp_source}\index{include/vipra/vipra\_behaviors/targets/target\_modifiers/modifier\_location.hpp@{include/vipra/vipra\_behaviors/targets/target\_modifiers/modifier\_location.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/definitions/sim\_pack.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/values/numeric\_value.hpp"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/util/class\_types.hpp"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }VIPRA::Behaviors\ \{}
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1ModifierLocation}{ModifierLocation}}\ \{}
+\DoxyCodeLine{00016\ \ \ NON\_DEFAULT\_CONSTRUCTIBLE(\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1ModifierLocation}{ModifierLocation}})}
+\DoxyCodeLine{00017\ \ \ COPYABLE(\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1ModifierLocation}{ModifierLocation}})}
+\DoxyCodeLine{00018\ \ \ MOVEABLE(\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1ModifierLocation}{ModifierLocation}})}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00021\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1ModifierLocation}{ModifierLocation}}(VIPRA::idx\ location)\ :\ \_location(location)\ \{\}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00032\ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1ModifierLocation_a35c98d5ea7029b42ed2bb5e75aca167b}{operator()}}(\textcolor{keyword}{auto}\ pack,\ VIPRA::idx\ targetIdx,\ VIPRA::idx\ selfIdx)\ \textcolor{keyword}{const}\ -\/>\ \textcolor{keywordtype}{bool}\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\ targetPos\ =\ pack.pedset.ped\_coords(targetIdx);}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordflow}{return}\ pack.context.locations[\_location].contains(targetPos);}
+\DoxyCodeLine{00035\ \ \ \}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00038\ \ \ VIPRA::idx\ \_location;}
+\DoxyCodeLine{00039\ \};}
+\DoxyCodeLine{00040\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA::Behaviors}}
+
+\end{DoxyCode}

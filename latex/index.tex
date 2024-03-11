@@ -1,0 +1,527 @@
+\chapter{VIPRA Documentation}
+\hypertarget{index}{}\label{index}\index{VIPRA Documentation@{VIPRA Documentation}}
+\label{index_md_docs_2docs}%
+\Hypertarget{index_md_docs_2docs}%
+\hypertarget{index_autotoc_md0}{}\doxysection{\texorpdfstring{Usage}{Usage}}\label{index_autotoc_md0}
+VIPRA is a template framework this means it requires the user to define their own main and handle any command line arguments.
+
+A basic skeleton will be provided in the future for ease of use.
+
+There is an Example Simulation below.\hypertarget{index_autotoc_md1}{}\doxysubsection{\texorpdfstring{Simulation Construction}{Simulation Construction}}\label{index_autotoc_md1}
+Simulations are created by choosing which implementations to use for the several different Module Types.
+
+A utility function for creating simulations is provided that allows the modules to be passed in in any order\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ ++}
+\DoxyCodeLine{\textcolor{keyword}{template}\ <\textcolor{keyword}{typename}...\ module\_ts>}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ VIPRA::simulation(module\_ts\&\&...)\ -\/>\ \mbox{\hyperlink{classVIPRA_1_1SimType}{VIPRA::SimType}};}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md2}{}\doxysubsubsection{\texorpdfstring{Required Modules}{Required Modules}}\label{index_autotoc_md2}
+Each simulation requires the following modules\+:
+\begin{DoxyItemize}
+\item {\ttfamily Model}
+\item {\ttfamily Goals}
+\item {\ttfamily Pedestrian Set}
+\item {\ttfamily Map}
+\begin{DoxyItemize}
+\item {\ttfamily Obstacle Set}
+\item {\ttfamily Polygon Input}
+\end{DoxyItemize}
+\item {\ttfamily Output Coordinator}
+\begin{DoxyItemize}
+\item {\ttfamily Output}
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+{\ttfamily Maps} and {\ttfamily Output Coordinators} are special in that they require modules themselves (denoted by the additional indent)
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md4}{}\doxysubsection{\texorpdfstring{Example Simulation}{Example Simulation}}\label{index_autotoc_md4}
+Below is an example main that uses some of the module implementations that are shipped with VIPRA.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ ++}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <vipra.hpp>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ "{}modules/model/calm\_model/calm\_model.hpp"{}}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ main()\ -\/>\ \textcolor{keywordtype}{int}\ \{}
+\DoxyCodeLine{\ \ \textcolor{comment}{//\ Create\ the\ simulation,\ modules\ can\ be\ placed\ in\ any\ order\ so\ long\ as\ all\ are\ provided/valid}}
+\DoxyCodeLine{\ \ \textcolor{keyword}{auto}\ sim\ =\ VIPRA::simulation(}
+\DoxyCodeLine{\ \ \ \ \ \ \mbox{\hyperlink{classCALM_1_1Model}{CALM::Model}}\{\},\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Pedestrian\ Dynamics\ Model}}
+\DoxyCodeLine{\ \ \ \ \ \ \mbox{\hyperlink{classVIPRA_1_1Goals_1_1AStar}{VIPRA::Goals::AStar}}\{\},\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Goals\ Module}}
+\DoxyCodeLine{\ \ \ \ \ \ \mbox{\hyperlink{classVIPRA_1_1Pedestrians_1_1Grid}{VIPRA::Pedestrians::Grid}}\{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Pedestrian\ Set\ Module}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classVIPRA_1_1Input_1_1JSON}{VIPRA::Input::JSON}}\{\textcolor{stringliteral}{"{}maps/pedestrians/a320/a320\_144\_pedestrians.json"{}}\},\ \textcolor{comment}{//\ Input\ Module}}
+\DoxyCodeLine{\ \ \ \ \ \ \},}
+\DoxyCodeLine{\ \ \ \ \ \ \mbox{\hyperlink{classVIPRA_1_1Module_1_1Output}{VIPRA::Module::Output}}\{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Output\ Coordinator}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{classVIPRA_1_1Output_1_1Trajectories_1_1JSON}{VIPRA::Output::Trajectories::JSON}}\{\}\ \ \ \textcolor{comment}{//\ Output\ Module}}
+\DoxyCodeLine{\ \ \ \ \ \ \},}
+\DoxyCodeLine{\ \ \ \ \ \ \mbox{\hyperlink{classVIPRA_1_1Module_1_1Map}{VIPRA::Module::Map}}\{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Map\ Coordinator}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{classVIPRA_1_1Input_1_1JSON}{VIPRA::Input::JSON}}\{\textcolor{stringliteral}{"{}maps/obstacles/a320/a320\_polygons.json"{}}\},\ \textcolor{comment}{//\ Input\ Module\ (Polygon\ Input)}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{classVIPRA_1_1Obstacles_1_1QuadTree}{VIPRA::Obstacles::QuadTree}}\{\}\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Obstacle\ Set\ Module}}
+\DoxyCodeLine{\ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ );}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \textcolor{comment}{//\ Run\ the\ simulation}}
+\DoxyCodeLine{\ \ sim((\mbox{\hyperlink{classVIPRA_1_1Parameters}{VIPRA::Parameters}}\{\mbox{\hyperlink{classVIPRA_1_1Input_1_1JSON}{VIPRA::Input::JSON}}\{\textcolor{stringliteral}{"{}module\_params.json"{}}\}\}));}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md5}{}\doxysubsection{\texorpdfstring{Example Parameter Sweep}{Example Parameter Sweep}}\label{index_autotoc_md5}
+This example uses the parameter sweep engine.
+
+It takes in the total number of simulations to run as a command line argument.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ ++}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <vipra.hpp>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ "{}modules/model/calm\_model/calm\_model.hpp"{}}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ main(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}**\ argv)\ -\/>\ \textcolor{keywordtype}{int}\ \{}
+\DoxyCodeLine{\ \ VIPRA::ParameterSweep::initialize(argc,\ argv);\ \ \textcolor{comment}{//\ Initialize\ the\ parameter\ sweep\ engine}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \textcolor{keywordflow}{if}\ (argc\ !=\ 2)\ \{\ \ \ \ \ \ \textcolor{comment}{//\ Read\ in\ the\ command\ line\ arguments\ for\ the\ number\ of\ simulations\ to\ run}}
+\DoxyCodeLine{\ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Usage:\ "{}}\ <<\ argv[0]\ <<\ \textcolor{stringliteral}{"{}\ <simCount>"{}}\ <<\ std::endl;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\ \ \}}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{size\_t}\ simCount\ =\ std::stoul(argv[1]);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \textcolor{keyword}{auto}\ sim\ =\ VIPRA::simulation(\ \ \ \ \ \textcolor{comment}{//\ Create\ the\ simulation}}
+\DoxyCodeLine{\ \ \ \ \ \ \mbox{\hyperlink{classCALM_1_1Model}{CALM::Model}}\{\},\ }
+\DoxyCodeLine{\ \ \ \ \ \ \mbox{\hyperlink{classVIPRA_1_1Goals_1_1AStar}{VIPRA::Goals::AStar}}\{\},}
+\DoxyCodeLine{\ \ \ \ \ \ \mbox{\hyperlink{classVIPRA_1_1Pedestrians_1_1Grid}{VIPRA::Pedestrians::Grid}}\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classVIPRA_1_1Input_1_1JSON}{VIPRA::Input::JSON}}\{\textcolor{stringliteral}{"{}maps/pedestrians/a320/a320\_144\_pedestrians.json"{}}\},}
+\DoxyCodeLine{\ \ \ \ \ \ \},}
+\DoxyCodeLine{\ \ \ \ \ \ \mbox{\hyperlink{classVIPRA_1_1Module_1_1Output}{VIPRA::Module::Output}}\{\mbox{\hyperlink{classVIPRA_1_1Output_1_1Trajectories_1_1JSON}{VIPRA::Output::Trajectories::JSON}}\{\}\},}
+\DoxyCodeLine{\ \ \ \ \ \ \mbox{\hyperlink{classVIPRA_1_1Module_1_1Map}{VIPRA::Module::Map}}\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{classVIPRA_1_1Input_1_1JSON}{VIPRA::Input::JSON}}\{\textcolor{stringliteral}{"{}maps/obstacles/a320/a320\_polygons.json"{}}\},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{classVIPRA_1_1Obstacles_1_1QuadTree}{VIPRA::Obstacles::QuadTree}}\{\}}
+\DoxyCodeLine{\ \ \ \ \ \ \});}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ VIPRA::ParameterSweep::run(\ \ \ \ \textcolor{comment}{//\ Run\ a\ parameter\ sweep}}
+\DoxyCodeLine{\ \ \ \ \ \ sim,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Simulation\ to\ run}}
+\DoxyCodeLine{\ \ \ \ \ \ \mbox{\hyperlink{classVIPRA_1_1Parameters}{VIPRA::Parameters}}\{\mbox{\hyperlink{classVIPRA_1_1Input_1_1JSON}{VIPRA::Input::JSON}}\{\textcolor{stringliteral}{"{}module\_params.json"{}}\}\},\ \textcolor{comment}{//\ Module\ Parameters}}
+\DoxyCodeLine{\ \ \ \ \ \ simCount,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Number\ of\ simulations}}
+\DoxyCodeLine{\ \ \ \ \ \ []()\ \{\ std::cout\ <<\ \textcolor{stringliteral}{"{}Simulation\ complete\ on:\ "{}}\ <<\ VIPRA::ParameterSweep::get\_rank()\ <<\ std::endl;\ \}\ \textcolor{comment}{//\ Optional:\ callback\ for\ each\ simulation\ run}}
+\DoxyCodeLine{\ \ );}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md6}{}\doxysubsection{\texorpdfstring{Module Parameters}{Module Parameters}}\label{index_autotoc_md6}
+Parameters are loaded into each module before they are initizalized. The exact steps are showing in \`{}\+Simluation Steps\`{}.
+
+Parameters can use any \`{}\+Parameter Input\`{} module, by default a \`{}\+JSON\`{} input module is provided.
+
+The format for which is\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ "{}module\ type"{}:\ \{}
+\DoxyCodeLine{\ \ \ \ "{}module\ name"{}:\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ "{}parameter\ name"{}:\ "{}parameter\ value"{}}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \},}
+\DoxyCodeLine{\ \ ...}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Example\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ ...}
+\DoxyCodeLine{\ \ "{}goals"{}:\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ //\ Module\ Type}
+\DoxyCodeLine{\ \ \ \ "{}astar"{}:\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ //\ Module\ Name}
+\DoxyCodeLine{\ \ \ \ \ \ "{}endGoalType"{}:\ "{}exit"{},\ \ //\ Parameter\ values}
+\DoxyCodeLine{\ \ \ \ \ \ "{}gridSize"{}:\ 0.1,}
+\DoxyCodeLine{\ \ \ \ \ \ "{}closestObstacle"{}:\ 0.25,}
+\DoxyCodeLine{\ \ \ \ \ \ "{}goalRange"{}:\ 0.05}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \},}
+\DoxyCodeLine{\ \ ...}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md8}{}\doxysubsection{\texorpdfstring{Included Modules}{Included Modules}}\label{index_autotoc_md8}
+There are several base modules included with VIPRA.
+
+{\bfseries{Model}}\+:
+\begin{DoxyItemize}
+\item \`{}\+Calm Model\`{}
+\end{DoxyItemize}
+
+{\bfseries{Goals}}\+:
+\begin{DoxyItemize}
+\item \`{}\+AStar\`{}
+\end{DoxyItemize}
+
+{\bfseries{Obstacle Set}}\+:
+\begin{DoxyItemize}
+\item \`{}\+Quad\+Tree\`{}
+\end{DoxyItemize}
+
+{\bfseries{Pedestrian Set}}\+:
+\begin{DoxyItemize}
+\item \`{}\+Grid\`{}
+\end{DoxyItemize}
+
+{\bfseries{Input}}\+:
+\begin{DoxyItemize}
+\item \`{}\+JSON\`{}
+\end{DoxyItemize}
+
+{\bfseries{Output}}\+:
+\begin{DoxyItemize}
+\item \`{}\+JSON\`{}
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md10}{}\doxysubsubsection{\texorpdfstring{Calm Model}{Calm Model}}\label{index_autotoc_md10}
+This {\ttfamily Model} module implements the \href{https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0229690}{\texttt{ Calm Model}}\hypertarget{index_autotoc_md11}{}\doxyparagraph{\texorpdfstring{Use\+:}{Use\+:}}\label{index_autotoc_md11}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ ++}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ "{}modules/model/calm\_model/calm\_model.hpp"{}}}
+\DoxyCodeLine{}
+\DoxyCodeLine{VIPRA::simulation(}
+\DoxyCodeLine{\ \ ...}
+\DoxyCodeLine{\ \ \mbox{\hyperlink{classCALM_1_1Model}{CALM::Model}}\{\},}
+\DoxyCodeLine{\ \ ...}
+\DoxyCodeLine{);}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md12}{}\doxyparagraph{\texorpdfstring{Parameters\+:}{Parameters\+:}}\label{index_autotoc_md12}
+
+\begin{DoxyItemize}
+\item {\ttfamily mean\+Mass} \+: Mean mass for population
+\item {\ttfamily mass\+Std\+Dev} \+: Standard Deviation for mass
+\item {\ttfamily mean\+Reaction\+Time} \+: Mean reaction time for population
+\item {\ttfamily reaction\+Time\+Std\+Dev} \+: Standard Deviation for reaction time
+\item {\ttfamily mean\+Max\+Speed} \+: Mean max speed for population
+\item {\ttfamily max\+Speed\+Std\+Dev} \+: Standard deviation for max speed
+\item {\ttfamily mean\+Shoulder\+Len} \+: Mean shoulder length for population
+\item {\ttfamily shoulder\+Len\+Std\+Dev} \+: Standard deviation for shoulder length
+\end{DoxyItemize}\hypertarget{index_autotoc_md13}{}\doxysubsubsection{\texorpdfstring{AStar Goals}{AStar Goals}}\label{index_autotoc_md13}
+This {\ttfamily Goals} module uses the A\texorpdfstring{$\ast$}{*} algorithm to find paths for each pedestrian.\hypertarget{index_autotoc_md14}{}\doxyparagraph{\texorpdfstring{Use\+:}{Use\+:}}\label{index_autotoc_md14}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ ++}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ "{}vipra.hpp"{}}}
+\DoxyCodeLine{}
+\DoxyCodeLine{VIPRA::simulation(}
+\DoxyCodeLine{\ \ ...}
+\DoxyCodeLine{\ \ \mbox{\hyperlink{classVIPRA_1_1Goals_1_1AStar}{VIPRA::Goals::AStar}}\{\},}
+\DoxyCodeLine{\ \ ...}
+\DoxyCodeLine{);}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md15}{}\doxyparagraph{\texorpdfstring{Parameters\+:}{Parameters\+:}}\label{index_autotoc_md15}
+
+\begin{DoxyItemize}
+\item {\ttfamily end\+Goal\+Type} \+: Name of object in map each pedestrian tries to reach (e.\+g. "{}exit"{})
+\item {\ttfamily goal\+Range} \+: Range, in meters, before a goal is counted as "{}reached"{} (e.\+g. 0.\+05)
+\item {\ttfamily grid\+Size} \+: Length of each side, in meters, of each grid in the pathing graph (e.\+g. 0.\+1)
+\item {\ttfamily closest\+Obstacle} \+: Closest a grid center can be to an obstacle before being considered non-\/traversable
+\end{DoxyItemize}\hypertarget{index_autotoc_md16}{}\doxysubsubsection{\texorpdfstring{Quad\+Tree Obstalce Set}{Quad\+Tree Obstalce Set}}\label{index_autotoc_md16}
+This {\ttfamily Obstacle Set} module uses the Quad Tree to hold the map geometry.\hypertarget{index_autotoc_md17}{}\doxyparagraph{\texorpdfstring{Use\+:}{Use\+:}}\label{index_autotoc_md17}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ ++}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ "{}vipra.hpp"{}}}
+\DoxyCodeLine{}
+\DoxyCodeLine{VIPRA::simulation(}
+\DoxyCodeLine{\ \ ...}
+\DoxyCodeLine{\ \ \mbox{\hyperlink{classVIPRA_1_1Module_1_1Map}{VIPRA::Module::Map}}\{}
+\DoxyCodeLine{\ \ \ \ ...}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{classVIPRA_1_1Obstacles_1_1QuadTree}{VIPRA::Obstacles::QuadTree}}\{\}\ \textcolor{comment}{//\ Obstacle\ sets\ go\ inside\ the\ Map\ module}}
+\DoxyCodeLine{\ \ \ \ ...}
+\DoxyCodeLine{\ \ \}}
+\DoxyCodeLine{\ \ ...}
+\DoxyCodeLine{)}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md18}{}\doxyparagraph{\texorpdfstring{Parameters\+:}{Parameters\+:}}\label{index_autotoc_md18}
+
+\begin{DoxyItemize}
+\item {\ttfamily min\+Quad\+Size} \+: Size at which quads stop being subdivided
+\end{DoxyItemize}\hypertarget{index_autotoc_md19}{}\doxysubsubsection{\texorpdfstring{Grid Pedestrian Set}{Grid Pedestrian Set}}\label{index_autotoc_md19}
+This {\ttfamily Pedestrian Set} module holds pedestrians in a grid of cells, allowing for more efficient lookup of nearest neighbors\hypertarget{index_autotoc_md20}{}\doxyparagraph{\texorpdfstring{Use\+:}{Use\+:}}\label{index_autotoc_md20}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ ++}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ "{}vipra.hpp"{}}}
+\DoxyCodeLine{}
+\DoxyCodeLine{VIPRA::simulation(}
+\DoxyCodeLine{\ \ ...}
+\DoxyCodeLine{\ \ \mbox{\hyperlink{classVIPRA_1_1Pedestrians_1_1Grid}{VIPRA::Pedestrians::Grid}}\{\},}
+\DoxyCodeLine{\ \ ...}
+\DoxyCodeLine{);}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md21}{}\doxyparagraph{\texorpdfstring{Parameters\+:}{Parameters\+:}}\label{index_autotoc_md21}
+
+\begin{DoxyItemize}
+\item {\ttfamily grid\+Size}\+: Size of each grid cell
+\end{DoxyItemize}\hypertarget{index_autotoc_md22}{}\doxysubsubsection{\texorpdfstring{JSON Input}{JSON Input}}\label{index_autotoc_md22}
+This {\ttfamily Input} module loads JSON data, using \href{https://github.com/nlohmann/json}{\texttt{ nlohmann JSON}}.
+\begin{DoxyItemize}
+\item Qualifies as a\+:
+\begin{DoxyItemize}
+\item Polygon Input
+\item Parameter Input
+\end{DoxyItemize}
+\end{DoxyItemize}\hypertarget{index_autotoc_md23}{}\doxyparagraph{\texorpdfstring{Use\+:}{Use\+:}}\label{index_autotoc_md23}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ ++}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ "{}vipra.hpp"{}}}
+\DoxyCodeLine{}
+\DoxyCodeLine{VIPRA::simulation(}
+\DoxyCodeLine{\ \ ...}
+\DoxyCodeLine{\ \ \mbox{\hyperlink{classVIPRA_1_1Module_1_1Map}{VIPRA::Module::Map}}\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{classVIPRA_1_1Input_1_1JSON}{VIPRA::Input::JSON}}\{\textcolor{stringliteral}{"{}filepath"{}}\}\ \textcolor{comment}{//\ Input\ modules\ are\ usually\ used\ in\ other\ modules}}
+\DoxyCodeLine{\ \ \ \ ...}
+\DoxyCodeLine{\ \ \}}
+\DoxyCodeLine{);}
+\DoxyCodeLine{}
+\DoxyCodeLine{sim(\mbox{\hyperlink{classVIPRA_1_1Parameters}{VIPRA::Parameters}}\{}
+\DoxyCodeLine{\ \ \mbox{\hyperlink{classVIPRA_1_1Input_1_1JSON}{VIPRA::Input::JSON}}\{\textcolor{stringliteral}{"{}filepath"{}}\}\ \textcolor{comment}{//\ Or\ for\ loading\ parameters}}
+\DoxyCodeLine{\});}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md24}{}\doxysubsubsection{\texorpdfstring{JSON Output}{JSON Output}}\label{index_autotoc_md24}
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md26}{}\doxysection{\texorpdfstring{Common Errors}{Common Errors}}\label{index_autotoc_md26}
+\DoxyHorRuler{0}
+\hypertarget{index_autotoc_md28}{}\doxysection{\texorpdfstring{Development}{Development}}\label{index_autotoc_md28}
+\hypertarget{index_autotoc_md29}{}\doxysection{\texorpdfstring{Overview}{Overview}}\label{index_autotoc_md29}
+\hypertarget{index_autotoc_md30}{}\doxysubsection{\texorpdfstring{Simulation}{Simulation}}\label{index_autotoc_md30}
+\hypertarget{index_autotoc_md31}{}\doxysubsubsection{\texorpdfstring{Simulation Steps}{Simulation Steps}}\label{index_autotoc_md31}
+\hypertarget{index_autotoc_md32}{}\doxysubsection{\texorpdfstring{Module Types}{Module Types}}\label{index_autotoc_md32}
+{\bfseries{Model}}
+
+\`{}\+Model\`{} modules are the pedestrian dynamics models that govern how the pedestrians will move during a simulation
+
+{\bfseries{Goals}}
+
+\`{}\+Goals\`{} modules handle pathfinding for the simulation
+
+{\bfseries{Obstacle Set}}
+
+\`{}\+Obstacle Set\`{} modules hold the geometry of the environment and handle map/pedestrian collision detection
+
+{\bfseries{Pedestrian Set}}
+
+\`{}\+Pedestrian Set\`{} modules hold the pedestrian positions/velocities and handle queries to pedestrians (ex. nearest neighbor)
+
+{\bfseries{Input}}
+
+\`{}\+Input\`{} modules handle loading input for the simulation. There are several specialized input types\+:
+\begin{DoxyItemize}
+\item \`{}\+Serializable Input\`{} modules are inputs that allow for serialization of their values
+\item \`{}\+Parameter Input\`{} modules are able to load parameters
+\item \`{}\+Polygon Input\`{} modules are able to load polygons for use in obstacle sets
+\end{DoxyItemize}
+
+{\bfseries{Output}}
+
+\`{}\+Output\`{} modules handle producing output from the simulation
+
+{\bfseries{Map}}
+
+The \`{}\+Map\`{} module is a coordinator, it accepts one \`{}\+Obstacle Set\`{} and one \`{}\+Polygon Input\`{}.
+
+{\bfseries{Output Coordinator}}
+
+The \`{}\+Output Coordinator\`{} module handles coordinating any number of \`{}\+Output\`{} modules.\hypertarget{index_autotoc_md33}{}\doxysubsection{\texorpdfstring{Parameter Sweep}{Parameter Sweep}}\label{index_autotoc_md33}
+\hypertarget{index_autotoc_md34}{}\doxysubsection{\texorpdfstring{Randomization}{Randomization}}\label{index_autotoc_md34}
+\hypertarget{index_autotoc_md35}{}\doxysubsection{\texorpdfstring{VIPRA Types}{VIPRA Types}}\label{index_autotoc_md35}
+\hypertarget{index_autotoc_md36}{}\doxysection{\texorpdfstring{Module Implementation}{Module Implementation}}\label{index_autotoc_md36}
+\begin{quote}
+!!! Important Notes\+:
+\begin{DoxyItemize}
+\item These modules are implemented using templates; this means that any method that accepts a module as a parameter is required to be defined in a header file
+\item Every module has helper macros for their required methods, see Macros 
+\end{DoxyItemize}\end{quote}
+\hypertarget{index_autotoc_md37}{}\doxysection{\texorpdfstring{Base Module Implementation}{Base Module Implementation}}\label{index_autotoc_md37}
+\hypertarget{index_autotoc_md38}{}\doxysubsubsection{\texorpdfstring{Interface}{Interface}}\label{index_autotoc_md38}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ ++}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ register\_params(Params\ \textcolor{keyword}{auto}\&);}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ config(Params\ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&);}
+
+\end{DoxyCode}
+
+
+Every Module also requires a name and type tag\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ ++}
+\DoxyCodeLine{VIPRA\_MODULE\_NAME(\textcolor{stringliteral}{"{}**name**"{}})}
+\DoxyCodeLine{VIPRA\_MODULE\_TYPE(**type**)}
+
+\end{DoxyCode}
+
+
+
+\begin{DoxyItemize}
+\item Replace {\ttfamily \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}name\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}} with the name for the module; this will be used to pull the correct parameters from input.
+\item Replace {\ttfamily \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}type\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}} with the type of module the class is; available modules are below\+:
+\end{DoxyItemize}
+\begin{DoxyEnumerate}
+\item {\ttfamily MODEL} -\/ Model
+\item {\ttfamily GOALS} -\/ Goals
+\item {\ttfamily PEDESTRIANS} -\/ Pedestrian Set
+\item {\ttfamily OBSTACLES} -\/ Obstacle Set
+\item {\ttfamily INPUT} -\/ Input
+\item {\ttfamily OUTPUT} -\/ Output
+\end{DoxyEnumerate}\hypertarget{index_autotoc_md39}{}\doxysection{\texorpdfstring{Model Implementation}{Model Implementation}}\label{index_autotoc_md39}
+{\ttfamily Model} modules are the pedestrian dynamics models that govern how the pedestrians will move during a simulation\hypertarget{index_autotoc_md40}{}\doxysubsubsection{\texorpdfstring{Interface}{Interface}}\label{index_autotoc_md40}
+Along with the Base Module interface, Model modules are required to implement the following methods.
+
+Helper macros can be found in Model Macros
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ ++}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ initialize(PedSet\ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&,\ Map\ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&,\ Goals\ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&,\ Output\ \textcolor{keyword}{auto}\&);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ timestep(PedSet\ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&,\ Map\ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&,\ Goals\ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&,\ Output\ \textcolor{keyword}{auto}\&,\ \mbox{\hyperlink{structVIPRA_1_1State}{VIPRA::State}}\&,\ VIPRA::delta\_t,\ VIPRA::timestep);}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md41}{}\doxysection{\texorpdfstring{Goals Implementation}{Goals Implementation}}\label{index_autotoc_md41}
+{\ttfamily Goals} modules handle pathfinding for the simulation.\hypertarget{index_autotoc_md42}{}\doxysubsubsection{\texorpdfstring{Interface}{Interface}}\label{index_autotoc_md42}
+Along with the Base Module interface, Goals modules are required to implement the following methods.
+
+Helper macros can be found in Goals Macros
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ ++}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ initialize(PedSet\ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&,\ Map\ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&);}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ update(PedSet\ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&,\ Map\ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&,\ VIPRA::delta\_t);}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ change\_end\_goal(VIPRA::idx,\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}});}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ current\_goals()\ -\/>\ std::vector<VIPRA::f3d>\ \textcolor{keyword}{const}\&;}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ end\_goals()\ -\/>\ std::vector<VIPRA::f3d>\ \textcolor{keyword}{const}\&;}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ current\_goal(VIPRA::idx)\ -\/>\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ \textcolor{keyword}{const}\&;}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ end\_goal(VIPRA::idx)\ -\/>\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ \textcolor{keyword}{const}\&;}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ is\_goal\_met(VIPRA::idx)\ -\/>\ bool;}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ is\_sim\_goal\_met()\ -\/>\ bool;}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ time\_since\_last\_goal(VIPRA::idx)\ -\/>\ VIPRA::f\_pnt;}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md43}{}\doxysection{\texorpdfstring{Obstacle Set Implementation}{Obstacle Set Implementation}}\label{index_autotoc_md43}
+Obstacle Set modules hold the geometry of the environment and handle map/pedestrian collision detection.\hypertarget{index_autotoc_md44}{}\doxysubsubsection{\texorpdfstring{Interface}{Interface}}\label{index_autotoc_md44}
+Along with the Base Module interface, Obstacle Set modules are required to implement the following methods.
+
+Helper macros can be found in Obstacle Set Macros
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ ++}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ initialize(std::vector<VIPRA::Geometry::Polygon>\ \textcolor{keyword}{const}\&,\ std::vector<std::string>\ \textcolor{keyword}{const}\&,\ std::map<std::string,\ std::vector<VIPRA::f3d>>\ \textcolor{keyword}{const}\&);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ get\_object\_types()\ -\/>\ std::vector<std::string>\ \textcolor{keyword}{const}\&;}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ get\_objects(std::string\ \textcolor{keyword}{const}\&)\ -\/>\ std::vector<VIPRA::f3d>\ \textcolor{keyword}{const}\&;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ collision(VIPRA:f3d)\ -\/>\ bool;}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ collision(\mbox{\hyperlink{classVIPRA_1_1Geometry_1_1Circle}{VIPRA::Geometry::Circle}})\ -\/>\ bool;}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ ray\_hit(\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}},\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}})\ -\/>\ VIPRA::f\_pnt;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ get\_dimensions()\ -\/>\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}};}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md45}{}\doxysection{\texorpdfstring{Pedestrian Set Implementation}{Pedestrian Set Implementation}}\label{index_autotoc_md45}
+\hypertarget{index_autotoc_md46}{}\doxysubsubsection{\texorpdfstring{Interface}{Interface}}\label{index_autotoc_md46}
+Along with the Base Module interface, Obstacle Set modules are required to implement the following methods.
+
+Helper macros can be found in Pedestrian Set Macros
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ ++}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ num\_pedestrians()\ -\/>\ VIPRA::size;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ ped\_coords(VIPRA::idx)\ -\/>\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}};}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ all\_coords()\ -\/>\ std::vector<VIPRA::f3d>\ \textcolor{keyword}{const}\&;}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ ped\_velocity(VIPRA::idx)\ -\/>\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}};}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ all\_velocities()\ -\/>\ std::vector<VIPRA::f3d>\ \textcolor{keyword}{const}\&;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ update(\mbox{\hyperlink{structVIPRA_1_1State}{VIPRA::State}}\ \textcolor{keyword}{const}\&);}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md47}{}\doxysection{\texorpdfstring{Input Implementation}{Input Implementation}}\label{index_autotoc_md47}
+\begin{quote}
+!!! Important Note\+: Inputs should hold off on loading their input until their {\ttfamily load} method is called. This reduces the amount of I/O during parallel runs. \end{quote}
+\hypertarget{index_autotoc_md48}{}\doxysubsubsection{\texorpdfstring{Interface}{Interface}}\label{index_autotoc_md48}
+Along with the Base Module interface, Input modules are required to implement the following methods.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ ++}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ load();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ data\_t,\ \textcolor{keyword}{typename}...\ key\_ts>}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ get(key\_ts\ \textcolor{keyword}{const}\&...)\ -\/>\ data\_t;}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md49}{}\doxyparagraph{\texorpdfstring{Serializable Input Implementation}{Serializable Input Implementation}}\label{index_autotoc_md49}
+Serializable Input modules additionally require\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ ++}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ serialize()\ -\/>\ std::string;}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ deserialize(std::string\ \textcolor{keyword}{const}\&);}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md50}{}\doxyparagraph{\texorpdfstring{Parameter Input Implementation}{Parameter Input Implementation}}\label{index_autotoc_md50}
+Parameter Input modules additionally require\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ ++}
+\DoxyCodeLine{\textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ data\_t,\ \textcolor{keyword}{typename}...\ key\_ts>}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ get<VIPRA::Parameter<data\_t>>(key\_ts\ \textcolor{keyword}{const}\&...)\ -\/>\ std::optional<VIPRA::Parameter<data\_t>>;}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md51}{}\doxyparagraph{\texorpdfstring{Polygon Input Implementation}{Polygon Input Implementation}}\label{index_autotoc_md51}
+Polygon Input modules additionally require\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ ++}
+\DoxyCodeLine{\textcolor{keyword}{template}\ <\textcolor{keyword}{typename}...\ key\_ts>}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ load\_polygons(key\_ts\ \textcolor{keyword}{const}\&...)\ -\/>\ std::optional<std::vector<VIPRA::Geometry::Polygon>>;}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md52}{}\doxysection{\texorpdfstring{Output Implementation}{Output Implementation}}\label{index_autotoc_md52}
+\hypertarget{index_autotoc_md53}{}\doxysubsubsection{\texorpdfstring{Interface}{Interface}}\label{index_autotoc_md53}
+Along with the Base Module interface, Output modules are required to implement the following methods.
+
+Helper macros can be found in Output Macros
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ ++}
+\DoxyCodeLine{\textcolor{keyword}{auto}\ write();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ value\_t>}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ timestep\_value(std::string\ \textcolor{keyword}{const}\&,\ VIPRA::timestep,\ value\_t);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ value\_t>}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ ped\_timestep\_value(VIPRA::idx,\ VIPRA::timestep,\ std::string\ \textcolor{keyword}{const}\&,\ value\_t);}
+
+\end{DoxyCode}
+ 

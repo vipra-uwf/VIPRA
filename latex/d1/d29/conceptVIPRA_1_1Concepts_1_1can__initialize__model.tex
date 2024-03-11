@@ -1,0 +1,32 @@
+\doxysection{VIPRA\+::Concepts\+::can\+\_\+initialize\+\_\+model Concept Reference}
+\hypertarget{conceptVIPRA_1_1Concepts_1_1can__initialize__model}{}\label{conceptVIPRA_1_1Concepts_1_1can__initialize__model}\index{VIPRA::Concepts::can\_initialize\_model@{VIPRA::Concepts::can\_initialize\_model}}
+
+
+Checks that a type can be initialized following the model module interface.  
+
+
+
+
+{\ttfamily \#include $<$model.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ model\_t>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__initialize__model}{VIPRA::Concepts::can\_initialize\_model}}\ =\ \ \textcolor{keyword}{requires}(model\_t\ model,\ DummyPedSet\ \textcolor{keyword}{const}\&\ pedset,\ DummyMap\ \textcolor{keyword}{const}\&\ map,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ DummyGoals\ \textcolor{keyword}{const}\&\ goals,\ DummyOutput\&\ output,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{VIPRA::Random::Engine}}\&\ engine)\ \{}
+\DoxyCodeLine{\ \ \{model.initialize(pedset,\ map,\ goals,\ output,\ engine)\};}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Checks that a type can be initialized following the model module interface. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em model\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}

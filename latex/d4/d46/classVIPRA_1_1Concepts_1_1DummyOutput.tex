@@ -1,0 +1,55 @@
+\doxysection{VIPRA\+::Concepts\+::Dummy\+Output Class Reference}
+\hypertarget{classVIPRA_1_1Concepts_1_1DummyOutput}{}\label{classVIPRA_1_1Concepts_1_1DummyOutput}\index{VIPRA::Concepts::DummyOutput@{VIPRA::Concepts::DummyOutput}}
+
+
+Dummy output for use in other concepts.  
+
+
+
+
+{\ttfamily \#include $<$output.\+hpp$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyOutput_a455f71499e75db4ffdac9d4882d06460}\label{classVIPRA_1_1Concepts_1_1DummyOutput_a455f71499e75db4ffdac9d4882d06460} 
+using {\bfseries output\+\_\+data\+\_\+t} = void
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyOutput_a0094b5123cd456a3f8fa871b3c63656e}\label{classVIPRA_1_1Concepts_1_1DummyOutput_a0094b5123cd456a3f8fa871b3c63656e} 
+{\footnotesize template$<$typename params\+\_\+t $>$ }\\void {\bfseries register\+\_\+params} (params\+\_\+t \&)
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyOutput_a3ed300a469df5af1b313f4c0cb1f1206}\label{classVIPRA_1_1Concepts_1_1DummyOutput_a3ed300a469df5af1b313f4c0cb1f1206} 
+void {\bfseries config} (auto \&, \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{VIPRA\+::\+Random\+::\+Engine}} \&)
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyOutput_a3720fe9b86dfdc641bf297a034682a38}\label{classVIPRA_1_1Concepts_1_1DummyOutput_a3720fe9b86dfdc641bf297a034682a38} 
+void {\bfseries write} (std\+::filesystem\+::path const \&)
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyOutput_ad9fb521266a1d4e8f62225dc84c4d8de}\label{classVIPRA_1_1Concepts_1_1DummyOutput_ad9fb521266a1d4e8f62225dc84c4d8de} 
+void {\bfseries sim\+\_\+value} (char const \texorpdfstring{$\ast$}{*}, auto \&\&)
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyOutput_a063dc8689918192ca0414cea67d09b73}\label{classVIPRA_1_1Concepts_1_1DummyOutput_a063dc8689918192ca0414cea67d09b73} 
+void {\bfseries timestep\+\_\+value} (char const \texorpdfstring{$\ast$}{*}, VIPRA\+::timestep, auto \&\&)
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyOutput_a58e3748bb40661b0d4cdab3b1122d1af}\label{classVIPRA_1_1Concepts_1_1DummyOutput_a58e3748bb40661b0d4cdab3b1122d1af} 
+void {\bfseries ped\+\_\+value} (VIPRA\+::idx, char const \texorpdfstring{$\ast$}{*}, auto \&\&)
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyOutput_a2d45fb3f9e62b754eaa506b91c309364}\label{classVIPRA_1_1Concepts_1_1DummyOutput_a2d45fb3f9e62b754eaa506b91c309364} 
+void {\bfseries ped\+\_\+timestep\+\_\+value} (VIPRA\+::idx, VIPRA\+::timestep, char const \texorpdfstring{$\ast$}{*}, auto \&\&)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyOutput_a248a72692ec036d5fa9f68b3414bb0e6}\label{classVIPRA_1_1Concepts_1_1DummyOutput_a248a72692ec036d5fa9f68b3414bb0e6} 
+static constexpr VIPRA\+::\+Modules\+::\+Type {\bfseries \+\_\+\+VIPRA\+\_\+\+MODULE\+\_\+\+TYPE\+\_\+} = VIPRA\+::\+Modules\+::\+Type\+::\+OUTPUT
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Dummy output for use in other concepts. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/vipra/concepts/output.\+hpp\end{DoxyCompactItemize}

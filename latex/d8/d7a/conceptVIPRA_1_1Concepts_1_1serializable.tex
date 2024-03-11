@@ -1,0 +1,31 @@
+\doxysection{VIPRA\+::Concepts\+::serializable Concept Reference}
+\hypertarget{conceptVIPRA_1_1Concepts_1_1serializable}{}\label{conceptVIPRA_1_1Concepts_1_1serializable}\index{VIPRA::Concepts::serializable@{VIPRA::Concepts::serializable}}
+
+
+Checks that a type can be serialized and deserialized.  
+
+
+
+
+{\ttfamily \#include $<$serializable\+\_\+input.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ input\_t>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1serializable}{VIPRA::Concepts::serializable}}\ =\ \ \textcolor{keyword}{requires}(input\_t\ input)\ \{}
+\DoxyCodeLine{\ \ \{\ input.serialize()\ \}\ -\/>\ std::same\_as<std::string>;}
+\DoxyCodeLine{\ \ \{\ input.deserialize(std::declval<std::string>())\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Checks that a type can be serialized and deserialized. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em input\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}

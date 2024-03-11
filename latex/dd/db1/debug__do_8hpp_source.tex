@@ -1,0 +1,19 @@
+\doxysection{debug\+\_\+do.\+hpp}
+\hypertarget{debug__do_8hpp_source}{}\label{debug__do_8hpp_source}\index{include/vipra/util/debug\_do.hpp@{include/vipra/util/debug\_do.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{keyword}{namespace\ }VIPRA::Util\ \{}
+\DoxyCodeLine{00004\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ func\_t>}
+\DoxyCodeLine{00009\ \textcolor{comment}{//\ NOLINTNEXTLINE(readability-\/identifier-\/naming)\ utilty\ class}}
+\DoxyCodeLine{00010\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structVIPRA_1_1Util_1_1debug__do}{debug\_do}}\ \{}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#ifdef\ VIPRA\_DEBUG}}
+\DoxyCodeLine{00012\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{structVIPRA_1_1Util_1_1debug__do}{debug\_do}}(func\_t\&\&\ func)\ \{\ func();\ \}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00014\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{structVIPRA_1_1Util_1_1debug__do}{debug\_do}}(func\_t\&\&\ \textcolor{comment}{/*unused*/})\ \{\}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00016\ \};}
+\DoxyCodeLine{00017\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA::Util}}
+
+\end{DoxyCode}

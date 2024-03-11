@@ -1,0 +1,33 @@
+\doxysection{VIPRA\+::Concepts\+::can\+\_\+initialize\+\_\+obstacles Concept Reference}
+\hypertarget{conceptVIPRA_1_1Concepts_1_1can__initialize__obstacles}{}\label{conceptVIPRA_1_1Concepts_1_1can__initialize__obstacles}\index{VIPRA::Concepts::can\_initialize\_obstacles@{VIPRA::Concepts::can\_initialize\_obstacles}}
+
+
+Checks that a type can be initialized following the obstacle set module interface.  
+
+
+
+
+{\ttfamily \#include $<$obstacle\+\_\+set.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ obstacle\_t>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__initialize__obstacles}{VIPRA::Concepts::can\_initialize\_obstacles}}\ =\ \ \textcolor{keyword}{requires}(obstacle\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obsset,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<VIPRA::Geometry::Polygon>\ \textcolor{keyword}{const}\&\ \ \ \ \ \ \ \ \ \ obstacles,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<std::string>\ \textcolor{keyword}{const}\&\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ types,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::map<std::string,\ std::vector<VIPRA::f3d>>\ \textcolor{keyword}{const}\&\ objects)\ \{}
+\DoxyCodeLine{\ \ \{obsset.initialize(obstacles,\ types,\ objects)\};}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Checks that a type can be initialized following the obstacle set module interface. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em obstacle\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}

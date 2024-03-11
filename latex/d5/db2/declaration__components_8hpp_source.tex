@@ -1,0 +1,30 @@
+\doxysection{declaration\+\_\+components.\+hpp}
+\hypertarget{declaration__components_8hpp_source}{}\label{declaration__components_8hpp_source}\index{include/vipra/vipra\_behaviors/builder/declaration\_components.hpp@{include/vipra/vipra\_behaviors/builder/declaration\_components.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/\_grammar/generated/BehaviorParser.h"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }VIPRA::Behaviors\ \{}
+\DoxyCodeLine{00008\ \textcolor{keyword}{using\ }evEnd\ =\ BehaviorParser::Event\_endContext*;}
+\DoxyCodeLine{00009\ \textcolor{keyword}{using\ }evStart\ =\ BehaviorParser::Event\_startContext*;}
+\DoxyCodeLine{00010\ \textcolor{keyword}{using\ }evName\ =\ std::string;}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{using\ }acStimulus\ =\ BehaviorParser::Action\_stimulusContext*;}
+\DoxyCodeLine{00013\ \textcolor{keyword}{using\ }acResponse\ =\ BehaviorParser::Action\_responseContext*;}
+\DoxyCodeLine{00014\ \textcolor{keyword}{using\ }acDuration\ =\ BehaviorParser::Action\_durationContext*;}
+\DoxyCodeLine{00015\ \textcolor{keyword}{using\ }acTarget\ =\ BehaviorParser::Action\_targetContext*;}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{using\ }slType\ =\ BehaviorParser::Selector\_typeContext*;}
+\DoxyCodeLine{00018\ \textcolor{keyword}{using\ }slSelector\ =\ BehaviorParser::Selector\_selectorContext*;}
+\DoxyCodeLine{00019\ \textcolor{keyword}{using\ }slGroup\ =\ BehaviorParser::Selector\_fromContext*;}
+\DoxyCodeLine{00020\ \textcolor{keyword}{using\ }slRequired\ =\ BehaviorParser::Selector\_requiredContext*;}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{using\ }lcName\ =\ BehaviorParser::Loc\_nameContext*;}
+\DoxyCodeLine{00023\ \textcolor{keyword}{using\ }lcDimensions\ =\ BehaviorParser::Loc\_dimensionsContext*;}
+\DoxyCodeLine{00024\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA::Behaviors}}
+
+\end{DoxyCode}

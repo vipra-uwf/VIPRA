@@ -1,0 +1,28 @@
+\doxysection{VIPRA\+::Concepts\+::Polygon\+Input Concept Reference}
+\hypertarget{conceptVIPRA_1_1Concepts_1_1PolygonInput}{}\label{conceptVIPRA_1_1Concepts_1_1PolygonInput}\index{VIPRA::Concepts::PolygonInput@{VIPRA::Concepts::PolygonInput}}
+
+
+Checks that a type is a polygon input module.  
+
+
+
+
+{\ttfamily \#include $<$polygon\+\_\+input.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ input\_t>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1PolygonInput}{VIPRA::Concepts::PolygonInput}}\ =\ \ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1is__type}{is\_type<input\_t,\ Modules::Type::INPUT>}}\ \&\&\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__get__polygons}{can\_get\_polygons<input\_t>}}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Checks that a type is a polygon input module. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em input\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}

@@ -1,0 +1,112 @@
+\doxysection{parameters.\+hpp}
+\hypertarget{special__modules_2parameters_8hpp_source}{}\label{special__modules_2parameters_8hpp_source}\index{include/vipra/special\_modules/parameters.hpp@{include/vipra/special\_modules/parameters.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <nlohmann/json.hpp>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <set>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/input.hpp"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/parameter\_input.hpp"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/parameters.hpp"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}vipra/macros/module.hpp"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}vipra/modules.hpp"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}vipra/random/random.hpp"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}vipra/types/parameter.hpp"{}}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{comment}{//\ TODO(rolland):\ Check\ that\ all\ required\ parameters\ are\ provided\ (maybe\ not\ needed,\ they\ are\ checked\ when\ the\ module\ tries\ to\ get\ it)}}
+\DoxyCodeLine{00018\ \textcolor{comment}{//\ TODO(rolland):\ No\ way\ of\ checking\ what\ a\ parameter\ was,\ once\ get\_param\ is\ called\ the\ random\ engine\ moves\ on}}
+\DoxyCodeLine{00019\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ -\/\ this\ is\ needed\ for\ outputing\ the\ parameters\ used\ in\ a\ simulation\ run}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{namespace\ }VIPRA\ \{}
+\DoxyCodeLine{00022\ \textcolor{keyword}{template}\ <Concepts::parameter\_qualified\_input\ input\_t>}
+\DoxyCodeLine{00023\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVIPRA_1_1Parameters}{Parameters}}\ \{}
+\DoxyCodeLine{00024\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00025\ \ \ VIPRA\_MODULE\_TYPE(PARAMETERS)}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{Parameters<input\_t>}}(input\_t\&\&\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{input}})\ :\ \_input(\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{input}})\ \{\}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00039\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classVIPRA_1_1Parameters_aef778d182be7b3301be0ba6b0b60241a}{register\_param}}(VIPRA::Modules::Type\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{module}},\ std::string\ \textcolor{keyword}{const}\&\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{moduleName}},}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ \textcolor{keyword}{const}\&\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{paramName}})\ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{comment}{//\ TODO(rolland):\ maybe\ warn\ if\ a\ parameter\ is\ registered\ twice?}}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordflow}{if}\ (contains(\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{module}},\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{moduleName}},\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{paramName}}))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \_params[\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{module}}][\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{moduleName}}].insert(\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{paramName}});}
+\DoxyCodeLine{00045\ \ \ \}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00056\ \ \ [[\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{nodiscard}}]]\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classVIPRA_1_1Parameters_a239c1695dc53f87f996769c6e418a029}{has\_param}}(VIPRA::Modules::Type\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{module}},\ std::string\ \textcolor{keyword}{const}\&\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{moduleName}},}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ \textcolor{keyword}{const}\&\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{paramName}})\ \textcolor{keyword}{const}\ -\/>\ \textcolor{keywordtype}{bool}\ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordflow}{return}\ contains(\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{module}},\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{moduleName}},\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{paramName}});}
+\DoxyCodeLine{00059\ \ \ \}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00070\ \ \ [[\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{nodiscard}}]]\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classVIPRA_1_1Parameters_a9ae324436e9dab0d6ae4602e8a0a668b}{has\_required\_param}}(VIPRA::Modules::Type\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{module}},\ std::string\ \textcolor{keyword}{const}\&\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{moduleName}},}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ \textcolor{keyword}{const}\&\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{paramName}})\ \textcolor{keyword}{const}\ -\/>\ \textcolor{keywordtype}{bool}\ \{}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordflow}{if}\ (!contains(\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{module}},\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{moduleName}},\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{paramName}}))\ \{}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::runtime\_error(\textcolor{stringliteral}{"{}Parameter:\ "{}}\ +\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{paramName}}\ +\ \textcolor{stringliteral}{"{}\ For\ "{}}\ +\ to\_string(\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{module}})\ +}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\ Module:\ "{}}\ +\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{moduleName}}\ +\ \textcolor{stringliteral}{"{}\ Not\ Provided\ In\ Input"{}});}
+\DoxyCodeLine{00075\ \ \ \ \ \}}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00077\ \ \ \}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00088\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ data\_t>}
+\DoxyCodeLine{00089\ \ \ [[\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{nodiscard}}]]\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{get\_param}}(VIPRA::Modules::Type\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{module}},\ std::string\ \textcolor{keyword}{const}\&\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{moduleName}},}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ \textcolor{keyword}{const}\&\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{paramName}},\ \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{VIPRA::Random::Engine}}\&\ engine)\ \textcolor{keyword}{const}\ -\/>\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{data\_t}}\ \{}
+\DoxyCodeLine{00091\ \ \ \ \ std::string\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{moduleStr}}\ =\ to\_string(\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{module}});}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordflow}{if}\ (!contains(\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{module}},\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{moduleName}},\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{paramName}}))}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::runtime\_error(\textcolor{stringliteral}{"{}Parameter:\ "{}}\ +\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{paramName}}\ +\ \textcolor{stringliteral}{"{}\ For\ "{}}\ +\ to\_string(\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{module}})\ +}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\ Module:\ "{}}\ +\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{moduleName}}\ +\ \textcolor{stringliteral}{"{}\ Not\ Registered"{}});}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keyword}{auto}\ value\ =\ \_input.template\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{get<Parameter<data\_t>}}>(\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{moduleStr}},\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{moduleName}},\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{paramName}});}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordflow}{if}\ (!value.has\_value())\ \{}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::runtime\_error(\textcolor{stringliteral}{"{}Required\ Parameter:\ "{}}\ +\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{paramName}}\ +\ \textcolor{stringliteral}{"{}\ For\ "{}}\ +\ to\_string(\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{module}})\ +}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\ Module:\ "{}}\ +\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{moduleName}}\ +\ \textcolor{stringliteral}{"{}\ Not\ Provided\ In\ Input"{}});}
+\DoxyCodeLine{00101\ \ \ \ \ \}}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordflow}{return}\ randomize\_parameter(value.value(),\ engine);}
+\DoxyCodeLine{00104\ \ \ \}}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ array\_t>}
+\DoxyCodeLine{00107\ \ \ [[\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{nodiscard}}]]\ \textcolor{keyword}{auto}\ get\_array\_param(VIPRA::Modules::Type\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{module}},\ std::string\ \textcolor{keyword}{const}\&\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{moduleName}},}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ \textcolor{keyword}{const}\&\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{paramName}})\ \textcolor{keyword}{const}\ -\/>\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{array\_t}}\ \{}
+\DoxyCodeLine{00109\ \ \ \ \ std::string\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{moduleStr}}\ =\ to\_string(\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{module}});}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordflow}{if}\ (!contains(\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{module}},\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{moduleName}},\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{paramName}}))}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::runtime\_error(\textcolor{stringliteral}{"{}Parameter:\ "{}}\ +\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{paramName}}\ +\ \textcolor{stringliteral}{"{}\ For\ "{}}\ +\ to\_string(\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{module}})\ +}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\ Module:\ "{}}\ +\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{moduleName}}\ +\ \textcolor{stringliteral}{"{}\ Not\ Registered"{}});}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keyword}{auto}\ value\ =\ \_input.template\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{get<array\_t>}}(\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{moduleStr}},\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{moduleName}},\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{paramName}});}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keywordflow}{if}\ (!value.has\_value())\ \{}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::runtime\_error(\textcolor{stringliteral}{"{}Required\ Parameter:\ "{}}\ +\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{paramName}}\ +\ \textcolor{stringliteral}{"{}\ For\ "{}}\ +\ to\_string(\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{module}})\ +}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\ Module:\ "{}}\ +\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{moduleName}}\ +\ \textcolor{stringliteral}{"{}\ Not\ Provided\ In\ Input"{}});}
+\DoxyCodeLine{00119\ \ \ \ \ \}}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordflow}{return}\ value.value();}
+\DoxyCodeLine{00122\ \ \ \}}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \ \ [[\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{nodiscard}}]]\ \textcolor{keyword}{auto}\ get\_input()\ -\/>\ input\_t\&\ \{\ \textcolor{keywordflow}{return}\ \_input;\ \}}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00127\ \ \ input\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_input;}
+\DoxyCodeLine{00128\ \ \ std::map<VIPRA::Modules::Type,\ std::map<std::string,\ std::set<std::string>>>\ \_params;}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \ \ [[\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{nodiscard}}]]\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ randomize\_parameter(\textcolor{keyword}{auto}\&\&\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{paramVal}},\ \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{VIPRA::Random::Engine}}\&\ \textcolor{comment}{/*engine*/})\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{comment}{//\ TODO(rolland):\ randomize\ parameter,\ currently\ just\ pass\ through}}
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{paramVal}}.value;}
+\DoxyCodeLine{00133\ \ \ \}}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \ \ [[\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{nodiscard}}]]\ \textcolor{keyword}{auto}\ contains(VIPRA::Modules::Type\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{module}},\ std::string\ \textcolor{keyword}{const}\&\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{moduleName}},}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ \textcolor{keyword}{const}\&\ \mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{paramName}})\ \textcolor{keyword}{const}\ -\/>\ \textcolor{keywordtype}{bool}\ \{}
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keywordflow}{return}\ \_params.contains(\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{module}})\ \&\&\ \_params.at(\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{module}}).contains(\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{moduleName}})\ \&\&}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \_params.at(\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{module}}).at(\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{moduleName}}).contains(\mbox{\hyperlink{classVIPRA_1_1Parameters_ad9fa213e0f0dcbf8d682f1ed4859da82}{paramName}});}
+\DoxyCodeLine{00139\ \ \ \}}
+\DoxyCodeLine{00140\ \};}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ CHECK\_MODULE(ParamModule,\ Parameters<Concepts::DummyInput>)}
+\DoxyCodeLine{00143\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA}}
+
+\end{DoxyCode}

@@ -1,0 +1,80 @@
+\doxysection{output.\+hpp}
+\hypertarget{concepts_2output_8hpp_source}{}\label{concepts_2output_8hpp_source}\index{include/vipra/concepts/output.hpp@{include/vipra/concepts/output.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <concepts>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <filesystem>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/module.hpp"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}vipra/modules.hpp"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}vipra/geometry/f3d.hpp"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}vipra/types/idx.hpp"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}vipra/types/state.hpp"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}vipra/types/time.hpp"{}}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }VIPRA::Concepts\ \{}
+\DoxyCodeLine{00020\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ output\_t>}
+\DoxyCodeLine{00021\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__write}{can\_write}}\ =\ \textcolor{keyword}{requires}(output\_t\ output,\ std::filesystem::path\ \textcolor{keyword}{const}\&\ dir)\ \{}
+\DoxyCodeLine{00022\ \ \ \{output.write(dir)\};}
+\DoxyCodeLine{00023\ \};}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00030\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ output\_t>}
+\DoxyCodeLine{00031\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__write__timestep__values}{can\_write\_timestep\_values}}\ =\ \textcolor{keyword}{requires}(output\_t\ output,\ \textcolor{keywordtype}{char}\ \textcolor{keyword}{const}*\ key,\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ value)\ \{}
+\DoxyCodeLine{00032\ \ \ \{output.timestep\_value(key,\ VIPRA::timestep\{\},\ value)\};}
+\DoxyCodeLine{00033\ \ \ \{\ output.timestep\_value(key,\ VIPRA::timestep\{\},\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\{\})\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{00034\ \ \ \{\ output.timestep\_value(key,\ VIPRA::timestep\{\},\ std::string\{\})\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{00035\ \ \ \{output.ped\_timestep\_value(VIPRA::idx\{\},\ VIPRA::timestep\{\},\ key,\ value)\};}
+\DoxyCodeLine{00036\ \ \ \{\ output.ped\_timestep\_value(VIPRA::idx\{\},\ VIPRA::timestep\{\},\ key,\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\{\})\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{00037\ \ \ \{\ output.ped\_timestep\_value(VIPRA::idx\{\},\ VIPRA::timestep\{\},\ key,\ std::string\{\})\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{00038\ \};}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00045\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ output\_t>}
+\DoxyCodeLine{00046\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__write__sim__values}{can\_write\_sim\_values}}\ =\ \textcolor{keyword}{requires}(output\_t\ output,\ \textcolor{keywordtype}{char}\ \textcolor{keyword}{const}*\ key,\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ value)\ \{}
+\DoxyCodeLine{00047\ \ \ \{output.sim\_value(key,\ value)\};}
+\DoxyCodeLine{00048\ \ \ \{\ output.sim\_value(key,\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\{\})\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{00049\ \ \ \{\ output.sim\_value(key,\ std::string\{\})\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{00050\ \};}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00057\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ output\_t>}
+\DoxyCodeLine{00058\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__write__ped__values}{can\_write\_ped\_values}}\ =\ \textcolor{keyword}{requires}(output\_t\ output,\ VIPRA::idx\ idx,\ \textcolor{keywordtype}{char}\ \textcolor{keyword}{const}*\ key,\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ value)\ \{}
+\DoxyCodeLine{00059\ \ \ \{output.ped\_value(idx,\ key,\ value)\};}
+\DoxyCodeLine{00060\ \ \ \{\ output.ped\_value(VIPRA::idx\{\},\ key,\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\{\})\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{00061\ \ \ \{\ output.ped\_value(VIPRA::idx\{\},\ key,\ std::string\{\})\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{00062\ \};}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ output\_t>}
+\DoxyCodeLine{00065\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1BaseOutput}{BaseOutput}}\ =}
+\DoxyCodeLine{00066\ \ \ \ \ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__write__timestep__values}{can\_write\_timestep\_values<output\_t>}}\ \&\&\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__write__sim__values}{can\_write\_sim\_values<output\_t>}}\ \&\&\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__write__ped__values}{can\_write\_ped\_values<output\_t>}};}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00073\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ output\_t>}
+\DoxyCodeLine{00074\ \textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1OutputModule}{OutputModule}}\ =}
+\DoxyCodeLine{00075\ \ \ \ \ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1is__module}{is\_module<output\_t,\ VIPRA::Modules::Type::OUTPUT>}}\ \&\&\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__write}{can\_write<output\_t>}}\ \&\&\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1BaseOutput}{BaseOutput<output\_t>}};}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00081\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVIPRA_1_1Concepts_1_1DummyOutput}{DummyOutput}}\ \{}
+\DoxyCodeLine{00082\ \ \ \textcolor{comment}{//\ NOLINTBEGIN}}
+\DoxyCodeLine{00083\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00084\ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ VIPRA::Modules::Type\ \_VIPRA\_MODULE\_TYPE\_\ =\ VIPRA::Modules::Type::OUTPUT;}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \textcolor{keyword}{using\ }output\_data\_t\ =\ void;}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ params\_t>}
+\DoxyCodeLine{00089\ \ \ \textcolor{keywordtype}{void}\ register\_params(params\_t\&)\ \{\}}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \textcolor{keywordtype}{void}\ config(\textcolor{keyword}{auto}\&,\ \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{VIPRA::Random::Engine}}\&)\ \{\}}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \textcolor{keywordtype}{void}\ write(std::filesystem::path\ \textcolor{keyword}{const}\&)\ \{\}}
+\DoxyCodeLine{00094\ \ \ \textcolor{keywordtype}{void}\ sim\_value(\textcolor{keywordtype}{char}\ \textcolor{keyword}{const}*\ \textcolor{comment}{/*unused*/},\ \textcolor{keyword}{auto}\&\&\ \textcolor{comment}{/*unused*/})\ \{\}}
+\DoxyCodeLine{00095\ \ \ \textcolor{keywordtype}{void}\ timestep\_value(\textcolor{keywordtype}{char}\ \textcolor{keyword}{const}*\ \textcolor{comment}{/*unused*/},\ VIPRA::timestep,\ \textcolor{keyword}{auto}\&\&\ \textcolor{comment}{/*unused*/})\ \{\}}
+\DoxyCodeLine{00096\ \ \ \textcolor{keywordtype}{void}\ ped\_value(VIPRA::idx\ \textcolor{comment}{/*unused*/},\ \textcolor{keywordtype}{char}\ \textcolor{keyword}{const}*\ \textcolor{comment}{/*unused*/},\ \textcolor{keyword}{auto}\&\&\ \textcolor{comment}{/*unused*/})\ \{\}}
+\DoxyCodeLine{00097\ \ \ \textcolor{keywordtype}{void}\ ped\_timestep\_value(VIPRA::idx\ \textcolor{comment}{/*unused*/},\ VIPRA::timestep,\ \textcolor{keywordtype}{char}\ \textcolor{keyword}{const}*\ \textcolor{comment}{/*unused*/},\ \textcolor{keyword}{auto}\&\&\ \textcolor{comment}{/*unused*/})\ \{}
+\DoxyCodeLine{00098\ \ \ \}}
+\DoxyCodeLine{00099\ \ \ \textcolor{comment}{//\ NOLINTEND}}
+\DoxyCodeLine{00100\ \};}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ CHECK\_MODULE(\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1OutputModule}{OutputModule}},\ \mbox{\hyperlink{classVIPRA_1_1Concepts_1_1DummyOutput}{DummyOutput}});}
+\DoxyCodeLine{00103\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA::Concepts}}
+
+\end{DoxyCode}

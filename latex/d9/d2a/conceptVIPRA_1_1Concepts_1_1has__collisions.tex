@@ -1,0 +1,32 @@
+\doxysection{VIPRA\+::Concepts\+::has\+\_\+collisions Concept Reference}
+\hypertarget{conceptVIPRA_1_1Concepts_1_1has__collisions}{}\label{conceptVIPRA_1_1Concepts_1_1has__collisions}\index{VIPRA::Concepts::has\_collisions@{VIPRA::Concepts::has\_collisions}}
+
+
+Checks that a type has collision methods.  
+
+
+
+
+{\ttfamily \#include $<$obstacle\+\_\+set.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ obstacle\_t>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1has__collisions}{VIPRA::Concepts::has\_collisions}}\ =\ \ \textcolor{keyword}{requires}(\textcolor{keyword}{const}\ obstacle\_t\ obsset)\ \{}
+\DoxyCodeLine{\ \ \{\ obsset.collision(\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\{\})\ \}\ -\/>\ std::same\_as<bool>;}
+\DoxyCodeLine{\ \ \{\ obsset.collision(\mbox{\hyperlink{classVIPRA_1_1Geometry_1_1Circle}{VIPRA::Geometry::Circle}}\{\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\{\},\ 1.0F\})\ \}\ -\/>\ std::same\_as<bool>;}
+\DoxyCodeLine{\ \ \{\ obsset.ray\_hit(\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\{\},\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\{\})\ \}\ -\/>\ std::same\_as<VIPRA::f\_pnt>;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Checks that a type has collision methods. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em obstacle\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}

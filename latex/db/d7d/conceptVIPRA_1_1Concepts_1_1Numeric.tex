@@ -1,0 +1,28 @@
+\doxysection{VIPRA\+::Concepts\+::Numeric Concept Reference}
+\hypertarget{conceptVIPRA_1_1Concepts_1_1Numeric}{}\label{conceptVIPRA_1_1Concepts_1_1Numeric}\index{VIPRA::Concepts::Numeric@{VIPRA::Concepts::Numeric}}
+
+
+Checks that a type is a numeric type.  
+
+
+
+
+{\ttfamily \#include $<$numeric.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{class}\ type\_t>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1Numeric}{VIPRA::Concepts::Numeric}}\ =\ \ std::is\_arithmetic\_v<std::remove\_reference\_t<type\_t>>}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Checks that a type is a numeric type. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em type\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}

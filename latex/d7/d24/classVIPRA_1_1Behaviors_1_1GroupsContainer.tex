@@ -1,0 +1,234 @@
+\doxysection{VIPRA\+::Behaviors\+::Groups\+Container Class Reference}
+\hypertarget{classVIPRA_1_1Behaviors_1_1GroupsContainer}{}\label{classVIPRA_1_1Behaviors_1_1GroupsContainer}\index{VIPRA::Behaviors::GroupsContainer@{VIPRA::Behaviors::GroupsContainer}}
+
+
+Holds the indexes for pedestrians in each type group.  
+
+
+
+
+{\ttfamily \#include $<$pedestrian\+\_\+groups.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1GroupsContainer_a9515b4bc22b472de965df96ccdc4ab88}{initialize}} (\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}}, VIPRA\+::size)
+\begin{DoxyCompactList}\small\item\em Initializes the \+\_\+groups, starting with all pedestrians in group 0. \end{DoxyCompactList}\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1GroupsContainer_aae1d83f790eda628a530dd3ba1be8011}\label{classVIPRA_1_1Behaviors_1_1GroupsContainer_aae1d83f790eda628a530dd3ba1be8011} 
+void {\bfseries clean\+\_\+used} ()
+\begin{DoxyCompactList}\small\item\em Resets \+\_\+used status of all pedestrians. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1GroupsContainer_a9af52f9e5f6e679c2315a08b6b0d33ee}{size}} () const -\/$>$ VIPRA\+::size
+\begin{DoxyCompactList}\small\item\em Returns the number of \+\_\+groups. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1GroupsContainer_aa263f77cdc40452ed7865787b2734918}{at}} (VIPRA\+::idx) const -\/$>$ VIPRA\+::idx\+Vec const \&
+\begin{DoxyCompactList}\small\item\em Gets the group at index. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1GroupsContainer_aa97c1b357c0639781591db55c119edb7}{operator\mbox{[}$\,$\mbox{]}}} (VIPRA\+::idx) -\/$>$ VIPRA\+::idx\+Vec \&
+\begin{DoxyCompactList}\small\item\em Gets the group at index. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1GroupsContainer_adcf562861346c8605f7dc68ee8c7dde8}{get\+\_\+group}} (type\+UID) const -\/$>$ const VIPRA\+::idx\+Vec \&
+\begin{DoxyCompactList}\small\item\em Returns the group with a given type. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1GroupsContainer_a3ae174d71eb5b97eb8c43f764ec2d01e}{add\+\_\+ped}} (VIPRA\+::idx, type\+UID)
+\begin{DoxyCompactList}\small\item\em Adds a pedestrians index to the group with type. \end{DoxyCompactList}\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1GroupsContainer_a48a5d575fbed1a878645179f104643e3}\label{classVIPRA_1_1Behaviors_1_1GroupsContainer_a48a5d575fbed1a878645179f104643e3} 
+void {\bfseries move\+\_\+ped} (VIPRA\+::idx, type\+UID, type\+UID)
+\item 
+auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1GroupsContainer_aeaa255e2fff69e29ed594a156598f19e}{remove\+\_\+ped}} (VIPRA\+::idx, type\+UID) -\/$>$ bool
+\begin{DoxyCompactList}\small\item\em Removes the pedestrian from the group with type. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1GroupsContainer_a6eda1b757550c18a88a3a4ac85ac3b4e}{set\+\_\+used}} (VIPRA\+::idx, type\+UID) -\/$>$ bool
+\begin{DoxyCompactList}\small\item\em Sets a pedestrian as \+\_\+used in a particular group, this pedestrian can then no longer be selected from this group. \end{DoxyCompactList}\item 
+auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1GroupsContainer_abbc8fb789b5b32b7e9cf34a9a8b2ffa4}{get\+\_\+used}} (type\+UID) const -\/$>$ std\+::vector$<$ bool $>$ const \&
+\begin{DoxyCompactList}\small\item\em Returns vector of \+\_\+used pedestrians from a group. \end{DoxyCompactList}\item 
+\Hypertarget{classVIPRA_1_1Behaviors_1_1GroupsContainer_a8b551a3fe3d97196ebe002b1f5ca37b9}\label{classVIPRA_1_1Behaviors_1_1GroupsContainer_a8b551a3fe3d97196ebe002b1f5ca37b9} 
+auto {\bfseries is\+\_\+used} (VIPRA\+::idx, type\+UID) const -\/$>$ bool
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr auto \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1GroupsContainer_ab9f0753e471101b2bd77c4749420181f}{index}} (type\+UID type) -\/$>$ VIPRA\+::idx
+\begin{DoxyCompactList}\small\item\em Gets the index into the container for a given type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Holds the indexes for pedestrians in each type group. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1GroupsContainer_a3ae174d71eb5b97eb8c43f764ec2d01e}\label{classVIPRA_1_1Behaviors_1_1GroupsContainer_a3ae174d71eb5b97eb8c43f764ec2d01e} 
+\index{VIPRA::Behaviors::GroupsContainer@{VIPRA::Behaviors::GroupsContainer}!add\_ped@{add\_ped}}
+\index{add\_ped@{add\_ped}!VIPRA::Behaviors::GroupsContainer@{VIPRA::Behaviors::GroupsContainer}}
+\doxysubsubsection{\texorpdfstring{add\_ped()}{add\_ped()}}
+{\footnotesize\ttfamily void VIPRA\+::\+Behaviors\+::\+Groups\+Container\+::add\+\_\+ped (\begin{DoxyParamCaption}\item[{VIPRA\+::idx}]{ped\+Idx,  }\item[{type\+UID}]{type }\end{DoxyParamCaption})}
+
+
+
+Adds a pedestrians index to the group with type. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ped\+Idx} & \+: pedestrian index to add to group \\
+\hline
+{\em type} & \+: group to add to \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1GroupsContainer_aa263f77cdc40452ed7865787b2734918}\label{classVIPRA_1_1Behaviors_1_1GroupsContainer_aa263f77cdc40452ed7865787b2734918} 
+\index{VIPRA::Behaviors::GroupsContainer@{VIPRA::Behaviors::GroupsContainer}!at@{at}}
+\index{at@{at}!VIPRA::Behaviors::GroupsContainer@{VIPRA::Behaviors::GroupsContainer}}
+\doxysubsubsection{\texorpdfstring{at()}{at()}}
+{\footnotesize\ttfamily auto VIPRA\+::\+Behaviors\+::\+Groups\+Container\+::at (\begin{DoxyParamCaption}\item[{VIPRA\+::idx}]{index }\end{DoxyParamCaption}) const -\/$>$ VIPRA\+::idx\+Vec const\&}
+
+
+
+Gets the group at index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & \+: group index \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+VIPRA\+::idx\+Vec\& 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1GroupsContainer_adcf562861346c8605f7dc68ee8c7dde8}\label{classVIPRA_1_1Behaviors_1_1GroupsContainer_adcf562861346c8605f7dc68ee8c7dde8} 
+\index{VIPRA::Behaviors::GroupsContainer@{VIPRA::Behaviors::GroupsContainer}!get\_group@{get\_group}}
+\index{get\_group@{get\_group}!VIPRA::Behaviors::GroupsContainer@{VIPRA::Behaviors::GroupsContainer}}
+\doxysubsubsection{\texorpdfstring{get\_group()}{get\_group()}}
+{\footnotesize\ttfamily auto VIPRA\+::\+Behaviors\+::\+Groups\+Container\+::get\+\_\+group (\begin{DoxyParamCaption}\item[{type\+UID}]{type }\end{DoxyParamCaption}) const -\/$>$ const VIPRA\+::idx\+Vec\&}
+
+
+
+Returns the group with a given type. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & \+: type group to get \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+const VIPRA\+::idx\+Vec\& 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1GroupsContainer_abbc8fb789b5b32b7e9cf34a9a8b2ffa4}\label{classVIPRA_1_1Behaviors_1_1GroupsContainer_abbc8fb789b5b32b7e9cf34a9a8b2ffa4} 
+\index{VIPRA::Behaviors::GroupsContainer@{VIPRA::Behaviors::GroupsContainer}!get\_used@{get\_used}}
+\index{get\_used@{get\_used}!VIPRA::Behaviors::GroupsContainer@{VIPRA::Behaviors::GroupsContainer}}
+\doxysubsubsection{\texorpdfstring{get\_used()}{get\_used()}}
+{\footnotesize\ttfamily auto VIPRA\+::\+Behaviors\+::\+Groups\+Container\+::get\+\_\+used (\begin{DoxyParamCaption}\item[{type\+UID}]{type }\end{DoxyParamCaption}) const -\/$>$ std\+::vector$<$bool$>$ const\&}
+
+
+
+Returns vector of \+\_\+used pedestrians from a group. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & \+: group to get \+\_\+used pedestrians from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+const std\+::vector$<$bool$>$\& 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1GroupsContainer_ab9f0753e471101b2bd77c4749420181f}\label{classVIPRA_1_1Behaviors_1_1GroupsContainer_ab9f0753e471101b2bd77c4749420181f} 
+\index{VIPRA::Behaviors::GroupsContainer@{VIPRA::Behaviors::GroupsContainer}!index@{index}}
+\index{index@{index}!VIPRA::Behaviors::GroupsContainer@{VIPRA::Behaviors::GroupsContainer}}
+\doxysubsubsection{\texorpdfstring{index()}{index()}}
+{\footnotesize\ttfamily static constexpr auto VIPRA\+::\+Behaviors\+::\+Groups\+Container\+::index (\begin{DoxyParamCaption}\item[{type\+UID}]{type }\end{DoxyParamCaption}) -\/$>$ VIPRA\+::idx \hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Gets the index into the container for a given type. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & \+: \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+constexpr VIPRA\+::idx 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1GroupsContainer_a9515b4bc22b472de965df96ccdc4ab88}\label{classVIPRA_1_1Behaviors_1_1GroupsContainer_a9515b4bc22b472de965df96ccdc4ab88} 
+\index{VIPRA::Behaviors::GroupsContainer@{VIPRA::Behaviors::GroupsContainer}!initialize@{initialize}}
+\index{initialize@{initialize}!VIPRA::Behaviors::GroupsContainer@{VIPRA::Behaviors::GroupsContainer}}
+\doxysubsubsection{\texorpdfstring{initialize()}{initialize()}}
+{\footnotesize\ttfamily void VIPRA\+::\+Behaviors\+::\+Groups\+Container\+::initialize (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1Ptype}{Ptype}}}]{all\+Types,  }\item[{VIPRA\+::size}]{ped\+Cnt }\end{DoxyParamCaption})}
+
+
+
+Initializes the \+\_\+groups, starting with all pedestrians in group 0. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em all\+Types} & \+: Ptype with all possible types \\
+\hline
+{\em ped\+Cnt} & \+: number of pedestrians \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1GroupsContainer_aa97c1b357c0639781591db55c119edb7}\label{classVIPRA_1_1Behaviors_1_1GroupsContainer_aa97c1b357c0639781591db55c119edb7} 
+\index{VIPRA::Behaviors::GroupsContainer@{VIPRA::Behaviors::GroupsContainer}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!VIPRA::Behaviors::GroupsContainer@{VIPRA::Behaviors::GroupsContainer}}
+\doxysubsubsection{\texorpdfstring{operator[]()}{operator[]()}}
+{\footnotesize\ttfamily auto VIPRA\+::\+Behaviors\+::\+Groups\+Container\+::operator\mbox{[}$\,$\mbox{]} (\begin{DoxyParamCaption}\item[{VIPRA\+::idx}]{index }\end{DoxyParamCaption}) -\/$>$ VIPRA\+::idx\+Vec\&}
+
+
+
+Gets the group at index. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & \+: group index \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+VIPRA\+::idx\+Vec\& 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1GroupsContainer_aeaa255e2fff69e29ed594a156598f19e}\label{classVIPRA_1_1Behaviors_1_1GroupsContainer_aeaa255e2fff69e29ed594a156598f19e} 
+\index{VIPRA::Behaviors::GroupsContainer@{VIPRA::Behaviors::GroupsContainer}!remove\_ped@{remove\_ped}}
+\index{remove\_ped@{remove\_ped}!VIPRA::Behaviors::GroupsContainer@{VIPRA::Behaviors::GroupsContainer}}
+\doxysubsubsection{\texorpdfstring{remove\_ped()}{remove\_ped()}}
+{\footnotesize\ttfamily auto VIPRA\+::\+Behaviors\+::\+Groups\+Container\+::remove\+\_\+ped (\begin{DoxyParamCaption}\item[{VIPRA\+::idx}]{ped\+Idx,  }\item[{type\+UID}]{type }\end{DoxyParamCaption}) -\/$>$ bool}
+
+
+
+Removes the pedestrian from the group with type. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ped\+Idx} & \+: pedestrian index to remove \\
+\hline
+{\em type} & \+: group to remove the pedestrian from \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1GroupsContainer_a6eda1b757550c18a88a3a4ac85ac3b4e}\label{classVIPRA_1_1Behaviors_1_1GroupsContainer_a6eda1b757550c18a88a3a4ac85ac3b4e} 
+\index{VIPRA::Behaviors::GroupsContainer@{VIPRA::Behaviors::GroupsContainer}!set\_used@{set\_used}}
+\index{set\_used@{set\_used}!VIPRA::Behaviors::GroupsContainer@{VIPRA::Behaviors::GroupsContainer}}
+\doxysubsubsection{\texorpdfstring{set\_used()}{set\_used()}}
+{\footnotesize\ttfamily auto VIPRA\+::\+Behaviors\+::\+Groups\+Container\+::set\+\_\+used (\begin{DoxyParamCaption}\item[{VIPRA\+::idx}]{ped\+Idx,  }\item[{type\+UID}]{type }\end{DoxyParamCaption}) -\/$>$ bool}
+
+
+
+Sets a pedestrian as \+\_\+used in a particular group, this pedestrian can then no longer be selected from this group. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ped\+Idx} & \+: pedestrian index \\
+\hline
+{\em type} & \+: group pedestrian has been added to \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true 
+
+false 
+\end{DoxyReturn}
+\Hypertarget{classVIPRA_1_1Behaviors_1_1GroupsContainer_a9af52f9e5f6e679c2315a08b6b0d33ee}\label{classVIPRA_1_1Behaviors_1_1GroupsContainer_a9af52f9e5f6e679c2315a08b6b0d33ee} 
+\index{VIPRA::Behaviors::GroupsContainer@{VIPRA::Behaviors::GroupsContainer}!size@{size}}
+\index{size@{size}!VIPRA::Behaviors::GroupsContainer@{VIPRA::Behaviors::GroupsContainer}}
+\doxysubsubsection{\texorpdfstring{size()}{size()}}
+{\footnotesize\ttfamily auto VIPRA\+::\+Behaviors\+::\+Groups\+Container\+::size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const -\/$>$ VIPRA\+::size}
+
+
+
+Returns the number of \+\_\+groups. 
+
+\begin{DoxyReturn}{Returns}
+VIPRA\+::size 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/vipra/vipra\+\_\+behaviors/selectors/pedestrian\+\_\+groups.\+hpp\item 
+include/vipra/vipra\+\_\+behaviors/selectors/pedestrian\+\_\+groups.\+cpp\end{DoxyCompactItemize}

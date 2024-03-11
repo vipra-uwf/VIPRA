@@ -1,0 +1,39 @@
+\doxysection{all\+\_\+of\+\_\+type.\+hpp}
+\hypertarget{all__of__type_8hpp_source}{}\label{all__of__type_8hpp_source}\index{include/vipra/util/all\_of\_type.hpp@{include/vipra/util/all\_of\_type.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <tuple>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}vipra/util/get\_nth\_value.hpp"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }VIPRA::Util\ \{}
+\DoxyCodeLine{00009\ \textcolor{comment}{//\ NOLINTBEGIN(readability-\/identifier-\/naming)\ utility\ type}}
+\DoxyCodeLine{00010\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}...\ type\_ts>}
+\DoxyCodeLine{00011\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structVIPRA_1_1Util_1_1all__of__type}{all\_of\_type}}\ \{\};}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ type\_t>}
+\DoxyCodeLine{00014\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structVIPRA_1_1Util_1_1all__of__type}{all\_of\_type}}<type\_t>\ \{}
+\DoxyCodeLine{00015\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ value\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00016\ \};}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ check\_type\_t,\ \textcolor{keyword}{typename}\ head\_t,\ \textcolor{keyword}{typename}...\ tail\_ts>}
+\DoxyCodeLine{00019\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structVIPRA_1_1Util_1_1all__of__type}{all\_of\_type}}<check\_type\_t,\ head\_t,\ tail\_ts...>\ \{}
+\DoxyCodeLine{00020\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ value\ =}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ std::is\_same\_v<check\_type\_t,\ head\_t>\ \&\&\ \mbox{\hyperlink{structVIPRA_1_1Util_1_1all__of__type}{all\_of\_type}}<head\_t,\ tail\_ts...>::value;}
+\DoxyCodeLine{00022\ \};}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ check\_type\_t,\ \textcolor{keyword}{typename}...\ type\_ts>}
+\DoxyCodeLine{00025\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structVIPRA_1_1Util_1_1all__of__type}{all\_of\_type}}<check\_type\_t,\ std::tuple<type\_ts...>>\ \{}
+\DoxyCodeLine{00026\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ value\ =\ std::is\_same\_v<check\_type\_t,\ std::tuple\_element<0,\ std::tuple<type\_ts...>>>\ \&\&}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structVIPRA_1_1Util_1_1all__of__type}{all\_of\_type}}<std::tuple\_element<0,\ std::tuple<type\_ts...>>,\ type\_ts...>::value;}
+\DoxyCodeLine{00028\ \};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}...\ type\_ts>}
+\DoxyCodeLine{00031\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ \textcolor{keywordtype}{bool}\ all\_of\_type\_v\ =\ \mbox{\hyperlink{structVIPRA_1_1Util_1_1all__of__type}{all\_of\_type}}<type\_ts...>::value;}
+\DoxyCodeLine{00032\ \textcolor{comment}{//\ NOLINTEND(readability-\/identifier-\/naming)}}
+\DoxyCodeLine{00033\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA::Util}}
+
+\end{DoxyCode}

@@ -1,0 +1,24 @@
+\doxysection{atom\+\_\+scale.\+hpp}
+\hypertarget{atom__scale_8hpp_source}{}\label{atom__scale_8hpp_source}\index{include/vipra/vipra\_behaviors/actions/atoms/atom\_scale.hpp@{include/vipra/vipra\_behaviors/actions/atoms/atom\_scale.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/attributes/attributes.hpp"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/targets/target.hpp"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{namespace\ }VIPRA::Behaviors\ \{}
+\DoxyCodeLine{00007\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1AtomScale}{AtomScale}}\ \{}
+\DoxyCodeLine{00008\ \ \ Attribute\ \ \ \ \ \ \ attribute;}
+\DoxyCodeLine{00009\ \ \ \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1CAttributeValue}{CAttributeValue}}\ value;}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ operator()(\textcolor{keyword}{auto}\ pack,\ \textcolor{keyword}{const}\ VIPRA::idxVec\&\ peds,\ std::vector<bool>\ \textcolor{keyword}{const}\&\ conditionMet,}
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<Target>\ \textcolor{keyword}{const}\&\ targets)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordflow}{for}\ (VIPRA::idx\ idx\ =\ 0;\ idx\ <\ peds.size();\ ++idx)\ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (conditionMet[idx])\ \mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1AttributeHandling_a9c97e29640cead7f37e9bf8ea18d2b0b}{AttributeHandling::scale\_value}}(targets[idx],\ attribute,\ pack,\ pack.state,\ value);}
+\DoxyCodeLine{00015\ \ \ \ \ \}}
+\DoxyCodeLine{00016\ \ \ \}}
+\DoxyCodeLine{00017\ \};}
+\DoxyCodeLine{00018\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA::Behaviors}}
+
+\end{DoxyCode}

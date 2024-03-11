@@ -1,0 +1,54 @@
+\doxysection{VIPRA\+::Data\+Structures\+::Graph\texorpdfstring{$<$}{<} data\+\_\+t \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classVIPRA_1_1DataStructures_1_1Graph}{}\label{classVIPRA_1_1DataStructures_1_1Graph}\index{VIPRA::DataStructures::Graph$<$ data\_t $>$@{VIPRA::DataStructures::Graph$<$ data\_t $>$}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structVIPRA_1_1DataStructures_1_1Graph_1_1Node}{Node}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classVIPRA_1_1DataStructures_1_1Graph_a833d97135fab9013118297f038a6f117}\label{classVIPRA_1_1DataStructures_1_1Graph_a833d97135fab9013118297f038a6f117} 
+using {\bfseries value\+\_\+t} = data\+\_\+t
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classVIPRA_1_1DataStructures_1_1Graph_a11b0810c2d97dd3ae449cf019ef4bfcf}\label{classVIPRA_1_1DataStructures_1_1Graph_a11b0810c2d97dd3ae449cf019ef4bfcf} 
+void {\bfseries reserve} (VIPRA\+::idx size)
+\item 
+\Hypertarget{classVIPRA_1_1DataStructures_1_1Graph_abd8ea7ff61ea9d60bc5ee70d8aea781d}\label{classVIPRA_1_1DataStructures_1_1Graph_abd8ea7ff61ea9d60bc5ee70d8aea781d} 
+constexpr auto {\bfseries node\+\_\+count} () const -\/$>$ VIPRA\+::idx
+\item 
+\Hypertarget{classVIPRA_1_1DataStructures_1_1Graph_aa121a368ccd7f7e2ba5cbea2e75664cd}\label{classVIPRA_1_1DataStructures_1_1Graph_aa121a368ccd7f7e2ba5cbea2e75664cd} 
+constexpr auto {\bfseries nodes} () -\/$>$ std\+::vector$<$ \mbox{\hyperlink{structVIPRA_1_1DataStructures_1_1Graph_1_1Node}{Node}} $>$ \&
+\item 
+\Hypertarget{classVIPRA_1_1DataStructures_1_1Graph_afe19042dfe8395cce0c7b98b8656e786}\label{classVIPRA_1_1DataStructures_1_1Graph_afe19042dfe8395cce0c7b98b8656e786} 
+constexpr auto {\bfseries nodes} () const -\/$>$ const std\+::vector$<$ \mbox{\hyperlink{structVIPRA_1_1DataStructures_1_1Graph_1_1Node}{Node}} $>$ \&
+\item 
+\Hypertarget{classVIPRA_1_1DataStructures_1_1Graph_afaf3f3519f62a744548d559bea9483db}\label{classVIPRA_1_1DataStructures_1_1Graph_afaf3f3519f62a744548d559bea9483db} 
+constexpr auto {\bfseries neighbors} (VIPRA\+::idx node\+Idx) -\/$>$ std\+::vector$<$ VIPRA\+::idx $>$ \&
+\item 
+\Hypertarget{classVIPRA_1_1DataStructures_1_1Graph_ac0fe344993f30928a9db4362424f6c37}\label{classVIPRA_1_1DataStructures_1_1Graph_ac0fe344993f30928a9db4362424f6c37} 
+constexpr auto {\bfseries neighbors} (VIPRA\+::idx node\+Idx) const -\/$>$ const std\+::vector$<$ VIPRA\+::idx $>$ \&
+\item 
+\Hypertarget{classVIPRA_1_1DataStructures_1_1Graph_a889e0f7c0258f6b9097046af8ca1db63}\label{classVIPRA_1_1DataStructures_1_1Graph_a889e0f7c0258f6b9097046af8ca1db63} 
+constexpr auto {\bfseries data} (VIPRA\+::idx node\+Idx) -\/$>$ data\+\_\+t \&
+\item 
+\Hypertarget{classVIPRA_1_1DataStructures_1_1Graph_af77a2ae0e0d6c6d85419a84599cf9c16}\label{classVIPRA_1_1DataStructures_1_1Graph_af77a2ae0e0d6c6d85419a84599cf9c16} 
+constexpr auto {\bfseries data} (VIPRA\+::idx node\+Idx) const -\/$>$ const data\+\_\+t \&
+\item 
+\Hypertarget{classVIPRA_1_1DataStructures_1_1Graph_ae815d0711fde6fcf690603a6c254ce1b}\label{classVIPRA_1_1DataStructures_1_1Graph_ae815d0711fde6fcf690603a6c254ce1b} 
+void {\bfseries add\+\_\+edge} (VIPRA\+::idx node\+Idx1, VIPRA\+::idx node\+Idx2)
+\item 
+\Hypertarget{classVIPRA_1_1DataStructures_1_1Graph_a4cdb122fdea55f114daa8aef405fa1ed}\label{classVIPRA_1_1DataStructures_1_1Graph_a4cdb122fdea55f114daa8aef405fa1ed} 
+constexpr auto {\bfseries add\+\_\+node} (data\+\_\+t data) -\/$>$ VIPRA\+::idx
+\item 
+\Hypertarget{classVIPRA_1_1DataStructures_1_1Graph_a89189b0a91f2f1398655b535ddba9167}\label{classVIPRA_1_1DataStructures_1_1Graph_a89189b0a91f2f1398655b535ddba9167} 
+auto {\bfseries add\+\_\+node} (data\+\_\+t data, std\+::vector$<$ VIPRA\+::idx $>$ neighbors) -\/$>$ VIPRA\+::idx
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/vipra/data\+\_\+structures/graph.\+hpp\end{DoxyCompactItemize}

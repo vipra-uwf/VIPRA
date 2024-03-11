@@ -1,0 +1,105 @@
+\doxysection{values.\+hpp}
+\hypertarget{values_8hpp_source}{}\label{values_8hpp_source}\index{include/vipra/vipra\_behaviors/values/values.hpp@{include/vipra/vipra\_behaviors/values/values.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <stdexcept>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/\_grammar/generated/BehaviorParser.h"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}vipra/random/random.hpp"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/behavior/exceptions.hpp"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/definitions/dsl\_types.hpp"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/time/time.hpp"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/values/numeric\_value.hpp"{}}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{comment}{//\ TODO(rolland):\ Check\ that\ range\ values\ make\ sense\ (min\ <\ max)}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{comment}{//\ TODO(rolland):\ fix\ parsing\ of\ range\ values\ (10-\/15)\ fails}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{keyword}{namespace\ }VIPRA::Behaviors\ \{}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{using\ }RandomVal\ =\ std::pair<VIPRA::f\_pnt,\ VIPRA::f\_pnt>;}
+\DoxyCodeLine{00021\ \textcolor{keyword}{using\ }RangeVal\ =\ std::pair<VIPRA::f\_pnt,\ VIPRA::f\_pnt>;}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00031\ [[nodiscard]]\ \textcolor{keyword}{inline}\ \textcolor{keyword}{auto}\ collapse\_range\_value(VIPRA::seed\ seed,\ VIPRA::f\_pnt\ min,\ VIPRA::f\_pnt\ max)}
+\DoxyCodeLine{00032\ \ \ \ \ -\/>\ VIPRA::f\_pnt\ \{}
+\DoxyCodeLine{00033\ \ \ \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{VIPRA::Random::Engine}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ eng\{seed\};}
+\DoxyCodeLine{00034\ \ \ \mbox{\hyperlink{classVIPRA_1_1Random_1_1uniform__distribution}{VIPRA::Random::uniform\_distribution<VIPRA::f\_pnt>}}\ distr\{min,\ max\};}
+\DoxyCodeLine{00035\ \ \ \textcolor{keywordflow}{return}\ distr(eng);}
+\DoxyCodeLine{00036\ \}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00045\ [[nodiscard]]\ \textcolor{keyword}{inline}\ \textcolor{keyword}{auto}\ get\_numeric(BehaviorParser::Value\_numberContext*\ ctx,\ VIPRA::seed\ seed)}
+\DoxyCodeLine{00046\ \ \ \ \ -\/>\ NumericValue\ \{}
+\DoxyCodeLine{00047\ \ \ VIPRA::f\_pnt\ val\ =\ std::stof(ctx-\/>NUMBER()-\/>toString());}
+\DoxyCodeLine{00048\ \ \ \textcolor{keywordflow}{return}\ NumericValue(seed,\ ExactValue\{val\});}
+\DoxyCodeLine{00049\ \}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00058\ [[nodiscard]]\ \textcolor{keyword}{inline}\ \textcolor{keyword}{auto}\ get\_numeric(BehaviorParser::Value\_randomContext*\ ctx,\ VIPRA::seed\ seed)}
+\DoxyCodeLine{00059\ \ \ \ \ -\/>\ NumericValue\ \{}
+\DoxyCodeLine{00060\ \ \ \textcolor{keywordflow}{if}\ (ctx-\/>random\_float())\ \{}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{auto}\ \ \ \ \ \ \ \ \ numbers\ =\ ctx-\/>random\_float()-\/>float\_range()-\/>FLOAT();}
+\DoxyCodeLine{00062\ \ \ \ \ VIPRA::f\_pnt\ min\ =\ std::stof(numbers[0]-\/>toString());}
+\DoxyCodeLine{00063\ \ \ \ \ VIPRA::f\_pnt\ max\ =\ std::stof(numbers[1]-\/>toString());}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordflow}{return}\ NumericValue(seed,\ RandomFloatValue\{min,\ max\});}
+\DoxyCodeLine{00065\ \ \ \}}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \textcolor{keyword}{auto}\ \ \ \ \ \ \ \ \ numbers\ =\ ctx-\/>random\_number()-\/>number\_range()-\/>NUMBER();}
+\DoxyCodeLine{00068\ \ \ VIPRA::f\_pnt\ min\ =\ std::round(std::stof(numbers[0]-\/>toString()));}
+\DoxyCodeLine{00069\ \ \ VIPRA::f\_pnt\ max\ =\ std::round(std::stof(numbers[1]-\/>toString()));}
+\DoxyCodeLine{00070\ \ \ \textcolor{keywordflow}{return}\ NumericValue(seed,\ RandomNumberValue\{min,\ max\});}
+\DoxyCodeLine{00071\ \}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00080\ [[nodiscard]]\ \textcolor{keyword}{inline}\ \textcolor{keyword}{auto}\ get\_numeric(BehaviorParser::Value\_rangeContext*\ ctx,\ VIPRA::seed\ seed)}
+\DoxyCodeLine{00081\ \ \ \ \ -\/>\ NumericValue\ \{}
+\DoxyCodeLine{00082\ \ \ \textcolor{keywordflow}{if}\ (ctx-\/>float\_range())\ \{}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{auto}\ \ \ \ \ \ \ \ \ numbers\ =\ ctx-\/>float\_range()-\/>FLOAT();}
+\DoxyCodeLine{00084\ \ \ \ \ VIPRA::f\_pnt\ min\ =\ std::stof(numbers[0]-\/>toString());}
+\DoxyCodeLine{00085\ \ \ \ \ VIPRA::f\_pnt\ max\ =\ std::stof(numbers[1]-\/>toString());}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keywordflow}{return}\ NumericValue(seed,\ ExactValue\{collapse\_range\_value(seed,\ min,\ max)\});}
+\DoxyCodeLine{00087\ \ \ \}}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \textcolor{keyword}{auto}\ \ \ \ \ \ \ \ \ numbers\ =\ ctx-\/>number\_range()-\/>NUMBER();}
+\DoxyCodeLine{00090\ \ \ VIPRA::f\_pnt\ min\ =\ std::round(std::stof(numbers[0]-\/>toString()));}
+\DoxyCodeLine{00091\ \ \ VIPRA::f\_pnt\ max\ =\ std::round(std::stof(numbers[1]-\/>toString()));}
+\DoxyCodeLine{00092\ \ \ \textcolor{keywordflow}{return}\ NumericValue(seed,\ ExactValue\{std::round(collapse\_range\_value(seed,\ min,\ max))\});}
+\DoxyCodeLine{00093\ \}}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00102\ [[nodiscard]]\ \textcolor{keyword}{inline}\ \textcolor{keyword}{auto}\ get\_numeric(BehaviorParser::Value\_floatContext*\ ctx,\ VIPRA::seed\ seed)}
+\DoxyCodeLine{00103\ \ \ \ \ -\/>\ NumericValue\ \{}
+\DoxyCodeLine{00104\ \ \ VIPRA::f\_pnt\ val\ =\ std::stof(ctx-\/>FLOAT()-\/>toString());}
+\DoxyCodeLine{00105\ \ \ \textcolor{keywordflow}{return}\ NumericValue(seed,\ ExactValue\{val\});}
+\DoxyCodeLine{00106\ \}}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00115\ [[nodiscard]]\ \textcolor{keyword}{inline}\ \textcolor{keyword}{auto}\ get\_numeric(BehaviorParser::Value\_numericContext*\ ctx,\ VIPRA::seed\ seed)}
+\DoxyCodeLine{00116\ \ \ \ \ -\/>\ NumericValue\ \{}
+\DoxyCodeLine{00117\ \ \ \textcolor{keywordflow}{if}\ (ctx-\/>value\_float())\ \textcolor{keywordflow}{return}\ get\_numeric(ctx-\/>value\_float(),\ seed);}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \ \ \textcolor{keywordflow}{if}\ (ctx-\/>value\_number())\ \textcolor{keywordflow}{return}\ get\_numeric(ctx-\/>value\_number(),\ seed);}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \ \ \textcolor{keywordflow}{if}\ (ctx-\/>value\_random())\ \textcolor{keywordflow}{return}\ get\_numeric(ctx-\/>value\_random(),\ seed);}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \ \ \textcolor{keywordflow}{if}\ (ctx-\/>value\_range())\ \textcolor{keywordflow}{return}\ get\_numeric(ctx-\/>value\_range(),\ seed);}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \ \ \textcolor{comment}{//\ spdlog::error("{}Numeric\ Value\ Context\ Missing\ Children\ (you\ should\ never\ see\ this\ error)"{});}}
+\DoxyCodeLine{00126\ \ \ \textcolor{keywordflow}{throw}\ std::runtime\_error(\textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00127\ \ \ \textcolor{keywordflow}{return}\ \{\};}
+\DoxyCodeLine{00128\ \}}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00137\ [[nodiscard]]\ \textcolor{keyword}{inline}\ \textcolor{keyword}{auto}\ get\_coord(BehaviorParser::Value\_coordContext*\ ctx,\ VIPRA::seed\ seed)\ -\/>\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ \{}
+\DoxyCodeLine{00138\ \ \ \textcolor{keyword}{auto}\ \ \ \ \ \ \ values\ =\ ctx-\/>value\_numeric();}
+\DoxyCodeLine{00139\ \ \ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ val;}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \ \ \textcolor{keywordflow}{for}\ (VIPRA::idx\ i\ =\ 0;\ i\ <\ values.size();\ ++i)\ \{}
+\DoxyCodeLine{00142\ \ \ \ \ \textcolor{keyword}{auto}\ num\ =\ get\_numeric(values[i],\ seed);}
+\DoxyCodeLine{00143\ \ \ \ \ val[i]\ =\ num.value(0);}
+\DoxyCodeLine{00144\ \ \ \}}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \ \ \textcolor{keywordflow}{return}\ val;}
+\DoxyCodeLine{00147\ \}}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA::Behaviors}}
+
+\end{DoxyCode}

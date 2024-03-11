@@ -1,0 +1,154 @@
+\doxysection{rectangle.\+hpp}
+\hypertarget{rectangle_8hpp_source}{}\label{rectangle_8hpp_source}\index{include/vipra/geometry/rectangle.hpp@{include/vipra/geometry/rectangle.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <array>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}vipra/geometry/f3d.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}vipra/geometry/line.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}vipra/types/size.hpp"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }VIPRA::Geometry\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVIPRA_1_1Geometry_1_1Rectangle}{Rectangle}}\ \{}
+\DoxyCodeLine{00010\ \ \ \textcolor{comment}{//\ TODO(rolland):\ implement,\ currently\ axis\ aligned\ only}}
+\DoxyCodeLine{00011\ \ \ \textcolor{comment}{//\ TODO(rolland):\ create\ tests}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{classVIPRA_1_1Geometry_1_1Rectangle}{Rectangle}}(\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ point1,\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ point2,\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ point3,\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ point4)}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ :\ \_p1(point1),}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \_p2(point2),}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \_p3(point3),}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \_p4(point4),}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \_width(std::abs(point3.x\ -\/\ point1.x)),}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \_height(std::abs(point3.y\ -\/\ point1.y)),}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \_area(calc\_area())\ \{\}}
+\DoxyCodeLine{00022\ \ \ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{classVIPRA_1_1Geometry_1_1Rectangle}{Rectangle}}(\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ point1,\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ point3)}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ :\ \_p1(point1),}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \_p3(point3),}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \_width(std::abs(point3.x\ -\/\ point1.x)),}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \_height(std::abs(point3.y\ -\/\ point1.y)),}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \_area(calc\_area())\ \{}
+\DoxyCodeLine{00028\ \ \ \ \ \_p2\ =\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}(point3.x,\ point1.y,\ point1.z);}
+\DoxyCodeLine{00029\ \ \ \ \ \_p4\ =\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}(point1.x,\ point3.y,\ point3.z);}
+\DoxyCodeLine{00030\ \ \ \}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00039\ \ \ [[nodiscard]]\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classVIPRA_1_1Geometry_1_1Rectangle_a436fa147ca56028ad5276b426ed05f81}{is\_point\_inside}}(\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ point)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ -\/>\ \textcolor{keywordtype}{bool}\ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{const}\ VIPRA::f\_pnt\ areaTri1\ =\ triangle\_area(\_p1,\ \_p2,\ point);}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{const}\ VIPRA::f\_pnt\ areaTri2\ =\ triangle\_area(\_p2,\ \_p3,\ point);}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{const}\ VIPRA::f\_pnt\ areaTri3\ =\ triangle\_area(\_p3,\ \_p4,\ point);}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{const}\ VIPRA::f\_pnt\ areaTri4\ =\ triangle\_area(\_p4,\ \_p1,\ point);}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordflow}{return}\ (areaTri1\ +\ areaTri2\ +\ areaTri3\ +\ areaTri4)\ <=\ area()\ +\ AREA\_ERROR;}
+\DoxyCodeLine{00046\ \ \ \}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00055\ \ \ [[nodiscard]]\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classVIPRA_1_1Geometry_1_1Rectangle_a5b55ae2af71c3e47c6683b0829abbfc6}{does\_intersect}}(\mbox{\hyperlink{classVIPRA_1_1Geometry_1_1Rectangle}{Rectangle}}\ \textcolor{keyword}{const}\&\ other)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ -\/>\ \textcolor{keywordtype}{bool}\ \{}
+\DoxyCodeLine{00056\ \ \ \ \ std::array<Line,\ 4>\ lines1\{\mbox{\hyperlink{structVIPRA_1_1Geometry_1_1Line}{Line}}\{\_p1,\ \_p2\},\ \{\_p2,\ \_p3\},\ \{\_p3,\ \_p4\},\ \{\_p4,\ \_p1\}\};}
+\DoxyCodeLine{00057\ \ \ \ \ std::array<Line,\ 4>\ lines2\{}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structVIPRA_1_1Geometry_1_1Line}{Line}}\{other.\_p1,\ other.\_p2\},\ \{other.\_p2,\ other.\_p3\},\ \{other.\_p3,\ other.\_p4\},\ \{other.\_p4,\ other.\_p1\}\};}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ 4;\ i++)\ \{}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ j\ =\ 0;\ j\ <\ 4;\ j++)\ \{}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (lines1.at(i).does\_intersect(lines2.at(j)))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00064\ \ \ \ \ \}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00067\ \ \ \}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00076\ \ \ [[nodiscard]]\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classVIPRA_1_1Geometry_1_1Rectangle_a17b5c0653f23bb0da0bbb684b3abfd46}{does\_intersect}}(\mbox{\hyperlink{structVIPRA_1_1Geometry_1_1Line}{Line}}\ \textcolor{keyword}{const}\&\ other)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ -\/>\ \textcolor{keywordtype}{bool}\ \{}
+\DoxyCodeLine{00077\ \ \ \ \ std::array<Line,\ 4>\ lines1\{\mbox{\hyperlink{structVIPRA_1_1Geometry_1_1Line}{Line}}\{\_p1,\ \_p2\},\ \{\_p2,\ \_p3\},\ \{\_p3,\ \_p4\},\ \{\_p4,\ \_p1\}\};}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ 4;\ ++i)\ \{}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (lines1.at(i).does\_intersect(other))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00081\ \ \ \ \ \}}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00084\ \ \ \}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ Getters\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00087\ \ \ [[nodiscard]]\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ rotation()\ const\ noexcept\ -\/>\ VIPRA::f\_pnt\ \{}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordflow}{return}\ atan2(\_p2.y\ -\/\ \_p1.y,\ \_p2.x\ -\/\ \_p1.x);}
+\DoxyCodeLine{00089\ \ \ \}}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ [[nodiscard]]\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ width()\ const\ noexcept\ -\/>\ VIPRA::f\_pnt\ \{\ \textcolor{keywordflow}{return}\ \_width;\ \}}
+\DoxyCodeLine{00092\ \ \ [[nodiscard]]\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ height()\ const\ noexcept\ -\/>\ VIPRA::f\_pnt\ \{\ \textcolor{keywordflow}{return}\ \_height;\ \}}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ [[nodiscard]]\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ area()\ const\ noexcept\ -\/>\ VIPRA::f\_pnt\ \{\ \textcolor{keywordflow}{return}\ \_area;\ \}}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \textcolor{comment}{//\ TODO(rolland):\ this\ assumes\ axis\ aligned}}
+\DoxyCodeLine{00097\ \ \ [[nodiscard]]\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ center()\ const\ noexcept\ -\/>\ VIPRA::f3d\ \{}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}(\_p1.x\ +\ width()\ /\ 2,\ \_p1.y\ +\ height()\ /\ 2,\ \_p1.z);}
+\DoxyCodeLine{00099\ \ \ \}}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \ \ [[nodiscard]]\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ p1()\ const\ noexcept\ -\/>\ VIPRA::f3d\ \{\ \textcolor{keywordflow}{return}\ \_p1;\ \}}
+\DoxyCodeLine{00102\ \ \ [[nodiscard]]\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ p2()\ const\ noexcept\ -\/>\ VIPRA::f3d\ \{\ \textcolor{keywordflow}{return}\ \_p2;\ \}}
+\DoxyCodeLine{00103\ \ \ [[nodiscard]]\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ p3()\ const\ noexcept\ -\/>\ VIPRA::f3d\ \{\ \textcolor{keywordflow}{return}\ \_p3;\ \}}
+\DoxyCodeLine{00104\ \ \ [[nodiscard]]\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ p4()\ const\ noexcept\ -\/>\ VIPRA::f3d\ \{\ \textcolor{keywordflow}{return}\ \_p4;\ \}}
+\DoxyCodeLine{00105\ \ \ [[nodiscard]]\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ operator[](VIPRA::size\ idx)\ -\/>\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\&\ \{}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordflow}{switch}\ (idx)\ \{}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0:}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_p1;}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1:}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_p2;}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2:}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_p3;}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3:}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_p4;}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(\textcolor{stringliteral}{"{}Attempt\ To\ Read\ Out\ of\ Bounds\ on\ Rect"{}});}
+\DoxyCodeLine{00117\ \ \ \ \ \}}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keywordflow}{return}\ \_p1;}
+\DoxyCodeLine{00120\ \ \ \}}
+\DoxyCodeLine{00121\ \ \ [[nodiscard]]\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ at(VIPRA::size\ idx)\ \textcolor{keyword}{const}\ -\/>\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\&\ \{}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keywordflow}{switch}\ (idx)\ \{}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0:}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_p1;}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1:}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_p2;}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2:}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_p3;}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3:}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_p4;}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ std::out\_of\_range(\textcolor{stringliteral}{"{}Attempt\ To\ Read\ Out\ of\ Bounds\ on\ Rect"{}});}
+\DoxyCodeLine{00133\ \ \ \ \ \}}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keywordflow}{return}\ \_p1;}
+\DoxyCodeLine{00136\ \ \ \}}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00138\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00139\ \ \ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ \ \ \_p1\{\};}
+\DoxyCodeLine{00140\ \ \ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ \ \ \_p2\{\};}
+\DoxyCodeLine{00141\ \ \ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ \ \ \_p3\{\};}
+\DoxyCodeLine{00142\ \ \ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ \ \ \_p4\{\};}
+\DoxyCodeLine{00143\ \ \ VIPRA::f\_pnt\ \_width\{\};}
+\DoxyCodeLine{00144\ \ \ VIPRA::f\_pnt\ \_height\{\};}
+\DoxyCodeLine{00145\ \ \ VIPRA::f\_pnt\ \_area\{\};}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ VIPRA::f\_pnt\ AREA\_ERROR\ =\ 0.0001;}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00157\ \ \ [[nodiscard]]\ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ triangle\_area(\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ point1,\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ point2,}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ point3)\ \textcolor{keyword}{noexcept}\ -\/>\ VIPRA::f\_pnt\ \{}
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keywordflow}{return}\ std::abs((point2.x\ *\ point1.y\ -\/\ point1.x\ *\ point2.y)\ +}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (point3.x\ *\ point2.y\ -\/\ point2.x\ *\ point3.y)\ +}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (point1.x\ *\ point3.y\ -\/\ point3.x\ *\ point1.y))\ /}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ 2;}
+\DoxyCodeLine{00163\ \ \ \}}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ \ \ [[nodiscard]]\ \textcolor{keyword}{inline}\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ calc\_area()\ const\ noexcept\ -\/>\ VIPRA::f\_pnt\ \{}
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{keywordflow}{return}\ (triangle\_area(\_p1,\ \_p2,\ \_p3)\ +\ triangle\_area(\_p1,\ \_p3,\ \_p4));}
+\DoxyCodeLine{00167\ \ \ \}}
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00169\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00170\ \ \ \textcolor{keyword}{constexpr}\ Rectangle()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00171\ \ \ \textcolor{keyword}{constexpr}\ Rectangle(Rectangle\ \textcolor{keyword}{const}\&)\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00172\ \ \ \textcolor{keyword}{constexpr}\ Rectangle(Rectangle\&\&)\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00173\ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ operator=(Rectangle\ \textcolor{keyword}{const}\&)\ -\/>\ Rectangle\&\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00174\ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ operator=(Rectangle\&\&)\ -\/>\ Rectangle\&\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00175\ \ \ \textcolor{keyword}{constexpr}\ \string~Rectangle()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00176\ \};}
+\DoxyCodeLine{00177\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA::Geometry}}
+
+\end{DoxyCode}

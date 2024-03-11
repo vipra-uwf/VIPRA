@@ -1,0 +1,30 @@
+\doxysection{VIPRA\+::Concepts\+::can\+\_\+get\+\_\+polygons Concept Reference}
+\hypertarget{conceptVIPRA_1_1Concepts_1_1can__get__polygons}{}\label{conceptVIPRA_1_1Concepts_1_1can__get__polygons}\index{VIPRA::Concepts::can\_get\_polygons@{VIPRA::Concepts::can\_get\_polygons}}
+
+
+Checks that a type can load polygons.  
+
+
+
+
+{\ttfamily \#include $<$polygon\+\_\+input.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ input\_t>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__get__polygons}{VIPRA::Concepts::can\_get\_polygons}}\ =\ \ \textcolor{keyword}{requires}(input\_t\ input)\ \{}
+\DoxyCodeLine{\ \ \{\ input.load\_polygons(\textcolor{stringliteral}{"{}key"{}})\ \}\ -\/>\ std::same\_as<std::optional<std::vector<VIPRA::Geometry::Polygon>>>;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Checks that a type can load polygons. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em input\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}

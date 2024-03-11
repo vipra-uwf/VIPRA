@@ -1,0 +1,29 @@
+\doxysection{VIPRA\+::Concepts\+::Input\+Module Concept Reference}
+\hypertarget{conceptVIPRA_1_1Concepts_1_1InputModule}{}\label{conceptVIPRA_1_1Concepts_1_1InputModule}\index{VIPRA::Concepts::InputModule@{VIPRA::Concepts::InputModule}}
+
+
+Checks that a type is an input module.  
+
+
+
+
+{\ttfamily \#include $<$input.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ input\_t>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1InputModule}{VIPRA::Concepts::InputModule}}\ =\ }
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1is__type}{is\_type<input\_t,\ VIPRA::Modules::Type::INPUT>}}\ \&\&\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__get__values}{can\_get\_values<input\_t>}}\ \&\&\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1delayed__load}{delayed\_load<input\_t>}}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Checks that a type is an input module. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em input\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}

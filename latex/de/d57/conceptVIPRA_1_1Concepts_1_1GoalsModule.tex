@@ -1,0 +1,29 @@
+\doxysection{VIPRA\+::Concepts\+::Goals\+Module Concept Reference}
+\hypertarget{conceptVIPRA_1_1Concepts_1_1GoalsModule}{}\label{conceptVIPRA_1_1Concepts_1_1GoalsModule}\index{VIPRA::Concepts::GoalsModule@{VIPRA::Concepts::GoalsModule}}
+
+
+Checks that a type is a goals module.  
+
+
+
+
+{\ttfamily \#include $<$goals.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ goals\_t>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1GoalsModule}{VIPRA::Concepts::GoalsModule}}\ =\ \ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1is__module}{is\_module<goals\_t,\ VIPRA::Modules::Type::GOALS>}}\ \&\&\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__initialize__goals}{can\_initialize\_goals<goals\_t>}}\ \&\&}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__get__goals}{can\_get\_goals<goals\_t>}}\ \&\&\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__update__goals}{can\_update\_goals<goals\_t>}}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Checks that a type is a goals module. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em goals\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}

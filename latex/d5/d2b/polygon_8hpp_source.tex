@@ -1,0 +1,58 @@
+\doxysection{polygon.\+hpp}
+\hypertarget{polygon_8hpp_source}{}\label{polygon_8hpp_source}\index{include/vipra/geometry/polygon.hpp@{include/vipra/geometry/polygon.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}vipra/geometry/circle.hpp"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}vipra/geometry/line.hpp"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{comment}{//\ TODO(rolland):\ add\ in\ iterators}}
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }VIPRA::Geometry\ \{}
+\DoxyCodeLine{00011\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structVIPRA_1_1Geometry_1_1Polygon}{Polygon}}\ \{}
+\DoxyCodeLine{00012\ \ \ std::vector<VIPRA::Geometry::Line>\ edges;}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{structVIPRA_1_1Geometry_1_1Polygon}{Polygon}}(\textcolor{keyword}{const}\ std::vector<VIPRA::f3d>\&\ points)\ \{}
+\DoxyCodeLine{00015\ \ \ \ \ assert(points.size()\ >\ 2);}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ points.size()\ -\/\ 1;\ ++i)\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ edges.emplace\_back(points.at(i),\ points.at(i\ +\ 1));}
+\DoxyCodeLine{00019\ \ \ \ \ \}}
+\DoxyCodeLine{00020\ \ \ \ \ edges.emplace\_back(points.back(),\ points.front());}
+\DoxyCodeLine{00021\ \ \ \}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{structVIPRA_1_1Geometry_1_1Polygon}{Polygon}}(std::vector<VIPRA::f3d>\&\&\ points)\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ assert(points.size()\ >\ 2);}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{comment}{//\ TODO(rolland):\ may\ be\ able\ to\ convert\ in\ place?}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ points.size()\ -\/\ 1;\ ++i)\ \{}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ edges.emplace\_back(points.at(i),\ points.at(i\ +\ 1));}
+\DoxyCodeLine{00029\ \ \ \ \ \}}
+\DoxyCodeLine{00030\ \ \ \ \ edges.emplace\_back(points.back(),\ points.front());}
+\DoxyCodeLine{00031\ \ \ \}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00040\ \ \ [[nodiscard]]\ \textcolor{keyword}{inline}\ \textcolor{keyword}{auto}\ \mbox{\hyperlink{structVIPRA_1_1Geometry_1_1Polygon_ada45ba17aa25e511d94879fb853a9d64}{is\_point\_inside}}(\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ point)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ -\/>\ \textcolor{keywordtype}{bool}\ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{comment}{//\ TODO(rolland):\ verify\ this}}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{bool}\ isInside\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ edge\ :\ edges)\ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (edge.is\_point\_on(point))\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (edge.start.y\ >\ point.y\ !=\ edge.end.y\ >\ point.y\ \&\&}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ point.x\ <\ (edge.end.x\ -\/\ edge.start.x)\ *\ (point.y\ -\/\ edge.start.y)\ /\ (edge.end.y\ -\/\ edge.start.y)\ +}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ edge.start.x)\ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ isInside\ =\ !isInside;}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00050\ \ \ \ \ \}}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordflow}{return}\ isInside;}
+\DoxyCodeLine{00052\ \ \ \}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ [[nodiscard]]\ \textcolor{keyword}{inline}\ \textcolor{keyword}{auto}\ does\_intersect(\mbox{\hyperlink{classVIPRA_1_1Geometry_1_1Circle}{VIPRA::Geometry::Circle}}\ \textcolor{keyword}{const}\&\ circle)\ \textcolor{keyword}{const}\ \textcolor{keyword}{noexcept}\ -\/>\ \textcolor{keywordtype}{bool}\ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordflow}{return}\ std::any\_of(edges.begin(),\ edges.end(),}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ [\&](\textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&\ edge)\ \{\ return\ circle.does\_intersect(edge);\ \});}
+\DoxyCodeLine{00057\ \ \ \}}
+\DoxyCodeLine{00058\ \};}
+\DoxyCodeLine{00059\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA::Geometry}}
+
+\end{DoxyCode}

@@ -1,0 +1,42 @@
+\doxysection{behavior\+\_\+context.\+hpp}
+\hypertarget{behavior__context_8hpp_source}{}\label{behavior__context_8hpp_source}\index{include/vipra/vipra\_behaviors/definitions/behavior\_context.hpp@{include/vipra/vipra\_behaviors/definitions/behavior\_context.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ SIMULATION\_CONTEXT\_HPP}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ SIMULATION\_CONTEXT\_HPP}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}vipra/geometry/f3d.hpp"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}vipra/random/random.hpp"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}vipra/types/time.hpp"{}}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/conditions/condition.hpp"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/conditions/sub\_condition.hpp"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/definitions/dsl\_types.hpp"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/definitions/pedestrian\_types.hpp"{}}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/definitions/sim\_pack.hpp"{}}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/locations/location.hpp"{}}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{namespace\ }VIPRA::Behaviors\ \{}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ cond\_t>}
+\DoxyCodeLine{00022\ \textcolor{keyword}{class\ }Event;}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00028\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ pedset\_t,\ \textcolor{keyword}{typename}\ map\_t,\ \textcolor{keyword}{typename}\ goals\_t>}
+\DoxyCodeLine{00029\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1BehaviorContext}{BehaviorContext}}\ \{}
+\DoxyCodeLine{00030\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1Simpack}{pack\_t}}\ =\ \mbox{\hyperlink{structVIPRA_1_1Behaviors_1_1Simpack}{Simpack<pedset\_t,\ map\_t,\ goals\_t>}};}
+\DoxyCodeLine{00031\ \ \ VIPRA::delta\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ elapsedTime\ =\ 0;}
+\DoxyCodeLine{00032\ \ \ \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{VIPRA::Random::Engine}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ engine;}
+\DoxyCodeLine{00033\ \ \ std::vector<Behaviors::stateUID>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pedStates;}
+\DoxyCodeLine{00034\ \ \ std::vector<Behaviors::typeUID>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ types;}
+\DoxyCodeLine{00035\ \ \ std::vector<Event<Condition<SubCondition<pack\_t>>>>\ events;}
+\DoxyCodeLine{00036\ \ \ std::vector<Behaviors::Location>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ locations;}
+\DoxyCodeLine{00037\ \};}
+\DoxyCodeLine{00038\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA::Behaviors}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

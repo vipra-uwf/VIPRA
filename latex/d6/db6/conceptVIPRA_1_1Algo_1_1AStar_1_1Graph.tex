@@ -1,0 +1,30 @@
+\doxysection{VIPRA\+::Algo\+::AStar\+::Graph Concept Reference}
+\hypertarget{conceptVIPRA_1_1Algo_1_1AStar_1_1Graph}{}\label{conceptVIPRA_1_1Algo_1_1AStar_1_1Graph}\index{VIPRA::Algo::AStar::Graph@{VIPRA::Algo::AStar::Graph}}
+
+
+Concept for type that can be used as a graph for the A\texorpdfstring{$\ast$}{*} algorithm.  
+
+
+
+
+{\ttfamily \#include $<$astar.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ graph\_t>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Algo_1_1AStar_1_1Graph}{VIPRA::Algo::AStar::Graph}}\ =\ \ \textcolor{keyword}{requires}(\textcolor{keyword}{const}\ graph\_t\ graph,\ VIPRA::idx\ idx)\ \{}
+\DoxyCodeLine{\ \ \{\ graph.neighbors(idx)\ \}\ -\/>\ std::same\_as<std::vector<VIPRA::idx>\ \textcolor{keyword}{const}\&>;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Concept for type that can be used as a graph for the A\texorpdfstring{$\ast$}{*} algorithm. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em graph\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}

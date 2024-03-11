@@ -1,0 +1,26 @@
+\doxysection{subcondition\+\_\+start.\+hpp}
+\hypertarget{subcondition__start_8hpp_source}{}\label{subcondition__start_8hpp_source}\index{include/vipra/vipra\_behaviors/conditions/subconditions/subcondition\_start.hpp@{include/vipra/vipra\_behaviors/conditions/subconditions/subcondition\_start.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/definitions/behavior\_context.hpp"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/definitions/sim\_pack.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/events/event.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}vipra/vipra\_behaviors/targets/target.hpp"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }VIPRA::Behaviors\ \{}
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1SubConditionStart}{SubConditionStart}}\ \{}
+\DoxyCodeLine{00010\ \ \ DEFAULT\_CONSTRUCTIBLE(\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1SubConditionStart}{SubConditionStart}})}
+\DoxyCodeLine{00011\ \ \ COPYABLE(\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1SubConditionStart}{SubConditionStart}})}
+\DoxyCodeLine{00012\ \ \ MOVEABLE(\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1SubConditionStart}{SubConditionStart}})}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00015\ \ \ \textcolor{keywordtype}{void}\ operator()(\textcolor{keyword}{auto}\ \textcolor{comment}{/*unused*/},\ VIPRA::idxVec\ \textcolor{keyword}{const}\&\ \textcolor{comment}{/*unused*/},\ std::vector<Target>\ \textcolor{keyword}{const}\&\ \textcolor{comment}{/*unused*/},}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<bool>\&\ met,\ std::vector<bool>\ \textcolor{keyword}{const}\&\ \textcolor{comment}{/*unused*/},\ BoolOp\ \textcolor{comment}{/*unused*/})\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00017\ \ \ \ \ std::fill(met.begin(),\ met.end(),\ \textcolor{keyword}{true});}
+\DoxyCodeLine{00018\ \ \ \}}
+\DoxyCodeLine{00019\ \};}
+\DoxyCodeLine{00020\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA::Behaviors}}
+
+\end{DoxyCode}

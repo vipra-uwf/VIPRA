@@ -1,0 +1,32 @@
+\doxysection{VIPRA\+::Concepts\+::has\+\_\+model\+\_\+timestep Concept Reference}
+\hypertarget{conceptVIPRA_1_1Concepts_1_1has__model__timestep}{}\label{conceptVIPRA_1_1Concepts_1_1has__model__timestep}\index{VIPRA::Concepts::has\_model\_timestep@{VIPRA::Concepts::has\_model\_timestep}}
+
+
+Checks that a type has a pedestrian dynamics timestep method.  
+
+
+
+
+{\ttfamily \#include $<$model.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ model\_t>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1has__model__timestep}{VIPRA::Concepts::has\_model\_timestep}}\ =\ \ \textcolor{keyword}{requires}(model\_t\ model,\ DummyPedSet\ \textcolor{keyword}{const}\&\ pedset,\ DummyMap\ \textcolor{keyword}{const}\&\ map,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ DummyGoals\ \textcolor{keyword}{const}\&\ goals,\ DummyOutput\&\ output,\ \mbox{\hyperlink{structVIPRA_1_1State}{VIPRA::State}}\&\ state,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ VIPRA::delta\_t\ deltaT,\ VIPRA::timestep\ timestep)\ \{}
+\DoxyCodeLine{\ \ \{\ model.timestep(pedset,\ map,\ goals,\ output,\ state,\ deltaT,\ timestep)\ \}\ -\/>\ std::same\_as<void>;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Checks that a type has a pedestrian dynamics timestep method. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em model\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}

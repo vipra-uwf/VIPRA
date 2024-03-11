@@ -1,0 +1,11 @@
+\doxysection{VIPRA\+::Concepts\+::can\+\_\+initialize\+\_\+field Concept Reference}
+\hypertarget{conceptVIPRA_1_1Concepts_1_1can__initialize__field}{}\label{conceptVIPRA_1_1Concepts_1_1can__initialize__field}\index{VIPRA::Concepts::can\_initialize\_field@{VIPRA::Concepts::can\_initialize\_field}}
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ field\_t>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__initialize__field}{VIPRA::Concepts::can\_initialize\_field}}\ =\ \ \textcolor{keyword}{requires}(field\_t\ field,\ DummyPedSet\ \textcolor{keyword}{const}\&\ pedset,\ DummyObsSet\ \textcolor{keyword}{const}\&\ obsset)\ \{}
+\DoxyCodeLine{\ \ \{field.initialize(pedset,\ obsset)\};}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}

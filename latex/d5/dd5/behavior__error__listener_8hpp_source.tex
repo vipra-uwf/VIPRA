@@ -1,0 +1,37 @@
+\doxysection{behavior\+\_\+error\+\_\+listener.\+hpp}
+\hypertarget{behavior__error__listener_8hpp_source}{}\label{behavior__error__listener_8hpp_source}\index{include/vipra/vipra\_behaviors/builder/behavior\_error\_listener.hpp@{include/vipra/vipra\_behaviors/builder/behavior\_error\_listener.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}antlr4-\/runtime.h"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{keyword}{namespace\ }VIPRA::Behaviors\ \{}
+\DoxyCodeLine{00006\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVIPRA_1_1Behaviors_1_1BehaviorErrorListener}{BehaviorErrorListener}}\ :\ \textcolor{keyword}{public}\ antlr4::BaseErrorListener\ \{}
+\DoxyCodeLine{00007\ \ \ \textcolor{comment}{//\ NOLINTBEGIN}}
+\DoxyCodeLine{00008\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00009\ \ \ \textcolor{keywordtype}{void}\ syntaxError(antlr4::Recognizer*\ recognizer,\ antlr4::Token*\ offendingSymbol,\ \textcolor{keywordtype}{size\_t}\ line,}
+\DoxyCodeLine{00010\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ charPositionInLine,\ std::string\ \textcolor{keyword}{const}\&\ msg,\ std::exception\_ptr\ ex)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{00011\ \ \ \ \ std::printf(\textcolor{stringliteral}{"{}Behavior\ Syntax\ Error:\ Line\ \%zul:\%zul,\ \%s"{}},\ line,\ charPositionInLine,\ msg.c\_str());}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordflow}{throw}\ std::runtime\_error(\textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00013\ \ \ \}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \ \ \textcolor{keywordtype}{void}\ reportAmbiguity(antlr4::Parser*\ recognizer,\ antlr4::dfa::DFA\ \textcolor{keyword}{const}\&\ dfa,\ \textcolor{keywordtype}{size\_t}\ startIndex,}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ stopIndex,\ \textcolor{keywordtype}{bool}\ exact,\ antlrcpp::BitSet\ \textcolor{keyword}{const}\&\ ambigAlts,}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ antlr4::atn::ATNConfigSet*\ configs)\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{00018\ \ \ \ \ std::printf(\textcolor{stringliteral}{"{}Behavior\ Ambiguity\ Error:\ Line\ \%zu:\%zu"{}},\ startIndex,\ stopIndex);}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordflow}{throw}\ std::runtime\_error(\textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00020\ \ \ \}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \textcolor{keywordtype}{void}\ reportAttemptingFullContext(antlr4::Parser*\ recognizer,\ antlr4::dfa::DFA\ \textcolor{keyword}{const}\&\ dfa,\ \textcolor{keywordtype}{size\_t}\ startIndex,}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ stopIndex,\ antlrcpp::BitSet\ \textcolor{keyword}{const}\&\ conflictingAlts,}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ antlr4::atn::ATNConfigSet*\ configs)\textcolor{keyword}{\ override\ }\{\}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \textcolor{keywordtype}{void}\ reportContextSensitivity(antlr4::Parser*\ recognizer,\ antlr4::dfa::DFA\ \textcolor{keyword}{const}\&\ dfa,\ \textcolor{keywordtype}{size\_t}\ startIndex,}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ stopIndex,\ \textcolor{keywordtype}{size\_t}\ prediction,}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ antlr4::atn::ATNConfigSet*\ configs)\textcolor{keyword}{\ override\ }\{\}}
+\DoxyCodeLine{00029\ \ \ \textcolor{comment}{//\ NOLINTEND}}
+\DoxyCodeLine{00030\ \};}
+\DoxyCodeLine{00031\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA::Behaviors}}
+
+\end{DoxyCode}

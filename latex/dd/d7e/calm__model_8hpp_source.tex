@@ -1,0 +1,201 @@
+\doxysection{calm\+\_\+model.\+hpp}
+\hypertarget{calm__model_8hpp_source}{}\label{calm__model_8hpp_source}\index{modules/model/calm\_model/calm\_model.hpp@{modules/model/calm\_model/calm\_model.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}vipra.hpp"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}calm\_collision.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}calm\_model\_types.hpp"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/goals.hpp"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}vipra/geometry/f3d.hpp"{}}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}vipra/random/distributions.hpp"{}}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{namespace\ }CALM\ \{}
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classCALM_1_1Model}{Model}}\ \{}
+\DoxyCodeLine{00013\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ VIPRA\_MODULE\_NAME(\textcolor{stringliteral}{"{}calm\_model"{}})}
+\DoxyCodeLine{00015\ \ \ VIPRA\_MODULE\_TYPE(MODEL)}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ VIPRA\_REGISTER\_STEP\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ VIPRA\_REGISTER\_PARAM(\textcolor{stringliteral}{"{}meanMass"{}});}
+\DoxyCodeLine{00019\ \ \ \ \ VIPRA\_REGISTER\_PARAM(\textcolor{stringliteral}{"{}massStdDev"{}});}
+\DoxyCodeLine{00020\ \ \ \ \ VIPRA\_REGISTER\_PARAM(\textcolor{stringliteral}{"{}meanReactionTime"{}});}
+\DoxyCodeLine{00021\ \ \ \ \ VIPRA\_REGISTER\_PARAM(\textcolor{stringliteral}{"{}reactionTimeStdDev"{}});}
+\DoxyCodeLine{00022\ \ \ \ \ VIPRA\_REGISTER\_PARAM(\textcolor{stringliteral}{"{}meanMaxSpeed"{}});}
+\DoxyCodeLine{00023\ \ \ \ \ VIPRA\_REGISTER\_PARAM(\textcolor{stringliteral}{"{}maxSpeedStdDev"{}});}
+\DoxyCodeLine{00024\ \ \ \ \ VIPRA\_REGISTER\_PARAM(\textcolor{stringliteral}{"{}meanShoulderLen"{}});}
+\DoxyCodeLine{00025\ \ \ \ \ VIPRA\_REGISTER\_PARAM(\textcolor{stringliteral}{"{}shoulderLenStdDev"{}});}
+\DoxyCodeLine{00026\ \ \ \ \ VIPRA\_REGISTER\_PARAM(\textcolor{stringliteral}{"{}random\_seed"{}});}
+\DoxyCodeLine{00027\ \ \ \}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ VIPRA\_CONFIG\_STEP\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ VIPRA\_GET\_PARAM(\textcolor{stringliteral}{"{}meanMass"{}},\ \_config.meanMass);}
+\DoxyCodeLine{00031\ \ \ \ \ VIPRA\_GET\_PARAM(\textcolor{stringliteral}{"{}massStdDev"{}},\ \_config.massStdDev);}
+\DoxyCodeLine{00032\ \ \ \ \ VIPRA\_GET\_PARAM(\textcolor{stringliteral}{"{}meanReactionTime"{}},\ \_config.meanReactionTime);}
+\DoxyCodeLine{00033\ \ \ \ \ VIPRA\_GET\_PARAM(\textcolor{stringliteral}{"{}reactionTimeStdDev"{}},\ \_config.reactionTimeStdDev);}
+\DoxyCodeLine{00034\ \ \ \ \ VIPRA\_GET\_PARAM(\textcolor{stringliteral}{"{}meanMaxSpeed"{}},\ \_config.meanMaxSpeed);}
+\DoxyCodeLine{00035\ \ \ \ \ VIPRA\_GET\_PARAM(\textcolor{stringliteral}{"{}maxSpeedStdDev"{}},\ \_config.maxSpeedStdDev);}
+\DoxyCodeLine{00036\ \ \ \ \ VIPRA\_GET\_PARAM(\textcolor{stringliteral}{"{}meanShoulderLen"{}},\ \_config.meanShoulderLen);}
+\DoxyCodeLine{00037\ \ \ \ \ VIPRA\_GET\_PARAM(\textcolor{stringliteral}{"{}shoulderLenStdDev"{}},\ \_config.shoulderLenStdDev);}
+\DoxyCodeLine{00038\ \ \ \}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \textcolor{comment}{//\ NOLINTNEXTLINE(misc-\/unused-\/parameters)}}
+\DoxyCodeLine{00041\ \ \ VIPRA\_MODEL\_INIT\_STEP\ \{}
+\DoxyCodeLine{00042\ \ \ \ \ \_peds.resize(pedset.num\_pedestrians());}
+\DoxyCodeLine{00043\ \ \ \ \ \_collision.initialize(pedset,\ goals,\ \_peds);}
+\DoxyCodeLine{00044\ \ \ \ \ \_collision.assignRaceStatuses(\_raceStatuses,\ \_inRace);}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \_peds.masses\ =\ VIPRA::Random::make\_distribution<VIPRA::Random::normal\_distribution<>>(}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \{\_config.meanMass,\ \_config.massStdDev\},\ \_peds.size(),\ engine);}
+\DoxyCodeLine{00048\ \ \ \ \ \_peds.reactionTimes\ =\ VIPRA::Random::make\_distribution<VIPRA::Random::normal\_distribution<>>(}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \{\_config.meanReactionTime,\ \_config.reactionTimeStdDev\},\ \_peds.size(),\ engine);}
+\DoxyCodeLine{00050\ \ \ \ \ \_peds.maxSpeeds\ =\ VIPRA::Random::make\_distribution<VIPRA::Random::normal\_distribution<>>(}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \{\_config.meanMaxSpeed,\ \_config.maxSpeedStdDev\},\ \_peds.size(),\ engine);}
+\DoxyCodeLine{00052\ \ \ \ \ \_peds.shoulderLens\ =\ VIPRA::Random::make\_distribution<VIPRA::Random::normal\_distribution<>>(}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \{\_config.meanShoulderLen,\ \_config.shoulderLenStdDev\},\ \_peds.size(),\ engine);}
+\DoxyCodeLine{00054\ \ \ \}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \textcolor{comment}{//\ NOLINTNEXTLINE(misc-\/unused-\/parameters,\ bugprone-\/easily-\/swappable-\/parameters)}}
+\DoxyCodeLine{00057\ \ \ VIPRA\_MODEL\_TIMESTEP\ \{}
+\DoxyCodeLine{00058\ \ \ \ \ calc\_shoulders(pedset.all\_coords(),\ goals.current\_goals());}
+\DoxyCodeLine{00059\ \ \ \ \ calc\_neighbors(pedset,\ map,\ goals);}
+\DoxyCodeLine{00060\ \ \ \ \ calc\_betas();}
+\DoxyCodeLine{00061\ \ \ \ \ update\_state(pedset,\ goals,\ state,\ deltaT);}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordflow}{if}\ (timestep\ >\ 0)\ \{}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \_collision.raceDetection(pedset,\ \_peds,\ goals,\ timestep,\ map);}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \_collision.assignRaceStatuses(\_raceStatuses,\ \_inRace);}
+\DoxyCodeLine{00066\ \ \ \ \ \}}
+\DoxyCodeLine{00067\ \ \ \}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00070\ \ \ \mbox{\hyperlink{structCALM_1_1ModelData}{ModelData}}\ \ \ \ \ \ \ \_peds;}
+\DoxyCodeLine{00071\ \ \ \mbox{\hyperlink{structCALM_1_1ConfigData}{ConfigData}}\ \ \ \ \ \ \_config;}
+\DoxyCodeLine{00072\ \ \ \mbox{\hyperlink{classCALM_1_1Collision}{CALM::Collision}}\ \_collision;}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ std::vector<RaceStatus>\ \ \ \ \ \ \ \ \_raceStatuses;}
+\DoxyCodeLine{00075\ \ \ std::vector<std::vector<bool>>\ \_inRace;}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ VIPRA::delta\_t\ SLIDING\_GOAL\_TIME\ =\ 0.1F;}
+\DoxyCodeLine{00078\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ VIPRA::f\_pnt\ \ \ EQUILIBRIUM\_DISTANCE\ =\ 0.382;}
+\DoxyCodeLine{00079\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ VIPRA::f\_pnt\ \ \ EQUILIBRIUM\_RESOLUTION\ =\ 0.01F;}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \textcolor{keywordtype}{void}\ calc\_neighbors(\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1PedsetModule}{VIPRA::Concepts::PedsetModule}}\ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&\ pedset,}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1MapModule}{VIPRA::Concepts::MapModule}}\ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&\ \textcolor{comment}{/*map*/},}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1GoalsModule}{VIPRA::Concepts::GoalsModule}}\ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&\ goals);}
+\DoxyCodeLine{00084\ \ \ \textcolor{keywordtype}{void}\ update\_state(\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1PedsetModule}{VIPRA::Concepts::PedsetModule}}\ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&\ pedset,}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1GoalsModule}{VIPRA::Concepts::GoalsModule}}\ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&\ goals,\ \mbox{\hyperlink{structVIPRA_1_1State}{VIPRA::State}}\&\ state,}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ VIPRA::delta\_t\ deltaT);}
+\DoxyCodeLine{00087\ \ \ \textcolor{keyword}{auto}\ is\_path\_blocked(VIPRA::idx\ pedIdx,\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ veloc,\ VIPRA::f\_pnt\ maxDist,}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1MapModule}{VIPRA::Concepts::MapModule}}\ \textcolor{keyword}{auto}\&\ map)\ -\/>\ VIPRA::f\_pnt;}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ calc\_shoulders(VIPRA::f3dVec\ \textcolor{keyword}{const}\&,\ VIPRA::f3dVec\ \textcolor{keyword}{const}\&);}
+\DoxyCodeLine{00091\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ obj\_spatial\_test(\textcolor{keyword}{const}\ \mbox{\hyperlink{classVIPRA_1_1Geometry_1_1Rectangle}{VIPRA::Geometry::Rectangle}}\&,\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}},\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}})\ -\/>\ bool;}
+\DoxyCodeLine{00092\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ obj\_direction\_test(\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}},\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}},\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}})\ -\/>\ bool;}
+\DoxyCodeLine{00093\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ is\_ped\_toward\_goal(\mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}},\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}},\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}})\ -\/>\ bool;}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \textcolor{keyword}{auto}\ rect\_from\_shoulders(VIPRA::idx,\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}},\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}})\ -\/>\ \mbox{\hyperlink{classVIPRA_1_1Geometry_1_1Rectangle}{VIPRA::Geometry::Rectangle}};}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ calc\_betas();}
+\DoxyCodeLine{00098\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{auto}\ calc\_beta(VIPRA::f\_pnt\ distance)\ -\/>\ VIPRA::f\_pnt;}
+\DoxyCodeLine{00099\ \};}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \textcolor{comment}{//\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/\ IMPLEMENTATIONS\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \textcolor{keywordtype}{void}\ Model::calc\_neighbors(\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1PedsetModule}{VIPRA::Concepts::PedsetModule}}\ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&\ pedset,}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1MapModule}{VIPRA::Concepts::MapModule}}\ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&\ \textcolor{comment}{/*map*/},}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1GoalsModule}{VIPRA::Concepts::GoalsModule}}\ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&\ goals)\ \{}
+\DoxyCodeLine{00106\ \ \ \textcolor{keyword}{const}\ VIPRA::size\ pedCnt\ =\ pedset.num\_pedestrians();}
+\DoxyCodeLine{00107\ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&\ \ \ \ \ \ \ coords\ =\ pedset.all\_coords();}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \ \ \textcolor{keywordflow}{for}\ (VIPRA::idx\ i\ =\ 0;\ i\ <\ pedCnt;\ ++i)\ \{}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordflow}{if}\ (goals.is\_goal\_met(i))\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ \ \ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pedCoords\ =\ coords[i];}
+\DoxyCodeLine{00113\ \ \ \ \ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pedGoal\ =\ goals.current\_goal(i);}
+\DoxyCodeLine{00114\ \ \ \ \ \mbox{\hyperlink{classVIPRA_1_1Geometry_1_1Rectangle}{VIPRA::Geometry::Rectangle}}\ pedRect\ =\ rect\_from\_shoulders(i,\ pedCoords,\ pedGoal);}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \ \ \ \ VIPRA::f\_pnt\ nearestDist\ =\ std::numeric\_limits<VIPRA::f\_pnt>::max();}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordflow}{for}\ (VIPRA::idx\ j\ =\ 0;\ j\ <\ pedCnt;\ ++j)\ \{}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ ==\ j\ ||\ goals.is\_goal\_met(j))\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \ \ \ \ \ \ \ \ otherCoords\ =\ coords[j];}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ VIPRA::f\_pnt\ distance\ =\ pedCoords.distance\_to(otherCoords);}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (distance\ >=\ nearestDist)\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((\_raceStatuses[i]\ ==\ 0\ \&\&\ \_raceStatuses[j]\ ==\ 1)\ ||}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ std::fabs(distance\ -\/\ EQUILIBRIUM\_DISTANCE)\ <\ EQUILIBRIUM\_RESOLUTION)}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!is\_ped\_toward\_goal(pedCoords,\ pedGoal,\ otherCoords))\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!obj\_spatial\_test(pedRect,\ \_peds.shoulders[j].start,\ \_peds.shoulders[j].end))\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ \ \ \ \ \ \ nearestDist\ =\ distance;}
+\DoxyCodeLine{00134\ \ \ \ \ \}}
+\DoxyCodeLine{00135\ \ \ \ \ \_peds.nearestDists[i]\ =\ nearestDist;}
+\DoxyCodeLine{00136\ \ \ \}}
+\DoxyCodeLine{00137\ \}}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \textcolor{keywordtype}{void}\ Model::update\_state(\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1PedsetModule}{VIPRA::Concepts::PedsetModule}}\ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&\ pedset,}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1GoalsModule}{VIPRA::Concepts::GoalsModule}}\ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&\ goals,\ \mbox{\hyperlink{structVIPRA_1_1State}{VIPRA::State}}\&\ state,}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ VIPRA::delta\_t\ deltaT)\ \{}
+\DoxyCodeLine{00142\ \ \ \textcolor{keyword}{const}\ VIPRA::size\ pedCnt\ =\ pedset.num\_pedestrians();}
+\DoxyCodeLine{00143\ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&\ \ \ \ \ \ \ velocities\ =\ pedset.all\_velocities();}
+\DoxyCodeLine{00144\ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&\ \ \ \ \ \ \ coords\ =\ pedset.all\_coords();}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \ \ \textcolor{keywordflow}{for}\ (VIPRA::idx\ i\ =\ 0;\ i\ <\ pedCnt;\ ++i)\ \{}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keywordflow}{if}\ (goals.is\_goal\_met(i)\ ||\ \_collision.status(i)\ ==\ WAIT)\ \{}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ state.velocities[i]\ =\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\{\};}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00150\ \ \ \ \ \}}
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordflow}{if}\ (goals.time\_since\_last\_goal(i)\ >\ 0\ \&\&\ goals.time\_since\_last\_goal(i)\ <=\ SLIDING\_GOAL\_TIME)\ \{}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ state.velocities[i].x\ =\ 0;}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ state.velocities[i].y\ =\ 0;}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00155\ \ \ \ \ \}}
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00157\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ \ \ goal\ =\ goals.current\_goal(i);}
+\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ \ \ velocity\ =\ velocities[i];}
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ \ \ coord\ =\ coords[i];}
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{keyword}{const}\ VIPRA::f\_pnt\ desiredSpeed\ =\ \_peds.maxSpeeds[i];}
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{keyword}{const}\ VIPRA::f\_pnt\ mass\ =\ \_peds.masses[i];}
+\DoxyCodeLine{00162\ \ \ \ \ \textcolor{keyword}{const}\ VIPRA::f\_pnt\ reactionTime\ =\ \_peds.reactionTimes[i];}
+\DoxyCodeLine{00163\ \ \ \ \ \textcolor{keyword}{const}\ VIPRA::f\_pnt\ beta\ =\ \_peds.betas[i];}
+\DoxyCodeLine{00164\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ \ \ direction\ =\ goal\ -\/\ coord;}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ propulsion\ =\ ((direction.\mbox{\hyperlink{structVIPRA_1_1f3d_ab1277b8ed16683c649cd5648fbea1885}{unit}}()\ *\ desiredSpeed\ *\ beta\ -\/\ velocity)\ *\ mass)\ /\ reactionTime;}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00168\ \ \ \ \ state.velocities[i]\ =\ ((propulsion\ /\ mass)\ *\ deltaT)\ +\ velocity;}
+\DoxyCodeLine{00169\ \ \ \ \ state.positions[i]\ =\ coord\ +\ (state.velocities[i]\ *\ deltaT);}
+\DoxyCodeLine{00170\ \ \ \}}
+\DoxyCodeLine{00171\ \}}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00173\ \textcolor{keyword}{auto}\ Model::is\_path\_blocked(VIPRA::idx\ pedIdx,\ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA::f3d}}\ velocity,\ VIPRA::f\_pnt\ maxDist,}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1MapModule}{VIPRA::Concepts::MapModule}}\ \textcolor{keyword}{auto}\&\ map)\ -\/>\ VIPRA::f\_pnt\ \{}
+\DoxyCodeLine{00175\ \ \ \mbox{\hyperlink{structVIPRA_1_1Geometry_1_1Line}{VIPRA::Geometry::Line}}\ shoulders\ =\ \_peds.shoulders[pedIdx];}
+\DoxyCodeLine{00176\ \ \ \textcolor{keywordflow}{if}\ (shoulders.start\ ==\ shoulders.end)\ \{}
+\DoxyCodeLine{00177\ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00178\ \ \ \}}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00180\ \ \ VIPRA::f\_pnt\ \textcolor{keyword}{const}\ leftDist\ =\ map.ray\_hit(shoulders.start,\ shoulders.start\ +\ (velocity.unit()\ *\ maxDist));}
+\DoxyCodeLine{00181\ \ \ VIPRA::f\_pnt\ \textcolor{keyword}{const}\ rightDist\ =\ map.ray\_hit(shoulders.end,\ shoulders.end\ +\ (velocity.unit()\ *\ maxDist));}
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00183\ \ \ \textcolor{keywordflow}{if}\ (leftDist\ ==\ -\/1)\ \{}
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keywordflow}{return}\ rightDist;}
+\DoxyCodeLine{00185\ \ \ \}}
+\DoxyCodeLine{00186\ \ \ \textcolor{keywordflow}{if}\ (rightDist\ ==\ -\/1)\ \{}
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keywordflow}{return}\ leftDist;}
+\DoxyCodeLine{00188\ \ \ \}}
+\DoxyCodeLine{00189\ }
+\DoxyCodeLine{00190\ \ \ \textcolor{keywordflow}{return}\ std::min(leftDist,\ rightDist);}
+\DoxyCodeLine{00191\ \}}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00193\ \}\ \ \textcolor{comment}{//\ namespace\ CALM}}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00195\ CHECK\_MODULE(ModelModule,\ \mbox{\hyperlink{classCALM_1_1Model}{CALM::Model}})}
+
+\end{DoxyCode}

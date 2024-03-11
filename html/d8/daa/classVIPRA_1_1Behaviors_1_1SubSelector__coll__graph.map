@@ -1,0 +1,5 @@
+<map id="VIPRA::Behaviors::SubSelector&lt; selector_t, cond_t &gt;" name="VIPRA::Behaviors::SubSelector&lt; selector_t, cond_t &gt;">
+<area shape="rect" id="Node000001" title="Selects pedestrians for one type, gets combined with other SubSelectors in Selector." alt="" coords="5,94,208,135"/>
+<area shape="rect" id="Node000002" href="$db/dbc/classVIPRA_1_1Behaviors_1_1Ptype.html" title="Pedestrian Type, used as a composite of typeUIDs." alt="" coords="24,5,189,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="109,46,109,93,104,93,104,46"/>
+</map>

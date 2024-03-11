@@ -1,0 +1,127 @@
+\doxysection{parameter\+\_\+sweep.\+hpp}
+\hypertarget{parameter__sweep_8hpp_source}{}\label{parameter__sweep_8hpp_source}\index{include/vipra/parameter\_sweep/parameter\_sweep.hpp@{include/vipra/parameter\_sweep/parameter\_sweep.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <mpi.h>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <cstddef>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/parameter\_input.hpp"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/parameters.hpp"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}vipra/special\_modules/parameters.hpp"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}vipra/types/parameter.hpp"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}vipra/types/util/result\_or\_void.hpp"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}vipra/util/all\_of\_type.hpp"{}}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{namespace\ }VIPRA\ \{}
+\DoxyCodeLine{00017\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVIPRA_1_1ParameterSweep}{ParameterSweep}}\ \{}
+\DoxyCodeLine{00018\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00019\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ initialize(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}**\ argv)\ \{}
+\DoxyCodeLine{00020\ \ \ \ \ MPI\_Init(\&argc,\ \&argv);}
+\DoxyCodeLine{00021\ \ \ \ \ MPI\_Comm\_dup(MPI\_COMM\_WORLD,\ \&comm);}
+\DoxyCodeLine{00022\ \ \ \ \ MPI\_Comm\_rank(comm,\ \&rank);}
+\DoxyCodeLine{00023\ \ \ \ \ MPI\_Comm\_size(comm,\ \&size);}
+\DoxyCodeLine{00024\ \ \ \}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ sim\_t,\ \textcolor{keyword}{typename}\ params\_t,\ \textcolor{keyword}{typename}\ callback\_t\ =\ VIPRA::VOID>}
+\DoxyCodeLine{00027\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ run(sim\_t\&\&\ sim,\ params\_t\&\&\ params,\ \textcolor{keywordtype}{size\_t}\ count,\ callback\_t\&\&\ callback\ =\ \mbox{\hyperlink{structVIPRA_1_1VOID}{VOID}}\{\})\ \{}
+\DoxyCodeLine{00028\ \ \ \ \ load\_params(params);}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ localCount\ =\ sim\_count(count);}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ sim.add\_sim\_id(sim\_id(count));}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ localCount;\ ++i)\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same\_v<callback\_t,\ VIPRA::VOID>)\ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ sim.parallel\_run(params);}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ TODO(rolland):\ this\ doesn't\ properly\ warn\ that\ the\ callback\ is\ not\ being\ used}}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_invocable\_v<callback\_t,\ \textcolor{keyword}{decltype}(sim.parallel\_run(params))>)\ \{}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ callback(sim.parallel\_run(params));}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ sim.parallel\_run(params);}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ callback();}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00045\ \ \ \ \ \}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ sim.set\_sim\_id(count);}
+\DoxyCodeLine{00048\ \ \ \ \ MPI\_Barrier(MPI\_COMM\_WORLD);}
+\DoxyCodeLine{00049\ \ \ \}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ [[nodiscard]]\ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ get\_rank()\ -\/>\ \textcolor{keywordtype}{int}\ \{\ \textcolor{keywordflow}{return}\ rank;\ \}}
+\DoxyCodeLine{00052\ \ \ [[nodiscard]]\ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ get\_size()\ -\/>\ \textcolor{keywordtype}{int}\ \{\ \textcolor{keywordflow}{return}\ size;\ \}}
+\DoxyCodeLine{00053\ \ \ [[nodiscard]]\ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ is\_parallel()\ -\/>\ \textcolor{keywordtype}{bool}\ \{\ \textcolor{keywordflow}{return}\ size\ >\ 1;\ \}}
+\DoxyCodeLine{00054\ \ \ [[nodiscard]]\ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ is\_root()\ -\/>\ \textcolor{keywordtype}{bool}\ \{\ \textcolor{keywordflow}{return}\ rank\ ==\ 0;\ \}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00057\ \ \ \textcolor{keyword}{struct\ }DeferedFinalize\ \{}
+\DoxyCodeLine{00058\ \ \ \ \ DeferedFinalize(DeferedFinalize\ \textcolor{keyword}{const}\&)\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00059\ \ \ \ \ DeferedFinalize(DeferedFinalize\&\&)\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keyword}{auto}\ operator=(DeferedFinalize\ \textcolor{keyword}{const}\&)\ -\/>\ DeferedFinalize\&\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{auto}\ operator=(DeferedFinalize\&\&)\ -\/>\ DeferedFinalize\&\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00062\ \ \ \ \ DeferedFinalize()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00063\ \ \ \ \ \string~DeferedFinalize()\ \{}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ flag\ =\ 0;}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ MPI\_Initialized(\&flag);}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (flag)\ MPI\_Finalize();}
+\DoxyCodeLine{00067\ \ \ \ \ \}}
+\DoxyCodeLine{00068\ \ \ \};}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \textcolor{comment}{//\ NOLINTBEGIN}}
+\DoxyCodeLine{00071\ \ \ \textcolor{keyword}{static}\ MPI\_Comm\ \ \ \ \ \ \ \ comm;}
+\DoxyCodeLine{00072\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ rank;}
+\DoxyCodeLine{00073\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ size;}
+\DoxyCodeLine{00074\ \ \ \textcolor{keyword}{static}\ DeferedFinalize\ \_finalize;}
+\DoxyCodeLine{00075\ \ \ \textcolor{comment}{//\ NOLINTEND}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ params\_t>}
+\DoxyCodeLine{00078\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ load\_params(params\_t\&\ params)\ \{}
+\DoxyCodeLine{00079\ \ \ \ \ std::string\ serialized\{\};}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ length\{\};}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keyword}{auto}\&\ input\ =\ params.get\_input();}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordflow}{if}\ (rank\ ==\ 0)\ \{}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ input.load();}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ serialized\ =\ input.serialize();}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ length\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(serialized.size());}
+\DoxyCodeLine{00088\ \ \ \ \ \}}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ MPI\_Bcast(\&length,\ 1,\ MPI\_INT,\ 0,\ comm);}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordflow}{if}\ (rank\ !=\ 0)\ \{}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ serialized.resize(length);}
+\DoxyCodeLine{00094\ \ \ \ \ \}}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \ \ MPI\_Bcast(serialized.data(),\ length,\ MPI\_CHAR,\ 0,\ comm);}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordflow}{if}\ (rank\ !=\ 0)\ \{}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ input.deserialize(serialized);}
+\DoxyCodeLine{00100\ \ \ \ \ \}}
+\DoxyCodeLine{00101\ \ \ \}}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ sim\_count(\textcolor{keywordtype}{size\_t}\ count)\ -\/>\ \textcolor{keywordtype}{size\_t}\ \{}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ localCount\ =\ count\ /\ size;}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordflow}{if}\ (rank\ <\ count\ \%\ size)\ \{}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ ++localCount;}
+\DoxyCodeLine{00107\ \ \ \ \ \}}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordflow}{return}\ localCount;}
+\DoxyCodeLine{00110\ \ \ \}}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ sim\_id(\textcolor{keywordtype}{size\_t}\ count)\ -\/>\ \textcolor{keywordtype}{size\_t}\ \{}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ idx\ =\ rank\ *\ sim\_count(count);}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keywordflow}{if}\ (rank\ >\ count\ \%\ size)\ \{}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ idx\ +=\ count\ \%\ size;}
+\DoxyCodeLine{00116\ \ \ \ \ \}}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keywordflow}{return}\ idx;}
+\DoxyCodeLine{00119\ \ \ \}}
+\DoxyCodeLine{00120\ \};}
+\DoxyCodeLine{00121\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA}}
+
+\end{DoxyCode}

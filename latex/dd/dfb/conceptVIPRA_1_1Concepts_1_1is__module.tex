@@ -1,0 +1,30 @@
+\doxysection{VIPRA\+::Concepts\+::is\+\_\+module Concept Reference}
+\hypertarget{conceptVIPRA_1_1Concepts_1_1is__module}{}\label{conceptVIPRA_1_1Concepts_1_1is__module}\index{VIPRA::Concepts::is\_module@{VIPRA::Concepts::is\_module}}
+
+
+Checks that a type is a module.  
+
+
+
+
+{\ttfamily \#include $<$module.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ module\_t,\ Modules::Type\ type>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1is__module}{VIPRA::Concepts::is\_module}}\ =\ \ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1is__type}{is\_type<module\_t,\ type>}}\ \&\&\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1has__parameters}{has\_parameters<module\_t>}}\ \&\&\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1has__config}{has\_config<module\_t>}}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Checks that a type is a module. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em module\+\_\+t} & \\
+\hline
+{\em type} & \\
+\hline
+\end{DoxyTemplParams}

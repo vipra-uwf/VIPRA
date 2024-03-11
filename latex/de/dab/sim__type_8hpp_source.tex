@@ -1,0 +1,169 @@
+\doxysection{sim\+\_\+type.\+hpp}
+\hypertarget{sim__type_8hpp_source}{}\label{sim__type_8hpp_source}\index{include/vipra/simulation/sim\_type.hpp@{include/vipra/simulation/sim\_type.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#include\ <cstddef>}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <tuple>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/all\_concepts.hpp"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/output\_coordinator.hpp"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}vipra/concepts/parameters.hpp"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}vipra/parameter\_sweep/parameter\_sweep.hpp"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}vipra/random/random.hpp"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}vipra/special\_modules/behavior\_model.hpp"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}vipra/types/parameter.hpp"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}vipra/types/time.hpp"{}}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ "{}vipra/types/util/result\_or\_void.hpp"{}}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}vipra/types/util/sim\_output.hpp"{}}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ "{}vipra/util/all\_of\_type.hpp"{}}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ "{}vipra/util/debug\_do.hpp"{}}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{comment}{//\ TODO(rolland):\ create\ type\ erased\ wrapper\ for\ simulation}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{comment}{//\ TODO(rolland):\ go\ through\ everything\ and\ handle\ errors\ more\ gracefully,\ currently\ we\ just\ throw}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{keyword}{namespace\ }VIPRA\ \{}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{keyword}{template}\ <Concepts::OutputCoordinator\ output\_t,\ Concepts::ModelModule\ model\_t,}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ Concepts::PedsetModule\ pedset\_t,\ Concepts::GoalsModule\ goals\_t,\ Concepts::MapModule\ map\_t>}
+\DoxyCodeLine{00031\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classVIPRA_1_1SimType}{SimType}}\ \{}
+\DoxyCodeLine{00032\ \ \ \textcolor{keyword}{using\ }base\_output\_t\ =\ \textcolor{keyword}{decltype}(std::declval<output\_t>().write());}
+\DoxyCodeLine{00033\ \ \ \textcolor{keyword}{using\ }output\_data\_t\ =\ VIPRA::sim\_output\_t<output\_t>;}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00036\ \ \ \textcolor{keyword}{constexpr}\ \mbox{\hyperlink{classVIPRA_1_1SimType}{SimType}}(output\_t\&\&\ output,\ model\_t\&\&\ model,\ pedset\_t\&\&\ pedset,\ goals\_t\&\&\ goals,\ map\_t\&\&\ obstacles)}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ :\ \_output(output),\ \_model(model),\ \_pedset(pedset),\ \_goals(goals),\ \_map(obstacles)\ \{\}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00045\ \ \ \textcolor{keyword}{auto}\ \mbox{\hyperlink{classVIPRA_1_1SimType_ae308979596a569cd12ab5a1ecc745bcd}{operator()}}(\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1ParamModule}{Concepts::ParamModule}}\ \textcolor{keyword}{auto}\&\&\ params)\ -\/>\ output\_data\_t\ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{comment}{//\ TODO(rolland):\ this\ assumes\ that\ a\ only\ a\ single\ node\ should\ ever\ run\ this\ function,\ there\ may\ be\ sitations\ where\ this\ isn't\ user\ friendly?}}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordflow}{if}\ (!ParameterSweep::is\_root())\ \textcolor{keywordflow}{return}\ \{\};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ params.get\_input().load();}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same\_v<output\_data\_t,\ void>)\ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ run\_sim(std::forward<\textcolor{keyword}{decltype}(params)>(params));}
+\DoxyCodeLine{00053\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ run\_sim(std::forward<\textcolor{keyword}{decltype}(params)>(params));}
+\DoxyCodeLine{00055\ \ \ \ \ \}}
+\DoxyCodeLine{00056\ \ \ \}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \textcolor{comment}{//\ TODO(rolland):\ the\ simulation\ shouldn't\ have\ to\ know\ that\ it\ is\ being\ run\ in\ parallel}}
+\DoxyCodeLine{00059\ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ -\/\ this\ is\ needed\ because\ of\ the\ delayed\ loading\ of\ parameters,\ with\ the\ operator()\ every\ node\ would\ load\ the\ parameters\ when\ they've\ already\ been\ updated}}
+\DoxyCodeLine{00060\ \ \ \textcolor{keyword}{auto}\ parallel\_run(\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1ParamModule}{Concepts::ParamModule}}\ \textcolor{keyword}{auto}\&\&\ params)\ -\/>\ output\_data\_t\ \{}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same\_v<output\_data\_t,\ void>)\ \{}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ run\_sim(std::forward<\textcolor{keyword}{decltype}(params)>(params));}
+\DoxyCodeLine{00063\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ run\_sim(std::forward<\textcolor{keyword}{decltype}(params)>(params));}
+\DoxyCodeLine{00065\ \ \ \ \ \}}
+\DoxyCodeLine{00066\ \ \ \}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \textcolor{keywordtype}{void}\ set\_sim\_id(VIPRA::idx\ idx)\ \{\ \_currSimIdx\ =\ idx;\ \}}
+\DoxyCodeLine{00069\ \ \ \textcolor{keywordtype}{void}\ add\_sim\_id(VIPRA::idx\ idx)\ \{\ \_currSimIdx\ +=\ idx;\ \}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00072\ \ \ output\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_output;}
+\DoxyCodeLine{00073\ \ \ model\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_model;}
+\DoxyCodeLine{00074\ \ \ pedset\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_pedset;}
+\DoxyCodeLine{00075\ \ \ goals\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_goals;}
+\DoxyCodeLine{00076\ \ \ map\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_map;}
+\DoxyCodeLine{00077\ \ \ BehaviorModel<pedset\_t,\ map\_t,\ goals\_t>\ \_behaviorModel;}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \textcolor{comment}{//\ TODO(rolland):\ NEXT\ create\ a\ sim\ id\ and\ update\ output\ to\ use\ it}}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{VIPRA::Random::Engine}}\ \_engine\{\};}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ VIPRA::idx\ \ \ \ \ \ \_currSimIdx\{0\};}
+\DoxyCodeLine{00084\ \ \ VIPRA::timestep\ \_timestep\{0\};}
+\DoxyCodeLine{00085\ \ \ VIPRA::timestep\ \_outputFrequency\{0\};}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \textcolor{keyword}{auto}\ run\_sim(Concepts::ParamModule\ \textcolor{keyword}{auto}\&\&\ params)\ -\/>\ output\_data\_t\ \{}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keyword}{auto}\ [maxTimestep,\ timestepSize,\ randomseed,\ state]\ =\ initialize(params);}
+\DoxyCodeLine{00089\ \ \ \ \ \_output.new\_run(\_currSimIdx++);}
+\DoxyCodeLine{00090\ \ \ \ \ \_timestep\ =\ 0;}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordflow}{while}\ (\_timestep\ <\ maxTimestep\ \&\&\ !\_goals.is\_sim\_goal\_met())\ \{}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \_model.timestep(\_pedset,\ \_map,\ \_goals,\ \_output,\ state,\ timestepSize,\ \_timestep);}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \_behaviorModel.timestep(\_pedset,\ \_map,\ \_goals,\ state,\ timestepSize);}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \_pedset.update(state);}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \_goals.update(\_pedset,\ \_map,\ timestepSize);}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ output\_positions();}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ ++\_timestep;}
+\DoxyCodeLine{00099\ \ \ \ \ \}}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same\_v<output\_data\_t,\ void>)\ \{}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \_output.write();}
+\DoxyCodeLine{00103\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_output.write();}
+\DoxyCodeLine{00105\ \ \ \ \ \}}
+\DoxyCodeLine{00106\ \ \ \}}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00114\ \ \ \textcolor{keyword}{auto}\ initialize(Concepts::ParamModule\ \textcolor{keyword}{auto}\&\ params)\ \{}
+\DoxyCodeLine{00115\ \ \ \ \ register\_params(params);}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \ \ \ \ VIPRA::timestep\ maxTimestep\ =\ params.template\ get\_param<VIPRA::timestep>(Modules::Type::SIMULATION,}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}main"{}},\ \textcolor{stringliteral}{"{}max\_timestep"{}},\ \_engine);}
+\DoxyCodeLine{00119\ \ \ \ \ VIPRA::timestep\ timestepSize\ =\ params.template\ get\_param<VIPRA::timestep>(}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ Modules::Type::SIMULATION,\ \textcolor{stringliteral}{"{}main"{}},\ \textcolor{stringliteral}{"{}timestep\_size"{}},\ \_engine);}
+\DoxyCodeLine{00121\ \ \ \ \ VIPRA::timestep\ randomseed\ =}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ params.template\ get\_param<VIPRA::timestep>(Modules::Type::SIMULATION,\ \textcolor{stringliteral}{"{}main"{}},\ \textcolor{stringliteral}{"{}random\_seed"{}},\ \_engine);}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \ \ \ \ \_engine.\mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine_a49e677f0a9609ce76b96a0e855da75e1}{reseed}}(randomseed);}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \ \ \ \ config(params);}
+\DoxyCodeLine{00127\ \ \ \ \ \_map.initialize(\_pedset);}
+\DoxyCodeLine{00128\ \ \ \ \ \_goals.initialize(\_pedset,\ \_map);}
+\DoxyCodeLine{00129\ \ \ \ \ \_model.initialize(\_pedset,\ \_map,\ \_goals,\ \_output,\ \_engine);}
+\DoxyCodeLine{00130\ \ \ \ \ \_behaviorModel.initialize(\_pedset,\ \_map,\ \_goals,\ randomseed);}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \ \ \ \ \mbox{\hyperlink{structVIPRA_1_1State}{VIPRA::State}}\ state;}
+\DoxyCodeLine{00133\ \ \ \ \ state.initialize(\_pedset);}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keywordflow}{return}\ std::make\_tuple(maxTimestep,\ timestepSize,\ randomseed,\ state);}
+\DoxyCodeLine{00136\ \ \ \}}
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00143\ \ \ \textcolor{keywordtype}{void}\ register\_params(Concepts::ParamModule\ \textcolor{keyword}{auto}\&\ params)\ \{}
+\DoxyCodeLine{00144\ \ \ \ \ \_output.register\_params(params);}
+\DoxyCodeLine{00145\ \ \ \ \ \_model.register\_params(params);}
+\DoxyCodeLine{00146\ \ \ \ \ \_pedset.register\_params(params);}
+\DoxyCodeLine{00147\ \ \ \ \ \_goals.register\_params(params);}
+\DoxyCodeLine{00148\ \ \ \ \ \_map.register\_params(params);}
+\DoxyCodeLine{00149\ \ \ \ \ params.register\_param(Modules::Type::SIMULATION,\ \textcolor{stringliteral}{"{}main"{}},\ \textcolor{stringliteral}{"{}max\_timestep"{}});}
+\DoxyCodeLine{00150\ \ \ \ \ params.register\_param(Modules::Type::SIMULATION,\ \textcolor{stringliteral}{"{}main"{}},\ \textcolor{stringliteral}{"{}timestep\_size"{}});}
+\DoxyCodeLine{00151\ \ \ \ \ params.register\_param(Modules::Type::SIMULATION,\ \textcolor{stringliteral}{"{}main"{}},\ \textcolor{stringliteral}{"{}output\_frequency"{}});}
+\DoxyCodeLine{00152\ \ \ \ \ params.register\_param(Modules::Type::SIMULATION,\ \textcolor{stringliteral}{"{}main"{}},\ \textcolor{stringliteral}{"{}random\_seed"{}});}
+\DoxyCodeLine{00153\ \ \ \ \ BehaviorModel<pedset\_t,\ map\_t,\ goals\_t>::register\_params(params);}
+\DoxyCodeLine{00154\ \ \ \}}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \ \ \textcolor{keywordtype}{void}\ config(Concepts::ParamModule\ \textcolor{keyword}{auto}\&\ params)\ \{}
+\DoxyCodeLine{00157\ \ \ \ \ \_output.config(params,\ \_engine);}
+\DoxyCodeLine{00158\ \ \ \ \ \_model.config(params,\ \_engine);}
+\DoxyCodeLine{00159\ \ \ \ \ \_pedset.config(params,\ \_engine);}
+\DoxyCodeLine{00160\ \ \ \ \ \_goals.config(params,\ \_engine);}
+\DoxyCodeLine{00161\ \ \ \ \ \_map.config(params,\ \_engine);}
+\DoxyCodeLine{00162\ \ \ \ \ \_behaviorModel.config(params,\ \_engine);}
+\DoxyCodeLine{00163\ \ \ \ \ \_outputFrequency\ =\ params.template\ get\_param<VIPRA::timestep>(Modules::Type::SIMULATION,\ \textcolor{stringliteral}{"{}main"{}},}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}output\_frequency"{}},\ \_engine);}
+\DoxyCodeLine{00165\ \ \ \}}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00171\ \ \ \textcolor{keywordtype}{void}\ output\_positions()\ \{}
+\DoxyCodeLine{00172\ \ \ \ \ \textcolor{keywordflow}{if}\ (\_timestep\ \%\ \_outputFrequency\ !=\ 0)\ \{}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00174\ \ \ \ \ \}}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00176\ \ \ \ \ \textcolor{keyword}{const}\ VIPRA::size\ pedCnt\ =\ \_pedset.num\_pedestrians();}
+\DoxyCodeLine{00177\ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\&\ \ \ \ \ \ \ coords\ =\ \_pedset.all\_coords();}
+\DoxyCodeLine{00178\ }
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keywordflow}{for}\ (VIPRA::idx\ i\ =\ 0;\ i\ <\ pedCnt;\ ++i)\ \{}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \_output.ped\_timestep\_value(i,\ \_timestep\ /\ \_outputFrequency,\ \textcolor{stringliteral}{"{}position"{}},\ coords.at(i));}
+\DoxyCodeLine{00181\ \ \ \ \ \}}
+\DoxyCodeLine{00182\ \ \ \}}
+\DoxyCodeLine{00183\ \};}
+\DoxyCodeLine{00184\ \}\ \ \textcolor{comment}{//\ namespace\ VIPRA}}
+
+\end{DoxyCode}

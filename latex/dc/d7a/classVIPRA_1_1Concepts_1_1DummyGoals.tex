@@ -1,0 +1,64 @@
+\doxysection{VIPRA\+::Concepts\+::Dummy\+Goals Class Reference}
+\hypertarget{classVIPRA_1_1Concepts_1_1DummyGoals}{}\label{classVIPRA_1_1Concepts_1_1DummyGoals}\index{VIPRA::Concepts::DummyGoals@{VIPRA::Concepts::DummyGoals}}
+
+
+Dummy Goals module for use in other concepts.  
+
+
+
+
+{\ttfamily \#include $<$goals.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyGoals_ae3533a148e4d075e192976cee615c4c7}\label{classVIPRA_1_1Concepts_1_1DummyGoals_ae3533a148e4d075e192976cee615c4c7} 
+{\footnotesize template$<$\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1ParamModule}{VIPRA\+::\+Concepts\+::\+Param\+Module}} params\+\_\+t$>$ }\\void {\bfseries register\+\_\+params} (params\+\_\+t \&params)
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyGoals_a3711ba62344a7af336744bd66bcf1f03}\label{classVIPRA_1_1Concepts_1_1DummyGoals_a3711ba62344a7af336744bd66bcf1f03} 
+{\footnotesize template$<$\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1ParamModule}{VIPRA\+::\+Concepts\+::\+Param\+Module}} params\+\_\+t$>$ }\\void {\bfseries config} (params\+\_\+t const \&params, \mbox{\hyperlink{classVIPRA_1_1Random_1_1Engine}{VIPRA\+::\+Random\+::\+Engine}} \&)
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyGoals_ad5fd68b39d1fa519fe50656cf5ce748a}\label{classVIPRA_1_1Concepts_1_1DummyGoals_ad5fd68b39d1fa519fe50656cf5ce748a} 
+{\footnotesize template$<$typename pedset\+\_\+t , typename map\+\_\+t $>$ }\\void {\bfseries initialize} (pedset\+\_\+t const \&, map\+\_\+t const \&)
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyGoals_ad81b9a11493dc9f5345e983980e014c3}\label{classVIPRA_1_1Concepts_1_1DummyGoals_ad81b9a11493dc9f5345e983980e014c3} 
+{\footnotesize template$<$typename pedset\+\_\+t , typename map\+\_\+t $>$ }\\void {\bfseries update} (pedset\+\_\+t const \&, map\+\_\+t const \&, VIPRA\+::f\+\_\+pnt)
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyGoals_ab7a2d92d36a0d356918683e93e9a7b12}\label{classVIPRA_1_1Concepts_1_1DummyGoals_ab7a2d92d36a0d356918683e93e9a7b12} 
+void {\bfseries change\+\_\+end\+\_\+goal} (VIPRA\+::idx, \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}})
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyGoals_a56a0288aab2dfe41f8ad47a5a98aa9e9}\label{classVIPRA_1_1Concepts_1_1DummyGoals_a56a0288aab2dfe41f8ad47a5a98aa9e9} 
+auto {\bfseries current\+\_\+goals} () const -\/$>$ const VIPRA\+::f3d\+Vec \&
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyGoals_ae385b6553838071ab1d4521155c6582b}\label{classVIPRA_1_1Concepts_1_1DummyGoals_ae385b6553838071ab1d4521155c6582b} 
+auto {\bfseries end\+\_\+goals} () const -\/$>$ const VIPRA\+::f3d\+Vec \&
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyGoals_a5c486cd061d12369f5051dcd2315b0e7}\label{classVIPRA_1_1Concepts_1_1DummyGoals_a5c486cd061d12369f5051dcd2315b0e7} 
+auto {\bfseries current\+\_\+goal} (VIPRA\+::idx) const -\/$>$ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} const \&
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyGoals_aa97f615fe1fbaaa973cd6bf66c8b329d}\label{classVIPRA_1_1Concepts_1_1DummyGoals_aa97f615fe1fbaaa973cd6bf66c8b329d} 
+auto {\bfseries end\+\_\+goal} (VIPRA\+::idx) const -\/$>$ \mbox{\hyperlink{structVIPRA_1_1f3d}{VIPRA\+::f3d}} const \&
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyGoals_a6385733cb6b3721422667e196c0f0f4b}\label{classVIPRA_1_1Concepts_1_1DummyGoals_a6385733cb6b3721422667e196c0f0f4b} 
+auto {\bfseries is\+\_\+goal\+\_\+met} (VIPRA\+::idx) const -\/$>$ bool
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyGoals_a35483ee1953e2fc57cf7de931fb93b61}\label{classVIPRA_1_1Concepts_1_1DummyGoals_a35483ee1953e2fc57cf7de931fb93b61} 
+auto {\bfseries is\+\_\+sim\+\_\+goal\+\_\+met} () const -\/$>$ bool
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyGoals_ab8c37e566ea061b7243823470c7aaf69}\label{classVIPRA_1_1Concepts_1_1DummyGoals_ab8c37e566ea061b7243823470c7aaf69} 
+auto {\bfseries time\+\_\+since\+\_\+last\+\_\+goal} (VIPRA\+::idx) const -\/$>$ VIPRA\+::f\+\_\+pnt
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classVIPRA_1_1Concepts_1_1DummyGoals_a91a25047d2454af09a04b2b1e54d26a9}\label{classVIPRA_1_1Concepts_1_1DummyGoals_a91a25047d2454af09a04b2b1e54d26a9} 
+static constexpr VIPRA\+::\+Modules\+::\+Type {\bfseries \+\_\+\+VIPRA\+\_\+\+MODULE\+\_\+\+TYPE\+\_\+} = VIPRA\+::\+Modules\+::\+Type\+::\+GOALS
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Dummy Goals module for use in other concepts. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/vipra/concepts/goals.\+hpp\end{DoxyCompactItemize}

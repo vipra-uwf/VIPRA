@@ -1,0 +1,29 @@
+\doxysection{VIPRA\+::Concepts\+::Model\+Module Concept Reference}
+\hypertarget{conceptVIPRA_1_1Concepts_1_1ModelModule}{}\label{conceptVIPRA_1_1Concepts_1_1ModelModule}\index{VIPRA::Concepts::ModelModule@{VIPRA::Concepts::ModelModule}}
+
+
+Checks that a type is a model module.  
+
+
+
+
+{\ttfamily \#include $<$model.\+hpp$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ model\_t>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1ModelModule}{VIPRA::Concepts::ModelModule}}\ =\ \ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1is__module}{is\_module<model\_t,\ VIPRA::Modules::Type::MODEL>}}\ \&\&\ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1has__model__timestep}{has\_model\_timestep<model\_t>}}\ \&\&}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{conceptVIPRA_1_1Concepts_1_1can__initialize__model}{can\_initialize\_model<model\_t>}}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+Checks that a type is a model module. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em model\+\_\+t} & \\
+\hline
+\end{DoxyTemplParams}
