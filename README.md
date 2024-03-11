@@ -1,17 +1,19 @@
 - [Introduction](#introduction)
 
-- [Usage](#usage) <!-- TODO -->
-  - [Simulation Construction](#simulation-construction) <!-- TODO -->
+- [Usage](#usage)
+  - [Simulation Construction](#simulation-construction)
     - [Example Simulation](#example-simulation)
     - [Example Parameter Sweep](#example-parameter-sweep)
-  - [Module Parameters](#module-parameters) <!-- TODO -->
-  - [Included Modules](#included-modules) <!-- TODO -->
+  - [Module Parameters](#module-parameters)
+  - [Included Modules](#included-modules)
+  - [DSL Behaviors](#behavior-usage) <!-- TODO -->
 
 - [Common Errors](#common-errors) <!-- TODO -->
 
 - [Development](#development)
   - [Overview](#overview)
     - [Simulation](#simulation) <!-- TODO -->
+      - [Simulation Steps](#simulation-steps)
     - [Module Types](#module-types)
     - [Parameter Sweep](#parameter-sweeps) <!-- TODO -->
     - [Randomization](#randomization) <!-- TODO -->
@@ -32,6 +34,16 @@
   - [Utilities](#utilities) <!-- TODO -->
     - [Algorithms](#algorithms) <!-- TODO -->
     - [Data Structures](#data-structures) <!-- TODO -->
+
+# Introduction
+
+This project provides tools for interdisciplinary analysis of fine-scaled pedestrian movement, especially for science-based decision-making. It is motivated by the fact that local movement and interaction patterns of individuals congregated in public locations, such as entertainment venues and transportation hubs, impacts public health in myriad ways. For instance, infectious disease transmission in crowded areas, such as the 2016 measles outbreak in Disney world that resulted in 125 cases, is affected by the evolution of the pedestrian contact network.
+
+In such contexts, mathematical models can be used to explore different “what if” scenarios for planning public health interventions. For example, pedestrian mobility models could help in the design of public spaces and policies that reduce contacts to mitigate disease spread or encourage walking to improve health outcomes. Understanding the fine-scale movement and interaction patterns of people can help design effective policies and spatial layouts to better engineer suitable movement and interaction patterns for improved public health outcomes in several domains.
+
+Pedestrian dynamics enables such analysis by simulating the trajectories of individual pedestrians in a crowd. Such movement is impacted by behavioral characteristics of humans, policy choices of decisions makers, and design decisions regarding the built environment. Furthermore, the impact of pedestrian dynamics is governed by application-domain models, such as infection spread models. Thus, input from a variety of science domains is required to produce comprehensive understanding for science-based decision-making.
+
+This project includes a modular pedestrian dynamics code to which input from different domains could be easily included. In addition, it includes tools to democratize use by users with limited computing background by including a domain specific language to specify human behavior and policy. We also separately provide a recommender system, as a complementary project, to suggested suitable models to use.
 
 # Usage
 
@@ -61,7 +73,7 @@ Each simulation requires the following modules:
   - `Obstacle Set`
   - `Polygon Input`
 - `Output Coordinator`
-  - `Output`
+  - `Output` (Can have any number of Output modules)
 
 `Maps` and `Output Coordinators` are special in that they require modules themselves (denoted by the additional indent)
 
@@ -93,8 +105,12 @@ auto main() -> int {
       }
   );
 
-  // Run the simulation
-  sim((VIPRA::Parameters{VIPRA::Input::JSON{"module_params.json"}}));
+  // Run the simulation, passing in parameters
+  sim(
+    VIPRA::Parameters{
+      VIPRA::Input::JSON{"module_params.json"}
+    }
+  );
 }
 ```
 
@@ -141,11 +157,11 @@ auto main(int argc, char** argv) -> int {
 
 ## Module Parameters
 
-Parameters are loaded into each module before they are initizalized. The exact steps are showing in [`Simluation Steps`](#simulation-steps).
+Parameters are loaded into each module before they are initizalized. The exact steps of a simulation run are shown in [`Simluation Steps`](#simulation-steps).
 
-Parameters can use any [`Parameter Input`](#parameter-input-implementation) module, by default a [`JSON`](#json-input) input module is provided.
+Parameters can use any [`Parameter Input`](#parameter-input-implementation) module, the [`JSON`](#json-input) input module provided works for this.
 
-The format for which is:
+The format for JSON parameters is:
 ```JSON
 {
   "module type": {
@@ -157,6 +173,7 @@ The format for which is:
 }
 ```
 
+Example of a [`Goals`](#goals-implementation) module parameters:
 ```JSON
 {
   ...
@@ -175,7 +192,7 @@ The format for which is:
 
 ## Included Modules
 
-There are several base modules included with VIPRA.
+There are several modules included with VIPRA.
 
 **Model**:
 - [`Calm Model`](#calm-model)
@@ -243,7 +260,7 @@ VIPRA::simulation(
 - `gridSize` : Length of each side, in meters, of each grid in the pathing graph (e.g. 0.1)
 - `closestObstacle` : Closest a grid center can be to an obstacle before being considered non-traversable
 
-### QuadTree Obstalce Set 
+### QuadTree Obstacle Set 
 
 This `Obstacle Set` module uses the [Quad Tree](#quadtree-datastructure) to hold the map geometry.
 
@@ -254,9 +271,8 @@ This `Obstacle Set` module uses the [Quad Tree](#quadtree-datastructure) to hold
 VIPRA::simulation(
   ...
   VIPRA::Module::Map{
-    ...
+    VIPRA::Input::JSON{"filepath"} // Map requires an Input module
     VIPRA::Obstacles::QuadTree{} // Obstacle sets go inside the Map module
-    ...
   }
   ...
 )
@@ -310,9 +326,29 @@ sim(VIPRA::Parameters{
 });
 ```
 
-### JSON Output
-<!-- TODO -->
+#### Parameters:
 
+- NONE
+
+### JSON Output
+
+This `Output` module creates a JSON file containing the positions of each pedestrian for each timestep that matches the output frequency in the simulation module parameters.
+
+#### Use:
+
+```C++
+VIPRA::simulation(
+  ...
+  VIPRA::Module::Output{
+    VIPRA::Output::Trajectories::JSON{}
+  },
+  ...
+)
+```
+
+#### Parameters:
+
+- `filename`: Name of the output file
 
 ---
 
@@ -332,7 +368,55 @@ sim(VIPRA::Parameters{
 
 ### Simulation Steps
 
-<!-- TODO -->
+These are the general steps taken when a simulation is run.
+
+#### 1. VIPRA::simulation
+
+First a Simulation is constructed using the `VIPRA::simulation` utility method.
+
+#### 2. Run Sim
+
+The simulation is started using either `operator()` or `run_sim()`.
+
+These both take a [`Parameter Module`](#parameter-module) as their argument.
+
+#### 3. Parameters Loaded
+
+The [`Parameter Module`](#parameter-module) calls `load()` on it's [`Parameter Input`](#parameter-input-implementation) module.
+
+#### 4. Parameters Registered
+
+Each Module has its `register_params()` method called.
+
+This is used to tell the simulation which parameters are required by each module.
+
+#### 5. Modules Configured
+
+Each Module has its `config()` method called.
+
+The loaded parameters are passed in to each module.
+
+
+#### 6. Modules Initialized
+
+The [`Map`](#map-module), [`Goals`](#goals-implementation), [`Model`](#model-implementation), and [`Behavior Model`](#behaviors) have their `initialize()` methods called.
+
+This allows each module to setup any necessary pre-simulation work.
+
+#### 7. Simulation Run
+
+The following is run until the [`Goals`](#goals-implementation) module simulation goal is met, or until the simulation `max_timestep` is reached.
+
+```
+model.timestep();
+behaviors.timestep();
+pedestrian_set.update();
+goals.update();
+```
+
+#### 8. Output
+
+Finally, each of the [`Output`](#output-implementation) modules `write()` method is called.
 
 ## Module Types
 
@@ -388,8 +472,11 @@ The [`Output Coordinator`](#output-coordinator) module handles coordinating any 
 > !!! Important Notes:
 > - These modules are implemented using templates; this means that any method that accepts a module as a parameter is required to be defined in a header file
 > - Every module has helper macros for their required methods, see [Macros](#macros)
+> - For these Interfaces, assume `using namespace VIPRA::Concepts`
 
 # Base Module Implementation
+
+Each module is required to implement the following:
 
 ### Interface
 
@@ -426,9 +513,9 @@ Along with the [Base Module](#base-module-implementation) interface, Model modul
 Helper macros can be found in [Model Macros](#model-macros)
 
 ```C++
-void initialize(PedSet auto const&, Map auto const&, Goals auto const&, Output auto&);
+void initialize(PedsetModule auto const&, MapModule auto const&, GoalsModule auto const&, OutputModule auto&);
 
-void timestep(PedSet auto const&, Map auto const&, Goals auto const&, Output auto&, VIPRA::State&, VIPRA::delta_t, VIPRA::timestep);
+void timestep(PedsetModule auto const&, MapModule auto const&, GoalsModule auto const&, OutputModule auto&, VIPRA::State&, VIPRA::delta_t, VIPRA::timestep);
 ```
 
 # Goals Implementation
@@ -442,8 +529,8 @@ Along with the [Base Module](#base-module-implementation) interface, Goals modul
 Helper macros can be found in [Goals Macros](#goals-macros)
 
 ```C++
-void initialize(PedSet auto const&, Map auto const&);
-void update(PedSet auto const&, Map auto const&, VIPRA::delta_t);
+void initialize(PedSetModule auto const&, MapModule auto const&);
+void update(PedSetModule auto const&, MapModule auto const&, VIPRA::delta_t);
 void change_end_goal(VIPRA::idx, VIPRA::f3d);
 
 auto current_goals() -> std::vector<VIPRA::f3d> const&;
@@ -558,6 +645,156 @@ void timestep_value(std::string const&, VIPRA::timestep, value_t);
 
 template <typename value_t>
 void ped_timestep_value(VIPRA::idx, VIPRA::timestep, std::string const&, value_t);
-
-
 ```
+
+# Macros
+
+For reference on how to use these macros, you can look at `modules/model/calm_model/calm_model.hpp`
+
+## Base Module Macros
+
+#### VIPRA_MODULE_TYPE(type)
+
+`VIPRA_MODULE_TYPE` sets the modules type
+- MODEL,
+- GOALS,
+- INPUT,
+- OUTPUT,
+- PEDESTRIANS,
+- PARAMETERS,
+- MAP,
+- OBSTACLES,
+
+```C++
+VIPRA_MODULE_TYPE(MODEL)
+```
+
+#### VIPRA_MODULE_NAME(name)
+
+`VIPRA_MODULE_NAME` sets the modules name, the name is used to grab the correct parameters.
+
+```C++
+class ExampleModel {
+  VIPRA_MODULE_NAME("example_model")
+};
+```
+
+#### CHECK_MODULE(type, class)
+
+`CHECK_MODULE` checks that the class conforms to the module interface.
+
+```C++
+class ExampleModel {
+  ...
+};
+
+CHECK_MODULE(MODEL, ExampleModel)
+```
+
+#### VIPRA_REGISTER_STEP
+#### VIPRA_REGISTER_PARAM
+
+`VIPRA_REGISTER_STEP` provides the proper function signature for the parameter registration step.
+
+`VIPRA_REGISTER_PARAM` registers a parameter in the parameter registration step.
+
+```C++
+class ExampleModel {
+  public:
+    VIPRA_REGISTER_STEP {
+      VIPRA_REGISTER_PARAM("example_param")
+    }
+}
+```
+
+#### VIPRA_CONFIG_STEP
+#### VIPRA_GET_PARAM
+#### VIPRA_GET_ARRAY_PARAM
+
+`VIPRA_CONFIG_STEP` provides the proper function signature for the module configuration step.
+
+`VIPRA_GET_PARAM` loads the parameter into a variable.
+
+`VIPRA_GET_ARRAY_PARAM` loads an array parameter into a vector.
+
+```C++
+class ExampleModel {
+  public:
+    VIPRA_CONFIG_STEP {
+      VIPRA_GET_PARAM("meanMass", _meanMass);
+      VIPRA_GET_ARRAY_PARAM("array", _arrayExample);
+    }
+
+  private:
+    VIPRA::f_pnt _meanMass;
+    std::vector<std::string> _arrayExample;
+}
+```
+
+## Model Macros
+
+#### VIPRA_MODEL_INIT_STEP
+
+`VIPRA_MODEL_INIT_STEP` provides the proper function signature for the model initialization step.
+
+It provides the parameters:
+- pedset: the pedestrian set module
+- map: the map module
+- goals: the goals module
+- output: the output module
+- engine: randomization engine
+
+```C++
+class ExampleModel {
+  public:
+    VIPRA_MODEL_INIT_STEP {
+      // initialize model values
+    }
+}
+```
+
+#### VIPRA_MODEL_TIMESTEP
+
+`VIPRA_MODEL_TIMESTEP` provides the proper function signature for the model timestep step.
+
+It provides the parameters:
+- pedset: the pedestrian set module
+- map: the map module
+- goals: the goals module
+- output: the output module
+- state: the [`State`] object to update
+- deltaT: the size of a timestep
+- timestep: the current timestep number
+
+```C++
+class ExampleModel {
+  public:
+    VIPRA_MODEL_TIMESTEP {
+      // calculate pedestrian movement
+      // update state parameter
+    }
+};
+```
+
+## Goals Macros
+
+#### VIPRA_GOALS_INIT_STEP
+
+`VIPRA_GOALS_INIT_STEP` provides the proper function signature for the goals initialization step.
+
+It provides the parameters:
+- pedset: the pedestrian set module
+- map: the map module
+
+```C++
+class ExampleGoals {
+  public:
+    VIPRA_GOALS_INIT_STEP {
+      // initialize pedestrian paths
+    }
+};
+```
+
+# Algorithms
+
+# Data Structures

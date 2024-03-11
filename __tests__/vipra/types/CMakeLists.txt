@@ -6,4 +6,5 @@ target_sources(
   f3d.tests.cpp
   line.tests.cpp
   rectangle.tests.cpp
+  circle.tests.cpp
 )
