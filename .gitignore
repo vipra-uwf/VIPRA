@@ -33,7 +33,6 @@
 
 # Build
 build
-main.cpp
 
 # VS Code
 .vscode
