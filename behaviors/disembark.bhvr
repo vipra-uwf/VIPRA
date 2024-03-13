@@ -1,0 +1,30 @@
+
+/*
+  This Behavior mimics passengers waiting for those in front of them to move before they proceed down an aisle.
+*/
+
+Types:
+  Passenger
+.
+
+Location:
+  Name: Plane_Front
+  Dimensions:
+    Center: {24, 1.7}
+    Lengths: {3, 10}
+    Rotation: 0
+.
+
+Selector:
+  Type: Passenger
+  Select: Everyone
+.
+
+Action (Passenger):
+  Condition:
+    Goal is @Plane_Front
+    and
+    Exists: Passenger in front, within 2m whose goal is not @Plane_Front
+    
+  Response: set velocity to {0}
+.
