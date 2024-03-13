@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.14)
 set(PROJECT_NAME VIPRA)
 
+OPTION(BUILD_LIBRARY ON "Build the library")
+OPTION(BUILD_EXECUTABLE OFF "Build the executable")
+
 project(
   ${PROJECT_NAME} 
   VERSION 0.0.1
@@ -12,13 +15,22 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
 
-add_library(
-  ${PROJECT_NAME}
-  STATIC
-  ${PROJECT_SOURCE_DIR}/include/vipra/vipra.cpp
-)
+if (BUILD_LIBRARY)
+  add_library(
+    ${PROJECT_NAME}
+    STATIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/vipra/vipra.cpp
+  )
+elseif (BUILD_EXECUTABLE)
+  add_executable(
+    ${PROJECT_NAME} 
+    ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
+  )
+  set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR})
+endif()
 
-add_subdirectory(${PROJECT_SOURCE_DIR}/include/vipra)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/include/vipra)
+add_subdirectory(modules)
 
 include(FetchContent)
 message(STATUS "Getting nlohmann_json")
@@ -43,7 +55,8 @@ target_link_libraries(
 target_include_directories(
   ${PROJECT_NAME}
   PUBLIC
-  ${PROJECT_SOURCE_DIR}/include
-  ${PROJECT_SOURCE_DIR}/include/vipra/vipra_behaviors
+  ${CMAKE_CURRENT_SOURCE_DIR}/include
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/vipra/vipra_behaviors
+  ${CMAKE_CURRENT_SOURCE_DIR}/modules
   ${ANTLR4CPP_INCLUDE_DIRS}
 )

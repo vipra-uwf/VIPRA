@@ -1,6 +1,8 @@
 - [Introduction](#introduction)
 
 - [Usage](#usage)
+  - [Standalone Build](#standalone-build)
+  - [Library](#library-build)
   - [Simulation Construction](#simulation-construction)
     - [Example Simulation](#example-simulation)
     - [Example Parameter Sweep](#example-parameter-sweep)
@@ -47,11 +49,38 @@ This project includes a modular pedestrian dynamics code to which input from dif
 
 # Usage
 
-VIPRA is a template framework this means it requires the user to define their own main and handle any command line arguments.
-
-A basic skeleton will be provided in the future for ease of use.
+VIPRA can either be used as a [Library](#library-build) for use in other projects or built as a [Standalone Simulation](#standalone-build).
 
 There is an [Example Simulation](#example-simulation) below.
+
+## Standalone Build
+
+The `VIPRA` repository comes with a ready `main.cpp` that follows the [Example Simulation](#example-simulation) below.
+
+To build the simulation, in the parent directory run:
+```
+make
+```
+
+The example simulation provided can be run with:
+```
+./VIPRA
+```
+
+## Library
+
+`VIPRA` can be included in a project using [CMake](https://cmake.org/)
+
+```
+target_link_libraries(
+  **project**
+  PUBLIC
+  VIPRA
+)
+```
+
+- Replace `**project**` with the name of your CMake project
+
 
 ## Simulation Construction
 
