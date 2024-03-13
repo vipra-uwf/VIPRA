@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['macros_0',['Macros',['../d0/d30/md_README.html#autotoc_md132',1,'Base Module Macros'],['../d0/d30/md_README.html#autotoc_md144',1,'Goals Macros'],['../d0/d30/md_README.html#autotoc_md131',1,'Macros'],['../d0/d30/md_README.html#autotoc_md141',1,'Model Macros']]],
+  ['macros_0',['Macros',['../d0/d30/md_README.html#autotoc_md134',1,'Base Module Macros'],['../d0/d30/md_README.html#autotoc_md146',1,'Goals Macros'],['../d0/d30/md_README.html#autotoc_md133',1,'Macros'],['../d0/d30/md_README.html#autotoc_md143',1,'Model Macros']]],
   ['mag_1',['mag',['../d8/d28/structVIPRA_1_1f3d.html#ad9d889bd43362f82f1697db56427c55b',1,'VIPRA::f3d']]],
   ['mag_5fsqrd_2',['mag_sqrd',['../d8/d28/structVIPRA_1_1f3d.html#aa9051aef878e60d8a98f03a5543245fb',1,'VIPRA::f3d']]],
   ['map_3',['Map',['../d1/dc6/structVIPRA_1_1Checks_1_1Map.html',1,'VIPRA::Checks::Map&lt; type_t &gt;'],['../d2/d41/classVIPRA_1_1Module_1_1Map.html',1,'VIPRA::Module::Map&lt; input_t, obstacles_t, field_ts &gt;'],['../d2/d41/classVIPRA_1_1Module_1_1Map.html#a1ad4ea5d4c3c32d25d95b9991cc3ac20',1,'VIPRA::Module::Map::Map()']]],
@@ -8,18 +8,18 @@ var searchData=
   ['max_5',['max',['../df/d63/classVIPRA_1_1Random_1_1Engine.html#a709ce38c547084a3a17861b8772c002e',1,'VIPRA::Random::Engine']]],
   ['min_6',['Min',['../d3/d6c/structVIPRA_1_1Behaviors_1_1Min.html',1,'VIPRA::Behaviors']]],
   ['min_7',['min',['../df/d63/classVIPRA_1_1Random_1_1Engine.html#a3caead5675755726b36dfc14dad6c0ba',1,'VIPRA::Random::Engine']]],
-  ['model_8',['Model',['../index.html#autotoc_md10',1,'Calm Model'],['../d0/d30/md_README.html#autotoc_md76',1,'Calm Model'],['../da/de5/classCALM_1_1Model.html',1,'CALM::Model'],['../da/d2d/structVIPRA_1_1Checks_1_1Model.html',1,'VIPRA::Checks::Model&lt; type_t &gt;']]],
-  ['model_20implementation_9',['Model Implementation',['../index.html#autotoc_md50',1,'Model Implementation'],['../d0/d30/md_README.html#autotoc_md116',1,'Model Implementation']]],
-  ['model_20macros_10',['Model Macros',['../d0/d30/md_README.html#autotoc_md141',1,'']]],
+  ['model_8',['Model',['../index.html#autotoc_md10',1,'Calm Model'],['../d0/d30/md_README.html#autotoc_md78',1,'Calm Model'],['../da/de5/classCALM_1_1Model.html',1,'CALM::Model'],['../da/d2d/structVIPRA_1_1Checks_1_1Model.html',1,'VIPRA::Checks::Model&lt; type_t &gt;']]],
+  ['model_20implementation_9',['Model Implementation',['../index.html#autotoc_md50',1,'Model Implementation'],['../d0/d30/md_README.html#autotoc_md118',1,'Model Implementation']]],
+  ['model_20macros_10',['Model Macros',['../d0/d30/md_README.html#autotoc_md143',1,'']]],
   ['modeldata_11',['ModelData',['../da/d17/structCALM_1_1ModelData.html',1,'CALM']]],
   ['modifierdirection_12',['ModifierDirection',['../df/dbe/classVIPRA_1_1Behaviors_1_1ModifierDirection.html',1,'VIPRA::Behaviors']]],
   ['modifierdistance_13',['ModifierDistance',['../d1/d05/classVIPRA_1_1Behaviors_1_1ModifierDistance.html',1,'VIPRA::Behaviors']]],
   ['modifierlocation_14',['ModifierLocation',['../dd/d17/classVIPRA_1_1Behaviors_1_1ModifierLocation.html',1,'VIPRA::Behaviors']]],
-  ['module_20implementation_15',['Module Implementation',['../index.html#autotoc_md48',1,'Base Module Implementation'],['../d0/d30/md_README.html#autotoc_md114',1,'Base Module Implementation'],['../index.html#autotoc_md47',1,'Module Implementation'],['../d0/d30/md_README.html#autotoc_md113',1,'Module Implementation']]],
-  ['module_20macros_16',['Base Module Macros',['../d0/d30/md_README.html#autotoc_md132',1,'']]],
-  ['module_20parameters_17',['Module Parameters',['../index.html#autotoc_md6',1,'Module Parameters'],['../d0/d30/md_README.html#autotoc_md72',1,'Module Parameters']]],
-  ['module_20types_18',['Module Types',['../index.html#autotoc_md43',1,'Module Types'],['../d0/d30/md_README.html#autotoc_md109',1,'Module Types']]],
-  ['modules_19',['Modules',['../index.html#autotoc_md8',1,'Included Modules'],['../d0/d30/md_README.html#autotoc_md74',1,'Included Modules'],['../index.html#autotoc_md2',1,'Required Modules'],['../d0/d30/md_README.html#autotoc_md68',1,'Required Modules']]],
-  ['modules_20configured_20',['Modules Configured',['../index.html#autotoc_md39',1,'5. Modules Configured'],['../d0/d30/md_README.html#autotoc_md105',1,'5. Modules Configured']]],
-  ['modules_20initialized_21',['Modules Initialized',['../index.html#autotoc_md40',1,'6. Modules Initialized'],['../d0/d30/md_README.html#autotoc_md106',1,'6. Modules Initialized']]]
+  ['module_20implementation_15',['Module Implementation',['../index.html#autotoc_md48',1,'Base Module Implementation'],['../d0/d30/md_README.html#autotoc_md116',1,'Base Module Implementation'],['../index.html#autotoc_md47',1,'Module Implementation'],['../d0/d30/md_README.html#autotoc_md115',1,'Module Implementation']]],
+  ['module_20macros_16',['Base Module Macros',['../d0/d30/md_README.html#autotoc_md134',1,'']]],
+  ['module_20parameters_17',['Module Parameters',['../index.html#autotoc_md6',1,'Module Parameters'],['../d0/d30/md_README.html#autotoc_md74',1,'Module Parameters']]],
+  ['module_20types_18',['Module Types',['../index.html#autotoc_md43',1,'Module Types'],['../d0/d30/md_README.html#autotoc_md111',1,'Module Types']]],
+  ['modules_19',['Modules',['../index.html#autotoc_md8',1,'Included Modules'],['../d0/d30/md_README.html#autotoc_md76',1,'Included Modules'],['../index.html#autotoc_md2',1,'Required Modules'],['../d0/d30/md_README.html#autotoc_md70',1,'Required Modules']]],
+  ['modules_20configured_20',['Modules Configured',['../index.html#autotoc_md39',1,'5. Modules Configured'],['../d0/d30/md_README.html#autotoc_md107',1,'5. Modules Configured']]],
+  ['modules_20initialized_21',['Modules Initialized',['../index.html#autotoc_md40',1,'6. Modules Initialized'],['../d0/d30/md_README.html#autotoc_md108',1,'6. Modules Initialized']]]
 ];
