@@ -1,7 +1,6 @@
 
-
 release:
 	@echo "Building release version"
 	@mkdir -p build
-	@cmake -B build . -DBUILD_EXECUTABLE=ON -DBUILD_LIBRARY=OFF
+	@cmake -B build . -DVIPRA_BUILD_EXECUTABLE=ON -DVIPRA_BUILD_LIBRARY=OFF
 	@cmake --build build

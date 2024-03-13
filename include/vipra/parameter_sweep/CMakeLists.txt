@@ -1,7 +1,7 @@
 
 
 target_sources(
-  ${PROJECT_NAME}
+  ${VIPRA_PROJECT_NAME}
   PUBLIC
   parameter_sweep.cpp
 )

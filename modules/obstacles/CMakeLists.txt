@@ -7,7 +7,7 @@ file(GLOB
 )
 
 target_sources(
-  ${PROJECT_NAME}
+  ${VIPRA_PROJECT_NAME}
   PRIVATE
   ${obstacles_srcs}
 )

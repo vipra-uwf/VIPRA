@@ -5,7 +5,7 @@ file(GLOB
 )
 
 target_sources(
-  ${PROJECT_NAME}
+  ${VIPRA_PROJECT_NAME}
   PRIVATE
   ${antlr_srcs}
   ${CMAKE_CURRENT_SOURCE_DIR}/selectors/pedestrian_groups.cpp
