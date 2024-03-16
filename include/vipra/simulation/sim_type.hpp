@@ -116,8 +116,8 @@ class SimType {
 
     VIPRA::timestep maxTimestep = params.template get_param<VIPRA::timestep>(Modules::Type::SIMULATION,
                                                                              "main", "max_timestep", _engine);
-    VIPRA::timestep timestepSize = params.template get_param<VIPRA::timestep>(
-        Modules::Type::SIMULATION, "main", "timestep_size", _engine);
+    VIPRA::delta_t  timestepSize =
+        params.template get_param<VIPRA::f_pnt>(Modules::Type::SIMULATION, "main", "timestep_size", _engine);
     VIPRA::timestep randomseed =
         params.template get_param<VIPRA::timestep>(Modules::Type::SIMULATION, "main", "random_seed", _engine);
 

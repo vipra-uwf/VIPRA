@@ -1,7 +1,7 @@
 {
   "simulation": {
     "main": {
-      "max_timestep": 40000,
+      "max_timestep": 10000,
       "timestep_size": 0.005,
       "output_frequency": 100,
       "random_seed": 12345
@@ -17,6 +17,9 @@
       "meanShoulderLen": 0.2,
       "maxSpeedStdDev": 0.1,
       "shoulderLenStdDev": 0.05
+    },
+    "circle_model": {
+      "radius": 0.2
     }
   },
   "goals": {
@@ -39,7 +42,7 @@
   },
   "output": {
     "coordinator": {
-      "output_dir": "./output"
+      "output_dir": "./sim_output"
     },
     "trajectories_json": {
       "filename": "trajectories.json"

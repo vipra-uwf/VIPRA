@@ -27,7 +27,9 @@
     - [Obstacle Set Implementation](#obstacle-set-implementation) <!-- TODO -->
     - [Pedestrian Set Implementation](#pedestrian-set-implementation) <!-- TODO -->
     - [Input Implementation](#input-implementation) <!-- TODO -->
-    - [Output Implementation](#output_implementation) <!-- TODO -->
+    - [Output Implementation](#output-implementation) <!-- TODO -->
+
+  - [Model Implementation Example](#model-implementation-example)
 
   - [Parameter Sweep Usage](#parameter-sweep-usage) <!-- TODO -->
 
@@ -675,6 +677,159 @@ void timestep_value(std::string const&, VIPRA::timestep, value_t);
 template <typename value_t>
 void ped_timestep_value(VIPRA::idx, VIPRA::timestep, std::string const&, value_t);
 ```
+---
+
+# Model Implementation Example
+
+In this example we will walk through creating a [`Model`](#model-implementation) module.
+This Model will simply have pedestrians walking in circles around their initial position.
+
+1. Create Folder and Files
+  We will create the following: 
+  - `modules/model/example_model`
+  - `modules/model/example_model/example_model.hpp`
+
+2. Create the model
+```C++
+
+#include <vipra.hpp>
+
+namespace Example {
+class Model {
+ public:
+  // Give the module a name and set its type
+  VIPRA_MODULE_NAME("example_model")
+  VIPRA_MODULE_TYPE(MODEL)
+
+  // Add in the parameter registration step, this is where we tell VIPRA what parameters the module needs
+  VIPRA_REGISTER_STEP { 
+    VIPRA_REGISTER_PARAM("radius");
+  }
+
+  // Add in the configuration step, this is where the module parameters are loaded in
+  VIPRA_CONFIG_STEP { 
+    VIPRA_GET_PARAM("radius", _radius); 
+  }
+
+  // Add in the initialization step, this is run right before the simulation starts
+  VIPRA_MODEL_INIT_STEP { 
+    _initialPoints = pedset.all_coords(); 
+  }
+
+  // Add in the timestep, this is where the model updates the pedestrians state
+  VIPRA_MODEL_TIMESTEP {
+    for (size_t i = 0; i < pedset.num_pedestrians(); ++i) {
+      // Update the pedestrian's position, to make them move in a circle
+      state.positions[i] = VIPRA::f3d{_initialPoints[i][0] + _radius * std::cos(deltaT * timestep),
+                                      _initialPoints[i][1] + _radius * std::sin(deltaT * timestep)};
+    }
+  }
+
+ private:
+  VIPRA::f_pnt  _radius;
+  VIPRA::f3dVec _initialPoints;
+};
+}  // namespace Example
+
+```
+
+3. Update `main.cpp` to use our new model
+
+```C++
+
+#include <vipra.hpp>
+
+#include "modules/model/example_model/example_model.hpp"
+
+auto main() -> int {
+  auto sim = VIPRA::simulation(
+      Example::Model{},       // Here is our model being passed in, the rest don't matter in this example
+      VIPRA::Module::Output{
+        VIPRA::Output::Trajectories::JSON{}
+      },
+      VIPRA::Goals::AStar{},
+      VIPRA::Pedestrians::Grid{
+          VIPRA::Input::JSON{"maps/pedestrians/a320/a320_144_pedestrians.json"},
+      },
+      VIPRA::Module::Map{
+        VIPRA::Input::JSON{"maps/obstacles/a320/a320_polygons.json"},
+        VIPRA::Obstacles::QuadTree{}
+      }
+  );
+
+  sim(VIPRA::Parameters{VIPRA::Input::JSON{"./examples/module_params.json"}});
+}
+```
+
+4. Update the `module_params.json`
+
+```JSON
+{
+  "simulation": {
+    "main": {
+      "max_timestep": 10000,
+      "timestep_size": 0.005,
+      "output_frequency": 100,
+      "random_seed": 12345
+    }
+  },
+  "model": {     // Since our module is a model we put the parameters under the "model" field
+    "example_model": {  // We add in a field with our module name
+      "radius": 0.2     // Here is our radius parameter
+    }
+  },
+  "goals": {
+    "astar": {
+      "endGoalType": "exit",
+      "gridSize": 0.1,
+      "closestObstacle": 0.25,
+      "goalRange": 0.05
+    }
+  },
+  "pedset": {
+    "grid": {
+      "gridSize": 0.5
+    }
+  },
+  "obstacles": {
+    "quad_tree": {
+      "minQuadSize": 0.05
+    }
+  },
+  "output": {
+    "coordinator": {
+      "output_dir": "./output"
+    },
+    "trajectories_json": {
+      "filename": "trajectories.json"
+    }
+  },
+  "behavior_model": {
+    "main": {
+      "behaviors_dir": "./behaviors",
+      "behaviors": []
+    }
+  }
+}
+```
+
+5. Compile Simulation
+
+The simulation can be compiled by running
+```
+make
+```
+
+6. Run
+
+Run the simulation with
+```
+./VIPRA
+```
+
+The output will be under `./output/trajectories.json`
+
+---
 
 # Macros
 
