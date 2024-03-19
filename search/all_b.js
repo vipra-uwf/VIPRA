@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['data_20structures_0',['Data Structures',['../d0/d30/md_README.html#autotoc_md149',1,'']]],
+  ['data_20structures_0',['Data Structures',['../index.html#autotoc_md87',1,'Data Structures'],['../d0/d30/md_README.html#autotoc_md175',1,'Data Structures']]],
   ['debug_5fdo_1',['debug_do',['../d3/d36/structVIPRA_1_1Util_1_1debug__do.html',1,'VIPRA::Util']]],
   ['deferedcleanup_2',['DeferedCleanup',['../d8/db7/structVIPRA_1_1Behaviors_1_1AttributeHandling_1_1DeferedCleanup.html',1,'VIPRA::Behaviors::AttributeHandling']]],
-  ['development_3',['Development',['../index.html#autotoc_md31',1,'Development'],['../d0/d30/md_README.html#autotoc_md99',1,'Development']]],
+  ['development_3',['Development',['../index.html#autotoc_md34',1,'Development'],['../d0/d30/md_README.html#autotoc_md122',1,'Development']]],
   ['do_5fintersect_4',['do_intersect',['../da/d49/structVIPRA_1_1Geometry_1_1Line.html#a8d1bdf34a4c3f4add91de6d03173e94f',1,'VIPRA::Geometry::Line']]],
   ['documentation_5',['VIPRA Documentation',['../index.html',1,'']]],
   ['does_5fintersect_6',['does_intersect',['../da/d49/structVIPRA_1_1Geometry_1_1Line.html#aefad7d31e2973487cb4662275aa0c6c5',1,'VIPRA::Geometry::Line::does_intersect()'],['../d8/d9a/classVIPRA_1_1Geometry_1_1Rectangle.html#a5b55ae2af71c3e47c6683b0829abbfc6',1,'VIPRA::Geometry::Rectangle::does_intersect(Rectangle const &amp;other) const noexcept -&gt; bool'],['../d8/d9a/classVIPRA_1_1Geometry_1_1Rectangle.html#a17b5c0653f23bb0da0bbb684b3abfd46',1,'VIPRA::Geometry::Rectangle::does_intersect(Line const &amp;other) const noexcept -&gt; bool']]],

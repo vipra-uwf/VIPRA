@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['obstacle_20set_0',['Obstacle Set',['../index.html#autotoc_md16',1,'QuadTree Obstacle Set'],['../d0/d30/md_README.html#autotoc_md84',1,'QuadTree Obstacle Set']]],
-  ['obstacle_20set_20implementation_1',['Obstacle Set Implementation',['../index.html#autotoc_md54',1,'Obstacle Set Implementation'],['../d0/d30/md_README.html#autotoc_md122',1,'Obstacle Set Implementation']]],
+  ['obstacle_20set_0',['Obstacle Set',['../index.html#autotoc_md19',1,'QuadTree Obstacle Set'],['../d0/d30/md_README.html#autotoc_md107',1,'QuadTree Obstacle Set']]],
+  ['obstacle_20set_20implementation_1',['Obstacle Set Implementation',['../index.html#autotoc_md57',1,'Obstacle Set Implementation'],['../d0/d30/md_README.html#autotoc_md145',1,'Obstacle Set Implementation']]],
   ['operator_21_3d_2',['operator!=',['../db/dbc/classVIPRA_1_1Behaviors_1_1Ptype.html#af3e58af15b0639ed91e154bad5e9d1f5',1,'VIPRA::Behaviors::Ptype']]],
   ['operator_28_29_3',['operator()',['../df/d63/classVIPRA_1_1Random_1_1Engine.html#a6ede0ac74268d511e148682b3fbe114c',1,'VIPRA::Random::Engine::operator()()'],['../da/d73/classVIPRA_1_1SimType.html#ae308979596a569cd12ab5a1ecc745bcd',1,'VIPRA::SimType::operator()()'],['../df/dbe/classVIPRA_1_1Behaviors_1_1ModifierDirection.html#a14511052d21487ee5bde78269e3efa11',1,'VIPRA::Behaviors::ModifierDirection::operator()()'],['../d1/d05/classVIPRA_1_1Behaviors_1_1ModifierDistance.html#a289da4c6ef72cd34d932d9f5ca508b02',1,'VIPRA::Behaviors::ModifierDistance::operator()()'],['../dd/d17/classVIPRA_1_1Behaviors_1_1ModifierLocation.html#a35c98d5ea7029b42ed2bb5e75aca167b',1,'VIPRA::Behaviors::ModifierLocation::operator()()'],['../d4/d03/structVIPRA_1_1Behaviors_1_1TargetNearest.html#a3d5f608671bc82c408ee808a7a835865',1,'VIPRA::Behaviors::TargetNearest::operator()()']]],
   ['operator_2b_4',['operator+',['../db/dbc/classVIPRA_1_1Behaviors_1_1Ptype.html#a94167cabb75fd6ead63dc9f952167cfe',1,'VIPRA::Behaviors::Ptype::operator+(typeUID type) const noexcept -&gt; Ptype'],['../db/dbc/classVIPRA_1_1Behaviors_1_1Ptype.html#abcc877d13e190017783558ba2962bce6',1,'VIPRA::Behaviors::Ptype::operator+(Ptype type) const noexcept -&gt; Ptype']]],
@@ -11,8 +11,8 @@ var searchData=
   ['operator_3d_3d_8',['operator==',['../db/dbc/classVIPRA_1_1Behaviors_1_1Ptype.html#a7c692a65d238c56be2fe0cc7fd1199f0',1,'VIPRA::Behaviors::Ptype']]],
   ['operator_5b_5d_9',['operator[]',['../d7/d24/classVIPRA_1_1Behaviors_1_1GroupsContainer.html#aa97c1b357c0639781591db55c119edb7',1,'VIPRA::Behaviors::GroupsContainer']]],
   ['orientation_5fto_10',['orientation_to',['../da/d49/structVIPRA_1_1Geometry_1_1Line.html#acf514a728f44949fbf8e15c14fc4e9d5',1,'VIPRA::Geometry::Line']]],
-  ['output_11',['Output',['../index.html#autotoc_md42',1,'8. Output'],['../d0/d30/md_README.html#autotoc_md110',1,'8. Output'],['../index.html#autotoc_md25',1,'JSON Output'],['../d0/d30/md_README.html#autotoc_md93',1,'JSON Output'],['../d1/dd7/classVIPRA_1_1Module_1_1Output.html',1,'VIPRA::Module::Output&lt; output_ts &gt;']]],
-  ['output_20implementation_12',['Output Implementation',['../index.html#autotoc_md63',1,'Output Implementation'],['../d0/d30/md_README.html#autotoc_md131',1,'Output Implementation']]],
+  ['output_11',['Output',['../index.html#autotoc_md45',1,'8. Output'],['../d0/d30/md_README.html#autotoc_md133',1,'8. Output'],['../index.html#autotoc_md28',1,'JSON Output'],['../d0/d30/md_README.html#autotoc_md116',1,'JSON Output'],['../d1/dd7/classVIPRA_1_1Module_1_1Output.html',1,'VIPRA::Module::Output&lt; output_ts &gt;']]],
+  ['output_20implementation_12',['Output Implementation',['../index.html#autotoc_md66',1,'Output Implementation'],['../d0/d30/md_README.html#autotoc_md154',1,'Output Implementation']]],
   ['outputcoord_13',['OutputCoord',['../dd/d59/structVIPRA_1_1Checks_1_1OutputCoord.html',1,'VIPRA::Checks']]],
-  ['overview_14',['Overview',['../index.html#autotoc_md32',1,'Overview'],['../d0/d30/md_README.html#autotoc_md100',1,'Overview']]]
+  ['overview_14',['Overview',['../index.html#autotoc_md35',1,'Overview'],['../d0/d30/md_README.html#autotoc_md123',1,'Overview']]]
 ];
