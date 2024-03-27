@@ -38,6 +38,8 @@ class TimedLatchCollection {
     }
   }
 
+  [[nodiscard]] auto size() const -> VIPRA::size { return _startTimes.size(); }
+
   /**
    * @brief Checks if the latches duration time has passed since it was latched
    * 

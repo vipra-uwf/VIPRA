@@ -28,9 +28,11 @@ class Grid {
   VIPRA_MODULE_TYPE(PEDESTRIANS);
   VIPRA_MODULE_NAME("grid")
 
-  explicit Grid(input_t&& input) : _input(input) {
-    input.load();
-    auto coords = input.template get<std::vector<VIPRA::f3d>>("coords");
+  // TODO(rolland): having the pedset call load means each node will load the same file
+  explicit Grid(input_t&& input) : _input(input) { _input.load(); }
+
+  void initialize() {
+    auto coords = _input.template get<std::vector<VIPRA::f3d>>("coords");
     if (!coords) throw std::runtime_error("Could not find pedestrian coordinates in input file");
 
     _velocities = std::vector<VIPRA::f3d>((*coords).size());

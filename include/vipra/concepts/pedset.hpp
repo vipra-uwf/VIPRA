@@ -63,13 +63,24 @@ concept can_update_pedset = requires(pedset_t pedset, State const& state) {
 };
 
 /**
+ * @brief Checks that a type can be initialized with as a pedestrian set
+ * 
+ * @tparam pedset_t 
+ */
+template <typename pedset_t>
+concept can_initialize_pedset = requires(pedset_t pedset, State const& state) {
+  {pedset.initialize()};
+};
+
+/**
  * @brief Checks that a type is a pedestrian set module
  * 
  * @tparam pedset_t 
  */
 template <typename pedset_t>
 concept PedsetModule = is_module<pedset_t, VIPRA::Modules::Type::PEDESTRIANS> && can_get_num_peds<pedset_t> &&
-    can_get_ped_coords<pedset_t> && can_get_ped_velocity<pedset_t> && can_update_pedset<pedset_t>;
+    can_initialize_pedset<pedset_t> && can_get_ped_coords<pedset_t> && can_get_ped_velocity<pedset_t> &&
+    can_update_pedset<pedset_t>;
 
 /**
  * @brief Dummy pedestrian set for use in other concepts
@@ -83,6 +94,8 @@ class DummyPedSet {
 
   template <typename params_t>
   void register_params(params_t&) {}
+
+  void initialize();
 
   void config(auto& params, VIPRA::Random::Engine&) {}
   void update(const VIPRA::State&) {}

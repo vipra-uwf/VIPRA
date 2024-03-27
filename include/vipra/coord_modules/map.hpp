@@ -112,7 +112,6 @@ class Map {
   input_t                 _input;
 
   void initialize_obstacles() {
-    // TODO(rolland): replace point obstacles with polygons
     auto const objTypes = _input.template get<std::vector<std::string>>("obj_types");
     if (!objTypes) throw std::runtime_error("Could not find object types in input file");
 

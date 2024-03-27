@@ -30,7 +30,7 @@ class Condition {
 
   template <typename pack_t>
   void evaluate(pack_t pack, VIPRA::idxVec const& peds, std::vector<bool>& met,
-                std::vector<Target> const& targets, std::optional<TimedLatchCollection>& /*latches*/) {
+                std::vector<Target> const& targets, std::optional<TimedLatchCollection>& latches) {
     // TODO(rolland): add in latch checks
     std::fill(_temp.begin(), _temp.end(), false);
     _conditions[0](pack, peds, targets, met, _temp, BoolOp::OR);
@@ -46,6 +46,8 @@ class Condition {
           break;
       }
     }
+
+    handle_latches(pack, latches, met);
   }
 
   void add_operation(BoolOp oper) { _steps.emplace_back(oper); }
@@ -55,5 +57,18 @@ class Condition {
   std::vector<subcond_t> _conditions;
   std::vector<BoolOp>    _steps;
   std::vector<bool>      _temp;
+
+  template <typename pack_t>
+  void handle_latches(pack_t pack, std::optional<TimedLatchCollection>& latches, std::vector<bool>& met) {
+    if (latches.has_value()) {
+      for (VIPRA::idx i = 0; i < met.size(); ++i) {
+        if (met[i]) {
+          latches->latch(pack.dT, i);
+        }
+
+        met[i] = latches->check(pack.dT, i);
+      }
+    }
+  }
 };
 }  // namespace VIPRA::Behaviors

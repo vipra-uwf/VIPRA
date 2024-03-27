@@ -3,6 +3,7 @@ set(VIPRA_PROJECT_NAME VIPRA)
 
 OPTION(VIPRA_BUILD_LIBRARY ON "Build the library")
 OPTION(VIPRA_BUILD_EXECUTABLE OFF "Build the executable")
+OPTION(VIPRA_DEBUG_MODE OFF "Build in debug mode")
 
 if (VIPRA_BUILD_LIBRARY AND VIPRA_BUILD_EXECUTABLE)
   message(FATAL_ERROR "Cannot build both library and executable")
@@ -16,8 +17,16 @@ if (VIPRA_BUILD_LIBRARY)
   message("Building VIPRA as library")
 elseif (VIPRA_BUILD_EXECUTABLE)
   message("Building VIPRA as executable")
-endif()
 
+  if (VIPRA_DEBUG_MODE)
+    message("Building in debug mode")
+    set(CMAKE_BUILD_TYPE Debug)
+  else()
+    message("Building in release mode")
+    set(CMAKE_BUILD_TYPE Release)
+  endif()
+endif()
+  
 project(
   ${VIPRA_PROJECT_NAME} 
   VERSION 0.0.1

@@ -43,6 +43,7 @@ class AStar {
 
     construct_graph(map);
     set_end_goals(pedset, map);
+    _paths.clear();
 
     for (VIPRA::idx pedIdx = 0; pedIdx < pedCnt; ++pedIdx) {
       auto const pos = pedset.ped_coords(pedIdx);
@@ -180,6 +181,7 @@ class AStar {
    * @param map 
    */
   void construct_graph(Concepts::MapModule auto const& map) {
+    _graph.clear();
     set_grid_counts(map);
 
     assert(_xCount > 0 && _yCount > 0);
