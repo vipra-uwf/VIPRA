@@ -65,8 +65,9 @@ class SimType {
     }
   }
 
-  void set_sim_id(VIPRA::idx idx) { _currSimIdx = idx; }
-  void add_sim_id(VIPRA::idx idx) { _currSimIdx += idx; }
+  [[nodiscard]] auto get_sim_id() -> VIPRA::idx { return _currSimIdx; }
+  void               set_sim_id(VIPRA::idx idx) { _currSimIdx = idx; }
+  void               add_sim_id(VIPRA::idx idx) { _currSimIdx += idx; }
 
  private:
   output_t                                _output;
@@ -75,8 +76,6 @@ class SimType {
   goals_t                                 _goals;
   map_t                                   _map;
   BehaviorModel<pedset_t, map_t, goals_t> _behaviorModel;
-
-  // TODO(rolland): NEXT create a sim id and update output to use it
 
   VIPRA::Random::Engine _engine{};
 

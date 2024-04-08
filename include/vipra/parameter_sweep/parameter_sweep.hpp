@@ -9,6 +9,7 @@
 #include "vipra/concepts/parameter_input.hpp"
 #include "vipra/concepts/parameters.hpp"
 #include "vipra/special_modules/parameters.hpp"
+#include "vipra/types/idx.hpp"
 #include "vipra/types/parameter.hpp"
 #include "vipra/types/util/result_or_void.hpp"
 #include "vipra/util/all_of_type.hpp"
@@ -36,7 +37,10 @@ class ParameterSweep {
       } else {
         // TODO(rolland): this doesn't properly warn that the callback is not being used
         if constexpr (std::is_invocable_v<callback_t, decltype(sim.parallel_run(params))>) {
-          callback(sim.parallel_run(params));
+          callback(sim.get_sim_id(), sim.parallel_run(params));
+        } else if constexpr (std::is_invocable_v<callback_t, VIPRA::idx>) {
+          sim.parallel_run(params);
+          callback(sim.get_sim_id());
         } else {
           sim.parallel_run(params);
           callback();
@@ -52,6 +56,12 @@ class ParameterSweep {
   [[nodiscard]] static auto get_size() -> int { return size; }
   [[nodiscard]] static auto is_parallel() -> bool { return size > 1; }
   [[nodiscard]] static auto is_root() -> bool { return rank == 0; }
+
+  static void master_do(auto&& func) {
+    if (rank == 0) {
+      func();
+    }
+  }
 
  private:
   struct DeferedFinalize {
@@ -101,6 +111,7 @@ class ParameterSweep {
   }
 
   static auto sim_count(size_t count) -> size_t {
+    // TODO(rolland): if not evenly divisible, they overlap by 1
     size_t localCount = count / size;
     if (rank < count % size) {
       ++localCount;

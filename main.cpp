@@ -4,6 +4,7 @@
  * 
  */
 
+#include <iostream>
 #include <vipra.hpp>
 
 #include "modules/model/calm_model/calm_model.hpp"
@@ -35,12 +36,26 @@ auto main(int argc, char** argv) -> int {
       }
   );
 
+  // Create a Timer and start it
+  VIPRA::Util::Clock<VIPRA::Util::milli> timer{};
+  timer.start();
+
   // Run the parameter sweep
   VIPRA::ParameterSweep::run(
-      sim, 
+      sim,
       VIPRA::Parameters{
         VIPRA::Input::JSON{"module_params.json"}
       },
       simCount,
-      []() { std::cout << "Simulation complete on: " << VIPRA::ParameterSweep::get_rank() << std::endl; });
+      [](VIPRA::idx simId) { std::cout << "Simulation id: " << simId << " complete on: " << VIPRA::ParameterSweep::get_rank() << std::endl; });
+
+  // Only the master node prints the time taken
+  VIPRA::ParameterSweep::master_do([&](){
+    auto time = timer.stop();
+    auto seconds = std::chrono::duration_cast<std::chrono::seconds>(time);
+    time -= seconds;
+    auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(time);
+
+    std::cout << "Time taken: " << seconds.count() << "s " << milliseconds.count() << "ms" << std::endl;
+  });
 }

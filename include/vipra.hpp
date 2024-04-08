@@ -12,3 +12,4 @@
 #include "vipra/simulation/simulation_setup.hpp"
 #include "vipra/special_modules.hpp"
 #include "vipra/types/all_types.hpp"
+#include "vipra/util/clock.hpp"
