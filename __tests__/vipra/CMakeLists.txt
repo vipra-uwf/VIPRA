@@ -1,6 +1,5 @@
 
 
-add_subdirectory(
-  types
-  algorithms
-)
+add_subdirectory(types)
+add_subdirectory(algorithms)
+add_subdirectory(full_sim)
