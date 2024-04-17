@@ -1,9 +1,12 @@
 #pragma once
 
+#include <filesystem>
+#include <iostream>
 #include <map>
 
 #include <nlohmann/json.hpp>
 #include <set>
+#include <type_traits>
 
 #include "vipra/concepts/input.hpp"
 #include "vipra/concepts/parameter_input.hpp"
@@ -11,8 +14,10 @@
 
 #include "vipra/macros/module.hpp"
 #include "vipra/modules.hpp"
+#include "vipra/random/distributions.hpp"
 #include "vipra/random/random.hpp"
 #include "vipra/types/parameter.hpp"
+#include "vipra/util/template_specialization.hpp"
 
 // TODO(rolland): Check that all required parameters are provided (maybe not needed, they are checked when the module tries to get it)
 // TODO(rolland): No way of checking what a parameter was, once get_param is called the random engine moves on
@@ -36,8 +41,7 @@ class Parameters {
    * @param paramName 
    * @param param 
    */
-  void register_param(VIPRA::Modules::Type module, std::string const& moduleName,
-                      std::string const& paramName) {
+  void register_param(Modules::Type module, std::string const& moduleName, std::string const& paramName) {
     // TODO(rolland): maybe warn if a parameter is registered twice?
     if (contains(module, moduleName, paramName)) return;
 
@@ -53,7 +57,7 @@ class Parameters {
    * @return true 
    * @return false 
    */
-  [[nodiscard]] auto has_param(VIPRA::Modules::Type module, std::string const& moduleName,
+  [[nodiscard]] auto has_param(Modules::Type module, std::string const& moduleName,
                                std::string const& paramName) const -> bool {
     return contains(module, moduleName, paramName);
   }
@@ -67,7 +71,7 @@ class Parameters {
    * @return true 
    * @return false 
    */
-  [[nodiscard]] auto has_required_param(VIPRA::Modules::Type module, std::string const& moduleName,
+  [[nodiscard]] auto has_required_param(Modules::Type module, std::string const& moduleName,
                                         std::string const& paramName) const -> bool {
     if (!contains(module, moduleName, paramName)) {
       throw std::runtime_error("Parameter: " + paramName + " For " + to_string(module) +
@@ -86,25 +90,39 @@ class Parameters {
    * @return data_t 
    */
   template <typename data_t>
-  [[nodiscard]] auto get_param(VIPRA::Modules::Type module, std::string const& moduleName,
-                               std::string const& paramName, VIPRA::Random::Engine& engine) const -> data_t {
+  [[nodiscard]] auto get_param(Modules::Type module, std::string const& moduleName,
+                               std::string const& paramName, Random::Engine& engine) const -> data_t {
     std::string moduleStr = to_string(module);
 
     if (!contains(module, moduleName, paramName))
       throw std::runtime_error("Parameter: " + paramName + " For " + to_string(module) +
                                " Module: " + moduleName + " Not Registered");
 
-    auto value = _input.template get<Parameter<data_t>>(moduleStr, moduleName, paramName);
+    auto value = _input.template get_param<data_t>(engine, moduleStr, moduleName, paramName);
     if (!value.has_value()) {
       throw std::runtime_error("Required Parameter: " + paramName + " For " + to_string(module) +
                                " Module: " + moduleName + " Not Provided In Input");
     }
 
-    return randomize_parameter(value.value(), engine);
+    // print out the parameter
+    std::cout << "Parameter: " << paramName << " For " << to_string(module) << " Module: " << moduleName
+              << " Value: " << value.value() << std::endl;
+
+    return value.value();
   }
 
+  /**
+   * @brief Gets an array parameter from the input
+   * @note Arrays are generally used for random discrete values, however this method is for a parameter that is required to be an array
+   *
+   * @tparam array_t 
+   * @param module 
+   * @param moduleName 
+   * @param paramName 
+   * @return array_t 
+   */
   template <typename array_t>
-  [[nodiscard]] auto get_array_param(VIPRA::Modules::Type module, std::string const& moduleName,
+  [[nodiscard]] auto get_array_param(Modules::Type module, std::string const& moduleName,
                                      std::string const& paramName) const -> array_t {
     std::string moduleStr = to_string(module);
 
@@ -124,20 +142,15 @@ class Parameters {
   [[nodiscard]] auto get_input() -> input_t& { return _input; }
 
  private:
-  input_t                                                                      _input;
-  std::map<VIPRA::Modules::Type, std::map<std::string, std::set<std::string>>> _params;
+  input_t                                                               _input;
+  std::map<Modules::Type, std::map<std::string, std::set<std::string>>> _params;
 
-  [[nodiscard]] constexpr auto randomize_parameter(auto&& paramVal, VIPRA::Random::Engine& /*engine*/) const {
-    // TODO(rolland): randomize parameter, currently just pass through
-    return paramVal.value;
-  }
-
-  [[nodiscard]] auto contains(VIPRA::Modules::Type module, std::string const& moduleName,
+  [[nodiscard]] auto contains(Modules::Type module, std::string const& moduleName,
                               std::string const& paramName) const -> bool {
     return _params.contains(module) && _params.at(module).contains(moduleName) &&
            _params.at(module).at(moduleName).contains(paramName);
   }
 };
 
-CHECK_MODULE(ParamModule, Parameters<Concepts::DummyInput>)
+CHECK_MODULE(ParamModule, Parameters<Concepts::DummyParameterInput>)
 }  // namespace VIPRA

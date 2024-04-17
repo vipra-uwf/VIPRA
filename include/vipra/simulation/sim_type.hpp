@@ -120,7 +120,7 @@ class SimType {
     VIPRA::timestep randomseed =
         params.template get_param<VIPRA::timestep>(Modules::Type::SIMULATION, "main", "random_seed", _engine);
 
-    _engine.reseed(randomseed);
+    _engine.reseed(randomseed + (_currSimIdx * _currSimIdx));
 
     config(params);
     _pedset.initialize();

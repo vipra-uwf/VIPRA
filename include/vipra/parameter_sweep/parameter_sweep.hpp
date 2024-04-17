@@ -14,6 +14,8 @@
 #include "vipra/types/util/result_or_void.hpp"
 #include "vipra/util/all_of_type.hpp"
 
+#include "vipra/parameter_sweep/ps_util.hpp"
+
 namespace VIPRA {
 class ParameterSweep {
  public:
@@ -27,9 +29,9 @@ class ParameterSweep {
   template <typename sim_t, typename params_t, typename callback_t = VIPRA::VOID>
   static void run(sim_t&& sim, params_t&& params, size_t count, callback_t&& callback = VOID{}) {
     load_params(params);
-    size_t localCount = sim_count(count);
+    size_t localCount = sim_count(rank, size, count);
 
-    sim.add_sim_id(sim_id(count));
+    sim.add_sim_id(start_sim_id(rank, size, count));
 
     for (size_t i = 0; i < localCount; ++i) {
       if constexpr (std::is_same_v<callback_t, VIPRA::VOID>) {
@@ -108,25 +110,6 @@ class ParameterSweep {
     if (rank != 0) {
       input.deserialize(serialized);
     }
-  }
-
-  static auto sim_count(size_t count) -> size_t {
-    // TODO(rolland): if not evenly divisible, they overlap by 1
-    size_t localCount = count / size;
-    if (rank < count % size) {
-      ++localCount;
-    }
-
-    return localCount;
-  }
-
-  static auto sim_id(size_t count) -> size_t {
-    size_t idx = rank * sim_count(count);
-    if (rank > count % size) {
-      idx += count % size;
-    }
-
-    return idx;
   }
 };
 }  // namespace VIPRA

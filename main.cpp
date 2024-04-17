@@ -44,7 +44,7 @@ auto main(int argc, char** argv) -> int {
   VIPRA::ParameterSweep::run(
       sim,
       VIPRA::Parameters{
-        VIPRA::Input::JSON{"module_params.json"}
+        VIPRA::Input::JSON{"examples/module_params.json"}
       },
       simCount,
       [](VIPRA::idx simId) { std::cout << "Simulation id: " << simId << " complete on: " << VIPRA::ParameterSweep::get_rank() << std::endl; });

@@ -20,6 +20,7 @@
 #include "vipra/concepts/polygon_input.hpp"
 #include "vipra/concepts/serializable_input.hpp"
 #include "vipra/modules.hpp"
+#include "vipra/random/distributions.hpp"
 #include "vipra/types/float.hpp"
 #include "vipra/types/parameter.hpp"
 #include "vipra/util/get_nth_value.hpp"
@@ -44,6 +45,9 @@ class JSON {
 
   template <typename data_t>
   [[nodiscard]] auto get(auto&&... keys) const -> std::optional<data_t>;
+  template <typename data_t>
+  [[nodiscard]] auto get_param(Random::Engine& eng, auto&&... keys) const -> std::optional<data_t>;
+
   [[nodiscard]] auto load_polygons(auto&&... keys) const -> std::optional<std::vector<Geometry::Polygon>>;
 
   [[nodiscard]] auto serialize() -> std::string;
@@ -75,10 +79,12 @@ class JSON {
 
   template <typename data_t>
   [[nodiscard]] static auto numeric_parameter_helper(
-      std::reference_wrapper<const nlohmann::json> const& value) -> std::optional<Parameter<data_t>>;
+      VIPRA::Random::Engine& eng, std::reference_wrapper<const nlohmann::json> const& value)
+      -> std::optional<data_t>;
 
-  [[nodiscard]] static inline auto get_parameter(std::reference_wrapper<const nlohmann::json> const& value)
-      -> std::optional<Parameter<std::string>>;
+  [[nodiscard]] static inline auto get_parameter(Random::Engine&                                     eng,
+                                                 std::reference_wrapper<const nlohmann::json> const& value)
+      -> std::optional<std::string>;
 };
 }  // namespace VIPRA::Input
 
@@ -102,6 +108,29 @@ auto VIPRA::Input::JSON::get(key_ts&&... keys) const -> std::optional<data_t> {
 
   auto value = get_value_at_key(std::forward<key_ts>(keys)...);
   if (!value) return std::nullopt;
+
+  return get_value<data_t>(value.value());
+}
+
+/**
+   * @brief Returns the value of the given key from the JSON file
+   * 
+   * @tparam data_t 
+   * @tparam key_ts 
+   * @param keys 
+   * @return std::optional<data_t> 
+   */
+template <typename data_t, typename... key_ts>
+auto VIPRA::Input::JSON::get_param(Random::Engine& eng, key_ts&&... keys) const -> std::optional<data_t> {
+  assert(_loaded);
+
+  auto value = get_value_at_key(std::forward<key_ts>(keys)...);
+  if (!value) return std::nullopt;
+
+  if constexpr (std::is_same_v<data_t, std::string>)
+    return get_parameter(eng, value.value());
+  else if constexpr (Concepts::Numeric<data_t>)
+    return numeric_parameter_helper<data_t>(eng, value.value());
 
   return get_value<data_t>(value.value());
 }
@@ -144,39 +173,28 @@ template <typename... key_ts>
    * @brief Gets a string parameter from the JSON value
    * 
    * @param value 
-   * @return std::optional<Parameter<std::string>> 
+   * @return std::optional<std::string> 
    */
 [[nodiscard]] auto VIPRA::Input::JSON::get_parameter(
-    std::reference_wrapper<const nlohmann::json> const& value) -> std::optional<Parameter<std::string>> {
-  std::string inputData{};
+    VIPRA::Random::Engine& eng, std::reference_wrapper<const nlohmann::json> const& value)
+    -> std::optional<std::string> {
   try {
     if (value.get().is_array()) {
       // discrete, choose random value
-      Parameter<std::string> parameter{};
-      parameter.randomType = Parameter<std::string>::RandomType::DISCRETE;
-      // TODO(rolland): This needs to take a random value, currently just hard coded to 0 till randomization is added
-      parameter.value = value.get()[0].get<std::string>();
-      return parameter;
+      VIPRA::Random::uniform_distribution<size_t> dist(0, value.get().size() - 1);
+      return value.get()[dist(eng)].get<std::string>();
     }
 
-    Parameter<std::string> parameter{};
-    parameter.randomType = Parameter<std::string>::RandomType::NONE;
-    // TODO(rolland): This needs to take a random value, currently just hard coded to 0 till randomization is added
-    parameter.value = value.get().get<std::string>();
-    return parameter;
+    if (value.get().is_object()) {
+      // TODO(rolland): range, Strings cannont be a range error?
+      return std::nullopt;
+    }
   } catch (nlohmann::json::type_error const& e) {
     return std::nullopt;
   }
 
-  if (inputData.empty()) {
-    return std::nullopt;
-  }
-
   // single value
-  Parameter<std::string> parameter{};
-  parameter.randomType = Parameter<std::string>::RandomType::NONE;
-  parameter.value = inputData;
-  return parameter;
+  return value.get().get<std::string>();
 }
 
 /**
@@ -184,40 +202,31 @@ template <typename... key_ts>
    * 
    * @tparam data_t 
    * @param value 
-   * @return std::optional<Parameter<data_t>> 
+   * @return std::optional<data_t> 
    */
 template <typename data_t>
 [[nodiscard]] auto VIPRA::Input::JSON::numeric_parameter_helper(
-    std::reference_wrapper<const nlohmann::json> const& value) -> std::optional<Parameter<data_t>> {
-  data_t inputData{};
+    VIPRA::Random::Engine& eng, std::reference_wrapper<const nlohmann::json> const& value)
+    -> std::optional<data_t> {
   try {
     if (value.get().is_array()) {
       // discrete, choose random value
-      Parameter<data_t> parameter{};
-      parameter.randomType = Parameter<data_t>::RandomType::DISCRETE;
-      // TODO(rolland): This needs to take a random value, currently just hard coded to 0 till randomization is added
-      parameter.value = value.get()[0].template get<data_t>();
-      return parameter;
+      VIPRA::Random::uniform_distribution<size_t> dist(0, value.get().size() - 1);
+      return value.get()[dist(eng)].get<data_t>();
     }
 
     if (value.get().is_object()) {
       // range, choose random value
-      Parameter<data_t> parameter{};
-      parameter.randomType = Parameter<data_t>::RandomType::RANGE;
-      // TODO(rolland): This needs to take a random value, currently just hard coded to min till randomization is added
-      parameter.value = value.get()["min"].template get<data_t>();
-      return parameter;
+      VIPRA::Random::uniform_distribution<data_t> dist(value.get()["min"].get<data_t>(),
+                                                       value.get()["max"].get<data_t>());
+      return dist(eng);
     }
-
-    // single value
-    Parameter<data_t> parameter{};
-    parameter.randomType = Parameter<data_t>::RandomType::NONE;
-    parameter.value = value.get().template get<data_t>();
-    return parameter;
-
   } catch (nlohmann::json::type_error const& e) {
     return std::nullopt;
   }
+
+  // single value
+  return value.get().get<data_t>();
 }
 
 /**
@@ -344,11 +353,7 @@ template <typename... key_ts>
 template <typename data_t>
 [[nodiscard]] auto VIPRA::Input::JSON::get_value(
     std::reference_wrapper<const nlohmann::json> const& value) const -> std::optional<data_t> {
-  if constexpr (std::is_same_v<data_t, VIPRA::Parameter<std::string>>) {
-    return get_parameter(value);
-  }
-
-  else if constexpr (std::is_same_v<data_t, VIPRA::f3d>) {
+  if constexpr (std::is_same_v<data_t, VIPRA::f3d>) {
     return get_f3d(value);
   }
 
@@ -361,10 +366,7 @@ template <typename data_t>
     return get_vector<value_t>(value);
   }
 
-  else if constexpr (Util::is_specialization<data_t, Parameter>::value) {
-    using value_t = typename Util::get_specialization_internal<data_t>::type;
-    return numeric_parameter_helper<value_t>(value);
-  } else {
+  else {
     try {
       return value.get().get<data_t>();
     } catch (nlohmann::json::type_error const& e) {
