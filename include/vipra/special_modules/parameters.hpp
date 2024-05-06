@@ -17,6 +17,7 @@
 #include "vipra/random/distributions.hpp"
 #include "vipra/random/random.hpp"
 #include "vipra/types/parameter.hpp"
+#include "vipra/util/debug_do.hpp"
 #include "vipra/util/template_specialization.hpp"
 
 // TODO(rolland): Check that all required parameters are provided (maybe not needed, they are checked when the module tries to get it)
@@ -104,9 +105,10 @@ class Parameters {
                                " Module: " + moduleName + " Not Provided In Input");
     }
 
-    // print out the parameter
-    std::cout << "Parameter: " << paramName << " For " << to_string(module) << " Module: " << moduleName
-              << " Value: " << value.value() << std::endl;
+    Util::debug_do([&]() {
+      std::cout << "Parameter: " << paramName << " For " << to_string(module) << " Module: " << moduleName
+                << " Value: " << value.value() << std::endl;
+    });
 
     return value.value();
   }

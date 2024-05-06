@@ -6,6 +6,8 @@
 #include "calm_model_types.hpp"
 #include "vipra/concepts/goals.hpp"
 #include "vipra/geometry/f3d.hpp"
+#include "vipra/macros/performance.hpp"
+#include "vipra/performance/performance_testing.hpp"
 #include "vipra/random/distributions.hpp"
 
 namespace CALM {
@@ -41,7 +43,7 @@ class Model {
   VIPRA_MODEL_INIT_STEP {
     _peds.resize(pedset.num_pedestrians());
     _collision.initialize(pedset, goals, _peds);
-    _collision.assignRaceStatuses(_raceStatuses, _inRace);
+    _collision.assign_race_statuses(_raceStatuses, _inRace);
 
     _peds.masses = VIPRA::Random::make_distribution<VIPRA::Random::normal_distribution<>>(
         {_config.meanMass, _config.massStdDev}, _peds.size(), engine);
@@ -55,14 +57,16 @@ class Model {
 
   // NOLINTNEXTLINE(misc-unused-parameters, bugprone-easily-swappable-parameters)
   VIPRA_MODEL_TIMESTEP {
+    VIPRA_PERF_FUNCTION("calm::model_step")
+
     calc_shoulders(pedset.all_coords(), goals.current_goals());
     calc_neighbors(pedset, map, goals);
     calc_betas();
     update_state(pedset, goals, state, deltaT);
 
     if (timestep > 0) {
-      _collision.raceDetection(pedset, _peds, goals, timestep, map);
-      _collision.assignRaceStatuses(_raceStatuses, _inRace);
+      _collision.race_detection(pedset, _peds, goals, timestep, map);
+      _collision.assign_race_statuses(_raceStatuses, _inRace);
     }
   }
 
@@ -103,6 +107,8 @@ class Model {
 void Model::calc_neighbors(VIPRA::Concepts::PedsetModule auto const& pedset,
                            VIPRA::Concepts::MapModule auto const& /*map*/,
                            VIPRA::Concepts::GoalsModule auto const& goals) {
+  VIPRA_PERF_FUNCTION("calm::calc_neighbors")
+
   const VIPRA::size pedCnt = pedset.num_pedestrians();
   auto const&       coords = pedset.all_coords();
 
@@ -139,6 +145,8 @@ void Model::calc_neighbors(VIPRA::Concepts::PedsetModule auto const& pedset,
 void Model::update_state(VIPRA::Concepts::PedsetModule auto const& pedset,
                          VIPRA::Concepts::GoalsModule auto const& goals, VIPRA::State& state,
                          VIPRA::delta_t deltaT) {
+  VIPRA_PERF_FUNCTION("calm::update_state")
+
   const VIPRA::size pedCnt = pedset.num_pedestrians();
   auto const&       velocities = pedset.all_velocities();
   auto const&       coords = pedset.all_coords();
@@ -172,6 +180,7 @@ void Model::update_state(VIPRA::Concepts::PedsetModule auto const& pedset,
 
 auto Model::is_path_blocked(VIPRA::idx pedIdx, VIPRA::f3d velocity, VIPRA::f_pnt maxDist,
                             const VIPRA::Concepts::MapModule auto& map) -> VIPRA::f_pnt {
+  VIPRA_PERF_FUNCTION("calm::is_path_blocked")
   VIPRA::Geometry::Line shoulders = _peds.shoulders[pedIdx];
   if (shoulders.start == shoulders.end) {
     return -1;

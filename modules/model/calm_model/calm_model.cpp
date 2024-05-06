@@ -4,6 +4,8 @@
 namespace CALM {
 
 void Model::calc_shoulders(VIPRA::f3dVec const& coords, VIPRA::f3dVec const& goals) {
+  VIPRA_PERF_FUNCTION("calm::calc_shoulders")
+
   VIPRA::size pedCnt = coords.size();
 
   for (VIPRA::idx i = 0; i < pedCnt; ++i) {
@@ -17,6 +19,8 @@ void Model::calc_shoulders(VIPRA::f3dVec const& coords, VIPRA::f3dVec const& goa
 
 auto Model::obj_spatial_test(const VIPRA::Geometry::Rectangle& collisionRect, VIPRA::f3d objLeft,
                              VIPRA::f3d objRight) -> bool {
+  VIPRA_PERF_FUNCTION("calm::obj_spatial_test")
+
   if (collisionRect.p1() == collisionRect.p2()) {
     return false;
   }
@@ -28,6 +32,8 @@ auto Model::obj_spatial_test(const VIPRA::Geometry::Rectangle& collisionRect, VI
 }
 
 auto Model::obj_direction_test(VIPRA::f3d pedCoord, VIPRA::f3d veloc, VIPRA::f3d objCoords) -> bool {
+  VIPRA_PERF_FUNCTION("calm::obj_direction_test")
+
   const VIPRA::f3d displacement = objCoords - pedCoord;
 
   VIPRA::f_pnt const dotProduct =
@@ -37,6 +43,8 @@ auto Model::obj_direction_test(VIPRA::f3d pedCoord, VIPRA::f3d veloc, VIPRA::f3d
 }
 
 auto Model::is_ped_toward_goal(VIPRA::f3d pedCoords, VIPRA::f3d goal, VIPRA::f3d otherCoords) -> bool {
+  VIPRA_PERF_FUNCTION("calm::is_ped_toward_goal")
+
   VIPRA::f3d pedDirection = goal - pedCoords;
   VIPRA::f3d secondDirection = otherCoords - pedCoords;
 
@@ -45,6 +53,8 @@ auto Model::is_ped_toward_goal(VIPRA::f3d pedCoords, VIPRA::f3d goal, VIPRA::f3d
 
 auto Model::rect_from_shoulders(VIPRA::idx pedIdx, VIPRA::f3d pedCoords, VIPRA::f3d goal)
     -> VIPRA::Geometry::Rectangle {
+  VIPRA_PERF_FUNCTION("calm::rect_from_shoulders")
+
   const VIPRA::Geometry::Line pedShldr = _peds.shoulders[pedIdx];
   const VIPRA::f3d            range = (goal - pedCoords).unit();
 

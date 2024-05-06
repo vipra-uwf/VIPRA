@@ -4,6 +4,7 @@
 
 namespace VIPRA::Util {
 using nano = std::chrono::nanoseconds;
+using micro = std::chrono::microseconds;
 using milli = std::chrono::milliseconds;
 using seconds = std::chrono::seconds;
 
@@ -33,6 +34,8 @@ class Clock {
     _running = true;
     _start = clock_t::now();
   }
+
+  [[nodiscard]] inline auto is_running() const -> bool { return _running; }
 
   /**
    * @brief Returns the time since it was started

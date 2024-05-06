@@ -24,9 +24,9 @@ struct f3d {
   constexpr explicit f3d(VIPRA::f_pnt valX, VIPRA::f_pnt valY) noexcept : x(valX), y(valY), z(0) {}
   constexpr explicit f3d(VIPRA::f_pnt valX, VIPRA::f_pnt valY, VIPRA::f_pnt valZ) noexcept
       : x(valX), y(valY), z(valZ) {}
-  constexpr f3d(const f3d& other) noexcept = default;
+  constexpr f3d(f3d const& other) noexcept = default;
   constexpr f3d(f3d&& other) noexcept = default;
-  constexpr auto operator=(const f3d& other) noexcept -> f3d& = default;
+  constexpr auto operator=(f3d const& other) noexcept -> f3d& = default;
   constexpr auto operator=(f3d&& other) noexcept -> f3d& = default;
 
   template <Concepts::Numeric data_t>
@@ -97,20 +97,20 @@ struct f3d {
     return *this;
   }
 
-  inline constexpr auto operator-(const f3d& other) const noexcept -> f3d {
+  inline constexpr auto operator-(f3d const& other) const noexcept -> f3d {
     return f3d{x - other.x, y - other.y, z - other.z};
   }
   inline constexpr auto operator-(f3d&& other) const noexcept -> f3d {
     return f3d{x - other.x, y - other.y, z - other.z};
   }
-  inline constexpr auto operator+(const f3d& other) const noexcept -> f3d {
+  inline constexpr auto operator+(f3d const& other) const noexcept -> f3d {
     return f3d{x + other.x, y + other.y, z + other.z};
   }
   inline constexpr auto operator+(f3d&& other) const noexcept -> f3d {
     return f3d{x + other.x, y + other.y, z + other.z};
   }
 
-  inline constexpr auto operator+=(const f3d& other) noexcept -> f3d& {
+  inline constexpr auto operator+=(f3d const& other) noexcept -> f3d& {
     x += other.x;
     y += other.y;
     z += other.z;
@@ -123,7 +123,7 @@ struct f3d {
     return *this;
   }
 
-  inline constexpr auto operator-=(const f3d& other) noexcept -> f3d& {
+  inline constexpr auto operator-=(f3d const& other) noexcept -> f3d& {
     x -= other.x;
     y -= other.y;
     z -= other.z;
@@ -136,7 +136,7 @@ struct f3d {
     return *this;
   }
 
-  [[nodiscard]] inline constexpr auto distance_to_sqrd(const f3d& other) const noexcept -> VIPRA::f_pnt {
+  [[nodiscard]] inline constexpr auto distance_to_sqrd(f3d const& other) const noexcept -> VIPRA::f_pnt {
     const VIPRA::f_pnt deltaX = other.x - x;
     const VIPRA::f_pnt deltaY = other.y - y;
     const VIPRA::f_pnt deltaZ = other.z - z;
@@ -144,7 +144,7 @@ struct f3d {
     return (deltaX * deltaX) + (deltaY * deltaY) + (deltaZ * deltaZ);
   }
 
-  [[nodiscard]] inline constexpr auto distance_to(const f3d& other) const -> VIPRA::f_pnt {
+  [[nodiscard]] inline constexpr auto distance_to(f3d const& other) const -> VIPRA::f_pnt {
     const VIPRA::f_pnt deltaX = other.x - x;
     const VIPRA::f_pnt deltaY = other.y - y;
     const VIPRA::f_pnt deltaZ = other.z - z;
@@ -160,14 +160,14 @@ struct f3d {
     return std::sqrt((deltaX * deltaX) + (deltaY * deltaY) + (deltaZ * deltaZ));
   }
 
-  inline constexpr auto operator==(const f3d& other) const noexcept -> bool {
+  inline constexpr auto operator==(f3d const& other) const noexcept -> bool {
     return (x == other.x && y == other.y && z == other.z);
   }
   inline constexpr auto operator==(f3d&& other) const noexcept -> bool {
     return (x == other.x && y == other.y && z == other.z);
   }
 
-  inline constexpr auto operator!=(const f3d& other) const noexcept -> bool {
+  inline constexpr auto operator!=(f3d const& other) const noexcept -> bool {
     return (x != other.x || y != other.y || z != other.z);
   }
   inline constexpr auto operator!=(f3d&& other) const noexcept -> bool {
@@ -212,7 +212,7 @@ struct f3d {
    * @param other : 
    * @return constexpr VIPRA::f_pnt 
    */
-  [[nodiscard]] inline constexpr auto dot(const f3d& other) const noexcept -> VIPRA::f_pnt {
+  [[nodiscard]] inline constexpr auto dot(f3d const& other) const noexcept -> VIPRA::f_pnt {
     return (x * other.x) + (y * other.y) + (z * other.z);
   }
 
@@ -222,7 +222,7 @@ struct f3d {
    * @param other 
    * @return f3d 
    */
-  [[nodiscard]] inline constexpr auto cross(const f3d& other) const noexcept -> f3d {
+  [[nodiscard]] inline constexpr auto cross(f3d const& other) const noexcept -> f3d {
     return f3d{(y * other.z) - (z * other.y), (z * other.x) - (x * other.z), (x * other.y) - (y * other.x)};
   }
 
@@ -237,7 +237,7 @@ struct f3d {
 };
 
 template <Concepts::Numeric data_t>
-inline constexpr auto operator*(data_t&& multiplier, const f3d& other) noexcept -> f3d {
+inline constexpr auto operator*(data_t&& multiplier, f3d const& other) noexcept -> f3d {
   return f3d{other.x * multiplier, other.y * multiplier, other.z * multiplier};
 }
 

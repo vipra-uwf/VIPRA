@@ -11,8 +11,15 @@
     "calm_model": {
       "meanMass": 1.0,
       "massStdDev": 0.1,
-      "meanReactionTime": 0.4,
-      "reactionTimeStdDev": 0.05,
+      "meanReactionTime": [
+        0.4,
+        0.42,
+        0.44
+      ],
+      "reactionTimeStdDev": {
+        "min": 0.02,
+        "max": 0.03
+      },
       "meanMaxSpeed": 1.0,
       "meanShoulderLen": 0.2,
       "maxSpeedStdDev": 0.1,

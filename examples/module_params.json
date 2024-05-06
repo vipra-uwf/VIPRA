@@ -1,7 +1,7 @@
 {
   "simulation": {
     "main": {
-      "max_timestep": 80000,
+      "max_timestep": 5000,
       "timestep_size": 0.005,
       "output_frequency": 100,
       "random_seed": 12346345
@@ -59,8 +59,7 @@
     "main": {
       "behaviors_dir": "./behaviors",
       "behaviors": [
-        "disembark",
-        "luggage"
+        "disembark"
       ]
     }
   }
