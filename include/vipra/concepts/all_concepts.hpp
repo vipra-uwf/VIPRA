@@ -1,6 +1,5 @@
 #pragma once
 
-#include "vipra/concepts/field.hpp"
 #include "vipra/concepts/goals.hpp"
 #include "vipra/concepts/has_type.hpp"
 #include "vipra/concepts/input.hpp"

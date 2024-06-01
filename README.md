@@ -607,10 +607,11 @@ Helper macros can be found in [Pedestrian Set Macros](#pedestrian-set-macros)
 ```C++
 auto num_pedestrians() -> VIPRA::size;
 
-auto ped_coords(VIPRA::idx) -> VIPRA::f3d;
-auto all_coords() -> std::vector<VIPRA::f3d> const&;
-auto ped_velocity(VIPRA::idx) -> VIPRA::f3d;
-auto all_velocities() -> std::vector<VIPRA::f3d> const&;
+auto ped_coords(VIPRA::idx) const -> VIPRA::f3d;
+auto all_coords() const -> std::vector<VIPRA::f3d> const&;
+auto ped_velocity(VIPRA::idx) const -> VIPRA::f3d;
+auto all_velocities() const -> std::vector<VIPRA::f3d> const&;
+auto closest_ped() const -> VIPRA::idx;
 
 void update(VIPRA::State const&);
 ```
@@ -786,7 +787,7 @@ auto main() -> int {
       "goalRange": 0.05
     }
   },
-  "pedset": {
+  "pedestrians": {
     "grid": {
       "gridSize": 0.5
     }

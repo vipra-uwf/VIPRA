@@ -3,7 +3,6 @@
 #include <concepts>
 #include "vipra/concepts/module.hpp"
 #include "vipra/concepts/obstacle_set.hpp"
-#include "vipra/concepts/pedset.hpp"
 
 #include "vipra/macros/module.hpp"
 #include "vipra/macros/parameters.hpp"
@@ -17,8 +16,8 @@ namespace VIPRA::Concepts {
  * @tparam map_t 
  */
 template <typename map_t>
-concept can_initialize_map = requires(map_t map, DummyPedSet const& pedset) {
-  {map.initialize(pedset)};
+concept can_initialize_map = requires(map_t map) {
+  {map.initialize()};
 };
 
 /**
@@ -38,8 +37,8 @@ concept can_get_obstacles = requires(const map_t map) {
  * @tparam map_t 
  */
 template <typename map_t>
-concept MapModule =
-    is_module<map_t, Modules::Type::MAP> && can_initialize_map<map_t> && can_get_obstacles<map_t>;
+concept MapModule = is_module<map_t, Modules::Type::MAP> && can_initialize_map<map_t> &&
+    can_get_obstacles<map_t> && can_get_dimensions<map_t>;
 
 /**
  * @brief Dummy map for use in other concepts
@@ -58,8 +57,9 @@ class DummyMap {
   template <VIPRA::Concepts::ParamModule params_t>
   void config(params_t const& params, VIPRA::Random::Engine&) {}
 
-  template <Concepts::PedsetModule pedestrians_t>
-  void initialize(pedestrians_t const& pedestrians) {}
+  void initialize() {}
+
+  auto get_dimensions() const -> VIPRA::f3d { return VIPRA::f3d{0}; }
 
   auto obstacle_set() const -> DummyObsSet const& { return _dummy; }
 

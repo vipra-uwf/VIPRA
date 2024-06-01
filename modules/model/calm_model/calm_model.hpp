@@ -119,27 +119,61 @@ void Model::calc_neighbors(VIPRA::Concepts::PedsetModule auto const& pedset,
     VIPRA::f3d                 pedGoal = goals.current_goal(i);
     VIPRA::Geometry::Rectangle pedRect = rect_from_shoulders(i, pedCoords, pedGoal);
 
-    VIPRA::f_pnt nearestDist = std::numeric_limits<VIPRA::f_pnt>::max();
-    for (VIPRA::idx j = 0; j < pedCnt; ++j) {
-      if (i == j || goals.is_goal_met(j)) continue;
+    auto nearest = pedset.closest_ped(i, [&](VIPRA::idx other) {
+      if (i == other || goals.is_goal_met(other)) return false;
 
-      auto         otherCoords = coords[j];
+      auto         otherCoords = coords[other];
       VIPRA::f_pnt distance = pedCoords.distance_to(otherCoords);
 
-      if (distance >= nearestDist) continue;
-
-      if ((_raceStatuses[i] == 0 && _raceStatuses[j] == 1) ||
+      if ((_raceStatuses[i] == 0 && _raceStatuses[other] == 1) ||
           std::fabs(distance - EQUILIBRIUM_DISTANCE) < EQUILIBRIUM_RESOLUTION)
-        continue;
+        return false;
 
-      if (!is_ped_toward_goal(pedCoords, pedGoal, otherCoords)) continue;
+      if (!is_ped_toward_goal(pedCoords, pedGoal, otherCoords)) return false;
 
-      if (!obj_spatial_test(pedRect, _peds.shoulders[j].start, _peds.shoulders[j].end)) continue;
+      if (!obj_spatial_test(pedRect, _peds.shoulders[other].start, _peds.shoulders[other].end)) return false;
 
-      nearestDist = distance;
+      return true;
+    });
+
+    if (nearest == i) {
+      _peds.nearestDists[i] = 100.0;
+    } else {
+      _peds.nearestDists[i] = pedCoords.distance_to(coords[nearest]);
     }
-    _peds.nearestDists[i] = nearestDist;
   }
+  // ---------------------------------------------------------------------------
+  // const VIPRA::size pedCnt = pedset.num_pedestrians();
+  // auto const&       coords = pedset.all_coords();
+
+  // for (VIPRA::idx i = 0; i < pedCnt; ++i) {
+  //   if (goals.is_goal_met(i)) continue;
+
+  //   VIPRA::f3d                 pedCoords = coords[i];
+  //   VIPRA::f3d                 pedGoal = goals.current_goal(i);
+  //   VIPRA::Geometry::Rectangle pedRect = rect_from_shoulders(i, pedCoords, pedGoal);
+
+  //   VIPRA::f_pnt nearestDist = std::numeric_limits<VIPRA::f_pnt>::max();
+  //   for (VIPRA::idx j = 0; j < pedCnt; ++j) {
+  //     if (i == j || goals.is_goal_met(j)) continue;
+
+  //     auto         otherCoords = coords[j];
+  //     VIPRA::f_pnt distance = pedCoords.distance_to(otherCoords);
+
+  //     if (distance >= nearestDist) continue;
+
+  //     if ((_raceStatuses[i] == 0 && _raceStatuses[j] == 1) ||
+  //         std::fabs(distance - EQUILIBRIUM_DISTANCE) < EQUILIBRIUM_RESOLUTION)
+  //       continue;
+
+  //     if (!is_ped_toward_goal(pedCoords, pedGoal, otherCoords)) continue;
+
+  //     if (!obj_spatial_test(pedRect, _peds.shoulders[j].start, _peds.shoulders[j].end)) continue;
+
+  //     nearestDist = distance;
+  //   }
+  //   _peds.nearestDists[i] = nearestDist;
+  // }
 }
 
 void Model::update_state(VIPRA::Concepts::PedsetModule auto const& pedset,

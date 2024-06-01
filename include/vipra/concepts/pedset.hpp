@@ -1,7 +1,9 @@
 #pragma once
 
 #include <concepts>
+#include <vector>
 
+#include "vipra/concepts/map.hpp"
 #include "vipra/concepts/module.hpp"
 #include "vipra/modules.hpp"
 
@@ -28,6 +30,11 @@ namespace VIPRA::Concepts {
 template <typename pedset_t>
 concept can_get_num_peds = requires(const pedset_t pedset) {
   { pedset.num_pedestrians() } -> std::same_as<VIPRA::size>;
+};
+
+template <typename pedset_t, typename func_t>
+concept can_get_conditional_peds = requires(const pedset_t pedset, VIPRA::idx idx, func_t&& condition) {
+  { pedset.closest_ped(idx, condition) } -> std::same_as<VIPRA::idx>;
 };
 
 /**
@@ -68,8 +75,8 @@ concept can_update_pedset = requires(pedset_t pedset, State const& state) {
  * @tparam pedset_t 
  */
 template <typename pedset_t>
-concept can_initialize_pedset = requires(pedset_t pedset, State const& state) {
-  {pedset.initialize()};
+concept can_initialize_pedset = requires(pedset_t pedset, DummyMap const& map) {
+  {pedset.initialize(map)};
 };
 
 /**
@@ -80,7 +87,7 @@ concept can_initialize_pedset = requires(pedset_t pedset, State const& state) {
 template <typename pedset_t>
 concept PedsetModule = is_module<pedset_t, VIPRA::Modules::Type::PEDESTRIANS> && can_get_num_peds<pedset_t> &&
     can_initialize_pedset<pedset_t> && can_get_ped_coords<pedset_t> && can_get_ped_velocity<pedset_t> &&
-    can_update_pedset<pedset_t>;
+    can_update_pedset<pedset_t> && can_get_conditional_peds<pedset_t, VIPRA::idx(VIPRA::idx)>;
 
 /**
  * @brief Dummy pedestrian set for use in other concepts
@@ -95,10 +102,12 @@ class DummyPedSet {
   template <typename params_t>
   void register_params(params_t&) {}
 
-  void initialize();
+  void initialize(auto const&) {}
 
   void config(auto& params, VIPRA::Random::Engine&) {}
   void update(const VIPRA::State&) {}
+
+  auto closest_ped(VIPRA::idx /*unused*/, auto&& /*unused*/) const -> VIPRA::idx { return 0; }
 
   auto num_pedestrians() const -> VIPRA::size { return 1; }
   auto ped_coords(VIPRA::idx /*unused*/) const -> VIPRA::f3d const& { return _dummy2; }

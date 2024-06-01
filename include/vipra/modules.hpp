@@ -12,7 +12,6 @@ enum class Type {
   PEDESTRIANS,
   PARAMETERS,
   MAP,
-  FIELD,
   OBSTACLES,
   SIMULATION,
   BEHAVIOR_MODEL,
@@ -38,8 +37,6 @@ inline auto to_string(Type type) -> std::string {
       return "simulation";
     case Type::MAP:
       return "map";
-    case Type::FIELD:
-      return "field";
     case Type::BEHAVIOR_MODEL:
       return "behavior_model";
   }

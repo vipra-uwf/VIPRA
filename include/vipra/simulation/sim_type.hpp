@@ -123,8 +123,8 @@ class SimType {
     _engine.reseed(randomseed + (_currSimIdx * _currSimIdx));
 
     config(params);
-    _pedset.initialize();
-    _map.initialize(_pedset);
+    _map.initialize();
+    _pedset.initialize(_map);
     _goals.initialize(_pedset, _map);
     _model.initialize(_pedset, _map, _goals, _output, _engine);
     _behaviorModel.initialize(_pedset, _map, _goals, randomseed);

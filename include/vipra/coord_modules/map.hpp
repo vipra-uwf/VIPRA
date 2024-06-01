@@ -1,8 +1,5 @@
 #pragma once
 
-#include <tuple>
-
-#include "vipra/concepts/field.hpp"
 #include "vipra/concepts/input.hpp"
 #include "vipra/concepts/map.hpp"
 #include "vipra/concepts/obstacle_set.hpp"
@@ -12,11 +9,8 @@
 #include "vipra/modules.hpp"
 #include "vipra/random/random.hpp"
 
-// TODO(rolland): update any fields each timestep
-
 namespace VIPRA::Module {
-template <Concepts::PolygonInput input_t, Concepts::ObstacleModule obstacles_t,
-          Concepts::FieldModule... field_ts>
+template <Concepts::PolygonInput input_t, Concepts::ObstacleModule obstacles_t>
 class Map {
  public:
   // NOLINTNEXTLINE
@@ -24,12 +18,11 @@ class Map {
   ;
 
   /**
-   * @brief Construct a new Map object, loads obstacles from input file and initializes all fields
+   * @brief Construct a new Map object, loads obstacles from input file
    * 
    * @param params 
    */
-  explicit Map(input_t&& input, obstacles_t&& obstacles, field_ts&&... fields)
-      : _input(input), _obstacles{std::move(obstacles)}, _fields{std::move(fields)...} {}
+  explicit Map(input_t&& input, obstacles_t&& obstacles) : _input(input), _obstacles{std::move(obstacles)} {}
 
   /**
    * @brief Initializes all fields with the pedestrians and obstacles
@@ -37,15 +30,9 @@ class Map {
    * @tparam pedestrians_t 
    * @param pedestrians 
    */
-  template <Concepts::PedsetModule pedestrians_t>
-  void initialize(pedestrians_t const& pedestrians) {
+  void initialize() {
     _input.load();
     initialize_obstacles();
-    std::apply(
-        [&](auto&&... fields) {
-          (fields.template initialize<obstacles_t, pedestrians_t>(pedestrians, _obstacles), ...);
-        },
-        _fields);
   }
 
   /**
@@ -53,10 +40,7 @@ class Map {
    * 
    * @param params 
    */
-  void config(auto const& params, VIPRA::Random::Engine& engine) {
-    _obstacles.config(params, engine);
-    std::apply([&](auto&&... fields) { (fields.config(params, engine), ...); }, _fields);
-  }
+  void config(auto const& params, VIPRA::Random::Engine& engine) { _obstacles.config(params, engine); }
 
   /**
    * @brief Calls register_params on all obstacles modules
@@ -66,7 +50,6 @@ class Map {
   template <Concepts::ParamModule params_t>
   void register_params(params_t& params) {
     _obstacles.register_params(params);
-    std::apply([&params](auto&&... fields) { (fields.register_params(params), ...); }, _fields);
   }
 
   [[nodiscard]] inline auto get_object_types() const -> std::vector<std::string> {
@@ -95,21 +78,9 @@ class Map {
 
   [[nodiscard]] inline auto obstacle_set() const -> obstacles_t const& { return _obstacles; }
 
-  // TODO(rolland): decide on what other methods to access fields with
-  template <Concepts::FieldModule field_t>
-  [[nodiscard]] constexpr inline auto field() -> field_t& {
-    return std::get<field_t>(_fields);
-  }
-
-  template <Concepts::FieldModule field_t>
-  [[nodiscard]] constexpr inline auto field() const -> field_t const& {
-    return std::get<field_t>(_fields);
-  }
-
  private:
-  obstacles_t             _obstacles{};
-  std::tuple<field_ts...> _fields;
-  input_t                 _input;
+  obstacles_t _obstacles{};
+  input_t     _input;
 
   void initialize_obstacles() {
     auto const objTypes = _input.template get<std::vector<std::string>>("obj_types");
@@ -134,5 +105,5 @@ class Map {
   }
 };
 
-CHECK_MODULE(MapModule, Map<Concepts::DummyPolygonInput, Concepts::DummyObsSet, Concepts::DummyField>)
+CHECK_MODULE(MapModule, Map<Concepts::DummyPolygonInput, Concepts::DummyObsSet>)
 }  // namespace VIPRA::Module
