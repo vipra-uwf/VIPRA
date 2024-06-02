@@ -39,6 +39,9 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
 
+set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set(MODULES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/modules)
+
 if (VIPRA_BUILD_LIBRARY)
   add_library(
     ${VIPRA_PROJECT_NAME}
@@ -58,7 +61,8 @@ if (VIPRA_PERF_TESTING)
 endif()
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/include/vipra)
-add_subdirectory(modules)
+add_subdirectory(${MODULES_DIR})
+add_subdirectory(${SRC_DIR})
 
 include(FetchContent)
 message(STATUS "Getting nlohmann_json")
@@ -66,9 +70,16 @@ FetchContent_Declare(nlohmann_json URL https://github.com/nlohmann/json/releases
 FetchContent_MakeAvailable(nlohmann_json)
 message(STATUS "Done Getting nlohmann_json")
 
+message(STATUS "Getting fmt lib")
+FetchContent_Declare(
+  fmt
+  GIT_REPOSITORY https://github.com/fmtlib/fmt.git
+  GIT_TAG 10.1.1
+)
+FetchContent_MakeAvailable(fmt)
+message(STATUS "Done Getting fmt lib")
+
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
-include(ExternalAntlr4Cpp)
-include_directories(${ANTLR4_INCLUDE_DIRS})
 
 find_package(MPI REQUIRED)
 
@@ -76,8 +87,8 @@ target_link_libraries(
   ${VIPRA_PROJECT_NAME}
   PUBLIC
   nlohmann_json::nlohmann_json
-  antlr4_static
   MPI::MPI_CXX
+  fmt::fmt
 )
 
 target_include_directories(
@@ -85,6 +96,5 @@ target_include_directories(
   PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}/include
   ${CMAKE_CURRENT_SOURCE_DIR}/include/vipra/vipra_behaviors
-  ${CMAKE_CURRENT_SOURCE_DIR}/modules
-  ${ANTLR4CPP_INCLUDE_DIRS}
+  ${MODULES_DIR}
 )

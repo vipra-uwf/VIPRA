@@ -1,9 +1,4 @@
 
-file(GLOB
-  antlr_srcs
-  ${CMAKE_CURRENT_SOURCE_DIR}/_grammar/generated/*.cpp
-)
-
 target_sources(
   ${VIPRA_PROJECT_NAME}
   PRIVATE

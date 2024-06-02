@@ -9,4 +9,7 @@ ReflowComments:  false
 IncludeBlocks: Preserve
 AlignConsecutiveDeclarations: true
 DerivePointerAlignment: false
-QualifierAlignment: Right
+SpaceAfterLogicalNot: true
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeParens: ControlStatements
+SpacesInConditionalStatement: true

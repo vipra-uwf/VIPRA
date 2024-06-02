@@ -611,7 +611,7 @@ auto ped_coords(VIPRA::idx) const -> VIPRA::f3d;
 auto all_coords() const -> std::vector<VIPRA::f3d> const&;
 auto ped_velocity(VIPRA::idx) const -> VIPRA::f3d;
 auto all_velocities() const -> std::vector<VIPRA::f3d> const&;
-auto closest_ped() const -> VIPRA::idx;
+auto closest_ped(VIPRA::idx ped, auto&& condition = VOID{}) const -> VIPRA::idx;
 
 void update(VIPRA::State const&);
 ```

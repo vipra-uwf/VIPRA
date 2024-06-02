@@ -131,6 +131,11 @@ class Grid {
     }
   }
 
+  /**
+   * @brief Updates the grid for each pedestrian
+   * 
+   * @param state 
+   */
   void update_grids(VIPRA::State const& state) {
     VIPRA_PERF_FUNCTION("grid::update_grids")
 
@@ -145,20 +150,47 @@ class Grid {
     }
   }
 
-  inline auto get_grid(VIPRA::f3d pos) -> std::vector<VIPRA::idx>& {
+  /**
+   * @brief Gets the grid at a position
+   * 
+   * @param pos 
+   * @return std::vector<VIPRA::idx>& 
+   */
+  [[nodiscard]] inline auto get_grid(VIPRA::f3d pos) -> std::vector<VIPRA::idx>& {
     auto x = static_cast<size_t>(pos.x / _cellSize);
     auto y = static_cast<size_t>(pos.y / _cellSize);
     return _grid[x + y * _cols];
   }
 
+  /**
+   * @brief Gets the grid at a position
+   * 
+   * @param pos 
+   * @return std::vector<VIPRA::idx> const& 
+   */
   [[nodiscard]] inline auto get_grid(VIPRA::f3d pos) const -> std::vector<VIPRA::idx> const& {
     return _grid[static_cast<size_t>(pos.x / _cellSize) + static_cast<size_t>(pos.y / _cellSize) * _cols];
   }
 
+  /**
+   * @brief Checks if a position is out of bounds
+   * 
+   * @param x 
+   * @param y 
+   * @return true 
+   * @return false 
+   */
   [[nodiscard]] inline auto out_of_bounds(VIPRA::f_pnt x, VIPRA::f_pnt y) const -> bool {
     return x < 0 || x >= _cols * _cellSize || y < 0 || y >= _rows * _cellSize;
   }
 
+  /**
+   * @brief Checks the 8 grid neighbors of a position and calls a function for each pedestrian in the neighbor
+   * 
+   * @param pos 
+   * @param func 
+   * @return auto 
+   */
   inline auto for_each_neighbor(VIPRA::f3d pos, auto&& func) const {
     VIPRA_PERF_FUNCTION("grid::for_each_neighbor")
 
