@@ -1,0 +1,11 @@
+
+
+Types:
+  type1
+.
+
+Selector:
+  Type: type1
+  Select: everyone
+  Type: type1
+.

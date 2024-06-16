@@ -1,0 +1,7 @@
+
+
+Types: type1, type2.
+
+Action ( type1 ):
+  response: set velocity to {0}
+.

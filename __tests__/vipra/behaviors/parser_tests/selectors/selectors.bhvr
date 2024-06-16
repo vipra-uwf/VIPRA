@@ -1,0 +1,27 @@
+
+
+Types:
+  type1,
+  type2
+.
+
+Selector:
+  Types: type1
+  Select: 50%
+.
+
+Selector:
+  Types: type2
+  Select: everyone
+  From: type1
+.
+
+Selector:
+  Types: type1, type2
+  Select: exactly 5
+.
+
+Selector:
+  Types: type2
+  Select: in @testLoc
+.

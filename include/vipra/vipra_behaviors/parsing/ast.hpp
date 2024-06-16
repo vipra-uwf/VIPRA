@@ -53,6 +53,8 @@ class AST {
   struct String;
   struct Call;
 
+  struct Value;
+
   /**
    * @brief Binary operations
    * 
@@ -133,6 +135,40 @@ struct AST::Call {
   Type        type;
   // TODO(rolland): figure out if these need to be full expressions
   std::vector<std::string> args;
+
+  [[nodiscard]] auto to_string(int) const -> std::string;
+};
+
+/**
+ * @brief AST node for holding numerical values information
+ * 
+ */
+struct AST::Value {
+  enum class Type { EXACT, RANDOM, RANGE };
+
+  Type         type;
+  VIPRA::f_pnt min;
+  VIPRA::f_pnt max;
+
+  [[nodiscard]] auto to_string(int) const -> std::string;
+};
+
+struct AST::Duration {
+  AST::Value value;
+
+  [[nodiscard]] auto to_string(int) const -> std::string;
+};
+
+/**
+ * @brief AST node for holding action information
+ * 
+ */
+struct AST::Action {
+  std::string            type;
+  std::string            target;
+  AST::Condition         condition;
+  std::vector<AST::Call> response;
+  AST::Value             duration;
 
   [[nodiscard]] auto to_string(int) const -> std::string;
 };
@@ -234,11 +270,21 @@ struct AST::Primary {
 };
 
 /**
+ * @brief AST node for strings
+ * 
+ */
+struct AST::String {
+  std::string value;
+
+  [[nodiscard]] auto to_string(int) const -> std::string;
+};
+
+/**
  * @brief AST node for statements
  * 
  */
 struct AST::Statement {
-  std::variant<std::nullptr_t, AST::Types, AST::Location, AST::Selector> statement;
+  std::variant<std::nullptr_t, AST::Types, AST::Action, AST::Location, AST::Selector> statement;
 
   [[nodiscard]] auto to_string(int) const -> std::string;
 

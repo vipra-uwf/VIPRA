@@ -4,6 +4,7 @@
 
 #include <cwctype>
 #include <fstream>
+#include <iostream>
 
 namespace VIPRA::Behaviors {
 
@@ -112,6 +113,12 @@ auto Lexer::parse_token() noexcept -> Token {
       break;
     case '.':
       next();
+
+      if ( std::isdigit(*_iter) ) {
+        --_iter;
+        return parse_number(false);
+      }
+
       return Token(Token::Type::DOT, _line, _col);
       break;
     case '#':
@@ -119,16 +126,7 @@ auto Lexer::parse_token() noexcept -> Token {
       return Token(Token::Type::HASH, _line, _col);
       break;
     case '@':
-      // TODO(rolland): create location token
       next();
-
-      if ( std::isalpha(*_iter) ) {
-        // If the next character is a letter, it is a location name
-        auto tok = parse_identifier(false);
-        tok.type = Token::Type::LOC;
-        return tok;
-      }
-
       return Token(Token::Type::AT, _line, _col);
       break;
     case '&':
@@ -170,14 +168,6 @@ auto Lexer::parse_token() noexcept -> Token {
       break;
     case '!':
       next();
-
-      if ( std::isalpha(*_iter) ) {
-        // If the next character is a letter, it is an event name
-        auto tok = parse_identifier(false);
-        tok.type = Token::Type::EVNT;
-        return tok;
-      }
-
       return replace_not_equal();
       break;
     case '?':
@@ -303,6 +293,10 @@ auto Lexer::parse_number(bool negative) noexcept -> Token {
   value += *_iter;
 
   bool flt = false;
+
+  if ( *_iter == '.' ) {
+    flt = true;
+  }
 
   next();
   while ( (_iter < _source.end()) && (std::isdigit(*_iter) || *_iter == '.') ) {
@@ -434,6 +428,9 @@ auto Lexer::keywords() -> std::map<std::string, Token::Type> const& {
       {"response", Token::Type::RESPONSE}, {"target", Token::Type::TARGET},
       {"duration", Token::Type::DURATION}, {"event", Token::Type::EVENT},
       {"select", Token::Type::SELECT},     {"from", Token::Type::FROM},
+      {"types", Token::Type::TYPES},       {"name", Token::Type::NAME},
+      {"center", Token::Type::CENTER},     {"dimensions", Token::Type::DIMENSIONS},
+      {"rotation", Token::Type::ROTATION},
   };
   return KEYWORDS;
 }

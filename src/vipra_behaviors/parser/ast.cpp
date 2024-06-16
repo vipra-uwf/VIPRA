@@ -16,6 +16,9 @@ auto AST::to_string() const -> std::string {
   for ( const auto& statement : _statements ) {
     overloaded_visit(
         statement.statement, [&result](const AST::Types& types) { result += types.to_string(0); },
+        [&result](const AST::Location& location) { result += location.to_string(0); },
+        [&result](const AST::Selector& selector) { result += selector.to_string(0); },
+        [&result](const AST::Action& action) { result += action.to_string(0); },
         [&result](std::nullptr_t) { result += "null\n"; });
   }
   return result;
@@ -33,7 +36,7 @@ auto AST::statements() const -> const std::vector<Statement>& { return _statemen
  * 
  * @param statement 
  */
-void AST::add_statement(Statement&& statement) { _statements.emplace_back(std::move(statement)); }
+void AST::add_statement(Statement&& statement) { _statements.emplace_back(statement); }
 
 /**
  * @brief Converts a binary operator to a string
@@ -81,6 +84,9 @@ auto AST::Expression::to_string(int indent) const -> std::string {
 auto AST::Statement::to_string(int indent) const -> std::string {
   return overloaded_visit<std::string>(
       statement, [&](const Types& types) { return types.to_string(indent); },
+      [&](const Location& location) { return location.to_string(indent); },
+      [&](const Selector& selector) { return selector.to_string(indent); },
+      [&](const Action& action) { return action.to_string(indent); },
       [&](std::nullptr_t) { return std::string("null\n"); });
 }
 
@@ -146,16 +152,6 @@ auto AST::Unary::to_string(int indent) const -> std::string {
 }
 
 /**
- * @brief returns the string representation of the variable
- * 
- * @param indent spaces to indent
- * @return std::string string representation
- */
-auto AST::Variable::to_string(int indent) const -> std::string {
-  return fmt::format("\n{: >{}}Variable:", "", indent) + name + (attribute ? "." + attribute.value() : "");
-}
-
-/**
  * @brief returns the string representation of the terminal
  * 
  * @param indent spaces to indent
@@ -166,9 +162,6 @@ auto AST::Terminal::to_string(int indent) const -> std::string {
       value, [&](const Token& token) { return fmt::format("\n{: >{}}Terminal:", "", indent) + token.value; },
       [&](const std::unique_ptr<String>& str) {
         return fmt::format("\n{: >{}}Terminal:", "", indent) + str->value;
-      },
-      [&](const std::unique_ptr<Variable>& variable) {
-        return fmt::format("\n{: >{}}Terminal:", "", indent) + variable->to_string(indent + 1);
       });
 }
 
@@ -189,7 +182,40 @@ auto AST::Types::to_string(int indent) const -> std::string {
  * @return std::string string representation
  */
 auto AST::Location::to_string(int indent) const -> std::string {
+  // TODO(rolland): Add more to the string
   return fmt::format("\n{: >{}}Location: {}", "", indent, name);
+}
+
+/**
+ * @brief returns the string representation of the action
+ * 
+ * @param indent spaces to indent
+ * @return std::string string representation
+ */
+auto AST::Action::to_string(int indent) const -> std::string {
+  // TODO(rolland): Add more to the string
+  return fmt::format("\n{: >{}}Action: {}", "", indent, type);
+}
+
+/**
+ * @brief returns the string representation of the selector
+ * 
+ * @param indent spaces to indent
+ * @return std::string string representation
+ */
+auto AST::Selector::to_string(int indent) const -> std::string {
+  // TODO(rolland): Add more to the string
+  return fmt::format("\n{: >{}}Selector: {}", "", indent, fmt::join(types, ", "));
+}
+
+/**
+ * @brief returns the string representation of the call
+ * 
+ * @param indent spaces to indent
+ * @return std::string string representation
+ */
+auto AST::Call::to_string(int indent) const -> std::string {
+  return fmt::format("\n{: >{}}Call: {}", "", indent, name);
 }
 
 /**
@@ -207,11 +233,11 @@ auto AST::Primary::to_string(int indent) const -> std::string {
       [&](const std::unique_ptr<Terminal>& terminal) {
         return fmt::format("\n{: >{}}Primary:", "", indent) + terminal->to_string(indent + 1);
       },
-      [&](const std::unique_ptr<Variable>& variable) {
-        return fmt::format("\n{: >{}}Primary:", "", indent) + variable->to_string(indent + 1);
-      },
       [&](const std::unique_ptr<String>& str) {
         return fmt::format("\n{: >{}}Primary:", "", indent) + str->value;
+      },
+      [&](const std::unique_ptr<Call>& call) {
+        return fmt::format("\n{: >{}}Primary:", "", indent) + call->to_string(indent + 1);
       });
 }
 }  // namespace VIPRA::Behaviors
