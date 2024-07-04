@@ -6,6 +6,12 @@
 #include "vipra/types/idx.hpp"
 
 namespace VIPRA::DataStructures {
+
+/**
+ * @brief generic Graph datastructure
+ * 
+ * @tparam data_t 
+ */
 template <typename data_t>
 class Graph {
  public:
@@ -58,7 +64,7 @@ class Graph {
 
   [[nodiscard]] auto add_node(data_t data, std::vector<VIPRA::idx> neighbors) -> VIPRA::idx {
     _nodes.emplace_back(Node{data, neighbors});
-    for (auto neighbor : neighbors) {
+    for ( auto neighbor : neighbors ) {
       _nodes[neighbor].neighbors.push_back(_nodes.size() - 1);
     }
     return _nodes.size() - 1;

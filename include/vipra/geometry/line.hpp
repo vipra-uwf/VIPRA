@@ -24,8 +24,8 @@ struct Line {
     VIPRA::f_pnt val = (line.end.y - line.start.y) * (point.x - line.end.x) -
                        (line.end.x - line.start.x) * (point.y - line.end.y);
 
-    if (val > 0) return Orientation::CLOCKWISE;
-    if (val < 0) return Orientation::COUNTERCLOCKWISE;
+    if ( val > 0 ) return Orientation::CLOCKWISE;
+    if ( val < 0 ) return Orientation::COUNTERCLOCKWISE;
     return Orientation::COLLINEAR;
   }
 
@@ -86,7 +86,7 @@ struct Line {
 
     const VIPRA::f_pnt determinant = a1 * b2 - a2 * b1;
 
-    if (determinant == 0) return VIPRA::f3d{0, 0, 0};
+    if ( determinant == 0 ) return VIPRA::f3d{0, 0, 0};
 
     const VIPRA::f_pnt x = (b2 * c1 - b1 * c2) / determinant;
     const VIPRA::f_pnt y = (a1 * c2 - a2 * c1) / determinant;
@@ -108,12 +108,12 @@ struct Line {
     const Orientation ori3 = orientation_to(line2, line1.start);
     const Orientation ori4 = orientation_to(line2, line1.end);
 
-    if (ori1 != ori2 && ori3 != ori4) return true;
+    if ( ori1 != ori2 && ori3 != ori4 ) return true;
 
-    if (ori1 == Orientation::COLLINEAR && line1.is_point_on(line2.start)) return true;
-    if (ori2 == Orientation::COLLINEAR && line1.is_point_on(line2.end)) return true;
-    if (ori3 == Orientation::COLLINEAR && line2.is_point_on(line1.start)) return true;
-    if (ori4 == Orientation::COLLINEAR && line2.is_point_on(line1.end)) return true;
+    if ( ori1 == Orientation::COLLINEAR && line1.is_point_on(line2.start) ) return true;
+    if ( ori2 == Orientation::COLLINEAR && line1.is_point_on(line2.end) ) return true;
+    if ( ori3 == Orientation::COLLINEAR && line2.is_point_on(line1.start) ) return true;
+    if ( ori4 == Orientation::COLLINEAR && line2.is_point_on(line1.end) ) return true;
 
     return false;
   }

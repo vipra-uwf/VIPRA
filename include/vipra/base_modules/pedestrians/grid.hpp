@@ -6,6 +6,7 @@
 #include "vipra/concepts/pedset.hpp"
 #include "vipra/macros/module.hpp"
 #include "vipra/macros/parameters.hpp"
+#include "vipra/macros/pedestrians.hpp"
 #include "vipra/macros/performance.hpp"
 #include "vipra/modules.hpp"
 
@@ -35,9 +36,9 @@ class Grid {
   // TODO(rolland): having the pedset call load means each node will load the same file
   explicit Grid(input_t&& input) : _input(input) { _input.load(); }
 
-  void initialize(VIPRA::Concepts::MapModule auto const& map) {
+  VIPRA_PEDS_INIT_STEP {
     auto coords = _input.template get<std::vector<VIPRA::f3d>>("coords");
-    if (!coords) throw std::runtime_error("Could not find pedestrian coordinates in input file");
+    if ( ! coords ) throw std::runtime_error("Could not find pedestrian coordinates in input file");
 
     auto dimensions = map.get_dimensions();
     set_grids(dimensions.x, dimensions.y);
@@ -48,23 +49,20 @@ class Grid {
     initialize_grids();
   }
 
-  void update(VIPRA::State const& state) {
+  VIPRA_PEDS_UPDATE_STEP {
     assert(state.size() == _coords.size());
 
+    // Update pedestrian positions in grids
     update_grids(state);
-
-    for (VIPRA::idx pedIdx = 0; pedIdx < state.size(); ++pedIdx) {
+    for ( VIPRA::idx pedIdx = 0; pedIdx < state.size(); ++pedIdx ) {
       _coords[pedIdx] = state.positions[pedIdx];
       _velocities[pedIdx] = state.velocities[pedIdx];
     }
   }
 
-  template <Concepts::ParamModule params_t>
-  void register_params(params_t& params) {
-    params.template register_param(VIPRA::Modules::Type::PEDESTRIANS, "grid", "gridSize");
-  }
+  VIPRA_REGISTER_STEP { VIPRA_REGISTER_PARAM("gridSize"); }
 
-  void config(auto const& params, VIPRA::Random::Engine& engine) { VIPRA_GET_PARAM("gridSize", _cellSize); }
+  VIPRA_CONFIG_STEP { VIPRA_GET_PARAM("gridSize", _cellSize); }
 
   [[nodiscard]] auto closest_ped(VIPRA::idx ped, auto&& condition = VOID{}) const -> VIPRA::idx {
     VIPRA_PERF_FUNCTION("grid::closest_ped")
@@ -72,13 +70,15 @@ class Grid {
     VIPRA::f_pnt minDist = std::numeric_limits<VIPRA::f_pnt>::max();
     VIPRA::idx   minIdx = ped;
 
+    // Check all surrounding grids for the nearest pedestrian that matches the predicate
     // TODO(rolland): this only checks the 9 neighbors, should check all until a certain distance
     for_each_neighbor(_coords[ped], [&](VIPRA::idx other) {
       VIPRA::f_pnt dist = _coords[ped].distance_to(_coords[other]);
 
-      if (dist < minDist) {
-        if constexpr (!std::is_same_v<decltype(condition), VOID>) {
-          if (!condition(other)) return;
+      if ( dist < minDist ) {
+        if constexpr ( ! std::is_same_v<decltype(condition), VOID> ) {
+          // don't have a predicate, return the nearest
+          if ( ! condition(other) ) return;
         }
 
         minDist = dist;
@@ -121,11 +121,13 @@ class Grid {
   }
 
   void initialize_grids() {
-    for (auto& grid : _grid) {
+    // Create grids
+    for ( auto& grid : _grid ) {
       grid = std::vector<VIPRA::idx>();
     }
 
-    for (VIPRA::idx pedIdx = 0; pedIdx < _coords.size(); ++pedIdx) {
+    // Add all of the pedestrians in each grid to their respective grid
+    for ( VIPRA::idx pedIdx = 0; pedIdx < _coords.size(); ++pedIdx ) {
       auto& grid = get_grid(_coords[pedIdx]);
       grid.push_back(pedIdx);
     }
@@ -134,20 +136,30 @@ class Grid {
   void update_grids(VIPRA::State const& state) {
     VIPRA_PERF_FUNCTION("grid::update_grids")
 
-    for (VIPRA::idx pedIdx = 0; pedIdx < state.size(); ++pedIdx) {
+    // for all of the pedestrians, check if they moved grids, if they did update both
+    for ( VIPRA::idx pedIdx = 0; pedIdx < state.size(); ++pedIdx ) {
       auto& oldGrid = get_grid(_coords[pedIdx]);
       auto& newGrid = get_grid(state.positions[pedIdx]);
 
-      if (&oldGrid == &newGrid) continue;
+      if ( &oldGrid == &newGrid ) continue;
 
       oldGrid.erase(std::remove(oldGrid.begin(), oldGrid.end(), pedIdx), oldGrid.end());
       newGrid.push_back(pedIdx);
     }
   }
 
+  /**
+   * @brief Returns the grid for a given position
+   * 
+   * @param pos 
+   * @return std::vector<VIPRA::idx>& 
+   */
   inline auto get_grid(VIPRA::f3d pos) -> std::vector<VIPRA::idx>& {
+    assert(! out_of_bounds(pos));
+
     auto x = static_cast<size_t>(pos.x / _cellSize);
     auto y = static_cast<size_t>(pos.y / _cellSize);
+
     return _grid[x + y * _cols];
   }
 
@@ -162,11 +174,14 @@ class Grid {
   inline auto for_each_neighbor(VIPRA::f3d pos, auto&& func) const {
     VIPRA_PERF_FUNCTION("grid::for_each_neighbor")
 
-    for (int i = -1; i <= 1; ++i) {
-      for (int j = -1; j <= 1; ++j) {
-        if (out_of_bounds(pos.x + i * _cellSize, pos.y + j * _cellSize)) continue;
+    // Loop through the surrounding grids and call the provided function with each pedestrian in each grid
+    for ( int i = -1; i <= 1; ++i ) {
+      for ( int j = -1; j <= 1; ++j ) {
+        if ( out_of_bounds(pos.x + i * _cellSize, pos.y + j * _cellSize) ) continue;
+
         auto& neighbor = get_grid(VIPRA::f3d{pos.x + i * _cellSize, pos.y + j * _cellSize});
-        for (auto pedIdx : neighbor) {
+
+        for ( auto pedIdx : neighbor ) {
           func(pedIdx);
         }
       }

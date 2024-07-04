@@ -19,7 +19,7 @@ class SubConditionInLocation {
 
   void operator()(auto pack, const VIPRA::idxVec& peds, std::vector<Target> const& targets,
                   std::vector<bool>& met, std::vector<bool> const& /*unused*/, BoolOp /*unused*/) const {
-    for (auto idx : peds) {
+    for ( auto idx : peds ) {
       auto const& coords = pack.pedset.ped_coords(targets[idx].targetIdx);
       met[idx] = pack.context.locations[_location].contains(coords);
     }

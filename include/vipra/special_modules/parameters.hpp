@@ -44,7 +44,7 @@ class Parameters {
    */
   void register_param(Modules::Type module, std::string const& moduleName, std::string const& paramName) {
     // TODO(rolland): maybe warn if a parameter is registered twice?
-    if (contains(module, moduleName, paramName)) return;
+    if ( contains(module, moduleName, paramName) ) return;
 
     _params[module][moduleName].insert(paramName);
   }
@@ -74,7 +74,7 @@ class Parameters {
    */
   [[nodiscard]] auto has_required_param(Modules::Type module, std::string const& moduleName,
                                         std::string const& paramName) const -> bool {
-    if (!contains(module, moduleName, paramName)) {
+    if ( ! contains(module, moduleName, paramName) ) {
       throw std::runtime_error("Parameter: " + paramName + " For " + to_string(module) +
                                " Module: " + moduleName + " Not Provided In Input");
     }
@@ -95,12 +95,12 @@ class Parameters {
                                std::string const& paramName, Random::Engine& engine) const -> data_t {
     std::string moduleStr = to_string(module);
 
-    if (!contains(module, moduleName, paramName))
+    if ( ! contains(module, moduleName, paramName) )
       throw std::runtime_error("Parameter: " + paramName + " For " + to_string(module) +
                                " Module: " + moduleName + " Not Registered");
 
     auto value = _input.template get_param<data_t>(engine, moduleStr, moduleName, paramName);
-    if (!value.has_value()) {
+    if ( ! value.has_value() ) {
       throw std::runtime_error("Required Parameter: " + paramName + " For " + to_string(module) +
                                " Module: " + moduleName + " Not Provided In Input");
     }
@@ -128,12 +128,12 @@ class Parameters {
                                      std::string const& paramName) const -> array_t {
     std::string moduleStr = to_string(module);
 
-    if (!contains(module, moduleName, paramName))
+    if ( ! contains(module, moduleName, paramName) )
       throw std::runtime_error("Parameter: " + paramName + " For " + to_string(module) +
                                " Module: " + moduleName + " Not Registered");
 
     auto value = _input.template get<array_t>(moduleStr, moduleName, paramName);
-    if (!value.has_value()) {
+    if ( ! value.has_value() ) {
       throw std::runtime_error("Required Parameter: " + paramName + " For " + to_string(module) +
                                " Module: " + moduleName + " Not Provided In Input");
     }

@@ -57,7 +57,7 @@ using RangeVal = std::pair<VIPRA::f_pnt, VIPRA::f_pnt>;
  */
 [[nodiscard]] inline auto get_numeric(BehaviorParser::Value_randomContext* ctx, VIPRA::seed seed)
     -> NumericValue {
-  if (ctx->random_float()) {
+  if ( ctx->random_float() ) {
     auto         numbers = ctx->random_float()->float_range()->FLOAT();
     VIPRA::f_pnt min = std::stof(numbers[0]->toString());
     VIPRA::f_pnt max = std::stof(numbers[1]->toString());
@@ -79,7 +79,7 @@ using RangeVal = std::pair<VIPRA::f_pnt, VIPRA::f_pnt>;
  */
 [[nodiscard]] inline auto get_numeric(BehaviorParser::Value_rangeContext* ctx, VIPRA::seed seed)
     -> NumericValue {
-  if (ctx->float_range()) {
+  if ( ctx->float_range() ) {
     auto         numbers = ctx->float_range()->FLOAT();
     VIPRA::f_pnt min = std::stof(numbers[0]->toString());
     VIPRA::f_pnt max = std::stof(numbers[1]->toString());
@@ -114,13 +114,13 @@ using RangeVal = std::pair<VIPRA::f_pnt, VIPRA::f_pnt>;
  */
 [[nodiscard]] inline auto get_numeric(BehaviorParser::Value_numericContext* ctx, VIPRA::seed seed)
     -> NumericValue {
-  if (ctx->value_float()) return get_numeric(ctx->value_float(), seed);
+  if ( ctx->value_float() ) return get_numeric(ctx->value_float(), seed);
 
-  if (ctx->value_number()) return get_numeric(ctx->value_number(), seed);
+  if ( ctx->value_number() ) return get_numeric(ctx->value_number(), seed);
 
-  if (ctx->value_random()) return get_numeric(ctx->value_random(), seed);
+  if ( ctx->value_random() ) return get_numeric(ctx->value_random(), seed);
 
-  if (ctx->value_range()) return get_numeric(ctx->value_range(), seed);
+  if ( ctx->value_range() ) return get_numeric(ctx->value_range(), seed);
 
   // spdlog::error("Numeric Value Context Missing Children (you should never see this error)");
   throw std::runtime_error("");
@@ -138,7 +138,7 @@ using RangeVal = std::pair<VIPRA::f_pnt, VIPRA::f_pnt>;
   auto       values = ctx->value_numeric();
   VIPRA::f3d val;
 
-  for (VIPRA::idx i = 0; i < values.size(); ++i) {
+  for ( VIPRA::idx i = 0; i < values.size(); ++i ) {
     auto num = get_numeric(values[i], seed);
     val[i] = num.value(0);
   }

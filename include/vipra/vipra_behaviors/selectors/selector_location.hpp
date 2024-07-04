@@ -24,8 +24,8 @@ struct SelectorLocation {
     size_t        pedCnt = 0;
     VIPRA::idxVec groupPeds;
 
-    for (auto idx : group) {
-      if (loc.contains(pack.pedset.ped_coords(idx))) {
+    for ( auto idx : group ) {
+      if ( loc.contains(pack.pedset.ped_coords(idx)) ) {
         groupPeds.push_back(idx);
       }
     }

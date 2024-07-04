@@ -20,7 +20,6 @@ namespace VIPRA::Concepts {
 
 // TODO(rolland): add getting distance between pedestrians
 // TODO(rolland): add getting direction between pedestrians ?
-// TODO(rolland): add getting nearest pedestrian that meets a condition ?
 
 /**
  * @brief Checks that a type can get the number of pedestrians

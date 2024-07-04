@@ -34,7 +34,7 @@ class ModifierDirection {
     auto forward = goalCoord - selfCoord;
     auto dif = targetCoord - selfCoord;
 
-    if (_direction == Direction::FRONT) {
+    if ( _direction == Direction::FRONT ) {
       return dif.dot(forward) > RANGE;
     }
 

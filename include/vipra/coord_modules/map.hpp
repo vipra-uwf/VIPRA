@@ -15,7 +15,6 @@ class Map {
  public:
   // NOLINTNEXTLINE
   constexpr static VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::MAP;
-  ;
 
   /**
    * @brief Construct a new Map object, loads obstacles from input file
@@ -84,13 +83,13 @@ class Map {
 
   void initialize_obstacles() {
     auto const objTypes = _input.template get<std::vector<std::string>>("obj_types");
-    if (!objTypes) throw std::runtime_error("Could not find object types in input file");
+    if ( ! objTypes ) throw std::runtime_error("Could not find object types in input file");
 
     auto objMap = std::map<std::string, std::vector<VIPRA::f3d>>{};
 
     std::for_each(objTypes->begin(), objTypes->end(), [&](auto const& objType) {
       const auto positions = _input.template get<std::vector<VIPRA::f3d>>(objType);
-      if (!positions) {
+      if ( ! positions ) {
         throw std::runtime_error("Could not get object positions from input");
       }
 
@@ -99,7 +98,7 @@ class Map {
     });
 
     auto const obsCoords = _input.template load_polygons("obstacles");
-    if (!obsCoords) throw std::runtime_error("Could not get obstacle polygons from input");
+    if ( ! obsCoords ) throw std::runtime_error("Could not get obstacle polygons from input");
 
     _obstacles.initialize(obsCoords.value(), objTypes.value(), objMap);
   }

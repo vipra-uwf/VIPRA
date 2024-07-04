@@ -8,6 +8,13 @@
 #include "vipra/util/find_index.hpp"
 
 namespace VIPRA {
+/**
+ * @brief Creates a simulation with the provided modules
+ * 
+ * @tparam args_t 
+ * @param args 
+ * @return constexpr auto 
+ */
 template <typename... args_t>
 constexpr auto simulation(args_t... args) {
   // Finds the index for each module type

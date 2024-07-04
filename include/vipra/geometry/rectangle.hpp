@@ -57,9 +57,9 @@ class Rectangle {
     std::array<Line, 4> lines2{
         Line{other._p1, other._p2}, {other._p2, other._p3}, {other._p3, other._p4}, {other._p4, other._p1}};
 
-    for (size_t i = 0; i < 4; i++) {
-      for (size_t j = 0; j < 4; j++) {
-        if (lines1.at(i).does_intersect(lines2.at(j))) return true;
+    for ( size_t i = 0; i < 4; i++ ) {
+      for ( size_t j = 0; j < 4; j++ ) {
+        if ( lines1.at(i).does_intersect(lines2.at(j)) ) return true;
       }
     }
 
@@ -76,8 +76,8 @@ class Rectangle {
   [[nodiscard]] inline constexpr auto does_intersect(Line const& other) const noexcept -> bool {
     std::array<Line, 4> lines1{Line{_p1, _p2}, {_p2, _p3}, {_p3, _p4}, {_p4, _p1}};
 
-    for (size_t i = 0; i < 4; ++i) {
-      if (lines1.at(i).does_intersect(other)) return true;
+    for ( size_t i = 0; i < 4; ++i ) {
+      if ( lines1.at(i).does_intersect(other) ) return true;
     }
 
     return false;
@@ -103,7 +103,7 @@ class Rectangle {
   [[nodiscard]] inline constexpr auto p3() const noexcept -> VIPRA::f3d { return _p3; }
   [[nodiscard]] inline constexpr auto p4() const noexcept -> VIPRA::f3d { return _p4; }
   [[nodiscard]] inline constexpr auto operator[](VIPRA::size idx) -> VIPRA::f3d& {
-    switch (idx) {
+    switch ( idx ) {
       case 0:
         return _p1;
       case 1:
@@ -119,7 +119,7 @@ class Rectangle {
     return _p1;
   }
   [[nodiscard]] inline constexpr auto at(VIPRA::size idx) const -> const VIPRA::f3d& {
-    switch (idx) {
+    switch ( idx ) {
       case 0:
         return _p1;
       case 1:

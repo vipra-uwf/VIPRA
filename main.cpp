@@ -57,5 +57,6 @@ auto main(int argc, char** argv) -> int {
     auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(time);
 
     std::cout << "Time taken: " << seconds.count() << "s " << milliseconds.count() << "ms" << std::endl;
+    VIPRA_OUTPUT_PERFORMANCE;
   });
 }

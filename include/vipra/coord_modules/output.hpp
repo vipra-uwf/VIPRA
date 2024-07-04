@@ -6,6 +6,8 @@
 
 #include "vipra/concepts/output.hpp"
 #include "vipra/concepts/output_coordinator.hpp"
+#include "vipra/macros/module.hpp"
+#include "vipra/macros/parameters.hpp"
 #include "vipra/random/random.hpp"
 #include "vipra/types/idx.hpp"
 #include "vipra/types/util/result_or_void.hpp"
@@ -25,8 +27,8 @@ class Output {
   // NOLINTNEXTLINE(readability-identifier-naming) helper struct
   struct write_helper {
     static auto write(output_t& output, std::filesystem::path const& dir) {
-      if constexpr (std::is_same_v<Util::result_or_VOID_t<decltype(std::declval<output_t>().write(dir))>,
-                                   VOID>) {
+      if constexpr ( std::is_same_v<Util::result_or_VOID_t<decltype(std::declval<output_t>().write(dir))>,
+                                    VOID> ) {
         output.write(dir);
         return VOID{};
       } else {
@@ -36,8 +38,10 @@ class Output {
   };
 
  public:
+  VIPRA_MODULE_NAME("coordinator");
+  VIPRA_MODULE_TYPE(OUTPUT);
+
   // NOLINTNEXTLINE
-  constexpr static VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::OUTPUT;
 
   constexpr explicit Output(output_ts... outputs) : _outputs(std::make_tuple(outputs...)) {}
 
@@ -65,9 +69,8 @@ class Output {
    * 
    * @param params 
    */
-  void config(auto const& params, VIPRA::Random::Engine& engine) {
-    _base_output_dir = params.template get_param<std::string>(VIPRA::Modules::Type::OUTPUT, "coordinator",
-                                                              "output_dir", engine);
+  VIPRA_CONFIG_STEP {
+    VIPRA_GET_PARAM("output_dir", _base_output_dir)
     _current_output_dir = _base_output_dir;
 
     create_output_directory(_current_output_dir);
@@ -79,9 +82,8 @@ class Output {
    * 
    * @tparam params_t 
    */
-  template <Concepts::ParamModule params_t>
-  void register_params(params_t& params) {
-    params.register_param(VIPRA::Modules::Type::OUTPUT, "coordinator", "output_dir");
+  VIPRA_REGISTER_STEP {
+    VIPRA_REGISTER_PARAM("output_dir")
     std::apply([&](auto&&... outputs) { (outputs.template register_params<params_t>(params), ...); },
                _outputs);
   }
@@ -140,17 +142,20 @@ class Output {
   std::filesystem::path _current_output_dir;
 
   static void create_output_directory(std::filesystem::path const& directory) {
-    if (std::filesystem::exists(directory)) {
-      if (std::filesystem::is_directory(directory)) {
+    if ( std::filesystem::exists(directory) ) {
+      if ( std::filesystem::is_directory(directory) ) {
+        // directory exists and is actually a directory, all is good
         return;
       }
 
+      // exists but isn't a directory, error
       throw std::runtime_error("Output directory already exists and is not a directory: " +
                                directory.string());
     }
 
-    if (!std::filesystem::create_directory(directory)) {
-      if (!std::filesystem::exists(directory))
+    // create and check it was actually created
+    if ( ! std::filesystem::create_directory(directory) ) {
+      if ( ! std::filesystem::exists(directory) )
         throw std::runtime_error("Could not create output directory: " + directory.string());
     }
   }

@@ -24,9 +24,6 @@
       "meanShoulderLen": 0.2,
       "maxSpeedStdDev": 0.1,
       "shoulderLenStdDev": 0.05
-    },
-    "circle_model": {
-      "radius": 0.2
     }
   },
   "goals": {
@@ -58,9 +55,7 @@
   "behavior_model": {
     "main": {
       "behaviors_dir": "./behaviors",
-      "behaviors": [
-        "disembark"
-      ]
+      "behaviors": []
     }
   }
 }

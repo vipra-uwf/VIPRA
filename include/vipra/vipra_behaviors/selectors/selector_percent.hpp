@@ -24,7 +24,7 @@ struct SelectorPercent {
         static_cast<VIPRA::size>(std::floor(percentage * static_cast<VIPRA::f_pnt>(fullGroup.size())));
 
     bool starved = false;
-    if (count > group.size()) {
+    if ( count > group.size() ) {
               starved = true;
               count = group.size();
     }

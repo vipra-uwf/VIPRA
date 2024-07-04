@@ -56,7 +56,7 @@ struct CAttributeValue {
   CAttributeValue(Type aType, void const* aVal) : type(aType), value(aVal) {}
 
   inline void type_check(Type check) const {
-    if (type != check) DSLException::error("Invalid Type");
+    if ( type != check ) DSLException::error("Invalid Type");
   }
 
   /**
@@ -96,7 +96,7 @@ struct AttributeValue {
    * @param check : type value should be
    */
   inline void type_check(Type check) const {
-    if (type != check) DSLException::error("Invalid Type");
+    if ( type != check ) DSLException::error("Invalid Type");
   }
 
   /**
@@ -137,7 +137,7 @@ class AttributeHandling {
    * @return CAttributeValue 
    */
   [[nodiscard]] inline static auto get_value(Target target, Attribute attr, auto pack) -> CAttributeValue {
-    switch (target.type) {
+    switch ( target.type ) {
       case TargetType::PEDESTRIAN:
         return get_ped_value(target, attr, pack);
       case TargetType::EVENT:
@@ -162,7 +162,7 @@ class AttributeHandling {
    */
   inline static void set_value(Target target, Attribute attr, auto pack, VIPRA::State& state,
                                CAttributeValue value) {
-    switch (target.type) {
+    switch ( target.type ) {
       case TargetType::PEDESTRIAN:
         set_ped_value(target, attr, pack, state, value);
         return;
@@ -188,7 +188,7 @@ class AttributeHandling {
    */
   inline static void scale_value(Target target, Attribute attr, auto pack, VIPRA::State& state,
                                  CAttributeValue value) {
-    switch (target.type) {
+    switch ( target.type ) {
       case TargetType::PEDESTRIAN:
         scale_ped_value(target, attr, pack, state, value);
         return;
@@ -228,11 +228,11 @@ class AttributeHandling {
    */
   [[nodiscard]] inline static auto coord_loc_compare(CAttributeValue value1, CAttributeValue value2,
                                                      auto pack) -> bool {
-    if (value1.type == Type::COORD && value2.type == Type::LOCATION) {
+    if ( value1.type == Type::COORD && value2.type == Type::LOCATION ) {
       return pack.context.locations[value2.as<VIPRA::idx>()].contains(value1.as<VIPRA::f3d>());
     }
 
-    if (value2.type == Type::COORD && value1.type == Type::LOCATION) {
+    if ( value2.type == Type::COORD && value1.type == Type::LOCATION ) {
       return pack.context.locations[value1.as<VIPRA::idx>()].contains(value2.as<VIPRA::f3d>());
     }
 
@@ -249,13 +249,13 @@ class AttributeHandling {
    */
   [[nodiscard]] inline static auto is_equal(CAttributeValue value1, CAttributeValue value2, auto pack)
       -> bool {
-    if (is_coord_loc_compare(value1, value2)) {
+    if ( is_coord_loc_compare(value1, value2) ) {
       return coord_loc_compare(value1, value2, pack);
     }
 
-    if (value1.type != value2.type) return false;
+    if ( value1.type != value2.type ) return false;
 
-    switch (value1.type) {
+    switch ( value1.type ) {
       case Type::INVALID:
         throw std::runtime_error("Invalid Type");
         return false;
@@ -287,7 +287,7 @@ class AttributeHandling {
    */
   [[nodiscard]] inline static auto is_not_equal(CAttributeValue value1, CAttributeValue value2, auto pack)
       -> bool {
-    return !is_equal(value1, value2, pack);
+    return ! is_equal(value1, value2, pack);
   }
 
   /**
@@ -306,9 +306,9 @@ class AttributeHandling {
   }
 
   inline static void cleanup() {
-    for (auto data : get_value_store()) {
+    for ( auto data : get_value_store() ) {
       // NOLINTBEGIN(cppcoreguidelines-owning-memory)
-      switch (data.type) {
+      switch ( data.type ) {
         case Type::INVALID:
           // throw std::runtime_error("Invalid Type");
           break;
@@ -370,7 +370,7 @@ class AttributeHandling {
    */
   [[nodiscard]] inline static auto get_ped_value(Target target, Attribute attr, auto pack)
       -> CAttributeValue {
-    switch (attr) {
+    switch ( attr ) {
       case Attribute::POSITION:
         return {Type::COORD, &pack.pedset.ped_coords(target.targetIdx)};
       case Attribute::VELOCITY:
@@ -396,7 +396,7 @@ class AttributeHandling {
    */
   [[nodiscard]] inline static auto get_event_value(Target target, Attribute attr, auto pack)
       -> CAttributeValue {
-    switch (attr) {
+    switch ( attr ) {
       case Attribute::LOCATION:
         // TODO (rolland) : get this added in when event locations are done
         DSLException::error("Event Locations Not Implmented");
@@ -417,7 +417,7 @@ class AttributeHandling {
    */
   [[nodiscard]] inline static auto get_location_value(Target target, Attribute attr, auto pack)
       -> CAttributeValue {
-    switch (attr) {
+    switch ( attr ) {
       case Attribute::POSITION:
         return {Type::COORD, &pack.context.locations[target.targetIdx].center()};
       case Attribute::DIMENSIONS:
@@ -438,7 +438,7 @@ class AttributeHandling {
    */
   inline static void set_ped_value(Target target, Attribute attr, auto pack, VIPRA::State& state,
                                    CAttributeValue value) {
-    switch (attr) {
+    switch ( attr ) {
       case Attribute::POSITION:
         set_position(target, state, value);
         return;
@@ -468,7 +468,7 @@ class AttributeHandling {
    * @param value : value to set attribute to
    */
   inline static void set_location_value(Target target, Attribute attr, auto pack, CAttributeValue value) {
-    switch (attr) {
+    switch ( attr ) {
       case Attribute::POSITION:
         set_location_position(target, pack, value);
       case Attribute::DIMENSIONS:
@@ -489,7 +489,7 @@ class AttributeHandling {
    */
   inline static void scale_ped_value(Target target, Attribute attr, auto pack, VIPRA::State& state,
                                      CAttributeValue value) {
-    switch (attr) {
+    switch ( attr ) {
       case Attribute::POSITION:
         DSLException::error("Cannot Scale Pedestrian Position");
         return;
@@ -523,7 +523,7 @@ class AttributeHandling {
    * @param value : value to set attribute to
    */
   inline static void set_event_value(Target target, Attribute attr, auto pack, CAttributeValue value) {
-    switch (attr) {
+    switch ( attr ) {
       case Attribute::LOCATION:
         // TODO (rolland) : get this added in when event locations are done
         DSLException::error("Event Locations Not Implmented");
@@ -573,9 +573,9 @@ class AttributeHandling {
     auto&       context = pack.context;
     auto const& pedset = pack.pedset;
 
-    if (value.type == Type::COORD) {
+    if ( value.type == Type::COORD ) {
       goals.change_end_goal(target.targetIdx, value.as<VIPRA::f3d>());
-    } else if (value.type == Type::LOCATION) {
+    } else if ( value.type == Type::LOCATION ) {
       // TODO(rolland): this doesn't take into account two pedestrains going to the same location
       goals.change_end_goal(target.targetIdx,
                             context.locations[value.as<VIPRA::idx>()].random_point(context.engine));

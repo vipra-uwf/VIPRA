@@ -25,7 +25,7 @@ struct SelectorExactlyN {
     auto pedCnt = static_cast<VIPRA::size>(std::round(selectCount.value(0)));
 
     bool starved = false;
-    if (pedCnt > group.size()) {
+    if ( pedCnt > group.size() ) {
       starved = true;
       pedCnt = group.size();
     }

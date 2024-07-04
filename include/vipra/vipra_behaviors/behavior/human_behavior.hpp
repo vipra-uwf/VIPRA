@@ -109,15 +109,15 @@ void HumanBehavior<pedset_t, map_t, goals_t>::initialize(pedset_t const& pedset,
 
   _conditionMet.resize(pedset.num_pedestrians(), false);
   _targets.resize(pedset.num_pedestrians());
-  for (VIPRA::idx i = 0; i < pedset.num_pedestrians(); ++i) {
+  for ( VIPRA::idx i = 0; i < pedset.num_pedestrians(); ++i ) {
     _targets[i] = Target{TargetType::PEDESTRIAN, i};
   }
 
   Simpack<pedset_t, map_t, goals_t> pack{pedset, map, goals, _selector.get_groups(), _context, dummyState, 0};
   _selector.initialize(_name, pack);
 
-  for (auto& actionGroup : _actions) {
-    for (auto& action : actionGroup) {
+  for ( auto& actionGroup : _actions ) {
+    for ( auto& action : actionGroup ) {
       action.initialize(pack);
     }
   }
@@ -147,7 +147,7 @@ template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::
 void HumanBehavior<pedset_t, map_t, goals_t>::evaluate_events(pedset_t& pedset, map_t& map, goals_t& goals,
                                                               VIPRA::delta_t deltaT) {
   VIPRA::State dummyState;
-  for (auto& event : _context.events) {
+  for ( auto& event : _context.events ) {
     event.evaluate(HumanBehavior<pedset_t, map_t, goals_t>::pack_t{pedset, map, goals, _selector.get_groups(),
                                                                    _context, dummyState, deltaT});
   }
@@ -161,22 +161,28 @@ void HumanBehavior<pedset_t, map_t, goals_t>::apply_actions(pedset_t& pedset, ma
   HumanBehavior<pedset_t, map_t, goals_t>::pack_t pack{pedset,   map,   goals, _selector.get_groups(),
                                                        _context, state, deltaT};
 
-  for (VIPRA::idx i = 0; i < groupCnt; ++i) {
+  // check if any of the pedestrians should have an action applied
+  for ( VIPRA::idx i = 0; i < groupCnt; ++i ) {
     auto& pedestrians = groups[i];
+
+    // remove any pedestrians from the group if they have left the simulation
     pedestrians.erase(std::remove_if(pedestrians.begin(), pedestrians.end(),
                                      [&](VIPRA::idx ped) { return goals.is_goal_met(ped); }),
                       pedestrians.end());
 
+    // for each of the group's actions, check if it should apply and apply it
     std::for_each(_actions[i].begin(), _actions[i].end(), [&](auto& action) {
-      if (action.has_target()) {
+      if ( action.has_target() ) {
         action.targets()->get_targets(pack, pedestrians, _targets);
         // TODO(rolland): this needs to go back to self, if there is an action that changes it
       }
 
-      if (action.has_condition()) {
+      if ( action.has_condition() ) {
+        // check condition and apply
         action.condition()->evaluate(pack, pedestrians, _conditionMet, _targets, action.duration());
         action.perform_action(pack, pedestrians, _conditionMet, _targets);
       } else {
+        // unconditional
         action.perform_action(pack, pedestrians, _targets);
       }
     });

@@ -14,16 +14,16 @@ struct ConfigData {
   VIPRA::f_pnt maxSpeedStdDev;
   VIPRA::f_pnt meanShoulderLen;
   VIPRA::f_pnt shoulderLenStdDev;
-  VIPRA::size randomSeed;
+  VIPRA::size  randomSeed;
 };
 
 struct ModelData {
-  std::vector<VIPRA::f_pnt> masses;
-  std::vector<VIPRA::f_pnt> reactionTimes;
-  std::vector<VIPRA::f_pnt> maxSpeeds;
-  std::vector<VIPRA::f_pnt> shoulderLens;
-  std::vector<VIPRA::f_pnt> betas;
-  std::vector<VIPRA::f_pnt> nearestDists;
+  std::vector<VIPRA::f_pnt>          masses;
+  std::vector<VIPRA::f_pnt>          reactionTimes;
+  std::vector<VIPRA::f_pnt>          maxSpeeds;
+  std::vector<VIPRA::f_pnt>          shoulderLens;
+  std::vector<VIPRA::f_pnt>          betas;
+  std::vector<VIPRA::f_pnt>          nearestDists;
   std::vector<VIPRA::Geometry::Line> shoulders;
 
   [[nodiscard]] auto size() const noexcept -> size_t { return masses.size(); }
@@ -38,4 +38,4 @@ struct ModelData {
     shoulders.resize(size);
   }
 };
-} // namespace CALM
+}  // namespace CALM

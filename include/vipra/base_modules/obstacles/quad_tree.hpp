@@ -6,6 +6,9 @@
 #include "vipra/concepts/obstacle_set.hpp"
 
 #include "vipra/geometry/polygon.hpp"
+#include "vipra/macros/obstacles.hpp"
+#include "vipra/macros/parameters.hpp"
+#include "vipra/macros/performance.hpp"
 #include "vipra/modules.hpp"
 
 #include "vipra/geometry/f3d.hpp"
@@ -15,7 +18,7 @@
 #include "vipra/types/size.hpp"
 #include "vipra/util/debug_do.hpp"
 
-// TODO(rolland): implement quadtree for storing obstacles
+// TODO(rolland): implement quadtree for storing obstacles, currently just a vector
 
 namespace VIPRA::Obstacles {
 /**
@@ -24,17 +27,17 @@ namespace VIPRA::Obstacles {
  */
 class QuadTree {
  public:
+  VIPRA_MODULE_NAME("quad_tree");
   VIPRA_MODULE_TYPE(OBSTACLES);
 
-  void initialize(std::vector<VIPRA::Geometry::Polygon> const& obstacles,
-                  std::vector<std::string> const&              types,
-                  std::map<std::string, VIPRA::f3dVec> const&  objects) {
+  VIPRA_OBSTACLES_INIT {
     _objectTypes = types;
     _objects = objects;
     _obstacles = obstacles;
 
-    for (auto const& obstacle : obstacles) {
-      for (auto const& edge : obstacle.edges) {
+    // Get dimensions of the map
+    for ( auto const& obstacle : obstacles ) {
+      for ( auto const& edge : obstacle.edges ) {
         _dimensions.x = std::max(_dimensions.x, edge.start.x);
         _dimensions.y = std::max(_dimensions.y, edge.start.y);
         _dimensions.z = std::max(_dimensions.z, edge.start.z);
@@ -45,15 +48,9 @@ class QuadTree {
     }
   }
 
-  template <typename params_t>
-  void register_params(params_t& params) {
-    params.register_param(VIPRA::Modules::Type::OBSTACLES, "quad_tree", "minQuadSize");
-  }
+  VIPRA_REGISTER_STEP { VIPRA_REGISTER_PARAM("minQuadSize"); }
 
-  void config(auto& params, VIPRA::Random::Engine& engine) {
-    _obsDistance = params.template get_param<VIPRA::f_pnt>(VIPRA::Modules::Type::OBSTACLES, "quad_tree",
-                                                           "minQuadSize", engine);
-  }
+  VIPRA_CONFIG_STEP { VIPRA_GET_PARAM("minQuadSize", _obsDistance); }
 
   [[nodiscard]] auto get_dimensions() const -> VIPRA::f3d { return _dimensions; }
 
@@ -68,10 +65,12 @@ class QuadTree {
   }
 
   [[nodiscard]] auto ray_hit(VIPRA::f3d start, VIPRA::f3d end) const -> VIPRA::f_pnt {
+    VIPRA_PERF_FUNCTION("quad_tree::ray_hit");
+
     VIPRA::f_pnt hit = std::numeric_limits<VIPRA::f_pnt>::max();
-    for (auto const& obstacle : _obstacles) {
-      for (auto const& edge : obstacle.edges) {
-        if (!edge.does_intersect({start, end})) continue;
+    for ( auto const& obstacle : _obstacles ) {
+      for ( auto const& edge : obstacle.edges ) {
+        if ( ! edge.does_intersect({start, end}) ) continue;
         auto intersection = edge.intersection_point({start, end});
         hit = std::min(hit, start.distance_to(intersection));
       }

@@ -1,5 +1,4 @@
-#ifndef ACTION_HPP
-#define ACTION_HPP
+#pragma once
 
 #include <optional>
 
@@ -30,8 +29,8 @@ class Action {
 
  public:
   void initialize(auto pack) {
-    if (_condition) _condition->initialize(pack);
-    if (_duration) _duration->resize(pack.pedset.num_pedestrians());
+    if ( _condition ) _condition->initialize(pack);
+    if ( _duration ) _duration->resize(pack.pedset.num_pedestrians());
   }
 
   void perform_action(auto pack, VIPRA::idxVec& peds, std::vector<Target> const& targets) {
@@ -67,5 +66,3 @@ class Action {
 };
 
 }  // namespace VIPRA::Behaviors
-
-#endif

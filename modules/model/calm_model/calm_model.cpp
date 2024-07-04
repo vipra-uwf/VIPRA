@@ -8,7 +8,7 @@ void Model::calc_shoulders(VIPRA::f3dVec const& coords, VIPRA::f3dVec const& goa
 
   VIPRA::size pedCnt = coords.size();
 
-  for (VIPRA::idx i = 0; i < pedCnt; ++i) {
+  for ( VIPRA::idx i = 0; i < pedCnt; ++i ) {
     VIPRA::f3d coord = coords[i];
     VIPRA::f3d direction = (goals[i] - coord).unit();
 
@@ -21,7 +21,7 @@ auto Model::obj_spatial_test(const VIPRA::Geometry::Rectangle& collisionRect, VI
                              VIPRA::f3d objRight) -> bool {
   VIPRA_PERF_FUNCTION("calm::obj_spatial_test")
 
-  if (collisionRect.p1() == collisionRect.p2()) {
+  if ( collisionRect.p1() == collisionRect.p2() ) {
     return false;
   }
 

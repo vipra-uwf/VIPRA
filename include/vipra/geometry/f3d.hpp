@@ -31,7 +31,7 @@ struct f3d {
 
   template <Concepts::Numeric data_t>
   inline constexpr auto operator[](data_t index) -> VIPRA::f_pnt& {
-    switch (index) {
+    switch ( index ) {
       case 0:
         return x;
       case 1:
@@ -51,7 +51,7 @@ struct f3d {
 
   template <Concepts::Numeric data_t>
   inline constexpr auto operator[](data_t index) const -> VIPRA::f_pnt {
-    switch (index) {
+    switch ( index ) {
       case 0:
         return x;
       case 1:
@@ -182,7 +182,7 @@ struct f3d {
    * @return constexpr f3d 
    */
   [[nodiscard]] inline constexpr auto unit() const noexcept -> f3d {
-    if (x == 0 && y == 0 && z == 0) {
+    if ( x == 0 && y == 0 && z == 0 ) {
       return f3d{0, 0, 0};
     }
     return f3d{x, y, z} / mag();

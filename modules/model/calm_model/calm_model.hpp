@@ -57,14 +57,14 @@ class Model {
 
   // NOLINTNEXTLINE(misc-unused-parameters, bugprone-easily-swappable-parameters)
   VIPRA_MODEL_TIMESTEP {
-    VIPRA_PERF_FUNCTION("calm::model_step")
+    VIPRA_PERF_FUNCTION("calm::model_step");
 
     calc_shoulders(pedset.all_coords(), goals.current_goals());
     calc_neighbors(pedset, map, goals);
     calc_betas();
     update_state(pedset, goals, state, deltaT);
 
-    if (timestep > 0) {
+    if ( timestep > 0 ) {
       _collision.race_detection(pedset, _peds, goals, timestep, map);
       _collision.assign_race_statuses(_raceStatuses, _inRace);
     }
@@ -112,68 +112,37 @@ void Model::calc_neighbors(VIPRA::Concepts::PedsetModule auto const& pedset,
   const VIPRA::size pedCnt = pedset.num_pedestrians();
   auto const&       coords = pedset.all_coords();
 
-  for (VIPRA::idx i = 0; i < pedCnt; ++i) {
-    if (goals.is_goal_met(i)) continue;
+  for ( VIPRA::idx i = 0; i < pedCnt; ++i ) {
+    if ( goals.is_goal_met(i) ) continue;
 
     VIPRA::f3d                 pedCoords = coords[i];
     VIPRA::f3d                 pedGoal = goals.current_goal(i);
     VIPRA::Geometry::Rectangle pedRect = rect_from_shoulders(i, pedCoords, pedGoal);
 
     auto nearest = pedset.closest_ped(i, [&](VIPRA::idx other) {
-      if (i == other || goals.is_goal_met(other)) return false;
+      if ( i == other || goals.is_goal_met(other) ) return false;
 
       auto         otherCoords = coords[other];
       VIPRA::f_pnt distance = pedCoords.distance_to(otherCoords);
 
-      if ((_raceStatuses[i] == 0 && _raceStatuses[other] == 1) ||
-          std::fabs(distance - EQUILIBRIUM_DISTANCE) < EQUILIBRIUM_RESOLUTION)
+      if ( (_raceStatuses[i] == 0 && _raceStatuses[other] == 1) ||
+           std::fabs(distance - EQUILIBRIUM_DISTANCE) < EQUILIBRIUM_RESOLUTION )
         return false;
 
-      if (!is_ped_toward_goal(pedCoords, pedGoal, otherCoords)) return false;
+      if ( ! is_ped_toward_goal(pedCoords, pedGoal, otherCoords) ) return false;
 
-      if (!obj_spatial_test(pedRect, _peds.shoulders[other].start, _peds.shoulders[other].end)) return false;
+      if ( ! obj_spatial_test(pedRect, _peds.shoulders[other].start, _peds.shoulders[other].end) )
+        return false;
 
       return true;
     });
 
-    if (nearest == i) {
+    if ( nearest == i ) {
       _peds.nearestDists[i] = 100.0;
     } else {
       _peds.nearestDists[i] = pedCoords.distance_to(coords[nearest]);
     }
   }
-  // ---------------------------------------------------------------------------
-  // const VIPRA::size pedCnt = pedset.num_pedestrians();
-  // auto const&       coords = pedset.all_coords();
-
-  // for (VIPRA::idx i = 0; i < pedCnt; ++i) {
-  //   if (goals.is_goal_met(i)) continue;
-
-  //   VIPRA::f3d                 pedCoords = coords[i];
-  //   VIPRA::f3d                 pedGoal = goals.current_goal(i);
-  //   VIPRA::Geometry::Rectangle pedRect = rect_from_shoulders(i, pedCoords, pedGoal);
-
-  //   VIPRA::f_pnt nearestDist = std::numeric_limits<VIPRA::f_pnt>::max();
-  //   for (VIPRA::idx j = 0; j < pedCnt; ++j) {
-  //     if (i == j || goals.is_goal_met(j)) continue;
-
-  //     auto         otherCoords = coords[j];
-  //     VIPRA::f_pnt distance = pedCoords.distance_to(otherCoords);
-
-  //     if (distance >= nearestDist) continue;
-
-  //     if ((_raceStatuses[i] == 0 && _raceStatuses[j] == 1) ||
-  //         std::fabs(distance - EQUILIBRIUM_DISTANCE) < EQUILIBRIUM_RESOLUTION)
-  //       continue;
-
-  //     if (!is_ped_toward_goal(pedCoords, pedGoal, otherCoords)) continue;
-
-  //     if (!obj_spatial_test(pedRect, _peds.shoulders[j].start, _peds.shoulders[j].end)) continue;
-
-  //     nearestDist = distance;
-  //   }
-  //   _peds.nearestDists[i] = nearestDist;
-  // }
 }
 
 void Model::update_state(VIPRA::Concepts::PedsetModule auto const& pedset,
@@ -185,12 +154,12 @@ void Model::update_state(VIPRA::Concepts::PedsetModule auto const& pedset,
   auto const&       velocities = pedset.all_velocities();
   auto const&       coords = pedset.all_coords();
 
-  for (VIPRA::idx i = 0; i < pedCnt; ++i) {
-    if (goals.is_goal_met(i) || _collision.status(i) == WAIT) {
+  for ( VIPRA::idx i = 0; i < pedCnt; ++i ) {
+    if ( goals.is_goal_met(i) || _collision.status(i) == WAIT ) {
       state.velocities[i] = VIPRA::f3d{};
       continue;
     }
-    if (goals.time_since_last_goal(i) > 0 && goals.time_since_last_goal(i) <= SLIDING_GOAL_TIME) {
+    if ( goals.time_since_last_goal(i) > 0 && goals.time_since_last_goal(i) <= SLIDING_GOAL_TIME ) {
       state.velocities[i].x = 0;
       state.velocities[i].y = 0;
       continue;
@@ -215,18 +184,19 @@ void Model::update_state(VIPRA::Concepts::PedsetModule auto const& pedset,
 auto Model::is_path_blocked(VIPRA::idx pedIdx, VIPRA::f3d velocity, VIPRA::f_pnt maxDist,
                             const VIPRA::Concepts::MapModule auto& map) -> VIPRA::f_pnt {
   VIPRA_PERF_FUNCTION("calm::is_path_blocked")
+
   VIPRA::Geometry::Line shoulders = _peds.shoulders[pedIdx];
-  if (shoulders.start == shoulders.end) {
+  if ( shoulders.start == shoulders.end ) {
     return -1;
   }
 
   VIPRA::f_pnt const leftDist = map.ray_hit(shoulders.start, shoulders.start + (velocity.unit() * maxDist));
   VIPRA::f_pnt const rightDist = map.ray_hit(shoulders.end, shoulders.end + (velocity.unit() * maxDist));
 
-  if (leftDist == -1) {
+  if ( leftDist == -1 ) {
     return rightDist;
   }
-  if (rightDist == -1) {
+  if ( rightDist == -1 ) {
     return leftDist;
   }
 

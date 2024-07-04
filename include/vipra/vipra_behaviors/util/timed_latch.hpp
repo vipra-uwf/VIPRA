@@ -33,7 +33,7 @@ class TimedLatchCollection {
    * @param pedIdx : pedestrian index to latch
    */
   void latch(VIPRA::time_s startTime, VIPRA::idx pedIdx) {
-    if (_startTimes[pedIdx] == -1) {
+    if ( _startTimes[pedIdx] == -1 ) {
       _startTimes[pedIdx] = startTime;
     }
   }
@@ -49,10 +49,10 @@ class TimedLatchCollection {
    * @return false : if the latch is NOT set or the time has elapsed
    */
   auto check(VIPRA::time_s currTime, VIPRA::idx pedIdx) -> bool {
-    if (_startTimes[pedIdx] == -1) return false;
+    if ( _startTimes[pedIdx] == -1 ) return false;
 
     VIPRA::f_pnt val = _duration.value(pedIdx);
-    return !(currTime - _startTimes[pedIdx] >= val);
+    return ! (currTime - _startTimes[pedIdx] >= val);
   }
 
   /**

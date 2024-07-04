@@ -74,8 +74,11 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
                                    conversion_f_t&& conversion_func = VOID{}) noexcept
     -> std::optional<std::vector<
         std::remove_reference_t<Util::invoke_result_or_t<VIPRA::idx, conversion_f_t, VIPRA::idx>>>> {
+  // proper return type for the function
   using ret_t =
       std::vector<std::remove_reference_t<Util::invoke_result_or_t<VIPRA::idx, conversion_f_t, VIPRA::idx>>>;
+
+  // holds the nodes visited throughout the algorithm
   struct Node {
     VIPRA::idx   self;
     VIPRA::idx   parent;
@@ -97,7 +100,7 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
       auto container = this->c;
       auto gridPoint =
           std::find_if(container.begin(), container.end(), [&](Node* node) { return node->self == nodeIdx; });
-      if (gridPoint == container.end()) {
+      if ( gridPoint == container.end() ) {
         return nullptr;
       }
 
@@ -116,17 +119,17 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
   Node* current = nullptr;
   openset.push(&nodes[start]);
 
-  while (!openset.empty()) {
+  while ( ! openset.empty() ) {
     current = openset.top();
 
-    if (current->self == end) {
+    if ( current->self == end ) {
       break;
     }
 
     openset.pop();
     closedset.insert(current);
-    for (VIPRA::idx neighborIdx : graph.neighbors(current->self)) {
-      if (!closedset.contains(&nodes[neighborIdx])) {
+    for ( VIPRA::idx neighborIdx : graph.neighbors(current->self) ) {
+      if ( ! closedset.contains(&nodes[neighborIdx]) ) {
         Node neighbor;
         neighbor.self = neighborIdx;
         neighbor.parent = current->self;
@@ -134,11 +137,11 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
         neighbor.distanceWithHeuristic = neighbor.distanceFromStart + distance_func(neighborIdx, end);
 
         auto found = std::find(openset.begin(), openset.end(), &nodes[neighborIdx]);
-        if (found == openset.end()) {
+        if ( found == openset.end() ) {
           nodes[neighborIdx] = neighbor;
           openset.push(&nodes[neighborIdx]);
         } else {
-          if (neighbor.distanceFromStart < (*found)->distanceFromStart) {
+          if ( neighbor.distanceFromStart < (*found)->distanceFromStart ) {
             (*found)->distanceFromStart = neighbor.distanceFromStart;
             (*found)->distanceWithHeuristic = neighbor.distanceWithHeuristic;
             (*found)->parent = neighbor.parent;
@@ -148,13 +151,15 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
     }
   }
 
-  if (current->self != end) {
+  if ( current->self != end ) {
+    // no path found
     return std::nullopt;
   }
 
+  // construct the full path, If a conversion function is provided, run the path through that
   ret_t path;
-  while (current->self != start) {
-    if constexpr (std::is_same_v<conversion_f_t, VOID>) {
+  while ( current->self != start ) {
+    if constexpr ( std::is_same_v<conversion_f_t, VOID> ) {
       path.push_back(current->self);
     } else {
       path.push_back(conversion_func(current->self));
@@ -163,7 +168,8 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
     current = &nodes[current->parent];
   }
 
-  if constexpr (std::is_same_v<conversion_f_t, VOID>) {
+  // add the starting node
+  if constexpr ( std::is_same_v<conversion_f_t, VOID> ) {
     path.push_back(start);
   } else {
     path.push_back(conversion_func(start));

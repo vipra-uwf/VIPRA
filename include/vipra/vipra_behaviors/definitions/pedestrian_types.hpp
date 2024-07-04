@@ -38,7 +38,7 @@ class Ptype {
   [[nodiscard]] inline constexpr auto type_count() const -> VIPRA::size {
     VIPRA::size count = 0;
     typeUID     check = 1;
-    while ((check & fullType) != 0U) {
+    while ( (check & fullType) != 0U ) {
       check = check << 1U;
       ++count;
     }
@@ -54,8 +54,8 @@ class Ptype {
   void for_each_type(std::function<void(typeUID)> const& func) const {
     typeUID type = fullType;
     typeUID check = 1;
-    while (check <= type) {
-      if ((type & check) != 0U) {
+    while ( check <= type ) {
+      if ( (type & check) != 0U ) {
         func(check);
       }
       check = check << 1U;

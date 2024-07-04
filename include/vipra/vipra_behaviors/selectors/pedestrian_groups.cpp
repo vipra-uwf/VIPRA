@@ -13,7 +13,7 @@ namespace {
  */
 inline auto get_type_count(VIPRA::Behaviors::Ptype allTypes) -> VIPRA::size {
   VIPRA::size typeCnt = 1;
-  while (allTypes.fullType != 0) {
+  while ( allTypes.fullType != 0 ) {
     VIPRA::Behaviors::typeUID currType = allTypes.fullType & (allTypes.fullType - 1);
     allTypes.fullType = currType;
     ++typeCnt;
@@ -73,8 +73,8 @@ auto GroupsContainer::set_used(VIPRA::idx pedIdx, typeUID type) -> bool {
   auto&             group = _groups[ndx];
   auto&             usedGroup = _used[ndx];
 
-  for (VIPRA::idx i = 0; i < group.size(); ++i) {
-    if (group[i] == pedIdx) {
+  for ( VIPRA::idx i = 0; i < group.size(); ++i ) {
+    if ( group[i] == pedIdx ) {
       usedGroup[i] = true;
       return true;
     }
@@ -104,8 +104,8 @@ void GroupsContainer::clean_used() { _used.clear(); }
  */
 auto GroupsContainer::remove_ped(VIPRA::idx pedIdx, typeUID type) -> bool {
   auto& group = _groups[index(type)];
-  for (auto iter = group.begin(); iter != group.end(); ++iter) {
-    if (*iter == pedIdx) {
+  for ( auto iter = group.begin(); iter != group.end(); ++iter ) {
+    if ( *iter == pedIdx ) {
       group.erase(iter);
       return true;
     }

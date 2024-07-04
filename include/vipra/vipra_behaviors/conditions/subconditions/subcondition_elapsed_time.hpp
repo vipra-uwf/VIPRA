@@ -25,9 +25,9 @@ class SubConditionElapsedTimeFromEvent {
 
   void operator()(auto pack, const VIPRA::idxVec& peds, std::vector<Target> const& /*unused*/,
                   std::vector<bool>& met, std::vector<bool> const& /*unused*/, BoolOp /*unused*/) {
-    for (auto ped : peds) {
+    for ( auto ped : peds ) {
       auto const& event = pack.context.events[_event];
-      if (event.is_starting()) {
+      if ( event.is_starting() ) {
         _startTime = pack.context.elapsedTime;
       }
 

@@ -110,11 +110,11 @@ auto Selector<select_t, context_t>::select_peds_from_group(select_t& selector, a
   auto        usablegroup = filter_used_peds(fullGroup, _pedGroups.get_used(selector.group));
   auto        result = selector.select_peds(fullGroup, usablegroup, pack);
 
-  if (!result.starved) {
+  if ( ! result.starved ) {
     return result.group;
   }
 
-  if (selector.required) {
+  if ( selector.required ) {
     // spdlog::error("Behavior: {}, Required Selector Starved For Type: {} From Group: {}", behaviorName,
     // selector.type.fullType, selector.group);
     throw std::runtime_error("");
@@ -159,8 +159,8 @@ auto Selector<select_t, context_t>::filter_used_peds(const VIPRA::idxVec& peds, 
     -> VIPRA::idxVec {
   VIPRA::idxVec ret;
 
-  for (VIPRA::idx i = 0; i < peds.size(); ++i) {
-    if (!used[i]) {
+  for ( VIPRA::idx i = 0; i < peds.size(); ++i ) {
+    if ( ! used[i] ) {
       ret.push_back(peds[i]);
     }
   }
@@ -175,7 +175,7 @@ auto Selector<select_t, context_t>::filter_used_peds(const VIPRA::idxVec& peds, 
 template <typename select_t, typename context_t>
 void Selector<select_t, context_t>::sort_groups() {
   const VIPRA::size groupCnt = _pedGroups.size();
-  for (VIPRA::idx i = 1; i < groupCnt; ++i) {
+  for ( VIPRA::idx i = 1; i < groupCnt; ++i ) {
     std::sort(_pedGroups[i].begin(), _pedGroups[i].end());
   }
 }
@@ -188,9 +188,9 @@ void Selector<select_t, context_t>::sort_groups() {
  */
 template <typename select_t, typename context_t>
 void Selector<select_t, context_t>::check_for_duplicates(const VIPRA::idxVec& order) {
-  for (VIPRA::idx i = 0; i < order.size(); ++i) {
-    for (VIPRA::idx j = i + 1; j < order.size(); ++j) {
-      if (order[i] == order[j]) {
+  for ( VIPRA::idx i = 0; i < order.size(); ++i ) {
+    for ( VIPRA::idx j = i + 1; j < order.size(); ++j ) {
+      if ( order[i] == order[j] ) {
         // spdlog::error("Duplicate Selector in Selectors");
         throw std::runtime_error("");
       }
@@ -207,24 +207,24 @@ template <typename select_t, typename context_t>
 auto Selector<select_t, context_t>::order_selectors() -> VIPRA::idxVec {
   VIPRA::idxVec order;
 
-  for (VIPRA::idx selIdx = 0; selIdx < _subSelectors.size(); ++selIdx) {
-    if (_subSelectors[selIdx].group == 0) {
+  for ( VIPRA::idx selIdx = 0; selIdx < _subSelectors.size(); ++selIdx ) {
+    if ( _subSelectors[selIdx].group == 0 ) {
       order.push_back(selIdx);
     }
   }
 
   _allTypes.for_each_type([&](typeUID type) {
-    for (VIPRA::idx selIdx = 0; selIdx < _subSelectors.size(); ++selIdx) {
-      if (_subSelectors[selIdx].group == type) {
+    for ( VIPRA::idx selIdx = 0; selIdx < _subSelectors.size(); ++selIdx ) {
+      if ( _subSelectors[selIdx].group == type ) {
         order.push_back(selIdx);
       }
     }
   });
 
-  for (VIPRA::idx selIdx = 0; selIdx < _subSelectors.size(); ++selIdx) {
+  for ( VIPRA::idx selIdx = 0; selIdx < _subSelectors.size(); ++selIdx ) {
     bool notInGraph = std::find_if(order.begin(), order.end(),
                                    [&](VIPRA::idx index) { return index == selIdx; }) == order.end();
-    if (notInGraph) {
+    if ( notInGraph ) {
       order.push_back(selIdx);
     }
   }

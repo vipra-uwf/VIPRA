@@ -1,3 +1,6 @@
 #pragma once
 
-// TODO(rolland): add in a macro for obstacle set initialization once we switch obstacles to being polygons
+#define VIPRA_OBSTACLES_INIT                                              \
+  void initialize(std::vector<VIPRA::Geometry::Polygon> const& obstacles, \
+                  std::vector<std::string> const&              types,     \
+                  std::map<std::string, VIPRA::f3dVec> const&  objects)

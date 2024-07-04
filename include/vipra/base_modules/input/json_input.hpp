@@ -45,6 +45,7 @@ class JSON {
 
   template <typename data_t>
   [[nodiscard]] auto get(auto&&... keys) const -> std::optional<data_t>;
+
   template <typename data_t>
   [[nodiscard]] auto get_param(Random::Engine& eng, auto&&... keys) const -> std::optional<data_t>;
 
@@ -107,7 +108,7 @@ auto VIPRA::Input::JSON::get(key_ts&&... keys) const -> std::optional<data_t> {
   assert(_loaded);
 
   auto value = get_value_at_key(std::forward<key_ts>(keys)...);
-  if (!value) return std::nullopt;
+  if ( ! value ) return std::nullopt;
 
   return get_value<data_t>(value.value());
 }
@@ -125,11 +126,11 @@ auto VIPRA::Input::JSON::get_param(Random::Engine& eng, key_ts&&... keys) const 
   assert(_loaded);
 
   auto value = get_value_at_key(std::forward<key_ts>(keys)...);
-  if (!value) return std::nullopt;
+  if ( ! value ) return std::nullopt;
 
-  if constexpr (std::is_same_v<data_t, std::string>)
+  if constexpr ( std::is_same_v<data_t, std::string> )
     return get_parameter(eng, value.value());
-  else if constexpr (Concepts::Numeric<data_t>)
+  else if constexpr ( Concepts::Numeric<data_t> )
     return numeric_parameter_helper<data_t>(eng, value.value());
 
   return get_value<data_t>(value.value());
@@ -150,15 +151,16 @@ template <typename... key_ts>
   assert(_loaded);
 
   auto value = get_value_at_key(std::forward<key_ts>(keys)...);
-  if (!value) return std::nullopt;
+  if ( ! value ) return std::nullopt;
 
+  // go through each polygon in the array and construct it
   std::vector<Geometry::Polygon> polygons;
-  for (auto const& polygon : value.value().get()) {
-    if (!polygon.is_array()) return std::nullopt;
+  for ( auto const& polygon : value.value().get() ) {
+    if ( ! polygon.is_array() ) return std::nullopt;
 
     std::vector<VIPRA::f3d> points;
-    for (auto const& point : polygon) {
-      if (!is_f2d(point)) return std::nullopt;
+    for ( auto const& point : polygon ) {
+      if ( ! is_f2d(point) ) return std::nullopt;
       points.emplace_back(point.at("x").template get<VIPRA::f_pnt>(),
                           point.at("y").template get<VIPRA::f_pnt>(), 0);
     }
@@ -178,18 +180,20 @@ template <typename... key_ts>
 [[nodiscard]] auto VIPRA::Input::JSON::get_parameter(
     VIPRA::Random::Engine& eng, std::reference_wrapper<const nlohmann::json> const& value)
     -> std::optional<std::string> {
+  // getting string parameter values, so we have to follow the rules for parameter sweep values
+
   try {
-    if (value.get().is_array()) {
+    if ( value.get().is_array() ) {
       // discrete, choose random value
       VIPRA::Random::uniform_distribution<size_t> dist(0, value.get().size() - 1);
       return value.get()[dist(eng)].get<std::string>();
     }
 
-    if (value.get().is_object()) {
+    if ( value.get().is_object() ) {
       // TODO(rolland): range, Strings cannont be a range error?
       return std::nullopt;
     }
-  } catch (nlohmann::json::type_error const& e) {
+  } catch ( nlohmann::json::type_error const& e ) {
     return std::nullopt;
   }
 
@@ -209,19 +213,19 @@ template <typename data_t>
     VIPRA::Random::Engine& eng, std::reference_wrapper<const nlohmann::json> const& value)
     -> std::optional<data_t> {
   try {
-    if (value.get().is_array()) {
+    if ( value.get().is_array() ) {
       // discrete, choose random value
       VIPRA::Random::uniform_distribution<size_t> dist(0, value.get().size() - 1);
       return value.get()[dist(eng)].get<data_t>();
     }
 
-    if (value.get().is_object()) {
+    if ( value.get().is_object() ) {
       // range, choose random value
       VIPRA::Random::uniform_distribution<data_t> dist(value.get()["min"].get<data_t>(),
                                                        value.get()["max"].get<data_t>());
       return dist(eng);
     }
-  } catch (nlohmann::json::type_error const& e) {
+  } catch ( nlohmann::json::type_error const& e ) {
     return std::nullopt;
   }
 
@@ -241,12 +245,12 @@ template <typename data_t>
     std::reference_wrapper<const nlohmann::json> const& value) const -> std::optional<std::vector<data_t>> {
   assert(_loaded);
 
-  if (!value.get().is_array()) return std::nullopt;
+  if ( ! value.get().is_array() ) return std::nullopt;
 
   std::vector<data_t> vec;
-  for (auto const& element : value.get()) {
+  for ( auto const& element : value.get() ) {
     auto elementValue = get_value<data_t>(std::cref(element));
-    if (elementValue) vec.emplace_back(*elementValue);
+    if ( elementValue ) vec.emplace_back(*elementValue);
   }
 
   return vec;
@@ -260,12 +264,12 @@ template <typename data_t>
    */
 [[nodiscard]] inline auto VIPRA::Input::JSON::get_f3d_vec(
     std::reference_wrapper<const nlohmann::json> const& value) -> std::optional<VIPRA::f3dVec> {
-  if (!value.get().is_array()) return std::nullopt;
+  if ( ! value.get().is_array() ) return std::nullopt;
 
   VIPRA::f3dVec f3dVec;
-  for (auto const& f3d : value.get()) {
-    if (!is_f3d(f3d)) {
-      if (!is_f2d(f3d)) return std::nullopt;
+  for ( auto const& f3d : value.get() ) {
+    if ( ! is_f3d(f3d) ) {
+      if ( ! is_f2d(f3d) ) return std::nullopt;
 
       f3dVec.emplace_back(f3d.at("x").get<VIPRA::f_pnt>(), f3d.at("y").get<VIPRA::f_pnt>(), 0);
       continue;
@@ -286,7 +290,7 @@ template <typename data_t>
    */
 [[nodiscard]] inline auto VIPRA::Input::JSON::get_f3d(
     std::reference_wrapper<const nlohmann::json> const& value) -> std::optional<VIPRA::f3d> {
-  if (!is_f3d(value.get())) return std::nullopt;
+  if ( ! is_f3d(value.get()) ) return std::nullopt;
 
   return VIPRA::f3d(value.get().at("x").get<VIPRA::f_pnt>(), value.get().at("y").get<VIPRA::f_pnt>(),
                     value.get().at("z").get<VIPRA::f_pnt>());
@@ -298,20 +302,20 @@ template <typename data_t>
    * @param filepath 
    */
 inline void VIPRA::Input::JSON::load() {
-  if (_loaded) return;
+  if ( _loaded ) return;
 
-  if (!std::filesystem::exists(_filepath))
+  if ( ! std::filesystem::exists(_filepath) )
     throw std::runtime_error("File does not exist at: " + _filepath.string());
 
-  if (!std::filesystem::is_regular_file(_filepath))
+  if ( ! std::filesystem::is_regular_file(_filepath) )
     throw std::runtime_error("File is not a regular file at: " + _filepath.string());
 
   std::ifstream file(_filepath, std::ios::in);
-  if (!file.is_open()) throw std::runtime_error("Could not open file at: " + _filepath.string());
+  if ( ! file.is_open() ) throw std::runtime_error("Could not open file at: " + _filepath.string());
 
   try {
     _json = nlohmann::json::parse(file);
-  } catch (nlohmann::json::parse_error const& e) {
+  } catch ( nlohmann::json::parse_error const& e ) {
     throw std::runtime_error("Could not parse JSON file at: " + _filepath.string() + "\n" + e.what());
   }
 
@@ -319,6 +323,13 @@ inline void VIPRA::Input::JSON::load() {
   file.close();
 }
 
+/**
+ * @brief Returns the json value at the provided key location
+ * 
+ * @tparam key_ts 
+ * @param keys 
+ * @return std::optional<std::reference_wrapper<const nlohmann::json>> 
+ */
 template <typename... key_ts>
 [[nodiscard]] auto VIPRA::Input::JSON::get_value_at_key(key_ts&&... keys) const
     -> std::optional<std::reference_wrapper<const nlohmann::json>> {
@@ -326,9 +337,9 @@ template <typename... key_ts>
   bool found = true;
 
   auto const findKey = [&](std::string const& key) {
-    if (!found) return;
+    if ( ! found ) return;
 
-    if (!value.get().contains(key)) {
+    if ( ! value.get().contains(key) ) {
       found = false;
       return;
     }
@@ -336,9 +347,10 @@ template <typename... key_ts>
     value = std::cref(value.get().at(key));
   };
 
+  // drill through each key to get the final value
   (findKey(keys), ...);
 
-  if (!found) return std::nullopt;
+  if ( ! found ) return std::nullopt;
 
   return value;
 }
@@ -353,15 +365,15 @@ template <typename... key_ts>
 template <typename data_t>
 [[nodiscard]] auto VIPRA::Input::JSON::get_value(
     std::reference_wrapper<const nlohmann::json> const& value) const -> std::optional<data_t> {
-  if constexpr (std::is_same_v<data_t, VIPRA::f3d>) {
+  if constexpr ( std::is_same_v<data_t, VIPRA::f3d> ) {
     return get_f3d(value);
   }
 
-  else if constexpr (std::is_same_v<data_t, VIPRA::f3dVec>) {
+  else if constexpr ( std::is_same_v<data_t, VIPRA::f3dVec> ) {
     return get_f3d_vec(value);
   }
 
-  else if constexpr (Util::is_specialization<data_t, std::vector>::value) {
+  else if constexpr ( Util::is_specialization<data_t, std::vector>::value ) {
     using value_t = typename Util::get_specialization_internal<data_t>::type;
     return get_vector<value_t>(value);
   }
@@ -369,7 +381,7 @@ template <typename data_t>
   else {
     try {
       return value.get().get<data_t>();
-    } catch (nlohmann::json::type_error const& e) {
+    } catch ( nlohmann::json::type_error const& e ) {
       return std::nullopt;
     }
   }
@@ -385,9 +397,10 @@ template <typename data_t>
    * @return false 
    */
 [[nodiscard]] inline auto VIPRA::Input::JSON::is_f3d(nlohmann::json const& value) -> bool {
-  if (!value.is_object()) return false;
-  if (!value.contains("x") || !value.contains("y") || !value.contains("z")) return false;
-  if (!value.at("x").is_number() || !value.at("y").is_number() || !value.at("z").is_number()) return false;
+  if ( ! value.is_object() ) return false;
+  if ( ! value.contains("x") || ! value.contains("y") || ! value.contains("z") ) return false;
+  if ( ! value.at("x").is_number() || ! value.at("y").is_number() || ! value.at("z").is_number() )
+    return false;
   return true;
 }
 
@@ -399,9 +412,9 @@ template <typename data_t>
    * @return false 
    */
 [[nodiscard]] inline auto VIPRA::Input::JSON::is_f2d(nlohmann::json const& value) -> bool {
-  if (!value.is_object()) return false;
-  if (!value.contains("x") || !value.contains("y")) return false;
-  if (!value.at("x").is_number() || !value.at("y").is_number()) return false;
+  if ( ! value.is_object() ) return false;
+  if ( ! value.contains("x") || ! value.contains("y") ) return false;
+  if ( ! value.at("x").is_number() || ! value.at("y").is_number() ) return false;
   return true;
 }
 
@@ -411,7 +424,7 @@ inline void VIPRA::Input::JSON::deserialize(std::string const& data) {
   try {
     _json = nlohmann::json::parse(data);
     _loaded = true;
-  } catch (nlohmann::json::parse_error const& e) {
+  } catch ( nlohmann::json::parse_error const& e ) {
     throw std::runtime_error("Could not parse JSON data\n");
   }
 }

@@ -41,13 +41,13 @@ class BehaviorModel {
     Behaviors::AttributeHandling::cleanup();
 
     load_behaviors(seed);
-    for (auto& behavior : _behaviors) {
+    for ( auto& behavior : _behaviors ) {
       behavior.initialize(pedset, map, goals);
     }
   }
 
   void timestep(pedset_t& pedset, map_t& map, goals_t& goals, VIPRA::State& state, VIPRA::delta_t deltaT) {
-    for (auto& behavior : _behaviors) {
+    for ( auto& behavior : _behaviors ) {
       behavior.timestep(pedset, map, goals, state, deltaT);
     }
   }
