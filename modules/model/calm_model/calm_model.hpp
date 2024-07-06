@@ -1,42 +1,36 @@
 #pragma once
 
-#include "vipra.hpp"
+#include <tuple>
+#include <type_traits>
+
+#include "vipra/modules/model.hpp"
+
+#include "vipra/macros/model.hpp"
+#include "vipra/macros/module.hpp"
+#include "vipra/macros/parameters.hpp"
+
+#include "vipra/random/distributions.hpp"
 
 #include "calm_collision.hpp"
 #include "calm_model_types.hpp"
-#include "vipra/concepts/goals.hpp"
-#include "vipra/geometry/f3d.hpp"
-#include "vipra/macros/performance.hpp"
-#include "vipra/performance/performance_testing.hpp"
-#include "vipra/random/distributions.hpp"
 
 namespace CALM {
-class Model {
+class Model : VIPRA::Modules::Model<Model> {
  public:
-  VIPRA_MODULE_NAME("calm_model")
-  VIPRA_MODULE_TYPE(MODEL)
+  VIPRA_MODULE_TYPE(MODEL);
+  VIPRA_MODULE_NAME("calm_model");
 
   VIPRA_REGISTER_STEP {
-    VIPRA_REGISTER_PARAM("meanMass");
-    VIPRA_REGISTER_PARAM("massStdDev");
-    VIPRA_REGISTER_PARAM("meanReactionTime");
-    VIPRA_REGISTER_PARAM("reactionTimeStdDev");
-    VIPRA_REGISTER_PARAM("meanMaxSpeed");
-    VIPRA_REGISTER_PARAM("maxSpeedStdDev");
-    VIPRA_REGISTER_PARAM("meanShoulderLen");
-    VIPRA_REGISTER_PARAM("shoulderLenStdDev");
-    VIPRA_REGISTER_PARAM("random_seed");
-  }
-
-  VIPRA_CONFIG_STEP {
-    VIPRA_GET_PARAM("meanMass", _config.meanMass);
-    VIPRA_GET_PARAM("massStdDev", _config.massStdDev);
-    VIPRA_GET_PARAM("meanReactionTime", _config.meanReactionTime);
-    VIPRA_GET_PARAM("reactionTimeStdDev", _config.reactionTimeStdDev);
-    VIPRA_GET_PARAM("meanMaxSpeed", _config.meanMaxSpeed);
-    VIPRA_GET_PARAM("maxSpeedStdDev", _config.maxSpeedStdDev);
-    VIPRA_GET_PARAM("meanShoulderLen", _config.meanShoulderLen);
-    VIPRA_GET_PARAM("shoulderLenStdDev", _config.shoulderLenStdDev);
+    VIPRA_REGISTER_PARAM("meanMass", _config.meanMass);
+    VIPRA_REGISTER_PARAM("massStdDev", _config.massStdDev);
+    VIPRA_REGISTER_PARAM("meanMass", _config.meanMass);
+    VIPRA_REGISTER_PARAM("massStdDev", _config.massStdDev);
+    VIPRA_REGISTER_PARAM("meanReactionTime", _config.meanReactionTime);
+    VIPRA_REGISTER_PARAM("reactionTimeStdDev", _config.reactionTimeStdDev);
+    VIPRA_REGISTER_PARAM("meanMaxSpeed", _config.meanMaxSpeed);
+    VIPRA_REGISTER_PARAM("maxSpeedStdDev", _config.maxSpeedStdDev);
+    VIPRA_REGISTER_PARAM("meanShoulderLen", _config.meanShoulderLen);
+    VIPRA_REGISTER_PARAM("shoulderLenStdDev", _config.shoulderLenStdDev);
   }
 
   // NOLINTNEXTLINE(misc-unused-parameters)
@@ -55,7 +49,7 @@ class Model {
         {_config.meanShoulderLen, _config.shoulderLenStdDev}, _peds.size(), engine);
   }
 
-  // NOLINTNEXTLINE(misc-unused-parameters, bugprone-easily-swappable-parameters)
+  // NOLINTNEXTLINE(bugprone-easily-swappable-parameters, misc-unused-parameters)
   VIPRA_MODEL_TIMESTEP {
     VIPRA_PERF_FUNCTION("calm::model_step");
 
@@ -75,21 +69,16 @@ class Model {
   ConfigData      _config;
   CALM::Collision _collision;
 
-  std::vector<RaceStatus>        _raceStatuses;
-  std::vector<std::vector<bool>> _inRace;
-
+  std::vector<RaceStatus>         _raceStatuses;
+  std::vector<std::vector<bool>>  _inRace;
   static constexpr VIPRA::delta_t SLIDING_GOAL_TIME = 0.1F;
   static constexpr VIPRA::f_pnt   EQUILIBRIUM_DISTANCE = 0.382;
   static constexpr VIPRA::f_pnt   EQUILIBRIUM_RESOLUTION = 0.01F;
 
-  void calc_neighbors(VIPRA::Concepts::PedsetModule auto const& pedset,
-                      VIPRA::Concepts::MapModule auto const& /*map*/,
-                      VIPRA::Concepts::GoalsModule auto const& goals);
-  void update_state(VIPRA::Concepts::PedsetModule auto const& pedset,
-                    VIPRA::Concepts::GoalsModule auto const& goals, VIPRA::State& state,
-                    VIPRA::delta_t deltaT);
-  auto is_path_blocked(VIPRA::idx pedIdx, VIPRA::f3d veloc, VIPRA::f_pnt maxDist,
-                       const VIPRA::Concepts::MapModule auto& map) -> VIPRA::f_pnt;
+  void calc_neighbors(auto const& pedset, auto const& /*map*/, auto const& goals);
+  void update_state(auto const& pedset, auto const& goals, VIPRA::State& state, VIPRA::delta_t deltaT);
+  auto is_path_blocked(VIPRA::idx pedIdx, VIPRA::f3d veloc, VIPRA::f_pnt maxDist, const auto& map)
+      -> VIPRA::f_pnt;
 
   void        calc_shoulders(VIPRA::f3dVec const&, VIPRA::f3dVec const&);
   static auto obj_spatial_test(const VIPRA::Geometry::Rectangle&, VIPRA::f3d, VIPRA::f3d) -> bool;
@@ -104,9 +93,7 @@ class Model {
 
 // ------------------- IMPLEMENTATIONS -----------------------------------------------------
 
-void Model::calc_neighbors(VIPRA::Concepts::PedsetModule auto const& pedset,
-                           VIPRA::Concepts::MapModule auto const& /*map*/,
-                           VIPRA::Concepts::GoalsModule auto const& goals) {
+void Model::calc_neighbors(auto const& pedset, auto const& /*map*/, auto const& goals) {
   VIPRA_PERF_FUNCTION("calm::calc_neighbors")
 
   const VIPRA::size pedCnt = pedset.num_pedestrians();
@@ -145,9 +132,7 @@ void Model::calc_neighbors(VIPRA::Concepts::PedsetModule auto const& pedset,
   }
 }
 
-void Model::update_state(VIPRA::Concepts::PedsetModule auto const& pedset,
-                         VIPRA::Concepts::GoalsModule auto const& goals, VIPRA::State& state,
-                         VIPRA::delta_t deltaT) {
+void Model::update_state(auto const& pedset, auto const& goals, VIPRA::State& state, VIPRA::delta_t deltaT) {
   VIPRA_PERF_FUNCTION("calm::update_state")
 
   const VIPRA::size pedCnt = pedset.num_pedestrians();
@@ -181,8 +166,8 @@ void Model::update_state(VIPRA::Concepts::PedsetModule auto const& pedset,
   }
 }
 
-auto Model::is_path_blocked(VIPRA::idx pedIdx, VIPRA::f3d velocity, VIPRA::f_pnt maxDist,
-                            const VIPRA::Concepts::MapModule auto& map) -> VIPRA::f_pnt {
+auto Model::is_path_blocked(VIPRA::idx pedIdx, VIPRA::f3d velocity, VIPRA::f_pnt maxDist, const auto& map)
+    -> VIPRA::f_pnt {
   VIPRA_PERF_FUNCTION("calm::is_path_blocked")
 
   VIPRA::Geometry::Line shoulders = _peds.shoulders[pedIdx];
@@ -205,4 +190,4 @@ auto Model::is_path_blocked(VIPRA::idx pedIdx, VIPRA::f3d velocity, VIPRA::f_pnt
 
 }  // namespace CALM
 
-CHECK_MODULE(ModelModule, CALM::Model)
+// CHECK_MODULE(ModelModule, CALM::Model)

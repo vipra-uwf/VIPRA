@@ -4,17 +4,19 @@
 #include <tuple>
 #include <type_traits>
 
-#include "vipra/concepts/output.hpp"
-#include "vipra/concepts/output_coordinator.hpp"
 #include "vipra/macros/module.hpp"
 #include "vipra/macros/parameters.hpp"
+
+#include "vipra/modules/module.hpp"
 #include "vipra/random/random.hpp"
+
 #include "vipra/types/idx.hpp"
+#include "vipra/types/time.hpp"
 #include "vipra/types/util/result_or_void.hpp"
 
 namespace VIPRA::Module {
-template <Concepts::OutputModule... output_ts>
-class Output {
+template <typename... output_ts>
+class Output : public VIPRA::Modules::Module<Output<output_ts...>> {
   // TODO(rolland): decide if we need std::remove_reference
   // TODO(rolland): need to figure out how to get paths for each output
   //                   - if multiple output modules use the same parameter, how do we split them up
@@ -70,11 +72,10 @@ class Output {
    * @param params 
    */
   VIPRA_CONFIG_STEP {
-    VIPRA_GET_PARAM("output_dir", _base_output_dir)
     _current_output_dir = _base_output_dir;
 
     create_output_directory(_current_output_dir);
-    std::apply([&](auto&&... outputs) { (outputs.config(params, engine), ...); }, _outputs);
+    std::apply([&](auto&&... outputs) { (outputs.config(paramIn, engine), ...); }, _outputs);
   }
 
   /**
@@ -82,11 +83,7 @@ class Output {
    * 
    * @tparam params_t 
    */
-  VIPRA_REGISTER_STEP {
-    VIPRA_REGISTER_PARAM("output_dir")
-    std::apply([&](auto&&... outputs) { (outputs.template register_params<params_t>(params), ...); },
-               _outputs);
-  }
+  VIPRA_REGISTER_STEP { VIPRA_REGISTER_PARAM("output_dir", _base_output_dir); }
 
   /**
    * @brief Calls sim_value on all output modules
@@ -161,5 +158,4 @@ class Output {
   }
 };
 
-CHECK_MODULE(OutputCoordinator, Output<Concepts::DummyOutput>);
 }  // namespace VIPRA::Module

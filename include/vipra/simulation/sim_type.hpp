@@ -18,8 +18,8 @@
 #include "vipra/types/util/result_or_void.hpp"
 #include "vipra/types/util/sim_output.hpp"
 
+#include "vipra/debug/debug_do.hpp"
 #include "vipra/util/all_of_type.hpp"
-#include "vipra/util/debug_do.hpp"
 
 // TODO(rolland): create type erased wrapper for simulation
 

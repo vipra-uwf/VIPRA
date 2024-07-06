@@ -1,12 +1,11 @@
 #pragma once
 
-#include "vipra/concepts/goals.hpp"
-#include "vipra/concepts/map.hpp"
-#include "vipra/concepts/pedset.hpp"
-
 #include "calm_model_types.hpp"
 #include "vipra/geometry/rectangle.hpp"
 #include "vipra/macros/performance.hpp"
+
+#include "vipra/types/idx.hpp"
+#include "vipra/types/time.hpp"
 
 namespace CALM {
 
@@ -15,8 +14,7 @@ using VIPRA::Geometry::Rectangle;
 
 class Collision {
  public:
-  void initialize(const VIPRA::Concepts::PedsetModule auto& pedset,
-                  const VIPRA::Concepts::GoalsModule auto& goals, ModelData const& data) {
+  void initialize(const auto& pedset, const auto& goals, ModelData const& data) {
     raceStatuses = std::vector<RaceStatus>(pedset.num_pedestrians(), NO_RACE);
     inRace = std::vector<std::vector<bool>>(pedset.num_pedestrians(),
                                             std::vector<bool>(pedset.num_pedestrians(), false));
@@ -29,9 +27,8 @@ class Collision {
     initialize_rectangles(pedset, goals, data);
   }
 
-  void race_detection(const VIPRA::Concepts::PedsetModule auto& pedset, ModelData const& data,
-                      const VIPRA::Concepts::GoalsModule auto& goals, VIPRA::timestep timestep,
-                      const VIPRA::Concepts::MapModule auto& map) {
+  void race_detection(const auto& pedset, ModelData const& data, const auto& goals, VIPRA::timestep timestep,
+                      const auto& map) {
     VIPRA_PERF_FUNCTION("CALM::Collision::raceDetection")
 
     calc_collision_rectangles(pedset, goals, data);
@@ -49,8 +46,7 @@ class Collision {
     }
   }
 
-  void initialize_rectangles(const VIPRA::Concepts::PedsetModule auto& pedset,
-                             const VIPRA::Concepts::GoalsModule auto& goals, ModelData const& data) {
+  void initialize_rectangles(const auto& pedset, const auto& goals, ModelData const& data) {
     collisionRectangles = std::vector<Rectangle>(pedset.num_pedestrians());
     auto const& shldrs = data.shoulderLens;
     for ( VIPRA::size i = 0; i < collisionRectangles.size(); i++ ) {
@@ -85,8 +81,7 @@ class Collision {
   static constexpr float       minspeed = 0.00000001F;
   static constexpr float       rectangleRange = 0.4;
 
-  void calc_collision_rectangles(const VIPRA::Concepts::PedsetModule auto& pedset,
-                                 const VIPRA::Concepts::GoalsModule auto& goals, ModelData const& data) {
+  void calc_collision_rectangles(const auto& pedset, const auto& goals, ModelData const& data) {
     VIPRA_PERF_FUNCTION("CALM::Collision::calcCollisionRectangles")
 
     auto const&       coords = pedset.all_coords();
@@ -170,9 +165,8 @@ class Collision {
     return midpoint;
   }
 
-  [[nodiscard]] auto check_if_highest_priority(const VIPRA::Concepts::PedsetModule auto& pedset,
-                                               const VIPRA::Concepts::GoalsModule auto&  goals,
-                                               VIPRA::idx pedIdx, VIPRA::timestep timestep) -> bool {
+  [[nodiscard]] auto check_if_highest_priority(const auto& pedset, const auto& goals, VIPRA::idx pedIdx,
+                                               VIPRA::timestep timestep) -> bool {
     VIPRA_PERF_FUNCTION("CALM::Collision::checkIfHighestPriority")
 
     bool flag = true;

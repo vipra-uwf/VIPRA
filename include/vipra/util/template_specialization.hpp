@@ -24,4 +24,19 @@ struct get_specialization_internal<template_t<inner_t>> {
   using type = inner_t;
 };
 
+template <typename>
+struct get_map_specialization;
+
+/**
+ * @brief Utility struct that gets the specialization of a templated type
+ * 
+ * @tparam template_t 
+ * @tparam inner_t 
+ */
+template <template <typename...> typename template_t, typename key_t, typename value_t>
+struct get_specialization_internal<template_t<key_t, value_t>> {
+  using key = key_t;
+  using value = value_t;
+};
+
 }  // namespace VIPRA::Util

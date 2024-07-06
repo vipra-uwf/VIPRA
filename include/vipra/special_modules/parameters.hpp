@@ -8,16 +8,12 @@
 #include <set>
 #include <type_traits>
 
-#include "vipra/concepts/input.hpp"
-#include "vipra/concepts/parameter_input.hpp"
-#include "vipra/concepts/parameters.hpp"
-
+#include "vipra/debug/debug_do.hpp"
 #include "vipra/macros/module.hpp"
 #include "vipra/modules.hpp"
 #include "vipra/random/distributions.hpp"
 #include "vipra/random/random.hpp"
 #include "vipra/types/parameter.hpp"
-#include "vipra/util/debug_do.hpp"
 #include "vipra/util/template_specialization.hpp"
 
 // TODO(rolland): Check that all required parameters are provided (maybe not needed, they are checked when the module tries to get it)
@@ -25,7 +21,7 @@
 //                  - this is needed for outputing the parameters used in a simulation run
 
 namespace VIPRA {
-template <Concepts::parameter_qualified_input input_t>
+template <typename input_t>
 class Parameters {
  public:
   VIPRA_MODULE_TYPE(PARAMETERS)
@@ -105,7 +101,7 @@ class Parameters {
                                " Module: " + moduleName + " Not Provided In Input");
     }
 
-    Util::debug_do([&]() {
+    Debug::debug_do([&]() {
       std::cout << "Parameter: " << paramName << " For " << to_string(module) << " Module: " << moduleName
                 << " Value: " << value.value() << std::endl;
     });
@@ -154,5 +150,4 @@ class Parameters {
   }
 };
 
-CHECK_MODULE(ParamModule, Parameters<Concepts::DummyParameterInput>)
 }  // namespace VIPRA

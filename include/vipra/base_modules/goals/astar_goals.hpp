@@ -1,39 +1,35 @@
 #pragma once
 
-#include <algorithm>
-#include <cstdio>
-#include <queue>
-
-#include "vipra/algorithms/astar.hpp"
-
-#include "vipra/concepts/goals.hpp"
-#include "vipra/concepts/obstacle_set.hpp"
-
+#include "vipra/base_modules/goals/pathing_graph.hpp"
 #include "vipra/data_structures/graph.hpp"
+
+#include "vipra/geometry/circle.hpp"
+#include "vipra/geometry/f3d.hpp"
 
 #include "vipra/macros/goals.hpp"
 #include "vipra/macros/module.hpp"
 #include "vipra/macros/parameters.hpp"
+
 #include "vipra/macros/performance.hpp"
-#include "vipra/modules.hpp"
-
-#include "vipra/types/float.hpp"
-#include "vipra/types/idx.hpp"
-#include "vipra/types/parameter.hpp"
+#include "vipra/modules/goals.hpp"
 #include "vipra/types/size.hpp"
-
-#include "vipra/types/time.hpp"
-#include "vipra/util/debug_do.hpp"
 
 namespace VIPRA::Goals {
 /**
  * @brief Goals module that uses the A* algorithm to find the path to the goal
  * 
  */
-class AStar {
+class AStar : VIPRA::Modules::Goals<AStar> {
  public:
-  VIPRA_MODULE_NAME("astar")
+  VIPRA_MODULE_NAME("astar");
   VIPRA_MODULE_TYPE(GOALS);
+
+  VIPRA_REGISTER_STEP {
+    VIPRA_REGISTER_PARAM("endGoalType", _endGoalType);
+    VIPRA_REGISTER_PARAM("goalRange", _goalRange);
+    VIPRA_REGISTER_PARAM("gridSize", _gridSize);
+    VIPRA_REGISTER_PARAM("closestObstacle", _closestObstacle);
+  }
 
   VIPRA_GOALS_INIT_STEP {
     VIPRA_PERF_FUNCTION("astar::init");
@@ -47,41 +43,14 @@ class AStar {
     _timeSinceLastGoal = std::vector<VIPRA::f_pnt>(pedCnt, 0);
 
     // Create map graph
-    construct_graph(map);
+    _graph = PathingGraph(map, _gridSize, _closestObstacle);
     set_end_goals(pedset, map);
     _paths.clear();
+    _paths.reserve(pedCnt);
 
     // for each pedestrian, find their path to their end goal
     for ( VIPRA::idx pedIdx = 0; pedIdx < pedCnt; ++pedIdx ) {
-      auto const pos = pedset.ped_coords(pedIdx);
-
-      // Get the pedestrian start and end grid location
-      VIPRA::idx startIdx = get_closest_grid_idx(pos);
-      VIPRA::idx endIdx = get_closest_grid_idx(_endGoals[pedIdx]);
-      if ( _graph.nodes().size() <= startIdx || _graph.nodes().size() <= endIdx ) {
-        throw std::runtime_error("Start or end index is out of bounds");
-      }
-
-      // use A* to find the path
-      auto const path = VIPRA::Algo::astar(
-          startIdx, endIdx, _graph,
-          [&](VIPRA::idx left, VIPRA::idx right) -> VIPRA::f_pnt {
-            return _graph.data(left).pos.distance_to(_graph.data(right).pos);
-          },
-          [&](VIPRA::idx nodeIdx) -> VIPRA::f3d { return _graph.data(nodeIdx).pos; });
-
-      if ( ! path ) {
-        // No path found
-        throw std::runtime_error("No path found for pedestrian");
-      }
-
-      // set their path, squash nodes that all go in the same direction into one node
-      _paths.push_back(squash_path(path.value()));
-    }
-
-    // update the pedestrians current goal to the start of thier path
-    for ( VIPRA::idx pedIdx = 0; pedIdx < pedCnt; ++pedIdx ) {
-      _currentGoals[pedIdx] = _paths[pedIdx].back();
+      find_path(pedIdx, pedset.ped_coords(pedIdx));
     }
 
     assert(_timeSinceLastGoal.size() == pedCnt);
@@ -90,21 +59,7 @@ class AStar {
     assert(_paths.size() == pedCnt);
   }
 
-  VIPRA_CONFIG_STEP {
-    VIPRA_GET_PARAM("endGoalType", _end_goal_type);
-    VIPRA_GET_PARAM("goalRange", _goal_range);
-    VIPRA_GET_PARAM("gridSize", _grid_size);
-    VIPRA_GET_PARAM("closestObstacle", _closest_obstacle);
-  }
-
-  VIPRA_REGISTER_STEP {
-    VIPRA_REGISTER_PARAM("endGoalType");
-    VIPRA_REGISTER_PARAM("goalRange");
-    VIPRA_REGISTER_PARAM("gridSize");
-    VIPRA_REGISTER_PARAM("closestObstacle");
-  }
-
-  VIPRA_GOALS_UPDATE {
+  VIPRA_GOALS_UPDATE_STEP {
     VIPRA_PERF_FUNCTION("astar::update");
 
     assert(pedset.num_pedestrians() > 0);
@@ -113,7 +68,7 @@ class AStar {
       auto const pos = pedset.ped_coords(pedIdx);
       _timeSinceLastGoal[pedIdx] += deltaT;
 
-      if ( pos.distance_to(_currentGoals[pedIdx]) < _goal_range ) {
+      if ( pos.distance_to(_currentGoals[pedIdx]) < _goalRange ) {
         if ( ! _paths[pedIdx].empty() ) {
           _currentGoals[pedIdx] = _paths[pedIdx].back();
           _paths[pedIdx].pop_back();
@@ -124,29 +79,17 @@ class AStar {
   }
 
   /**
-   * @brief Changes a pedestrians end goal location
-   * 
-   * @param pedIdx 
-   * @param newGoal 
-   */
-  void change_end_goal(VIPRA::idx pedIdx, VIPRA::f3d newGoal) {
+     * @brief Changes a pedestrians end goal location
+     *
+     * @param pedIdx
+     * @param newGoal
+     */
+  void change_end_goal(VIPRA::f3d pos, VIPRA::idx pedIdx, VIPRA::f3d newGoal) {
     assert(pedIdx < _endGoals.size());
 
     // uses A* to find the path to the new end goal
     _endGoals[pedIdx] = newGoal;
-    auto const path = VIPRA::Algo::astar(
-        get_closest_grid_idx(_currentGoals[pedIdx]), get_closest_grid_idx(_endGoals[pedIdx]), _graph,
-        [&](VIPRA::idx left, VIPRA::idx right) -> VIPRA::f_pnt {
-          return _graph.data(left).pos.distance_to(_graph.data(right).pos);
-        },
-        [&](VIPRA::idx nodeIdx) -> VIPRA::f3d { return _graph.data(nodeIdx).pos; });
-
-    if ( ! path ) {
-      throw std::runtime_error("No path found for pedestrian");
-    }
-
-    _paths[pedIdx] = squash_path(*path);
-    _currentGoals[pedIdx] = _paths[pedIdx].back();
+    find_path(pedIdx, pos);
   }
 
   [[nodiscard]] auto end_goals() const -> VIPRA::f3dVec const& { return _endGoals; }
@@ -173,103 +116,33 @@ class AStar {
   }
 
  private:
-  struct GridPoint {
-    VIPRA::f3d pos;
-    bool       traversable;
-  };
-
-  std::string  _end_goal_type;
-  VIPRA::f_pnt _goal_range;
-  VIPRA::f_pnt _grid_size;
-  VIPRA::f_pnt _closest_obstacle;
+  std::string  _endGoalType;
+  VIPRA::f_pnt _goalRange;
+  VIPRA::f_pnt _gridSize;
+  VIPRA::f_pnt _closestObstacle;
 
   VIPRA::f3dVec             _currentGoals;
   VIPRA::f3dVec             _endGoals;
   std::vector<VIPRA::f_pnt> _timeSinceLastGoal;
 
-  std::vector<std::vector<VIPRA::f3d>>    _paths;
-  VIPRA::DataStructures::Graph<GridPoint> _graph;
-  VIPRA::size                             _xCount;
-  VIPRA::size                             _yCount;
-
-  /**
-   * @brief Constructs the graph of grid points
-   * 
-   * @param map 
-   */
-  void construct_graph(Concepts::MapModule auto const& map) {
-    _graph.clear();
-    set_grid_counts(map);
-
-    assert(_xCount > 0 && _yCount > 0);
-
-    _graph.reserve(_xCount * _yCount);
-
-    // TODO(rolland): This starts the grid a (0, 0) and not the bottom left corner of the map, we may want to change this
-    VIPRA::f3d center;
-
-    // Construct a graph of grids filling the map with adjacent grids connecting
-    for ( VIPRA::idx currY = 0; currY < _yCount; ++currY ) {
-      center.x = 0.0F;
-      center.y += _grid_size;
-
-      for ( VIPRA::idx currX = 0; currX < _xCount; ++currX ) {
-        center.x += _grid_size;
-        const VIPRA::idx currIdx = _graph.add_node(
-            GridPoint{center, ! map.collision(VIPRA::Geometry::Circle{center, _closest_obstacle})});
-
-        if ( ! _graph.data(currIdx).traversable ) {
-          continue;
-        }
-
-        set_adjacents(currIdx, currX, currY);
-      }
-    }
-  }
-
-  /**
-   * @brief Set the adjacent nodes of the current node
-   * 
-   * @param currIdx 
-   * @param currX 
-   * @param currY 
-   */
-  // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-  void set_adjacents(VIPRA::idx currIdx, VIPRA::idx currX, VIPRA::idx currY) {
-    assert(currIdx < _graph.nodes().size());
-    assert(currX < _xCount && currY < _yCount);
-    assert(_graph.data(currIdx).traversable == true);
-
-    // Check if the neighbor grid is eligible to be connected to
-    if ( currX > 1 ) {
-      if ( _graph.data(currIdx - 1).traversable ) _graph.add_edge(currIdx, currIdx - 1);
-    }
-    if ( currY > 1 ) {
-      if ( _graph.data(currIdx - _xCount).traversable ) _graph.add_edge(currIdx, currIdx - _xCount);
-    }
-    if ( currX > 1 && currY > 1 ) {
-      if ( _graph.data(currIdx - _xCount - 1).traversable ) _graph.add_edge(currIdx, currIdx - _xCount - 1);
-    }
-    if ( currX < _xCount - 1 && currY > 1 ) {
-      if ( _graph.data(currIdx - _xCount + 1).traversable ) _graph.add_edge(currIdx, currIdx - _xCount + 1);
-    }
-  }
+  std::vector<std::vector<VIPRA::f3d>> _paths;
+  PathingGraph                         _graph;
 
   /**
    * @brief Sets the end goals for each pedestrian
-   * 
-   * @param pedset 
-   * @param map 
+   *
+   * @param pedset
+   * @param map
    */
-  void set_end_goals(Concepts::PedsetModule auto const& pedset, Concepts::MapModule auto const& map) {
+  void set_end_goals(auto const& pedset, auto const& map) {
     assert(pedset.num_pedestrians() > 0);
 
     const VIPRA::size pedCnt = pedset.num_pedestrians();
 
     // find the end goals, provided as a module parameter
-    auto const& objects = map.get_objects(_end_goal_type);
+    auto const& objects = map.get_objects(_endGoalType);
     if ( objects.empty() ) {
-      throw std::runtime_error("No objects of type " + _end_goal_type + " found in map");
+      throw std::runtime_error("No objects of type " + _endGoalType + " found in map");
     }
 
     // set each pedestrians end goal as the nearest of that type
@@ -288,9 +161,9 @@ class AStar {
 
   /**
    * @brief Squashes the path to remove unnecessary points
-   * 
-   * @param path 
-   * @return std::vector<VIPRA::f3d> 
+   *
+   * @param path
+   * @return std::vector<VIPRA::f3d>
    */
   [[nodiscard]] static auto squash_path(std::vector<VIPRA::f3d> const& path) -> std::vector<VIPRA::f3d> {
     assert(path.empty() == false);
@@ -311,24 +184,11 @@ class AStar {
   }
 
   /**
-   * @brief Gets the index of the grid point
-   * 
-   * @param gridX 
-   * @param gridY 
-   * @param xCount 
-   * @return VIPRA::idx 
-   */
-  [[nodiscard]] static auto get_index(VIPRA::size gridX, VIPRA::size gridY, VIPRA::size xCount) noexcept
-      -> VIPRA::idx {
-    return gridX + (gridY * xCount);
-  }
-
-  /**
    * @brief Gets the nearest goal to the pedestrian
-   * 
-   * @param pos 
-   * @param goals 
-   * @return VIPRA::f3dVec::const_iterator 
+   *
+   * @param pos
+   * @param goals
+   * @return VIPRA::f3dVec::const_iterator
    */
   [[nodiscard]] static auto get_nearest_goal(VIPRA::f3d pos, std::vector<VIPRA::f3d> const& goals)
       -> VIPRA::f3dVec::const_iterator {
@@ -340,52 +200,35 @@ class AStar {
   }
 
   /**
-   * @brief Gets the closest grid index to the coordinate
+   * @brief Sets the pedestrians path to pos
    * 
+   * @param pedIdx 
    * @param pos 
-   * @return VIPRA::idx 
    */
-  [[nodiscard]] auto get_closest_grid_idx(VIPRA::f3d pos) const -> VIPRA::idx {
-    auto gridX = static_cast<VIPRA::idx>(std::floor(pos.x / _grid_size));
-    auto gridY = static_cast<VIPRA::idx>(std::floor(pos.y / _grid_size));
-
-    auto const idx = get_index(gridX, gridY, _xCount);
-
-    if ( idx >= _graph.nodes().size() ) {
-      throw std::runtime_error("Grid index is out of bounds");
+  void find_path(VIPRA::idx pedIdx, VIPRA::f3d startPos) {
+    // Get the pedestrian start and end grid location
+    VIPRA::idx startIdx = _graph.get_closest_grid_idx(startPos);
+    VIPRA::idx endIdx = _graph.get_closest_grid_idx(_endGoals[pedIdx]);
+    if ( _graph.nodes().size() <= startIdx || _graph.nodes().size() <= endIdx ) {
+      throw std::runtime_error("Start or end index is out of bounds");
     }
 
-    return idx;
+    // use A* to find the path
+    auto const path = VIPRA::Algo::astar(
+        startIdx, endIdx, _graph,
+        [&](VIPRA::idx left, VIPRA::idx right) -> VIPRA::f_pnt {
+          return _graph.data(left).pos.distance_to(_graph.data(right).pos);
+        },
+        [&](VIPRA::idx nodeIdx) -> VIPRA::f3d { return _graph.data(nodeIdx).pos; });
+
+    if ( ! path ) {
+      // No path found
+      throw std::runtime_error("No path found for pedestrian");
+    }
+
+    // set their path, squash nodes that all go in the same direction into one node
+    _paths[pedIdx] = squash_path(*path);
+    _currentGoals[pedIdx] = _paths[pedIdx].back();
   }
-
-  /**
-   * @brief Sets the number of grid points in the x and y directions
-   * 
-   * @param map 
-   */
-  void set_grid_counts(const Concepts::MapModule auto& map) {
-    const VIPRA::f3d dimensions = map.get_dimensions();
-
-    assert(dimensions.x > 0 && dimensions.y > 0);
-    assert(_grid_size > 0 && _closest_obstacle > 0);
-
-    _xCount = static_cast<VIPRA::idx>(std::ceil(dimensions.x / _grid_size) + 1);
-    _yCount = static_cast<VIPRA::idx>(std::ceil(dimensions.y / _grid_size) + 1);
-  }
-
-  // void debug_output_paths() {
-  //   std::printf("{\"paths\": [\n");
-  //   for (auto const& path : _paths) {
-  //     std::printf("{ \"points\": [\n");
-  //     for (auto const& point : path) {
-  //       std::printf("[%f, %f, %f]%c\n", point.x, point.y, point.z, point == path.back() ? ' ' : ',');
-  //     }
-  //     std::printf("]}%c\n", &path == &_paths.back() ? ' ' : ',');
-  //   }
-  //   std::printf("]}\n");
-  //   std::fflush(stdout);
-  // }
 };
 }  // namespace VIPRA::Goals
-
-CHECK_MODULE(GoalsModule, VIPRA::Goals::AStar)

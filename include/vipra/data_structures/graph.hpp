@@ -8,12 +8,12 @@
 namespace VIPRA::DataStructures {
 
 /**
- * @brief generic Graph datastructure
+ * @brief generic Graph datastructure mixin
  * 
- * @tparam data_t 
+ * @tparam data_t
  */
-template <typename data_t>
-class Graph {
+template <typename class_t, typename data_t>
+class GraphMixin {
  public:
   using value_t = data_t;
 
@@ -73,6 +73,14 @@ class Graph {
  private:
   std::vector<Node> _nodes;
 };
+
+/**
+ * @brief generic Graph datastructure
+ * 
+ * @tparam data_t 
+ */
+template <typename data_t>
+class Graph : public GraphMixin<void, data_t> {};
 
 static_assert(Algo::AStar::Graph<Graph<VIPRA::f3d>>);
 }  // namespace VIPRA::DataStructures

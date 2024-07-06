@@ -1,6 +1,8 @@
 #pragma once
 
-#include "vipra.hpp"
+#include "vipra/geometry/line.hpp"
+#include "vipra/types/float.hpp"
+#include "vipra/types/size.hpp"
 
 namespace CALM {
 enum RaceStatus { NO_RACE, WAIT };
