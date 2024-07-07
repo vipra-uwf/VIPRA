@@ -95,7 +95,7 @@ class Parameters {
       throw std::runtime_error("Parameter: " + paramName + " For " + to_string(module) +
                                " Module: " + moduleName + " Not Registered");
 
-    auto value = _input.template get_param<data_t>(engine, moduleStr, moduleName, paramName);
+    auto value = _input.template get_param<data_t>(moduleStr, moduleName, paramName, engine);
     if ( ! value.has_value() ) {
       throw std::runtime_error("Required Parameter: " + paramName + " For " + to_string(module) +
                                " Module: " + moduleName + " Not Provided In Input");

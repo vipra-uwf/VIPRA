@@ -36,7 +36,8 @@ namespace VIPRA::Input {
   * 
   * 
   */
-class JSON : public VIPRA::Modules::Input<JSON>,
+class JSON : public VIPRA::Modules::Module<JSON>,
+             public VIPRA::Modules::Input<JSON>,
              public VIPRA::Modules::ParamReader<JSON>,
              public VIPRA::Modules::Serializable<JSON>,
              public VIPRA::Modules::PolygonInput<JSON> {

@@ -6,6 +6,7 @@
 
 #include "vipra/geometry/polygon.hpp"
 #include "vipra/modules/module.hpp"
+#include "vipra/util/crtp.hpp"
 
 namespace VIPRA::Modules {
 
@@ -14,7 +15,9 @@ namespace VIPRA::Modules {
  * 
  */
 template <typename module_t>
-class PolygonInput : public VIPRA::Modules::Module<PolygonInput<module_t>> {
+class PolygonInput : public Util::CRTP<PolygonInput<module_t>> {
+  using Util::CRTP<PolygonInput<module_t>>::self;
+
  public:
   /**
      * @brief Returns polygons as loaded from the input module, std::nullopt if incorrect type / doesn't exist
@@ -27,7 +30,7 @@ class PolygonInput : public VIPRA::Modules::Module<PolygonInput<module_t>> {
   template <typename... keys_t>
   [[nodiscard]] auto load_polygons(keys_t&&... keys) const
       -> std::optional<std::vector<VIPRA::Geometry::Polygon>> {
-    this->self().template get<std::vector<VIPRA::Geometry::Polygon>>(std::forward<keys_t>(keys)...);
+    return self().template get<std::vector<VIPRA::Geometry::Polygon>>(std::forward<keys_t>(keys)...);
   }
 };
 

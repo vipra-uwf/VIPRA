@@ -1,63 +1,49 @@
 #pragma once
 
-#include "vipra/concepts/goals.hpp"
-#include "vipra/concepts/has_type.hpp"
-#include "vipra/concepts/input.hpp"
-#include "vipra/concepts/map.hpp"
-#include "vipra/concepts/model.hpp"
-#include "vipra/concepts/obstacle_set.hpp"
-#include "vipra/concepts/output.hpp"
-#include "vipra/concepts/output_coordinator.hpp"
-#include "vipra/concepts/parameters.hpp"
-#include "vipra/concepts/pedset.hpp"
+#include "vipra/coord_modules/output.hpp"
+#include "vipra/modules.hpp"
+#include "vipra/modules/goals.hpp"
+#include "vipra/modules/input.hpp"
+#include "vipra/modules/model.hpp"
+#include "vipra/modules/obstacles.hpp"
+#include "vipra/modules/output.hpp"
+#include "vipra/modules/pedestrians.hpp"
+#include "vipra/util/template_specialization.hpp"
 
 namespace VIPRA::Checks {
 template <typename type_t>
-struct Params {
-  static_assert(Concepts::has_type<type_t>::value, "Missing Module Type");
-  // NOLINTNEXTLINE(readability-identifier-naming) lowercase is a regular naming convetion here
-  static constexpr bool value = Concepts::ParamModule<type_t>;
-};
-
-template <typename type_t>
 struct Input {
-  static_assert(Concepts::has_type<type_t>::value, "Missing Module Type");
   // NOLINTNEXTLINE(readability-identifier-naming) lowercase is a regular naming convetion here
-  static constexpr bool value = Concepts::InputModule<type_t>;
+  static constexpr bool value = std::derived_from<type_t, VIPRA::Modules::Input<type_t>>;
 };
 
 template <typename type_t>
 struct OutputCoord {
-  static_assert(Concepts::has_type<type_t>::value, "Missing Module Type");
   // NOLINTNEXTLINE(readability-identifier-naming) lowercase is a regular naming convetion here
-  static constexpr bool value = Concepts::OutputCoordinator<type_t>;
+  static constexpr bool value = Util::is_specialization<type_t, VIPRA::CoordModules::Output>::value;
 };
 
 template <typename type_t>
 struct Model {
-  static_assert(Concepts::has_type<type_t>::value, "Missing Module Type");
   // NOLINTNEXTLINE(readability-identifier-naming) lowercase is a regular naming convetion here
-  static constexpr bool value = Concepts::ModelModule<type_t>;
+  static constexpr bool value = std::derived_from<type_t, VIPRA::Modules::Model<type_t>>;
 };
 
 template <typename type_t>
 struct Pedset {
-  static_assert(Concepts::has_type<type_t>::value, "Missing Module Type");
   // NOLINTNEXTLINE(readability-identifier-naming) lowercase is a regular naming convetion here
-  static constexpr bool value = Concepts::PedsetModule<type_t>;
+  static constexpr bool value = std::derived_from<type_t, VIPRA::Modules::Pedestrians<type_t>>;
 };
 
 template <typename type_t>
 struct Goals {
-  static_assert(Concepts::has_type<type_t>::value, "Missing Module Type");
   // NOLINTNEXTLINE(readability-identifier-naming) lowercase is a regular naming convetion here
-  static constexpr bool value = Concepts::GoalsModule<type_t>;
+  static constexpr bool value = std::derived_from<type_t, VIPRA::Modules::Goals<type_t>>;
 };
 
 template <typename type_t>
-struct Map {
-  static_assert(Concepts::has_type<type_t>::value, "Missing Module Type");
+struct Obstacles {
   // NOLINTNEXTLINE(readability-identifier-naming) lowercase is a regular naming convetion here
-  static constexpr bool value = Concepts::MapModule<type_t>;
+  static constexpr bool value = std::derived_from<type_t, VIPRA::Modules::Obstacles<type_t>>;
 };
 }  // namespace VIPRA::Checks

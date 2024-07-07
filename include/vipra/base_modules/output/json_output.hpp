@@ -18,12 +18,12 @@ namespace VIPRA::Output::Trajectories {
  * @brief JSON output module for writing trajectories to a JSON file
  * 
  */
-class JSON : public VIPRA::Modules::Output<JSON> {
+class JSON : public VIPRA::Modules::Module<JSON>, public VIPRA::Modules::Output<JSON> {
  public:
   VIPRA_MODULE_NAME("trajectories_json")
   VIPRA_MODULE_TYPE(OUTPUT)
 
-  VIPRA_REGISTER_STEP { VIPRA_REGISTER_PARAM("filename", _filename); }
+  VIPRA_REGISTER_PARAMS(VIPRA_PARAM("filename", _filename))
 
   [[nodiscard]] auto to_string() -> std::string { return _json.dump(); }
 

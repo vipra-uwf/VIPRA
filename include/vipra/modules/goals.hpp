@@ -14,40 +14,42 @@ namespace VIPRA::Modules {
  * 
  */
 template <typename module_t>
-class Goals : public Module<Goals<module_t>> {
+class Goals : public Util::CRTP<Goals<module_t>> {
+  using Util::CRTP<Goals<module_t>>::self;
+
  public:
   template <typename pedset_t, typename map_t>
   void initialize(pedset_t const& pedset, map_t const& map) {
-    return this->self().init_step(pedset, map);
+    return self().init_step(pedset, map);
   }
 
   template <typename pedset_t, typename map_t>
   void update(pedset_t const& pedset, map_t const& map, VIPRA::delta_t deltaT) {
-    return this->self().update_step(pedset, map, deltaT);
+    return self().update_step(pedset, map, deltaT);
   }
 
   void change_end_goal(VIPRA::idx pedIdx, VIPRA::f3d goalPos) {
-    return this->self().change_end_goal(pedIdx, goalPos);
+    return self().change_end_goal(pedIdx, goalPos);
   }
 
-  [[nodiscard]] auto current_goals() const -> const VIPRA::f3dVec& { return this->self().current_goals(); }
+  [[nodiscard]] auto current_goals() const -> const VIPRA::f3dVec& { return self().current_goals(); }
 
-  [[nodiscard]] auto end_goals() const -> const VIPRA::f3dVec& { return this->self().end_goals(); }
+  [[nodiscard]] auto end_goals() const -> const VIPRA::f3dVec& { return self().end_goals(); }
 
   [[nodiscard]] auto current_goal(VIPRA::idx pedIdx) const -> VIPRA::f3d const& {
-    return this->self().current_goal(pedIdx);
+    return self().current_goal(pedIdx);
   }
 
   [[nodiscard]] auto end_goal(VIPRA::idx pedIdx) const -> VIPRA::f3d const& {
-    return this->self().end_goal(pedIdx);
+    return self().end_goal(pedIdx);
   }
 
-  [[nodiscard]] auto is_goal_met(VIPRA::idx pedIdx) const -> bool { return this->self().is_goal_met(pedIdx); }
+  [[nodiscard]] auto is_goal_met(VIPRA::idx pedIdx) const -> bool { return self().is_goal_met(pedIdx); }
 
-  [[nodiscard]] auto is_sim_goal_met() const -> bool { return this->self().is_sim_goal_met(); }
+  [[nodiscard]] auto is_sim_goal_met() const -> bool { return self().is_sim_goal_met(); }
 
   [[nodiscard]] auto time_since_last_goal(VIPRA::idx pedIdx) const -> VIPRA::f_pnt {
-    return this->self().time_since_last_goal(pedIdx);
+    return self().time_since_last_goal(pedIdx);
   }
 };
 

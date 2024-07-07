@@ -34,7 +34,7 @@ struct get_map_specialization;
  * @tparam inner_t 
  */
 template <template <typename...> typename template_t, typename key_t, typename value_t>
-struct get_specialization_internal<template_t<key_t, value_t>> {
+struct get_map_specialization<template_t<key_t, value_t>> {
   using key = key_t;
   using value = value_t;
 };

@@ -4,7 +4,7 @@
 
 #define VIPRA_GOALS_INIT_STEP                  \
   template <typename pedset_t, typename map_t> \
-  void init(pedset_t const& pedset, map_t const& map)
+  void init_step(pedset_t const& pedset, map_t const& map)
 
 #define VIPRA_GOALS_UPDATE_STEP                \
   template <typename pedset_t, typename map_t> \

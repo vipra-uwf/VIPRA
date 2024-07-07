@@ -24,8 +24,8 @@ class BehaviorModel {
 
   // NOLINTNEXTLINE(misc-unused-parameters)
   static void register_params(Concepts::ParamModule auto& params) {
-    VIPRA_REGISTER_PARAM("behaviors_dir");
-    VIPRA_REGISTER_PARAM("behaviors");
+    VIPRA_PARAM("behaviors_dir");
+    VIPRA_PARAM("behaviors");
   }
 
   // NOLINTNEXTLINE(misc-unused-parameters)

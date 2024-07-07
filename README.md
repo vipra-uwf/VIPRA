@@ -703,8 +703,8 @@ class Model {
   VIPRA_MODULE_TYPE(MODEL)
 
   // Add in the parameter registration step, this is where we tell VIPRA what parameters the module needs
-  VIPRA_REGISTER_STEP { 
-    VIPRA_REGISTER_PARAM("radius");
+  VIPRA_REGISTER_PARAMS ( 
+    VIPRA_PARAM("radius");
   }
 
   // Add in the configuration step, this is where the module parameters are loaded in
@@ -876,18 +876,18 @@ class ExampleModel {
 CHECK_MODULE(MODEL, ExampleModel)
 ```
 
-#### VIPRA_REGISTER_STEP
-#### VIPRA_REGISTER_PARAM
+#### VIPRA_REGISTER_PARAMS
+#### VIPRA_PARAM
 
-`VIPRA_REGISTER_STEP` provides the proper function signature for the parameter registration step.
+`VIPRA_REGISTER_PARAMS` provides the proper function signature for the parameter registration step.
 
-`VIPRA_REGISTER_PARAM` registers a parameter in the parameter registration step.
+`VIPRA_PARAM` registers a parameter in the parameter registration step.
 
 ```C++
 class ExampleModel {
   public:
-    VIPRA_REGISTER_STEP {
-      VIPRA_REGISTER_PARAM("example_param")
+    VIPRA_REGISTER_PARAMS (
+      VIPRA_PARAM("example_param")
     }
 }
 ```

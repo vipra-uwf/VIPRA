@@ -136,5 +136,13 @@ class PathingGraph : public VIPRA::DataStructures::GraphMixin<PathingGraph, Grid
       if ( data(currIdx - _xCount + 1).traversable ) add_edge(currIdx, currIdx - _xCount + 1);
     }
   }
+
+ public:
+  PathingGraph() = default;
+  PathingGraph(const PathingGraph&) = default;
+  PathingGraph(PathingGraph&&) = default;
+  auto operator=(const PathingGraph&) -> PathingGraph& = default;
+  auto operator=(PathingGraph&&) -> PathingGraph& = default;
+  ~PathingGraph() = default;
 };
 }  // namespace VIPRA::Goals

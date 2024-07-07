@@ -9,29 +9,28 @@
 #include "vipra/macros/module.hpp"
 #include "vipra/macros/parameters.hpp"
 
+#include "vipra/modules/module.hpp"
 #include "vipra/random/distributions.hpp"
 
 #include "calm_collision.hpp"
 #include "calm_model_types.hpp"
 
 namespace CALM {
-class Model : VIPRA::Modules::Model<Model> {
+class Model : public VIPRA::Modules::Module<Model>, public VIPRA::Modules::Model<Model> {
  public:
   VIPRA_MODULE_TYPE(MODEL);
   VIPRA_MODULE_NAME("calm_model");
 
-  VIPRA_REGISTER_STEP {
-    VIPRA_REGISTER_PARAM("meanMass", _config.meanMass);
-    VIPRA_REGISTER_PARAM("massStdDev", _config.massStdDev);
-    VIPRA_REGISTER_PARAM("meanMass", _config.meanMass);
-    VIPRA_REGISTER_PARAM("massStdDev", _config.massStdDev);
-    VIPRA_REGISTER_PARAM("meanReactionTime", _config.meanReactionTime);
-    VIPRA_REGISTER_PARAM("reactionTimeStdDev", _config.reactionTimeStdDev);
-    VIPRA_REGISTER_PARAM("meanMaxSpeed", _config.meanMaxSpeed);
-    VIPRA_REGISTER_PARAM("maxSpeedStdDev", _config.maxSpeedStdDev);
-    VIPRA_REGISTER_PARAM("meanShoulderLen", _config.meanShoulderLen);
-    VIPRA_REGISTER_PARAM("shoulderLenStdDev", _config.shoulderLenStdDev);
-  }
+  VIPRA_REGISTER_PARAMS(VIPRA_PARAM("meanMass", _config.meanMass),
+                        VIPRA_PARAM("massStdDev", _config.massStdDev),
+                        VIPRA_PARAM("meanMass", _config.meanMass),
+                        VIPRA_PARAM("massStdDev", _config.massStdDev),
+                        VIPRA_PARAM("meanReactionTime", _config.meanReactionTime),
+                        VIPRA_PARAM("reactionTimeStdDev", _config.reactionTimeStdDev),
+                        VIPRA_PARAM("meanMaxSpeed", _config.meanMaxSpeed),
+                        VIPRA_PARAM("maxSpeedStdDev", _config.maxSpeedStdDev),
+                        VIPRA_PARAM("meanShoulderLen", _config.meanShoulderLen),
+                        VIPRA_PARAM("shoulderLenStdDev", _config.shoulderLenStdDev))
 
   // NOLINTNEXTLINE(misc-unused-parameters)
   VIPRA_MODEL_INIT_STEP {

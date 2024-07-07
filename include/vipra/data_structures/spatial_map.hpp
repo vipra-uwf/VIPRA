@@ -47,6 +47,12 @@ class SpatialMap {
     }
   }
 
+  void initialize(VIPRA::f_pnt width, VIPRA::f_pnt height, std::vector<VIPRA::f3d> const& positions,
+                  std::vector<data_t> const& data) {
+    set_grids(width, height);
+    initialize_grids(positions, data);
+  }
+
  private:
   std::vector<std::vector<data_t>> _grid;
   VIPRA::size                      _rows{};
@@ -112,6 +118,18 @@ class SpatialMap {
    */
   [[nodiscard]] inline auto out_of_bounds(VIPRA::f_pnt x, VIPRA::f_pnt y) const -> bool {
     return x < 0 || x >= _cols * _cellSize || y < 0 || y >= _rows * _cellSize;
+  }
+
+  /**
+   * @brief Checks if the point is out of bounds
+   * 
+   * @param x 
+   * @param y 
+   * @return true 
+   * @return false 
+   */
+  [[nodiscard]] inline auto out_of_bounds(VIPRA::f3d pos) const -> bool {
+    return out_of_bounds(pos.x, pos.y);
   }
 };
 }  // namespace VIPRA::DataStructures

@@ -8,16 +8,17 @@
 #include "vipra/macros/parameters.hpp"
 
 #include "vipra/modules/module.hpp"
+#include "vipra/modules/output.hpp"
+
 #include "vipra/random/random.hpp"
 
 #include "vipra/types/idx.hpp"
 #include "vipra/types/time.hpp"
 #include "vipra/types/util/result_or_void.hpp"
 
-namespace VIPRA::Module {
+namespace VIPRA::CoordModules {
 template <typename... output_ts>
-class Output : public VIPRA::Modules::Module<Output<output_ts...>> {
-  // TODO(rolland): decide if we need std::remove_reference
+class Output : public Modules::Output<Output<output_ts...>> {
   // TODO(rolland): need to figure out how to get paths for each output
   //                   - if multiple output modules use the same parameter, how do we split them up
   //                   - maybe require a path parameter for each output module, in their constructor?
@@ -43,10 +44,20 @@ class Output : public VIPRA::Modules::Module<Output<output_ts...>> {
   VIPRA_MODULE_NAME("coordinator");
   VIPRA_MODULE_TYPE(OUTPUT);
 
-  // NOLINTNEXTLINE
+  VIPRA_REGISTER_PARAMS(VIPRA_PARAM("output_dir", _base_output_dir))
 
-  constexpr explicit Output(output_ts... outputs) : _outputs(std::make_tuple(outputs...)) {}
+  VIPRA_CONFIG_STEP {
+    _current_output_dir = _base_output_dir;
 
+    create_output_directory(_current_output_dir);
+    std::apply([&](auto&&... outputs) { (outputs.config(paramIn, engine), ...); }, _outputs);
+  }
+
+  /**
+   * @brief Creates a new output directory for the current simulation run
+   * 
+   * @param runIdx 
+   */
   void new_run(VIPRA::idx runIdx) {
     _current_output_dir = _base_output_dir / std::to_string(runIdx);
     create_output_directory(_current_output_dir);
@@ -65,25 +76,6 @@ class Output : public VIPRA::Modules::Module<Output<output_ts...>> {
         },
         _outputs);
   }
-
-  /**
-   * @brief Calls config on all output modules
-   * 
-   * @param params 
-   */
-  VIPRA_CONFIG_STEP {
-    _current_output_dir = _base_output_dir;
-
-    create_output_directory(_current_output_dir);
-    std::apply([&](auto&&... outputs) { (outputs.config(paramIn, engine), ...); }, _outputs);
-  }
-
-  /**
-   * @brief Calls register_params on all output modules
-   * 
-   * @tparam params_t 
-   */
-  VIPRA_REGISTER_STEP { VIPRA_REGISTER_PARAM("output_dir", _base_output_dir); }
 
   /**
    * @brief Calls sim_value on all output modules
@@ -156,6 +148,9 @@ class Output : public VIPRA::Modules::Module<Output<output_ts...>> {
         throw std::runtime_error("Could not create output directory: " + directory.string());
     }
   }
+
+ public:
+  constexpr explicit Output(output_ts... outputs) : _outputs(std::make_tuple(outputs...)) {}
 };
 
-}  // namespace VIPRA::Module
+}  // namespace VIPRA::CoordModules

@@ -1,6 +1,8 @@
 #pragma once
 
 #include <iostream>
+#include <numeric>
+#include <vector>
 
 #include "vipra/data_structures/spatial_map.hpp"
 
@@ -9,6 +11,7 @@
 #include "vipra/macros/pedestrians.hpp"
 #include "vipra/macros/performance.hpp"
 
+#include "vipra/modules/module.hpp"
 #include "vipra/modules/pedestrians.hpp"
 
 #include "vipra/geometry/f3d.hpp"
@@ -25,27 +28,30 @@ namespace VIPRA::Pedestrians {
  * @brief Pedestrian module that uses a grid to store pedestrians
  * 
  */
-class Grid : public Modules::Pedestrians<Grid> {
+class Grid : public Modules::Module<Grid>, public Modules::Pedestrians<Grid> {
  public:
   VIPRA_MODULE_NAME("grid");
   VIPRA_MODULE_TYPE(PEDESTRIANS);
 
-  VIPRA_REGISTER_STEP { VIPRA_REGISTER_PARAM("gridSize", _cellSize); }
+  VIPRA_REGISTER_PARAMS(VIPRA_PARAM("gridSize", _cellSize))
 
   VIPRA_PEDS_INIT_STEP {
     auto coords = input.template get<std::vector<VIPRA::f3d>>("coords");
     if ( ! coords ) throw std::runtime_error("Could not find pedestrian coordinates in input file");
 
     auto dimensions = map.get_dimensions();
-    set_grids(dimensions.x, dimensions.y);
+
+    // create temporary vector of indices to initialize spatial map with
+    std::vector<VIPRA::idx> tempIndexes((*coords).size());
+    std::iota(std::begin(tempIndexes), std::end(tempIndexes), 0);
+
+    _spatialGrid.initialize(dimensions.x, dimensions.y, *coords, tempIndexes);
 
     set_velocities(std::vector<VIPRA::f3d>((*coords).size()));
     set_coordinates(std::move(*coords));
   }
 
   VIPRA_PEDS_UPDATE_STEP {
-    assert(state.size() == _coords.size());
-
     // Update pedestrian positions in grids
     _spatialGrid.update_grids(get_coordinates());
   }

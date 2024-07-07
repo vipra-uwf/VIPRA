@@ -18,10 +18,12 @@ namespace VIPRA::Obstacles {
  * @brief Obstacle module that uses a quadtree to store obstacles
  * 
  */
-class QuadTree : public VIPRA::Modules::Obstacles<QuadTree> {
+class QuadTree : public VIPRA::Modules::Module<QuadTree>, public VIPRA::Modules::Obstacles<QuadTree> {
  public:
   VIPRA_MODULE_NAME("quad_tree");
   VIPRA_MODULE_TYPE(OBSTACLES);
+
+  VIPRA_REGISTER_PARAMS(VIPRA_PARAM("minQuadSize", _obsDistance))
 
   VIPRA_OBSTACLES_INIT {
     _objectTypes = types;
@@ -40,8 +42,6 @@ class QuadTree : public VIPRA::Modules::Obstacles<QuadTree> {
       }
     }
   }
-
-  VIPRA_REGISTER_STEP { VIPRA_REGISTER_PARAM("minQuadSize", _obsDistance); }
 
   [[nodiscard]] auto get_dimensions() const -> VIPRA::f3d { return _dimensions; }
 

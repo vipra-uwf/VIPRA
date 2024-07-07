@@ -19,17 +19,13 @@ namespace VIPRA::Goals {
  * @brief Goals module that uses the A* algorithm to find the path to the goal
  * 
  */
-class AStar : VIPRA::Modules::Goals<AStar> {
+class AStar : public Modules::Module<AStar>, public Modules::Goals<AStar> {
  public:
   VIPRA_MODULE_NAME("astar");
   VIPRA_MODULE_TYPE(GOALS);
 
-  VIPRA_REGISTER_STEP {
-    VIPRA_REGISTER_PARAM("endGoalType", _endGoalType);
-    VIPRA_REGISTER_PARAM("goalRange", _goalRange);
-    VIPRA_REGISTER_PARAM("gridSize", _gridSize);
-    VIPRA_REGISTER_PARAM("closestObstacle", _closestObstacle);
-  }
+  VIPRA_REGISTER_PARAMS(VIPRA_PARAM("endGoalType", _endGoalType), VIPRA_PARAM("goalRange", _goalRange),
+                        VIPRA_PARAM("gridSize", _gridSize), VIPRA_PARAM("closestObstacle", _closestObstacle))
 
   VIPRA_GOALS_INIT_STEP {
     VIPRA_PERF_FUNCTION("astar::init");

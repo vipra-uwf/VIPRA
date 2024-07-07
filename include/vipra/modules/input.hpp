@@ -15,25 +15,27 @@
 namespace VIPRA::Modules {
 
 template <typename module_t>
-class Input : Util::CRTP<Input<module_t>> {
+class Input : public Util::CRTP<Input<module_t>> {
+  using Util::CRTP<Input<module_t>>::self;
+
  public:
   void load() {
     if ( _loaded ) return;
-    this->self().load_impl();
+    self().load_impl();
   }
 
   template <typename data_t, Concepts::StringView... keys_t>
   auto get(keys_t&&... keys) const -> std::optional<data_t> {
     assert(_loaded);
-
-    return this->self().get(std::string_view(std::forward<keys_t>(keys))...);
+    return {data_t{}};
+    // return self().get(std::string_view(std::forward<keys_t>(keys))...);
   }
 
   template <typename data_t, Concepts::StringView... keys_t>
   auto get_vector(keys_t&&... keys) const -> std::optional<std::vector<data_t>> {
     assert(_loaded);
-
-    return this->self().get_vector(std::string_view(std::forward<keys_t>(keys))...);
+    return {data_t{}};
+    // return self().get_vector(std::string_view(std::forward<keys_t>(keys))...);
   }
 
   void set_loaded(bool loaded) { _loaded = loaded; }

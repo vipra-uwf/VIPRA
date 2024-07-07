@@ -2,9 +2,11 @@
 
 #include <type_traits>
 
-#define VIPRA_REGISTER_STEP [[nodiscard]] auto parameters()
+#define VIPRA_REGISTER_PARAMS(params...) \
+  [[nodiscard]] auto parameters() { return std::forward_as_tuple(params); }
 
-#define VIPRA_REGISTER_PARAM(name, output) std::pair<std::string, decltype(output)&>{name, output};
+#define VIPRA_PARAM(name, output) \
+  std::pair<std::string, decltype(output)&> { name, output }
 
 #define VIPRA_CONFIG_STEP           \
   template <typename paramreader_t> \

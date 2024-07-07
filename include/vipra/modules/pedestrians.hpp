@@ -14,6 +14,7 @@
 #include "vipra/types/size.hpp"
 #include "vipra/types/state.hpp"
 #include "vipra/types/util/result_or_void.hpp"
+#include "vipra/util/crtp.hpp"
 
 namespace VIPRA::Modules {
 
@@ -27,24 +28,27 @@ concept Condition = std::is_invocable_r<bool, func_t, VIPRA::idx>::value || std:
  * 
  */
 template <typename module_t>
-class Pedestrians : public Module<Pedestrians<module_t>> {
+class Pedestrians : public Util::CRTP<Pedestrians<module_t>> {
+  using Util::CRTP<Pedestrians<module_t>>::self;
+
  public:
-  void initialize(auto& input, auto const& map) { this->self().init_step(input, map); }
+  void initialize(auto& input, auto const& map) { self().init_step(input, map); }
+
   void update(VIPRA::State const& state) {
     for ( VIPRA::idx pedIdx = 0; pedIdx < state.size(); ++pedIdx ) {
       _coords[pedIdx] = state.positions[pedIdx];
       _velocities[pedIdx] = state.velocities[pedIdx];
     }
 
-    this->self().update_step(state);
+    self().update_step();
   }
 
   template <Condition condition_t>
   [[nodiscard]] auto closest_ped(VIPRA::idx pedIdx, condition_t&& condition = VOID{}) const -> VIPRA::idx {
     if constexpr ( std::is_same_v<condition_t, VOID> ) {
-      return this->self().closest_ped_impl(pedIdx);
+      return self().closest_ped_impl(pedIdx);
     } else {
-      return this->self().conditional_closest_ped_impl(pedIdx, std::forward<condition_t>(condition));
+      return self().conditional_closest_ped_impl(pedIdx, std::forward<condition_t>(condition));
     }
   }
 
