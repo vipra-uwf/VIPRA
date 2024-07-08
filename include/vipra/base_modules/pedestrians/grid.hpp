@@ -35,7 +35,8 @@ class Grid : public Modules::Module<Grid>, public Modules::Pedestrians<Grid> {
 
   VIPRA_REGISTER_PARAMS(VIPRA_PARAM("gridSize", _cellSize))
 
-  VIPRA_PEDS_INIT_STEP {
+  VIPRA_PEDS_INIT_STEP
+  {
     auto coords = input.template get<std::vector<VIPRA::f3d>>("coords");
     if ( ! coords ) throw std::runtime_error("Could not find pedestrian coordinates in input file");
 
@@ -51,12 +52,14 @@ class Grid : public Modules::Module<Grid>, public Modules::Pedestrians<Grid> {
     set_coordinates(std::move(*coords));
   }
 
-  VIPRA_PEDS_UPDATE_STEP {
+  VIPRA_PEDS_UPDATE_STEP
+  {
     // Update pedestrian positions in grids
     _spatialGrid.update_grids(get_coordinates(), state.positions);
   }
 
-  [[nodiscard]] auto conditional_closest_ped_impl(VIPRA::idx ped, auto&& condition) const -> VIPRA::idx {
+  [[nodiscard]] auto conditional_closest_ped_impl(VIPRA::idx ped, auto&& condition) const -> VIPRA::idx
+  {
     VIPRA_PERF_FUNCTION("grid::conditional_closest_ped")
 
     VIPRA::f_pnt minDist = std::numeric_limits<VIPRA::f_pnt>::max();
@@ -77,7 +80,8 @@ class Grid : public Modules::Module<Grid>, public Modules::Pedestrians<Grid> {
     return minIdx;
   }
 
-  [[nodiscard]] auto closest_ped_impl(VIPRA::idx ped) const -> VIPRA::idx {
+  [[nodiscard]] auto closest_ped_impl(VIPRA::idx ped) const -> VIPRA::idx
+  {
     VIPRA_PERF_FUNCTION("grid::closest_ped")
 
     VIPRA::f_pnt minDist = std::numeric_limits<VIPRA::f_pnt>::max();

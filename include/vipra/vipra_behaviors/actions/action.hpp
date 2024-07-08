@@ -28,18 +28,21 @@ class Action {
   MOVEABLE(Action)
 
  public:
-  void initialize(auto pack) {
+  void initialize(auto pack)
+  {
     if ( _condition ) _condition->initialize(pack);
     if ( _duration ) _duration->resize(pack.pedset.num_pedestrians());
   }
 
-  void perform_action(auto pack, VIPRA::idxVec& peds, std::vector<Target> const& targets) {
+  void perform_action(auto pack, VIPRA::idxVec& peds, std::vector<Target> const& targets)
+  {
     std::vector<bool> conditionMet;
     std::for_each(_atoms.begin(), _atoms.end(),
                   [&](atom_t& atom) { atom(pack, peds, conditionMet, targets); });
   }
   void perform_action(auto pack, const VIPRA::idxVec& peds, std::vector<bool> const& conditionMet,
-                      std::vector<Target> const& targets) {
+                      std::vector<Target> const& targets)
+  {
     std::for_each(_atoms.begin(), _atoms.end(),
                   [&](atom_t& atom) { atom(pack, peds, conditionMet, targets); });
   }

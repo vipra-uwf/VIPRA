@@ -19,7 +19,8 @@ struct SelectorExactlyN {
 
   NumericValue selectCount;
   auto         operator()(const VIPRA::idxVec& /*unused*/, const VIPRA::idxVec& group, auto pack) const
-      -> SelectorResult {
+      -> SelectorResult
+  {
     auto groupPeds = group;
 
     auto pedCnt = static_cast<VIPRA::size>(std::round(selectCount.value(0)));

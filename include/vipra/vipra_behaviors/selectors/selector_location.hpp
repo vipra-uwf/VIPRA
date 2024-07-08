@@ -19,7 +19,8 @@ struct SelectorLocation {
 
   VIPRA::idx location;
   auto       operator()(const VIPRA::idxVec& /*unused*/, const VIPRA::idxVec& group, auto pack) const
-      -> SelectorResult {
+      -> SelectorResult
+  {
     auto const&   loc = pack.context.locations[location];
     size_t        pedCnt = 0;
     VIPRA::idxVec groupPeds;

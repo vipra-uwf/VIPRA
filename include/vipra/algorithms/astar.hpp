@@ -30,8 +30,11 @@ namespace AStar {
  * @tparam graph_t 
  */
 template <typename graph_t>
-concept Graph = requires(const graph_t graph, VIPRA::idx idx) {
-  { graph.neighbors(idx) } -> std::same_as<std::vector<VIPRA::idx> const&>;
+concept Graph = requires(const graph_t graph, VIPRA::idx idx)
+{
+  {
+    graph.neighbors(idx)
+    } -> std::same_as<std::vector<VIPRA::idx> const&>;
 };
 
 /**
@@ -40,8 +43,11 @@ concept Graph = requires(const graph_t graph, VIPRA::idx idx) {
  * @tparam func_t 
  */
 template <typename func_t>
-concept distance_func = requires(func_t func, VIPRA::idx idx1, VIPRA::idx idx2) {
-  { func(idx1, idx2) } -> std::same_as<VIPRA::f_pnt>;
+concept distance_func = requires(func_t func, VIPRA::idx idx1, VIPRA::idx idx2)
+{
+  {
+    func(idx1, idx2)
+    } -> std::same_as<VIPRA::f_pnt>;
 };
 
 /**
@@ -50,7 +56,8 @@ concept distance_func = requires(func_t func, VIPRA::idx idx1, VIPRA::idx idx2) 
  * @tparam func_t 
  */
 template <typename func_t>
-concept conversion_func = std::is_same_v<func_t, VOID> || requires(func_t func, VIPRA::idx idx1) {
+concept conversion_func = std::is_same_v<func_t, VOID> || requires(func_t func, VIPRA::idx idx1)
+{
   {func(idx1)};
 };
 }  // namespace AStar
@@ -73,7 +80,8 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
                                    distance_f_t&&   distance_func,
                                    conversion_f_t&& conversion_func = VOID{}) noexcept
     -> std::optional<std::vector<
-        std::remove_reference_t<Util::invoke_result_or_t<VIPRA::idx, conversion_f_t, VIPRA::idx>>>> {
+        std::remove_reference_t<Util::invoke_result_or_t<VIPRA::idx, conversion_f_t, VIPRA::idx>>>>
+{
   // proper return type for the function
   using ret_t =
       std::vector<std::remove_reference_t<Util::invoke_result_or_t<VIPRA::idx, conversion_f_t, VIPRA::idx>>>;
@@ -88,7 +96,8 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
     auto operator==(Node const& other) const -> bool { return self == other.self; }
 
     struct Compare {
-      auto operator()(Node* left, Node* right) const -> bool {
+      auto operator()(Node* left, Node* right) const -> bool
+      {
         return left->distanceWithHeuristic > right->distanceWithHeuristic;
       }
     };
@@ -96,7 +105,8 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
 
   // TODO(rolland): look at replacing this with a better data structure
   struct PQueue : public std::priority_queue<Node*, std::vector<Node*>, typename Node::Compare> {
-    auto search(VIPRA::idx nodeIdx) -> Node* {
+    auto search(VIPRA::idx nodeIdx) -> Node*
+    {
       auto container = this->c;
       auto gridPoint =
           std::find_if(container.begin(), container.end(), [&](Node* node) { return node->self == nodeIdx; });
@@ -140,7 +150,8 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
         if ( found == openset.end() ) {
           nodes[neighborIdx] = neighbor;
           openset.push(&nodes[neighborIdx]);
-        } else {
+        }
+        else {
           if ( neighbor.distanceFromStart < (*found)->distanceFromStart ) {
             (*found)->distanceFromStart = neighbor.distanceFromStart;
             (*found)->distanceWithHeuristic = neighbor.distanceWithHeuristic;
@@ -161,7 +172,8 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
   while ( current->self != start ) {
     if constexpr ( std::is_same_v<conversion_f_t, VOID> ) {
       path.push_back(current->self);
-    } else {
+    }
+    else {
       path.push_back(conversion_func(current->self));
     }
 
@@ -171,7 +183,8 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
   // add the starting node
   if constexpr ( std::is_same_v<conversion_f_t, VOID> ) {
     path.push_back(start);
-  } else {
+  }
+  else {
     path.push_back(conversion_func(start));
   }
 

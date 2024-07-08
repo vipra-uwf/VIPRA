@@ -26,7 +26,8 @@ class ModifierDirection {
    * @return true : if in direction
    * @return false : if not in direction
    */
-  auto operator()(auto pack, VIPRA::idx targetIdx, VIPRA::idx selfIdx) const -> bool {
+  auto operator()(auto pack, VIPRA::idx targetIdx, VIPRA::idx selfIdx) const -> bool
+  {
     auto const& goalCoord = pack.goals.current_goal(selfIdx);
     auto const& selfCoord = pack.pedset.ped_coords(selfIdx);
     auto const& targetCoord = pack.pedset.ped_coords(targetIdx);

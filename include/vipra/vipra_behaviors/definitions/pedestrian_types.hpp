@@ -35,7 +35,8 @@ class Ptype {
    * 
    * @return constexpr VIPRA::size 
    */
-  [[nodiscard]] inline constexpr auto type_count() const -> VIPRA::size {
+  [[nodiscard]] inline constexpr auto type_count() const -> VIPRA::size
+  {
     VIPRA::size count = 0;
     typeUID     check = 1;
     while ( (check & fullType) != 0U ) {
@@ -51,7 +52,8 @@ class Ptype {
    * 
    * @param func : function to apply to each type
    */
-  void for_each_type(std::function<void(typeUID)> const& func) const {
+  void for_each_type(std::function<void(typeUID)> const& func) const
+  {
     typeUID type = fullType;
     typeUID check = 1;
     while ( check <= type ) {
@@ -67,7 +69,8 @@ class Ptype {
    * 
    * @param type : type to check for
    */
-  [[nodiscard]] inline constexpr auto is_type(typeUID type) const noexcept -> bool {
+  [[nodiscard]] inline constexpr auto is_type(typeUID type) const noexcept -> bool
+  {
     return ((type & fullType) != 0U) && ((~type & fullType) == 0);
   }
 
@@ -76,7 +79,8 @@ class Ptype {
    * 
    * @param type : type to check for
    */
-  [[nodiscard]] inline constexpr auto has_type(typeUID type) const noexcept -> bool {
+  [[nodiscard]] inline constexpr auto has_type(typeUID type) const noexcept -> bool
+  {
     return (type & fullType) != 0U;
   }
 
@@ -94,7 +98,8 @@ class Ptype {
    * @param type : type to add
    * @return constexpr Ptype& 
    */
-  inline constexpr auto operator+=(typeUID type) noexcept -> Ptype& {
+  inline constexpr auto operator+=(typeUID type) noexcept -> Ptype&
+  {
     fullType = (fullType | type);
     return *this;
   }
@@ -105,7 +110,8 @@ class Ptype {
    * @param type : ptype to union
    * @return constexpr Ptype 
    */
-  inline constexpr auto operator+(Ptype type) const noexcept -> Ptype {
+  inline constexpr auto operator+(Ptype type) const noexcept -> Ptype
+  {
     return Ptype{fullType | type.fullType};
   }
 
@@ -115,7 +121,8 @@ class Ptype {
    * @param type : ptype to add
    * @return constexpr Ptype& 
    */
-  inline constexpr auto operator+=(Ptype type) noexcept -> Ptype& {
+  inline constexpr auto operator+=(Ptype type) noexcept -> Ptype&
+  {
     fullType = (fullType | type.fullType);
     return *this;
   }
@@ -134,7 +141,8 @@ class Ptype {
    * @param type : type to remove
    * @return constexpr Ptype& 
    */
-  inline constexpr auto operator-=(typeUID type) noexcept -> Ptype& {
+  inline constexpr auto operator-=(typeUID type) noexcept -> Ptype&
+  {
     fullType = (fullType & ~type);
     return *this;
   }
@@ -145,7 +153,8 @@ class Ptype {
    * @param type : ptype to compare
    * @return constexpr Ptype 
    */
-  inline constexpr auto operator-(Ptype type) const noexcept -> Ptype {
+  inline constexpr auto operator-(Ptype type) const noexcept -> Ptype
+  {
     return Ptype{fullType & ~type.fullType};
   }
 
@@ -155,7 +164,8 @@ class Ptype {
    * @param type : type to compare
    * @return constexpr Ptype& 
    */
-  inline constexpr auto operator-=(Ptype type) noexcept -> Ptype& {
+  inline constexpr auto operator-=(Ptype type) noexcept -> Ptype&
+  {
     fullType = (fullType & ~type.fullType);
     return *this;
   }

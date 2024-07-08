@@ -49,17 +49,20 @@ class HumanBehavior {
   void initialize(pedset_t const& pedset, map_t const& map, goals_t& goals);
   void timestep(pedset_t& pedset, map_t& map, goals_t& goals, VIPRA::State& state, VIPRA::delta_t deltaT);
 
-  void set_all_ped_types(Ptype types) {
+  void set_all_ped_types(Ptype types)
+  {
     _selector.set_all_types(types);
     _actions.resize(types.type_count() + 1);
   }
   void add_sub_selector(auto const& subSelector) { _selector.add_sub_selector(subSelector); }
   void add_action(typeUID type, auto const& action) { _actions[type].emplace_back(action); }
-  auto add_event(event_t const& evnt) -> VIPRA::idx {
+  auto add_event(event_t const& evnt) -> VIPRA::idx
+  {
     _context.events.push_back(evnt);
     return _context.events.size() - 1;
   }
-  auto add_location(Location const& loc) -> VIPRA::idx {
+  auto add_location(Location const& loc) -> VIPRA::idx
+  {
     _context.locations.emplace_back(loc);
     return _context.locations.size() - 1;
   }
@@ -68,7 +71,8 @@ class HumanBehavior {
   [[nodiscard]] auto event_count() const noexcept -> VIPRA::size { return _context.events.size(); }
   [[nodiscard]] auto location_count() const noexcept -> VIPRA::size { return _context.locations.size(); }
   [[nodiscard]] auto selector_count() noexcept -> VIPRA::size { return _selector.selector_count(); }
-  [[nodiscard]] auto action_count() const noexcept -> VIPRA::size {
+  [[nodiscard]] auto action_count() const noexcept -> VIPRA::size
+  {
     return std::accumulate(_actions.begin(), _actions.end(), 0,
                            [](VIPRA::size sum, auto const& group) { return sum + group.size(); });
   }
@@ -100,7 +104,8 @@ class HumanBehavior {
  */
 template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
 void HumanBehavior<pedset_t, map_t, goals_t>::initialize(pedset_t const& pedset, map_t const& map,
-                                                         goals_t& goals) {
+                                                         goals_t& goals)
+{
   VIPRA::State dummyState;
 
   _context.engine = VIPRA::Random::Engine{_seedNum};
@@ -137,7 +142,8 @@ void HumanBehavior<pedset_t, map_t, goals_t>::initialize(pedset_t const& pedset,
  */
 template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
 void HumanBehavior<pedset_t, map_t, goals_t>::timestep(pedset_t& pedset, map_t& map, goals_t& goals,
-                                                       VIPRA::State& state, VIPRA::delta_t deltaT) {
+                                                       VIPRA::State& state, VIPRA::delta_t deltaT)
+{
   evaluate_events(pedset, map, goals, deltaT);
   apply_actions(pedset, map, goals, state, deltaT);
   _context.elapsedTime += deltaT;
@@ -145,7 +151,8 @@ void HumanBehavior<pedset_t, map_t, goals_t>::timestep(pedset_t& pedset, map_t& 
 
 template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
 void HumanBehavior<pedset_t, map_t, goals_t>::evaluate_events(pedset_t& pedset, map_t& map, goals_t& goals,
-                                                              VIPRA::delta_t deltaT) {
+                                                              VIPRA::delta_t deltaT)
+{
   VIPRA::State dummyState;
   for ( auto& event : _context.events ) {
     event.evaluate(HumanBehavior<pedset_t, map_t, goals_t>::pack_t{pedset, map, goals, _selector.get_groups(),
@@ -155,7 +162,8 @@ void HumanBehavior<pedset_t, map_t, goals_t>::evaluate_events(pedset_t& pedset, 
 
 template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
 void HumanBehavior<pedset_t, map_t, goals_t>::apply_actions(pedset_t& pedset, map_t& map, goals_t& goals,
-                                                            VIPRA::State& state, VIPRA::delta_t deltaT) {
+                                                            VIPRA::State& state, VIPRA::delta_t deltaT)
+{
   GroupsContainer&                                groups = _selector.get_groups();
   const VIPRA::size                               groupCnt = groups.size();
   HumanBehavior<pedset_t, map_t, goals_t>::pack_t pack{pedset,   map,   goals, _selector.get_groups(),
@@ -181,7 +189,8 @@ void HumanBehavior<pedset_t, map_t, goals_t>::apply_actions(pedset_t& pedset, ma
         // check condition and apply
         action.condition()->evaluate(pack, pedestrians, _conditionMet, _targets, action.duration());
         action.perform_action(pack, pedestrians, _conditionMet, _targets);
-      } else {
+      }
+      else {
         // unconditional
         action.perform_action(pack, pedestrians, _targets);
       }

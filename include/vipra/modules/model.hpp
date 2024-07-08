@@ -22,13 +22,15 @@ class Model : public Util::CRTP<Model<class_t>> {
  public:
   template <typename pedset_t, typename map_t, typename goals_t, typename output_t>
   void initialize(pedset_t const& pedset, map_t const& map, goals_t const& goals, output_t& output,
-                  VIPRA::Random::Engine& engine) {
+                  VIPRA::Random::Engine& engine)
+  {
     self().init_step(pedset, map, goals, output, engine);
   }
 
   template <typename pedset_t, typename map_t, typename goals_t, typename output_t>
   void take_timestep(pedset_t const& pedset, map_t const& map, goals_t const& goals, output_t const& output,
-                     VIPRA::State& state, VIPRA::delta_t deltaT, VIPRA::timestep timestep) {
+                     VIPRA::State& state, VIPRA::delta_t deltaT, VIPRA::timestep timestep)
+  {
     self().timestep(pedset, map, goals, output, state, deltaT, timestep);
   }
 };

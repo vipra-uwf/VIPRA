@@ -17,7 +17,8 @@ class PathingGraph : public VIPRA::DataStructures::GraphMixin<PathingGraph, Grid
  public:
   template <typename map_t>
   PathingGraph(map_t const& map, VIPRA::f_pnt gridSize, VIPRA::f_pnt closestObstacle)
-      : _gridSize(gridSize), _closestObstacle(closestObstacle) {
+      : _gridSize(gridSize), _closestObstacle(closestObstacle)
+  {
     construct_graph(map);
   }
 
@@ -27,7 +28,8 @@ class PathingGraph : public VIPRA::DataStructures::GraphMixin<PathingGraph, Grid
    * @param pos
    * @return VIPRA::idx
    */
-  [[nodiscard]] auto get_closest_grid_idx(VIPRA::f3d pos) const -> VIPRA::idx {
+  [[nodiscard]] auto get_closest_grid_idx(VIPRA::f3d pos) const -> VIPRA::idx
+  {
     auto gridX = static_cast<VIPRA::idx>(std::floor(pos.x / _gridSize));
     auto gridY = static_cast<VIPRA::idx>(std::floor(pos.y / _gridSize));
 
@@ -51,7 +53,8 @@ class PathingGraph : public VIPRA::DataStructures::GraphMixin<PathingGraph, Grid
    *
    * @param map
    */
-  void set_grid_counts(const auto& map) {
+  void set_grid_counts(const auto& map)
+  {
     const VIPRA::f3d dimensions = map.get_dimensions();
 
     assert(dimensions.x > 0 && dimensions.y > 0);
@@ -70,7 +73,8 @@ class PathingGraph : public VIPRA::DataStructures::GraphMixin<PathingGraph, Grid
    * @return VIPRA::idx
    */
   [[nodiscard]] static auto get_index(VIPRA::size gridX, VIPRA::size gridY, VIPRA::size xCount) noexcept
-      -> VIPRA::idx {
+      -> VIPRA::idx
+  {
     return gridX + (gridY * xCount);
   }
 
@@ -79,7 +83,8 @@ class PathingGraph : public VIPRA::DataStructures::GraphMixin<PathingGraph, Grid
      *
      * @param map
      */
-  void construct_graph(auto const& map) {
+  void construct_graph(auto const& map)
+  {
     clear();
     set_grid_counts(map);
 
@@ -117,7 +122,8 @@ class PathingGraph : public VIPRA::DataStructures::GraphMixin<PathingGraph, Grid
      * @param currY
      */
   // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-  void set_adjacents(VIPRA::idx currIdx, VIPRA::idx currX, VIPRA::idx currY) {
+  void set_adjacents(VIPRA::idx currIdx, VIPRA::idx currX, VIPRA::idx currY)
+  {
     assert(currIdx < nodes().size());
     assert(currX < _xCount && currY < _yCount);
     assert(data(currIdx).traversable == true);

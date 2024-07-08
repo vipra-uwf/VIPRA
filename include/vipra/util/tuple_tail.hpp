@@ -13,7 +13,8 @@ namespace VIPRA::Util {
  * @return std::tuple<tail...> 
  */
 template <typename head, typename... tail>
-constexpr auto tuple_tail(const std::tuple<head, tail...>& tuple) -> std::tuple<tail...> {
+constexpr auto tuple_tail(const std::tuple<head, tail...>& tuple) -> std::tuple<tail...>
+{
   return std::apply([](auto&&, const auto&... args) { return std::tie(args...); }, tuple);
 }
 }  // namespace VIPRA::Util

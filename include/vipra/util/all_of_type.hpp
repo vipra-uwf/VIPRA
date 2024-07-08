@@ -8,7 +8,8 @@
 namespace VIPRA::Util {
 // NOLINTBEGIN(readability-identifier-naming) utility type
 template <typename... type_ts>
-struct all_of_type {};
+struct all_of_type {
+};
 
 template <typename type_t>
 struct all_of_type<type_t> {

@@ -19,7 +19,8 @@
 namespace VIPRA {
 class ParameterSweep {
  public:
-  static void initialize(int argc, char** argv) {
+  static void initialize(int argc, char** argv)
+  {
     MPI_Init(&argc, &argv);
     MPI_Comm_dup(MPI_COMM_WORLD, &comm);
     MPI_Comm_rank(comm, &rank);
@@ -40,7 +41,8 @@ class ParameterSweep {
   template <typename sim_t, typename pedinput_t, typename obsinput_t, typename params_t,
             typename callback_t = VIPRA::VOID>
   static void run(sim_t&& sim, pedinput_t&& pedInput, obsinput_t&& obsInput, params_t&& params, size_t count,
-                  callback_t&& callback = VOID{}) {
+                  callback_t&& callback = VOID{})
+  {
     load_params(params);
     load_inputs(pedInput);
     load_inputs(obsInput);
@@ -59,7 +61,8 @@ class ParameterSweep {
       if constexpr ( std::is_same_v<callback_t, VIPRA::VOID> ) {
         sim.parallel_run(std::forward<pedinput_t>(pedInput), std::forward<obsinput_t>(obsInput),
                          std::forward<params_t>(params));
-      } else {
+      }
+      else {
         // TODO(rolland): this doesn't properly warn that the callback is not being used
         if constexpr ( std::is_invocable_v<callback_t,
                                            decltype(sim.parallel_run(std::forward<pedinput_t>(pedInput),
@@ -68,11 +71,13 @@ class ParameterSweep {
           callback(sim.get_sim_id(),
                    sim.parallel_run(std::forward<pedinput_t>(pedInput), std::forward<obsinput_t>(obsInput),
                                     std::forward<params_t>(params)));
-        } else if constexpr ( std::is_invocable_v<callback_t, VIPRA::idx> ) {
+        }
+        else if constexpr ( std::is_invocable_v<callback_t, VIPRA::idx> ) {
           sim.parallel_run(std::forward<pedinput_t>(pedInput), std::forward<obsinput_t>(obsInput),
                            std::forward<params_t>(params));
           callback(sim.get_sim_id());
-        } else {
+        }
+        else {
           sim.parallel_run(std::forward<pedinput_t>(pedInput), std::forward<obsinput_t>(obsInput),
                            std::forward<params_t>(params));
           callback();
@@ -95,7 +100,8 @@ class ParameterSweep {
    * 
    * @param func 
    */
-  static void master_do(auto&& func) {
+  static void master_do(auto&& func)
+  {
     if ( rank == 0 ) {
       func();
     }
@@ -108,7 +114,8 @@ class ParameterSweep {
     auto operator=(DeferedFinalize const&) -> DeferedFinalize& = default;
     auto operator=(DeferedFinalize&&) -> DeferedFinalize& = default;
     DeferedFinalize() = default;
-    ~DeferedFinalize() {
+    ~DeferedFinalize()
+    {
       int flag = 0;
       MPI_Initialized(&flag);
       if ( flag ) MPI_Finalize();
@@ -129,7 +136,8 @@ class ParameterSweep {
    * @param params 
    */
   template <typename params_t>
-  static void load_params(params_t& params) {
+  static void load_params(params_t& params)
+  {
     std::string serialized{};
     int         length{};
 
@@ -161,7 +169,8 @@ class ParameterSweep {
    * @param params 
    */
   template <typename input_t>
-  static void load_inputs(input_t& input) {
+  static void load_inputs(input_t& input)
+  {
     std::string serialized{};
     int         length{};
 

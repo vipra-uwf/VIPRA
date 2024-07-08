@@ -26,7 +26,9 @@ struct TargetNearest {
   std::optional<modifier_t> modifier;
 
   explicit TargetNearest(Ptype type, bool allPeds = false, std::optional<modifier_t> modifier = std::nullopt)
-      : type(type), allPeds(allPeds), modifier(modifier) {}
+      : type(type), allPeds(allPeds), modifier(modifier)
+  {
+  }
 
   /**
    * @brief Returns the nearest pedestrian that has any of the target types
@@ -35,7 +37,8 @@ struct TargetNearest {
    * @param self : pedestrain calling the function
    * @return Target 
    */
-  inline auto operator()(auto pack, Self self) const -> Target {
+  inline auto operator()(auto pack, Self self) const -> Target
+  {
     if ( allPeds ) {
       auto curr = nearest_in_group(pack, self.target.targetIdx, pack.groups.get_group(0));
       if ( curr.second == VIPRA::INVALID_IDX ) return Target{TargetType::INVALID, 0};
@@ -71,7 +74,8 @@ struct TargetNearest {
    * @return std::pair<VIPRA::dist, VIPRA::idx> : nearest distance and nearest pedestrian index
    */
   [[nodiscard]] inline auto nearest_in_group(auto pack, VIPRA::idx self, VIPRA::idxVec const& idxs) const
-      -> std::pair<VIPRA::f_pnt, VIPRA::idx> {
+      -> std::pair<VIPRA::f_pnt, VIPRA::idx>
+  {
     VIPRA::f_pnt shortest = std::numeric_limits<VIPRA::f_pnt>::max();
     VIPRA::idx   nearest = VIPRA::INVALID_IDX;
 

@@ -17,8 +17,9 @@ enum class Type {
   BEHAVIOR_MODEL,
 };
 
-inline auto to_string(Type type) -> std::string {
-  switch (type) {
+inline auto to_string(Type type) -> std::string
+{
+  switch ( type ) {
     case Type::MODEL:
       return "model";
     case Type::GOALS:

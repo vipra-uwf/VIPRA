@@ -19,16 +19,19 @@ class Goals : public Util::CRTP<Goals<module_t>> {
 
  public:
   template <typename pedset_t, typename map_t>
-  void initialize(pedset_t const& pedset, map_t const& map) {
+  void initialize(pedset_t const& pedset, map_t const& map)
+  {
     return self().init_step(pedset, map);
   }
 
   template <typename pedset_t, typename map_t>
-  void update(pedset_t const& pedset, map_t const& map, VIPRA::delta_t deltaT) {
+  void update(pedset_t const& pedset, map_t const& map, VIPRA::delta_t deltaT)
+  {
     return self().update_step(pedset, map, deltaT);
   }
 
-  void change_end_goal(VIPRA::idx pedIdx, VIPRA::f3d goalPos) {
+  void change_end_goal(VIPRA::idx pedIdx, VIPRA::f3d goalPos)
+  {
     return self().change_end_goal(pedIdx, goalPos);
   }
 
@@ -36,11 +39,13 @@ class Goals : public Util::CRTP<Goals<module_t>> {
 
   [[nodiscard]] auto end_goals() const -> const VIPRA::f3dVec& { return self().end_goals(); }
 
-  [[nodiscard]] auto current_goal(VIPRA::idx pedIdx) const -> VIPRA::f3d const& {
+  [[nodiscard]] auto current_goal(VIPRA::idx pedIdx) const -> VIPRA::f3d const&
+  {
     return self().current_goal(pedIdx);
   }
 
-  [[nodiscard]] auto end_goal(VIPRA::idx pedIdx) const -> VIPRA::f3d const& {
+  [[nodiscard]] auto end_goal(VIPRA::idx pedIdx) const -> VIPRA::f3d const&
+  {
     return self().end_goal(pedIdx);
   }
 
@@ -48,7 +53,8 @@ class Goals : public Util::CRTP<Goals<module_t>> {
 
   [[nodiscard]] auto is_sim_goal_met() const -> bool { return self().is_sim_goal_met(); }
 
-  [[nodiscard]] auto time_since_last_goal(VIPRA::idx pedIdx) const -> VIPRA::f_pnt {
+  [[nodiscard]] auto time_since_last_goal(VIPRA::idx pedIdx) const -> VIPRA::f_pnt
+  {
     return self().time_since_last_goal(pedIdx);
   }
 };

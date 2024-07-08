@@ -21,10 +21,13 @@ class SubConditionExists {
 
  public:
   explicit SubConditionExists(modifier_t modifier, SubConditionAttribute condition)
-      : _modifier(std::move(modifier)), _attributeCond(condition) {}
+      : _modifier(std::move(modifier)), _attributeCond(condition)
+  {
+  }
 
   void operator()(auto pack, const VIPRA::idxVec& peds, std::vector<Target> const& /*unused*/,
-                  std::vector<bool>& met, std::vector<bool> const& prevMet, BoolOp oper) const {
+                  std::vector<bool>& met, std::vector<bool> const& prevMet, BoolOp oper) const
+  {
     for ( auto selfidx : peds ) {
       if ( short_circuit(selfidx, met, prevMet, oper) ) continue;
 

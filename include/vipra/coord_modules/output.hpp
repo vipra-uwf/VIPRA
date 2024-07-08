@@ -29,12 +29,14 @@ class Output : public Modules::Module<Output<output_ts...>>, public Modules::Out
   template <typename output_t>
   // NOLINTNEXTLINE(readability-identifier-naming) helper struct
   struct write_helper {
-    static auto write(output_t& output, std::filesystem::path const& dir) {
+    static auto write(output_t& output, std::filesystem::path const& dir)
+    {
       if constexpr ( std::is_same_v<Util::result_or_VOID_t<decltype(std::declval<output_t>().write(dir))>,
                                     VOID> ) {
         output.write(dir);
         return VOID{};
-      } else {
+      }
+      else {
         return output.write(dir);
       }
     }
@@ -53,14 +55,16 @@ class Output : public Modules::Module<Output<output_ts...>>, public Modules::Out
    * @param paramIn
    */
   template <typename paramreader_t>
-  void register_params(paramreader_t&& paramIn) {
+  void register_params(paramreader_t&& paramIn)
+  {
     Modules::Module<Output<output_ts...>>::register_params(std::forward<paramreader_t>(paramIn));
 
     std::apply([&](auto&&... outputs) { (outputs.register_params(paramIn), ...); }, _outputs);
   }
 
   template <typename paramreader_t>
-  void config(paramreader_t& paramIn, VIPRA::Random::Engine& engine) {
+  void config(paramreader_t& paramIn, VIPRA::Random::Engine& engine)
+  {
     _base_output_dir =
         paramIn.template get_param<std::string>(module_type(), module_name(), "output_dir", engine);
 
@@ -76,7 +80,8 @@ class Output : public Modules::Module<Output<output_ts...>>, public Modules::Out
    * 
    * @param runIdx 
    */
-  void new_run(VIPRA::idx runIdx) {
+  void new_run(VIPRA::idx runIdx)
+  {
     _current_output_dir = _base_output_dir / std::to_string(runIdx);
     create_output_directory(_current_output_dir);
   }
@@ -87,7 +92,8 @@ class Output : public Modules::Module<Output<output_ts...>>, public Modules::Out
    * @return Util::result_or_VOID_tuple<std::tuple<output_ts...>>::type 
    */
   auto write() -> std::tuple<Util::result_or_VOID_t<
-      decltype(std::declval<output_ts>().write(std::declval<std::filesystem::path>()))>...> {
+      decltype(std::declval<output_ts>().write(std::declval<std::filesystem::path>()))>...>
+  {
     return std::apply(
         [&](auto&&... outputs) {
           return std::make_tuple(write_helper<decltype(outputs)>::write(outputs, _current_output_dir)...);
@@ -101,7 +107,8 @@ class Output : public Modules::Module<Output<output_ts...>>, public Modules::Out
    * @param key 
    * @param value 
    */
-  void sim_value(char const* key, auto&& value) {
+  void sim_value(char const* key, auto&& value)
+  {
     std::apply([&key, &value](auto&&... outputs) { (outputs.sim_value(key, value), ...); }, _outputs);
   }
 
@@ -111,7 +118,8 @@ class Output : public Modules::Module<Output<output_ts...>>, public Modules::Out
    * @param key 
    * @param value 
    */
-  void timestep_value(char const* key, VIPRA::timestep timestep, auto&& value) {
+  void timestep_value(char const* key, VIPRA::timestep timestep, auto&& value)
+  {
     std::apply(
         [&key, &timestep, &value](auto&&... outputs) { (outputs.timestep_value(key, timestep, value), ...); },
         _outputs);
@@ -124,7 +132,8 @@ class Output : public Modules::Module<Output<output_ts...>>, public Modules::Out
    * @param key 
    * @param value 
    */
-  void ped_value(VIPRA::idx pedIdx, char const* key, auto&& value) {
+  void ped_value(VIPRA::idx pedIdx, char const* key, auto&& value)
+  {
     std::apply([&pedIdx, &key, &value](auto&&... outputs) { (outputs.ped_value(pedIdx, key, value), ...); },
                _outputs);
   }
@@ -136,7 +145,8 @@ class Output : public Modules::Module<Output<output_ts...>>, public Modules::Out
    * @param key 
    * @param value 
    */
-  void ped_timestep_value(VIPRA::idx pedIdx, VIPRA::timestep timestep, char const* key, auto&& value) {
+  void ped_timestep_value(VIPRA::idx pedIdx, VIPRA::timestep timestep, char const* key, auto&& value)
+  {
     std::apply([&pedIdx, &timestep, &key, &value](
                    auto&&... outputs) { (outputs.ped_timestep_value(pedIdx, timestep, key, value), ...); },
                _outputs);
@@ -148,7 +158,8 @@ class Output : public Modules::Module<Output<output_ts...>>, public Modules::Out
   std::filesystem::path _base_output_dir;
   std::filesystem::path _current_output_dir;
 
-  static void create_output_directory(std::filesystem::path const& directory) {
+  static void create_output_directory(std::filesystem::path const& directory)
+  {
     if ( std::filesystem::exists(directory) ) {
       if ( std::filesystem::is_directory(directory) ) {
         // directory exists and is actually a directory, all is good

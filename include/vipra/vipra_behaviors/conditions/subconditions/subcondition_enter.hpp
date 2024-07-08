@@ -22,7 +22,8 @@ class SubConditionEnter {
   explicit SubConditionEnter(VIPRA::idx location) : _location{location} {}
 
   void operator()(auto pack, const VIPRA::idxVec& peds, std::vector<Target> const& targets,
-                  std::vector<bool>& met, std::vector<bool> const& /*unused*/, BoolOp /*unused*/) {
+                  std::vector<bool>& met, std::vector<bool> const& /*unused*/, BoolOp /*unused*/)
+  {
     if ( _entered.size() < pack.pedset.num_pedestrians() ) _entered.resize(pack.pedset.num_pedestrians());
 
     for ( auto ped : peds ) {

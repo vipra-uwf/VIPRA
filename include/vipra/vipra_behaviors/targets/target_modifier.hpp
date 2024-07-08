@@ -32,7 +32,8 @@ class TargetModifier {
    * @return true : if target passes check
    * @return false : if target does NOT pass check
    */
-  [[nodiscard]] auto check(auto pack, VIPRA::idx self, VIPRA::idx target) const -> bool {
+  [[nodiscard]] auto check(auto pack, VIPRA::idx self, VIPRA::idx target) const -> bool
+  {
     return std::all_of(_checks.begin(), _checks.end(),
                        [&](modifier_t const& modifier) { return modifier(pack, target, self); });
   }

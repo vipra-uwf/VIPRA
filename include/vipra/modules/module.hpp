@@ -29,7 +29,8 @@ class Module : public Util::CRTP<Module<class_t>> {
    * @param paramIn
    */
   template <typename paramreader_t>
-  void register_params(paramreader_t&& paramIn) {
+  void register_params(paramreader_t&& paramIn)
+  {
     static_assert(Concepts::has_parameters<class_t>, "Module is missing VIPRA_REGISTER_PARAMS");
 
     Debug::debug_do([&]() { std::cout << "Registering Params For: " << self().module_name() << "\n"; });
@@ -59,7 +60,8 @@ class Module : public Util::CRTP<Module<class_t>> {
    * @param engine 
    */
   template <typename paramreader_t>
-  void config(paramreader_t& paramIn, VIPRA::Random::Engine& engine) {
+  void config(paramreader_t& paramIn, VIPRA::Random::Engine& engine)
+  {
     static_assert(Concepts::has_parameters<class_t>, "Module is missing VIPRA_REGISTER_PARAMS");
 
     Debug::debug_do([&]() { std::cout << "Configuring Module: " << self().module_name() << "\n"; });

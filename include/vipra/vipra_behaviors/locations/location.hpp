@@ -18,7 +18,8 @@ class Location {
   MOVEABLE(Location)
 
  public:
-  constexpr explicit Location(VIPRA::f3d center, VIPRA::f3d dims) : _center(center), _dims(dims), _area(0) {
+  constexpr explicit Location(VIPRA::f3d center, VIPRA::f3d dims) : _center(center), _dims(dims), _area(0)
+  {
     _p1.x = center.x + (dims.x / 2);
     _p1.y = center.y + (dims.y / 2);
     _p2.x = center.x - (dims.x / 2);
@@ -32,7 +33,8 @@ class Location {
   }
 
   constexpr explicit Location(VIPRA::f3d center, VIPRA::f3d dims, VIPRA::f_pnt rot)
-      : _center(center), _dims(dims), _rot(rot), _area(0) {
+      : _center(center), _dims(dims), _rot(rot), _area(0)
+  {
     _p1.x = center.x + ((dims.x / 2) * std::cos(rot)) - ((dims.y / 2) * std::sin(rot));
     _p1.y = center.y + ((dims.x / 2) * std::sin(rot)) + ((dims.y / 2) * std::cos(rot));
     _p2.x = center.x - ((dims.x / 2) * std::cos(rot)) - ((dims.y / 2) * std::sin(rot));
@@ -50,7 +52,8 @@ class Location {
    * 
    * @return constexpr VIPRA::f_pnt : area
    */
-  [[nodiscard]] constexpr auto area() const -> VIPRA::f_pnt {
+  [[nodiscard]] constexpr auto area() const -> VIPRA::f_pnt
+  {
     VIPRA::f_pnt area1 = triangle_area(_p1, _p2, _p3);
     VIPRA::f_pnt area2 = triangle_area(_p1, _p3, _p4);
 
@@ -66,7 +69,8 @@ class Location {
   [[nodiscard]] constexpr auto rotation() -> VIPRA::f_pnt& { return _rot; }
   [[nodiscard]] constexpr auto rotation() const -> VIPRA::f_pnt { return _rot; }
 
-  [[nodiscard]] constexpr auto random_point(VIPRA::Random::Engine& eng) const -> VIPRA::f3d {
+  [[nodiscard]] constexpr auto random_point(VIPRA::Random::Engine& eng) const -> VIPRA::f3d
+  {
     VIPRA::Random::uniform_distribution<> wDistr{0, _dims.x};
     VIPRA::Random::uniform_distribution<> hDistr{0, _dims.y};
 
@@ -87,7 +91,8 @@ class Location {
    * @return true : if inside rectangle
    * @return false : if NOT inside rectangle
    */
-  [[nodiscard]] constexpr auto contains(VIPRA::f3d point) const -> bool {
+  [[nodiscard]] constexpr auto contains(VIPRA::f3d point) const -> bool
+  {
     VIPRA::f_pnt areaTri1 = triangle_area(_p1, _p2, point);
     VIPRA::f_pnt areaTri2 = triangle_area(_p2, _p3, point);
     VIPRA::f_pnt areaTri3 = triangle_area(_p3, _p4, point);
@@ -96,7 +101,8 @@ class Location {
     return (areaTri1 += areaTri2 += areaTri3 += areaTri4) <= _area;
   }
 
-  void set_center(VIPRA::f3d center) {
+  void set_center(VIPRA::f3d center)
+  {
     _center = center;
     _p1.x = center.x + (_dims.x / 2);
     _p1.y = center.y + (_dims.y / 2);
@@ -108,7 +114,8 @@ class Location {
     _p4.y = center.y - (_dims.y / 2);
   }
 
-  void set_dims(VIPRA::f3d dims) {
+  void set_dims(VIPRA::f3d dims)
+  {
     _dims = dims;
     _p1.x = _center.x + (_dims.x / 2);
     _p1.y = _center.y + (_dims.y / 2);
@@ -143,7 +150,8 @@ class Location {
    * @return constexpr VIPRA::f_pnt : triangle area
    */
   [[nodiscard]] static constexpr auto triangle_area(VIPRA::f3d point1, VIPRA::f3d point2, VIPRA::f3d point3)
-      -> VIPRA::f_pnt {
+      -> VIPRA::f_pnt
+  {
     return std::abs((point2.x * point1.y - point1.x * point2.y) +
                     (point3.x * point2.y - point2.x * point3.y) +
                     (point1.x * point3.y - point3.x * point1.y)) /

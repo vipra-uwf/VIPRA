@@ -81,11 +81,13 @@ class JSON : public VIPRA::Modules::Module<JSON>,
   [[nodiscard]] auto get_map(json_cref const& value) const -> std::optional<std::map<std::string, data_t>>;
 
  public:
-  void parse_impl(std::string const& data) {
+  void parse_impl(std::string const& data)
+  {
     try {
       _json = nlohmann::json::parse(data);
       set_loaded(true);
-    } catch ( nlohmann::json::parse_error const& e ) {
+    }
+    catch ( nlohmann::json::parse_error const& e ) {
       throw std::runtime_error("Could not parse JSON data\n");
     }
   }
@@ -103,7 +105,8 @@ class JSON : public VIPRA::Modules::Module<JSON>,
    * @return std::optional<data_t> 
    */
 template <typename data_t, VIPRA::Concepts::StringView... key_ts>
-auto VIPRA::Input::JSON::get_impl(key_ts&&... keys) const -> std::optional<data_t> {
+auto VIPRA::Input::JSON::get_impl(key_ts&&... keys) const -> std::optional<data_t>
+{
   auto value = get_value_at_key(std::forward<key_ts>(keys)...);
   if ( ! value ) return std::nullopt;
 
@@ -119,7 +122,8 @@ auto VIPRA::Input::JSON::get_impl(key_ts&&... keys) const -> std::optional<data_
    */
 template <typename data_t>
 [[nodiscard]] auto VIPRA::Input::JSON::get_vector(json_cref const& value) const
-    -> std::optional<std::vector<data_t>> {
+    -> std::optional<std::vector<data_t>>
+{
   if ( ! value.get().is_array() ) return std::nullopt;
 
   std::vector<data_t> vec;
@@ -138,7 +142,8 @@ template <typename data_t>
    * @return std::optional<VIPRA::f3dVec> 
    */
 [[nodiscard]] inline auto VIPRA::Input::JSON::get_f3d_vec(json_cref const& value)
-    -> std::optional<VIPRA::f3dVec> {
+    -> std::optional<VIPRA::f3dVec>
+{
   if ( ! value.get().is_array() ) return std::nullopt;
 
   VIPRA::f3dVec f3dVec;
@@ -163,7 +168,8 @@ template <typename data_t>
    * @param value 
    * @return std::optional<VIPRA::f3d> 
    */
-[[nodiscard]] inline auto VIPRA::Input::JSON::get_f3d(json_cref const& value) -> std::optional<VIPRA::f3d> {
+[[nodiscard]] inline auto VIPRA::Input::JSON::get_f3d(json_cref const& value) -> std::optional<VIPRA::f3d>
+{
   if ( ! is_f3d(value.get()) ) return std::nullopt;
 
   return VIPRA::f3d(value.get().at("x").get<VIPRA::f_pnt>(), value.get().at("y").get<VIPRA::f_pnt>(),
@@ -175,7 +181,8 @@ template <typename data_t>
    * 
    * @param filepath 
    */
-inline void VIPRA::Input::JSON::load_impl() {
+inline void VIPRA::Input::JSON::load_impl()
+{
   if ( ! std::filesystem::exists(_filepath) )
     throw std::runtime_error("File does not exist at: " + _filepath.string());
 
@@ -187,7 +194,8 @@ inline void VIPRA::Input::JSON::load_impl() {
 
   try {
     _json = nlohmann::json::parse(file);
-  } catch ( nlohmann::json::parse_error const& e ) {
+  }
+  catch ( nlohmann::json::parse_error const& e ) {
     throw std::runtime_error("Could not parse JSON file at: " + _filepath.string() + "\n" + e.what());
   }
 
@@ -202,7 +210,8 @@ inline void VIPRA::Input::JSON::load_impl() {
  * @return std::optional<json_cref> 
  */
 template <typename... key_ts>
-[[nodiscard]] auto VIPRA::Input::JSON::get_value_at_key(key_ts&&... keys) const -> std::optional<json_cref> {
+[[nodiscard]] auto VIPRA::Input::JSON::get_value_at_key(key_ts&&... keys) const -> std::optional<json_cref>
+{
   auto value = std::cref(_json);
   bool found = true;
 
@@ -238,7 +247,8 @@ template <typename... key_ts>
  * @return std::optional<std::vector<Geometry::Polygon>> 
  */
 inline auto VIPRA::Input::JSON::get_polygons(json_cref const& value)
-    -> std::optional<std::vector<VIPRA::Geometry::Polygon>> {
+    -> std::optional<std::vector<VIPRA::Geometry::Polygon>>
+{
   std::vector<Geometry::Polygon> polygons;
   for ( auto const& polygon : value.get() ) {
     if ( ! polygon.is_array() ) return std::nullopt;
@@ -264,7 +274,8 @@ inline auto VIPRA::Input::JSON::get_polygons(json_cref const& value)
    * @return std::optional<data_t> 
    */
 template <typename data_t>
-[[nodiscard]] auto VIPRA::Input::JSON::get_value(json_cref const& value) const -> std::optional<data_t> {
+[[nodiscard]] auto VIPRA::Input::JSON::get_value(json_cref const& value) const -> std::optional<data_t>
+{
   if constexpr ( std::is_same_v<data_t, VIPRA::f3d> ) {
     return get_f3d(value);
   }
@@ -290,7 +301,8 @@ template <typename data_t>
   else {
     try {
       return value.get().get<data_t>();
-    } catch ( nlohmann::json::type_error const& e ) {
+    }
+    catch ( nlohmann::json::type_error const& e ) {
       return std::nullopt;
     }
   }
@@ -300,10 +312,12 @@ template <typename data_t>
 
 template <typename data_t>
 [[nodiscard]] auto VIPRA::Input::JSON::get_map(json_cref const& value) const
-    -> std::optional<std::map<std::string, data_t>> {
+    -> std::optional<std::map<std::string, data_t>>
+{
   try {
     return value.get().get<std::map<std::string, data_t>>();
-  } catch ( nlohmann::json::type_error const& e ) {
+  }
+  catch ( nlohmann::json::type_error const& e ) {
     return std::nullopt;
   }
 }
@@ -315,7 +329,8 @@ template <typename data_t>
    * @return true 
    * @return false 
    */
-[[nodiscard]] inline auto VIPRA::Input::JSON::is_f3d(nlohmann::json const& value) -> bool {
+[[nodiscard]] inline auto VIPRA::Input::JSON::is_f3d(nlohmann::json const& value) -> bool
+{
   if ( ! value.is_object() ) return false;
   if ( ! value.contains("x") || ! value.contains("y") || ! value.contains("z") ) return false;
   if ( ! value.at("x").is_number() || ! value.at("y").is_number() || ! value.at("z").is_number() )
@@ -330,7 +345,8 @@ template <typename data_t>
    * @return true 
    * @return false 
    */
-[[nodiscard]] inline auto VIPRA::Input::JSON::is_f2d(nlohmann::json const& value) -> bool {
+[[nodiscard]] inline auto VIPRA::Input::JSON::is_f2d(nlohmann::json const& value) -> bool
+{
   if ( ! value.is_object() ) return false;
   if ( ! value.contains("x") || ! value.contains("y") ) return false;
   if ( ! value.at("x").is_number() || ! value.at("y").is_number() ) return false;

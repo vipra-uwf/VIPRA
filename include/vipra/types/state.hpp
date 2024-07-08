@@ -15,7 +15,8 @@ struct State {
 
   [[nodiscard]] auto size() const -> size_t { return positions.size(); }
 
-  void initialize(auto const& pedset) {
+  void initialize(auto const& pedset)
+  {
     positions = pedset.all_coords();
     velocities = pedset.all_velocities();
   }

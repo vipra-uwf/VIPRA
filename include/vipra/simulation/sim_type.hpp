@@ -89,7 +89,9 @@ class SimType : public Modules::Module<SimType<model_t, output_t, pedset_t, goal
  public:
   constexpr SimType(output_t&& output, model_t&& model, pedset_t&& pedset, goals_t&& goals,
                     obstacles_t&& obstacles)
-      : _output(output), _model(model), _pedset(pedset), _goals(goals), _map(obstacles) {}
+      : _output(output), _model(model), _pedset(pedset), _goals(goals), _map(obstacles)
+  {
+  }
 };
 
 // ----------------------------------------------------------------------------------------------------------------
@@ -107,7 +109,8 @@ template <typename pedinput_t, typename obsinput_t, typename params_t>
 auto SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::operator()(pedinput_t&& pedInput,
                                                                             obsinput_t&& obsInput,
                                                                             params_t&&   params)
-    -> output_data_t {
+    -> output_data_t
+{
   // TODO(rolland): this assumes that a only a single node should ever run this function, there may be sitations where this isn't user friendly?
   if ( ! ParameterSweep::is_root() ) return {};
 
@@ -118,7 +121,8 @@ auto SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::operator()(pedi
   if constexpr ( std::is_same_v<output_data_t, void> ) {
     run_sim(std::forward<pedinput_t>(pedInput), std::forward<obsinput_t>(obsInput),
             std::forward<params_t>(params));
-  } else {
+  }
+  else {
     return run_sim(std::forward<pedinput_t>(pedInput), std::forward<obsinput_t>(obsInput),
                    std::forward<params_t>(params));
   }
@@ -131,11 +135,13 @@ template <typename pedinput_t, typename obsinput_t, typename params_t>
 auto SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::parallel_run(pedinput_t&& pedInput,
                                                                               obsinput_t&& obsInput,
                                                                               params_t&&   params)
-    -> output_data_t {
+    -> output_data_t
+{
   if constexpr ( std::is_same_v<output_data_t, void> ) {
     run_sim(std::forward<pedinput_t>(pedInput), std::forward<obsinput_t>(obsInput),
             std::forward<params_t>(params));
-  } else {
+  }
+  else {
     return run_sim(std::forward<pedinput_t>(pedInput), std::forward<obsinput_t>(obsInput),
                    std::forward<params_t>(params));
   }
@@ -145,7 +151,8 @@ template <typename model_t, typename output_t, typename pedset_t, typename goals
 template <typename pedinput_t, typename obsinput_t, typename params_t>
 auto SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::run_sim(pedinput_t const& pedInput,
                                                                          obsinput_t const& obsInput,
-                                                                         params_t&& params) -> output_data_t {
+                                                                         params_t&& params) -> output_data_t
+{
   // initialize parameters, etc
   register_step(std::forward<params_t>(params));
 
@@ -171,14 +178,16 @@ auto SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::run_sim(pedinpu
   // write output and if output returns a value, return that
   if constexpr ( std::is_same_v<output_data_t, void> ) {
     _output.write();
-  } else {
+  }
+  else {
     return _output.write();
   }
 }
 
 template <typename model_t, typename output_t, typename pedset_t, typename goals_t, typename obstacles_t>
 template <typename params_t>
-void SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::register_step(params_t&& params) {
+void SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::register_step(params_t&& params)
+{
   register_params(params);
   _output.register_params(std::forward<params_t>(params));
   _model.register_params(std::forward<params_t>(params));
@@ -197,7 +206,8 @@ template <typename model_t, typename output_t, typename pedset_t, typename goals
 template <typename pedinput_t, typename obsinput_t, typename params_t>
 void SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::initialize(pedinput_t const& pedInput,
                                                                             obsinput_t const& obsInput,
-                                                                            params_t&&        params) {
+                                                                            params_t&&        params)
+{
   config_step(std::forward<params_t>(params));
 
   _engine.reseed(_seed + (_currSimIdx * _currSimIdx));
@@ -211,7 +221,8 @@ void SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::initialize(pedi
 
 template <typename model_t, typename output_t, typename pedset_t, typename goals_t, typename obstacles_t>
 template <typename params_t>
-void SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::config_step(params_t const& params) {
+void SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::config_step(params_t const& params)
+{
   config(params, _engine);
   _output.config(params, _engine);
   _model.config(params, _engine);
@@ -226,7 +237,8 @@ void SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::config_step(par
    * 
    */
 template <typename model_t, typename output_t, typename pedset_t, typename goals_t, typename obstacles_t>
-void SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::output_positions() {
+void SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::output_positions()
+{
   if ( _currTimestep % _outputFrequency != 0 ) {
     return;
   }

@@ -18,7 +18,8 @@ enum class BoolOp { AND, OR };
  * @return false 
  */
 inline constexpr auto short_circuit(VIPRA::idx idx, std::vector<bool>& met, std::vector<bool> const& prevMet,
-                                    BoolOp oper) -> bool {
+                                    BoolOp oper) -> bool
+{
   if ( oper == BoolOp::AND && ! prevMet[idx] ) {
     met[idx] = false;
     return true;

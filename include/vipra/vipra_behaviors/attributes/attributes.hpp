@@ -55,7 +55,8 @@ struct CAttributeValue {
 
   CAttributeValue(Type aType, void const* aVal) : type(aType), value(aVal) {}
 
-  inline void type_check(Type check) const {
+  inline void type_check(Type check) const
+  {
     if ( type != check ) DSLException::error("Invalid Type");
   }
 
@@ -66,7 +67,8 @@ struct CAttributeValue {
    * @return const value_t& 
    */
   template <typename value_t>
-  [[nodiscard]] inline auto as() const -> value_t const& {
+  [[nodiscard]] inline auto as() const -> value_t const&
+  {
     return *static_cast<value_t const*>(value);
   }
 
@@ -77,7 +79,8 @@ struct CAttributeValue {
    * @return const value_t* 
    */
   template <typename value_t>
-  [[nodiscard]] inline auto as_ptr() const -> value_t const* {
+  [[nodiscard]] inline auto as_ptr() const -> value_t const*
+  {
     return static_cast<value_t const*>(value);
   }
 };
@@ -95,7 +98,8 @@ struct AttributeValue {
    * 
    * @param check : type value should be
    */
-  inline void type_check(Type check) const {
+  inline void type_check(Type check) const
+  {
     if ( type != check ) DSLException::error("Invalid Type");
   }
 
@@ -106,7 +110,8 @@ struct AttributeValue {
    * @return value_t& 
    */
   template <typename value_t>
-  [[nodiscard]] inline auto as() -> value_t& {
+  [[nodiscard]] inline auto as() -> value_t&
+  {
     return *static_cast<value_t*>(value);
   }
 
@@ -117,7 +122,8 @@ struct AttributeValue {
    * @return value_t* 
    */
   template <typename value_t>
-  [[nodiscard]] inline auto as_ptr() const -> value_t* {
+  [[nodiscard]] inline auto as_ptr() const -> value_t*
+  {
     return static_cast<value_t*>(value);
   }
 };
@@ -136,7 +142,8 @@ class AttributeHandling {
    * @param pack : simulation pack
    * @return CAttributeValue 
    */
-  [[nodiscard]] inline static auto get_value(Target target, Attribute attr, auto pack) -> CAttributeValue {
+  [[nodiscard]] inline static auto get_value(Target target, Attribute attr, auto pack) -> CAttributeValue
+  {
     switch ( target.type ) {
       case TargetType::PEDESTRIAN:
         return get_ped_value(target, attr, pack);
@@ -161,7 +168,8 @@ class AttributeHandling {
    * @param value : value to set attribute to
    */
   inline static void set_value(Target target, Attribute attr, auto pack, VIPRA::State& state,
-                               CAttributeValue value) {
+                               CAttributeValue value)
+  {
     switch ( target.type ) {
       case TargetType::PEDESTRIAN:
         set_ped_value(target, attr, pack, state, value);
@@ -187,7 +195,8 @@ class AttributeHandling {
    * @param value : value to scale attribute by
    */
   inline static void scale_value(Target target, Attribute attr, auto pack, VIPRA::State& state,
-                                 CAttributeValue value) {
+                                 CAttributeValue value)
+  {
     switch ( target.type ) {
       case TargetType::PEDESTRIAN:
         scale_ped_value(target, attr, pack, state, value);
@@ -212,7 +221,8 @@ class AttributeHandling {
    * @return false : if not
    */
   [[nodiscard]] inline static auto is_coord_loc_compare(CAttributeValue value1, CAttributeValue value2)
-      -> bool {
+      -> bool
+  {
     return (value1.type == Type::COORD && value2.type == Type::LOCATION) ||
            (value1.type == Type::LOCATION && value2.type == Type::COORD);
   }
@@ -227,7 +237,8 @@ class AttributeHandling {
    * @return false : if not
    */
   [[nodiscard]] inline static auto coord_loc_compare(CAttributeValue value1, CAttributeValue value2,
-                                                     auto pack) -> bool {
+                                                     auto pack) -> bool
+  {
     if ( value1.type == Type::COORD && value2.type == Type::LOCATION ) {
       return pack.context.locations[value2.as<VIPRA::idx>()].contains(value1.as<VIPRA::f3d>());
     }
@@ -247,8 +258,8 @@ class AttributeHandling {
    * @return true : if equal
    * @return false : if not equal or not same type
    */
-  [[nodiscard]] inline static auto is_equal(CAttributeValue value1, CAttributeValue value2, auto pack)
-      -> bool {
+  [[nodiscard]] inline static auto is_equal(CAttributeValue value1, CAttributeValue value2, auto pack) -> bool
+  {
     if ( is_coord_loc_compare(value1, value2) ) {
       return coord_loc_compare(value1, value2, pack);
     }
@@ -286,7 +297,8 @@ class AttributeHandling {
    * @return false : if equal or not same type
    */
   [[nodiscard]] inline static auto is_not_equal(CAttributeValue value1, CAttributeValue value2, auto pack)
-      -> bool {
+      -> bool
+  {
     return ! is_equal(value1, value2, pack);
   }
 
@@ -299,13 +311,15 @@ class AttributeHandling {
    * @return CAttributeValue
    */
   template <typename value_t>
-  [[nodiscard]] inline static auto store_value(Type type, value_t&& value) -> CAttributeValue {
+  [[nodiscard]] inline static auto store_value(Type type, value_t&& value) -> CAttributeValue
+  {
     auto& valueStore = get_value_store();
     valueStore.emplace_back(type, new std::remove_cvref_t<value_t>(std::forward<value_t>(value)));
     return valueStore.back();
   }
 
-  inline static void cleanup() {
+  inline static void cleanup()
+  {
     for ( auto data : get_value_store() ) {
       // NOLINTBEGIN(cppcoreguidelines-owning-memory)
       switch ( data.type ) {
@@ -355,7 +369,8 @@ class AttributeHandling {
   static const DeferedCleanup CLEANUP;
 
   // NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables) Bug in clang-tidy (https://bugs.llvm.org/show_bug.cgi?id=48040)
-  static inline auto get_value_store() -> std::vector<CAttributeValue>& {
+  static inline auto get_value_store() -> std::vector<CAttributeValue>&
+  {
     static std::vector<CAttributeValue> valueStore;
     return valueStore;
   }
@@ -368,8 +383,8 @@ class AttributeHandling {
    * @param pack : simulation pack
    * @return CAttributeValue 
    */
-  [[nodiscard]] inline static auto get_ped_value(Target target, Attribute attr, auto pack)
-      -> CAttributeValue {
+  [[nodiscard]] inline static auto get_ped_value(Target target, Attribute attr, auto pack) -> CAttributeValue
+  {
     switch ( attr ) {
       case Attribute::POSITION:
         return {Type::COORD, &pack.pedset.ped_coords(target.targetIdx)};
@@ -395,7 +410,8 @@ class AttributeHandling {
    * @return CAttributeValue 
    */
   [[nodiscard]] inline static auto get_event_value(Target target, Attribute attr, auto pack)
-      -> CAttributeValue {
+      -> CAttributeValue
+  {
     switch ( attr ) {
       case Attribute::LOCATION:
         // TODO (rolland) : get this added in when event locations are done
@@ -416,7 +432,8 @@ class AttributeHandling {
    * @return CAttributeValue 
    */
   [[nodiscard]] inline static auto get_location_value(Target target, Attribute attr, auto pack)
-      -> CAttributeValue {
+      -> CAttributeValue
+  {
     switch ( attr ) {
       case Attribute::POSITION:
         return {Type::COORD, &pack.context.locations[target.targetIdx].center()};
@@ -437,7 +454,8 @@ class AttributeHandling {
    * @param value : value to set attribute to
    */
   inline static void set_ped_value(Target target, Attribute attr, auto pack, VIPRA::State& state,
-                                   CAttributeValue value) {
+                                   CAttributeValue value)
+  {
     switch ( attr ) {
       case Attribute::POSITION:
         set_position(target, state, value);
@@ -467,7 +485,8 @@ class AttributeHandling {
    * @param pack : simulation pack
    * @param value : value to set attribute to
    */
-  inline static void set_location_value(Target target, Attribute attr, auto pack, CAttributeValue value) {
+  inline static void set_location_value(Target target, Attribute attr, auto pack, CAttributeValue value)
+  {
     switch ( attr ) {
       case Attribute::POSITION:
         set_location_position(target, pack, value);
@@ -488,7 +507,8 @@ class AttributeHandling {
    * @param value : value to set attribute to
    */
   inline static void scale_ped_value(Target target, Attribute attr, auto pack, VIPRA::State& state,
-                                     CAttributeValue value) {
+                                     CAttributeValue value)
+  {
     switch ( attr ) {
       case Attribute::POSITION:
         DSLException::error("Cannot Scale Pedestrian Position");
@@ -522,7 +542,8 @@ class AttributeHandling {
    * @param pack : simulation pack
    * @param value : value to set attribute to
    */
-  inline static void set_event_value(Target target, Attribute attr, auto pack, CAttributeValue value) {
+  inline static void set_event_value(Target target, Attribute attr, auto pack, CAttributeValue value)
+  {
     switch ( attr ) {
       case Attribute::LOCATION:
         // TODO (rolland) : get this added in when event locations are done
@@ -544,7 +565,8 @@ class AttributeHandling {
    * @param state : next time step state
    * @param value : value to set position to
    */
-  static inline void set_position(Target target, VIPRA::State& state, CAttributeValue value) {
+  static inline void set_position(Target target, VIPRA::State& state, CAttributeValue value)
+  {
     value.type_check(Type::COORD);
     state.positions[target.targetIdx] = value.as<VIPRA::f3d>();
   }
@@ -556,7 +578,8 @@ class AttributeHandling {
    * @param pack : simulation pack
    * @param value : value to set attribute to
    */
-  static inline void set_state(Target target, auto pack, CAttributeValue value) {
+  static inline void set_state(Target target, auto pack, CAttributeValue value)
+  {
     value.type_check(Type::STATE);
     pack.context.pedStates[target.targetIdx] = value.as<stateUID>();
   }
@@ -568,14 +591,16 @@ class AttributeHandling {
    * @param pack : simulation pack
    * @param value : value to set velocity to
    */
-  static inline void set_goal(Target target, auto pack, CAttributeValue value) {
+  static inline void set_goal(Target target, auto pack, CAttributeValue value)
+  {
     auto&       goals = pack.goals;
     auto&       context = pack.context;
     auto const& pedset = pack.pedset;
 
     if ( value.type == Type::COORD ) {
       goals.change_end_goal(target.targetIdx, value.as<VIPRA::f3d>());
-    } else if ( value.type == Type::LOCATION ) {
+    }
+    else if ( value.type == Type::LOCATION ) {
       // TODO(rolland): this doesn't take into account two pedestrains going to the same location
       goals.change_end_goal(target.targetIdx,
                             context.locations[value.as<VIPRA::idx>()].random_point(context.engine));
@@ -592,7 +617,8 @@ class AttributeHandling {
    * @param state : next timestep state
    * @param value : value to set velocity to
    */
-  static inline void set_velocity(Target target, auto pack, VIPRA::State& state, CAttributeValue value) {
+  static inline void set_velocity(Target target, auto pack, VIPRA::State& state, CAttributeValue value)
+  {
     value.type_check(Type::COORD);
 
     state.velocities[target.targetIdx] = value.as<VIPRA::f3d>();
@@ -608,7 +634,8 @@ class AttributeHandling {
      * @param pack 
      * @param value 
      */
-  static inline void set_location_position(Target target, auto pack, CAttributeValue value) {
+  static inline void set_location_position(Target target, auto pack, CAttributeValue value)
+  {
     value.type_check(Type::COORD);
     pack.context.locations[target.targetIdx].set_center(value.as<VIPRA::f3d>());
   }
@@ -620,7 +647,8 @@ class AttributeHandling {
      * @param pack 
      * @param value 
      */
-  static inline void set_location_dims(Target target, auto pack, CAttributeValue value) {
+  static inline void set_location_dims(Target target, auto pack, CAttributeValue value)
+  {
     value.type_check(Type::COORD);
     pack.context.locations[target.targetIdx].set_dims(value.as<VIPRA::f3d>());
   }
@@ -637,7 +665,8 @@ class AttributeHandling {
    * @param state : next timestep state
    * @param value : value to set velocity to
    */
-  static inline void scale_velocity(Target target, auto pack, VIPRA::State& state, CAttributeValue value) {
+  static inline void scale_velocity(Target target, auto pack, VIPRA::State& state, CAttributeValue value)
+  {
     value.type_check(Type::NUMBER);
 
     NumericValue const& scale = *static_cast<NumericValue const*>(value.value);

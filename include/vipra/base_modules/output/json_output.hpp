@@ -32,22 +32,26 @@ class JSON : public VIPRA::Modules::Module<JSON>, public VIPRA::Modules::Output<
   [[nodiscard]] auto to_string() -> std::string { return _json.dump(); }
 
   template <typename data_t>
-  void set_sim_value(char const* key, data_t&& value) {
+  void set_sim_value(char const* key, data_t&& value)
+  {
     _json[key] = std::forward<data_t>(value);
   }
 
   template <typename data_t>
-  void set_timestep_value(char const* key, VIPRA::idx timestep, data_t&& value) {
+  void set_timestep_value(char const* key, VIPRA::idx timestep, data_t&& value)
+  {
     _json["timesteps"][timestep][key] = std::forward<data_t>(value);
   }
 
   template <typename data_t>
-  void set_ped_value(VIPRA::idx pedIdx, char const* key, data_t&& value) {
+  void set_ped_value(VIPRA::idx pedIdx, char const* key, data_t&& value)
+  {
     _json["pedestrians"].at(pedIdx)[key] = std::forward<data_t>(value);
   }
 
   template <typename data_t>
-  void set_ped_timestep_value(VIPRA::idx pedIdx, VIPRA::idx timestep, char const* key, data_t&& value) {
+  void set_ped_timestep_value(VIPRA::idx pedIdx, VIPRA::idx timestep, char const* key, data_t&& value)
+  {
     _json["timesteps"][timestep]["pedestrians"][pedIdx][key] = std::forward<data_t>(value);
   }
 
@@ -57,29 +61,33 @@ class JSON : public VIPRA::Modules::Module<JSON>, public VIPRA::Modules::Output<
 };
 
 template <>
-inline void Output::Trajectories::JSON::set_ped_value(VIPRA::idx pedIdx, char const* key,
-                                                      VIPRA::f3d&& value) {
+inline void Output::Trajectories::JSON::set_ped_value(VIPRA::idx pedIdx, char const* key, VIPRA::f3d&& value)
+{
   _json["pedestrians"].at(pedIdx)[key] = nlohmann::json({value.x, value.y, value.z});
 }
 template <>
-inline void Output::Trajectories::JSON::set_ped_value(VIPRA::idx pedIdx, char const* key, VIPRA::f3d& value) {
+inline void Output::Trajectories::JSON::set_ped_value(VIPRA::idx pedIdx, char const* key, VIPRA::f3d& value)
+{
   _json["pedestrians"].at(pedIdx)[key] = nlohmann::json({value.x, value.y, value.z});
 }
 template <>
 inline void Output::Trajectories::JSON::set_ped_value(VIPRA::idx pedIdx, char const* key,
-                                                      const VIPRA::f3d& value) {
+                                                      const VIPRA::f3d& value)
+{
   _json["pedestrians"].at(pedIdx)[key] = nlohmann::json({value.x, value.y, value.z});
 }
 
 template <>
 inline void Output::Trajectories::JSON::set_ped_timestep_value(VIPRA::idx pedIdx, VIPRA::idx timestep,
-                                                               char const* key, VIPRA::f3d&& value) {
+                                                               char const* key, VIPRA::f3d&& value)
+{
   _json["timesteps"][timestep]["pedestrians"][pedIdx][key] = nlohmann::json({value.x, value.y, value.z});
 }
 
 template <>
 inline void Output::Trajectories::JSON::set_ped_timestep_value(VIPRA::idx pedIdx, VIPRA::idx timestep,
-                                                               char const* key, const VIPRA::f3d& value) {
+                                                               char const* key, const VIPRA::f3d& value)
+{
   _json["timesteps"][timestep]["pedestrians"][pedIdx][key] = nlohmann::json({value.x, value.y, value.z});
 }
 

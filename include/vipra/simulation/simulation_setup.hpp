@@ -16,7 +16,8 @@ namespace VIPRA {
  * @return constexpr auto 
  */
 template <typename... args_t>
-constexpr auto simulation(args_t... args) {
+constexpr auto simulation(args_t... args)
+{
   // Finds the index for each module type
   constexpr std::size_t OUTPUT_IDX = Util::FindIndex<0, Checks::OutputCoord, args_t...>::value;
   constexpr std::size_t MODEL_IDX = Util::FindIndex<0, Checks::Model, args_t...>::value;

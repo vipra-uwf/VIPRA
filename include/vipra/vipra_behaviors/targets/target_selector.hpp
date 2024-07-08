@@ -21,7 +21,8 @@ class TargetSelector {
  public:
   explicit TargetSelector(targetfunc_t&& func) : _select(func) {}
 
-  void get_targets(auto pack, const VIPRA::idxVec& peds, std::vector<Target>& targets) {
+  void get_targets(auto pack, const VIPRA::idxVec& peds, std::vector<Target>& targets)
+  {
     if ( ! _select ) {
       std::for_each(peds.begin(), peds.end(), [&](auto idx) {
         targets[idx] = Target{TargetType::PEDESTRIAN, idx};

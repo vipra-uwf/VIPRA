@@ -9,7 +9,9 @@ namespace VIPRA {
  */
 struct VOID {
   template <typename... arg_ts>
-  inline void operator()(arg_ts... /*unused*/) const noexcept {}
+  inline void operator()(arg_ts... /*unused*/) const noexcept
+  {
+  }
 };
 }  // namespace VIPRA
 

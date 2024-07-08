@@ -32,7 +32,8 @@ class TimedLatchCollection {
    * @param startTime : current simulation time
    * @param pedIdx : pedestrian index to latch
    */
-  void latch(VIPRA::time_s startTime, VIPRA::idx pedIdx) {
+  void latch(VIPRA::time_s startTime, VIPRA::idx pedIdx)
+  {
     if ( _startTimes[pedIdx] == -1 ) {
       _startTimes[pedIdx] = startTime;
     }
@@ -48,7 +49,8 @@ class TimedLatchCollection {
    * @return true : if the latch is set and the duration has not elapsed
    * @return false : if the latch is NOT set or the time has elapsed
    */
-  auto check(VIPRA::time_s currTime, VIPRA::idx pedIdx) -> bool {
+  auto check(VIPRA::time_s currTime, VIPRA::idx pedIdx) -> bool
+  {
     if ( _startTimes[pedIdx] == -1 ) return false;
 
     VIPRA::f_pnt val = _duration.value(pedIdx);
@@ -77,7 +79,8 @@ class TimedLatchCollection {
    * @return false : if NOT inside time range
    */
   static inline constexpr auto in_time_step(VIPRA::time_s currTime, VIPRA::time_s checkTime,
-                                            VIPRA::delta_t deltaT) -> bool {
+                                            VIPRA::delta_t deltaT) -> bool
+  {
     const VIPRA::delta_t left = checkTime - deltaT;
     const VIPRA::delta_t right = checkTime + deltaT;
     return (currTime > left && currTime < right);

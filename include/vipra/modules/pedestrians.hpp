@@ -34,7 +34,8 @@ class Pedestrians : public Util::CRTP<Pedestrians<module_t>> {
  public:
   void initialize(auto& input, auto const& map) { self().init_step(input, map); }
 
-  void update(VIPRA::State const& state) {
+  void update(VIPRA::State const& state)
+  {
     self().update_step(state);
 
     for ( VIPRA::idx pedIdx = 0; pedIdx < state.size(); ++pedIdx ) {
@@ -44,21 +45,25 @@ class Pedestrians : public Util::CRTP<Pedestrians<module_t>> {
   }
 
   template <Condition condition_t>
-  [[nodiscard]] auto closest_ped(VIPRA::idx pedIdx, condition_t&& condition = VOID{}) const -> VIPRA::idx {
+  [[nodiscard]] auto closest_ped(VIPRA::idx pedIdx, condition_t&& condition = VOID{}) const -> VIPRA::idx
+  {
     if constexpr ( std::is_same_v<condition_t, VOID> ) {
       return self().closest_ped_impl(pedIdx);
-    } else {
+    }
+    else {
       return self().conditional_closest_ped_impl(pedIdx, std::forward<condition_t>(condition));
     }
   }
 
-  [[nodiscard]] auto distance(VIPRA::idx firstPed, VIPRA::idx secondPed) const -> VIPRA::f_pnt {
+  [[nodiscard]] auto distance(VIPRA::idx firstPed, VIPRA::idx secondPed) const -> VIPRA::f_pnt
+  {
     return _coords[firstPed].distance_to(_coords[secondPed]);
   }
 
   [[nodiscard]] auto num_pedestrians() const -> VIPRA::size { return _coords.size(); }
 
-  [[nodiscard]] auto ped_coords(VIPRA::idx pedIdx) const -> VIPRA::f3d const& {
+  [[nodiscard]] auto ped_coords(VIPRA::idx pedIdx) const -> VIPRA::f3d const&
+  {
     assert(pedIdx < _coords.size());
 
     return _coords[pedIdx];
@@ -66,7 +71,8 @@ class Pedestrians : public Util::CRTP<Pedestrians<module_t>> {
 
   [[nodiscard]] auto all_coords() const -> std::vector<VIPRA::f3d> const& { return _coords; }
 
-  [[nodiscard]] auto ped_velocity(VIPRA::idx pedIdx) const -> VIPRA::f3d const& {
+  [[nodiscard]] auto ped_velocity(VIPRA::idx pedIdx) const -> VIPRA::f3d const&
+  {
     assert(pedIdx < _velocities.size());
     return _velocities[pedIdx];
   }

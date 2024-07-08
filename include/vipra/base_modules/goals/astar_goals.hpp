@@ -27,7 +27,8 @@ class AStar : public Modules::Module<AStar>, public Modules::Goals<AStar> {
   VIPRA_REGISTER_PARAMS(VIPRA_PARAM("endGoalType", _endGoalType), VIPRA_PARAM("goalRange", _goalRange),
                         VIPRA_PARAM("gridSize", _gridSize), VIPRA_PARAM("closestObstacle", _closestObstacle))
 
-  VIPRA_GOALS_INIT_STEP {
+  VIPRA_GOALS_INIT_STEP
+  {
     VIPRA_PERF_FUNCTION("astar::init");
 
     assert(pedset.num_pedestrians() > 0);
@@ -55,7 +56,8 @@ class AStar : public Modules::Module<AStar>, public Modules::Goals<AStar> {
     assert(_paths.size() == pedCnt);
   }
 
-  VIPRA_GOALS_UPDATE_STEP {
+  VIPRA_GOALS_UPDATE_STEP
+  {
     VIPRA_PERF_FUNCTION("astar::update");
 
     assert(pedset.num_pedestrians() > 0);
@@ -80,7 +82,8 @@ class AStar : public Modules::Module<AStar>, public Modules::Goals<AStar> {
      * @param pedIdx
      * @param newGoal
      */
-  void change_end_goal(VIPRA::f3d pos, VIPRA::idx pedIdx, VIPRA::f3d newGoal) {
+  void change_end_goal(VIPRA::f3d pos, VIPRA::idx pedIdx, VIPRA::f3d newGoal)
+  {
     assert(pedIdx < _endGoals.size());
 
     // uses A* to find the path to the new end goal
@@ -90,23 +93,28 @@ class AStar : public Modules::Module<AStar>, public Modules::Goals<AStar> {
 
   [[nodiscard]] auto end_goals() const -> VIPRA::f3dVec const& { return _endGoals; }
   [[nodiscard]] auto current_goals() const -> VIPRA::f3dVec const& { return _currentGoals; }
-  [[nodiscard]] auto current_goal(VIPRA::idx pedIdx) const -> VIPRA::f3d const& {
+  [[nodiscard]] auto current_goal(VIPRA::idx pedIdx) const -> VIPRA::f3d const&
+  {
     assert(pedIdx < _currentGoals.size());
     return _currentGoals[pedIdx];
   }
-  [[nodiscard]] auto end_goal(VIPRA::idx pedIdx) const -> VIPRA::f3d const& {
+  [[nodiscard]] auto end_goal(VIPRA::idx pedIdx) const -> VIPRA::f3d const&
+  {
     assert(pedIdx < _endGoals.size());
     return _endGoals[pedIdx];
   }
-  [[nodiscard]] auto is_goal_met(VIPRA::idx pedIdx) const -> bool {
+  [[nodiscard]] auto is_goal_met(VIPRA::idx pedIdx) const -> bool
+  {
     assert(pedIdx < _paths.size());
     return _paths[pedIdx].empty();
   }
-  [[nodiscard]] auto is_sim_goal_met() const -> bool {
+  [[nodiscard]] auto is_sim_goal_met() const -> bool
+  {
     return std::all_of(_paths.begin(), _paths.end(), [](auto const& path) { return path.empty(); });
   }
 
-  [[nodiscard]] auto time_since_last_goal(VIPRA::idx pedIdx) const -> VIPRA::f_pnt {
+  [[nodiscard]] auto time_since_last_goal(VIPRA::idx pedIdx) const -> VIPRA::f_pnt
+  {
     assert(_timeSinceLastGoal.size() > pedIdx);
     return _timeSinceLastGoal[pedIdx];
   }
@@ -130,7 +138,8 @@ class AStar : public Modules::Module<AStar>, public Modules::Goals<AStar> {
    * @param pedset
    * @param map
    */
-  void set_end_goals(auto const& pedset, auto const& map) {
+  void set_end_goals(auto const& pedset, auto const& map)
+  {
     assert(pedset.num_pedestrians() > 0);
 
     const VIPRA::size pedCnt = pedset.num_pedestrians();
@@ -149,7 +158,8 @@ class AStar : public Modules::Module<AStar>, public Modules::Goals<AStar> {
 
       if ( nearestGoal != objects.end() ) {
         _endGoals[pedIdx] = *nearestGoal;
-      } else {
+      }
+      else {
         throw std::runtime_error("No goal found for pedestrian");
       }
     }
@@ -161,7 +171,8 @@ class AStar : public Modules::Module<AStar>, public Modules::Goals<AStar> {
    * @param path
    * @return std::vector<VIPRA::f3d>
    */
-  [[nodiscard]] static auto squash_path(std::vector<VIPRA::f3d> const& path) -> std::vector<VIPRA::f3d> {
+  [[nodiscard]] static auto squash_path(std::vector<VIPRA::f3d> const& path) -> std::vector<VIPRA::f3d>
+  {
     assert(path.empty() == false);
 
     std::vector<VIPRA::f3d> squashedPath;
@@ -186,7 +197,8 @@ class AStar : public Modules::Module<AStar>, public Modules::Goals<AStar> {
    * @return VIPRA::f3dVec::const_iterator
    */
   [[nodiscard]] static auto get_nearest_goal(VIPRA::f3d pos, std::vector<VIPRA::f3d> const& goals)
-      -> VIPRA::f3dVec::const_iterator {
+      -> VIPRA::f3dVec::const_iterator
+  {
     assert(goals.empty() == false);
 
     return std::min_element(goals.begin(), goals.end(), [&](auto const& left, auto const& right) {
@@ -200,7 +212,8 @@ class AStar : public Modules::Module<AStar>, public Modules::Goals<AStar> {
    * @param pedIdx 
    * @param pos 
    */
-  void find_path(VIPRA::idx pedIdx, VIPRA::f3d startPos) {
+  void find_path(VIPRA::idx pedIdx, VIPRA::f3d startPos)
+  {
     // Get the pedestrian start and end grid location
     VIPRA::idx startIdx = _graph.get_closest_grid_idx(startPos);
     VIPRA::idx endIdx = _graph.get_closest_grid_idx(_endGoals[pedIdx]);

@@ -15,7 +15,8 @@ class SubConditionLeave {
   explicit SubConditionLeave(VIPRA::idx location) : _location{location} {}
 
   void operator()(auto pack, const VIPRA::idxVec& peds, std::vector<Target> const& targets,
-                  std::vector<bool>& met, std::vector<bool> const& /*unused*/, BoolOp /*unused*/) {
+                  std::vector<bool>& met, std::vector<bool> const& /*unused*/, BoolOp /*unused*/)
+  {
     for ( auto idx : peds ) {
       if ( _left.size() < pack.pedset.num_pedestrians() ) _left.resize(pack.pedset.num_pedestrians());
 

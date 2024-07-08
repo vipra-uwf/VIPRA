@@ -21,7 +21,8 @@ class Condition {
   MOVEABLE(Condition)
  public:
   template <typename pack_t>
-  void initialize(pack_t pack) {
+  void initialize(pack_t pack)
+  {
     if ( _conditions.size() > 1 ) {
       _temp.resize(pack.pedset.num_pedestrians());
       std::fill(_temp.begin(), _temp.end(), false);
@@ -40,7 +41,8 @@ class Condition {
    */
   template <typename pack_t>
   void evaluate(pack_t pack, VIPRA::idxVec const& peds, std::vector<bool>& met,
-                std::vector<Target> const& targets, std::optional<TimedLatchCollection>& latches) {
+                std::vector<Target> const& targets, std::optional<TimedLatchCollection>& latches)
+  {
     std::fill(_temp.begin(), _temp.end(), false);
     _conditions[0](pack, peds, targets, met, _temp, BoolOp::OR);
 
@@ -76,7 +78,8 @@ class Condition {
    * @param met 
    */
   template <typename pack_t>
-  void handle_latches(pack_t pack, std::optional<TimedLatchCollection>& latches, std::vector<bool>& met) {
+  void handle_latches(pack_t pack, std::optional<TimedLatchCollection>& latches, std::vector<bool>& met)
+  {
     if ( latches.has_value() ) {
       for ( VIPRA::idx i = 0; i < met.size(); ++i ) {
         if ( met[i] ) {

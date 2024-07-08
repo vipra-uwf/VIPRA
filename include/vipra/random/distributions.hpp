@@ -24,10 +24,12 @@ template <Concepts::Numeric data_t = VIPRA::f_pnt>
 class uniform_distribution {
  public:
   constexpr uniform_distribution(data_t min, data_t max) : _range(min, max) {}
-  constexpr explicit uniform_distribution(std::pair<data_t, data_t> rangeVals)
-      : _range(std::move(rangeVals)) {}
+  constexpr explicit uniform_distribution(std::pair<data_t, data_t> rangeVals) : _range(std::move(rangeVals))
+  {
+  }
 
-  constexpr auto operator()(Random::Engine& engine) -> data_t {
+  constexpr auto operator()(Random::Engine& engine) -> data_t
+  {
     auto val = engine();
     if ( (_range.second - _range.first) == 0 ) return _range.first;
     return static_cast<data_t>(_range.first + static_cast<double>(val) /
@@ -51,7 +53,8 @@ class normal_distribution {
  public:
   constexpr normal_distribution(data_t mean, data_t stdDev) : _mean(mean), _stdDev(stdDev) {}
 
-  constexpr auto operator()(Random::Engine& engine) -> data_t {
+  constexpr auto operator()(Random::Engine& engine) -> data_t
+  {
     double resultX = 0;
     double resultY = 0;
     double result = 1.0;
@@ -95,7 +98,8 @@ class normal_distribution {
  */
 template <typename dist_t, Concepts::Numeric data_t = VIPRA::f_pnt>
 inline auto make_distribution(dist_t&& distr, VIPRA::size count, VIPRA::Random::Engine& engine)
-    -> std::vector<data_t> {
+    -> std::vector<data_t>
+{
   std::vector<data_t> ret(count);
 
   std::transform(ret.cbegin(), ret.cend(), ret.begin(), [&](data_t) {

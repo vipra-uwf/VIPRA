@@ -26,7 +26,8 @@ class ParamReader : public Util::CRTP<ParamReader<module_t>> {
  public:
   template <typename data_t>
   auto get_param(std::string const& type, std::string const& moduleName, std::string const& paramName,
-                 VIPRA::Random::Engine& engine) const -> std::optional<std::remove_cvref_t<data_t>> {
+                 VIPRA::Random::Engine& engine) const -> std::optional<std::remove_cvref_t<data_t>>
+  {
     auto singleValue = this->self().template get<std::remove_cvref_t<data_t>>(type, moduleName, paramName);
     if ( singleValue ) {
       return singleValue;
@@ -44,7 +45,8 @@ class ParamReader : public Util::CRTP<ParamReader<module_t>> {
       if constexpr ( Concepts::Numeric<std::remove_cvref_t<data_t>> ) {
         // NOTE(rolland): strings cannot be ranges
         return get_range_value<std::remove_cvref_t<data_t>>(mapValue.value(), engine);
-      } else {
+      }
+      else {
         return std::nullopt;
       }
     }
@@ -54,7 +56,8 @@ class ParamReader : public Util::CRTP<ParamReader<module_t>> {
 
  private:
   template <typename data_t>
-  auto get_discrete_value(std::vector<data_t> const& data, VIPRA::Random::Engine& engine) const -> data_t {
+  auto get_discrete_value(std::vector<data_t> const& data, VIPRA::Random::Engine& engine) const -> data_t
+  {
     VIPRA::Random::uniform_distribution<size_t> dist(0, data.size() - 1);
     return data[dist(engine)];
   }
@@ -62,7 +65,8 @@ class ParamReader : public Util::CRTP<ParamReader<module_t>> {
   template <typename data_t>
   requires Concepts::Numeric<data_t>
   auto get_range_value(std::map<std::string, data_t> const& data, VIPRA::Random::Engine& engine) const
-      -> data_t {
+      -> data_t
+  {
     VIPRA::Random::uniform_distribution<data_t> dist(data.at("min"), data.at("max"));
     return dist(engine);
   }

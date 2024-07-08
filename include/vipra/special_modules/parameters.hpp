@@ -38,7 +38,8 @@ class Parameters {
    * @param paramName 
    * @param param 
    */
-  void register_param(Modules::Type module, std::string const& moduleName, std::string const& paramName) {
+  void register_param(Modules::Type module, std::string const& moduleName, std::string const& paramName)
+  {
     // TODO(rolland): maybe warn if a parameter is registered twice?
     if ( contains(module, moduleName, paramName) ) return;
 
@@ -55,7 +56,8 @@ class Parameters {
    * @return false 
    */
   [[nodiscard]] auto has_param(Modules::Type module, std::string const& moduleName,
-                               std::string const& paramName) const -> bool {
+                               std::string const& paramName) const -> bool
+  {
     return contains(module, moduleName, paramName);
   }
 
@@ -69,7 +71,8 @@ class Parameters {
    * @return false 
    */
   [[nodiscard]] auto has_required_param(Modules::Type module, std::string const& moduleName,
-                                        std::string const& paramName) const -> bool {
+                                        std::string const& paramName) const -> bool
+  {
     if ( ! contains(module, moduleName, paramName) ) {
       throw std::runtime_error("Parameter: " + paramName + " For " + to_string(module) +
                                " Module: " + moduleName + " Not Provided In Input");
@@ -89,7 +92,8 @@ class Parameters {
   template <typename data_t>
   [[nodiscard]] auto get_param(Modules::Type module, std::string const& moduleName,
                                std::string const& paramName, Random::Engine& engine) const
-      -> std::remove_cvref_t<data_t> {
+      -> std::remove_cvref_t<data_t>
+  {
     using param_t = std::remove_cvref_t<data_t>;
 
     std::string moduleStr = to_string(module);
@@ -105,7 +109,8 @@ class Parameters {
     if constexpr ( Util::is_specialization<param_t, std::vector>::value ) {
       // the parameter is supposed to be an array, load it as such
       value = get_array_param<param_t>(module, moduleName, paramName);
-    } else {
+    }
+    else {
       // the parameter is meant to be a single value, follow parameter randomization rules
       value = _input.template get_param<param_t>(moduleStr, moduleName, paramName, engine);
     }
@@ -131,7 +136,8 @@ class Parameters {
   std::map<Modules::Type, std::map<std::string, std::set<std::string>>> _params;
 
   [[nodiscard]] auto contains(Modules::Type module, std::string const& moduleName,
-                              std::string const& paramName) const -> bool {
+                              std::string const& paramName) const -> bool
+  {
     return _params.contains(module) && _params.at(module).contains(moduleName) &&
            _params.at(module).at(moduleName).contains(paramName);
   }
@@ -148,7 +154,8 @@ class Parameters {
    */
   template <typename array_t>
   [[nodiscard]] auto get_array_param(Modules::Type module, std::string const& moduleName,
-                                     std::string const& paramName) const -> array_t {
+                                     std::string const& paramName) const -> array_t
+  {
     std::string moduleStr = to_string(module);
 
     if ( ! contains(module, moduleName, paramName) )

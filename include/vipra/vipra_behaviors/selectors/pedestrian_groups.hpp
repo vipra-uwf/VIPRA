@@ -25,7 +25,8 @@ class GroupsContainer {
   * @param type : 
   * @return constexpr VIPRA::idx 
   */
-  static constexpr auto index(typeUID type) -> VIPRA::idx {
+  static constexpr auto index(typeUID type) -> VIPRA::idx
+  {
     if ( type == 0 ) {
       return 0;
     }

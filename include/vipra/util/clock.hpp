@@ -30,7 +30,8 @@ class Clock {
    * @brief Starts the timer
    * 
    */
-  inline void start() {
+  inline void start()
+  {
     _running = true;
     _start = clock_t::now();
   }
@@ -42,8 +43,9 @@ class Clock {
    * 
    * @return time_t 
    */
-  [[nodiscard]] inline auto click() -> time_t {
-    if (!_running) return ZERO;
+  [[nodiscard]] inline auto click() -> time_t
+  {
+    if ( ! _running ) return ZERO;
     return std::chrono::duration_cast<time_t>(clock_t::now() - _start);
   }
 
@@ -52,8 +54,9 @@ class Clock {
    * 
    * @return time_t 
    */
-  [[nodiscard]] inline auto stop() -> time_t {
-    if (!_running) return ZERO;
+  [[nodiscard]] inline auto stop() -> time_t
+  {
+    if ( ! _running ) return ZERO;
     auto duration = std::chrono::duration_cast<time_t>(clock_t::now() - _start);
     _running = false;
     return duration;

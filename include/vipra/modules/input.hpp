@@ -19,7 +19,8 @@ class Input : public Util::CRTP<Input<module_t>> {
   using Util::CRTP<Input<module_t>>::self;
 
  public:
-  void load() {
+  void load()
+  {
     // TODO(rolland) maybe have load_impl return a bool and handle if it failed?
     if ( _loaded ) return;
     _loaded = true;
@@ -35,7 +36,8 @@ class Input : public Util::CRTP<Input<module_t>> {
    * @return std::optional<data_t> 
    */
   template <typename data_t, Concepts::StringView... keys_t>
-  auto get(keys_t&&... keys) const -> std::optional<data_t> {
+  auto get(keys_t&&... keys) const -> std::optional<data_t>
+  {
     assert(_loaded);
 
     return self().template get_impl<data_t>(std::string_view(std::forward<keys_t>(keys))...);

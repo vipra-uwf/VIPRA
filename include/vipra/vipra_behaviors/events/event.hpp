@@ -28,7 +28,8 @@ class Event {
   void set_start_condition(cond_t const& condition) { _startCondition = condition; }
   void set_end_condition(cond_t const& condition) { _endCondition = condition; }
 
-  [[nodiscard]] auto is_occurring() const -> bool {
+  [[nodiscard]] auto is_occurring() const -> bool
+  {
     return _status == EventStatus::OCCURRING || _status == EventStatus::STARTING;
   }
   [[nodiscard]] auto has_occurred() const -> bool { return _occurred; }
@@ -51,7 +52,8 @@ class Event {
 };
 
 template <typename cond_t>
-void Event<cond_t>::evaluate(auto pack) {
+void Event<cond_t>::evaluate(auto pack)
+{
   if ( _status == EventStatus::ENDING ) {
     _status = EventStatus::NOT_OCCURRING;
   }

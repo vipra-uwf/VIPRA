@@ -15,8 +15,8 @@ namespace VIPRA::DataStructures {
 template <typename data_t>
 class SpatialMap {
  public:
-  void update_grids(std::vector<VIPRA::f3d> const& oldPositions,
-                    std::vector<VIPRA::f3d> const& newPositions) {
+  void update_grids(std::vector<VIPRA::f3d> const& oldPositions, std::vector<VIPRA::f3d> const& newPositions)
+  {
     VIPRA_PERF_FUNCTION("grid::update_grids")
 
     // for all of the data, check if they moved grids, if they did update both
@@ -31,7 +31,8 @@ class SpatialMap {
     }
   }
 
-  void for_each_neighbor(VIPRA::f3d pos, auto&& func) const {
+  void for_each_neighbor(VIPRA::f3d pos, auto&& func) const
+  {
     VIPRA_PERF_FUNCTION("spatial_grid::for_each_neighbor")
 
     // Loop through the surrounding grids and call the provided function with each pedestrian in each grid
@@ -49,7 +50,8 @@ class SpatialMap {
   }
 
   void initialize(VIPRA::f_pnt cellSize, VIPRA::f_pnt width, VIPRA::f_pnt height,
-                  std::vector<VIPRA::f3d> const& positions, std::vector<data_t> const& data) {
+                  std::vector<VIPRA::f3d> const& positions, std::vector<data_t> const& data)
+  {
     assert(cellSize != 0);
     assert(width != 0);
     assert(height != 0);
@@ -65,13 +67,15 @@ class SpatialMap {
   VIPRA::size                      _cols{};
   VIPRA::f_pnt                     _cellSize{};
 
-  void set_grids(VIPRA::f_pnt width, VIPRA::f_pnt height) {
+  void set_grids(VIPRA::f_pnt width, VIPRA::f_pnt height)
+  {
     _rows = static_cast<size_t>(std::ceil(height / _cellSize));
     _cols = static_cast<size_t>(std::ceil(width / _cellSize));
     _grid.resize(_rows * _cols);
   }
 
-  void initialize_grids(std::vector<VIPRA::f3d> const& positions, std::vector<data_t> const& data) {
+  void initialize_grids(std::vector<VIPRA::f3d> const& positions, std::vector<data_t> const& data)
+  {
     if ( positions.size() != data.size() )
       throw std::logic_error("Spatial Map initialized with differing counts of data and positions");
 
@@ -93,7 +97,8 @@ class SpatialMap {
    * @param pos
    * @return std::vector<VIPRA::idx>&
    */
-  inline auto get_grid(VIPRA::f3d pos) -> std::vector<VIPRA::idx>& {
+  inline auto get_grid(VIPRA::f3d pos) -> std::vector<VIPRA::idx>&
+  {
     assert(! out_of_bounds(pos));
 
     auto gridX = static_cast<size_t>(pos.x / _cellSize);
@@ -108,7 +113,8 @@ class SpatialMap {
    * @param pos 
    * @return std::vector<VIPRA::idx> const& 
    */
-  [[nodiscard]] inline auto get_grid(VIPRA::f3d pos) const -> std::vector<VIPRA::idx> const& {
+  [[nodiscard]] inline auto get_grid(VIPRA::f3d pos) const -> std::vector<VIPRA::idx> const&
+  {
     assert(! out_of_bounds(pos));
 
     return _grid[static_cast<size_t>(pos.x / _cellSize) + static_cast<size_t>(pos.y / _cellSize) * _cols];
@@ -122,7 +128,8 @@ class SpatialMap {
    * @return true 
    * @return false 
    */
-  [[nodiscard]] inline auto out_of_bounds(VIPRA::f_pnt gridX, VIPRA::f_pnt gridY) const -> bool {
+  [[nodiscard]] inline auto out_of_bounds(VIPRA::f_pnt gridX, VIPRA::f_pnt gridY) const -> bool
+  {
     return gridX < 0 || gridX >= _cols * _cellSize || gridY < 0 || gridY >= _rows * _cellSize;
   }
 
@@ -134,7 +141,8 @@ class SpatialMap {
    * @return true 
    * @return false 
    */
-  [[nodiscard]] inline auto out_of_bounds(VIPRA::f3d pos) const -> bool {
+  [[nodiscard]] inline auto out_of_bounds(VIPRA::f3d pos) const -> bool
+  {
     return out_of_bounds(pos.x, pos.y);
   }
 };

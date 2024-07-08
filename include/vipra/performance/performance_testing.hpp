@@ -36,7 +36,8 @@ class Perf {
    * 
    * @param name 
    */
-  static void add_call(std::string_view name) noexcept {
+  static void add_call(std::string_view name) noexcept
+  {
     if ( ! std::is_constant_evaluated() ) {
       if ( get_calls().find(name) == get_calls().end() ) {
         get_calls().emplace(std::string(name), 0);
@@ -50,7 +51,8 @@ class Perf {
    * 
    * @param name 
    */
-  static void start(std::string_view name) noexcept {
+  static void start(std::string_view name) noexcept
+  {
     if ( ! std::is_constant_evaluated() ) {
       if ( get_clocks().find(name) == get_clocks().end() ) {
         get_clocks().emplace(std::string(name), Util::Clock<Util::micro>{});
@@ -65,7 +67,8 @@ class Perf {
    * 
    * @param name 
    */
-  static void stop(std::string_view name) noexcept {
+  static void stop(std::string_view name) noexcept
+  {
     if ( ! std::is_constant_evaluated() ) {
       auto time = (get_clocks().find(name))->second.stop();
       if ( get_timings().find(name) == get_timings().end() ) {
@@ -81,7 +84,8 @@ class Perf {
    * 
    * @return std::string 
    */
-  static auto report() -> std::string {
+  static auto report() -> std::string
+  {
     std::string report{"\n\nFunction Call Counts:\n"};
 
     auto sortedCalls = sort_calls();
@@ -124,7 +128,8 @@ class Perf {
     FunctionTimer(FunctionTimer&&) noexcept = delete;
     auto operator=(FunctionTimer const&) -> FunctionTimer& = delete;
     auto operator=(FunctionTimer&&) -> FunctionTimer& = delete;
-    explicit FunctionTimer(std::string_view name) noexcept : _name(name) {
+    explicit FunctionTimer(std::string_view name) noexcept : _name(name)
+    {
       Perf::add_call(_name);
       Perf::start(_name);
     }
@@ -136,22 +141,26 @@ class Perf {
   };
 
  private:
-  [[nodiscard]] static auto get_calls() -> std::map<std::string, size_t, std::less<>>& {
+  [[nodiscard]] static auto get_calls() -> std::map<std::string, size_t, std::less<>>&
+  {
     static std::map<std::string, size_t, std::less<>> calls;
     return calls;
   }
 
-  [[nodiscard]] static auto get_timings() -> std::map<std::string, Util::micro, std::less<>>& {
+  [[nodiscard]] static auto get_timings() -> std::map<std::string, Util::micro, std::less<>>&
+  {
     static std::map<std::string, Util::micro, std::less<>> timings;
     return timings;
   }
 
-  [[nodiscard]] static auto get_clocks() -> std::map<std::string, Util::Clock<Util::micro>, std::less<>>& {
+  [[nodiscard]] static auto get_clocks() -> std::map<std::string, Util::Clock<Util::micro>, std::less<>>&
+  {
     static std::map<std::string, Util::Clock<Util::micro>, std::less<>> timings;
     return timings;
   }
 
-  [[nodiscard]] static auto sort_calls() -> std::vector<std::pair<std::string, size_t>> {
+  [[nodiscard]] static auto sort_calls() -> std::vector<std::pair<std::string, size_t>>
+  {
     const auto cmp = [](auto const& left, auto const& right) -> bool { return left.second > right.second; };
 
     std::vector<std::pair<std::string, size_t>> retVal;
@@ -164,7 +173,8 @@ class Perf {
     return retVal;
   }
 
-  [[nodiscard]] static auto sort_timings() -> std::vector<std::pair<std::string, Util::micro>> {
+  [[nodiscard]] static auto sort_timings() -> std::vector<std::pair<std::string, Util::micro>>
+  {
     const auto cmp = [](auto const& left, auto const& right) -> bool { return left.second > right.second; };
 
     std::vector<std::pair<std::string, Util::micro>> retVal;

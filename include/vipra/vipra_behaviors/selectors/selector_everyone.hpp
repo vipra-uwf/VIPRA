@@ -14,7 +14,8 @@ struct SelectorEveryone {
   MOVEABLE(SelectorEveryone)
 
   auto operator()(const VIPRA::idxVec& /*unused*/, const VIPRA::idxVec& group, auto /*unused*/)
-      -> SelectorResult {
+      -> SelectorResult
+  {
     auto vec = VIPRA::idxVec(group.size());
     std::iota(vec.begin(), vec.end(), 0);
     return {false, vec};

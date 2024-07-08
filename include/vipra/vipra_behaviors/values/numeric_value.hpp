@@ -42,7 +42,8 @@ class NumericValue {
  */
 struct ExactValue {
   VIPRA::f_pnt value;
-  inline auto  operator()(VIPRA::seed /*unused*/, VIPRA::idx /*unused*/) const -> VIPRA::f_pnt {
+  inline auto  operator()(VIPRA::seed /*unused*/, VIPRA::idx /*unused*/) const -> VIPRA::f_pnt
+  {
     return value;
   }
 };
@@ -55,7 +56,8 @@ struct RandomFloatValue {
   VIPRA::f_pnt min{};
   VIPRA::f_pnt max{};
 
-  inline auto operator()(VIPRA::seed seed, VIPRA::idx pedIdx) const -> VIPRA::f_pnt {
+  inline auto operator()(VIPRA::seed seed, VIPRA::idx pedIdx) const -> VIPRA::f_pnt
+  {
     return Behaviors::DRNG::ped_random_float(seed, pedIdx, Min{min}, Max{max});
   }
 };
@@ -68,7 +70,8 @@ struct RandomNumberValue {
   VIPRA::f_pnt min{};
   VIPRA::f_pnt max{};
 
-  inline auto operator()(VIPRA::seed seed, VIPRA::idx pedIdx) const -> VIPRA::f_pnt {
+  inline auto operator()(VIPRA::seed seed, VIPRA::idx pedIdx) const -> VIPRA::f_pnt
+  {
     return std::round(Behaviors::DRNG::ped_random_float(seed, pedIdx, Min{min}, Max{max}));
   }
 };

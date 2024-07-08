@@ -18,13 +18,16 @@ class Rectangle {
         _p4(point4),
         _width(std::abs(point3.x - point1.x)),
         _height(std::abs(point3.y - point1.y)),
-        _area(calc_area()) {}
+        _area(calc_area())
+  {
+  }
   constexpr Rectangle(VIPRA::f3d point1, VIPRA::f3d point3)
       : _p1(point1),
         _p3(point3),
         _width(std::abs(point3.x - point1.x)),
         _height(std::abs(point3.y - point1.y)),
-        _area(calc_area()) {
+        _area(calc_area())
+  {
     _p2 = VIPRA::f3d(point3.x, point1.y, point1.z);
     _p4 = VIPRA::f3d(point1.x, point3.y, point3.z);
   }
@@ -36,7 +39,8 @@ class Rectangle {
    * @return true
    * @return false
    */
-  [[nodiscard]] inline constexpr auto is_point_inside(VIPRA::f3d point) const noexcept -> bool {
+  [[nodiscard]] inline constexpr auto is_point_inside(VIPRA::f3d point) const noexcept -> bool
+  {
     const VIPRA::f_pnt areaTri1 = triangle_area(_p1, _p2, point);
     const VIPRA::f_pnt areaTri2 = triangle_area(_p2, _p3, point);
     const VIPRA::f_pnt areaTri3 = triangle_area(_p3, _p4, point);
@@ -52,7 +56,8 @@ class Rectangle {
    * @return true
    * @return false
    */
-  [[nodiscard]] inline constexpr auto does_intersect(Rectangle const& other) const noexcept -> bool {
+  [[nodiscard]] inline constexpr auto does_intersect(Rectangle const& other) const noexcept -> bool
+  {
     std::array<Line, 4> lines1{Line{_p1, _p2}, {_p2, _p3}, {_p3, _p4}, {_p4, _p1}};
     std::array<Line, 4> lines2{
         Line{other._p1, other._p2}, {other._p2, other._p3}, {other._p3, other._p4}, {other._p4, other._p1}};
@@ -73,7 +78,8 @@ class Rectangle {
    * @return true
    * @return false
    */
-  [[nodiscard]] inline constexpr auto does_intersect(Line const& other) const noexcept -> bool {
+  [[nodiscard]] inline constexpr auto does_intersect(Line const& other) const noexcept -> bool
+  {
     std::array<Line, 4> lines1{Line{_p1, _p2}, {_p2, _p3}, {_p3, _p4}, {_p4, _p1}};
 
     for ( size_t i = 0; i < 4; ++i ) {
@@ -84,7 +90,8 @@ class Rectangle {
   }
 
   // ---------- Getters -------------------
-  [[nodiscard]] inline constexpr auto rotation() const noexcept -> VIPRA::f_pnt {
+  [[nodiscard]] inline constexpr auto rotation() const noexcept -> VIPRA::f_pnt
+  {
     return atan2(_p2.y - _p1.y, _p2.x - _p1.x);
   }
 
@@ -94,7 +101,8 @@ class Rectangle {
   [[nodiscard]] inline constexpr auto area() const noexcept -> VIPRA::f_pnt { return _area; }
 
   // TODO(rolland): this assumes axis aligned
-  [[nodiscard]] inline constexpr auto center() const noexcept -> VIPRA::f3d {
+  [[nodiscard]] inline constexpr auto center() const noexcept -> VIPRA::f3d
+  {
     return VIPRA::f3d(_p1.x + width() / 2, _p1.y + height() / 2, _p1.z);
   }
 
@@ -102,7 +110,8 @@ class Rectangle {
   [[nodiscard]] inline constexpr auto p2() const noexcept -> VIPRA::f3d { return _p2; }
   [[nodiscard]] inline constexpr auto p3() const noexcept -> VIPRA::f3d { return _p3; }
   [[nodiscard]] inline constexpr auto p4() const noexcept -> VIPRA::f3d { return _p4; }
-  [[nodiscard]] inline constexpr auto operator[](VIPRA::size idx) -> VIPRA::f3d& {
+  [[nodiscard]] inline constexpr auto operator[](VIPRA::size idx) -> VIPRA::f3d&
+  {
     switch ( idx ) {
       case 0:
         return _p1;
@@ -118,7 +127,8 @@ class Rectangle {
 
     return _p1;
   }
-  [[nodiscard]] inline constexpr auto at(VIPRA::size idx) const -> const VIPRA::f3d& {
+  [[nodiscard]] inline constexpr auto at(VIPRA::size idx) const -> const VIPRA::f3d&
+  {
     switch ( idx ) {
       case 0:
         return _p1;
@@ -155,14 +165,16 @@ class Rectangle {
    * @return constexpr VIPRA::f_pnt : triangle area
    */
   [[nodiscard]] static inline constexpr auto triangle_area(VIPRA::f3d point1, VIPRA::f3d point2,
-                                                           VIPRA::f3d point3) noexcept -> VIPRA::f_pnt {
+                                                           VIPRA::f3d point3) noexcept -> VIPRA::f_pnt
+  {
     return std::abs((point2.x * point1.y - point1.x * point2.y) +
                     (point3.x * point2.y - point2.x * point3.y) +
                     (point1.x * point3.y - point3.x * point1.y)) /
            2;
   }
 
-  [[nodiscard]] inline constexpr auto calc_area() const noexcept -> VIPRA::f_pnt {
+  [[nodiscard]] inline constexpr auto calc_area() const noexcept -> VIPRA::f_pnt
+  {
     return (triangle_area(_p1, _p2, _p3) + triangle_area(_p1, _p3, _p4));
   }
 

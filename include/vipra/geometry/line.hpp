@@ -20,7 +20,8 @@ struct Line {
    * @param point3 
    * @return 
    */
-  [[nodiscard]] static constexpr auto orientation_to(Line line, VIPRA::f3d point) noexcept -> Orientation {
+  [[nodiscard]] static constexpr auto orientation_to(Line line, VIPRA::f3d point) noexcept -> Orientation
+  {
     VIPRA::f_pnt val = (line.end.y - line.start.y) * (point.x - line.end.x) -
                        (line.end.x - line.start.x) * (point.y - line.end.y);
 
@@ -35,7 +36,8 @@ struct Line {
    * @param point 
    * @return VIPRA::f3d 
    */
-  [[nodiscard]] inline constexpr auto closest_point(VIPRA::f3d point) const noexcept -> VIPRA::f3d {
+  [[nodiscard]] inline constexpr auto closest_point(VIPRA::f3d point) const noexcept -> VIPRA::f3d
+  {
     // TODO(rolland): verify
     const VIPRA::f_pnt lineLength = start.distance_to(end);
     const VIPRA::f_pnt t =
@@ -50,7 +52,8 @@ struct Line {
    * @return true 
    * @return false 
    */
-  [[nodiscard]] inline constexpr auto is_point_on(VIPRA::f3d point) const -> bool {
+  [[nodiscard]] inline constexpr auto is_point_on(VIPRA::f3d point) const -> bool
+  {
     return point.x <= std::max(start.x, end.x) && point.y <= std::max(start.y, end.y) &&
            point.x >= std::min(start.x, end.x) && point.y >= std::min(start.y, end.y);
   }
@@ -62,7 +65,8 @@ struct Line {
    * @return true 
    * @return false 
    */
-  [[nodiscard]] constexpr auto does_intersect(Line other) const noexcept -> bool {
+  [[nodiscard]] constexpr auto does_intersect(Line other) const noexcept -> bool
+  {
     return do_intersect(*this, other);
   }
 
@@ -73,7 +77,8 @@ struct Line {
    * @param other 
    * @return VIPRA::f3d 
    */
-  [[nodiscard]] constexpr auto intersection_point(Line other) const noexcept -> VIPRA::f3d {
+  [[nodiscard]] constexpr auto intersection_point(Line other) const noexcept -> VIPRA::f3d
+  {
     assert(does_intersect(other));
 
     const VIPRA::f_pnt a1 = end.y - start.y;
@@ -102,7 +107,8 @@ struct Line {
    * @return true 
    * @return false 
    */
-  [[nodiscard]] static constexpr auto do_intersect(Line line1, Line line2) noexcept -> bool {
+  [[nodiscard]] static constexpr auto do_intersect(Line line1, Line line2) noexcept -> bool
+  {
     const Orientation ori1 = orientation_to(line1, line2.start);
     const Orientation ori2 = orientation_to(line1, line2.end);
     const Orientation ori3 = orientation_to(line2, line1.start);

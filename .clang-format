@@ -13,3 +13,4 @@ SpaceAfterLogicalNot: true
 SpaceBeforeAssignmentOperators: true
 SpaceBeforeParens: ControlStatements
 SpacesInConditionalStatement: true
+BreakBeforeBraces: Stroustrup
