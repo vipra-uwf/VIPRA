@@ -77,8 +77,7 @@ class SimType : public Modules::Module<SimType<model_t, output_t, pedset_t, goal
   // TODO(rolland): the simulation shouldn't have to know that it is being run in parallel
   //                  - this is needed because of the delayed loading of parameters, with the operator() every node would load the parameters when they've already been updated
   template <typename pedinput_t, typename obsinput_t, typename params_t>
-  auto parallel_run(pedinput_t const& pedInput, obsinput_t const& obsInput, params_t&& params)
-      -> output_data_t {
+  auto parallel_run(pedinput_t&& pedInput, obsinput_t&& obsInput, params_t&& params) -> output_data_t {
     if constexpr ( std::is_same_v<output_data_t, void> ) {
       run_sim(std::forward<pedinput_t>(pedInput), std::forward<obsinput_t>(obsInput),
               std::forward<params_t>(params));

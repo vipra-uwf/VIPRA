@@ -14,7 +14,7 @@ class Serializable : public Util::CRTP<Serializable<module_t>> {
  public:
   [[nodiscard]] auto serialize() -> std::string { return self().to_string(); }
 
-  auto parse(std::string const& data) -> bool { return self().parse_impl(data); }
+  void parse(std::string const& data) { self().parse_impl(data); }
 };
 
 }  // namespace VIPRA::Modules

@@ -54,6 +54,8 @@ class JSON : public VIPRA::Modules::Module<JSON>,
   template <typename data_t, Concepts::StringView... keys_t>
   [[nodiscard]] auto get_impl(keys_t&&... keys) const -> std::optional<data_t>;
 
+  [[nodiscard]] auto to_string() -> std::string { return _json.dump(); }
+
  private:
   nlohmann::json        _json;
   std::filesystem::path _filepath;
@@ -78,6 +80,7 @@ class JSON : public VIPRA::Modules::Module<JSON>,
   template <typename data_t>
   [[nodiscard]] auto get_map(json_cref const& value) const -> std::optional<std::map<std::string, data_t>>;
 
+ public:
   void parse_impl(std::string const& data) {
     try {
       _json = nlohmann::json::parse(data);
