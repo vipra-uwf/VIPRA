@@ -4,18 +4,21 @@
 #include <tuple>
 #include <type_traits>
 
-#include "vipra/concepts/output.hpp"
-#include "vipra/concepts/output_coordinator.hpp"
 #include "vipra/macros/module.hpp"
 #include "vipra/macros/parameters.hpp"
+
+#include "vipra/modules/module.hpp"
+#include "vipra/modules/output.hpp"
+
 #include "vipra/random/random.hpp"
+
 #include "vipra/types/idx.hpp"
+#include "vipra/types/time.hpp"
 #include "vipra/types/util/result_or_void.hpp"
 
-namespace VIPRA::Module {
-template <Concepts::OutputModule... output_ts>
-class Output {
-  // TODO(rolland): decide if we need std::remove_reference
+namespace VIPRA::CoordModules {
+template <typename... output_ts>
+class Output : public Modules::Module<Output<output_ts...>>, public Modules::Output<Output<output_ts...>> {
   // TODO(rolland): need to figure out how to get paths for each output
   //                   - if multiple output modules use the same parameter, how do we split them up
   //                   - maybe require a path parameter for each output module, in their constructor?
@@ -41,10 +44,38 @@ class Output {
   VIPRA_MODULE_NAME("coordinator");
   VIPRA_MODULE_TYPE(OUTPUT);
 
-  // NOLINTNEXTLINE
+  VIPRA_REGISTER_PARAMS(VIPRA_PARAM("output_dir", _base_output_dir))
 
-  constexpr explicit Output(output_ts... outputs) : _outputs(std::make_tuple(outputs...)) {}
+  /**
+   * @brief Registers the modules parameters with the parameter reader
+   * 
+   * @tparam paramreader_t 
+   * @param paramIn
+   */
+  template <typename paramreader_t>
+  void register_params(paramreader_t&& paramIn) {
+    Modules::Module<Output<output_ts...>>::register_params(std::forward<paramreader_t>(paramIn));
 
+    std::apply([&](auto&&... outputs) { (outputs.register_params(paramIn), ...); }, _outputs);
+  }
+
+  template <typename paramreader_t>
+  void config(paramreader_t& paramIn, VIPRA::Random::Engine& engine) {
+    _base_output_dir =
+        paramIn.template get_param<std::string>(module_type(), module_name(), "output_dir", engine);
+
+    _current_output_dir = _base_output_dir;
+    create_output_directory(_current_output_dir);
+
+    // configure all outputs
+    std::apply([&](auto&&... outputs) { (outputs.config(paramIn, engine), ...); }, _outputs);
+  }
+
+  /**
+   * @brief Creates a new output directory for the current simulation run
+   * 
+   * @param runIdx 
+   */
   void new_run(VIPRA::idx runIdx) {
     _current_output_dir = _base_output_dir / std::to_string(runIdx);
     create_output_directory(_current_output_dir);
@@ -62,30 +93,6 @@ class Output {
           return std::make_tuple(write_helper<decltype(outputs)>::write(outputs, _current_output_dir)...);
         },
         _outputs);
-  }
-
-  /**
-   * @brief Calls config on all output modules
-   * 
-   * @param params 
-   */
-  VIPRA_CONFIG_STEP {
-    VIPRA_GET_PARAM("output_dir", _base_output_dir)
-    _current_output_dir = _base_output_dir;
-
-    create_output_directory(_current_output_dir);
-    std::apply([&](auto&&... outputs) { (outputs.config(params, engine), ...); }, _outputs);
-  }
-
-  /**
-   * @brief Calls register_params on all output modules
-   * 
-   * @tparam params_t 
-   */
-  VIPRA_REGISTER_STEP {
-    VIPRA_REGISTER_PARAM("output_dir")
-    std::apply([&](auto&&... outputs) { (outputs.template register_params<params_t>(params), ...); },
-               _outputs);
   }
 
   /**
@@ -159,7 +166,9 @@ class Output {
         throw std::runtime_error("Could not create output directory: " + directory.string());
     }
   }
+
+ public:
+  constexpr explicit Output(output_ts... outputs) : _outputs(std::make_tuple(outputs...)) {}
 };
 
-CHECK_MODULE(OutputCoordinator, Output<Concepts::DummyOutput>);
-}  // namespace VIPRA::Module
+}  // namespace VIPRA::CoordModules

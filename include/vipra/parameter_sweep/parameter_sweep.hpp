@@ -6,12 +6,12 @@
 #include <cstddef>
 #include <type_traits>
 
-#include "vipra/concepts/parameter_input.hpp"
-#include "vipra/concepts/parameters.hpp"
 #include "vipra/special_modules/parameters.hpp"
+
 #include "vipra/types/idx.hpp"
 #include "vipra/types/parameter.hpp"
 #include "vipra/types/util/result_or_void.hpp"
+
 #include "vipra/util/all_of_type.hpp"
 
 #include "vipra/parameter_sweep/ps_util.hpp"
@@ -37,29 +37,44 @@ class ParameterSweep {
    * @param count 
    * @param callback 
    */
-  template <typename sim_t, typename params_t, typename callback_t = VIPRA::VOID>
-  static void run(sim_t&& sim, params_t&& params, size_t count, callback_t&& callback = VOID{}) {
+  template <typename sim_t, typename pedinput_t, typename obsinput_t, typename params_t,
+            typename callback_t = VIPRA::VOID>
+  static void run(sim_t&& sim, pedinput_t&& pedInput, obsinput_t&& obsInput, params_t&& params, size_t count,
+                  callback_t&& callback = VOID{}) {
     load_params(params);
+    load_inputs(pedInput);
+    load_inputs(obsInput);
+
     size_t localCount = sim_count(rank, size, count);
 
     // add the correct simulation number for the current worker
     // add, because this may be called multiple times
     sim.add_sim_id(start_sim_id(rank, size, count));
 
+    // TODO(rolland): jesus this is a mess
+
     for ( size_t i = 0; i < localCount; ++i ) {
       // run the simulation
       // if a callback is provided, call that on completion
       if constexpr ( std::is_same_v<callback_t, VIPRA::VOID> ) {
-        sim.parallel_run(params);
+        sim.parallel_run(std::forward<pedinput_t>(pedInput), std::forward<obsinput_t>(obsInput),
+                         std::forward<params_t>(params));
       } else {
         // TODO(rolland): this doesn't properly warn that the callback is not being used
-        if constexpr ( std::is_invocable_v<callback_t, decltype(sim.parallel_run(params))> ) {
-          callback(sim.get_sim_id(), sim.parallel_run(params));
+        if constexpr ( std::is_invocable_v<callback_t,
+                                           decltype(sim.parallel_run(std::forward<pedinput_t>(pedInput),
+                                                                     std::forward<obsinput_t>(obsInput),
+                                                                     std::forward<params_t>(params)))> ) {
+          callback(sim.get_sim_id(),
+                   sim.parallel_run(std::forward<pedinput_t>(pedInput), std::forward<obsinput_t>(obsInput),
+                                    std::forward<params_t>(params)));
         } else if constexpr ( std::is_invocable_v<callback_t, VIPRA::idx> ) {
-          sim.parallel_run(params);
+          sim.parallel_run(std::forward<pedinput_t>(pedInput), std::forward<obsinput_t>(obsInput),
+                           std::forward<params_t>(params));
           callback(sim.get_sim_id());
         } else {
-          sim.parallel_run(params);
+          sim.parallel_run(std::forward<pedinput_t>(pedInput), std::forward<obsinput_t>(obsInput),
+                           std::forward<params_t>(params));
           callback();
         }
       }
@@ -135,7 +150,37 @@ class ParameterSweep {
     MPI_Bcast(serialized.data(), length, MPI_CHAR, 0, comm);
 
     if ( rank != 0 ) {
-      input.deserialize(serialized);
+      input.parse(serialized);
+    }
+  }
+
+  /**
+   * @brief Load in the pedestrian or obstacle files and broadcast them to all workers
+   * 
+   * @tparam params_t 
+   * @param params 
+   */
+  template <typename input_t>
+  static void load_inputs(input_t& input) {
+    std::string serialized{};
+    int         length{};
+
+    if ( rank == 0 ) {
+      input.load();
+      serialized = input.serialize();
+      length = static_cast<int>(serialized.size());
+    }
+
+    MPI_Bcast(&length, 1, MPI_INT, 0, comm);
+
+    if ( rank != 0 ) {
+      serialized.resize(length);
+    }
+
+    MPI_Bcast(serialized.data(), length, MPI_CHAR, 0, comm);
+
+    if ( rank != 0 ) {
+      input.parse(serialized);
     }
   }
 };

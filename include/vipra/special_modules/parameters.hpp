@@ -8,16 +8,12 @@
 #include <set>
 #include <type_traits>
 
-#include "vipra/concepts/input.hpp"
-#include "vipra/concepts/parameter_input.hpp"
-#include "vipra/concepts/parameters.hpp"
-
+#include "vipra/debug/debug_do.hpp"
 #include "vipra/macros/module.hpp"
 #include "vipra/modules.hpp"
 #include "vipra/random/distributions.hpp"
 #include "vipra/random/random.hpp"
 #include "vipra/types/parameter.hpp"
-#include "vipra/util/debug_do.hpp"
 #include "vipra/util/template_specialization.hpp"
 
 // TODO(rolland): Check that all required parameters are provided (maybe not needed, they are checked when the module tries to get it)
@@ -25,7 +21,7 @@
 //                  - this is needed for outputing the parameters used in a simulation run
 
 namespace VIPRA {
-template <Concepts::parameter_qualified_input input_t>
+template <typename input_t>
 class Parameters {
  public:
   VIPRA_MODULE_TYPE(PARAMETERS)
@@ -92,25 +88,52 @@ class Parameters {
    */
   template <typename data_t>
   [[nodiscard]] auto get_param(Modules::Type module, std::string const& moduleName,
-                               std::string const& paramName, Random::Engine& engine) const -> data_t {
+                               std::string const& paramName, Random::Engine& engine) const
+      -> std::remove_cvref_t<data_t> {
+    using param_t = std::remove_cvref_t<data_t>;
+
     std::string moduleStr = to_string(module);
 
-    if ( ! contains(module, moduleName, paramName) )
+    // Check that the parameter was registered
+    if ( ! contains(module, moduleName, paramName) ) {
       throw std::runtime_error("Parameter: " + paramName + " For " + to_string(module) +
                                " Module: " + moduleName + " Not Registered");
+    }
 
-    auto value = _input.template get_param<data_t>(engine, moduleStr, moduleName, paramName);
+    // load the value of the parameter
+    auto value = std::optional<param_t>{};
+    if constexpr ( Util::is_specialization<param_t, std::vector>::value ) {
+      // the parameter is supposed to be an array, load it as such
+      value = get_array_param<param_t>(module, moduleName, paramName);
+    } else {
+      // the parameter is meant to be a single value, follow parameter randomization rules
+      value = _input.template get_param<param_t>(moduleStr, moduleName, paramName, engine);
+    }
+
     if ( ! value.has_value() ) {
+      // parameter value wasn't found, throw
       throw std::runtime_error("Required Parameter: " + paramName + " For " + to_string(module) +
                                " Module: " + moduleName + " Not Provided In Input");
     }
 
-    Util::debug_do([&]() {
+    Debug::debug_do([&]() {
       std::cout << "Parameter: " << paramName << " For " << to_string(module) << " Module: " << moduleName
                 << " Value: " << value.value() << std::endl;
     });
 
-    return value.value();
+    return param_t{std::move(value.value())};
+  }
+
+  [[nodiscard]] auto get_input() -> input_t& { return _input; }
+
+ private:
+  input_t                                                               _input;
+  std::map<Modules::Type, std::map<std::string, std::set<std::string>>> _params;
+
+  [[nodiscard]] auto contains(Modules::Type module, std::string const& moduleName,
+                              std::string const& paramName) const -> bool {
+    return _params.contains(module) && _params.at(module).contains(moduleName) &&
+           _params.at(module).at(moduleName).contains(paramName);
   }
 
   /**
@@ -140,19 +163,6 @@ class Parameters {
 
     return value.value();
   }
-
-  [[nodiscard]] auto get_input() -> input_t& { return _input; }
-
- private:
-  input_t                                                               _input;
-  std::map<Modules::Type, std::map<std::string, std::set<std::string>>> _params;
-
-  [[nodiscard]] auto contains(Modules::Type module, std::string const& moduleName,
-                              std::string const& paramName) const -> bool {
-    return _params.contains(module) && _params.at(module).contains(moduleName) &&
-           _params.at(module).at(moduleName).contains(paramName);
-  }
 };
 
-CHECK_MODULE(ParamModule, Parameters<Concepts::DummyParameterInput>)
 }  // namespace VIPRA

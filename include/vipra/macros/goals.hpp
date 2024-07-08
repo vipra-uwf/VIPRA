@@ -1,9 +1,11 @@
 #pragma once
 
-#define VIPRA_GOALS_INIT_STEP                                           \
-  template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t> \
-  void initialize(pedset_t const& pedset, map_t const& map)
+#include "vipra/types/time.hpp"
 
-#define VIPRA_GOALS_UPDATE                                              \
-  template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t> \
-  void update(pedset_t const& pedset, map_t const& /*unused*/, VIPRA::delta_t deltaT)
+#define VIPRA_GOALS_INIT_STEP                  \
+  template <typename pedset_t, typename map_t> \
+  void init_step(pedset_t const& pedset, map_t const& map)
+
+#define VIPRA_GOALS_UPDATE_STEP                \
+  template <typename pedset_t, typename map_t> \
+  void update_step(pedset_t const& pedset, map_t const& /*unused*/, VIPRA::delta_t deltaT)

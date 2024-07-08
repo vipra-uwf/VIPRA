@@ -18,7 +18,7 @@
 
 #include "vipra/types/util/result_or_void.hpp"
 
-#include "vipra/util/debug_do.hpp"
+#include "vipra/debug/debug_do.hpp"
 #include "vipra/util/invoke_result_or.hpp"
 
 namespace VIPRA::Algo {

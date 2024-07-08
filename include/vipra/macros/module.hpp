@@ -1,8 +1,7 @@
 #pragma once
 
 #define VIPRA_MODULE_TYPE(type) \
-  constexpr static VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::type;
+  constexpr auto module_type() const->VIPRA::Modules::Type { return VIPRA::Modules::Type::type; }
 
-#define VIPRA_MODULE_NAME(name) constexpr static const char* _VIPRA_MODULE_NAME_ = name;
-
-#define CHECK_MODULE(type, ...) static_assert(VIPRA::Concepts::type<__VA_ARGS__>);
+#define VIPRA_MODULE_NAME(name) \
+  constexpr auto module_name() const->const char* { return name; }

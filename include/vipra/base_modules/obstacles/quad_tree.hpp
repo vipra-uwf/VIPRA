@@ -1,34 +1,29 @@
 #pragma once
 
-#include <iostream>
+// TODO(rolland): implement quadtree for storing obstacles, currently just a vector
 
-#include "vipra/concepts/input.hpp"
-#include "vipra/concepts/obstacle_set.hpp"
+#include <map>
+#include <string>
+#include <vector>
 
-#include "vipra/geometry/polygon.hpp"
+#include "vipra/macros/module.hpp"
 #include "vipra/macros/obstacles.hpp"
+
 #include "vipra/macros/parameters.hpp"
 #include "vipra/macros/performance.hpp"
-#include "vipra/modules.hpp"
-
-#include "vipra/geometry/f3d.hpp"
-#include "vipra/types/float.hpp"
-#include "vipra/types/idx.hpp"
-#include "vipra/types/parameter.hpp"
-#include "vipra/types/size.hpp"
-#include "vipra/util/debug_do.hpp"
-
-// TODO(rolland): implement quadtree for storing obstacles, currently just a vector
+#include "vipra/modules/obstacles.hpp"
 
 namespace VIPRA::Obstacles {
 /**
  * @brief Obstacle module that uses a quadtree to store obstacles
  * 
  */
-class QuadTree {
+class QuadTree : public VIPRA::Modules::Module<QuadTree>, public VIPRA::Modules::Obstacles<QuadTree> {
  public:
   VIPRA_MODULE_NAME("quad_tree");
   VIPRA_MODULE_TYPE(OBSTACLES);
+
+  VIPRA_REGISTER_PARAMS(VIPRA_PARAM("minQuadSize", _obsDistance))
 
   VIPRA_OBSTACLES_INIT {
     _objectTypes = types;
@@ -47,10 +42,6 @@ class QuadTree {
       }
     }
   }
-
-  VIPRA_REGISTER_STEP { VIPRA_REGISTER_PARAM("minQuadSize"); }
-
-  VIPRA_CONFIG_STEP { VIPRA_GET_PARAM("minQuadSize", _obsDistance); }
 
   [[nodiscard]] auto get_dimensions() const -> VIPRA::f3d { return _dimensions; }
 
@@ -93,5 +84,3 @@ class QuadTree {
   VIPRA::f3d   _dimensions;
 };
 }  // namespace VIPRA::Obstacles
-
-CHECK_MODULE(ObstacleModule, VIPRA::Obstacles::QuadTree);

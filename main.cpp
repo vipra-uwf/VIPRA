@@ -5,6 +5,7 @@
  */
 
 #include <iostream>
+
 #include <vipra.hpp>
 
 #include "modules/model/calm_model/calm_model.hpp"
@@ -19,21 +20,17 @@ auto main(int argc, char** argv) -> int {
     return 1;
   }
   size_t simCount = std::stoul(argv[1]);
+  
 
   // Create Simulation
   auto sim = VIPRA::simulation(
       CALM::Model{},
       VIPRA::Goals::AStar{},
-      VIPRA::Pedestrians::Grid{
-          VIPRA::Input::JSON{"maps/pedestrians/a320/a320_144_pedestrians.json"},
-      },
-      VIPRA::Module::Output{
+      VIPRA::Pedestrians::Grid{},
+      VIPRA::CoordModules::Output{
         VIPRA::Output::Trajectories::JSON{}
       },
-      VIPRA::Module::Map{
-        VIPRA::Input::JSON{"maps/obstacles/a320/a320_polygons.json"},
-        VIPRA::Obstacles::QuadTree{}
-      }
+      VIPRA::Obstacles::QuadTree{}
   );
 
   // Create a Timer and start it
@@ -43,6 +40,8 @@ auto main(int argc, char** argv) -> int {
   // Run the parameter sweep
   VIPRA::ParameterSweep::run(
       sim,
+      VIPRA::Input::JSON{"maps/pedestrians/a320/a320_144_pedestrians.json"},
+      VIPRA::Input::JSON{"maps/obstacles/a320/a320_polygons.json"},
       VIPRA::Parameters{
         VIPRA::Input::JSON{"examples/module_params.json"}
       },

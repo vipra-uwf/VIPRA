@@ -2,11 +2,6 @@
 
 #include <functional>
 
-#include "vipra/concepts/goals.hpp"
-#include "vipra/concepts/map.hpp"
-#include "vipra/concepts/obstacle_set.hpp"
-#include "vipra/concepts/pedset.hpp"
-
 #include "vipra/geometry/f3d.hpp"
 
 #include "vipra/types/state.hpp"
@@ -24,8 +19,7 @@ struct BehaviorContext;
   * @brief Holds references to commonly used parameters for simpler passing
   * 
   */
-template <VIPRA::Concepts::PedsetModule pedset_t, VIPRA::Concepts::MapModule map_t,
-          VIPRA::Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 struct Simpack {
   pedset_t const&                            pedset;
   map_t const&                               obsset;

@@ -2,7 +2,6 @@
 
 #include <vector>
 
-#include "vipra/concepts/pedset.hpp"
 #include "vipra/geometry/f3d.hpp"
 
 namespace VIPRA {
@@ -16,7 +15,7 @@ struct State {
 
   [[nodiscard]] auto size() const -> size_t { return positions.size(); }
 
-  void initialize(const VIPRA::Concepts::PedsetModule auto& pedset) {
+  void initialize(auto const& pedset) {
     positions = pedset.all_coords();
     velocities = pedset.all_velocities();
   }
