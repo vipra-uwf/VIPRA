@@ -1,9 +1,15 @@
 #pragma once
 
+#include <map>
 #include <type_traits>
 
 namespace VIPRA::Util {
 template <typename type_t, template <typename...> class ref_t>
+
+/**
+ * @brief Utility struct that gets whether a type is a specialization of another templated type
+ * 
+ */
 // NOLINTNEXTLINE
 struct is_specialization : std::false_type {};
 
@@ -33,10 +39,10 @@ struct get_map_specialization;
  * @tparam template_t 
  * @tparam inner_t 
  */
-template <template <typename...> typename template_t, typename key_t, typename value_t>
-struct get_map_specialization<template_t<key_t, value_t>> {
-  using key = key_t;
-  using value = value_t;
+template <typename k_t, typename v_t>
+struct get_map_specialization<std::map<k_t, v_t>> {
+  using key_t = k_t;
+  using value_t = v_t;
 };
 
 }  // namespace VIPRA::Util

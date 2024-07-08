@@ -25,7 +25,7 @@ class Output : public Util::CRTP<Output<module_t>> {
 
  public:
   void write(std::filesystem::path const& outputDir) {
-    std::filesystem::path filepath = outputDir / _filename;
+    std::filesystem::path filepath = outputDir / self().filename();
     std::ofstream         file(filepath);
     if ( ! file.is_open() ) {
       throw std::runtime_error("Could not open file for writing: " + filepath.string());

@@ -35,9 +35,12 @@
 namespace VIPRA {
 
 template <typename model_t, typename output_t, typename pedset_t, typename goals_t, typename obstacles_t>
-class SimType : public Modules::Module<SimType<output_t, model_t, pedset_t, goals_t, obstacles_t>> {
+class SimType : public Modules::Module<SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>> {
   using base_output_t = decltype(std::declval<output_t>().write());
   using output_data_t = VIPRA::sim_output_t<output_t>;
+
+  using Modules::Module<SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>>::config;
+  using Modules::Module<SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>>::register_params;
 
  public:
   VIPRA_MODULE_NAME("main");
@@ -63,9 +66,11 @@ class SimType : public Modules::Module<SimType<output_t, model_t, pedset_t, goal
     params.get_input().load();
 
     if constexpr ( std::is_same_v<output_data_t, void> ) {
-      run_sim(pedInput, obsInput, std::forward<params_t>(params));
+      run_sim(std::forward<pedinput_t>(pedInput), std::forward<obsinput_t>(obsInput),
+              std::forward<params_t>(params));
     } else {
-      return run_sim(pedInput, obsInput, std::forward<params_t>(params));
+      return run_sim(std::forward<pedinput_t>(pedInput), std::forward<obsinput_t>(obsInput),
+                     std::forward<params_t>(params));
     }
   }
 
@@ -75,9 +80,11 @@ class SimType : public Modules::Module<SimType<output_t, model_t, pedset_t, goal
   auto parallel_run(pedinput_t const& pedInput, obsinput_t const& obsInput, params_t&& params)
       -> output_data_t {
     if constexpr ( std::is_same_v<output_data_t, void> ) {
-      run_sim(pedInput, obsInput, std::forward<params_t>(params));
+      run_sim(std::forward<pedinput_t>(pedInput), std::forward<obsinput_t>(obsInput),
+              std::forward<params_t>(params));
     } else {
-      return run_sim(pedInput, obsInput, std::forward<params_t>(params));
+      return run_sim(std::forward<pedinput_t>(pedInput), std::forward<obsinput_t>(obsInput),
+                     std::forward<params_t>(params));
     }
   }
 
@@ -105,9 +112,12 @@ class SimType : public Modules::Module<SimType<output_t, model_t, pedset_t, goal
   template <typename pedinput_t, typename obsinput_t, typename params_t>
   auto run_sim(pedinput_t const& pedInput, obsinput_t const& obsInput, params_t&& params) -> output_data_t {
     // initialize parameters, etc
-    register_params(std::forward<params_t>(params));
+    register_step(std::forward<params_t>(params));
+
     initialize(pedInput, obsInput, std::forward<params_t>(params));
+
     _output.new_run(_currSimIdx++);
+
     _currTimestep = 0;
 
     VIPRA::State state;
@@ -132,7 +142,8 @@ class SimType : public Modules::Module<SimType<output_t, model_t, pedset_t, goal
   }
 
   template <typename params_t>
-  void register_params(params_t&& params) {
+  void register_step(params_t&& params) {
+    register_params(params);
     _output.register_params(std::forward<params_t>(params));
     _model.register_params(std::forward<params_t>(params));
     _pedset.register_params(std::forward<params_t>(params));
@@ -148,9 +159,10 @@ class SimType : public Modules::Module<SimType<output_t, model_t, pedset_t, goal
    */
   template <typename pedinput_t, typename obsinput_t, typename params_t>
   void initialize(pedinput_t const& pedInput, obsinput_t const& obsInput, params_t&& params) {
+    config_step(std::forward<params_t>(params));
+
     _engine.reseed(_seed + (_currSimIdx * _currSimIdx));
 
-    config(std::forward<params_t>(params));
     _map.initialize(obsInput);
     _pedset.initialize(pedInput, _map);
     _goals.initialize(_pedset, _map);
@@ -159,7 +171,8 @@ class SimType : public Modules::Module<SimType<output_t, model_t, pedset_t, goal
   }
 
   template <typename params_t>
-  void config(params_t const& params) {
+  void config_step(params_t const& params) {
+    config(params, _engine);
     _output.config(params, _engine);
     _model.config(params, _engine);
     _pedset.config(params, _engine);

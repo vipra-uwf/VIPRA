@@ -45,7 +45,7 @@ class Grid : public Modules::Module<Grid>, public Modules::Pedestrians<Grid> {
     std::vector<VIPRA::idx> tempIndexes((*coords).size());
     std::iota(std::begin(tempIndexes), std::end(tempIndexes), 0);
 
-    _spatialGrid.initialize(dimensions.x, dimensions.y, *coords, tempIndexes);
+    _spatialGrid.initialize(_cellSize, dimensions.x, dimensions.y, *coords, tempIndexes);
 
     set_velocities(std::vector<VIPRA::f3d>((*coords).size()));
     set_coordinates(std::move(*coords));
@@ -53,7 +53,7 @@ class Grid : public Modules::Module<Grid>, public Modules::Pedestrians<Grid> {
 
   VIPRA_PEDS_UPDATE_STEP {
     // Update pedestrian positions in grids
-    _spatialGrid.update_grids(get_coordinates());
+    _spatialGrid.update_grids(get_coordinates(), state.positions);
   }
 
   [[nodiscard]] auto conditional_closest_ped_impl(VIPRA::idx ped, auto&& condition) const -> VIPRA::idx {

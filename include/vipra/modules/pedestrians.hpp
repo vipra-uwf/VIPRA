@@ -35,12 +35,12 @@ class Pedestrians : public Util::CRTP<Pedestrians<module_t>> {
   void initialize(auto& input, auto const& map) { self().init_step(input, map); }
 
   void update(VIPRA::State const& state) {
+    self().update_step(state);
+
     for ( VIPRA::idx pedIdx = 0; pedIdx < state.size(); ++pedIdx ) {
       _coords[pedIdx] = state.positions[pedIdx];
       _velocities[pedIdx] = state.velocities[pedIdx];
     }
-
-    self().update_step();
   }
 
   template <Condition condition_t>

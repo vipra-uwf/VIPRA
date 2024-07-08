@@ -7,6 +7,7 @@
 #include <vipra.hpp>
 
 #include "modules/model/calm_model/calm_model.hpp"
+#include "vipra/random/random.hpp"
 
 auto main() -> int {
   // Create the simulation
@@ -15,7 +16,7 @@ auto main() -> int {
                                VIPRA::Obstacles::QuadTree{});
 
   // Run the simulation with the module parameters in 'module_params.json'
-  sim(VIPRA::Input::JSON{"maps/obstacles/a320/a320_polygons.json"},
-      VIPRA::Input::JSON{"maps/pedestrians/a320/a320_144_pedestrians.json"},
-      VIPRA::Parameters{VIPRA::Input::JSON{"module_params.json"}});
+  sim(VIPRA::Input::JSON{"maps/pedestrians/a320/a320_144_pedestrians.json"},
+      VIPRA::Input::JSON{"maps/obstacles/a320/a320_polygons.json"},
+      VIPRA::Parameters{VIPRA::Input::JSON{"examples/module_params.json"}});
 }

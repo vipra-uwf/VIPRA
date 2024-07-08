@@ -42,7 +42,7 @@ class AStar : public Modules::Module<AStar>, public Modules::Goals<AStar> {
     _graph = PathingGraph(map, _gridSize, _closestObstacle);
     set_end_goals(pedset, map);
     _paths.clear();
-    _paths.reserve(pedCnt);
+    _paths.resize(pedCnt);
 
     // for each pedestrian, find their path to their end goal
     for ( VIPRA::idx pedIdx = 0; pedIdx < pedCnt; ++pedIdx ) {
@@ -165,7 +165,6 @@ class AStar : public Modules::Module<AStar>, public Modules::Goals<AStar> {
     assert(path.empty() == false);
 
     std::vector<VIPRA::f3d> squashedPath;
-    squashedPath.reserve(path.size() / 2);
 
     VIPRA::f3d dif;
     for ( VIPRA::idx i = 1; i < path.size(); ++i ) {

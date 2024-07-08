@@ -25,6 +25,10 @@ class JSON : public VIPRA::Modules::Module<JSON>, public VIPRA::Modules::Output<
 
   VIPRA_REGISTER_PARAMS(VIPRA_PARAM("filename", _filename))
 
+  // TODO(rolland): this is needed for the output coordinator to know what filename to use, but this is kinda nasty
+  //                    - maybe find a way to share parameters?
+  [[nodiscard]] auto filename() -> std::string const& { return _filename; }
+
   [[nodiscard]] auto to_string() -> std::string { return _json.dump(); }
 
   template <typename data_t>

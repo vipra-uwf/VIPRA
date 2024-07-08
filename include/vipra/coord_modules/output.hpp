@@ -18,7 +18,7 @@
 
 namespace VIPRA::CoordModules {
 template <typename... output_ts>
-class Output : public Modules::Output<Output<output_ts...>> {
+class Output : public Modules::Module<Output<output_ts...>>, public Modules::Output<Output<output_ts...>> {
   // TODO(rolland): need to figure out how to get paths for each output
   //                   - if multiple output modules use the same parameter, how do we split them up
   //                   - maybe require a path parameter for each output module, in their constructor?
@@ -46,10 +46,28 @@ class Output : public Modules::Output<Output<output_ts...>> {
 
   VIPRA_REGISTER_PARAMS(VIPRA_PARAM("output_dir", _base_output_dir))
 
-  VIPRA_CONFIG_STEP {
-    _current_output_dir = _base_output_dir;
+  /**
+   * @brief Registers the modules parameters with the parameter reader
+   * 
+   * @tparam paramreader_t 
+   * @param paramIn
+   */
+  template <typename paramreader_t>
+  void register_params(paramreader_t&& paramIn) {
+    Modules::Module<Output<output_ts...>>::register_params(std::forward<paramreader_t>(paramIn));
 
+    std::apply([&](auto&&... outputs) { (outputs.register_params(paramIn), ...); }, _outputs);
+  }
+
+  template <typename paramreader_t>
+  void config(paramreader_t& paramIn, VIPRA::Random::Engine& engine) {
+    _base_output_dir =
+        paramIn.template get_param<std::string>(module_type(), module_name(), "output_dir", engine);
+
+    _current_output_dir = _base_output_dir;
     create_output_directory(_current_output_dir);
+
+    // configure all outputs
     std::apply([&](auto&&... outputs) { (outputs.config(paramIn, engine), ...); }, _outputs);
   }
 
