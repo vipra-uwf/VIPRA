@@ -33,7 +33,7 @@ class AStar : public Modules::Module<AStar>, public Modules::Goals<AStar> {
 
     assert(pedset.num_pedestrians() > 0);
 
-    auto const pedCnt = pedset.num_pedestrians();
+    VIPRA::size const pedCnt = pedset.num_pedestrians();
 
     _currentGoals.resize(pedCnt);
     _endGoals.resize(pedCnt);
