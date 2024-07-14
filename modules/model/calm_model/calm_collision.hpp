@@ -14,7 +14,8 @@ using VIPRA::Geometry::Rectangle;
 
 class Collision {
  public:
-  void initialize(const auto& pedset, const auto& goals, ModelData const& data) {
+  void initialize(const auto& pedset, const auto& goals, ModelData const& data)
+  {
     raceStatuses = std::vector<RaceStatus>(pedset.num_pedestrians(), NO_RACE);
     inRace = std::vector<std::vector<bool>>(pedset.num_pedestrians(),
                                             std::vector<bool>(pedset.num_pedestrians(), false));
@@ -28,7 +29,8 @@ class Collision {
   }
 
   void race_detection(const auto& pedset, ModelData const& data, const auto& goals, VIPRA::timestep timestep,
-                      const auto& map) {
+                      const auto& map)
+  {
     VIPRA_PERF_FUNCTION("CALM::Collision::raceDetection")
 
     calc_collision_rectangles(pedset, goals, data);
@@ -40,13 +42,15 @@ class Collision {
       bool check = check_if_highest_priority(pedset, goals, i, timestep);
       if ( check ) {
         raceStatuses[i] = NO_RACE;
-      } else {
+      }
+      else {
         raceStatuses[i] = WAIT;
       }
     }
   }
 
-  void initialize_rectangles(const auto& pedset, const auto& goals, ModelData const& data) {
+  void initialize_rectangles(const auto& pedset, const auto& goals, ModelData const& data)
+  {
     collisionRectangles = std::vector<Rectangle>(pedset.num_pedestrians());
     auto const& shldrs = data.shoulderLens;
     for ( VIPRA::size i = 0; i < collisionRectangles.size(); i++ ) {
@@ -63,7 +67,8 @@ class Collision {
   }
 
   void assign_race_statuses(std::vector<RaceStatus>&        cpmRaceStatuses,
-                            std::vector<std::vector<bool>>& cpmInRace) {
+                            std::vector<std::vector<bool>>& cpmInRace)
+  {
     cpmRaceStatuses = raceStatuses;
     cpmInRace = inRace;
   }
@@ -81,7 +86,8 @@ class Collision {
   static constexpr float       minspeed = 0.00000001F;
   static constexpr float       rectangleRange = 0.4;
 
-  void calc_collision_rectangles(const auto& pedset, const auto& goals, ModelData const& data) {
+  void calc_collision_rectangles(const auto& pedset, const auto& goals, ModelData const& data)
+  {
     VIPRA_PERF_FUNCTION("CALM::Collision::calcCollisionRectangles")
 
     auto const&       coords = pedset.all_coords();
@@ -111,7 +117,8 @@ class Collision {
   }
 
   static void add_intersection_points(VIPRA::f3d p1, VIPRA::f3d q1, VIPRA::f3d p2, VIPRA::f3d q2,
-                                      VIPRA::f3dVec& intersectionPoints) {
+                                      VIPRA::f3dVec& intersectionPoints)
+  {
     VIPRA_PERF_FUNCTION("CALM::Collision::addIntersectionPoints")
     float a1 = q1.y - p1.y;
     float b1 = p1.x - q1.x;
@@ -127,7 +134,8 @@ class Collision {
       if ( Line{p1, q1}.is_point_on(q2) ) intersectionPoints.push_back(q2);
       if ( Line{p2, q2}.is_point_on(p1) ) intersectionPoints.push_back(p1);
       if ( Line{p2, q2}.is_point_on(q1) ) intersectionPoints.push_back(q1);
-    } else {
+    }
+    else {
       float pX{};
       float pY{};
       pX = (b2 * c1 - b1 * c2) / det;
@@ -136,7 +144,8 @@ class Collision {
     }
   }
 
-  [[nodiscard]] auto get_collision_area_midpoint(VIPRA::idx index1, VIPRA::idx index2) -> VIPRA::f3d {
+  [[nodiscard]] auto get_collision_area_midpoint(VIPRA::idx index1, VIPRA::idx index2) -> VIPRA::f3d
+  {
     VIPRA_PERF_FUNCTION("CALM::Collision::getCollisionAreaMidpoint")
 
     Rectangle const& r1 = collisionRectangles[index1];
@@ -166,7 +175,8 @@ class Collision {
   }
 
   [[nodiscard]] auto check_if_highest_priority(const auto& pedset, const auto& goals, VIPRA::idx pedIdx,
-                                               VIPRA::timestep timestep) -> bool {
+                                               VIPRA::timestep timestep) -> bool
+  {
     VIPRA_PERF_FUNCTION("CALM::Collision::checkIfHighestPriority")
 
     bool flag = true;
@@ -219,7 +229,8 @@ class Collision {
           inRace[i][pedIdx] = true;
           inRace[pedIdx][i] = true;
           flag = false;
-        } else {
+        }
+        else {
           if ( inRace[pedIdx][i] ) {
             inRace[pedIdx][i] = false;
             inRace[i][pedIdx] = false;
@@ -240,7 +251,8 @@ class Collision {
 
         inRace[i][pedIdx] = true;
         inRace[pedIdx][i] = true;
-      } else {
+      }
+      else {
         collisionMidpoint = intersectionMidpoints[pedIdx][i];
       }
       if ( coords1.distance_to(collisionMidpoint) > coords2.distance_to(collisionMidpoint) )
@@ -260,7 +272,8 @@ class Collision {
    * @return true
    * @return false
    */
-  auto check_if_collide(VIPRA::idx index1, VIPRA::idx index2) -> bool {
+  auto check_if_collide(VIPRA::idx index1, VIPRA::idx index2) -> bool
+  {
     VIPRA_PERF_FUNCTION("CALM::Collision::checkIfCollide")
 
     Rectangle& r1 = collisionRectangles[index1];
@@ -277,7 +290,8 @@ class Collision {
    * @return Line : Line containing the shoulder points
    */
   [[nodiscard]] static inline auto get_shoulder_points(const VIPRA::f3d& coords, const VIPRA::f3d& velocity,
-                                                       float shoulderWidth) noexcept -> Line {
+                                                       float shoulderWidth) noexcept -> Line
+  {
     VIPRA_PERF_FUNCTION("CALM::Collision::getShoulderPoints")
 
     if ( velocity == VIPRA::f3d{0, 0, 0} ) {

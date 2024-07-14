@@ -30,7 +30,8 @@ struct ModelData {
 
   [[nodiscard]] auto size() const noexcept -> size_t { return masses.size(); }
 
-  void resize(size_t size) {
+  void resize(size_t size)
+  {
     masses.resize(size);
     reactionTimes.resize(size);
     maxSpeeds.resize(size);

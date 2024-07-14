@@ -17,24 +17,25 @@
 #include "calm_model_types.hpp"
 
 namespace CALM {
-class Model : public VIPRA::Modules::Module<Model>, public VIPRA::Modules::Model<Model> {
+NEW_VIPRA_MODULE(Model, Model)
+{
  public:
   VIPRA_MODULE_TYPE(MODEL);
   VIPRA_MODULE_NAME("calm_model");
 
-  VIPRA_REGISTER_PARAMS(VIPRA_PARAM("meanMass", _config.meanMass),
-                        VIPRA_PARAM("massStdDev", _config.massStdDev),
-                        VIPRA_PARAM("meanMass", _config.meanMass),
-                        VIPRA_PARAM("massStdDev", _config.massStdDev),
-                        VIPRA_PARAM("meanReactionTime", _config.meanReactionTime),
-                        VIPRA_PARAM("reactionTimeStdDev", _config.reactionTimeStdDev),
-                        VIPRA_PARAM("meanMaxSpeed", _config.meanMaxSpeed),
-                        VIPRA_PARAM("maxSpeedStdDev", _config.maxSpeedStdDev),
-                        VIPRA_PARAM("meanShoulderLen", _config.meanShoulderLen),
-                        VIPRA_PARAM("shoulderLenStdDev", _config.shoulderLenStdDev))
+  VIPRA_REGISTER_PARAMS(
+      VIPRA_PARAM("meanMass", _config.meanMass), VIPRA_PARAM("massStdDev", _config.massStdDev),
+      VIPRA_PARAM("meanMass", _config.meanMass), VIPRA_PARAM("massStdDev", _config.massStdDev),
+      VIPRA_PARAM("meanReactionTime", _config.meanReactionTime),
+      VIPRA_PARAM("reactionTimeStdDev", _config.reactionTimeStdDev),
+      VIPRA_PARAM("meanMaxSpeed", _config.meanMaxSpeed),
+      VIPRA_PARAM("maxSpeedStdDev", _config.maxSpeedStdDev),
+      VIPRA_PARAM("meanShoulderLen", _config.meanShoulderLen),
+      VIPRA_PARAM("shoulderLenStdDev", _config.shoulderLenStdDev))
 
   // NOLINTNEXTLINE(misc-unused-parameters)
-  VIPRA_MODEL_INIT_STEP {
+  VIPRA_MODEL_INIT_STEP
+  {
     _peds.resize(pedset.num_pedestrians());
     _collision.initialize(pedset, goals, _peds);
     _collision.assign_race_statuses(_raceStatuses, _inRace);
@@ -50,7 +51,8 @@ class Model : public VIPRA::Modules::Module<Model>, public VIPRA::Modules::Model
   }
 
   // NOLINTNEXTLINE(bugprone-easily-swappable-parameters, misc-unused-parameters)
-  VIPRA_MODEL_TIMESTEP {
+  VIPRA_MODEL_TIMESTEP
+  {
     VIPRA_PERF_FUNCTION("calm::model_step");
 
     calc_shoulders(pedset.all_coords(), goals.current_goals());
@@ -78,22 +80,23 @@ class Model : public VIPRA::Modules::Module<Model>, public VIPRA::Modules::Model
   void calc_neighbors(auto const& pedset, auto const& /*map*/, auto const& goals);
   void update_state(auto const& pedset, auto const& goals, VIPRA::State& state, VIPRA::delta_t deltaT);
   auto is_path_blocked(VIPRA::idx pedIdx, VIPRA::f3d veloc, VIPRA::f_pnt maxDist, const auto& map)
-      -> VIPRA::f_pnt;
+      ->VIPRA::f_pnt;
 
   void        calc_shoulders(VIPRA::f3dVec const&, VIPRA::f3dVec const&);
-  static auto obj_spatial_test(const VIPRA::Geometry::Rectangle&, VIPRA::f3d, VIPRA::f3d) -> bool;
-  static auto obj_direction_test(VIPRA::f3d, VIPRA::f3d, VIPRA::f3d) -> bool;
-  static auto is_ped_toward_goal(VIPRA::f3d, VIPRA::f3d, VIPRA::f3d) -> bool;
+  static auto obj_spatial_test(const VIPRA::Geometry::Rectangle&, VIPRA::f3d, VIPRA::f3d)->bool;
+  static auto obj_direction_test(VIPRA::f3d, VIPRA::f3d, VIPRA::f3d)->bool;
+  static auto is_ped_toward_goal(VIPRA::f3d, VIPRA::f3d, VIPRA::f3d)->bool;
 
-  auto rect_from_shoulders(VIPRA::idx, VIPRA::f3d, VIPRA::f3d) -> VIPRA::Geometry::Rectangle;
+  auto rect_from_shoulders(VIPRA::idx, VIPRA::f3d, VIPRA::f3d)->VIPRA::Geometry::Rectangle;
 
   void                  calc_betas();
-  static constexpr auto calc_beta(VIPRA::f_pnt distance) -> VIPRA::f_pnt;
+  static constexpr auto calc_beta(VIPRA::f_pnt distance)->VIPRA::f_pnt;
 };
 
 // ------------------- IMPLEMENTATIONS -----------------------------------------------------
 
-void Model::calc_neighbors(auto const& pedset, auto const& /*map*/, auto const& goals) {
+void Model::calc_neighbors(auto const& pedset, auto const& /*map*/, auto const& goals)
+{
   VIPRA_PERF_FUNCTION("calm::calc_neighbors")
 
   const VIPRA::size pedCnt = pedset.num_pedestrians();
@@ -126,13 +129,15 @@ void Model::calc_neighbors(auto const& pedset, auto const& /*map*/, auto const& 
 
     if ( nearest == i ) {
       _peds.nearestDists[i] = 100.0;
-    } else {
+    }
+    else {
       _peds.nearestDists[i] = pedCoords.distance_to(coords[nearest]);
     }
   }
 }
 
-void Model::update_state(auto const& pedset, auto const& goals, VIPRA::State& state, VIPRA::delta_t deltaT) {
+void Model::update_state(auto const& pedset, auto const& goals, VIPRA::State& state, VIPRA::delta_t deltaT)
+{
   VIPRA_PERF_FUNCTION("calm::update_state")
 
   const VIPRA::size pedCnt = pedset.num_pedestrians();
@@ -167,7 +172,8 @@ void Model::update_state(auto const& pedset, auto const& goals, VIPRA::State& st
 }
 
 auto Model::is_path_blocked(VIPRA::idx pedIdx, VIPRA::f3d velocity, VIPRA::f_pnt maxDist, const auto& map)
-    -> VIPRA::f_pnt {
+    -> VIPRA::f_pnt
+{
   VIPRA_PERF_FUNCTION("calm::is_path_blocked")
 
   VIPRA::Geometry::Line shoulders = _peds.shoulders[pedIdx];
