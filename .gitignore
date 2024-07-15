@@ -49,5 +49,12 @@ temp
 latex
 html
 
+# Simulation
 VIPRA
 sim_output
+
+# Python
+__pycache__
+*.gif
+*.jpeg
+*.png

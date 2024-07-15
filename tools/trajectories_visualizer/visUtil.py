@@ -2,6 +2,7 @@ import sys
 import json
 import math
 import numpy as np
+import matplotlib
 import datetime
 
 def getArgs():
@@ -114,16 +115,19 @@ def getArgs():
     overrides = funcOverrides
   )
 
+def f3d_to_array(f3d):
+  return [f3d['x'], f3d['y'] if 'y' in f3d else 0]
 
 def getObs(obs):
   obsCoords = json.load(open(obs))
-  obsX = []
-  obsY = []
-  for obj in obsCoords["obstacle"]:
-    obsX.append(float(obj["x"]))
-    obsY.append(float(obj["y"]))
+  obstacles = []
+  for obj in obsCoords["obstacles"]:
+    obstacles.append([])
+    for point in obj:
+      obstacles[-1].append(f3d_to_array(point))
+    obstacles[-1].append(f3d_to_array(obj[0]))
 
-  return (obsX, obsY)
+  return obstacles
 
 def getPeds(peds):
   if peds:
@@ -165,8 +169,10 @@ def plotIndexes(pointsX, pointsY, pedColors, ax, args):
 def plotPeds(pedsX, pedsY, pedColors, ax, args):
   return ax.scatter(pedsX, pedsY, 2, color=pedColors)
 
-def plotObs(obsX, obsY, ax, args):
-  return ax.scatter(obsX, obsY, 1, c=args['obsColor'])
+def plotObs(obstacles, ax, args):
+  for obstacle in obstacles:
+    poly = matplotlib.patches.Polygon(obstacle, linewidth=1, facecolor=args['obsColor'])
+    ax.add_patch(poly)
 
 def prepPlot(ax, i, args):
   xDim = args['xDim']
