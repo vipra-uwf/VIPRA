@@ -1,6 +1,6 @@
 #pragma once
 
-// TODO(rolland): implement quadtree for storing obstacles, currently just a vector
+// TODO(rolland): issue #15 implement quadtree for storing obstacles, currently just a vector
 
 #include <map>
 #include <string>

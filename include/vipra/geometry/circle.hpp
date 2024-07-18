@@ -5,7 +5,7 @@
 
 namespace VIPRA::Geometry {
 class Circle {
-  // TODO(rolland): add more
+  // TODO(rolland): issue #17 add more
  public:
   constexpr Circle(VIPRA::f3d center, VIPRA::f_pnt radius) : _center(center), _radius(radius) {}
 

@@ -1,6 +1,6 @@
 #pragma once
 
-// TODO(rolland): complete proper implementation
+// TODO(rolland): issue #16 complete proper implementation
 
 #include <stdexcept>
 #include <vector>

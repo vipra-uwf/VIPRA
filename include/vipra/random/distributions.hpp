@@ -48,7 +48,7 @@ class uniform_distribution {
 template <Concepts::Numeric data_t = VIPRA::f_pnt>
 // NOLINTNEXTLINE (rolland) sticking to familiar naming convention for std::normal_distribution
 class normal_distribution {
-  // TODO(rolland): this is rather slow
+  // TODO(rolland): issue #24 this is rather slow
 
  public:
   constexpr normal_distribution(data_t mean, data_t stdDev) : _mean(mean), _stdDev(stdDev) {}

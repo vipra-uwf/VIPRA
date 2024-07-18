@@ -7,7 +7,7 @@
 
 namespace VIPRA::Geometry {
 class Rectangle {
-  // TODO(rolland): implement, currently axis aligned only
+  // TODO(rolland): issue #20 implement, currently axis aligned only
   // TODO(rolland): create tests
 
  public:
@@ -100,7 +100,7 @@ class Rectangle {
 
   [[nodiscard]] inline constexpr auto area() const noexcept -> VIPRA::f_pnt { return _area; }
 
-  // TODO(rolland): this assumes axis aligned
+  // TODO(rolland): issue #20 this assumes axis aligned
   [[nodiscard]] inline constexpr auto center() const noexcept -> VIPRA::f3d
   {
     return VIPRA::f3d(_p1.x + width() / 2, _p1.y + height() / 2, _p1.z);

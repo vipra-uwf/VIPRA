@@ -17,7 +17,7 @@
 #include "vipra/util/template_specialization.hpp"
 
 // TODO(rolland): Check that all required parameters are provided (maybe not needed, they are checked when the module tries to get it)
-// TODO(rolland): No way of checking what a parameter was, once get_param is called the random engine moves on
+// TODO(rolland): issue #26 No way of checking what a parameter was, once get_param is called the random engine moves on
 //                  - this is needed for outputing the parameters used in a simulation run
 
 namespace VIPRA {

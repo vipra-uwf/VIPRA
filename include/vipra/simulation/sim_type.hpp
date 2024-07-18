@@ -109,7 +109,7 @@ auto SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::operator()(pedi
                                                                             params_t&&   params)
     -> output_data_t
 {
-  // TODO(rolland): this assumes that a only a single node should ever run this function, there may be sitations where this isn't user friendly?
+  // TODO(rolland): issue #25 this assumes that a only a single node should ever run this function, there may be sitations where this isn't user friendly?
   if ( ! ParameterSweep::is_root() ) return {};
 
   pedInput.load();
@@ -126,7 +126,7 @@ auto SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::operator()(pedi
   }
 }
 
-// TODO(rolland): the simulation shouldn't have to know that it is being run in parallel
+// TODO(rolland): issue #25 the simulation shouldn't have to know that it is being run in parallel
 //                  - this is needed because of the delayed loading of parameters, with the operator() every node would load the parameters when they've already been updated
 template <typename model_t, typename output_t, typename pedset_t, typename goals_t, typename obstacles_t>
 template <typename pedinput_t, typename obsinput_t, typename params_t>

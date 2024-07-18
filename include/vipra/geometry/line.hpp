@@ -9,7 +9,7 @@ struct Line {
   VIPRA::f3d start;
   VIPRA::f3d end;
 
-  // TODO(rolland): add more to the line class
+  // TODO(rolland): issue #18 add more to the line class
   constexpr Line(VIPRA::f3d start, VIPRA::f3d end) : start(start), end(end) {}
 
   /**
@@ -38,7 +38,7 @@ struct Line {
    */
   [[nodiscard]] inline constexpr auto closest_point(VIPRA::f3d point) const noexcept -> VIPRA::f3d
   {
-    // TODO(rolland): verify
+    // TODO(rolland): issue #18 verify
     const VIPRA::f_pnt lineLength = start.distance_to(end);
     const VIPRA::f_pnt t =
         std::max(0.0, std::min(1.0, (point - start).dot(end - start) / (lineLength * lineLength)));

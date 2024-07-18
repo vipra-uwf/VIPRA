@@ -53,7 +53,7 @@ class ParameterSweep {
     // add, because this may be called multiple times
     sim.add_sim_id(start_sim_id(rank, size, count));
 
-    // TODO(rolland): jesus this is a mess
+    // TODO(rolland): issue #22 improve readability
 
     for ( size_t i = 0; i < localCount; ++i ) {
       // run the simulation
@@ -63,7 +63,7 @@ class ParameterSweep {
                          std::forward<params_t>(params));
       }
       else {
-        // TODO(rolland): this doesn't properly warn that the callback is not being used
+        // TODO(rolland): issue #23 this doesn't properly warn that the callback is not being used
         if constexpr ( std::is_invocable_v<callback_t,
                                            decltype(sim.parallel_run(std::forward<pedinput_t>(pedInput),
                                                                      std::forward<obsinput_t>(obsInput),

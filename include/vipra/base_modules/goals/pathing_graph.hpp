@@ -92,7 +92,7 @@ class PathingGraph : public VIPRA::DataStructures::GraphMixin<PathingGraph, Grid
 
     reserve(_xCount * _yCount);
 
-    // TODO(rolland): This starts the grid a (0, 0) and not the bottom left corner of the map, we may want to change this
+    // TODO(rolland): issue #14 This starts the grid a (0, 0) and not the bottom left corner of the map, we may want to change this
     VIPRA::f3d center;
 
     // Construct a graph of grids filling the map with adjacent grids connecting
