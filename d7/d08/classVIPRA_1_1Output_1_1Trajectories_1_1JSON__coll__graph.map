@@ -1,0 +1,11 @@
+<map id="VIPRA::Output::Trajectories::JSON" name="VIPRA::Output::Trajectories::JSON">
+<area shape="rect" id="Node000001" title="JSON output module for writing trajectories to a JSON file." alt="" coords="91,183,271,223"/>
+<area shape="rect" id="Node000002" href="$dc/dab/classVIPRA_1_1Modules_1_1Module.html" title=" " alt="" coords="5,94,170,135"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="122,143,162,180,158,184,118,147"/>
+<area shape="rect" id="Node000003" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="19,5,156,46"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="90,62,90,94,85,94,85,62"/>
+<area shape="rect" id="Node000004" href="$d4/de8/classVIPRA_1_1Modules_1_1Output.html" title=" " alt="" coords="194,94,355,135"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="244,147,204,184,200,180,240,143"/>
+<area shape="rect" id="Node000005" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="206,5,342,46"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="277,62,277,94,272,94,272,62"/>
+</map>

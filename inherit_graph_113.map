@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$d1/db2/structVIPRA_1_1Util_1_1all__of__type.html" title=" " alt="" coords="5,5,130,46"/>
+<area shape="rect" id="Node000000" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="5,5,155,46"/>
+<area shape="rect" id="Node000001" href="$d4/de8/classVIPRA_1_1Modules_1_1Output.html" title="Dummy output for use in other concepts." alt="" coords="203,5,364,46"/>
+<area shape="poly" id="edge51_Node000000_Node000001" title=" " alt="" coords="170,23,202,23,202,28,170,28"/>
 </map>

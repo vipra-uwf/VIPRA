@@ -1,7 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" title=" " alt="" coords="5,42,127,68"/>
-<area shape="rect" id="Node000001" href="$d7/d47/classVIPRA_1_1Behaviors_1_1BuilderException.html" title=" " alt="" coords="196,5,367,46"/>
-<area shape="poly" id="edge6_Node000000_Node000001" title=" " alt="" coords="142,42,195,35,196,40,142,47"/>
-<area shape="rect" id="Node000002" href="$d0/d16/classVIPRA_1_1Behaviors_1_1DSLException.html" title=" " alt="" coords="175,70,388,96"/>
-<area shape="poly" id="edge7_Node000000_Node000002" title=" " alt="" coords="143,62,178,67,177,72,142,68"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,56,104,82"/>
+<area shape="rect" id="Node000001" href="$da/d0b/structVIPRA_1_1Util_1_1has__tag_3_01type__t_00_01decltype_07_07void_08_01type__t_1_1tag_00_010_08_4.html" title=" " alt="" coords="167,5,325,61"/>
+<area shape="poly" id="edge7_Node000000_Node000001" title=" " alt="" coords="118,55,166,46,167,51,119,60"/>
+<area shape="rect" id="Node000002" href="$dc/d8b/structVIPRA_1_1Util_1_1is__specialization_3_01ref__t_3_01arg__ts_8_8_8_01_4_00_01ref__t_01_4.html" title=" " alt="" coords="152,85,340,126"/>
+<area shape="poly" id="edge8_Node000000_Node000002" title=" " alt="" coords="119,79,152,85,151,90,118,84"/>
 </map>

@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['mag_0',['mag',['../d8/d28/structVIPRA_1_1f3d.html#ad9d889bd43362f82f1697db56427c55b',1,'VIPRA::f3d']]],
-  ['mag_5fsqrd_1',['mag_sqrd',['../d8/d28/structVIPRA_1_1f3d.html#aa9051aef878e60d8a98f03a5543245fb',1,'VIPRA::f3d']]],
-  ['map_2',['Map',['../d2/d41/classVIPRA_1_1Module_1_1Map.html#a1ad4ea5d4c3c32d25d95b9991cc3ac20',1,'VIPRA::Module::Map']]],
-  ['max_3',['max',['../df/d63/classVIPRA_1_1Random_1_1Engine.html#a709ce38c547084a3a17861b8772c002e',1,'VIPRA::Random::Engine']]],
-  ['min_4',['min',['../df/d63/classVIPRA_1_1Random_1_1Engine.html#a3caead5675755726b36dfc14dad6c0ba',1,'VIPRA::Random::Engine']]]
+  ['latch_0',['latch',['../d5/d12/classVIPRA_1_1Behaviors_1_1TimedLatchCollection.html#a5b22b1e0b1bc68a8ddce4d8479c02d63',1,'VIPRA::Behaviors::TimedLatchCollection']]],
+  ['load_5fimpl_1',['load_impl',['../d1/d4b/classVIPRA_1_1Input_1_1JSON.html#a5782025a01f6efbcf9742f43cd546a1d',1,'VIPRA::Input::JSON']]],
+  ['load_5fpolygons_2',['load_polygons',['../df/d22/classVIPRA_1_1Modules_1_1PolygonInput.html#a79f0513761cbc6fb9fce8891c52e4c3d',1,'VIPRA::Modules::PolygonInput']]]
 ];

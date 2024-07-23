@@ -1,0 +1,23 @@
+<map id="VIPRA::Input::JSON" name="VIPRA::Input::JSON">
+<area shape="rect" id="Node000001" title="Parameter and Polygon qualified JSON input module." alt="" coords="475,144,613,169"/>
+<area shape="rect" id="Node000002" href="$dc/dab/classVIPRA_1_1Modules_1_1Module.html" title=" " alt="" coords="244,5,408,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="416,50,428,57,460,77,489,100,532,141,528,145,485,104,456,81,426,61,413,55"/>
+<area shape="rect" id="Node000003" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="23,5,160,46"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="175,23,244,23,244,28,175,28"/>
+<area shape="rect" id="Node000004" href="$db/dd6/classVIPRA_1_1Modules_1_1Input.html" title=" " alt="" coords="251,71,402,111"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="412,114,499,140,498,145,410,119"/>
+<area shape="rect" id="Node000005" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="23,71,160,111"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="175,88,250,88,250,94,175,94"/>
+<area shape="rect" id="Node000006" href="$d5/da1/classVIPRA_1_1Modules_1_1ParamReader.html" title=" " alt="" coords="226,136,427,177"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="442,154,475,154,475,159,442,159"/>
+<area shape="rect" id="Node000007" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="5,136,178,177"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="193,154,225,154,225,159,193,159"/>
+<area shape="rect" id="Node000008" href="$d5/d4f/classVIPRA_1_1Modules_1_1Serializable.html" title=" " alt="" coords="232,201,420,242"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="410,194,498,167,499,172,412,199"/>
+<area shape="rect" id="Node000009" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="12,201,171,242"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="187,219,232,219,232,224,187,224"/>
+<area shape="rect" id="Node000010" href="$df/d22/classVIPRA_1_1Modules_1_1PolygonInput.html" title=" " alt="" coords="228,267,425,307"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="413,258,426,251,456,231,485,209,528,168,532,172,489,213,460,236,428,256,416,262"/>
+<area shape="rect" id="Node000011" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="7,267,176,307"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="191,284,227,284,227,290,191,290"/>
+</map>
