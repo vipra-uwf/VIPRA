@@ -1,9 +1,5 @@
 #pragma once
 
-#include "vipra/concepts/goals.hpp"
-#include "vipra/concepts/map.hpp"
-#include "vipra/concepts/pedset.hpp"
-
 #include "vipra/geometry/f3d.hpp"
 
 #include "vipra/vipra_behaviors/actions/action.hpp"
@@ -21,7 +17,7 @@ namespace VIPRA::Behaviors {
 /**
  * Describes a specific human behavior. Implementations can either define the behavior directly in C++ or use a DSL.
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 class HumanBehavior {
   DEFAULT_CONSTRUCTIBLE(HumanBehavior)
   COPYABLE(HumanBehavior)
@@ -102,7 +98,7 @@ class HumanBehavior {
  * @param obsSet : obstacle set object
  * @param goals : goals object
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 void HumanBehavior<pedset_t, map_t, goals_t>::initialize(pedset_t const& pedset, map_t const& map,
                                                          goals_t& goals)
 {
@@ -140,7 +136,7 @@ void HumanBehavior<pedset_t, map_t, goals_t>::initialize(pedset_t const& pedset,
  * @param state 
  * @param deltaT 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 void HumanBehavior<pedset_t, map_t, goals_t>::timestep(pedset_t& pedset, map_t& map, goals_t& goals,
                                                        VIPRA::State& state, VIPRA::delta_t deltaT)
 {
@@ -149,7 +145,7 @@ void HumanBehavior<pedset_t, map_t, goals_t>::timestep(pedset_t& pedset, map_t& 
   _context.elapsedTime += deltaT;
 }
 
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 void HumanBehavior<pedset_t, map_t, goals_t>::evaluate_events(pedset_t& pedset, map_t& map, goals_t& goals,
                                                               VIPRA::delta_t deltaT)
 {
@@ -160,7 +156,7 @@ void HumanBehavior<pedset_t, map_t, goals_t>::evaluate_events(pedset_t& pedset, 
   }
 }
 
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 void HumanBehavior<pedset_t, map_t, goals_t>::apply_actions(pedset_t& pedset, map_t& map, goals_t& goals,
                                                             VIPRA::State& state, VIPRA::delta_t deltaT)
 {

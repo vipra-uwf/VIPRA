@@ -30,9 +30,9 @@ class Goals : public Util::CRTP<Goals<module_t>> {
     return self().update_step(pedset, map, deltaT);
   }
 
-  void change_end_goal(VIPRA::idx pedIdx, VIPRA::f3d goalPos)
+  void change_end_goal(VIPRA::idx pedIdx, VIPRA::f3d currPos, VIPRA::f3d goalPos)
   {
-    return self().change_end_goal(pedIdx, goalPos);
+    return self().change_end_goal(pedIdx, currPos, goalPos);
   }
 
   [[nodiscard]] auto current_goals() const -> const VIPRA::f3dVec& { return self().current_goals(); }

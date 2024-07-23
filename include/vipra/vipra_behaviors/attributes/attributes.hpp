@@ -598,11 +598,11 @@ class AttributeHandling {
     auto const& pedset = pack.pedset;
 
     if ( value.type == Type::COORD ) {
-      goals.change_end_goal(target.targetIdx, value.as<VIPRA::f3d>());
+      goals.change_end_goal(target.targetIdx, pedset.ped_coords(target.targetIdx), value.as<VIPRA::f3d>());
     }
     else if ( value.type == Type::LOCATION ) {
       // TODO(rolland): this doesn't take into account two pedestrains going to the same location
-      goals.change_end_goal(target.targetIdx,
+      goals.change_end_goal(target.targetIdx, pedset.ped_coords(target.targetIdx),
                             context.locations[value.as<VIPRA::idx>()].random_point(context.engine));
     }
 

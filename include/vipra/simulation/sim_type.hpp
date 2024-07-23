@@ -14,7 +14,7 @@
 
 #include "vipra/random/random.hpp"
 
-// #include "vipra/special_modules/behavior_model.hpp"
+#include "vipra/special_modules/behavior_model.hpp"
 
 #include "vipra/types/float.hpp"
 #include "vipra/types/parameter.hpp"
@@ -59,12 +59,12 @@ class SimType : public Modules::Module<SimType<model_t, output_t, pedset_t, goal
   [[nodiscard]] auto get_sim_id() -> VIPRA::idx { return _currSimIdx; }
 
  private:
-  output_t    _output;
-  model_t     _model;
-  pedset_t    _pedset;
-  goals_t     _goals;
-  obstacles_t _map;
-  // BehaviorModel<pedset_t, obstacles_t, goals_t> _behaviorModel;
+  output_t                                      _output;
+  model_t                                       _model;
+  pedset_t                                      _pedset;
+  goals_t                                       _goals;
+  obstacles_t                                   _map;
+  BehaviorModel<pedset_t, obstacles_t, goals_t> _behaviorModel;
 
   VIPRA::Random::Engine _engine{};
 
@@ -166,7 +166,7 @@ auto SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::run_sim(pedinpu
   // main loop
   while ( _currTimestep < _maxTimestep && ! _goals.is_sim_goal_met() ) {
     _model.timestep(_pedset, _map, _goals, _output, state, _timestepSize, _currTimestep);
-    // _behaviorModel.timestep(_pedset, _map, _goals, state, timestepSize);
+    _behaviorModel.timestep(_pedset, _map, _goals, state, _timestepSize);
     _pedset.update(state);
     _goals.update(_pedset, _map, _timestepSize);
     output_positions();
@@ -192,6 +192,7 @@ void SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::register_step(p
   _pedset.register_params(std::forward<params_t>(params));
   _goals.register_params(std::forward<params_t>(params));
   _map.register_params(std::forward<params_t>(params));
+  _behaviorModel.register_params(std::forward<params_t>(params));
 }
 
 /**
@@ -214,7 +215,7 @@ void SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::initialize(pedi
   _pedset.initialize(pedInput, _map);
   _goals.initialize(_pedset, _map);
   _model.initialize(_pedset, _map, _goals, _output, _engine);
-  // _behaviorModel.initialize(_pedset, _map, _goals, randomseed);
+  _behaviorModel.initialize(_pedset, _map, _goals, _seed);
 }
 
 template <typename model_t, typename output_t, typename pedset_t, typename goals_t, typename obstacles_t>
@@ -227,7 +228,7 @@ void SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::config_step(par
   _pedset.config(params, _engine);
   _goals.config(params, _engine);
   _map.config(params, _engine);
-  // _behaviorModel.config(params, _engine);
+  _behaviorModel.config(params, _engine);
 }
 
 /**

@@ -82,7 +82,7 @@ class AStar : public Modules::Module<AStar>, public Modules::Goals<AStar> {
      * @param pedIdx
      * @param newGoal
      */
-  void change_end_goal(VIPRA::f3d pos, VIPRA::idx pedIdx, VIPRA::f3d newGoal)
+  void change_end_goal(VIPRA::idx pedIdx, VIPRA::f3d pos, VIPRA::f3d newGoal)
   {
     assert(pedIdx < _endGoals.size());
 
