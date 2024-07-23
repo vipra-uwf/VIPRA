@@ -1,20 +1,26 @@
 #pragma once
 
 #include <iostream>
+#include <numeric>
+#include <vector>
 
-#include "vipra/concepts/input.hpp"
-#include "vipra/concepts/pedset.hpp"
+#include "vipra/data_structures/spatial_map.hpp"
+
 #include "vipra/macros/module.hpp"
-#include "vipra/modules.hpp"
+#include "vipra/macros/parameters.hpp"
+#include "vipra/macros/pedestrians.hpp"
+#include "vipra/macros/performance.hpp"
+
+#include "vipra/modules/module.hpp"
+#include "vipra/modules/pedestrians.hpp"
 
 #include "vipra/geometry/f3d.hpp"
+
+#include "vipra/types/float.hpp"
 #include "vipra/types/idx.hpp"
 #include "vipra/types/size.hpp"
 #include "vipra/types/state.hpp"
-
-#include "vipra/util/debug_do.hpp"
-
-// TODO(rolland): implement grid for storing pedestrians
+#include "vipra/types/util/result_or_void.hpp"
 
 namespace VIPRA::Pedestrians {
 
@@ -22,57 +28,81 @@ namespace VIPRA::Pedestrians {
  * @brief Pedestrian module that uses a grid to store pedestrians
  * 
  */
-template <Concepts::InputModule input_t>
-class Grid {
+class Grid : public Modules::Module<Grid>, public Modules::Pedestrians<Grid> {
  public:
+  VIPRA_MODULE_NAME("grid");
   VIPRA_MODULE_TYPE(PEDESTRIANS);
-  VIPRA_MODULE_NAME("grid")
 
-  explicit Grid(input_t&& input) : _input(input) {
-    input.load();
+  VIPRA_REGISTER_PARAMS(VIPRA_PARAM("gridSize", _cellSize))
+
+  VIPRA_PEDS_INIT_STEP
+  {
     auto coords = input.template get<std::vector<VIPRA::f3d>>("coords");
-    if (!coords) throw std::runtime_error("Could not find pedestrian coordinates in input file");
+    if ( ! coords ) throw std::runtime_error("Could not find pedestrian coordinates in input file");
 
-    _velocities = std::vector<VIPRA::f3d>((*coords).size());
-    _coords = std::move(*coords);
+    auto dimensions = map.get_dimensions();
+
+    // create temporary vector of indices to initialize spatial map with
+    std::vector<VIPRA::idx> tempIndexes((*coords).size());
+    std::iota(std::begin(tempIndexes), std::end(tempIndexes), 0);
+
+    _spatialGrid.initialize(_cellSize, dimensions.x, dimensions.y, *coords, tempIndexes);
+
+    set_velocities(std::vector<VIPRA::f3d>((*coords).size()));
+    set_coordinates(std::move(*coords));
   }
 
-  void update(const VIPRA::State& state) {
-    assert(state.size() == _coords.size());
-
-    for (VIPRA::idx pedIdx = 0; pedIdx < state.size(); ++pedIdx) {
-      _coords[pedIdx] = state.positions[pedIdx];
-      _velocities[pedIdx] = state.velocities[pedIdx];
-    }
+  VIPRA_PEDS_UPDATE_STEP
+  {
+    // Update pedestrian positions in grids
+    _spatialGrid.update_grids(get_coordinates(), state.positions);
   }
 
-  template <Concepts::ParamModule params_t>
-  void register_params(params_t& params) {
-    params.template register_param(VIPRA::Modules::Type::PEDESTRIANS, "grid", "gridSize");
+  [[nodiscard]] auto conditional_closest_ped_impl(VIPRA::idx ped, auto&& condition) const -> VIPRA::idx
+  {
+    VIPRA_PERF_FUNCTION("grid::conditional_closest_ped")
+
+    VIPRA::f_pnt minDist = std::numeric_limits<VIPRA::f_pnt>::max();
+    VIPRA::idx   minIdx = ped;
+
+    // Check all surrounding grids for the nearest pedestrian that matches the predicate
+    _spatialGrid.for_each_neighbor(ped_coords(ped), [&](VIPRA::idx other) {
+      VIPRA::f_pnt dist = distance(ped, other);
+
+      if ( dist < minDist ) {
+        if ( ! condition(other) ) return;
+
+        minDist = dist;
+        minIdx = other;
+      }
+    });
+
+    return minIdx;
   }
 
-  void config(auto const& params, VIPRA::Random::Engine& /*unused*/) {}
+  [[nodiscard]] auto closest_ped_impl(VIPRA::idx ped) const -> VIPRA::idx
+  {
+    VIPRA_PERF_FUNCTION("grid::closest_ped")
 
-  [[nodiscard]] auto num_pedestrians() const -> VIPRA::size { return _coords.size(); }
-  [[nodiscard]] auto ped_coords(VIPRA::idx pedIdx) const -> VIPRA::f3d const& {
-    assert(pedIdx < _coords.size());
+    VIPRA::f_pnt minDist = std::numeric_limits<VIPRA::f_pnt>::max();
+    VIPRA::idx   minIdx = ped;
 
-    return _coords[pedIdx];
+    // Check all surrounding grids for the nearest pedestrian that matches the predicate
+    _spatialGrid.for_each_neighbor(ped_coords(ped), [&](VIPRA::idx other) {
+      VIPRA::f_pnt dist = ped_coords(ped).distance_to(ped_coords(other));
+
+      if ( dist < minDist ) {
+        minDist = dist;
+        minIdx = other;
+      }
+    });
+
+    return minIdx;
   }
-  [[nodiscard]] auto all_coords() const -> std::vector<VIPRA::f3d> const& { return _coords; }
-  [[nodiscard]] auto ped_velocity(VIPRA::idx pedIdx) const -> VIPRA::f3d const& {
-    assert(pedIdx < _velocities.size());
-
-    return _velocities[pedIdx];
-  }
-  [[nodiscard]] auto all_velocities() const -> std::vector<VIPRA::f3d> const& { return _velocities; }
 
  private:
-  VIPRA::f3dVec _coords;
-  VIPRA::f3dVec _velocities;
+  VIPRA::f_pnt _cellSize{};
 
-  input_t _input;
+  VIPRA::DataStructures::SpatialMap<VIPRA::idx> _spatialGrid;
 };
 }  // namespace VIPRA::Pedestrians
-
-CHECK_MODULE(PedsetModule, VIPRA::Pedestrians::Grid<VIPRA::Concepts::DummyInput>)

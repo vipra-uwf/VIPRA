@@ -5,7 +5,7 @@
 
 namespace VIPRA::Geometry {
 class Circle {
-  // TODO(rolland): add more
+  // TODO(rolland): issue #17 add more
  public:
   constexpr Circle(VIPRA::f3d center, VIPRA::f_pnt radius) : _center(center), _radius(radius) {}
 
@@ -19,11 +19,13 @@ class Circle {
    * @return true 
    * @return false 
    */
-  [[nodiscard]] inline constexpr auto is_inside(VIPRA::f3d point) const -> bool {
+  [[nodiscard]] inline constexpr auto is_inside(VIPRA::f3d point) const -> bool
+  {
     return (point.distance_to(_center) <= _radius);
   }
 
-  [[nodiscard]] inline constexpr auto does_intersect(VIPRA::Geometry::Line line) const noexcept -> bool {
+  [[nodiscard]] inline constexpr auto does_intersect(VIPRA::Geometry::Line line) const noexcept -> bool
+  {
     return line.closest_point(_center).distance_to(_center) <= _radius;
   }
 

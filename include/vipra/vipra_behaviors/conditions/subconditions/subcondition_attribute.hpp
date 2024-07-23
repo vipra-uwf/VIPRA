@@ -18,18 +18,21 @@ class SubConditionAttribute {
 
  public:
   explicit SubConditionAttribute(Attribute type, CAttributeValue val, bool negative)
-      : _type(type), _value(val), _not(negative) {}
+      : _type(type), _value(val), _not(negative)
+  {
+  }
 
   void operator()(auto pack, const VIPRA::idxVec& peds, std::vector<Target> const& targets,
-                  std::vector<bool>& met, std::vector<bool> const& /*unused*/, BoolOp /*unused*/) const {
-    for (auto ped : peds) {
+                  std::vector<bool>& met, std::vector<bool> const& /*unused*/, BoolOp /*unused*/) const
+  {
+    for ( auto ped : peds ) {
       auto attr = AttributeHandling::get_value(targets[ped], _type, pack);
 
-      if (_value.type == Type::TOWARDS_LOC || _value.type == Type::TOWARDS_ATTR) {
+      if ( _value.type == Type::TOWARDS_LOC || _value.type == Type::TOWARDS_ATTR ) {
         met[ped] = towards_compare(attr, pack, targets[ped].targetIdx);
       }
 
-      if (_not) {
+      if ( _not ) {
         met[ped] = AttributeHandling::is_not_equal(attr, _value, pack);
       }
 
@@ -37,14 +40,15 @@ class SubConditionAttribute {
     }
   }
 
-  [[nodiscard]] auto individual(auto pack, VIPRA::idx self, Target target) const -> bool {
+  [[nodiscard]] auto individual(auto pack, VIPRA::idx self, Target target) const -> bool
+  {
     auto attr = AttributeHandling::get_value(target, _type, pack);
 
-    if (_value.type == Type::TOWARDS_LOC || _value.type == Type::TOWARDS_ATTR) {
+    if ( _value.type == Type::TOWARDS_LOC || _value.type == Type::TOWARDS_ATTR ) {
       return towards_compare(attr, pack, self);
     }
 
-    if (_not) {
+    if ( _not ) {
       return AttributeHandling::is_not_equal(attr, _value, pack);
     }
 
@@ -58,8 +62,9 @@ class SubConditionAttribute {
 
   static constexpr VIPRA::f_pnt TOWARDS_THRESHOLD = 0.5F;
 
-  [[nodiscard]] inline auto towards_compare(CAttributeValue& attr, auto pack, VIPRA::idx self) const -> bool {
-    if (_value.type == Type::TOWARDS_LOC) {
+  [[nodiscard]] inline auto towards_compare(CAttributeValue& attr, auto pack, VIPRA::idx self) const -> bool
+  {
+    if ( _value.type == Type::TOWARDS_LOC ) {
       return towards_location_compare(attr, pack, self);
     }
 
@@ -67,7 +72,8 @@ class SubConditionAttribute {
   }
 
   [[nodiscard]] inline auto towards_location_compare(CAttributeValue& attr, auto pack, VIPRA::idx self) const
-      -> bool {
+      -> bool
+  {
     attr.type_check(Type::COORD);
     const VIPRA::f3d selfPos = pack.pedset.ped_coords(self);
     auto const&      loc = pack.context.locations.at(_value.as<VIPRA::idx>());
@@ -75,7 +81,7 @@ class SubConditionAttribute {
     VIPRA::f3d checkDiff;
     VIPRA::f3d endDiff;
 
-    switch (_type) {
+    switch ( _type ) {
       case Attribute::DIMENSIONS:
       case Attribute::STATE:
       case Attribute::LOCATION:
@@ -89,7 +95,7 @@ class SubConditionAttribute {
       case Attribute::END_GOAL:
         [[fallthrough]];
       case Attribute::CURR_GOAL:
-        if (loc.contains(attr.as<VIPRA::f3d>())) return true;
+        if ( loc.contains(attr.as<VIPRA::f3d>()) ) return true;
         checkDiff = attr.as<VIPRA::f3d>() - selfPos;
         endDiff = loc.center() - selfPos;
       case Attribute::VELOCITY:
@@ -101,7 +107,9 @@ class SubConditionAttribute {
     return endDiff.dot(checkDiff) > TOWARDS_THRESHOLD;
   }
 
-  [[nodiscard]] inline auto towards_attribute_compare(CAttributeValue&, auto, VIPRA::idx) const -> bool {
+  [[nodiscard]] inline auto towards_attribute_compare(CAttributeValue& /*unused*/, auto /*unused*/,
+                                                      VIPRA::idx /*unused*/) const -> bool
+  {
     // TODO(rolland): implement this
     throw std::runtime_error("Towards Attribute Not implemented");
     return false;

@@ -4,16 +4,21 @@
 #include <tuple>
 #include <type_traits>
 
-#include "vipra/concepts/output.hpp"
-#include "vipra/concepts/output_coordinator.hpp"
+#include "vipra/macros/module.hpp"
+#include "vipra/macros/parameters.hpp"
+
+#include "vipra/modules/module.hpp"
+#include "vipra/modules/output.hpp"
+
 #include "vipra/random/random.hpp"
+
 #include "vipra/types/idx.hpp"
+#include "vipra/types/time.hpp"
 #include "vipra/types/util/result_or_void.hpp"
 
-namespace VIPRA::Module {
-template <Concepts::OutputModule... output_ts>
-class Output {
-  // TODO(rolland): decide if we need std::remove_reference
+namespace VIPRA::CoordModules {
+template <typename... output_ts>
+class Output : public Modules::Module<Output<output_ts...>>, public Modules::Output<Output<output_ts...>> {
   // TODO(rolland): need to figure out how to get paths for each output
   //                   - if multiple output modules use the same parameter, how do we split them up
   //                   - maybe require a path parameter for each output module, in their constructor?
@@ -24,24 +29,59 @@ class Output {
   template <typename output_t>
   // NOLINTNEXTLINE(readability-identifier-naming) helper struct
   struct write_helper {
-    static auto write(output_t& output, std::filesystem::path const& dir) {
-      if constexpr (std::is_same_v<Util::result_or_VOID_t<decltype(std::declval<output_t>().write(dir))>,
-                                   VOID>) {
+    static auto write(output_t& output, std::filesystem::path const& dir)
+    {
+      if constexpr ( std::is_same_v<Util::result_or_VOID_t<decltype(std::declval<output_t>().write(dir))>,
+                                    VOID> ) {
         output.write(dir);
         return VOID{};
-      } else {
+      }
+      else {
         return output.write(dir);
       }
     }
   };
 
  public:
-  // NOLINTNEXTLINE
-  constexpr static VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::OUTPUT;
+  VIPRA_MODULE_NAME("coordinator");
+  VIPRA_MODULE_TYPE(OUTPUT);
 
-  constexpr explicit Output(output_ts... outputs) : _outputs(std::make_tuple(outputs...)) {}
+  VIPRA_REGISTER_PARAMS(VIPRA_PARAM("output_dir", _base_output_dir))
 
-  void new_run(VIPRA::idx runIdx) {
+  /**
+   * @brief Registers the modules parameters with the parameter reader
+   * 
+   * @tparam paramreader_t 
+   * @param paramIn
+   */
+  template <typename paramreader_t>
+  void register_params(paramreader_t&& paramIn)
+  {
+    Modules::Module<Output<output_ts...>>::register_params(std::forward<paramreader_t>(paramIn));
+
+    std::apply([&](auto&&... outputs) { (outputs.register_params(paramIn), ...); }, _outputs);
+  }
+
+  template <typename paramreader_t>
+  void config(paramreader_t& paramIn, VIPRA::Random::Engine& engine)
+  {
+    _base_output_dir =
+        paramIn.template get_param<std::string>(module_type(), module_name(), "output_dir", engine);
+
+    _current_output_dir = _base_output_dir;
+    create_output_directory(_current_output_dir);
+
+    // configure all outputs
+    std::apply([&](auto&&... outputs) { (outputs.config(paramIn, engine), ...); }, _outputs);
+  }
+
+  /**
+   * @brief Creates a new output directory for the current simulation run
+   * 
+   * @param runIdx 
+   */
+  void new_run(VIPRA::idx runIdx)
+  {
     _current_output_dir = _base_output_dir / std::to_string(runIdx);
     create_output_directory(_current_output_dir);
   }
@@ -52,7 +92,8 @@ class Output {
    * @return Util::result_or_VOID_tuple<std::tuple<output_ts...>>::type 
    */
   auto write() -> std::tuple<Util::result_or_VOID_t<
-      decltype(std::declval<output_ts>().write(std::declval<std::filesystem::path>()))>...> {
+      decltype(std::declval<output_ts>().write(std::declval<std::filesystem::path>()))>...>
+  {
     return std::apply(
         [&](auto&&... outputs) {
           return std::make_tuple(write_helper<decltype(outputs)>::write(outputs, _current_output_dir)...);
@@ -61,38 +102,13 @@ class Output {
   }
 
   /**
-   * @brief Calls config on all output modules
-   * 
-   * @param params 
-   */
-  void config(auto const& params, VIPRA::Random::Engine& engine) {
-    _base_output_dir = params.template get_param<std::string>(VIPRA::Modules::Type::OUTPUT, "coordinator",
-                                                              "output_dir", engine);
-    _current_output_dir = _base_output_dir;
-
-    create_output_directory(_current_output_dir);
-    std::apply([&](auto&&... outputs) { (outputs.config(params, engine), ...); }, _outputs);
-  }
-
-  /**
-   * @brief Calls register_params on all output modules
-   * 
-   * @tparam params_t 
-   */
-  template <Concepts::ParamModule params_t>
-  void register_params(params_t& params) {
-    params.register_param(VIPRA::Modules::Type::OUTPUT, "coordinator", "output_dir");
-    std::apply([&](auto&&... outputs) { (outputs.template register_params<params_t>(params), ...); },
-               _outputs);
-  }
-
-  /**
    * @brief Calls sim_value on all output modules
    * 
    * @param key 
    * @param value 
    */
-  void sim_value(char const* key, auto&& value) {
+  void sim_value(char const* key, auto&& value)
+  {
     std::apply([&key, &value](auto&&... outputs) { (outputs.sim_value(key, value), ...); }, _outputs);
   }
 
@@ -102,7 +118,8 @@ class Output {
    * @param key 
    * @param value 
    */
-  void timestep_value(char const* key, VIPRA::timestep timestep, auto&& value) {
+  void timestep_value(char const* key, VIPRA::timestep timestep, auto&& value)
+  {
     std::apply(
         [&key, &timestep, &value](auto&&... outputs) { (outputs.timestep_value(key, timestep, value), ...); },
         _outputs);
@@ -115,7 +132,8 @@ class Output {
    * @param key 
    * @param value 
    */
-  void ped_value(VIPRA::idx pedIdx, char const* key, auto&& value) {
+  void ped_value(VIPRA::idx pedIdx, char const* key, auto&& value)
+  {
     std::apply([&pedIdx, &key, &value](auto&&... outputs) { (outputs.ped_value(pedIdx, key, value), ...); },
                _outputs);
   }
@@ -127,7 +145,8 @@ class Output {
    * @param key 
    * @param value 
    */
-  void ped_timestep_value(VIPRA::idx pedIdx, VIPRA::timestep timestep, char const* key, auto&& value) {
+  void ped_timestep_value(VIPRA::idx pedIdx, VIPRA::timestep timestep, char const* key, auto&& value)
+  {
     std::apply([&pedIdx, &timestep, &key, &value](
                    auto&&... outputs) { (outputs.ped_timestep_value(pedIdx, timestep, key, value), ...); },
                _outputs);
@@ -139,22 +158,28 @@ class Output {
   std::filesystem::path _base_output_dir;
   std::filesystem::path _current_output_dir;
 
-  static void create_output_directory(std::filesystem::path const& directory) {
-    if (std::filesystem::exists(directory)) {
-      if (std::filesystem::is_directory(directory)) {
+  static void create_output_directory(std::filesystem::path const& directory)
+  {
+    if ( std::filesystem::exists(directory) ) {
+      if ( std::filesystem::is_directory(directory) ) {
+        // directory exists and is actually a directory, all is good
         return;
       }
 
+      // exists but isn't a directory, error
       throw std::runtime_error("Output directory already exists and is not a directory: " +
                                directory.string());
     }
 
-    if (!std::filesystem::create_directory(directory)) {
-      if (!std::filesystem::exists(directory))
+    // create and check it was actually created
+    if ( ! std::filesystem::create_directory(directory) ) {
+      if ( ! std::filesystem::exists(directory) )
         throw std::runtime_error("Could not create output directory: " + directory.string());
     }
   }
+
+ public:
+  constexpr explicit Output(output_ts... outputs) : _outputs(std::make_tuple(outputs...)) {}
 };
 
-CHECK_MODULE(OutputCoordinator, Output<Concepts::DummyOutput>);
-}  // namespace VIPRA::Module
+}  // namespace VIPRA::CoordModules

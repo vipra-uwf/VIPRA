@@ -11,9 +11,10 @@ namespace {
  * @param allTypes : Ptype to get count of
  * @return VIPRA::size 
  */
-inline auto get_type_count(VIPRA::Behaviors::Ptype allTypes) -> VIPRA::size {
+inline auto get_type_count(VIPRA::Behaviors::Ptype allTypes) -> VIPRA::size
+{
   VIPRA::size typeCnt = 1;
-  while (allTypes.fullType != 0) {
+  while ( allTypes.fullType != 0 ) {
     VIPRA::Behaviors::typeUID currType = allTypes.fullType & (allTypes.fullType - 1);
     allTypes.fullType = currType;
     ++typeCnt;
@@ -30,7 +31,8 @@ namespace VIPRA::Behaviors {
  * @param allTypes : Ptype with all possible types
  * @param pedCnt : number of pedestrians
  */
-void GroupsContainer::initialize(Ptype allTypes, VIPRA::size pedCnt) {
+void GroupsContainer::initialize(Ptype allTypes, VIPRA::size pedCnt)
+{
   VIPRA::size typeCnt = get_type_count(allTypes);
   _groups.resize(typeCnt);
   _groups[0] = VIPRA::idxVec(pedCnt);
@@ -54,7 +56,8 @@ auto GroupsContainer::get_group(typeUID type) const -> const VIPRA::idxVec& { re
  * @param pedIdx : pedestrian index to add to group
  * @param type : group to add to
  */
-void GroupsContainer::add_ped(VIPRA::idx pedIdx, typeUID type) {
+void GroupsContainer::add_ped(VIPRA::idx pedIdx, typeUID type)
+{
   const VIPRA::size ndx = index(type);
   _groups[ndx].push_back(pedIdx);
   _used[ndx].push_back(false);
@@ -68,13 +71,14 @@ void GroupsContainer::add_ped(VIPRA::idx pedIdx, typeUID type) {
  * @return true 
  * @return false 
  */
-auto GroupsContainer::set_used(VIPRA::idx pedIdx, typeUID type) -> bool {
+auto GroupsContainer::set_used(VIPRA::idx pedIdx, typeUID type) -> bool
+{
   const VIPRA::size ndx = index(type);
   auto&             group = _groups[ndx];
   auto&             usedGroup = _used[ndx];
 
-  for (VIPRA::idx i = 0; i < group.size(); ++i) {
-    if (group[i] == pedIdx) {
+  for ( VIPRA::idx i = 0; i < group.size(); ++i ) {
+    if ( group[i] == pedIdx ) {
       usedGroup[i] = true;
       return true;
     }
@@ -102,10 +106,11 @@ void GroupsContainer::clean_used() { _used.clear(); }
  * @param pedIdx : pedestrian index to remove
  * @param type : group to remove the pedestrian from
  */
-auto GroupsContainer::remove_ped(VIPRA::idx pedIdx, typeUID type) -> bool {
+auto GroupsContainer::remove_ped(VIPRA::idx pedIdx, typeUID type) -> bool
+{
   auto& group = _groups[index(type)];
-  for (auto iter = group.begin(); iter != group.end(); ++iter) {
-    if (*iter == pedIdx) {
+  for ( auto iter = group.begin(); iter != group.end(); ++iter ) {
+    if ( *iter == pedIdx ) {
       group.erase(iter);
       return true;
     }

@@ -17,16 +17,17 @@ struct SelectorPercent {
 
   VIPRA::f_pnt percentage;
   auto         operator()(std::vector<VIPRA::idx> const& fullGroup, std::vector<VIPRA::idx> const& group,
-                  auto pack) const -> SelectorResult {
+                  auto pack) const -> SelectorResult
+  {
     auto groupPeds = group;
 
     auto count =
         static_cast<VIPRA::size>(std::floor(percentage * static_cast<VIPRA::f_pnt>(fullGroup.size())));
 
     bool starved = false;
-    if (count > group.size()) {
-              starved = true;
-              count = group.size();
+    if ( count > group.size() ) {
+      starved = true;
+      count = group.size();
     }
 
     // spdlog::debug("Selector Percent: Selecting {} Pedestrians", count);

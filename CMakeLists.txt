@@ -3,6 +3,8 @@ set(VIPRA_PROJECT_NAME VIPRA)
 
 OPTION(VIPRA_BUILD_LIBRARY ON "Build the library")
 OPTION(VIPRA_BUILD_EXECUTABLE OFF "Build the executable")
+OPTION(VIPRA_DEBUG_MODE OFF "Build in debug mode")
+OPTION(VIPRA_PERF_TESTING OFF "Enable performance testing")
 
 if (VIPRA_BUILD_LIBRARY AND VIPRA_BUILD_EXECUTABLE)
   message(FATAL_ERROR "Cannot build both library and executable")
@@ -16,6 +18,14 @@ if (VIPRA_BUILD_LIBRARY)
   message("Building VIPRA as library")
 elseif (VIPRA_BUILD_EXECUTABLE)
   message("Building VIPRA as executable")
+
+  if (VIPRA_DEBUG_MODE)
+    message("Building in debug mode")
+    set(CMAKE_BUILD_TYPE Debug)
+  else()
+    message("Building in release mode")
+    set(CMAKE_BUILD_TYPE Release)
+  endif()
 endif()
 
 project(
@@ -37,10 +47,14 @@ if (VIPRA_BUILD_LIBRARY)
   )
 elseif (VIPRA_BUILD_EXECUTABLE)
   add_executable(
-    ${VIPRA_PROJECT_NAME} 
+    ${VIPRA_PROJECT_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
   )
   set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR})
+endif()
+
+if (VIPRA_PERF_TESTING)
+  add_definitions(-DVIPRA_PERF_TESTING)
 endif()
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/include/vipra)

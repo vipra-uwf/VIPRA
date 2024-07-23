@@ -19,13 +19,14 @@ struct SelectorLocation {
 
   VIPRA::idx location;
   auto       operator()(const VIPRA::idxVec& /*unused*/, const VIPRA::idxVec& group, auto pack) const
-      -> SelectorResult {
+      -> SelectorResult
+  {
     auto const&   loc = pack.context.locations[location];
     size_t        pedCnt = 0;
     VIPRA::idxVec groupPeds;
 
-    for (auto idx : group) {
-      if (loc.contains(pack.pedset.ped_coords(idx))) {
+    for ( auto idx : group ) {
+      if ( loc.contains(pack.pedset.ped_coords(idx)) ) {
         groupPeds.push_back(idx);
       }
     }

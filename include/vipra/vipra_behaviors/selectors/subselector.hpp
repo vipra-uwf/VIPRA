@@ -39,10 +39,13 @@ class SubSelector {
 
  public:
   SubSelector(typeUID grp, Ptype typ, bool req, selector_t sel)
-      : group(grp), type(typ), required(req), _select(std::move(sel)) {}
+      : group(grp), type(typ), required(req), _select(std::move(sel))
+  {
+  }
 
   auto select_peds(const VIPRA::idxVec& totalGroup, const VIPRA::idxVec& usableGroup, auto pack)
-      -> SelectorResult {
+      -> SelectorResult
+  {
     return _select(totalGroup, usableGroup, pack);
   }
 

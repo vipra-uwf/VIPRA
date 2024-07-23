@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cassert>
 #include <cstdint>
 #include <cstdlib>
 #include <limits>
@@ -18,7 +19,12 @@ class Engine {
   using result_type = uint64_t;
 
   Engine() : _currVal(DEFAULT_SEED) {}
-  explicit Engine(uint64_t seedVal) : _currVal(seedVal) { _currVal <<= SHIFT_NUM; }
+  explicit Engine(uint64_t seedVal) : _currVal(seedVal)
+  {
+    assert(seedVal != 0);
+
+    _currVal <<= SHIFT_NUM;
+  }
 
   static constexpr uint64_t DEFAULT_SEED = 12345;
 
@@ -27,7 +33,10 @@ class Engine {
    * 
    * @return uint64_t 
    */
-  auto operator()() noexcept -> uint64_t {
+  auto operator()() noexcept -> uint64_t
+  {
+    assert(_currVal != 0);
+
     _currVal *= MULT_NUM;
     return _currVal >> SHIFT_NUM;
   }
@@ -37,9 +46,12 @@ class Engine {
    * 
    * @param seedNum : 
    */
-  void reseed(uint64_t seedNum) noexcept {
+  void reseed(uint64_t seedNum) noexcept
+  {
     _currVal = seedNum;
     _currVal <<= SHIFT_NUM;
+
+    assert(_currVal != 0);
   }
 
   /**

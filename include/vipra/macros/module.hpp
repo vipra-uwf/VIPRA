@@ -1,10 +1,12 @@
 #pragma once
 
+#include "vipra/modules.hpp"
+
 #define VIPRA_MODULE_TYPE(type) \
-  constexpr static VIPRA::Modules::Type _VIPRA_MODULE_TYPE_ = VIPRA::Modules::Type::type;
+  constexpr auto module_type() const->VIPRA::Modules::Type { return VIPRA::Modules::Type::type; }
 
-#define VIPRA_MODULE_NAME(name) constexpr static const char* _VIPRA_MODULE_NAME_ = name;
+#define VIPRA_MODULE_NAME(name) \
+  constexpr auto module_name() const->const char* { return name; }
 
-#define CHECK_MODULE(type, ...) static_assert(VIPRA::Concepts::type<__VA_ARGS__>);
-
-// TODO(rolland): add macro for naming a new module
+#define NEW_VIPRA_MODULE(Name, Type) \
+  class Name : public VIPRA::Modules::Module<Name>, public VIPRA::Modules::Type<Name>

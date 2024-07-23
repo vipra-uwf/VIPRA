@@ -24,12 +24,14 @@ template <Concepts::Numeric data_t = VIPRA::f_pnt>
 class uniform_distribution {
  public:
   constexpr uniform_distribution(data_t min, data_t max) : _range(min, max) {}
-  constexpr explicit uniform_distribution(std::pair<data_t, data_t> rangeVals)
-      : _range(std::move(rangeVals)) {}
+  constexpr explicit uniform_distribution(std::pair<data_t, data_t> rangeVals) : _range(std::move(rangeVals))
+  {
+  }
 
-  constexpr auto operator()(Random::Engine& engine) -> data_t {
+  constexpr auto operator()(Random::Engine& engine) -> data_t
+  {
     auto val = engine();
-    if ((_range.second - _range.first) == 0) return _range.first;
+    if ( (_range.second - _range.first) == 0 ) return _range.first;
     return static_cast<data_t>(_range.first + static_cast<double>(val) /
                                                   (static_cast<double>(std::numeric_limits<uint64_t>::max()) /
                                                    static_cast<double>(_range.second - _range.first)));
@@ -46,21 +48,23 @@ class uniform_distribution {
 template <Concepts::Numeric data_t = VIPRA::f_pnt>
 // NOLINTNEXTLINE (rolland) sticking to familiar naming convention for std::normal_distribution
 class normal_distribution {
-  // TODO(rolland): this is rather slow
+  // TODO(rolland): issue #24 this is rather slow
+
  public:
   constexpr normal_distribution(data_t mean, data_t stdDev) : _mean(mean), _stdDev(stdDev) {}
 
-  constexpr auto operator()(Random::Engine& engine) -> data_t {
+  constexpr auto operator()(Random::Engine& engine) -> data_t
+  {
     double resultX = 0;
     double resultY = 0;
     double result = 1.0;
 
-    if (_hasSpare) {
+    if ( _hasSpare ) {
       _hasSpare = false;
       return static_cast<data_t>(_mean + _stdDev * _spare);
     }
 
-    while (result >= 1.0 || result == 0.0) {
+    while ( result >= 1.0 || result == 0.0 ) {
       resultX = ((static_cast<double>(engine()) / static_cast<double>(Random::Engine::max())) * TWO) - 1.0;
       resultY = ((static_cast<double>(engine()) / static_cast<double>(Random::Engine::max())) * TWO) - 1.0;
       result = resultX * resultX + resultY * resultY;
@@ -82,9 +86,20 @@ class normal_distribution {
   static constexpr VIPRA::f_pnt TWO = 2.0;
 };
 
+/**
+ * @brief Creates a vector of values that follows the provided distribution
+ * 
+ * @tparam dist_t 
+ * @tparam data_t 
+ * @param distr 
+ * @param count 
+ * @param engine 
+ * @return std::vector<data_t> 
+ */
 template <typename dist_t, Concepts::Numeric data_t = VIPRA::f_pnt>
 inline auto make_distribution(dist_t&& distr, VIPRA::size count, VIPRA::Random::Engine& engine)
-    -> std::vector<data_t> {
+    -> std::vector<data_t>
+{
   std::vector<data_t> ret(count);
 
   std::transform(ret.cbegin(), ret.cend(), ret.begin(), [&](data_t) {

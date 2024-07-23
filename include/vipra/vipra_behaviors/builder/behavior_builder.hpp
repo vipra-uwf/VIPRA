@@ -3,9 +3,6 @@
 #include <filesystem>
 #include <stdexcept>
 
-#include "vipra/concepts/goals.hpp"
-#include "vipra/concepts/map.hpp"
-#include "vipra/concepts/pedset.hpp"
 #include "vipra/geometry/f3d.hpp"
 
 #include "vipra/vipra_behaviors/_grammar/generated/BehaviorBaseVisitor.h"
@@ -62,7 +59,7 @@ namespace VIPRA::Behaviors {
  * @brief Parses Behavior Files and Creates the Runtime Functionality they describe
  * 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 class BehaviorBuilder : public BehaviorBaseVisitor {
   DEFAULT_CONSTRUCTIBLE(BehaviorBuilder)
   COPYABLE(BehaviorBuilder)
@@ -158,7 +155,8 @@ class BehaviorBuilder : public BehaviorBaseVisitor {
    * @param values : values to format message with
    */
   template <typename... args_t>
-  [[noreturn]] static void error(std::string const& /*message*/, args_t&&... /*values*/) {
+  [[noreturn]] static void error(std::string const& /*message*/, args_t&&... /*values*/)
+  {
     // spdlog::error(message, std::forward<args_t>(values)...);
     BuilderException::error();
   }
@@ -238,19 +236,20 @@ class BehaviorBuilder : public BehaviorBaseVisitor {
    * @return std::optional<T> 
    */
   template <typename comp_t>
-  [[nodiscard]] static auto find_event_component(BehaviorParser::EventContext* ctx) -> std::optional<comp_t> {
-    for (auto const& attr : ctx->event_attribute()) {
+  [[nodiscard]] static auto find_event_component(BehaviorParser::EventContext* ctx) -> std::optional<comp_t>
+  {
+    for ( auto const& attr : ctx->event_attribute() ) {
       // Name
-      if constexpr (std::is_same_v<comp_t, std::string>)
-        if (attr->event_name()) return attr->event_name()->ID()->toString();
+      if constexpr ( std::is_same_v<comp_t, std::string> )
+        if ( attr->event_name() ) return attr->event_name()->ID()->toString();
 
       // Start Condition
-      if constexpr (std::is_same_v<comp_t, evStart>)
-        if (attr->event_start()) return attr->event_start();
+      if constexpr ( std::is_same_v<comp_t, evStart> )
+        if ( attr->event_start() ) return attr->event_start();
 
       // End Condition
-      if constexpr (std::is_same_v<comp_t, evEnd>)
-        if (attr->event_end()) return attr->event_end();
+      if constexpr ( std::is_same_v<comp_t, evEnd> )
+        if ( attr->event_end() ) return attr->event_end();
     }
 
     return std::nullopt;
@@ -264,24 +263,24 @@ class BehaviorBuilder : public BehaviorBaseVisitor {
    * @return std::optional<T> 
    */
   template <typename comp_t>
-  [[nodiscard]] static auto find_action_component(BehaviorParser::ActionContext* ctx)
-      -> std::optional<comp_t> {
-    for (auto const& attr : ctx->action_attribute()) {
+  [[nodiscard]] static auto find_action_component(BehaviorParser::ActionContext* ctx) -> std::optional<comp_t>
+  {
+    for ( auto const& attr : ctx->action_attribute() ) {
       // Stimulus
-      if constexpr (std::is_same_v<comp_t, acStimulus>)
-        if (attr->action_stimulus()) return attr->action_stimulus();
+      if constexpr ( std::is_same_v<comp_t, acStimulus> )
+        if ( attr->action_stimulus() ) return attr->action_stimulus();
 
       // Response
-      if constexpr (std::is_same_v<comp_t, acResponse>)
-        if (attr->action_response()) return attr->action_response();
+      if constexpr ( std::is_same_v<comp_t, acResponse> )
+        if ( attr->action_response() ) return attr->action_response();
 
       // Target
-      if constexpr (std::is_same_v<comp_t, acTarget>)
-        if (attr->action_target()) return attr->action_target();
+      if constexpr ( std::is_same_v<comp_t, acTarget> )
+        if ( attr->action_target() ) return attr->action_target();
 
       // Duration
-      if constexpr (std::is_same_v<comp_t, acDuration>)
-        if (attr->action_duration()) return attr->action_duration();
+      if constexpr ( std::is_same_v<comp_t, acDuration> )
+        if ( attr->action_duration() ) return attr->action_duration();
     }
 
     return std::nullopt;
@@ -296,23 +295,24 @@ class BehaviorBuilder : public BehaviorBaseVisitor {
    */
   template <typename comp_t>
   [[nodiscard]] static auto find_selector_component(BehaviorParser::Ped_SelectorContext* ctx)
-      -> std::optional<comp_t> {
-    for (auto const& attr : ctx->selector_attribute()) {
+      -> std::optional<comp_t>
+  {
+    for ( auto const& attr : ctx->selector_attribute() ) {
       // Type
-      if constexpr (std::is_same_v<comp_t, slType>)
-        if (attr->selector_type()) return attr->selector_type();
+      if constexpr ( std::is_same_v<comp_t, slType> )
+        if ( attr->selector_type() ) return attr->selector_type();
 
       // Selector
-      if constexpr (std::is_same_v<comp_t, slSelector>)
-        if (attr->selector_selector()) return attr->selector_selector();
+      if constexpr ( std::is_same_v<comp_t, slSelector> )
+        if ( attr->selector_selector() ) return attr->selector_selector();
 
       // Group
-      if constexpr (std::is_same_v<comp_t, slGroup>)
-        if (attr->selector_from()) return attr->selector_from();
+      if constexpr ( std::is_same_v<comp_t, slGroup> )
+        if ( attr->selector_from() ) return attr->selector_from();
 
       // Required
-      if constexpr (std::is_same_v<comp_t, slRequired>)
-        if (attr->selector_required()) return attr->selector_required();
+      if constexpr ( std::is_same_v<comp_t, slRequired> )
+        if ( attr->selector_required() ) return attr->selector_required();
     }
 
     return std::nullopt;
@@ -327,15 +327,16 @@ class BehaviorBuilder : public BehaviorBaseVisitor {
    */
   template <typename comp_t>
   [[nodiscard]] static auto find_location_component(BehaviorParser::LocationContext* ctx)
-      -> std::optional<comp_t> {
-    for (auto const& attr : ctx->location_attribute()) {
+      -> std::optional<comp_t>
+  {
+    for ( auto const& attr : ctx->location_attribute() ) {
       // Name
-      if constexpr (std::is_same_v<comp_t, lcName>)
-        if (attr->loc_name()) return attr->loc_name();
+      if constexpr ( std::is_same_v<comp_t, lcName> )
+        if ( attr->loc_name() ) return attr->loc_name();
 
       // Dimensions
-      if constexpr (std::is_same_v<comp_t, lcDimensions>)
-        if (attr->loc_dimensions()) return attr->loc_dimensions();
+      if constexpr ( std::is_same_v<comp_t, lcDimensions> )
+        if ( attr->loc_dimensions() ) return attr->loc_dimensions();
     }
 
     return std::nullopt;
@@ -352,11 +353,12 @@ class BehaviorBuilder : public BehaviorBaseVisitor {
  * @param seedNum : seed for randomization
  * @return HumanBehavior&&
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::build(std::string                  behaviorName,
                                                       std::filesystem::path const& filepath, seed seedNum)
-    -> HumanBehavior {
-  if (!std::filesystem::exists(filepath)) {
+    -> HumanBehavior
+{
+  if ( ! std::filesystem::exists(filepath) ) {
     // spdlog::error("Behavior \"{}\" Does NOT Exist at {}", behaviorName, filepath.c_str());
     BuilderException::error();
   }
@@ -391,9 +393,10 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::build(std::string               
  * @param behaviorName : name of new behavior
  * @param seedNum : randomization seed for behavior
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 void BehaviorBuilder<pedset_t, map_t, goals_t>::initial_behavior_setup(std::string const& behaviorName,
-                                                                       VIPRA::seed        seedNum) {
+                                                                       VIPRA::seed        seedNum)
+{
   _currentBehavior = HumanBehavior(behaviorName);
   _currentBehavior.set_seed(seedNum);
   _currSeed = seedNum;
@@ -407,8 +410,9 @@ void BehaviorBuilder<pedset_t, map_t, goals_t>::initial_behavior_setup(std::stri
  * @brief cleans and sets up the events map
  * 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
-void BehaviorBuilder<pedset_t, map_t, goals_t>::initialize_events() {
+template <typename pedset_t, typename map_t, typename goals_t>
+void BehaviorBuilder<pedset_t, map_t, goals_t>::initialize_events()
+{
   _eventsMap.clear();
 
   _startEvent = BehaviorBuilder<pedset_t, map_t, goals_t>::Event("Start");
@@ -424,8 +428,9 @@ void BehaviorBuilder<pedset_t, map_t, goals_t>::initialize_events() {
  * @brief cleans and sets up the states map
  * 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
-void BehaviorBuilder<pedset_t, map_t, goals_t>::initialize_states() {
+template <typename pedset_t, typename map_t, typename goals_t>
+void BehaviorBuilder<pedset_t, map_t, goals_t>::initialize_states()
+{
   _states.clear();
   _currState = Behaviors::stateUID{1};
 }
@@ -434,8 +439,9 @@ void BehaviorBuilder<pedset_t, map_t, goals_t>::initialize_states() {
  * @brief cleans and sets up the types map
  * 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
-void BehaviorBuilder<pedset_t, map_t, goals_t>::initialize_types() {
+template <typename pedset_t, typename map_t, typename goals_t>
+void BehaviorBuilder<pedset_t, map_t, goals_t>::initialize_types()
+{
   _types.clear();
   _types["pedestrian"] = 0;
   _types["pedestrians"] = 0;
@@ -446,8 +452,9 @@ void BehaviorBuilder<pedset_t, map_t, goals_t>::initialize_types() {
  * @brief cleans and sets up the locations map
  * 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
-void BehaviorBuilder<pedset_t, map_t, goals_t>::initialize_locations() {
+template <typename pedset_t, typename map_t, typename goals_t>
+void BehaviorBuilder<pedset_t, map_t, goals_t>::initialize_locations()
+{
   _locations.clear();
 }
 
@@ -457,14 +464,15 @@ void BehaviorBuilder<pedset_t, map_t, goals_t>::initialize_locations() {
  * @brief Checks the built behavior for possible issues
  * 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
-void BehaviorBuilder<pedset_t, map_t, goals_t>::end_behavior_check() {
-  if (_currentBehavior.selector_count() == 0) {
+template <typename pedset_t, typename map_t, typename goals_t>
+void BehaviorBuilder<pedset_t, map_t, goals_t>::end_behavior_check()
+{
+  if ( _currentBehavior.selector_count() == 0 ) {
     // spdlog::error("Behavior Error: No Pedestrian Selector Defined For Behavior: \"{}\"",
     // _currentBehavior.get_name());
     BuilderException::error();
   }
-  if (_currentBehavior.action_count() == 0) {
+  if ( _currentBehavior.action_count() == 0 ) {
     // spdlog::warn("Behavior Error: No Actions Defined For Behavior: \"{}\"", _currentBehavior.get_name());
   }
 }
@@ -475,67 +483,69 @@ void BehaviorBuilder<pedset_t, map_t, goals_t>::end_behavior_check() {
  * @param cond : condition context
  * @return Condition
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_condition(BehaviorParser::ConditionContext* cond)
-    -> Condition {
+    -> Condition
+{
   Condition condition;
   condition_tree_condition(cond, condition);
   return condition;
 }
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 void BehaviorBuilder<pedset_t, map_t, goals_t>::add_sub_condition(
-    Condition& condTree, BehaviorParser::Sub_conditionContext* subcond) {
-  if (subcond->condition_Time_Elapsed_From_Event()) {
+    Condition& condTree, BehaviorParser::Sub_conditionContext* subcond)
+{
+  if ( subcond->condition_Time_Elapsed_From_Event() ) {
     condTree.add_subcondition(build_time_elapsed_subcond(subcond->condition_Time_Elapsed_From_Event()));
     return;
   }
 
-  if (subcond->condition_Enter_Location()) {
+  if ( subcond->condition_Enter_Location() ) {
     condTree.add_subcondition(build_enter_subcond(subcond->condition_Enter_Location()));
     return;
   }
 
-  if (subcond->condition_Event_Occurred()) {
+  if ( subcond->condition_Event_Occurred() ) {
     condTree.add_subcondition(build_event_occurred_subcond(subcond->condition_Event_Occurred()));
     return;
   }
 
-  if (subcond->condition_Event_Occurring()) {
+  if ( subcond->condition_Event_Occurring() ) {
     condTree.add_subcondition(build_event_occurring_subcond(subcond->condition_Event_Occurring()));
     return;
   }
 
-  if (subcond->condition_Event_Starting()) {
+  if ( subcond->condition_Event_Starting() ) {
     condTree.add_subcondition(build_event_starting_subcond(subcond->condition_Event_Starting()));
     return;
   }
 
-  if (subcond->condition_Event_Ending()) {
+  if ( subcond->condition_Event_Ending() ) {
     condTree.add_subcondition(build_event_ending_subcond(subcond->condition_Event_Ending()));
     return;
   }
 
-  if (subcond->condition_Spatial()) {
+  if ( subcond->condition_Spatial() ) {
     condTree.add_subcondition(build_spatial_subcond(subcond->condition_Spatial()));
     return;
   }
 
-  if (subcond->condition_Exit_Location()) {
+  if ( subcond->condition_Exit_Location() ) {
     condTree.add_subcondition(build_exit_subcond(subcond->condition_Exit_Location()));
     return;
   }
 
-  if (subcond->condition_Inside_Location()) {
+  if ( subcond->condition_Inside_Location() ) {
     condTree.add_subcondition(build_in_location_subcond(subcond->condition_Inside_Location()));
     return;
   }
 
-  if (subcond->condition_Attribute()) {
+  if ( subcond->condition_Attribute() ) {
     condTree.add_subcondition(build_attribute_subcond(subcond->condition_Attribute()));
     return;
   }
 
-  if (subcond->condition_Exists()) {
+  if ( subcond->condition_Exists() ) {
     condTree.add_subcondition(build_exists_subcond(subcond->condition_Exists()));
     return;
   }
@@ -543,40 +553,44 @@ void BehaviorBuilder<pedset_t, map_t, goals_t>::add_sub_condition(
   // spdlog::error("Behavior Error: No Valid SubCondition For: \"{}\"", subcond->getText());
   BuilderException::error();
 }
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 void BehaviorBuilder<pedset_t, map_t, goals_t>::condition_tree_condition(
-    BehaviorParser::ConditionContext* condition, Condition& tree) {
+    BehaviorParser::ConditionContext* condition, Condition& tree)
+{
   condition_tree_unary(condition->unary(), tree);
 
-  if (condition->condition()) {
-    if (condition->AND()) {
+  if ( condition->condition() ) {
+    if ( condition->AND() ) {
       tree.add_operation(BoolOp::AND);
-    } else {
+    }
+    else {
       tree.add_operation(BoolOp::OR);
     }
 
     condition_tree_condition(condition->condition(), tree);
   }
 }
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 void BehaviorBuilder<pedset_t, map_t, goals_t>::condition_tree_unary(BehaviorParser::UnaryContext* unary,
-                                                                     Condition&                    tree) {
+                                                                     Condition&                    tree)
+{
   // if (unary->unary()) {
   //   condition_tree_unary(unary->unary(), tree);
   // }
 
-  if (unary->primary()) {
+  if ( unary->primary() ) {
     condition_tree_primary(unary->primary(), tree);
   }
 }
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 void BehaviorBuilder<pedset_t, map_t, goals_t>::condition_tree_primary(
-    BehaviorParser::PrimaryContext* primary, Condition& tree) {
-  if (primary->condition()) {
+    BehaviorParser::PrimaryContext* primary, Condition& tree)
+{
+  if ( primary->condition() ) {
     condition_tree_condition(primary->condition(), tree);
   }
 
-  if (primary->sub_condition()) {
+  if ( primary->sub_condition() ) {
     add_sub_condition(tree, primary->sub_condition());
   }
 }
@@ -587,23 +601,24 @@ void BehaviorBuilder<pedset_t, map_t, goals_t>::condition_tree_primary(
  * @param ctx : subselector context
  * @return Selector 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_sub_selector(slType type, slSelector selector,
                                                                    std::optional<slGroup> group,
-                                                                   bool required) -> SubSelector {
-  if (selector->selector()->selector_Everyone()) {
+                                                                   bool required) -> SubSelector
+{
+  if ( selector->selector()->selector_Everyone() ) {
     return build_everyone_selector(type, required);
   }
 
-  if (selector->selector()->selector_Exactly_N_Random()) {
+  if ( selector->selector()->selector_Exactly_N_Random() ) {
     return build_exactly_n_selector(type, selector, group, required);
   }
 
-  if (selector->selector()->selector_Percent()) {
+  if ( selector->selector()->selector_Percent() ) {
     return build_percent_selector(type, selector, group, required);
   }
 
-  if (selector->selector()->selector_Location()) {
+  if ( selector->selector()->selector_Location() ) {
     return build_location_selector(type, selector, group, required);
   }
 
@@ -617,18 +632,19 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_sub_selector(slType type, 
  * @param targetModifier : target modifier to add to
  * @param modifier : modifier context
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
-void BehaviorBuilder<pedset_t, map_t, goals_t>::add_modifier(
-    TargetModifier& targetModifier, BehaviorParser::ModifierContext* modifier) const {
-  if (modifier->direction()) {
+template <typename pedset_t, typename map_t, typename goals_t>
+void BehaviorBuilder<pedset_t, map_t, goals_t>::add_modifier(TargetModifier&                  targetModifier,
+                                                             BehaviorParser::ModifierContext* modifier) const
+{
+  if ( modifier->direction() ) {
     add_direction_modifier(targetModifier, modifier->direction());
     return;
   }
-  if (modifier->distance()) {
+  if ( modifier->distance() ) {
     add_distance_modifier(targetModifier, modifier->distance());
     return;
   }
-  if (modifier->location_modifier()) {
+  if ( modifier->location_modifier() ) {
     add_location_modifier(targetModifier, modifier->location_modifier());
     return;
   }
@@ -642,15 +658,16 @@ void BehaviorBuilder<pedset_t, map_t, goals_t>::add_modifier(
  * @param action : action to add the atom to
  * @param atom : atom context
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 void BehaviorBuilder<pedset_t, map_t, goals_t>::add_atom_to_action(Action&                             action,
-                                                                   BehaviorParser::Action_atomContext* atom) {
-  if (atom->set_atom()) {
+                                                                   BehaviorParser::Action_atomContext* atom)
+{
+  if ( atom->set_atom() ) {
     add_set_atom(action, atom->set_atom());
     return;
   }
 
-  if (atom->scale_atom()) {
+  if ( atom->scale_atom() ) {
     add_scale_atom(action, atom->scale_atom());
     return;
   }
@@ -663,13 +680,14 @@ void BehaviorBuilder<pedset_t, map_t, goals_t>::add_atom_to_action(Action&      
  * @brief Adds a target to an action
  * 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 void BehaviorBuilder<pedset_t, map_t, goals_t>::add_target_to_action(Action&                        action,
-                                                                     BehaviorParser::TargetContext* ctx) {
-  if (ctx->other()) {
+                                                                     BehaviorParser::TargetContext* ctx)
+{
+  if ( ctx->other() ) {
     auto modList = ctx->modifier();
     auto modifiers = make_target_modifier(modList);
-    if (ctx->other()->nearest_type()) {
+    if ( ctx->other()->nearest_type() ) {
       add_nearest_type_target(action, ctx->other()->nearest_type(), modifiers);
       return;
     }
@@ -684,13 +702,14 @@ void BehaviorBuilder<pedset_t, map_t, goals_t>::add_target_to_action(Action&    
  * @param modifiers : modifiers to add to target modifier
  * @return std::optional<TargetModifier> 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::make_target_modifier(
-    std::vector<BehaviorParser::ModifierContext*>& modifiers) -> std::optional<TargetModifier> {
-  if (modifiers.empty()) return std::nullopt;
+    std::vector<BehaviorParser::ModifierContext*>& modifiers) -> std::optional<TargetModifier>
+{
+  if ( modifiers.empty() ) return std::nullopt;
 
   TargetModifier mod;
-  for (auto* modifier : modifiers) {
+  for ( auto* modifier : modifiers ) {
     add_modifier(mod, modifier);
   }
 
@@ -707,11 +726,12 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::make_target_modifier(
  * @param type : type name
  * @return typeUID
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::get_type(std::string const& type) const
-    -> std::optional<typeUID> {
+    -> std::optional<typeUID>
+{
   auto const typeId = _types.find(type);
-  if (typeId == _types.end()) return std::nullopt;
+  if ( typeId == _types.end() ) return std::nullopt;
   return (*typeId).second;
 }
 
@@ -721,12 +741,13 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::get_type(std::string const& type
  * @param ctx : 
  * @return Behaviors::typeUID 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::get_group(std::optional<slGroup> group) const
-    -> std::pair<Behaviors::typeUID, std::string> {
-  if (group) {
+    -> std::pair<Behaviors::typeUID, std::string>
+{
+  if ( group ) {
     auto* ctx = group.value()->group();
-    if (!(ctx->PEDESTRIAN() || ctx->PEDESTRIANS())) {
+    if ( ! (ctx->PEDESTRIAN() || ctx->PEDESTRIANS()) ) {
       std::string name = ctx->ID()->toString();
       return {get_check_type(name), name};
     }
@@ -741,10 +762,11 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::get_group(std::optional<slGroup>
  * @param state : name of state
  * @return stateUID 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::get_state(std::string const& state) const
-    -> std::optional<Behaviors::stateUID> {
-  if (_states.find(state) == _states.end()) return std::nullopt;
+    -> std::optional<Behaviors::stateUID>
+{
+  if ( _states.find(state) == _states.end() ) return std::nullopt;
   return _states.at(state);
 }
 
@@ -754,11 +776,12 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::get_state(std::string const& sta
  * @param types : id_list vector
  * @return Behaviors::Ptype 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::get_composite_type(
-    std::vector<antlr4::tree::TerminalNode*> const& types) const -> Behaviors::Ptype {
+    std::vector<antlr4::tree::TerminalNode*> const& types) const -> Behaviors::Ptype
+{
   Ptype compType;
-  for (auto* type : types) {
+  for ( auto* type : types ) {
     const std::string tStr = type->toString();
     auto              tid = get_check_type(tStr);
     compType += tid;
@@ -774,11 +797,12 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::get_composite_type(
  * @param locName : Name of location to find
  * @return Location*
 */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::get_location(std::string const& locName) const
-    -> std::optional<VIPRA::idx> {
+    -> std::optional<VIPRA::idx>
+{
   auto loc = _locations.find(locName);
-  if (loc == _locations.end()) return std::nullopt;
+  if ( loc == _locations.end() ) return std::nullopt;
 
   return (*loc).second;
 }
@@ -790,11 +814,12 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::get_location(std::string const& 
  * @param evName : name of event to find
  * @return Event*
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::get_event(std::string const& evName) const
-    -> std::optional<VIPRA::idx> {
+    -> std::optional<VIPRA::idx>
+{
   auto event = _eventsMap.find(evName);
-  if (event == _eventsMap.end()) return std::nullopt;
+  if ( event == _eventsMap.end() ) return std::nullopt;
   return (*event).second;
 }
 
@@ -804,8 +829,9 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::get_event(std::string const& evN
  * @param attr : attribute string
  * @return Attribute 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
-auto BehaviorBuilder<pedset_t, map_t, goals_t>::get_attribute(std::string attr) -> Attribute {
+template <typename pedset_t, typename map_t, typename goals_t>
+auto BehaviorBuilder<pedset_t, map_t, goals_t>::get_attribute(std::string attr) -> Attribute
+{
   static std::map<std::string, Attribute> attrMap{
       {"position", Attribute::POSITION}, {"end goal", Attribute::END_GOAL}, {"goal", Attribute::CURR_GOAL},
       {"state", Attribute::STATE},       {"velocity", Attribute::VELOCITY}, {"location", Attribute::LOCATION},
@@ -814,7 +840,7 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::get_attribute(std::string attr) 
   std::transform(attr.begin(), attr.end(), attr.begin(), [](char chr) { return std::tolower(chr); });
 
   auto iter = attrMap.find(attr);
-  if (iter == attrMap.end()) {
+  if ( iter == attrMap.end() ) {
     return Attribute::INVALID;
   }
 
@@ -827,11 +853,12 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::get_attribute(std::string attr) 
  * @param locName 
  * @return VIPRA::idx 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::get_check_location(std::string const& locName) const
-    -> VIPRA::idx {
+    -> VIPRA::idx
+{
   auto loc = get_location(locName);
-  if (!loc) error("Behavior Error: Attempt To Use Undeclared Location: \"{}\"", locName);
+  if ( ! loc ) error("Behavior Error: Attempt To Use Undeclared Location: \"{}\"", locName);
   return loc.value();
 }
 
@@ -841,11 +868,12 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::get_check_location(std::string c
  * @param stateName 
  * @return Behaviors::stateUID 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::get_check_state(std::string const& stateName) const
-    -> Behaviors::stateUID {
+    -> Behaviors::stateUID
+{
   auto state = get_state(stateName);
-  if (!state) error("Behavior Error: Attempt To Use Undeclared State: \"{}\"", stateName);
+  if ( ! state ) error("Behavior Error: Attempt To Use Undeclared State: \"{}\"", stateName);
   return state.value();
 }
 
@@ -855,11 +883,12 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::get_check_state(std::string cons
  * @param eventName 
  * @return VIPRA::idx 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::get_check_event(std::string const& eventName) const
-    -> VIPRA::idx {
+    -> VIPRA::idx
+{
   auto event = get_event(eventName);
-  if (!event) error("Behavior Error: Attempt To Use Undeclared Event: \"{}\"", eventName);
+  if ( ! event ) error("Behavior Error: Attempt To Use Undeclared Event: \"{}\"", eventName);
   return event.value();
 }
 
@@ -869,11 +898,12 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::get_check_event(std::string cons
  * @param typeName 
  * @return Behaviors::typeUID 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::get_check_type(std::string const& typeName) const
-    -> Behaviors::typeUID {
+    -> Behaviors::typeUID
+{
   auto type = get_type(typeName);
-  if (!type) error("Behavior Error: Attempt To Use Undeclared Type: \"{}\"", typeName);
+  if ( ! type ) error("Behavior Error: Attempt To Use Undeclared Type: \"{}\"", typeName);
   return type.value();
 }
 
@@ -887,9 +917,10 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::get_check_type(std::string const
  * @param ctx 
  * @return std::tuple<VIPRA::f3d, VIPRA::f3d, VIPRA::f_pnt> 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::make_dimensions(
-    BehaviorParser::Loc_dimensionsContext* ctx) const -> std::tuple<VIPRA::f3d, VIPRA::f3d, VIPRA::f_pnt> {
+    BehaviorParser::Loc_dimensionsContext* ctx) const -> std::tuple<VIPRA::f3d, VIPRA::f3d, VIPRA::f_pnt>
+{
   auto rot = get_numeric(ctx->loc_rotation()->value_numeric(), _currSeed).value(0);
   auto center = get_coord(ctx->loc_center()->value_coord(), _currSeed);
   auto dims = get_coord(ctx->loc_lengths()->value_coord(), _currSeed);
@@ -902,37 +933,38 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::make_dimensions(
  * @param ctx : attribute value context
  * @return Behaviors::CAttributeValue 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::make_attribute_value(BehaviorParser::Attr_valueContext* ctx)
-    -> Behaviors::CAttributeValue {
-  if (ctx->value_coord()) {
+    -> Behaviors::CAttributeValue
+{
+  if ( ctx->value_coord() ) {
     return AttributeHandling::store_value<VIPRA::f3d>(Type::COORD, get_coord(ctx->value_coord(), _currSeed));
   }
 
-  if (ctx->STATE_VAL()) {
+  if ( ctx->STATE_VAL() ) {
     return AttributeHandling::store_value<Behaviors::stateUID>(Type::STATE,
                                                                get_check_state(ctx->STATE_VAL()->toString()));
   }
 
-  if (ctx->value_numeric()) {
+  if ( ctx->value_numeric() ) {
     return AttributeHandling::store_value<Behaviors::NumericValue>(
         Type::NUMBER, get_numeric(ctx->value_numeric(), _currSeed));
   }
 
-  if (ctx->LOC_NAME()) {
+  if ( ctx->LOC_NAME() ) {
     auto location = get_check_location(ctx->LOC_NAME()->toString());
     return AttributeHandling::store_value(Type::LOCATION, location);
   }
 
-  if (ctx->towards()) {
-    if (ctx->towards()->LOC_NAME()) {
+  if ( ctx->towards() ) {
+    if ( ctx->towards()->LOC_NAME() ) {
       auto location = get_check_location(ctx->towards()->LOC_NAME()->toString());
       return AttributeHandling::store_value(Type::TOWARDS_LOC, location);
     }
-    if (ctx->towards()->attribute()) {
+    if ( ctx->towards()->attribute() ) {
       auto attrStr = make_attribute_str(ctx->towards()->attribute());
       auto attr = get_attribute(attrStr);
-      if (attr != Attribute::INVALID) {
+      if ( attr != Attribute::INVALID ) {
         return AttributeHandling::store_value(Type::TOWARDS_ATTR, attr);
       }
     }
@@ -947,9 +979,10 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::make_attribute_value(BehaviorPar
  * @param types : id_list vector
  * @return std::vector<std::string>
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::make_list_strs(
-    std::vector<antlr4::tree::TerminalNode*> const& types) -> std::vector<std::string> {
+    std::vector<antlr4::tree::TerminalNode*> const& types) -> std::vector<std::string>
+{
   std::vector<std::string> strs(types.size());
 
   std::transform(types.begin(), types.end(), strs.begin(),
@@ -962,28 +995,29 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::make_list_strs(
  * @brief Gets the string value of an attribute from a context
  * 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::make_attribute_str(BehaviorParser::AttributeContext* ctx)
-    -> std::string {
-  if (ctx->POSITION()) {
+    -> std::string
+{
+  if ( ctx->POSITION() ) {
     return "position";
   }
-  if (ctx->VELOCITY()) {
+  if ( ctx->VELOCITY() ) {
     return "velocity";
   }
-  if (ctx->GOAL()) {
+  if ( ctx->GOAL() ) {
     return "goal";
   }
-  if (ctx->end_goal()) {
+  if ( ctx->end_goal() ) {
     return "end goal";
   }
-  if (ctx->STATE()) {
+  if ( ctx->STATE() ) {
     return "state";
   }
-  if (ctx->LOCATION()) {
+  if ( ctx->LOCATION() ) {
     return "location";
   }
-  if (ctx->STATUS()) {
+  if ( ctx->STATUS() ) {
     return "status";
   }
 
@@ -996,14 +1030,15 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::make_attribute_str(BehaviorParse
  * @param ctx : direction context
  * @return Direction 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::make_direction(BehaviorParser::DirectionContext* ctx)
-    -> Direction {
-  if (ctx->front()) {
+    -> Direction
+{
+  if ( ctx->front() ) {
     return Direction::FRONT;
   }
 
-  if (ctx->behind()) {
+  if ( ctx->behind() ) {
     return Direction::BEHIND;
   }
 
@@ -1018,10 +1053,11 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::make_direction(BehaviorParser::D
  * @param ctx : event context
  * @return VIPRA::idx 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::add_event(BehaviorParser::Event_nameContext* ctx)
-    -> VIPRA::idx {
-  if (!ctx) error("Behavior Error: Event Not Given a Name: \"{}\"", _currentBehavior.get_name());
+    -> VIPRA::idx
+{
+  if ( ! ctx ) error("Behavior Error: Event Not Given a Name: \"{}\"", _currentBehavior.get_name());
 
   auto eventName = ctx->ID()->toString();
   // spdlog::debug(R"(Behavior "{}": Adding Lasting Event: "{}")", _currentBehavior.get_name(), eventName);
@@ -1033,18 +1069,19 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::add_event(BehaviorParser::Event_
 }
 
 // --------------------------------------------- ANTLR VISITOR METHODS -----------------------------------------------------------------------------------------
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::visitLocation(BehaviorParser::LocationContext* ctx)
-    -> antlrcpp::Any {
+    -> antlrcpp::Any
+{
   auto name = find_location_component<lcName>(ctx);
-  if (!name) error(R"(Behavior "{}": Missing Location Name)", _currentBehavior.get_name());
+  if ( ! name ) error(R"(Behavior "{}": Missing Location Name)", _currentBehavior.get_name());
   std::string locName = "@" + name.value()->ID()->toString();
 
-  if (get_location(locName))
+  if ( get_location(locName) )
     error(R"(Behavior "{}": Attempt To Redefine Location: "{}")", _currentBehavior.get_name(), locName);
 
   auto dims = find_location_component<lcDimensions>(ctx);
-  if (!dims)
+  if ( ! dims )
     error(R"(Behavior "{}": Location Missing Dimensions: "{}")", _currentBehavior.get_name(), locName);
 
   auto [center, dimensions, rotation] = make_dimensions(dims.value());
@@ -1054,18 +1091,18 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::visitLocation(BehaviorParser::Lo
 
   return BehaviorBaseVisitor::visitLocation(ctx);
 }
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
-auto BehaviorBuilder<pedset_t, map_t, goals_t>::visitEvent(BehaviorParser::EventContext* ctx)
-    -> antlrcpp::Any {
+template <typename pedset_t, typename map_t, typename goals_t>
+auto BehaviorBuilder<pedset_t, map_t, goals_t>::visitEvent(BehaviorParser::EventContext* ctx) -> antlrcpp::Any
+{
   auto name = find_event_component<evName>(ctx);
-  if (!name) error(R"(Behavior "{}": Missing Event Name)", _currentBehavior.get_name());
+  if ( ! name ) error(R"(Behavior "{}": Missing Event Name)", _currentBehavior.get_name());
   std::string eventName = "!" + name.value();
 
-  if (get_event(eventName))
+  if ( get_event(eventName) )
     error(R"(Behavior "{}": Attempt To Redefine Event: "{}")", _currentBehavior.get_name(), eventName);
 
   auto startCond = find_event_component<evStart>(ctx);
-  if (!startCond) error(R"(Behavior "{}": Missing Start Condition)", _currentBehavior.get_name());
+  if ( ! startCond ) error(R"(Behavior "{}": Missing Start Condition)", _currentBehavior.get_name());
 
   auto endCond = find_event_component<evEnd>(ctx);
 
@@ -1078,7 +1115,7 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::visitEvent(BehaviorParser::Event
   // eventName);
   event.set_start_condition(build_condition(startCond.value()->condition()));
 
-  if (endCond) {
+  if ( endCond ) {
     // spdlog::debug(R"(Behavior "{}": Event: "{}" Adding End Condition)", _currentBehavior.get_name(),
     // eventName);
     event.set_end_condition(build_condition(endCond.value()->condition()));
@@ -1088,11 +1125,12 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::visitEvent(BehaviorParser::Event
 
   return BehaviorBaseVisitor::visitEvent(ctx);
 }
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::visitAction(BehaviorParser::ActionContext* ctx)
-    -> antlrcpp::Any {
+    -> antlrcpp::Any
+{
   auto response = find_action_component<acResponse>(ctx);
-  if (!response) error(R"(Behavior "{}": Action has no Response)", _currentBehavior.get_name());
+  if ( ! response ) error(R"(Behavior "{}": Action has no Response)", _currentBehavior.get_name());
 
   auto stimulus = find_action_component<acStimulus>(ctx);
   auto target = find_action_component<acTarget>(ctx);
@@ -1109,22 +1147,23 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::visitAction(BehaviorParser::Acti
   std::for_each(atoms.begin(), atoms.end(),
                 [&](BehaviorParser::Action_atomContext* atom) { add_atom_to_action(action, atom); });
 
-  if (stimulus) action.add_condition(build_condition(stimulus.value()->condition()));
-  if (target) add_target_to_action(action, target.value()->target());
-  if (duration) action.add_duration(get_numeric(duration.value()->duration()->value_numeric(), _currSeed));
+  if ( stimulus ) action.add_condition(build_condition(stimulus.value()->condition()));
+  if ( target ) add_target_to_action(action, target.value()->target());
+  if ( duration ) action.add_duration(get_numeric(duration.value()->duration()->value_numeric(), _currSeed));
 
   _currentBehavior.add_action(type, action);
   return BehaviorBaseVisitor::visitAction(ctx);
 }
 
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::visitPed_Selector(BehaviorParser::Ped_SelectorContext* ctx)
-    -> antlrcpp::Any {
+    -> antlrcpp::Any
+{
   auto type = find_selector_component<slType>(ctx);
-  if (!type) error(R"(Behavior "{}": Selector has no Type)", _currentBehavior.get_name());
+  if ( ! type ) error(R"(Behavior "{}": Selector has no Type)", _currentBehavior.get_name());
 
   auto selector = find_selector_component<slSelector>(ctx);
-  if (!selector) error(R"(Behavior "{}": Selector has no Selector version)", _currentBehavior.get_name());
+  if ( ! selector ) error(R"(Behavior "{}": Selector has no Selector version)", _currentBehavior.get_name());
 
   auto group = find_selector_component<slGroup>(ctx);
   auto required = find_selector_component<slRequired>(ctx);
@@ -1138,12 +1177,13 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::visitPed_Selector(BehaviorParser
 // ------------------------------- END ACTIONS -----------------------------------------------------------------------------------------
 
 // ------------------------------- DECLARATIONS -----------------------------------------------------------------------------------------
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::visitDecl_Ped_State(
-    BehaviorParser::Decl_Ped_StateContext* ctx) -> antlrcpp::Any {
+    BehaviorParser::Decl_Ped_StateContext* ctx) -> antlrcpp::Any
+{
   auto const stateNames = ctx->ID();
 
-  for (auto* state : stateNames) {
+  for ( auto* state : stateNames ) {
     auto name = state->toString();
     // spdlog::debug("Behavior \"{}\": Adding Pedestrian State {}, id: {}", _currentBehavior.get_name(), name,
     // _currState);
@@ -1153,13 +1193,14 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::visitDecl_Ped_State(
 
   return BehaviorBaseVisitor::visitDecl_Ped_State(ctx);
 }
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::visitDecl_Ped(BehaviorParser::Decl_PedContext* ctx)
-    -> antlrcpp::Any {
+    -> antlrcpp::Any
+{
   auto const typeNames = ctx->ID();
   Ptype      allTypes;
 
-  for (auto* type : typeNames) {
+  for ( auto* type : typeNames ) {
     auto name = type->toString();
     // spdlog::debug("Behavior \"{}\": Adding Pedestrian Type {}, id: {}", _currentBehavior.get_name(), name,
     // _currType);
@@ -1183,9 +1224,10 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::visitDecl_Ped(BehaviorParser::De
  * @param action : action to add atom to
  * @param ctx : set atom context
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 void BehaviorBuilder<pedset_t, map_t, goals_t>::add_set_atom(Action&                          action,
-                                                             BehaviorParser::Set_atomContext* ctx) {
+                                                             BehaviorParser::Set_atomContext* ctx)
+{
   auto attrStr = make_attribute_str(ctx->attribute());
   auto attr = get_attribute(attrStr);
   auto attrValue = make_attribute_value(ctx->attr_value());
@@ -1198,9 +1240,10 @@ void BehaviorBuilder<pedset_t, map_t, goals_t>::add_set_atom(Action&            
  * @param action : action to add to
  * @param ctx : scale atom context
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 void BehaviorBuilder<pedset_t, map_t, goals_t>::add_scale_atom(Action&                            action,
-                                                               BehaviorParser::Scale_atomContext* ctx) {
+                                                               BehaviorParser::Scale_atomContext* ctx)
+{
   auto attrStr = make_attribute_str(ctx->attribute());
   auto attr = get_attribute(attrStr);
   auto attrValue = make_attribute_value(ctx->attr_value());
@@ -1217,9 +1260,10 @@ void BehaviorBuilder<pedset_t, map_t, goals_t>::add_scale_atom(Action&          
  * @param condition 
  * @param ctx 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_enter_subcond(
-    BehaviorParser::Condition_Enter_LocationContext* ctx) -> SubConditionEnter {
+    BehaviorParser::Condition_Enter_LocationContext* ctx) -> SubConditionEnter
+{
   auto location = get_check_location(ctx->LOC_NAME()->toString());
 
   return SubConditionEnter{location};
@@ -1231,9 +1275,10 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_enter_subcond(
  * @param condition 
  * @param ctx 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_exit_subcond(
-    BehaviorParser::Condition_Exit_LocationContext* ctx) -> SubConditionLeave {
+    BehaviorParser::Condition_Exit_LocationContext* ctx) -> SubConditionLeave
+{
   auto location = get_check_location(ctx->LOC_NAME()->toString());
 
   return SubConditionLeave{location};
@@ -1244,9 +1289,10 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_exit_subcond(
  * @param condition : condition to add to
  * @param ctx : subcondition context
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_time_elapsed_subcond(
-    BehaviorParser::Condition_Time_Elapsed_From_EventContext* ctx) -> SubConditionElapsedTimeFromEvent {
+    BehaviorParser::Condition_Time_Elapsed_From_EventContext* ctx) -> SubConditionElapsedTimeFromEvent
+{
   Behaviors::NumericValue dur = get_numeric(ctx->value_numeric(), _currSeed);
   std::string             evName = ctx->EVNT()->toString();
   // spdlog::debug(R"(Behavior "{}": Adding SubCondition: Elapsed Time From "{}" Event)",
@@ -1262,9 +1308,10 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_time_elapsed_subcond(
  * @param condition : condition to add to
  * @param ctx : subcondition context
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_event_occurred_subcond(
-    BehaviorParser::Condition_Event_OccurredContext* ctx) -> SubConditionEventOccurred {
+    BehaviorParser::Condition_Event_OccurredContext* ctx) -> SubConditionEventOccurred
+{
   std::string evName = ctx->EVNT()->toString();
   // spdlog::debug(R"(Behavior "{}": Adding SubCondition: Event "{}" Occurred)", _currentBehavior.get_name(),
   // evName);
@@ -1278,9 +1325,10 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_event_occurred_subcond(
  * @param condition : condition to add to
  * @param ctx : subcondition context
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_event_occurring_subcond(
-    BehaviorParser::Condition_Event_OccurringContext* ctx) -> SubConditionEventOccurring {
+    BehaviorParser::Condition_Event_OccurringContext* ctx) -> SubConditionEventOccurring
+{
   std::string evName = ctx->EVNT()->toString();
   // spdlog::debug(R"(Behavior "{}": Adding SubCondition: Event "{}" Occurring)", _currentBehavior.get_name(),
   // evName);
@@ -1294,9 +1342,10 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_event_occurring_subcond(
  * @param condition : condition to add to
  * @param ctx : subcondition context
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_event_starting_subcond(
-    BehaviorParser::Condition_Event_StartingContext* ctx) -> SubConditionEventStarting {
+    BehaviorParser::Condition_Event_StartingContext* ctx) -> SubConditionEventStarting
+{
   std::string evName = ctx->EVNT()->toString();
   // spdlog::debug(R"(Behavior "{}": Adding SubCondition: Event "{}" Occurring)", _currentBehavior.get_name(),
   // evName);
@@ -1311,9 +1360,10 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_event_starting_subcond(
  * @param condition : condition to add to
  * @param ctx : subcondition context
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_event_ending_subcond(
-    BehaviorParser::Condition_Event_EndingContext* ctx) -> SubConditionEventEnding {
+    BehaviorParser::Condition_Event_EndingContext* ctx) -> SubConditionEventEnding
+{
   std::string evName = ctx->EVNT()->toString();
   // spdlog::debug(R"(Behavior "{}": Adding SubCondition: Event "{}" Occurring)", _currentBehavior.get_name(),
   // evName);
@@ -1327,16 +1377,18 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_event_ending_subcond(
  * @param condition : condition to add to
  * @param ctx : spatial condition context
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_spatial_subcond(
-    BehaviorParser::Condition_SpatialContext* ctx) -> SubConditionSpatial {
+    BehaviorParser::Condition_SpatialContext* ctx) -> SubConditionSpatial
+{
   auto distance = get_numeric(ctx->value_numeric(), _currSeed);
   // spdlog::debug(R"(Behavior "{}": Adding SubCondition: Spatial)", _currentBehavior.get_name());
   return SubConditionSpatial(distance);
 }
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_in_location_subcond(
-    BehaviorParser::Condition_Inside_LocationContext* ctx) -> SubConditionInLocation {
+    BehaviorParser::Condition_Inside_LocationContext* ctx) -> SubConditionInLocation
+{
   auto location = get_check_location(ctx->LOC_NAME()->toString());
 
   // spdlog::debug(R"(Behavior "{}": Adding SubCondition: Inside Location "{}")", _currentBehavior.get_name(),
@@ -1350,9 +1402,10 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_in_location_subcond(
  * @param condition 
  * @param ctx 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_attribute_subcond(
-    BehaviorParser::Condition_AttributeContext* ctx) -> SubConditionAttribute {
+    BehaviorParser::Condition_AttributeContext* ctx) -> SubConditionAttribute
+{
   auto attrStr = make_attribute_str(ctx->attribute());
   auto attr = get_attribute(attrStr);
   auto attrValue = make_attribute_value(ctx->attr_value());
@@ -1369,10 +1422,11 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_attribute_subcond(
  * @param condition 
  * @param ctx 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_exists_subcond(
     BehaviorParser::Condition_ExistsContext* ctx)
-    -> SubConditionExists<BehaviorBuilder<pedset_t, map_t, goals_t>::TargetModifier> {
+    -> SubConditionExists<BehaviorBuilder<pedset_t, map_t, goals_t>::TargetModifier>
+{
   auto modifiers = ctx->modifier();
   auto targetModifier = make_target_modifier(modifiers);
 
@@ -1397,13 +1451,14 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_exists_subcond(
  * @param action : action to add target to
  * @param ctx : target context
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 void BehaviorBuilder<pedset_t, map_t, goals_t>::add_nearest_type_target(
-    Action& action, BehaviorParser::Nearest_typeContext* ctx, std::optional<TargetModifier> modifier) {
+    Action& action, BehaviorParser::Nearest_typeContext* ctx, std::optional<TargetModifier> modifier)
+{
   auto  types = ctx->id_list()->ID();
   Ptype comPtype = get_composite_type(types);
   auto  typeStrs = make_list_strs(types);
-  bool  allPeds = !ctx->id_list()->PEDESTRIAN().empty();
+  bool  allPeds = ! ctx->id_list()->PEDESTRIAN().empty();
 
   // spdlog::debug(R"(Behavior: "{}": Adding Target: Nearest "{}")", _currentBehavior.get_name(),
   // fmt::join(typeStrs, " or "));
@@ -1421,9 +1476,10 @@ void BehaviorBuilder<pedset_t, map_t, goals_t>::add_nearest_type_target(
  * @param modifier : 
  * @param ctx : 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 void BehaviorBuilder<pedset_t, map_t, goals_t>::add_distance_modifier(
-    TargetModifier& modifier, BehaviorParser::DistanceContext* ctx) const {
+    TargetModifier& modifier, BehaviorParser::DistanceContext* ctx) const
+{
   NumericValue value = get_numeric(ctx->value_numeric(), _currSeed);
   modifier.add_check(ModifierDistance{value});
 }
@@ -1434,9 +1490,10 @@ void BehaviorBuilder<pedset_t, map_t, goals_t>::add_distance_modifier(
  * @param modifier : 
  * @param ctx : 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
-void BehaviorBuilder<pedset_t, map_t, goals_t>::add_direction_modifier(
-    TargetModifier& modifier, BehaviorParser::DirectionContext* ctx) {
+template <typename pedset_t, typename map_t, typename goals_t>
+void BehaviorBuilder<pedset_t, map_t, goals_t>::add_direction_modifier(TargetModifier& modifier,
+                                                                       BehaviorParser::DirectionContext* ctx)
+{
   auto direction = make_direction(ctx);
   modifier.add_check(ModifierDirection{direction});
 }
@@ -1447,9 +1504,10 @@ void BehaviorBuilder<pedset_t, map_t, goals_t>::add_direction_modifier(
  * @param modifier : 
  * @param ctx : 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 void BehaviorBuilder<pedset_t, map_t, goals_t>::add_location_modifier(
-    TargetModifier& modifier, BehaviorParser::Location_modifierContext* ctx) const {
+    TargetModifier& modifier, BehaviorParser::Location_modifierContext* ctx) const
+{
   auto location = get_check_location(ctx->LOC_NAME()->toString());
 
   modifier.add_check(ModifierLocation{location});
@@ -1466,9 +1524,10 @@ void BehaviorBuilder<pedset_t, map_t, goals_t>::add_location_modifier(
  * @param required : whether the selector needs to be satisfied
  * @return SubSelector 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_everyone_selector(slType type, bool required)
-    -> SubSelector {
+    -> SubSelector
+{
   auto  types = type->id_list()->ID();
   Ptype comPtype = get_composite_type(types);
 
@@ -1488,11 +1547,12 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_everyone_selector(slType t
  * @param required : whether the selector needs to be satisfied
  * @return SubSelector 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_exactly_n_selector(slType type, slSelector selector,
                                                                          std::optional<slGroup> group,
                                                                          bool                   required)
-    -> BehaviorBuilder<pedset_t, map_t, goals_t>::SubSelector {
+    -> BehaviorBuilder<pedset_t, map_t, goals_t>::SubSelector
+{
   auto  types = type->id_list()->ID();
   Ptype comPtype = get_composite_type(types);
   auto  typeStrs = make_list_strs(types);
@@ -1514,10 +1574,11 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_exactly_n_selector(slType 
  * @param required : whether the selector needs to be satisfied
  * @return SubSelector 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_percent_selector(slType type, slSelector selector,
                                                                        std::optional<slGroup> group,
-                                                                       bool required) -> SubSelector {
+                                                                       bool required) -> SubSelector
+{
   auto  types = type->id_list()->ID();
   Ptype comPtype = get_composite_type(types);
   auto  typeStrs = make_list_strs(types);
@@ -1538,10 +1599,11 @@ auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_percent_selector(slType ty
  * @param required 
  * @return SubSelector 
  */
-template <Concepts::PedsetModule pedset_t, Concepts::MapModule map_t, Concepts::GoalsModule goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, map_t, goals_t>::build_location_selector(slType type, slSelector selector,
                                                                         std::optional<slGroup> group,
-                                                                        bool required) -> SubSelector {
+                                                                        bool required) -> SubSelector
+{
   auto  types = type->id_list()->ID();
   Ptype comPtype = get_composite_type(types);
   auto  typeStrs = make_list_strs(types);

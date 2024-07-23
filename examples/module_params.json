@@ -1,25 +1,29 @@
 {
   "simulation": {
     "main": {
-      "max_timestep": 10000,
+      "max_timestep": 40000,
       "timestep_size": 0.005,
       "output_frequency": 100,
-      "random_seed": 12345
+      "random_seed": 12346345
     }
   },
   "model": {
     "calm_model": {
       "meanMass": 1.0,
-      "massStdDev": 0.1,
-      "meanReactionTime": 0.4,
+      "massStdDev": [
+        0.1,
+        0.2,
+        0.15
+      ],
+      "meanReactionTime": {
+        "min": 0.4,
+        "max": 0.6
+      },
       "reactionTimeStdDev": 0.05,
       "meanMaxSpeed": 1.0,
       "meanShoulderLen": 0.2,
       "maxSpeedStdDev": 0.1,
       "shoulderLenStdDev": 0.05
-    },
-    "circle_model": {
-      "radius": 0.2
     }
   },
   "goals": {
@@ -30,7 +34,7 @@
       "goalRange": 0.05
     }
   },
-  "pedset": {
+  "pedestrians": {
     "grid": {
       "gridSize": 0.5
     }
@@ -52,7 +56,7 @@
     "main": {
       "behaviors_dir": "./behaviors",
       "behaviors": [
-        "disembark"
+        "luggage"
       ]
     }
   }

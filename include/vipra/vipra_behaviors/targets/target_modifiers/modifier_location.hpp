@@ -29,7 +29,8 @@ class ModifierLocation {
    * @return true : if inside the location
    * @return false : if NOT inside the location
    */
-  auto operator()(auto pack, VIPRA::idx targetIdx, VIPRA::idx selfIdx) const -> bool {
+  auto operator()(auto pack, VIPRA::idx targetIdx, VIPRA::idx selfIdx) const -> bool
+  {
     auto const targetPos = pack.pedset.ped_coords(targetIdx);
     return pack.context.locations[_location].contains(targetPos);
   }

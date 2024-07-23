@@ -9,22 +9,21 @@
 #include "modules/model/calm_model/calm_model.hpp"
 
 auto main() -> int {
-  // Create the simulation
+  // Create Simulation
   auto sim = VIPRA::simulation(
       CALM::Model{},
       VIPRA::Goals::AStar{},
-      VIPRA::Pedestrians::Grid{
-          VIPRA::Input::JSON{"maps/pedestrians/a320/a320_144_pedestrians.json"},
-      },
-      VIPRA::Module::Output{
+      VIPRA::Pedestrians::Grid{},
+      VIPRA::CoordModules::Output{
         VIPRA::Output::Trajectories::JSON{}
       },
-      VIPRA::Module::Map{
-        VIPRA::Input::JSON{"maps/obstacles/a320/a320_polygons.json"},
-        VIPRA::Obstacles::QuadTree{}
-      }
+      VIPRA::Obstacles::QuadTree{}
   );
-  
+
   // Run the simulation with the module parameters in 'module_params.json'
-  sim(VIPRA::Parameters{VIPRA::Input::JSON{"module_params.json"}});
+  sim(
+    VIPRA::Input::JSON{"maps/pedestrians/a320/a320_144_pedestrians.json"},
+    VIPRA::Input::JSON{"maps/obstacles/a320/a320_polygons.json"},
+    VIPRA::Parameters{VIPRA::Input::JSON{"module_params.json"}}
+    );
 }

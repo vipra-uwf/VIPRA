@@ -7,13 +7,24 @@
 namespace VIPRA::Behaviors {
 enum class BoolOp { AND, OR };
 
+/**
+ * @brief true if the boolean expression can be short circuited
+ * 
+ * @param idx 
+ * @param met 
+ * @param prevMet 
+ * @param oper 
+ * @return true 
+ * @return false 
+ */
 inline constexpr auto short_circuit(VIPRA::idx idx, std::vector<bool>& met, std::vector<bool> const& prevMet,
-                                    BoolOp oper) -> bool {
-  if (oper == BoolOp::AND && !prevMet[idx]) {
+                                    BoolOp oper) -> bool
+{
+  if ( oper == BoolOp::AND && ! prevMet[idx] ) {
     met[idx] = false;
     return true;
   }
-  if (oper == BoolOp::OR && prevMet[idx]) {
+  if ( oper == BoolOp::OR && prevMet[idx] ) {
     met[idx] = true;
     return true;
   }
