@@ -47,4 +47,4 @@ jobs:
       - name: Build
         run: cd __tests__ && cmake --build build
       - name: Run tests
-        run: ./__tests__/build/vipra_tests
+        run: cd __tests__ && build/vipra_tests
