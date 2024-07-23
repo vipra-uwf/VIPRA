@@ -24,8 +24,12 @@ auto main(int argc, char** argv) -> int
   size_t simCount = std::stoul(argv[1]);
 
   // Create Simulation
-  auto sim = VIPRA::simulation(CALM::Model{}, VIPRA::Goals::AStar{}, VIPRA::Pedestrians::Grid{},
-                               VIPRA::CoordModules::Output{VIPRA::Output::Trajectories::JSON{}},
+  auto sim = VIPRA::simulation(CALM::Model{}, 
+                               VIPRA::Goals::AStar{}, 
+                               VIPRA::Pedestrians::Grid{},
+                               VIPRA::CoordModules::Output{
+                                VIPRA::Output::Trajectories::JSON{}
+                               },
                                VIPRA::Obstacles::QuadTree{});
 
   // Create a Timer and start it

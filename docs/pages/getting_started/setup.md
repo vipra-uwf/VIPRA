@@ -24,6 +24,8 @@ The [Example Simulation](../examples/simulation.md) provided can be run with:
 ./VIPRA
 ```
 
+See the [Usage Page](usage.md) for how to use VIPRA as a standalone program
+
 ## Library
 
 `VIPRA` can be included in a project using [CMake](https://cmake.org/)
