@@ -1,9 +1,4 @@
----
-title: ABOUT PAGE
-layout: template
-filename: docs.md
---- 
-
+**File Path:** [Home](docs.md) / 
 # Introduction
 
 This project provides tools for interdisciplinary analysis of fine-scaled pedestrian movement, especially for science-based decision-making. It is motivated by the fact that local movement and interaction patterns of individuals congregated in public locations, such as entertainment venues and transportation hubs, impacts public health in myriad ways. For instance, infectious disease transmission in crowded areas, such as the 2016 measles outbreak in Disney world that resulted in 125 cases, is affected by the evolution of the pedestrian contact network.
@@ -16,10 +11,16 @@ This project includes a modular pedestrian dynamics code to which input from dif
 
 # Getting Started
 
+## Researchers
+[How to use VIIPRA](pages/researchers.md)
+
+## Developers
+[How to add functionality.]()
+
+---
+
 1. See the [Setup Page](pages/getting_started/setup.md) for getting started
 
 2. See the [Usage Page](pages/getting_started/usage.md) for how to use VIPRA
 
 3. See the [Examples Page](pages/examples/list.md) for examples
-
-\tableofcontents
