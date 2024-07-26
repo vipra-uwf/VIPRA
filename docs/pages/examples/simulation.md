@@ -1,8 +1,3 @@
----
-title: Example Simulation
-layout: template
-filename: simluation.md
---- 
 
 # Example Simulation
 

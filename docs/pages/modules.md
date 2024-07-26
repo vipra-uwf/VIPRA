@@ -1,8 +1,3 @@
----
-title: Modules Overview
-layout: template
-filename: modules.md
---- 
 
 ## Module Types
 

@@ -39,7 +39,7 @@ class Obstacles : public Util::CRTP<Obstacles<module_t>> {
       }
 
       std::for_each(positions->begin(), positions->end(),
-                    [&](const auto& objPos) { objMap[objType].push_back(objPos); });
+                    [&](auto const& objPos) { objMap[objType].push_back(objPos); });
     });
 
     // load obstacle polygons

@@ -1,7 +1,25 @@
----
-title: Model Module Implementation
-layout: template
-filename: model.md
---- 
+# Model
 
-<!-- TODO: move relavent macros here -->
+# Required Methods
+
+```C++
+VIPRA_MODEL_TIMESTEP;
+
+VIPRA_MODEL_INIT_STEP;
+```
+
+# Details
+```
+VIPRA_MODEL_TIMESTEP;
+```
+
+### Parameters
+
+- `pedset` - the [Pedestrians Model implementation](..modules/pedestrians.md)
+- ``
+
+---
+
+```
+VIPRA_MODEL_INIT_STEP;
+```

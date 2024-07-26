@@ -1,8 +1,3 @@
----
-title: Simulation Overview
-layout: template
-filename: sim_overview.md
---- 
 
 ## Simulation
 

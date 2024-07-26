@@ -1,9 +1,3 @@
----
-title: Helper Macros
-layout: template
-filename: macros.md
---- 
-
 # Macros
 
 For reference on how to use these macros, you can look at `modules/model/calm_model/calm_model.hpp`

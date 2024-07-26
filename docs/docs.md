@@ -12,10 +12,10 @@ This project includes a modular pedestrian dynamics code to which input from dif
 # Getting Started
 
 ## Researchers
-[How to use VIIPRA](pages/researchers.md)
+[How to use VIPRA](pages/researchers.md)
 
 ## Developers
-[How to add functionality.]()
+[How to add functionality.](pages/developers.md)
 
 ---
 

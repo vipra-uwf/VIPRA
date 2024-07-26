@@ -40,7 +40,7 @@ class Grid : public Modules::Module<Grid>, public Modules::Pedestrians<Grid> {
     auto coords = input.template get<std::vector<VIPRA::f3d>>("coords");
     if ( ! coords ) throw std::runtime_error("Could not find pedestrian coordinates in input file");
 
-    auto dimensions = map.get_dimensions();
+    auto dimensions = obstacles.get_dimensions();
 
     // create temporary vector of indices to initialize spatial map with
     std::vector<VIPRA::idx> tempIndexes((*coords).size());

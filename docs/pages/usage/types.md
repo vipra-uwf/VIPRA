@@ -1,8 +1,3 @@
----
-title: VIPRA Types
-layout: template
-filename: types.md
---- 
 
 ## VIPRA Types
 

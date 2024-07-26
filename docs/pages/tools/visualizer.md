@@ -1,8 +1,3 @@
----
-title: Trajectories Visualizer
-layout: template
-filename: visualizer.md
---- 
 
 # VIPRA Trajectories Visualization
 

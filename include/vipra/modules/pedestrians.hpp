@@ -32,7 +32,7 @@ class Pedestrians : public Util::CRTP<Pedestrians<module_t>> {
   using Util::CRTP<Pedestrians<module_t>>::self;
 
  public:
-  void initialize(auto& input, auto const& map) { self().init_step(input, map); }
+  void initialize(auto& input, auto const& obstacles) { self().init_step(input, obstacles); }
 
   void update(VIPRA::State const& state)
   {

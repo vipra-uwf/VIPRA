@@ -18,16 +18,16 @@ class Goals : public Util::CRTP<Goals<module_t>> {
   using Util::CRTP<Goals<module_t>>::self;
 
  public:
-  template <typename pedset_t, typename map_t>
-  void initialize(pedset_t const& pedset, map_t const& map)
+  template <typename pedset_t, typename obstacles_t>
+  void initialize(pedset_t const& pedset, obstacles_t const& obstacles)
   {
-    return self().init_step(pedset, map);
+    return self().init_step(pedset, obstacles);
   }
 
-  template <typename pedset_t, typename map_t>
-  void update(pedset_t const& pedset, map_t const& map, VIPRA::delta_t deltaT)
+  template <typename pedset_t, typename obstacles_t>
+  void update(pedset_t const& pedset, obstacles_t const& obstacles, VIPRA::delta_t deltaT)
   {
-    return self().update_step(pedset, map, deltaT);
+    return self().update_step(pedset, obstacles, deltaT);
   }
 
   void change_end_goal(VIPRA::idx pedIdx, VIPRA::f3d currPos, VIPRA::f3d goalPos)

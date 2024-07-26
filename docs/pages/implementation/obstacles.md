@@ -1,14 +1,11 @@
----
-title: Obstacles Module Implementation
-layout: template
-filename: obstacles.md
---- 
 
 # Obstacle Set Implementation
 
 Obstacle Set modules hold the geometry of the environment and handle map/pedestrian collision detection.
 
-<!-- TODO: move relavent macros here -->
+# Required Module
+
+
 
 ```C++
 void initialize(std::vector<VIPRA::Geometry::Polygon> const&, std::vector<std::string> const&, std::map<std::string, std::vector<VIPRA::f3d>> const&);
@@ -22,3 +19,5 @@ auto ray_hit(VIPRA::f3d, VIPRA::f3d) -> VIPRA::f_pnt;
 
 auto get_dimensions() -> VIPRA::f3d;
 ```
+
+# Details

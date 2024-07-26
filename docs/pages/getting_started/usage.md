@@ -1,8 +1,3 @@
----
-title: Usage
-layout: template
-filename: usage.md
---- 
 
 # Usage
 

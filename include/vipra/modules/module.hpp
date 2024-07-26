@@ -57,8 +57,8 @@ void Module<class_t>::register_params(paramreader_t&& paramIn)
 
   // register all of the parameters with the parameter loader
   std::apply(
-      [&](const auto& first, const auto&... restArgs) {
-        auto regis = [&](const auto& param) {
+      [&](auto const& first, auto const&... restArgs) {
+        auto regis = [&](auto const& param) {
           paramIn.register_param(self().module_type(), self().module_name(), param.first);
         };
 
@@ -89,8 +89,8 @@ void Module<class_t>::config(paramreader_t& paramIn, VIPRA::Random::Engine& engi
 
   // load each parameter and apply it to the coresponding variable
   std::apply(
-      [&](const auto& first, const auto&... restArgs) {
-        auto configure = [&](const auto& param) {
+      [&](auto const& first, auto const&... restArgs) {
+        auto configure = [&](auto const& param) {
           using param_t = std::remove_cvref_t<decltype(param.second)>;
 
           // set the parameter variable as loaded from input

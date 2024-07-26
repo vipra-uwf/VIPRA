@@ -1,9 +1,3 @@
----
-title: Example Model
-layout: template
-filename: model_example.md
---- 
-
 
 # Model Implementation Example
 

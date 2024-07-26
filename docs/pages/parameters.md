@@ -1,8 +1,3 @@
----
-title: Module Parameters
-layout: template
-filename: parameters.md
---- 
 
 ## Module Parameters
 

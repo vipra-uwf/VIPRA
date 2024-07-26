@@ -17,15 +17,15 @@ namespace VIPRA::Behaviors {
 /**
  * Describes a specific human behavior. Implementations can either define the behavior directly in C++ or use a DSL.
  */
-template <typename pedset_t, typename map_t, typename goals_t>
+template <typename pedset_t, typename obstacles_t, typename goals_t>
 class HumanBehavior {
   DEFAULT_CONSTRUCTIBLE(HumanBehavior)
   COPYABLE(HumanBehavior)
   MOVEABLE(HumanBehavior)
 
  public:
-  using pack_t = Simpack<pedset_t, map_t, goals_t>;
-  using context_t = BehaviorContext<pedset_t, map_t, goals_t>;
+  using pack_t = Simpack<pedset_t, obstacles_t, goals_t>;
+  using context_t = BehaviorContext<pedset_t, obstacles_t, goals_t>;
   using cond_t = Condition<SubCondition<pack_t>>;
 
   using targetfunc_t = TargetFunc<pack_t>;
@@ -42,8 +42,9 @@ class HumanBehavior {
 
   explicit HumanBehavior(std::string behaviorName) : _name(std::move(behaviorName)), _context() {}
 
-  void initialize(pedset_t const& pedset, map_t const& map, goals_t& goals);
-  void timestep(pedset_t& pedset, map_t& map, goals_t& goals, VIPRA::State& state, VIPRA::delta_t deltaT);
+  void initialize(pedset_t const& pedset, obstacles_t const& obstacles, goals_t& goals);
+  void timestep(pedset_t& pedset, obstacles_t& map, goals_t& goals, VIPRA::State& state,
+                VIPRA::delta_t deltaT);
 
   void set_all_ped_types(Ptype types)
   {
@@ -86,8 +87,8 @@ class HumanBehavior {
   std::vector<bool>                  _conditionMet;
   std::vector<Target>                _targets;
 
-  void evaluate_events(pedset_t& pedset, map_t& map, goals_t& goals, VIPRA::delta_t deltaT);
-  void apply_actions(pedset_t& pedset, map_t& map, goals_t& goals, VIPRA::State& state,
+  void evaluate_events(pedset_t& pedset, obstacles_t& map, goals_t& goals, VIPRA::delta_t deltaT);
+  void apply_actions(pedset_t& pedset, obstacles_t& map, goals_t& goals, VIPRA::State& state,
                      VIPRA::delta_t deltaT);
 };
 
@@ -98,9 +99,9 @@ class HumanBehavior {
  * @param obsSet : obstacle set object
  * @param goals : goals object
  */
-template <typename pedset_t, typename map_t, typename goals_t>
-void HumanBehavior<pedset_t, map_t, goals_t>::initialize(pedset_t const& pedset, map_t const& map,
-                                                         goals_t& goals)
+template <typename pedset_t, typename obstacles_t, typename goals_t>
+void HumanBehavior<pedset_t, obstacles_t, goals_t>::initialize(pedset_t const&    pedset,
+                                                               obstacles_t const& obstacles, goals_t& goals)
 {
   VIPRA::State dummyState;
 
@@ -114,7 +115,8 @@ void HumanBehavior<pedset_t, map_t, goals_t>::initialize(pedset_t const& pedset,
     _targets[i] = Target{TargetType::PEDESTRIAN, i};
   }
 
-  Simpack<pedset_t, map_t, goals_t> pack{pedset, map, goals, _selector.get_groups(), _context, dummyState, 0};
+  Simpack<pedset_t, obstacles_t, goals_t> pack{pedset,   obstacles,  goals, _selector.get_groups(),
+                                               _context, dummyState, 0};
   _selector.initialize(_name, pack);
 
   for ( auto& actionGroup : _actions ) {
@@ -128,42 +130,44 @@ void HumanBehavior<pedset_t, map_t, goals_t>::initialize(pedset_t const& pedset,
  * @brief Evaluates behavior events, and performs actions of pedestrians
  * 
  * @tparam pedset_t 
- * @tparam map_t 
+ * @tparam obstacles_t 
  * @tparam goals_t 
  * @param pedset 
- * @param map 
+ * @param obstacles 
  * @param goals 
  * @param state 
  * @param deltaT 
  */
-template <typename pedset_t, typename map_t, typename goals_t>
-void HumanBehavior<pedset_t, map_t, goals_t>::timestep(pedset_t& pedset, map_t& map, goals_t& goals,
-                                                       VIPRA::State& state, VIPRA::delta_t deltaT)
+template <typename pedset_t, typename obstacles_t, typename goals_t>
+void HumanBehavior<pedset_t, obstacles_t, goals_t>::timestep(pedset_t& pedset, obstacles_t& map,
+                                                             goals_t& goals, VIPRA::State& state,
+                                                             VIPRA::delta_t deltaT)
 {
   evaluate_events(pedset, map, goals, deltaT);
   apply_actions(pedset, map, goals, state, deltaT);
   _context.elapsedTime += deltaT;
 }
 
-template <typename pedset_t, typename map_t, typename goals_t>
-void HumanBehavior<pedset_t, map_t, goals_t>::evaluate_events(pedset_t& pedset, map_t& map, goals_t& goals,
-                                                              VIPRA::delta_t deltaT)
+template <typename pedset_t, typename obstacles_t, typename goals_t>
+void HumanBehavior<pedset_t, obstacles_t, goals_t>::evaluate_events(pedset_t& pedset, obstacles_t& map,
+                                                                    goals_t& goals, VIPRA::delta_t deltaT)
 {
   VIPRA::State dummyState;
   for ( auto& event : _context.events ) {
-    event.evaluate(HumanBehavior<pedset_t, map_t, goals_t>::pack_t{pedset, map, goals, _selector.get_groups(),
-                                                                   _context, dummyState, deltaT});
+    event.evaluate(HumanBehavior<pedset_t, obstacles_t, goals_t>::pack_t{
+        pedset, map, goals, _selector.get_groups(), _context, dummyState, deltaT});
   }
 }
 
-template <typename pedset_t, typename map_t, typename goals_t>
-void HumanBehavior<pedset_t, map_t, goals_t>::apply_actions(pedset_t& pedset, map_t& map, goals_t& goals,
-                                                            VIPRA::State& state, VIPRA::delta_t deltaT)
+template <typename pedset_t, typename obstacles_t, typename goals_t>
+void HumanBehavior<pedset_t, obstacles_t, goals_t>::apply_actions(pedset_t& pedset, obstacles_t& map,
+                                                                  goals_t& goals, VIPRA::State& state,
+                                                                  VIPRA::delta_t deltaT)
 {
-  GroupsContainer&                                groups = _selector.get_groups();
-  const VIPRA::size                               groupCnt = groups.size();
-  HumanBehavior<pedset_t, map_t, goals_t>::pack_t pack{pedset,   map,   goals, _selector.get_groups(),
-                                                       _context, state, deltaT};
+  GroupsContainer&                                      groups = _selector.get_groups();
+  const VIPRA::size                                     groupCnt = groups.size();
+  HumanBehavior<pedset_t, obstacles_t, goals_t>::pack_t pack{pedset,   map,   goals, _selector.get_groups(),
+                                                             _context, state, deltaT};
 
   // check if any of the pedestrians should have an action applied
   for ( VIPRA::idx i = 0; i < groupCnt; ++i ) {

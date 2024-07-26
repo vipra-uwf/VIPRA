@@ -1,9 +1,3 @@
----
-title: Included Modules
-layout: template
-filename: base_modules.md
---- 
-
 
 ## Included Modules
 

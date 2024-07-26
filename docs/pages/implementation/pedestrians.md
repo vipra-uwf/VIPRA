@@ -1,23 +1,76 @@
----
-title: Pedestrian Module Implementation
-layout: template
-filename: pedestrians.md
---- 
 
 # Pedestrian Set Implementation
 
-### Interface
-
-<!-- TODO: move relavent macros here -->
+# Required Methods
 
 ```C++
-auto num_pedestrians() -> VIPRA::size;
+VIPRA_PEDS_INIT_STEP;
+VIPRA_PEDS_UPDATE_STEP;
 
-auto ped_coords(VIPRA::idx) const -> VIPRA::f3d;
-auto all_coords() const -> std::vector<VIPRA::f3d> const&;
-auto ped_velocity(VIPRA::idx) const -> VIPRA::f3d;
-auto all_velocities() const -> std::vector<VIPRA::f3d> const&;
-auto closest_ped() const -> VIPRA::idx;
-
-void update(VIPRA::State const&);
+VIPRA::idx closest_ped() const;
+VIPRA::idx conditional_closest_ped() const;
 ```
+
+# Details
+
+```
+VIPRA_PEDS_INIT_STEP;
+```
+
+### Parameters
+
+- `input` - [Input module implementation](../modules/input.md)
+- `obstacles` - [Obstacle module implementation](../modules/obstacles.md)
+
+### Returns
+
+`NONE`
+
+### Expected Results
+
+The module is ready to correctly return results for its required methods
+
+---
+
+```
+VIPRA_PEDS_UPDATE_STEP;
+```
+
+### Parameters
+
+- `state` : VIPRA::State - updated positions/velocities of pedestrians
+
+### Returns
+
+`NONE`
+
+### Expected Results
+
+The module is ready to correctly return results for its required methods
+
+---
+
+```
+VIPRA::idx closest_ped() const;
+```
+
+### Parameters
+
+`NONE`
+
+### Returns
+
+`NONE`
+
+### Expected Results
+
+The module is ready to correctly return results for its required methods
+
+---
+
+```
+VIPRA::idx conditional_closest_ped() const;
+```
+
+---
+

@@ -1,12 +1,7 @@
----
-title: Output Module Implementation
-layout: template
-filename: output.md
---- 
 
 # Output Implementation
 
-### Interface
+# Required Methods
 
 <!-- TODO: move relavent macros here -->
 

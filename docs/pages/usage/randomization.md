@@ -1,8 +1,3 @@
----
-title: VIPRA Randomization
-layout: template
-filename: randomization.md
---- 
 
 ## Randomization
 

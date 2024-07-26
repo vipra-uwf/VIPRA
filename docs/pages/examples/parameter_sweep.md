@@ -1,8 +1,3 @@
----
-title: Parameter Sweep Example
-layout: template
-filename: parameter_sweep.md
---- 
 
 ## Example Parameter Sweep
 

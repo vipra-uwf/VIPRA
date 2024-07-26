@@ -14,7 +14,7 @@ using VIPRA::Geometry::Rectangle;
 
 class Collision {
  public:
-  void initialize(const auto& pedset, const auto& goals, ModelData const& data)
+  void initialize(auto const& pedset, auto const& goals, ModelData const& data)
   {
     raceStatuses = std::vector<RaceStatus>(pedset.num_pedestrians(), NO_RACE);
     inRace = std::vector<std::vector<bool>>(pedset.num_pedestrians(),
@@ -28,8 +28,8 @@ class Collision {
     initialize_rectangles(pedset, goals, data);
   }
 
-  void race_detection(const auto& pedset, ModelData const& data, const auto& goals, VIPRA::timestep timestep,
-                      const auto& map)
+  void race_detection(auto const& pedset, ModelData const& data, auto const& goals, VIPRA::timestep timestep,
+                      auto const& obstacles)
   {
     VIPRA_PERF_FUNCTION("CALM::Collision::raceDetection")
 
@@ -49,7 +49,7 @@ class Collision {
     }
   }
 
-  void initialize_rectangles(const auto& pedset, const auto& goals, ModelData const& data)
+  void initialize_rectangles(auto const& pedset, auto const& goals, ModelData const& data)
   {
     collisionRectangles = std::vector<Rectangle>(pedset.num_pedestrians());
     auto const& shldrs = data.shoulderLens;
@@ -86,7 +86,7 @@ class Collision {
   static constexpr float       minspeed = 0.00000001F;
   static constexpr float       rectangleRange = 0.4;
 
-  void calc_collision_rectangles(const auto& pedset, const auto& goals, ModelData const& data)
+  void calc_collision_rectangles(auto const& pedset, auto const& goals, ModelData const& data)
   {
     VIPRA_PERF_FUNCTION("CALM::Collision::calcCollisionRectangles")
 
@@ -174,7 +174,7 @@ class Collision {
     return midpoint;
   }
 
-  [[nodiscard]] auto check_if_highest_priority(const auto& pedset, const auto& goals, VIPRA::idx pedIdx,
+  [[nodiscard]] auto check_if_highest_priority(auto const& pedset, auto const& goals, VIPRA::idx pedIdx,
                                                VIPRA::timestep timestep) -> bool
   {
     VIPRA_PERF_FUNCTION("CALM::Collision::checkIfHighestPriority")

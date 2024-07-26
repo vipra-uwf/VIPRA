@@ -42,7 +42,7 @@ struct Polygon {
   {
     // TODO(rolland): verify this
     bool isInside = false;
-    for ( const auto& edge : edges ) {
+    for ( auto const& edge : edges ) {
       if ( edge.is_point_on(point) ) return true;
       if ( edge.start.y > point.y != edge.end.y > point.y &&
            point.x < (edge.end.x - edge.start.x) * (point.y - edge.start.y) / (edge.end.y - edge.start.y) +
