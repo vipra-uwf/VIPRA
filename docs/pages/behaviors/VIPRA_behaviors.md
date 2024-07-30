@@ -1,3 +1,4 @@
+**File Path:** [Home](../../docs.md) / [Behaviors](VIPRA_behaviors.md)
 # VIPRA Behaviors
 
 VIPRA Behaviors is a DSL for creating human behaviors for use in pedestrian dynamics simulations.
@@ -5,28 +6,31 @@ Its goal is to provide an easy way for researchers without programming experienc
 
 `Behaviors` are a way to describe `Actions` that pedestrians take under a certain `Condition` without the use of a traditional programming language.
 
-`Behaviors` are comprised of several major parts:
-1. [`Selectors`](#s-selectors) (§S.)
-2. [`Actions`](#a-actions) (§A.)
-3. [`Events`](#e-events) (§E.)
+`Behaviors` are comprised of four major parts:
+1. [Types](#types)
+2. [Selectors](#selectors)
+3. [Events](#events)
+4. [Actions](#actions)
+
+See also [Behavior Examples](behavior_examples.md)
 
 ---
 
-# L. Behavior Layout
+# Behavior Layout
 
 The general layout of a `Behavior` is as follows:
 ```
-Types Declaration.       // section (§T.)
+Types Declaration.
 
-States Declaration.  // section (§St.)
+States Declaration.
 
-Location Declarations. // section (§L.)
+Location Declarations.
 
-Selector Declarations. // section (§S.)
+Selector Declarations.
 
-Event Declartions.   // section (§E.)
+Event Declartions.
 
-Action Declarations.   // section (§A.)
+Action Declarations.
 ```
 
 Each Declaration has a subset of components.
@@ -48,7 +52,8 @@ Selector:
 .
 ```
 
-`Type` and `Select` are both components of the [`Selector`](#s-selectors) declaration
+// TODO(tyler): Consider removing this, may be redundant with the actual selector section.   
+`Type` and `Select` are both components of the [`Selector`](#selectors) declaration
 
 
 ---
@@ -235,7 +240,7 @@ Location:
 
 ---
 
-# S. Selectors
+# Selectors
 
 `Selectors` are how pedestrians are selected for a certain `Type` (§T).
 

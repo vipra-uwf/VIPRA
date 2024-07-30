@@ -1,22 +1,16 @@
+**File Path:** [Home](../../docs.md) / [Behaviors](VIPRA_behaviors.md) / [Examples](behavior_examples.md)
 # Behavior Examples
 
-<details>
-  <summary>
-    <h1>
-      Ex. Creating An Example Behavior
-    </h1>
-  </summary>
+# Ex. Creating An Example Behavior
 
 Here we will make a couple of example `Behaviors`.
 
-<details>
-  <summary>
-    <h2>
-      Ex.1. The Simplest Behavior
-    </h2>
-  </summary>
+## Ex.1. The Simplest Behavior
 
 This example is a simple `Behavior` that causes every pedestrian to stand still for the duration of the simulation. 
+
+<details open>
+<summary>Code</summary>
 
 ```
 Types:           // Types Declaration (§T.) says what types of pedestrians there are
@@ -37,14 +31,12 @@ Action (person): // Action (§A.) says what people of that type do
 
 ---
 
-<details>
-  <summary>
-    <h2>
-      Ex.2. An Announcment Event
-    </h2>
-  </summary>
+## Ex.2. An Announcment Event
 
 This `Behavior` shows `Events`, with an announcement. In this example, we will make a simple `Behavior` and add to it.
+
+<details open>
+<summary>Code</summary>
 
 ```
 Types:                                // Types Declaration(§T.)
@@ -68,19 +60,19 @@ Action (Listener):                    // Action (§A.)
   Response: set velocity {0}
 . 
 ```
+</details open>
 
 In this example, an announcement will start after 10 seconds and last for 10 seconds.
 
 While the announcement is occurring, every pedestrian will be stopped to listen.
 
-<details>
-  <summary>
-    <h3>
-      Ex.2.1. A bit more realistic
-    </h3>
-  </summary>
+### Ex.2.1. A bit more realistic
 
 Everyone stopping to listen isn't very realistic, so we can change it slightly.
+
+<details open>
+<summary>Code</summary>
+
 
 ```
 Types:                                // Types Declaration(§T.)
@@ -104,19 +96,16 @@ Action (Listener):                    // Action (§A.)
   Response: set velocity {0}
 . 
 ```
-
+</details>
 In this example, only 10% of pedestrians will actually stop to listen to the announcement. (probably still an over-estimation)
 
-</details>
-
-<details>
-  <summary>
-    <h3>
-      Ex.2.2. Adding more
-    </h3>
-  </summary>
+### Ex.2.2. Adding more
 
 A black-and-white, either pedestrians stop to listen or don't, may not be as realistic as we would like.
+
+<details open>
+<summary>Code</summary>
+
 
 ```
 Types:                                // Types Declaration(§T.)
@@ -151,20 +140,17 @@ Action (Parital_Listener):            // Action (§A.)
   Response: scale velocity 0.75
 .
 ```
+</details>
 
 In this 10% of pedestrians stop to listen, another 25% slow down to listen, and the rest behave normally.
 
-</details>
-</details>
-
-<details>
-  <summary>
-    <h2>
-      Ex.3. Pedestrians Interacting
-    </h2>
-  </summary>
+## Ex.3. Pedestrians Interacting
 
 This example `Behavior` has pedestrians "fighting", to show that pedestrians can interact.
+
+<details open>
+<summary>Code</summary>
+
 
 ```
 Types:
@@ -197,8 +183,8 @@ Action (aggressive_fan):
 .
 ```
 
-
-</details>
 </details>
 
 Go To [VIPRA Behaviors](./VIPRA_Behaviors.md)
+
+\tableofcontents
