@@ -3,7 +3,7 @@
 
 VIPRA can either be used as a [Library](#library) for use in other projects or built as a [Standalone Simulation](#standalone-build).
 
-There is an [Example Simulation](../examples/simulation.md).
+An example of how to use the simulation function is provided here: [Example Simulation](../examples/simulation.md).
 
 # Standalone Build
 
@@ -15,12 +15,13 @@ This build takes one argument, the number of simulations to run, and generates a
 
 The following are requirement for running the VIPRA simulation.
 
-1. CMake version TODO or newer
-2. OpenMPI
+1. [CMake](https://cmake.org/download/) version 3.22.2 or newer.
+2. A compiler that can run C++20 or newer.
+3. [OpenMPI](https://www.open-mpi.org/software/ompi/v5.0/) version 5.05 or newer.
 
 The following are required for development.
 
-1. ANTLR4 - version TODO
+1. ANTLR4 - version 4.13.1 or newer.
 
 ---
 

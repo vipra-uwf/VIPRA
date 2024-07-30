@@ -1,4 +1,5 @@
 
+**File Path:** [Home](../docs.md) / [Researchers](researchers.md) / [Included Modules](base_modules.md)
 ## Included Modules
 
 There are several modules included with VIPRA.
@@ -28,6 +29,8 @@ There are several modules included with VIPRA.
 This `Model` module implements the [Calm Model](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0229690)
 
 #### Use:
+
+In **main.cpp**:
 ```C++
 #include "modules/model/calm_model/calm_model.hpp"
 
@@ -46,7 +49,30 @@ VIPRA::simulation(
 - `meanMaxSpeed` : Mean max speed for population
 - `maxSpeedStdDev` : Standard deviation for max speed
 - `meanShoulderLen` : Mean shoulder length for population
-- `shoulderLenStdDev` : Standard deviation for shoulder length
+- `shoulderLenStdDev` : Standard deviation for shoulder length  
+
+In **module_params.json**:
+```json
+  "model": {
+    "calm_model": {
+      "meanMass": 1.0,
+      "massStdDev": [
+        0.1,
+        0.2,
+        0.15
+      ],
+      "meanReactionTime": {
+        "min": 0.4,
+        "max": 0.6
+      },
+      "reactionTimeStdDev": 0.05,
+      "meanMaxSpeed": 1.0,
+      "meanShoulderLen": 0.2,
+      "maxSpeedStdDev": 0.1,
+      "shoulderLenStdDev": 0.05
+    }
+  },
+```
 
 ### AStar Goals
 

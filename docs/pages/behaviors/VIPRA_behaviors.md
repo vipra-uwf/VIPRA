@@ -6,9 +6,9 @@ Its goal is to provide an easy way for researchers without programming experienc
 `Behaviors` are a way to describe `Actions` that pedestrians take under a certain `Condition` without the use of a traditional programming language.
 
 `Behaviors` are comprised of several major parts:
-1. `Selectors` (§S.)
-2. `Actions` (§A.)
-3. `Events` (§E.)
+1. [`Selectors`](#s-selectors) (§S.)
+2. [`Actions`](#a-actions) (§A.)
+3. [`Events`](#e-events) (§E.)
 
 ---
 
@@ -48,7 +48,7 @@ Selector:
 .
 ```
 
-`Type` and `Select` are both components of the `Selector` declaration
+`Type` and `Select` are both components of the [`Selector`](#s-selectors) declaration
 
 
 ---
@@ -59,7 +59,7 @@ This section has some simple `Syntax` rules that must be followed for a `Behavio
 
 The other sections will have the specific `Syntax` rules for their respective parts, in a `Section - General Syntax Rules` section
 
-1. All Declarations must end in a '.'
+1. All Declarations must end in a `.`
 ```
 correct:
   Event:
@@ -1171,3 +1171,5 @@ Pedestrian States:
   #waiting
 .
 ```
+
+\tableofcontents

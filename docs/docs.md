@@ -12,15 +12,14 @@ This project includes a modular pedestrian dynamics code to which input from dif
 # Getting Started
 
 ## Researchers
-[How to use VIPRA](pages/researchers.md)
+[How to use VIPRA](pages/researchers.md)  
+[Jump straight to Setup](pages/getting_started/setup.md)
 
 ## Developers
 [How to add functionality.](pages/developers.md)
 
+## Examples
+[Examples for developing and running simulations](pages/examples/list.md)
+
+
 ---
-
-1. See the [Setup Page](pages/getting_started/setup.md) for getting started
-
-2. See the [Usage Page](pages/getting_started/usage.md) for how to use VIPRA
-
-3. See the [Examples Page](pages/examples/list.md) for examples
