@@ -12,7 +12,9 @@ Its goal is to provide an easy way for researchers without programming experienc
 3. [Events](#events)
 4. [Actions](#actions)
 
-See also [Behavior Examples](behavior_examples.md)
+*See also [Behavior Examples](behavior_examples.md)*
+
+***Document Note:** Text wrapped with `<` and `>`, denote a placeholder value. You should not include `<` and `>` when writing Behaviors.*
 
 ---
 
@@ -36,9 +38,9 @@ Action Declarations.
 Each Declaration has a subset of components.
 
 ```
-*Declaration Type*:
-  *Component Name* : *Component Value*
-  *...*
+<declaration_type>:
+  <component_name> : <component_value>
+  ...
 .
 ```
 
@@ -58,7 +60,7 @@ Selector:
 
 ---
 
-# Sy. General Syntax Rules
+# Behavior General Syntax Rules
 
 This section has some simple `Syntax` rules that must be followed for a `Behavior` to be considered correct.
 
@@ -69,18 +71,18 @@ The other sections will have the specific `Syntax` rules for their respective pa
 correct:
   Event:
     Name: Example
-    *...*
+    ...
   .
 
 incorrect:
   Event:
     Name: Example
-    *...*
+    ...
 ```
 
-2. Each `Behavior` (§B) must start with a `Types Declaration` (§T.1)
-3. Each `Behavior` (§B) must only have 1 `Types Declaration` (§T.1)
-4. Each `Behavior` (§B) must have at least 1 `Selector` (§S)
+2. Each `Behavior` must **start** with a [Types Declaration](#types-declaration)
+3. Each `Behavior` must **only have 1** [Types Declaration](#types-declaration)
+4. Each `Behavior` must have **at least 1** [Selector](#selectors)
 5. `Behaviors` are NOT case-sensitive so `Consider`, `consider`, and `ConSiDEr` are all valid.
 6. Comments can be added following '//' or between '/*' and '\*/'
 ```
@@ -117,19 +119,21 @@ Event:
 
 ---
 
-# T. Types
+# Types
 
-`Types` are how pedestrians are organized in `Behaviors` (§B)
+`Types` are how pedestrians are organized in `Behaviors`
 
-Each pedestrian is assigned a user defined `Type`, and based on their `Type` they will follow different `Actions` (§A).
+Each pedestrian is assigned a user-defined `Type`. These `Types` are used to categorize the [Actions](#actions) pedestrians will take during the simulation.
 
 ---
 
-## T.1. Types Declaration
+## Types Declaration
+
+`Types` are declared in the `Types Declaration` of a `Behavior`.
 
 A `Types Declaration` is what says which types are being used in the `Behavior`.
 
-`Behaviors` can only have 1 `Types Declaration` with up to 64 types.
+`Behaviors` can only have 1 `Types Declaration` which can include up to 64 `Types`.
 
 `Types Declarations` are slightly different from other declarations, in that they do not have components; instead each type is simply listed out.
 
@@ -150,7 +154,7 @@ Types:
 
 ---
 
-### T.1.1. Types Declaration - General Syntax Rules
+### Types Declaration General Syntax Rules
 
 1. `Types Declarations` can be any length up to 64 `Types`
 ```
@@ -166,31 +170,31 @@ Types:
 
 ---
 
-## T.2. Composite Types
+## Composite Types
 
 A Pedestrians `Type` can be composed of several other types.
 
 A Pedestrian with a `Composite Type` will have the attributes of each individual `Type`.
 
-How to assign `Composite Types` is explained in the `Selectors` (§S) section.
+How to assign `Composite Types` is explained in the [Selectors](#selectors) section.
 
 
 ---
 
-## T.3. Groups
+## Groups
 
 For most users, `Groups` and `Types` refer to the same thing.
 
 The main difference between a `Type` and a `Group` is that there is a base `Group` for each `Behavior`, being 'Pedestrian' (or 'Pedestrians').
 
-Each pedestrian with a `Type` is considered in that `Types` `Group`.
+Each pedestrian with a `Type` is considered in that `Type`'s `Group`.
 
 Pedestrians with `Composite Types` are in a `Group` for each `Type`.
 
 
 ---
 
-## T.4. Types - General Syntax Rules
+## Type General Syntax Rules
 
 1. `Type` names can only contain Letters, Underscores, and Hyphens `(a-z), (A-Z), '_', '-'`
 
@@ -198,7 +202,7 @@ Pedestrians with `Composite Types` are in a `Group` for each `Type`.
 ---
 
 
-# L. Locations
+# Locations
 
 `Locations` are rectangular regions that can be used in `Selectors`, `Conditions`, and `Actions`.
 
@@ -206,18 +210,18 @@ After being declared, `Location` names are always preceded by a `@`
 
 ```
 Location:
-  Name: *name*
+  Name: <name>
   Dimensions:
-    Center: *center*         // Coord Value (§V.2)
-    Lengths: *side lengths*  // Coord Value (§V.2)
-    Rotation: *rotation*     // Numeric Value (§V.1)
+    Center: <center_coords>  // Coord Value
+    Lengths: <side_lengths>  // Coord Value
+    Rotation: <rotation>     // Numeric Value
 .
 ```
 - \*Name* - The name used to reference this `Location`
 - \*Dimensions* - The dimensions for the `Location`
-  - \*center* - X,Y,Z coordiantes for the center of the rectangle
-  - \*side lengths* - X,Y,Z lengths of the rectangle
-  - \*rotation* - degrees of clockwise rotation
+  - \*Center* - X,Y,Z coordinates for the center of the rectangle as [coordinates](#coordinates).
+  - \*Lengths* - X,Y,Z lengths of the rectangle as [coordinates](#coordinates).
+  - \*Rotation* - degrees of clockwise rotation as a [numeric value](#numerical-values)
 
 
 Example:
@@ -225,37 +229,35 @@ Example:
 Location:
   Name: Aisle
   Dimensions:
-    Center: {15, 1.7}  // Center of rectangle is at (15, 1.7)
-    Lenghts: {30, 0.3}  // Height of 30m, Width of 30cm
+    Center: {15, 1.7}     // Center of rectangle is at (15, 1.7)
+    Lenghts: {30, 0.3}    // Height of 30m, Width of 30cm
     Rotation: 0           // Rotated 0 degrees (aligned with X axis)
 .
 ```
 ---
 
-## L.1. Locations - General Syntax Rules
+## Locations General Syntax Rules
 
 1. `Location` names are always preceded by a `@` after the declaration
 
 ---
 
----
-
 # Selectors
 
-`Selectors` are how pedestrians are selected for a certain `Type` (§T).
+`Selectors` are how pedestrians are selected for a certain [Type](#types).
 
 Selecting pedestrians is done through a `Selector` declaration. The basic syntax is as follows:
 ```
 Selector:
-  Type: *types*
-  From: *type*                  // Optional, defaults to base pedestrians group
-  Select: *selection criteria*
+  Type: <types>
+  From: <type>                  // Optional, defaults to base pedestrians group
+  Select: <selection_criteria>
 .
 ```
 
-- \*Select* - The exact `Select` criteria to use, available `Select` criteria are in (§S.5.)
-- \*From* - The `Group` (§T.3) to select pedestrians from
-- \*Type* - The `Type` (§T.) to assign to selected pedestrians
+- \*Type* - The [Type](#types) to assign to selected pedestrians.
+- \*From* - The [Group](#groups) to select pedestrians from.
+- \*Select* - The exact `Select` criteria to use. Available `Select` criteria are listed under [Available Select Criteria](#available-select-criteria).
 
 Selectors are applied with precedence equal to the order they appear in the `Behavior` file.
 
@@ -274,12 +276,12 @@ Selector:   // Selects 50% of pedestrians to be of typeB
 
 ---
 
-## S.2. Selecting From Groups
+## Selecting From Groups
 
-`Selectors` can select from specific `Groups` (§T.3)
+`Selectors` can select from specific [Groups](#groups)
 
-This has the effect of selecting the pedestrians for a `Composite Type` (§T.2) but allows for more dynamic proportions.
- 
+This has the effect of selecting the pedestrians for a [Composite Type](#composite-types) but allows for more dynamic proportions. This allows for refined selections within selections. 
+
 
 ```
 Types:
@@ -288,18 +290,18 @@ Types:
   typeC
 .
 
-Select:        // Selects 50% of pedestrians for typeA
+Select:        // Selects 50% of pedestrians to be typeA
   Type: typeA
   Select: 50%
 .
 
-Select:        // Selects 15% of typeA pedestrians for typeA & typeB
+Select:        // Selects 15% of typeA pedestrians to also be typeB
   Type: typeB
   From: typeA
   Select: 15%
 .
 
-Select:       // Selects 5% of typeA pedestrians for typeA & typeC
+Select:       // Selects 5% of typeA pedestrians to also be typeC
   Type: typeC
   From: typeA
   Select: 5%
@@ -313,7 +315,7 @@ With 100 pedestrians:
 
 ---
 
-## S.3. Selector Exclusivity
+## Selector Exclusivity
 
 When a pedestrian is selected from a `Group`, it is marked as used and can not be selected by another `Selector`.
 
@@ -323,11 +325,19 @@ Select:
   Group: typeA
   Select: 15%
 .
+
+Select:
+  Type: typeD
+  Group: typeA
+  Select: 20%
+.
 ```
 Means:
-Those 15% of 'typeA' pedestrians can not be selected from again.
+Those 15% of 'typeA' pedestrians that also are typeB can not be selected from again. Any selections for typeD in the above scenario will never also be typeB. 
 
-However, they can be selected from 'typeB'.
+However, they can be selected **from** 'typeB'.
+
+TODO(tyler): What happens if those values exceed 100%?
 
 ```
 Select:
@@ -337,11 +347,13 @@ Select:
 .
 ```
 
-This may result in some pedestrians being of types: typeA, typeB, and typeC.
+This may result in some pedestrians being of types typeA, typeB, and typeC.
+
+TODO(tyler): What happens if we want some overlap?
 
 ---
 
-## S.4. Required Selectors
+## Required Selectors
 
 `Selectors` can be marked as `Required` with a 'Required' `Component`. 
 
@@ -371,34 +383,34 @@ Behavior: Example, Required Selector Starved For Type: 2 From Group: 0"
 
 ---
 
-## S.5. Available Select Criteria
+## Available Select Criteria
 
-1. Everyone
-2. Percent
-3. Exactly N
+1. [Everyone](#everyone)
+2. [Percent](#percent)
+3. [Exactly N](#exactly-n)
 
 ---
 
-### S.5.1. Everyone
+### Everyone
 
 ```
 Select: Everyone
 ```
 
-This select criteria will select every pedestrian to have the selected `Type` (§T)
+This select criteria will select every pedestrian to have the selected [Type](#types)
 
 
 ---
 
-### S.5.2 Percent
+### Percent
 
 
 Selects a percentage of a `Group` for the provided `Type`
 
 ```
-*X*%
+<value>%
 ```
-\*X* - Number `Value` (§V) (1 - 100)
+\<value\> - [Number Value](#numerical-values) (1 - 100)
 
  
 Example:
@@ -409,14 +421,14 @@ Select: 15%
 
 ---
 
-### S.5.3 Exactly N 
+### Exactly N 
 
 Selects an exact number of pedestrians from a `Group`.
 
 ```
-Exaclty *X*
+Exaclty <value>
 ```
-\*X* - Number `Value` (§V)
+\<value\> - [Number Value](#numerical-values)
 
  
 Example:
@@ -427,14 +439,14 @@ Select: 10
 
 ---
 
-### S.5.4 Location
+### Location
 
 Selects all pedestrians inside a given location.
 
 ```
-Select: In *Location*
+Select: In <location>
 ```
-\*Location\* - Name of `Location` (§L)
+\<location\> - Name of [Location](#locations)
 
 Example:
 ```
@@ -443,38 +455,38 @@ Select: In @Elevator
 
 ---
 
-## S.6 Selectors - General Syntax Rules
-
+## Selectors General Syntax Rules
+TODO(tyler): We should either put something in here, or take it out. 
 
 ---
 
 
-# A. Actions
+# Actions
 
 `Actions` are what affect a Pedestrian's position, velocity, state, etc.
 
-`Actions` work by applying their `Atoms` each time step their `Condition` is satisfied.
+`Actions` work by applying attribute modifiers known as [Atoms](#atoms) each time step their `Condition` is satisfied.
 
 ---
 
-## A.1. Unconditional Actions
+## Unconditional Actions
 
 An `Unconditional Action` will ALWAYS take effect, applying its `Atoms` each timestep.
 
 
 ```
-Action (*type*):
-  Response: *atoms*
+Action (<type>):
+  Response: <atoms>
 .
 ```
-- Type being the pedestrian type that follows this `Action`
-- Atoms being the steps taken in an action, more in (§A.3.)
+- \<type\> being the pedestrian type that follows this `Action`
+- \<atoms\> being the steps taken in an action, more in *[Atoms](#atoms)*
 
 
 Example:
 ```
 Action (injured_person):         // Action Declaration for "injured_person"s
-  Response: scale velocity 0.75  // Scale Atom (§A.5.2.)
+  Response: scale velocity 0.75  // "Scale" Atom
 .
 ```
 With this Behavior, an injured person will always walk at 75% speed.
@@ -488,23 +500,23 @@ A `Conditional Action` will only take effect if its `Condition` is satisfied.
 
 `Conditional Actions` are written as follows:
 ```
-Action (*type*):
-  Condition: *condition*
-  Response: *atoms*
+Action (<type>):
+  Condition: <condition>
+  Response: <atoms>
 .
 ```
 
-- \*Type* being the pedestrian type that follows this `Action`
-- \*Atoms* being the steps taken in an action, more in (§A.4.)
-- see (§C.) for an explanation of Conditions
+- \<type\> being the pedestrian type that follows this `Action`. *See [Types](#types)*.
+- \<atoms\> being the steps taken in an action. *See [Atoms](#atoms)*.
+- \<condition\> being the condition to be filled. *See [Conditions](#conditions)*. 
 
 ---
 
 Example:
 ```
 Action (listener): 
-  Condition: !announcement occurring. // Condition (§C.)
-  Response: set velocity {0}          // Set Atom (§A.5.1.)
+  Condition: !announcement occurring. // Condition
+  Response: set velocity {0}          // Atom
 .
 ```
 Pedestrians of listener will stop moving while the announcement event is occurring.
@@ -512,59 +524,58 @@ Pedestrians of listener will stop moving while the announcement event is occurri
 
 ---
 
-## A.3. Action Durations
+## Action Durations
 
 Normally `Actions` only apply to the time step their `Condition` is true in.
 
 If a longer response is needed, a `Duration` can be added to the `Action`.
 
 ```
-Action (*type*): 
-  Condition: *condition*
-  Response: *atoms*
-  Duration: *value*
+Action (<type>): 
+  Condition: <condition>
+  Response: <atoms>
+  Duration: <value>
 .
 ```
-- \*Type* being the `Type` (§T.) the action applies to
-- \*Atoms* being the `Atoms` (§A.4.) for the `Action`
-- \*Condition* being the `Condition` (§C.) for the action to start
-- \*value* being a numerical `Value` (§V.), for how long the action should continue
+- \<type\> being the [Type](#types) the action applies to
+- \<atoms\> being the [Atoms](#atoms) for the `Action`
+- \<condition\> being the [Condition](#conditions) for the action to start
+- \<value\> being a numerical [Value](#values), for how long the action should continue
 
 ---
 
 Example, Someone Tripping:
 ```
 Action (tripper):
-  Condition: 10 seconds after !Start // Condition (§C.)
-  Response: set velocity {0}         // Set Atom (§A.5.1.)
+  Condition: 10 seconds after !Start // Condition
+  Response: set velocity {0}         // "Set" Atom
   Duration: 15 seconds               // Duration
 .
 ```
 
 Pedestrians of type `tripper` will trip after 10 seconds from the simulation starting, and remain still for 15 seconds.
 
-This is odd, as all `trippers` will trip at exactly the same time:
-Look at `Values` (§V.) for how to add randomness to `Durations` and `Conditions`
+This will cause all `trippers` to trip at exactly the same time. Normally, randomness should be added to a scenario such as this. For more information on how to add randomness to `Duration` and `Conditions`, see *[Random Values](#random-values)*.
 
 
 ---
 
-## A.4. Atoms
+## Atoms
 
 `Atoms` are the part of an `Action` that actually affects a pedestrian.
 
-The do this by changing pedestrian `Attributes` (§Att.).
+The do this by changing pedestrian [Attributes](#attributes).
 
-§A.5. has the list of available `Atoms`.
+See *[Available Atoms](#available-atoms)* for the list of available `Atoms`.
 
 ---
 
-## A.4.1 Atom Lists
+### Atom Lists
 
 An `Atom List` is the collection of `Atoms` that make up an `Action`.
 
 `Atom Lists` are written as follows:
-`*Atom* , *Atom*`
+`<atom> , <atom>`
 
 **Important Note:** `Atom` effects are applied in the order they are listed
 
@@ -575,58 +586,59 @@ Example:
 ```
 set velocity {0}, set state #listening
 ```
-This `Atom List` will result in the pedestrian stopping and their state being listening
+This `Atom List` will result in the pedestrian stopping and their state being set to "listening"
 
-(Pedestrian state is useful in `Conditions` (§C.))
+(Pedestrian state is useful in [Conditions](#conditions))
 
-
----
-
-## A.5. Available Atoms
 
 ---
 
-### A.5.1. Set
+## Available Atoms
+
+There are two types of available `Atoms`:
+1. [Set](#set)
+2. [Scale](#scale)
+---
+
+### Set
 
 The `Set Atom` sets a pedestrian's attribute to a specific value.
 
 ```
-set *attribute* to *attribute value*
+set <attribute> to <attribute_value>
 ```
 
-- Attributes are described in (§Att.).
-- Attribute Values are described in (§Att.1).
+- \<attributes\> are described in [Attributes](#attributes).
+- \<attribute_values\> are described in [Attribute Values](#attribute-values).
 
 
----
-
-### A.5.2. Scale
+### Scale
 
 The `Scale Atom` multiplies a pedestrian attribute by a given value
 
 ```
-scale *attribute* *attribute_value*
+scale <attribute> <attribute_value>
 ```
 
 Currently, only pedestrian `Velocity` can be scaled.
 
-- Attributes are described in (§Att.).
-- Attribute Values are described in (§Att.1 ).
+- \<attributes\> are described in [Attributes](#attributes).
+- \<attribute_values\> are described in [Attribute Values](#attribute-values).
 
 
 ---
 
-## A.6. Action Targets
+## Action Targets
 
 Sometimes Pedestrians will want to affect other pedestrians around them.
 
 This is done through the use of `Targets`.
 
 ```
-Action (*type*):
-  Condition: *condition*  // Condition (§C.)
-  Response: *atoms*       // Atoms (§A.4.)
-  Target: *target*        // Action Target
+Action (<type>):
+  Condition: <condition>  // Condition
+  Response: <atoms>       // Atoms
+  Target: <target>        // Action Target
 ```
 
 ---
@@ -638,21 +650,23 @@ Action (aggressive):
   Response: set target velocity {0}
   Target: nearest pedestrian
 ```
-This results in the pedestrian stopping the nearest pedestrian around them
+This results in the pedestrian stopping the nearest pedestrian around them.
 
 
 ---
 
-## A.6.1 Available Targets
+### Available Targets
+
+There is currently only one type of action `Target`, the "nearest" `Target`. This `Target` describes proximity to a pedestrian as part of an `Action`.
 
 ---
 
-## A.6.1.1 Nearest of Type
+#### Nearest
 
 Selects the nearest of a given type to be the target
 
 ```
-nearest *type list*   // selects the nearest pedestrian with any of the listed types
+nearest <type_list>   // selects the nearest pedestrian with any of the listed types
 
 // or
 
@@ -661,7 +675,7 @@ nearest pedestrian    // selects any pedestrian
   
 ---
 
-## A.6.2 Target Modifiers
+### Target Modifiers
 
 `Target Modifiers` change how pedestrians are selected to be the Target of an action.
 
@@ -675,17 +689,17 @@ This selects the nearest pedestrian in the direction of motion that is within 1 
 
 ---
 
-## A.6.2.1 Distance Target Modifier
+#### Distance Target Modifier
 
 Targets can be filtered by their distance to the pedestrian.
 
 ```
-within *numeric value*
+within <numeric_value>
 ```
 
 ---
 
-## A.6.2.2 Direction Target Modifier
+#### Direction Target Modifier
 
 Targets can be filtered by their direction from the pedestrian.
 
@@ -698,17 +712,17 @@ behind     // used to select pedestrians in the opposite direction the pedestria
 
 ---
 
-## A.6.2.3. Location Target Modifier
+#### Location Target Modifier
 
 Targets can be filtered by whether they are inside a `Location` or not.
 
 ```
-in *location name*
+in <location_name>
 ```
 
 ---
 
-# C. Conditions
+# Conditions
 
 A `Condition` is what decides if a `Conditional Action` or `Event` occurs. 
 
@@ -732,27 +746,35 @@ This results in typeA pedestrians stopping for 10 seconds after the example even
 
 ---
 
-## C.1 Sub Conditions
+## Sub Conditions
 
 A `Sub Condition` defines a single condition of the state of the simulation in which it returns true.
 
-Available `Sub Conditions` are in section (§C.2.)
+*See [Available Sub Conditions](#available-sub-conditions)*
 
 
 ---
 
-## C.2 Available Sub Conditions
+## Available Sub Conditions
+
+There are currently 6 total available sub conditions:
+1. [Elapsed Time](#elapsed-time)
+2. [Spatial](#spatial)
+3. [Event Status](#event-status)
+4. [Location Enter/Leave](#location-enterleave)
+5. [Inside Location](#inside-location)
+6. [Pedestrian Attributes](#pedestrian-attributes)
 
 ---
 
-### C.2.1. Elapsed Time
+### Elapsed Time
 
-This `Condition` will be true when a provided amount of time has passed from the start of an `Event` (§E.)
+This `Condition` will be true when a provided amount of time has passed from the **start** of an [Event](#events)
 
-**Note:** This is true only for one time step when the time has elapsed, until the `Event` starts again.
+**Note:** This is true only for **one time step** when the time has elapsed, until the `Event` starts again.
 
 ```
-*numeric value* seconds after *event*.
+<numeric_value> seconds after <event>.
 ```
 
 ---
@@ -761,21 +783,21 @@ Example:
 ```
 Action (typeA):
   Condition: 10 seconds after !Start // Elapsed Time Condition
-  Response: set velocity {0}         // Atom (§A.4)
-  Duration: 5 seconds                // Duration (§A.3)
+  Response: set velocity {0}         // "Set" Atom
+  Duration: 5 seconds                // Duration
 .
 ```
-**Note:** without the `Duration` the pedestrian would stop moving for only one time step.
+**Note:** without the `Duration` the pedestrian would stop moving for only one time step. *See [Duration](#action-durations)*.
 
 
 ---
 
-### C.2.2. Spatial
+### Spatial
 
 This `Condition` will be true when the condition Target is within a certain distance
 
 ```
-target within *numeric value*.
+target within <numeric_value>.
 ```
 
 ---
@@ -784,24 +806,24 @@ Example:
 ```
 Action (typeA):
   Condition: 10 seconds after !Start // Elapsed Time Condition
-  Response: set velocity {0}         // Atom (§A.4)
-  Duration: 5 seconds                // Duration (§A.3)
+  Response: set velocity {0}         // "Set" Atom
+  Duration: 5 seconds                // Duration
 .
 ```
-**Note:** without the `Duration` the pedestrian would stop moving for only one time step.
+**Note:** without the `Duration` the pedestrian would stop moving for only one time step. *See [Duration](#action-durations)*.
 
 
 ---
 
-### C.2.3. Event Status
+### Event Status
 
-This `Condition` checks for the status of an `Event` (§E.)
+This `Condition` checks for the status of an [Event](#events).
 
 ```
-*event* is *status*
+<event> is <status>
 ```
 
-### Available Statuses:
+#### Available Statuses:
 ```
 Starting  // True for the timestep the event starts
 Ending    // True for the timestep the event ends
@@ -821,16 +843,16 @@ Action (listener):
 
 ---
 
-## C.2.4. Location Enter/Leave
+## Location Enter/Leave
 
-This `Condition` checks if a pedestrian has entered or left a `Location` (§L.)
+This `Condition` checks if a pedestrian has entered or left a [Location](#location).
 
 ```
-Enter *location name*
+Enter <location_name>
 
 // or
 
-Exit *location name*
+Exit <location_name>
 ```
 
 
@@ -845,12 +867,12 @@ Action (Luggage_Grabber):
 
 ---
 
-## C.2.5. Inside Location
+## Inside Location
 
-This `Condition` checks if a pedestrian is inside a `Location` (§L.)
+This `Condition` checks if a pedestrian is inside a [Location](#location).
 
 ```
-In *location name*
+In <location_name>
 ```
 
 Example:
@@ -864,12 +886,12 @@ Action (Patient):
 
 ---
 
-## C.2.6. Pedestrian Attributes
+## Pedestrian Attributes
 
-This `Condition` checks if a pedestrian's `Attribute` (§Att.) is a given value (§Att.1)
+This `Condition` checks if a pedestrian's [Attribute](#attributes) is a given [Attribute Value](#attribute-values).
 
 ```
-*attribute* is *attribute value*
+<attribute> is <attribute_value>
 ```
 
 Example:
@@ -882,7 +904,7 @@ Action (typeA):
 
 ---
 
-# Att. Attributes
+# Attributes
 
 Each pedestrian has what are called `Attributes`.
 
@@ -895,6 +917,7 @@ State       // Pedestrians internal state
 ```
 
 These `Attributes` are important for `Actions` and `Conditions`.
+
 ---
 
 # Ex. Example
@@ -908,15 +931,15 @@ Action (typeA):
 
 ---
 
-# Att.1 Attribute Values
+## Attribute Values
 
 Attributes each have a different value type.
 
 ```
-Position: Coordinate (§V.2)
-Velocity: Coordinate (§V.2)
-Goal    : Coordinate (§V.2)
-State   : State      (§V.3)
+Position: Coordinate
+Velocity: Coordinate
+Goal    : Coordinate
+State   : State
 ```
 
 Generally, `Attribute Values` can only be compared to others of the same type, except `Coordinate` values.
@@ -934,11 +957,11 @@ Condition: goal is @aisle
 
 ---
 
-# E. Events
+# Events
 
-An `Event` is something that occurs during a simulation, for example an announcement or fire.
+An `Event` is something that occurs during a simulation, that effects the whole simulation. For example, an announcement or fire could be an `Event`.
 
-`Events` have a start `Condition` and, optionally, an end `Condition` (§C)
+`Events` have a start `Condition` and, optionally, an end [Condition](#conditions)
 
 An `Event` can only be described once, if a `Behavior` file tries to redefine an `Event` of the same name a `Behavior Error` is thrown.
 
@@ -951,14 +974,14 @@ Example:
 
 ---
 
-## E.1. Creating Events
+## Creating Events
 
 `Events` a defined as follows:
 ```
 Event:
-  Name: *name*
-  Start: *Condition*
-  End: *Condition*    // Optional
+  Name: <name>
+  Start: <condition>
+  End: <condition>    // Optional
 .
 ```
 
@@ -975,7 +998,7 @@ Event:
 
 ---
 
-## E.2. Special Events
+## Special Events
 
 Currently, there is only one special event that is predefined for each `Behavior`: `!Start`.
 
@@ -983,34 +1006,43 @@ The `!Start` event fires at the start of a simulation run and is always `Occurri
 
 ---
 
-## E.3. Events - General Syntax Rules
+## Events General Syntax Rules
+
+`Event` names are always preceded by a `!` when used.
 
 ---
 
-# V. Values
+# Values
+
+`Behaviors` support 3 types of values:
+
+1. [Numeric](#numerical-values)
+2. [Coordinates](#coordinates)
+3. [State](#state)
 
 ---
 
-## V.1. Numerical Values
+## Numerical Values
 
 Anywhere there is a numerical value required the following can be used (with some exceptions):
-1. `Exact Values`
-2. `Range Values`
-3. `Random Values`
+1. [Exact Values](#exact-values)
+2. [Range Values](#range-values)
+3. [Random Values](#random-values)
+
 
 ---
 
-### V.1.1. Float vs. Number Values
+### Exact Values
 
-There are two kinds of `Numerical Values`:
+`Exact Values` are used when the value should be a specific value
+
+There are two kinds of `Exact Values`:
 1. `Float Values`
 2. `Number Values`
 
-The difference between the two is simple:
-1. `Float Values` have a decimal value
-2. `Number Values` are whole numbers
+`Float Values` have decimal precision, while `Number Values` are only integers. 
 
----
+`Exact Values` are written as simple numerical values.
 
 Example:
 ```
@@ -1021,31 +1053,15 @@ Example:
 
 ---
 
-### V.1.1. Exact Values
-
-`Exact Values` are used when the value should be a specific value
-
-`Exact Values` can either be a `Float Value` or `Number Value`.
-
-`Exact Values` are written as simple numerical values.
-
-```
-50    
-50.15 
-```
-
-
----
-
-### V.1.2. Range Values
+### Range Values
 
 `Range Values` are singular random values within a given range.
 
-When the `Behavior` is run, the value is the same for every individual.
+When the `Behavior` is run, the value is the **same for every individual using that `Value`**.
 
 ---
 
-### V.1.2.1 Float Value Ranges  vs. Number Value Ranges 
+#### Float Value Ranges  vs. Number Value Ranges 
 
 `Range Values` are either `Float Value Ranges` or `Number Value Ranges`
 
@@ -1081,15 +1097,15 @@ The exact percentage will be a random integer value between 10 and 20.
 
 ---
 
-### V.1.3. Random Values
+### Random Values
 
 `Random Values` are very similar to `Range Values`, with a random value in a given range.
 
-The big difference is that: `Range Values` only have one random value, `Random Values` have a random value that is different for each pedestrian.
+The big difference is that: `Range Values` only have one random value, `Random Values` have a random value that is **different for each pedestrian**.
 
 ---
 
-### V.1.3.1 Float Random Values vs. Number Random Values
+#### Float Random Values vs. Number Random Values
 
 `Random Values` are either `Float Random Values` or `Number Random Values`
 
@@ -1125,16 +1141,18 @@ Each typeA pedestrian will stop randomly between 5 and 10 seconds after the star
 
 ---
 
-## V.2 Coordinates
+## Coordinates
 
 Coordinate Values are X, Y, Z coordinates.
 
 They are written:
 ```
-{ *numeric value*, *numeric value*, *numeric value* }
+{ <numeric_value>, <numeric_value>, <numeric_value> }
 ```
 
-The Y and Z portions can be left out, they are defaulted to 0:
+**The Y and Z coordinates are optional. When not specified, these coordinates are considered 0.**
+
+Example:
 ```
 {0}
 
@@ -1150,7 +1168,7 @@ The Y and Z portions can be left out, they are defaulted to 0:
 
 ---
 
-## V.3 State
+## State
 
 Each pedestrian has a `State` associated with it.
 
