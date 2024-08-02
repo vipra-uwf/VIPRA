@@ -108,11 +108,11 @@ Types:
 ```
 Event:
   Name: Example
-  Start: *start condition*
+  Start: <start_condition>
 .
 
 Event:
-  Start: *start condition*
+  Start: <start_condition>
   Name: Example
 .
 ```
@@ -516,7 +516,7 @@ Example:
 ```
 Action (listener): 
   Condition: !announcement occurring. // Condition
-  Response: set velocity {0}          // Atom
+  Response: set velocity to {0}          // Atom
 .
 ```
 Pedestrians of listener will stop moving while the announcement event is occurring.
@@ -548,7 +548,7 @@ Example, Someone Tripping:
 ```
 Action (tripper):
   Condition: 10 seconds after !Start // Condition
-  Response: set velocity {0}         // "Set" Atom
+  Response: set velocity to {0}         // "Set" Atom
   Duration: 15 seconds               // Duration
 .
 ```
@@ -584,7 +584,7 @@ An `Atom List` is the collection of `Atoms` that make up an `Action`.
 Example:
 
 ```
-set velocity {0}, set state #listening
+set velocity to {0}, set state to #listening
 ```
 This `Atom List` will result in the pedestrian stopping and their state being set to "listening"
 
@@ -737,7 +737,7 @@ Example:
 ```
 Action (typeA):
   Condition: !example occurred and 5 seconds after !Start
-  Response: set velocity {0}
+  Response: set velocity to {0}
   Duration: 10 seconds
 .
 ```
@@ -783,7 +783,7 @@ Example:
 ```
 Action (typeA):
   Condition: 10 seconds after !Start // Elapsed Time Condition
-  Response: set velocity {0}         // "Set" Atom
+  Response: set velocity to {0}         // "Set" Atom
   Duration: 5 seconds                // Duration
 .
 ```
@@ -806,7 +806,7 @@ Example:
 ```
 Action (typeA):
   Condition: 10 seconds after !Start // Elapsed Time Condition
-  Response: set velocity {0}         // "Set" Atom
+  Response: set velocity to {0}         // "Set" Atom
   Duration: 5 seconds                // Duration
 .
 ```
@@ -1170,28 +1170,27 @@ Example:
 
 ## State
 
-Each pedestrian has a `State` associated with it.
+Each pedestrian can have a single `State` associated with it. When a new state is set, it overrides the previous state. 
 
 `States` are user defined, and used for `Conditions`
 
-`States` are always preceded by a '#'.
+`States` are always preceded by a '#' when used, but are excluded in the definition.
 
 `States` are defined as follows:
 ```
-Pedestrian States:
-  #stateA,
-  #stateB,
-  #stateC
+States:
+  stateA,
+  stateB,
+  stateC
 .
 ```
 
-Ex. Example
-
+Example:
 ```
-Pedestrian States:
-  #happy,
-  #scared,
-  #waiting
+States:
+  happy,
+  scared,
+  waiting
 .
 ```
 

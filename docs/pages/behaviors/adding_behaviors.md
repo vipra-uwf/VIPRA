@@ -6,12 +6,12 @@ To use behaviors in simulations add them to `module_params.json` under `human_be
 
 Example:
 ```
-// Using the "example.behavior" Behavior file
+// Using the "example.bhvr" Behavior file
 
 "human_behavior_model": {
     "seed": 4525,
     "behaviors": [
-      "example"       // Add behavior name here without ".behavior"
+      "example"       // Add behavior file name here without ".bhvr"
     ]
 },
 ```
