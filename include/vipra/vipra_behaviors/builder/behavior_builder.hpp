@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <stdexcept>
 
+#include "behavior/exceptions.hpp"
 #include "vipra/geometry/f3d.hpp"
 #include "vipra/logging/logging.hpp"
 
@@ -874,6 +875,7 @@ template <typename pedset_t, typename obstacles_t, typename goals_t>
 auto BehaviorBuilder<pedset_t, obstacles_t, goals_t>::get_check_state(std::string const& stateName) const
     -> Behaviors::stateUID
 {
+  VIPRA::Log::debug("GET STATE: {}", stateName);
   auto state = get_state(stateName);
   if ( ! state ) error("Behavior Error: Attempt To Use Undeclared State: \"{}\"", stateName);
   return state.value();
@@ -1188,9 +1190,15 @@ auto BehaviorBuilder<pedset_t, obstacles_t, goals_t>::visitDecl_Ped_State(
 
   for ( auto* state : stateNames ) {
     auto name = state->toString();
+
+    if ( _states.contains("#" + name) ) {
+      VIPRA::Log::error("Behavior \"{}\": Duplicate State {}", _currentBehavior.get_name(), name);
+      BuilderException::error();
+    }
+
     VIPRA::Log::debug("Behavior \"{}\": Adding Pedestrian State {}, id: {}", _currentBehavior.get_name(),
                       name, static_cast<uint64_t>(_currState));
-    _states[name] = _currState;
+    _states["#" + name] = _currState;
     ++_currState;
   }
 
