@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.11.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>VIPRA Documentation: input</title>
+<title>VIPRA Documentation: Input Implementation</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -84,41 +84,38 @@ $(function(){ initResizable(false); });
 </div><!-- top -->
 <div id="doc-content">
 <div><div class="header">
-  <div class="headertitle"><div class="title">input</div></div>
+  <div class="headertitle"><div class="title">Input Implementation</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md191"></a>
-autotoc_md191</h2>
-<p>title: Input Module Implementation layout: template </p>
-<h2><a class="anchor" id="autotoc_md192"></a>
-filename: input.md</h2>
-<h1><a class="anchor" id="autotoc_md193"></a>
-Input Implementation</h1>
-<blockquote class="doxtable">
+<div class="textblock"><p><a class="anchor" id="autotoc_md229"></a> </p><blockquote class="doxtable">
 <p>&zwj;!!! Important Note: Inputs should hold off on loading their input until their <code>load</code> method is called. This reduces the amount of I/O during parallel runs. </p>
 </blockquote>
-<h3><a class="anchor" id="autotoc_md194"></a>
-Interface</h3>
+<p>There are several sub-sets of <code>Input Modules</code>:</p><ol type="1">
+<li></li>
+</ol>
+<h1><a class="anchor" id="autotoc_md230"></a>
+Required Module</h1>
 <div class="fragment"><div class="line"> ++</div>
-<div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> load();</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> data_t, <span class="keyword">typename</span>... key_ts&gt;</div>
 <div class="line"><span class="keyword">auto</span> get(key_ts <span class="keyword">const</span>&amp;...) -&gt; data_t;</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md195"></a>
-Serializable Input Implementation</h4>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md231"></a>
+Details</h1>
+<h1><a class="anchor" id="autotoc_md232"></a>
+Serializable Input Implementation</h1>
 <p>Serializable Input modules additionally require:</p>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="keyword">auto</span> serialize() -&gt; std::string;</div>
 <div class="line"><span class="keywordtype">void</span> deserialize(std::string <span class="keyword">const</span>&amp;);</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md196"></a>
-Parameter Input Implementation</h4>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md233"></a>
+Parameter Input Implementation</h1>
 <p>Parameter Input modules additionally require:</p>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> data_t, <span class="keyword">typename</span>... key_ts&gt;</div>
 <div class="line"><span class="keyword">auto</span> get&lt;VIPRA::Parameter&lt;data_t&gt;&gt;(key_ts <span class="keyword">const</span>&amp;...) -&gt; std::optional&lt;VIPRA::Parameter&lt;data_t&gt;&gt;;</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md197"></a>
-Polygon Input Implementation</h4>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md234"></a>
+Polygon Input Implementation</h1>
 <p>Polygon Input modules additionally require:</p>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span>... key_ts&gt;</div>

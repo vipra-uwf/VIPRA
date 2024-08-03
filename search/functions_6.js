@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['get_0',['get',['../db/dd6/classVIPRA_1_1Modules_1_1Input.html#aca6b3580a69b77cc87485585459a7684',1,'VIPRA::Modules::Input']]],
+  ['get_0',['get',['../d0/d6f/classbasic__format__args.html#a3339d3a4e4daaf7bb0de1a8084e7f086',1,'basic_format_args::get()'],['../db/dd6/classVIPRA_1_1Modules_1_1Input.html#aca6b3580a69b77cc87485585459a7684',1,'VIPRA::Modules::Input::get()']]],
   ['get_5fclosest_5fgrid_5fidx_1',['get_closest_grid_idx',['../d6/d44/classVIPRA_1_1Goals_1_1PathingGraph.html#aa3dfcc7b091455c50ca3d109ac7957de',1,'VIPRA::Goals::PathingGraph']]],
   ['get_5fduration_2',['get_duration',['../d5/d12/classVIPRA_1_1Behaviors_1_1TimedLatchCollection.html#af08c024755ec8eafd0b00efadd3d5b38',1,'VIPRA::Behaviors::TimedLatchCollection']]],
   ['get_5fgroup_3',['get_group',['../d7/d24/classVIPRA_1_1Behaviors_1_1GroupsContainer.html#adcf562861346c8605f7dc68ee8c7dde8',1,'VIPRA::Behaviors::GroupsContainer']]],

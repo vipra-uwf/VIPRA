@@ -143,8 +143,8 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>  <span class="comment">// register all of the parameters with the parameter loader</span></div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>  std::apply(</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>      [&amp;](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; first, <span class="keyword">const</span> <span class="keyword">auto</span>&amp;... restArgs) {</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        <span class="keyword">auto</span> regis = [&amp;](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; param) {</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>      [&amp;](<span class="keyword">auto</span> <span class="keyword">const</span>&amp; first, <span class="keyword">auto</span> <span class="keyword">const</span>&amp;... restArgs) {</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        <span class="keyword">auto</span> regis = [&amp;](<span class="keyword">auto</span> <span class="keyword">const</span>&amp; param) {</div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>          paramIn.register_param(self().module_type(), self().module_name(), param.first);</div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        };</div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
@@ -170,8 +170,8 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
 <div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>  <span class="comment">// load each parameter and apply it to the coresponding variable</span></div>
 <div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>  std::apply(</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>      [&amp;](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; first, <span class="keyword">const</span> <span class="keyword">auto</span>&amp;... restArgs) {</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        <span class="keyword">auto</span> configure = [&amp;](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; param) {</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>      [&amp;](<span class="keyword">auto</span> <span class="keyword">const</span>&amp; first, <span class="keyword">auto</span> <span class="keyword">const</span>&amp;... restArgs) {</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        <span class="keyword">auto</span> configure = [&amp;](<span class="keyword">auto</span> <span class="keyword">const</span>&amp; param) {</div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>          <span class="keyword">using </span>param_t = std::remove_cvref_t&lt;<span class="keyword">decltype</span>(param.second)&gt;;</div>
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>          <span class="comment">// set the parameter variable as loaded from input</span></div>

@@ -87,21 +87,43 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">setup</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md178"></a>
-autotoc_md178</h2>
-<p>title: Setup layout: template </p>
-<h2><a class="anchor" id="autotoc_md179"></a>
-filename: setup.md</h2>
-<h1><a class="anchor" id="autotoc_md180"></a>
+<div class="textblock"><p><b>File Path:</b> <a class="el" href="../../index.html#md_docs_2docs">Home</a> / <a class="el" href="../../d9/d3d/md_docs_2pages_2getting__started_2setup.html">Setup</a> </p>
+<h1><a class="anchor" id="autotoc_md174"></a>
 Setup</h1>
 <p>VIPRA can either be used as a Library for use in other projects or built as a Standalone Simulation.</p>
-<p>There is an <a class="el" href="../../d2/d01/md_docs_2pages_2examples_2simulation.html">Example Simulation</a>.</p>
-<h2><a class="anchor" id="autotoc_md181"></a>
-Standalone Build</h2>
+<p>An example of how to use the simulation function is provided here: <a class="el" href="../../d2/d01/md_docs_2pages_2examples_2simulation.html">Example Simulation</a>.</p>
+<h1><a class="anchor" id="autotoc_md175"></a>
+Standalone Build</h1>
 <p>The <code>VIPRA</code> repository comes with a ready <code>main.cpp</code> that follows the <a class="el" href="../../d2/d01/md_docs_2pages_2examples_2simulation.html">Example Simulation</a>.</p>
+<p>This build takes one argument, the number of simulations to run, and generates a number of "trajectories.json" files based on that parameter. This output file can then be used with the <a class="el" href="../../da/d11/md_docs_2pages_2tools_2visualizer.html">visualizer program</a> also included in this project to generate a visual representation of pedestrians in motion.</p>
+<h2><a class="anchor" id="autotoc_md176"></a>
+Requirements</h2>
+<p>The following are requirement for running the VIPRA simulation.</p>
+<ol type="1">
+<li><a href="https://cmake.org/download/">CMake</a> version 3.22.2 or newer.</li>
+<li>A compiler that can run C++20 or newer.</li>
+<li><a href="https://www.open-mpi.org/software/ompi/v5.0/">OpenMPI</a> version 5.05 or newer.</li>
+</ol>
+<p>The following are required for development.</p>
+<ol type="1">
+<li>ANTLR4 - version 4.13.1 or newer.</li>
+</ol>
+<hr  />
+<h2><a class="anchor" id="autotoc_md178"></a>
+Build</h2>
 <p>To build the simulation, in the parent directory run: </p><div class="fragment"><div class="line">make</div>
-</div><!-- fragment --><p>The <a class="el" href="../../d2/d01/md_docs_2pages_2examples_2simulation.html">Example Simulation</a> provided can be run with: </p><div class="fragment"><div class="line">./VIPRA</div>
+</div><!-- fragment --><p>Alternatively, run one of the following (recommended for developers only):</p>
+<ul>
+<li><code>make release</code> for compiling in release mode.</li>
+<li><code>make debug</code> for compiling in debug mode.</li>
+<li><code>make perf</code> for compiling the performance testing version.</li>
+</ul>
+<hr  />
+<h2><a class="anchor" id="autotoc_md180"></a>
+Running the Example</h2>
+<p>The <a class="el" href="../../d2/d01/md_docs_2pages_2examples_2simulation.html">Example Simulation</a> provided can be run with: </p><div class="fragment"><div class="line">./VIPRA (optional)&lt;number_of_simulations&gt;</div>
 </div><!-- fragment --><p>See the <a class="el" href="../../d1/d7f/md_docs_2pages_2getting__started_2usage.html">Usage Page</a> for how to use VIPRA as a standalone program</p>
+<hr  />
 <h2><a class="anchor" id="autotoc_md182"></a>
 Library</h2>
 <p><code>VIPRA</code> can be included in a project using <a href="https://cmake.org/">CMake</a></p>
@@ -111,8 +133,10 @@ Library</h2>
 <div class="line">  VIPRA</div>
 <div class="line">)</div>
 </div><!-- fragment --><ul>
-<li>Replace <code>**project**</code> with the name of your CMake project </li>
+<li>Replace <code>**project**</code> with the name of your CMake project</li>
 </ul>
+<hr  />
+<p><a class="el" href="../../index.html#md_docs_2docs">Return to main page</a> </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->

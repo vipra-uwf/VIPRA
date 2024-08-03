@@ -1,0 +1,11 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="Node000000" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="5,5,169,61"/>
+<area shape="rect" id="Node000001" href="$dc/dab/classVIPRA_1_1Modules_1_1Module.html" title=" " alt="" coords="217,17,384,58"/>
+<area shape="poly" id="edge148_Node000000_Node000001" title=" " alt="" coords="184,32,216,33,216,38,184,38"/>
+<area shape="rect" id="Node000002" href="$d1/d0b/classVIPRA_1_1CoordModules_1_1Output.html" title=" " alt="" coords="432,54,582,95"/>
+<area shape="poly" id="edge149_Node000001_Node000002" title=" " alt="" coords="399,52,432,58,431,64,399,58"/>
+<area shape="rect" id="Node000004" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="7,85,167,141"/>
+<area shape="rect" id="Node000003" href="$d4/de8/classVIPRA_1_1Modules_1_1Output.html" title=" " alt="" coords="217,86,384,127"/>
+<area shape="poly" id="edge150_Node000004_Node000003" title=" " alt="" coords="182,108,216,106,216,112,183,113"/>
+<area shape="poly" id="edge151_Node000003_Node000002" title=" " alt="" coords="399,89,431,83,432,89,399,94"/>
+</map>

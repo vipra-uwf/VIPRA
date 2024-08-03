@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.11.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>VIPRA Documentation: Behavior Examples</title>
+<title>VIPRA Documentation: behavior_examples</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -84,23 +84,34 @@ $(function(){ initResizable(false); });
 </div><!-- top -->
 <div id="doc-content">
 <div><div class="header">
-  <div class="headertitle"><div class="title">Behavior Examples</div></div>
+  <div class="headertitle"><div class="title">behavior_examples</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md28"></a> </p><details >
-<summary >
-</summary>
-<h1>Ex. Creating An Example Behavior </h1>
-<p></p>
-<p></p>
+<div class="toc"><h3>Table of Contents</h3>
+<ul><li class="level1"><a href="#autotoc_md28">Behavior Examples</a></li>
+<li class="level1"><a href="#autotoc_md29">Ex. Creating An Example Behavior</a><ul><li class="level2"><a href="#autotoc_md30">Ex.1. The Simplest Behavior</a></li>
+<li class="level2"><a href="#autotoc_md32">Ex.2. An Announcment Event</a><ul><li class="level3"><a href="#autotoc_md33">Ex.2.1. A bit more realistic</a></li>
+<li class="level3"><a href="#autotoc_md34">Ex.2.2. Adding more</a></li>
+</ul>
+</li>
+<li class="level2"><a href="#autotoc_md35">Ex.3. Pedestrians Interacting</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="textblock"><p><b>File Path:</b> <a class="el" href="../../index.html#md_docs_2docs">Home</a> / <a class="el" href="../../d2/dd2/md_docs_2pages_2behaviors_2VIPRA__behaviors.html">Behaviors</a> / <a class="el" href="../../d6/dc0/md_docs_2pages_2behaviors_2behavior__examples.html">Examples</a> </p>
+<h1><a class="anchor" id="autotoc_md28"></a>
+Behavior Examples</h1>
+<h1><a class="anchor" id="autotoc_md29"></a>
+Ex. Creating An Example Behavior</h1>
 <p>Here we will make a couple of example <code>Behaviors</code>.</p>
-<details >
-<summary >
-</summary>
-<h2>Ex.1. The Simplest Behavior </h2>
-<p></p>
-<p></p>
+<h2><a class="anchor" id="autotoc_md30"></a>
+Ex.1. The Simplest Behavior</h2>
 <p>This example is a simple <code>Behavior</code> that causes every pedestrian to stand still for the duration of the simulation.</p>
+<details  open="true">
+<summary >
+Code</summary>
+<p></p>
 <div class="fragment"><div class="line">Types:           // Types Declaration (§T.) says what types of pedestrians there are</div>
 <div class="line">  person</div>
 <div class="line">.</div>
@@ -116,13 +127,13 @@ $(function(){ initResizable(false); });
 </div><!-- fragment --><p></p>
 </details>
 <hr  />
-<details >
-<summary >
-</summary>
-<h2>Ex.2. An Announcment Event </h2>
-<p></p>
-<p></p>
+<h2><a class="anchor" id="autotoc_md32"></a>
+Ex.2. An Announcment Event</h2>
 <p>This <code>Behavior</code> shows <code>Events</code>, with an announcement. In this example, we will make a simple <code>Behavior</code> and add to it.</p>
+<details  open="true">
+<summary >
+Code</summary>
+<p></p>
 <div class="fragment"><div class="line">Types:                                // Types Declaration(§T.)</div>
 <div class="line">  Listener</div>
 <div class="line">.</div>
@@ -143,15 +154,16 @@ $(function(){ initResizable(false); });
 <div class="line">  Condition: !Announcement occurring  // Condition (§C.)</div>
 <div class="line">  Response: set velocity {0}</div>
 <div class="line">. </div>
-</div><!-- fragment --><p>In this example, an announcement will start after 10 seconds and last for 10 seconds.</p>
+</div><!-- fragment --> </details>
+<p>In this example, an announcement will start after 10 seconds and last for 10 seconds.</p>
 <p>While the announcement is occurring, every pedestrian will be stopped to listen.</p>
-<details >
-<summary >
-</summary>
-<h3>Ex.2.1. A bit more realistic </h3>
-<p></p>
-<p></p>
+<h3><a class="anchor" id="autotoc_md33"></a>
+Ex.2.1. A bit more realistic</h3>
 <p>Everyone stopping to listen isn't very realistic, so we can change it slightly.</p>
+<details  open="true">
+<summary >
+Code</summary>
+<p></p>
 <div class="fragment"><div class="line">Types:                                // Types Declaration(§T.)</div>
 <div class="line">  Listener</div>
 <div class="line">.</div>
@@ -172,16 +184,15 @@ $(function(){ initResizable(false); });
 <div class="line">  Condition: !Announcement occurring  // Condition (§C.)</div>
 <div class="line">  Response: set velocity {0}</div>
 <div class="line">. </div>
-</div><!-- fragment --><p>In this example, only 10% of pedestrians will actually stop to listen to the announcement. (probably still an over-estimation)</p>
-<p></p>
-</details>
-<details >
-<summary >
-</summary>
-<h3>Ex.2.2. Adding more </h3>
-<p></p>
-<p></p>
+</div><!-- fragment --> </details>
+<p>In this example, only 10% of pedestrians will actually stop to listen to the announcement. (probably still an over-estimation)</p>
+<h3><a class="anchor" id="autotoc_md34"></a>
+Ex.2.2. Adding more</h3>
 <p>A black-and-white, either pedestrians stop to listen or don't, may not be as realistic as we would like.</p>
+<details  open="true">
+<summary >
+Code</summary>
+<p></p>
 <div class="fragment"><div class="line">Types:                                // Types Declaration(§T.)</div>
 <div class="line">  Listener</div>
 <div class="line">  Partial_Listener</div>
@@ -213,17 +224,15 @@ $(function(){ initResizable(false); });
 <div class="line">  Condition: !Announcement occurring  // Condition (§C.)</div>
 <div class="line">  Response: scale velocity 0.75</div>
 <div class="line">.</div>
-</div><!-- fragment --><p>In this 10% of pedestrians stop to listen, another 25% slow down to listen, and the rest behave normally.</p>
-<p></p>
-</details>
-</details>
-<details >
-<summary >
-</summary>
-<h2>Ex.3. Pedestrians Interacting </h2>
-<p></p>
-<p></p>
+</div><!-- fragment --> </details>
+<p>In this 10% of pedestrians stop to listen, another 25% slow down to listen, and the rest behave normally.</p>
+<h2><a class="anchor" id="autotoc_md35"></a>
+Ex.3. Pedestrians Interacting</h2>
 <p>This example <code>Behavior</code> has pedestrians "fighting", to show that pedestrians can interact.</p>
+<details  open="true">
+<summary >
+Code</summary>
+<p></p>
 <div class="fragment"><div class="line">Types:</div>
 <div class="line">  teamA_fan</div>
 <div class="line">  teamB_fan</div>
@@ -253,7 +262,6 @@ $(function(){ initResizable(false); });
 <div class="line">  Target: nearest teamB_fan                                    // Target (§A.6.) has aggressive_fans only interact with teamB_fans </div>
 <div class="line">.</div>
 </div><!-- fragment --><p></p>
-</details>
 </details>
 <p>Go To VIPRA Behaviors </p>
 </div></div><!-- contents -->

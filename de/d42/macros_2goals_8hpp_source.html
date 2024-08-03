@@ -95,13 +95,13 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;vipra/types/time.hpp&quot;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#define VIPRA_GOALS_INIT_STEP                  \</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">  template &lt;typename pedset_t, typename map_t&gt; \</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">  void init_step(pedset_t const&amp; pedset, map_t const&amp; map)</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#define VIPRA_GOALS_INIT_STEP                        \</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">  template &lt;typename pedset_t, typename obstacles_t&gt; \</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">  void init_step(pedset_t const&amp; pedset, obstacles_t const&amp; obstacles)</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#define VIPRA_GOALS_UPDATE_STEP                \</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">  template &lt;typename pedset_t, typename map_t&gt; \</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">  void update_step(pedset_t const&amp; pedset, map_t const&amp; </span><span class="comment">/*unused*/</span><span class="preprocessor">, VIPRA::delta_t deltaT)</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#define VIPRA_GOALS_UPDATE_STEP                      \</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">  template &lt;typename pedset_t, typename obstacles_t&gt; \</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">  void update_step(pedset_t const&amp; pedset, obstacles_t const&amp; </span><span class="comment">/*unused*/</span><span class="preprocessor">, VIPRA::delta_t deltaT)</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

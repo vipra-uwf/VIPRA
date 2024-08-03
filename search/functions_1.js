@@ -1,4 +1,10 @@
 var searchData=
 [
-  ['build_0',['build',['../d7/d28/classVIPRA_1_1Behaviors_1_1BehaviorBuilder.html#ab03b3bc5f3cd33d58b30d66608425ba3',1,'VIPRA::Behaviors::BehaviorBuilder']]]
+  ['basic_5fcstring_5fview_0',['basic_cstring_view',['../d0/dff/classbasic__cstring__view.html#ab464b2378652892cec4716d3e3d475c7',1,'basic_cstring_view::basic_cstring_view(const Char *s)'],['../d0/dff/classbasic__cstring__view.html#a10b92cc0e3e67789601984099b9ed339',1,'basic_cstring_view::basic_cstring_view(const std::basic_string&lt; Char &gt; &amp;s)']]],
+  ['basic_5fformat_5fargs_1',['basic_format_args',['../d0/d6f/classbasic__format__args.html#a8102d3ce2d386dfd94895facba9d22df',1,'basic_format_args::basic_format_args(const detail::format_arg_store&lt; Context, NUM_ARGS, NUM_NAMED_ARGS, DESC &gt; &amp;store)'],['../d0/d6f/classbasic__format__args.html#a6724cde20c940102942d3e8dc5263179',1,'basic_format_args::basic_format_args(const dynamic_format_arg_store&lt; Context &gt; &amp;store)'],['../d0/d6f/classbasic__format__args.html#a1b6a098d11577f454964b51c2d7f9027',1,'basic_format_args::basic_format_args(const format_arg *args, int count)']]],
+  ['basic_5fmemory_5fbuffer_2',['basic_memory_buffer',['../d7/d4d/classbasic__memory__buffer.html#ade18cff12fc914085665a07af2e8fb7b',1,'basic_memory_buffer']]],
+  ['basic_5fprintf_5fcontext_3',['basic_printf_context',['../d5/d56/classbasic__printf__context.html#adfd397d9cb5e7fae13fa69cc88e6560d',1,'basic_printf_context']]],
+  ['basic_5fstring_5fview_4',['basic_string_view',['../d6/d63/classbasic__string__view.html#aae708273ca864680a424c10441799605',1,'basic_string_view::basic_string_view(const Char *s, size_t count) noexcept'],['../d6/d63/classbasic__string__view.html#ac33dd8c4bd4745b749a26cc6b363cd82',1,'basic_string_view::basic_string_view(const Char *s)'],['../d6/d63/classbasic__string__view.html#a2f1d654bab449755061a67f3c99538a5',1,'basic_string_view::basic_string_view(const S &amp;s) noexcept']]],
+  ['begin_5',['begin',['../d9/d9f/classbasic__format__parse__context.html#afb21ddaa0d32b5430f99eed530666ea9',1,'basic_format_parse_context']]],
+  ['build_6',['build',['../d7/d28/classVIPRA_1_1Behaviors_1_1BehaviorBuilder.html#afe83c5122324af355ec78bd5ce946fa1',1,'VIPRA::Behaviors::BehaviorBuilder']]]
 ];

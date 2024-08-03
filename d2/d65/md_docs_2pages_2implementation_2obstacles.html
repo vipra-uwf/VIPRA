@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.11.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>VIPRA Documentation: obstacles</title>
+<title>VIPRA Documentation: Obstacle Set Implementation</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -84,17 +84,12 @@ $(function(){ initResizable(false); });
 </div><!-- top -->
 <div id="doc-content">
 <div><div class="header">
-  <div class="headertitle"><div class="title">obstacles</div></div>
+  <div class="headertitle"><div class="title">Obstacle Set Implementation</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md200"></a>
-autotoc_md200</h2>
-<p>title: Obstacles Module Implementation layout: template </p>
-<h2><a class="anchor" id="autotoc_md201"></a>
-filename: obstacles.md</h2>
-<h1><a class="anchor" id="autotoc_md202"></a>
-Obstacle Set Implementation</h1>
-<p>Obstacle Set modules hold the geometry of the environment and handle map/pedestrian collision detection.</p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md243"></a> Obstacle Set modules hold the geometry of the environment and handle map/pedestrian collision detection.</p>
+<h1><a class="anchor" id="autotoc_md244"></a>
+Required Module</h1>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="keywordtype">void</span> initialize(std::vector&lt;VIPRA::Geometry::Polygon&gt; <span class="keyword">const</span>&amp;, std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp;, std::map&lt;std::string, std::vector&lt;VIPRA::f3d&gt;&gt; <span class="keyword">const</span>&amp;);</div>
 <div class="line"> </div>
@@ -108,7 +103,9 @@ Obstacle Set Implementation</h1>
 <div class="line"><span class="keyword">auto</span> get_dimensions() -&gt; <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a>;</div>
 <div class="ttc" id="aclassVIPRA_1_1Geometry_1_1Circle_html"><div class="ttname"><a href="../../de/df6/classVIPRA_1_1Geometry_1_1Circle.html">VIPRA::Geometry::Circle</a></div><div class="ttdef"><b>Definition</b> circle.hpp:7</div></div>
 <div class="ttc" id="astructVIPRA_1_1f3d_html"><div class="ttname"><a href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a></div><div class="ttdef"><b>Definition</b> f3d.hpp:18</div></div>
-</div><!-- fragment --> </div></div><!-- contents -->
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md245"></a>
+Details</h1>
+</div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

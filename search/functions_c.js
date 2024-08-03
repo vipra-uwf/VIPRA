@@ -6,7 +6,8 @@ var searchData=
   ['operator_2b_3d_3',['operator+=',['../db/dbc/classVIPRA_1_1Behaviors_1_1Ptype.html#a352728f7328e7fdde17806c00fb8b21f',1,'VIPRA::Behaviors::Ptype::operator+=(typeUID type) noexcept -&gt; Ptype &amp;'],['../db/dbc/classVIPRA_1_1Behaviors_1_1Ptype.html#a2e8fa3e2beb5a7be5c636dc3c91a82c6',1,'VIPRA::Behaviors::Ptype::operator+=(Ptype type) noexcept -&gt; Ptype &amp;']]],
   ['operator_2d_4',['operator-',['../db/dbc/classVIPRA_1_1Behaviors_1_1Ptype.html#a40ac12cf54cecd427ba59498ee80189b',1,'VIPRA::Behaviors::Ptype::operator-(typeUID type) const noexcept -&gt; Ptype'],['../db/dbc/classVIPRA_1_1Behaviors_1_1Ptype.html#a007550dc3355ab359e8bd6db83550339',1,'VIPRA::Behaviors::Ptype::operator-(Ptype type) const noexcept -&gt; Ptype']]],
   ['operator_2d_3d_5',['operator-=',['../db/dbc/classVIPRA_1_1Behaviors_1_1Ptype.html#ace9058c940fd7f70c29c82555a7393cc',1,'VIPRA::Behaviors::Ptype::operator-=(typeUID type) noexcept -&gt; Ptype &amp;'],['../db/dbc/classVIPRA_1_1Behaviors_1_1Ptype.html#a0db5a21be40ed5166b2a5f14add71a58',1,'VIPRA::Behaviors::Ptype::operator-=(Ptype type) noexcept -&gt; Ptype &amp;']]],
-  ['operator_3d_3d_6',['operator==',['../db/dbc/classVIPRA_1_1Behaviors_1_1Ptype.html#a7c692a65d238c56be2fe0cc7fd1199f0',1,'VIPRA::Behaviors::Ptype']]],
-  ['operator_5b_5d_7',['operator[]',['../d7/d24/classVIPRA_1_1Behaviors_1_1GroupsContainer.html#aa97c1b357c0639781591db55c119edb7',1,'VIPRA::Behaviors::GroupsContainer']]],
-  ['orientation_5fto_8',['orientation_to',['../da/d49/structVIPRA_1_1Geometry_1_1Line.html#acf514a728f44949fbf8e15c14fc4e9d5',1,'VIPRA::Geometry::Line']]]
+  ['operator_3d_6',['operator=',['../d7/d4d/classbasic__memory__buffer.html#a20c8cea076154a579ab0a04afb6c1f84',1,'basic_memory_buffer']]],
+  ['operator_3d_3d_7',['operator==',['../db/dbc/classVIPRA_1_1Behaviors_1_1Ptype.html#a7c692a65d238c56be2fe0cc7fd1199f0',1,'VIPRA::Behaviors::Ptype']]],
+  ['operator_5b_5d_8',['operator[]',['../d7/d24/classVIPRA_1_1Behaviors_1_1GroupsContainer.html#aa97c1b357c0639781591db55c119edb7',1,'VIPRA::Behaviors::GroupsContainer']]],
+  ['orientation_5fto_9',['orientation_to',['../da/d49/structVIPRA_1_1Geometry_1_1Line.html#acf514a728f44949fbf8e15c14fc4e9d5',1,'VIPRA::Geometry::Line']]]
 ];

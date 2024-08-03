@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.11.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>VIPRA Documentation: visualizer</title>
+<title>VIPRA Documentation: VIPRA Trajectories Visualization</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -84,22 +84,16 @@ $(function(){ initResizable(false); });
 </div><!-- top -->
 <div id="doc-content">
 <div><div class="header">
-  <div class="headertitle"><div class="title">visualizer</div></div>
+  <div class="headertitle"><div class="title">VIPRA Trajectories Visualization</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md251"></a>
-autotoc_md251</h2>
-<p>title: Trajectories Visualizer layout: template </p>
-<h2><a class="anchor" id="autotoc_md252"></a>
-filename: visualizer.md</h2>
-<h1><a class="anchor" id="autotoc_md253"></a>
-VIPRA Trajectories Visualization</h1>
-<h1><a class="anchor" id="autotoc_md254"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md307"></a> </p>
+<h1><a class="anchor" id="autotoc_md308"></a>
 visualize.py</h1>
 <p><code>visualize.py</code> is used to view the output from a simulation run.</p>
-<h2><a class="anchor" id="autotoc_md255"></a>
+<h2><a class="anchor" id="autotoc_md309"></a>
 Setup</h2>
-<h3><a class="anchor" id="autotoc_md256"></a>
+<h3><a class="anchor" id="autotoc_md310"></a>
 Requirements</h3>
 <ul>
 <li>Python 3.7^</li>
@@ -113,10 +107,10 @@ Requirements</h3>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md257"></a>
+<h2><a class="anchor" id="autotoc_md311"></a>
 Running</h2>
 <p><code>python3 visualize.py *flags*</code></p>
-<h3><a class="anchor" id="autotoc_md258"></a>
+<h3><a class="anchor" id="autotoc_md312"></a>
 Flags</h3>
 <ol type="1">
 <li><b>REQUIRED</b> <code>-peds *sim output path*</code> : sets the path to the simulation output *(no default)*</li>
@@ -138,7 +132,7 @@ Flags</h3>
 <li><code>-overrides *filename*</code> : overrides helper functions with the module provided</li>
 </ol>
 <p><b>color options: <a href="https://matplotlib.org/stable/tutorials/colors/colors.html">https://matplotlib.org/stable/tutorials/colors/colors.html</a></b></p>
-<h2><a class="anchor" id="autotoc_md259"></a>
+<h2><a class="anchor" id="autotoc_md313"></a>
 Plotting Custom Information</h2>
 <p>For plotting extra information added to the output use the <code>overrides</code> flag.</p>
 <p>Create a python file that includes the method: </p><div class="fragment"><div class="line">plotExtras(ax, timestep, output)</div>
@@ -150,7 +144,7 @@ Plotting Custom Information</h2>
 <p>Returns:</p><ul>
 <li>Nothing</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md260"></a>
+<h3><a class="anchor" id="autotoc_md314"></a>
 Pedestrian Colors</h3>
 <p>Pedestrian colors can be updated throughout the GIF by overriding the method: </p><div class="fragment"><div class="line">updateColors(output)</div>
 </div><!-- fragment --><ul>

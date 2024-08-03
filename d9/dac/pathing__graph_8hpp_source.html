@@ -111,11 +111,11 @@ $(function(){ initResizable(false); });
 <div class="foldopen" id="foldopen00016" data-start="{" data-end="};">
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="../../d6/d44/classVIPRA_1_1Goals_1_1PathingGraph.html">   16</a></span><span class="keyword">class </span><a class="code hl_class" href="../../d6/d44/classVIPRA_1_1Goals_1_1PathingGraph.html">PathingGraph</a> : <span class="keyword">public</span> <a class="code hl_class" href="../../d8/de6/classVIPRA_1_1DataStructures_1_1GraphMixin.html">VIPRA::DataStructures::GraphMixin</a>&lt;PathingGraph, GridPoint&gt; {</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> map_t&gt;</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>  <a class="code hl_class" href="../../d6/d44/classVIPRA_1_1Goals_1_1PathingGraph.html">PathingGraph</a>(map_t <span class="keyword">const</span>&amp; map, VIPRA::f_pnt gridSize, VIPRA::f_pnt closestObstacle)</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> obstacles_t&gt;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>  <a class="code hl_class" href="../../d6/d44/classVIPRA_1_1Goals_1_1PathingGraph.html">PathingGraph</a>(obstacles_t <span class="keyword">const</span>&amp; obstacles, VIPRA::f_pnt gridSize, VIPRA::f_pnt closestObstacle)</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>      : _gridSize(gridSize), _closestObstacle(closestObstacle)</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>  {</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    construct_graph(map);</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    construct_graph(obstacles);</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>  }</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
 <div class="foldopen" id="foldopen00031" data-start="{" data-end="}">
@@ -140,9 +140,9 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  VIPRA::f_pnt _gridSize{};</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>  VIPRA::f_pnt _closestObstacle{};</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  <span class="keywordtype">void</span> set_grid_counts(<span class="keyword">const</span> <span class="keyword">auto</span>&amp; map)</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  <span class="keywordtype">void</span> set_grid_counts(<span class="keyword">auto</span> <span class="keyword">const</span>&amp; obstacles)</div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  {</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keyword">const</span> <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> dimensions = map.get_dimensions();</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keyword">const</span> <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> dimensions = obstacles.get_dimensions();</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    assert(dimensions.x &gt; 0 &amp;&amp; dimensions.y &gt; 0);</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    assert(_gridSize &gt; 0 &amp;&amp; _closestObstacle &gt; 0);</div>
@@ -157,10 +157,10 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    <span class="keywordflow">return</span> gridX + (gridY * xCount);</div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>  }</div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>  <span class="keywordtype">void</span> construct_graph(<span class="keyword">auto</span> <span class="keyword">const</span>&amp; map)</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>  <span class="keywordtype">void</span> construct_graph(<span class="keyword">auto</span> <span class="keyword">const</span>&amp; obstacles)</div>
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>  {</div>
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    clear();</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    set_grid_counts(map);</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    set_grid_counts(obstacles);</div>
 <div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
 <div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    assert(_xCount &gt; 0 &amp;&amp; _yCount &gt; 0);</div>
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
@@ -176,8 +176,8 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>      <span class="keywordflow">for</span> ( VIPRA::idx currX = 0; currX &lt; _xCount; ++currX ) {</div>
 <div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        center.x += _gridSize;</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        <span class="keyword">const</span> VIPRA::idx currIdx =</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>            add_node(GridPoint{center, ! map.collision(<a class="code hl_class" href="../../de/df6/classVIPRA_1_1Geometry_1_1Circle.html">VIPRA::Geometry::Circle</a>{center, _closestObstacle})});</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        <span class="keyword">const</span> VIPRA::idx currIdx = add_node(</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>            GridPoint{center, ! obstacles.collision(<a class="code hl_class" href="../../de/df6/classVIPRA_1_1Geometry_1_1Circle.html">VIPRA::Geometry::Circle</a>{center, _closestObstacle})});</div>
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
 <div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        <span class="keywordflow">if</span> ( ! data(currIdx).traversable ) {</div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>          <span class="keywordflow">continue</span>;</div>

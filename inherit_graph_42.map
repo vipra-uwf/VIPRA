@@ -1,3 +1,9 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$d2/d7d/structVIPRA_1_1Behaviors_1_1SelectorPercent.html" title="Selects a percentage of a group to be a type." alt="" coords="5,5,185,46"/>
+<area shape="rect" id="Node000000" href="$de/d0d/classdetail_1_1buffer.html" title=" " alt="" coords="5,63,143,88"/>
+<area shape="rect" id="Node000001" href="$df/d24/classdetail_1_1counting__buffer.html" title=" " alt="" coords="191,5,367,31"/>
+<area shape="poly" id="edge10_Node000000_Node000001" title=" " alt="" coords="137,55,229,29,231,34,138,60"/>
+<area shape="rect" id="Node000002" href="$d7/d39/classdetail_1_1file__print__buffer.html" title=" " alt="" coords="211,55,347,96"/>
+<area shape="poly" id="edge11_Node000000_Node000002" title=" " alt="" coords="158,73,210,73,210,78,158,78"/>
+<area shape="rect" id="Node000003" href="$d3/df3/classdetail_1_1file__print__buffer_3_01F_00_01enable__if__t_3_01has__flockfile_3_01F_01_4_1_1value_01_4_01_4.html" title=" " alt="" coords="207,120,351,191"/>
+<area shape="poly" id="edge12_Node000000_Node000003" title=" " alt="" coords="124,92,207,125,205,130,122,97"/>
 </map>

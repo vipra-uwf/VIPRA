@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.11.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>VIPRA Documentation: VIPRA::Behaviors::HumanBehavior&lt; pedset_t, map_t, goals_t &gt; Class Template Reference</title>
+<title>VIPRA Documentation: VIPRA::Behaviors::HumanBehavior&lt; pedset_t, obstacles_t, goals_t &gt; Class Template Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -92,7 +92,7 @@ $(function(){ initResizable(false); });
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="../../d0/de2/classVIPRA_1_1Behaviors_1_1HumanBehavior-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">VIPRA::Behaviors::HumanBehavior&lt; pedset_t, map_t, goals_t &gt; Class Template Reference</div></div>
+  <div class="headertitle"><div class="title">VIPRA::Behaviors::HumanBehavior&lt; pedset_t, obstacles_t, goals_t &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -100,109 +100,109 @@ $(function(){ initResizable(false); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a2b6662271baae43e0bc8772f8ae59f34" id="r_a2b6662271baae43e0bc8772f8ae59f34"><td class="memItemLeft" align="right" valign="top"><a id="a2b6662271baae43e0bc8772f8ae59f34" name="a2b6662271baae43e0bc8772f8ae59f34"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>pack_t</b> = <a class="el" href="../../df/d0a/structVIPRA_1_1Behaviors_1_1Simpack.html">Simpack</a>&lt;pedset_t, map_t, goals_t&gt;</td></tr>
-<tr class="separator:a2b6662271baae43e0bc8772f8ae59f34"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace51fa3b906a12047c52237545c431f0" id="r_ace51fa3b906a12047c52237545c431f0"><td class="memItemLeft" align="right" valign="top"><a id="ace51fa3b906a12047c52237545c431f0" name="ace51fa3b906a12047c52237545c431f0"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>context_t</b> = <a class="el" href="../../d0/d96/structVIPRA_1_1Behaviors_1_1BehaviorContext.html">BehaviorContext</a>&lt;pedset_t, map_t, goals_t&gt;</td></tr>
-<tr class="separator:ace51fa3b906a12047c52237545c431f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d191d635e8c01631bce1cf370c6b64e" id="r_a4d191d635e8c01631bce1cf370c6b64e"><td class="memItemLeft" align="right" valign="top"><a id="a4d191d635e8c01631bce1cf370c6b64e" name="a4d191d635e8c01631bce1cf370c6b64e"></a>
+<tr class="memitem:a1a60d34081f97f4ab7f7cf84f3a26409" id="r_a1a60d34081f97f4ab7f7cf84f3a26409"><td class="memItemLeft" align="right" valign="top"><a id="a1a60d34081f97f4ab7f7cf84f3a26409" name="a1a60d34081f97f4ab7f7cf84f3a26409"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>pack_t</b> = <a class="el" href="../../df/d0a/structVIPRA_1_1Behaviors_1_1Simpack.html">Simpack</a>&lt;pedset_t, obstacles_t, goals_t&gt;</td></tr>
+<tr class="separator:a1a60d34081f97f4ab7f7cf84f3a26409"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d39d8ab3a27a0924de9afb77565d3d4" id="r_a1d39d8ab3a27a0924de9afb77565d3d4"><td class="memItemLeft" align="right" valign="top"><a id="a1d39d8ab3a27a0924de9afb77565d3d4" name="a1d39d8ab3a27a0924de9afb77565d3d4"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>context_t</b> = <a class="el" href="../../d0/d96/structVIPRA_1_1Behaviors_1_1BehaviorContext.html">BehaviorContext</a>&lt;pedset_t, obstacles_t, goals_t&gt;</td></tr>
+<tr class="separator:a1d39d8ab3a27a0924de9afb77565d3d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab3daf12cbae97587c3d30bba014f8bf" id="r_aab3daf12cbae97587c3d30bba014f8bf"><td class="memItemLeft" align="right" valign="top"><a id="aab3daf12cbae97587c3d30bba014f8bf" name="aab3daf12cbae97587c3d30bba014f8bf"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>cond_t</b> = <a class="el" href="../../d9/da8/classVIPRA_1_1Behaviors_1_1Condition.html">Condition</a>&lt;SubCondition&lt;<a class="el" href="../../df/d0a/structVIPRA_1_1Behaviors_1_1Simpack.html">pack_t</a>&gt;&gt;</td></tr>
-<tr class="separator:a4d191d635e8c01631bce1cf370c6b64e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5473772c98ef3a402d16e02094fad8eb" id="r_a5473772c98ef3a402d16e02094fad8eb"><td class="memItemLeft" align="right" valign="top"><a id="a5473772c98ef3a402d16e02094fad8eb" name="a5473772c98ef3a402d16e02094fad8eb"></a>
+<tr class="separator:aab3daf12cbae97587c3d30bba014f8bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4402d5044e593a61dedb38dc8b09b021" id="r_a4402d5044e593a61dedb38dc8b09b021"><td class="memItemLeft" align="right" valign="top"><a id="a4402d5044e593a61dedb38dc8b09b021" name="a4402d5044e593a61dedb38dc8b09b021"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>targetfunc_t</b> = TargetFunc&lt;<a class="el" href="../../df/d0a/structVIPRA_1_1Behaviors_1_1Simpack.html">pack_t</a>&gt;</td></tr>
-<tr class="separator:a5473772c98ef3a402d16e02094fad8eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a802ccfc054a47bfb188294d4fdf710ba" id="r_a802ccfc054a47bfb188294d4fdf710ba"><td class="memItemLeft" align="right" valign="top"><a id="a802ccfc054a47bfb188294d4fdf710ba" name="a802ccfc054a47bfb188294d4fdf710ba"></a>
+<tr class="separator:a4402d5044e593a61dedb38dc8b09b021"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a105a4a0e00b63097d10ad533e27f2c0e" id="r_a105a4a0e00b63097d10ad533e27f2c0e"><td class="memItemLeft" align="right" valign="top"><a id="a105a4a0e00b63097d10ad533e27f2c0e" name="a105a4a0e00b63097d10ad533e27f2c0e"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>targetmodifier_t</b> = <a class="el" href="../../d7/d00/classVIPRA_1_1Behaviors_1_1TargetModifier.html">TargetModifier</a>&lt;Modifier&lt;<a class="el" href="../../df/d0a/structVIPRA_1_1Behaviors_1_1Simpack.html">pack_t</a>&gt;&gt;</td></tr>
-<tr class="separator:a802ccfc054a47bfb188294d4fdf710ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7945a7f178fa4d94b348605f82b4b877" id="r_a7945a7f178fa4d94b348605f82b4b877"><td class="memItemLeft" align="right" valign="top"><a id="a7945a7f178fa4d94b348605f82b4b877" name="a7945a7f178fa4d94b348605f82b4b877"></a>
+<tr class="separator:a105a4a0e00b63097d10ad533e27f2c0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acad947fc5c1685b7fdd771c18e2cf8a3" id="r_acad947fc5c1685b7fdd771c18e2cf8a3"><td class="memItemLeft" align="right" valign="top"><a id="acad947fc5c1685b7fdd771c18e2cf8a3" name="acad947fc5c1685b7fdd771c18e2cf8a3"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>targetselector_t</b> = <a class="el" href="../../da/d83/classVIPRA_1_1Behaviors_1_1TargetSelector.html">TargetSelector</a>&lt;TargetFunc&lt;<a class="el" href="../../df/d0a/structVIPRA_1_1Behaviors_1_1Simpack.html">pack_t</a>&gt;&gt;</td></tr>
-<tr class="separator:a7945a7f178fa4d94b348605f82b4b877"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33a4f112fb56a4a426179928f9458c24" id="r_a33a4f112fb56a4a426179928f9458c24"><td class="memItemLeft" align="right" valign="top"><a id="a33a4f112fb56a4a426179928f9458c24" name="a33a4f112fb56a4a426179928f9458c24"></a>
+<tr class="separator:acad947fc5c1685b7fdd771c18e2cf8a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5eb47111c95cd492793d26288e15a13" id="r_ae5eb47111c95cd492793d26288e15a13"><td class="memItemLeft" align="right" valign="top"><a id="ae5eb47111c95cd492793d26288e15a13" name="ae5eb47111c95cd492793d26288e15a13"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>atom_t</b> = Atom&lt;<a class="el" href="../../df/d0a/structVIPRA_1_1Behaviors_1_1Simpack.html">pack_t</a>&gt;</td></tr>
-<tr class="separator:a33a4f112fb56a4a426179928f9458c24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17d7569c2e780e8962f5fbb29864085d" id="r_a17d7569c2e780e8962f5fbb29864085d"><td class="memItemLeft" align="right" valign="top"><a id="a17d7569c2e780e8962f5fbb29864085d" name="a17d7569c2e780e8962f5fbb29864085d"></a>
+<tr class="separator:ae5eb47111c95cd492793d26288e15a13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8693f5f206bf23f96477effc852ead08" id="r_a8693f5f206bf23f96477effc852ead08"><td class="memItemLeft" align="right" valign="top"><a id="a8693f5f206bf23f96477effc852ead08" name="a8693f5f206bf23f96477effc852ead08"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>action_t</b> = <a class="el" href="../../dd/da8/classVIPRA_1_1Behaviors_1_1Action.html">Action</a>&lt;atom_t, <a class="el" href="../../d9/da8/classVIPRA_1_1Behaviors_1_1Condition.html">cond_t</a>, <a class="el" href="../../da/d83/classVIPRA_1_1Behaviors_1_1TargetSelector.html">targetselector_t</a>&gt;</td></tr>
-<tr class="separator:a17d7569c2e780e8962f5fbb29864085d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd4ad048b51df6efa394c490df7db154" id="r_acd4ad048b51df6efa394c490df7db154"><td class="memItemLeft" align="right" valign="top"><a id="acd4ad048b51df6efa394c490df7db154" name="acd4ad048b51df6efa394c490df7db154"></a>
+<tr class="separator:a8693f5f206bf23f96477effc852ead08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55f97f8150f409afcc4021aa5980e627" id="r_a55f97f8150f409afcc4021aa5980e627"><td class="memItemLeft" align="right" valign="top"><a id="a55f97f8150f409afcc4021aa5980e627" name="a55f97f8150f409afcc4021aa5980e627"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>selectorfunc_t</b> = SelectorFunc&lt;<a class="el" href="../../df/d0a/structVIPRA_1_1Behaviors_1_1Simpack.html">pack_t</a>&gt;</td></tr>
-<tr class="separator:acd4ad048b51df6efa394c490df7db154"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef2216b119f14677b34452ce863a91f3" id="r_aef2216b119f14677b34452ce863a91f3"><td class="memItemLeft" align="right" valign="top"><a id="aef2216b119f14677b34452ce863a91f3" name="aef2216b119f14677b34452ce863a91f3"></a>
+<tr class="separator:a55f97f8150f409afcc4021aa5980e627"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30461f5c95e41f82853c22199dc09402" id="r_a30461f5c95e41f82853c22199dc09402"><td class="memItemLeft" align="right" valign="top"><a id="a30461f5c95e41f82853c22199dc09402" name="a30461f5c95e41f82853c22199dc09402"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>subselector_t</b> = <a class="el" href="../../d4/da0/classVIPRA_1_1Behaviors_1_1SubSelector.html">SubSelector</a>&lt;SelectorFunc&lt;<a class="el" href="../../df/d0a/structVIPRA_1_1Behaviors_1_1Simpack.html">pack_t</a>&gt;, <a class="el" href="../../d9/da8/classVIPRA_1_1Behaviors_1_1Condition.html">cond_t</a>&gt;</td></tr>
-<tr class="separator:aef2216b119f14677b34452ce863a91f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa003fc8ed45ad988cbde59fd2f64ef22" id="r_aa003fc8ed45ad988cbde59fd2f64ef22"><td class="memItemLeft" align="right" valign="top"><a id="aa003fc8ed45ad988cbde59fd2f64ef22" name="aa003fc8ed45ad988cbde59fd2f64ef22"></a>
+<tr class="separator:a30461f5c95e41f82853c22199dc09402"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a2d10d593fb8ac241c2c77cf1d16d4c" id="r_a3a2d10d593fb8ac241c2c77cf1d16d4c"><td class="memItemLeft" align="right" valign="top"><a id="a3a2d10d593fb8ac241c2c77cf1d16d4c" name="a3a2d10d593fb8ac241c2c77cf1d16d4c"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>selector_t</b> = <a class="el" href="../../dc/d8e/classVIPRA_1_1Behaviors_1_1Selector.html">Selector</a>&lt;<a class="el" href="../../d4/da0/classVIPRA_1_1Behaviors_1_1SubSelector.html">subselector_t</a>, <a class="el" href="../../d0/d96/structVIPRA_1_1Behaviors_1_1BehaviorContext.html">context_t</a>&gt;</td></tr>
-<tr class="separator:aa003fc8ed45ad988cbde59fd2f64ef22"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3613c0bee61b74833fecbb373e5c5231" id="r_a3613c0bee61b74833fecbb373e5c5231"><td class="memItemLeft" align="right" valign="top"><a id="a3613c0bee61b74833fecbb373e5c5231" name="a3613c0bee61b74833fecbb373e5c5231"></a>
+<tr class="separator:a3a2d10d593fb8ac241c2c77cf1d16d4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ac69201f1dfdb1ab1b597be0ca95d70" id="r_a7ac69201f1dfdb1ab1b597be0ca95d70"><td class="memItemLeft" align="right" valign="top"><a id="a7ac69201f1dfdb1ab1b597be0ca95d70" name="a7ac69201f1dfdb1ab1b597be0ca95d70"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>event_t</b> = <a class="el" href="../../d0/d62/classVIPRA_1_1Behaviors_1_1Event.html">Event</a>&lt;<a class="el" href="../../d9/da8/classVIPRA_1_1Behaviors_1_1Condition.html">cond_t</a>&gt;</td></tr>
-<tr class="separator:a3613c0bee61b74833fecbb373e5c5231"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a7ac69201f1dfdb1ab1b597be0ca95d70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a988fff72e242feebfe389775b4aaf08d" id="r_a988fff72e242feebfe389775b4aaf08d"><td class="memItemLeft" align="right" valign="top"><a id="a988fff72e242feebfe389775b4aaf08d" name="a988fff72e242feebfe389775b4aaf08d"></a>
+<tr class="memitem:a13581ec10a92c4c18eeca557fc54f88b" id="r_a13581ec10a92c4c18eeca557fc54f88b"><td class="memItemLeft" align="right" valign="top"><a id="a13581ec10a92c4c18eeca557fc54f88b" name="a13581ec10a92c4c18eeca557fc54f88b"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>HumanBehavior</b> (std::string behaviorName)</td></tr>
-<tr class="separator:a988fff72e242feebfe389775b4aaf08d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a174088047c2f1769dddbf4353f1ee369" id="r_a174088047c2f1769dddbf4353f1ee369"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a174088047c2f1769dddbf4353f1ee369">initialize</a> (pedset_t const &amp;pedset, map_t const &amp;map, goals_t &amp;goals)</td></tr>
-<tr class="memdesc:a174088047c2f1769dddbf4353f1ee369"><td class="mdescLeft">&#160;</td><td class="mdescRight">initializes behavior selector  <br /></td></tr>
-<tr class="separator:a174088047c2f1769dddbf4353f1ee369"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a06a4fc91a153d82979c19c3c96fa375f" id="r_a06a4fc91a153d82979c19c3c96fa375f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a06a4fc91a153d82979c19c3c96fa375f">timestep</a> (pedset_t &amp;pedset, map_t &amp;map, goals_t &amp;goals, <a class="el" href="../../d4/da2/structVIPRA_1_1State.html">VIPRA::State</a> &amp;state, VIPRA::delta_t deltaT)</td></tr>
-<tr class="memdesc:a06a4fc91a153d82979c19c3c96fa375f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluates behavior events, and performs actions of pedestrians.  <br /></td></tr>
-<tr class="separator:a06a4fc91a153d82979c19c3c96fa375f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a97d7a398e46029719ad4af8049ca5f35" id="r_a97d7a398e46029719ad4af8049ca5f35"><td class="memItemLeft" align="right" valign="top"><a id="a97d7a398e46029719ad4af8049ca5f35" name="a97d7a398e46029719ad4af8049ca5f35"></a>
+<tr class="separator:a13581ec10a92c4c18eeca557fc54f88b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae94045fcd6e4bd5587642f96efc735d" id="r_aae94045fcd6e4bd5587642f96efc735d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aae94045fcd6e4bd5587642f96efc735d">initialize</a> (pedset_t const &amp;pedset, obstacles_t const &amp;obstacles, goals_t &amp;goals)</td></tr>
+<tr class="memdesc:aae94045fcd6e4bd5587642f96efc735d"><td class="mdescLeft">&#160;</td><td class="mdescRight">initializes behavior selector  <br /></td></tr>
+<tr class="separator:aae94045fcd6e4bd5587642f96efc735d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a891432074c32d6efea642b61dace946b" id="r_a891432074c32d6efea642b61dace946b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a891432074c32d6efea642b61dace946b">timestep</a> (pedset_t &amp;pedset, obstacles_t &amp;map, goals_t &amp;goals, <a class="el" href="../../d4/da2/structVIPRA_1_1State.html">VIPRA::State</a> &amp;state, VIPRA::delta_t deltaT)</td></tr>
+<tr class="memdesc:a891432074c32d6efea642b61dace946b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluates behavior events, and performs actions of pedestrians.  <br /></td></tr>
+<tr class="separator:a891432074c32d6efea642b61dace946b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68b7cf8f7ad0864ce4b5a40d257a78eb" id="r_a68b7cf8f7ad0864ce4b5a40d257a78eb"><td class="memItemLeft" align="right" valign="top"><a id="a68b7cf8f7ad0864ce4b5a40d257a78eb" name="a68b7cf8f7ad0864ce4b5a40d257a78eb"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_all_ped_types</b> (<a class="el" href="../../db/dbc/classVIPRA_1_1Behaviors_1_1Ptype.html">Ptype</a> types)</td></tr>
-<tr class="separator:a97d7a398e46029719ad4af8049ca5f35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c28059f6f090a70786005b9ab694bf5" id="r_a8c28059f6f090a70786005b9ab694bf5"><td class="memItemLeft" align="right" valign="top"><a id="a8c28059f6f090a70786005b9ab694bf5" name="a8c28059f6f090a70786005b9ab694bf5"></a>
+<tr class="separator:a68b7cf8f7ad0864ce4b5a40d257a78eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61d4483b2843cc08f0e1fc69d7694f61" id="r_a61d4483b2843cc08f0e1fc69d7694f61"><td class="memItemLeft" align="right" valign="top"><a id="a61d4483b2843cc08f0e1fc69d7694f61" name="a61d4483b2843cc08f0e1fc69d7694f61"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>add_sub_selector</b> (auto const &amp;subSelector)</td></tr>
-<tr class="separator:a8c28059f6f090a70786005b9ab694bf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acfd2c8621829fc52494364143e9d573e" id="r_acfd2c8621829fc52494364143e9d573e"><td class="memItemLeft" align="right" valign="top"><a id="acfd2c8621829fc52494364143e9d573e" name="acfd2c8621829fc52494364143e9d573e"></a>
+<tr class="separator:a61d4483b2843cc08f0e1fc69d7694f61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69a6436dda45859d8095e0d65db0f6ba" id="r_a69a6436dda45859d8095e0d65db0f6ba"><td class="memItemLeft" align="right" valign="top"><a id="a69a6436dda45859d8095e0d65db0f6ba" name="a69a6436dda45859d8095e0d65db0f6ba"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>add_action</b> (typeUID type, auto const &amp;action)</td></tr>
-<tr class="separator:acfd2c8621829fc52494364143e9d573e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af67f4a45b5fc19ab81891bc93cffd461" id="r_af67f4a45b5fc19ab81891bc93cffd461"><td class="memItemLeft" align="right" valign="top"><a id="af67f4a45b5fc19ab81891bc93cffd461" name="af67f4a45b5fc19ab81891bc93cffd461"></a>
+<tr class="separator:a69a6436dda45859d8095e0d65db0f6ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84f8318db84ccc1d2f6ae5718c64c528" id="r_a84f8318db84ccc1d2f6ae5718c64c528"><td class="memItemLeft" align="right" valign="top"><a id="a84f8318db84ccc1d2f6ae5718c64c528" name="a84f8318db84ccc1d2f6ae5718c64c528"></a>
 auto&#160;</td><td class="memItemRight" valign="bottom"><b>add_event</b> (<a class="el" href="../../d0/d62/classVIPRA_1_1Behaviors_1_1Event.html">event_t</a> const &amp;evnt) -&gt; VIPRA::idx</td></tr>
-<tr class="separator:af67f4a45b5fc19ab81891bc93cffd461"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa907f2869bb98c5078c21910c820ba76" id="r_aa907f2869bb98c5078c21910c820ba76"><td class="memItemLeft" align="right" valign="top"><a id="aa907f2869bb98c5078c21910c820ba76" name="aa907f2869bb98c5078c21910c820ba76"></a>
+<tr class="separator:a84f8318db84ccc1d2f6ae5718c64c528"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a418e8818d340672842ca3bd6e4e2a4e7" id="r_a418e8818d340672842ca3bd6e4e2a4e7"><td class="memItemLeft" align="right" valign="top"><a id="a418e8818d340672842ca3bd6e4e2a4e7" name="a418e8818d340672842ca3bd6e4e2a4e7"></a>
 auto&#160;</td><td class="memItemRight" valign="bottom"><b>add_location</b> (<a class="el" href="../../d0/d27/classVIPRA_1_1Behaviors_1_1Location.html">Location</a> const &amp;loc) -&gt; VIPRA::idx</td></tr>
-<tr class="separator:aa907f2869bb98c5078c21910c820ba76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2d24523d7628dff544637df2070b76c" id="r_af2d24523d7628dff544637df2070b76c"><td class="memItemLeft" align="right" valign="top"><a id="af2d24523d7628dff544637df2070b76c" name="af2d24523d7628dff544637df2070b76c"></a>
+<tr class="separator:a418e8818d340672842ca3bd6e4e2a4e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0633138393c3f15f252bd456dd978b1" id="r_af0633138393c3f15f252bd456dd978b1"><td class="memItemLeft" align="right" valign="top"><a id="af0633138393c3f15f252bd456dd978b1" name="af0633138393c3f15f252bd456dd978b1"></a>
 auto&#160;</td><td class="memItemRight" valign="bottom"><b>get_name</b> () const noexcept -&gt; std::string const &amp;</td></tr>
-<tr class="separator:af2d24523d7628dff544637df2070b76c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ebe5f7f936135837d4fc24246b730fa" id="r_a7ebe5f7f936135837d4fc24246b730fa"><td class="memItemLeft" align="right" valign="top"><a id="a7ebe5f7f936135837d4fc24246b730fa" name="a7ebe5f7f936135837d4fc24246b730fa"></a>
+<tr class="separator:af0633138393c3f15f252bd456dd978b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14666f059493728501c103cadf6882f6" id="r_a14666f059493728501c103cadf6882f6"><td class="memItemLeft" align="right" valign="top"><a id="a14666f059493728501c103cadf6882f6" name="a14666f059493728501c103cadf6882f6"></a>
 auto&#160;</td><td class="memItemRight" valign="bottom"><b>event_count</b> () const noexcept -&gt; VIPRA::size</td></tr>
-<tr class="separator:a7ebe5f7f936135837d4fc24246b730fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a979967befc2255ba57c5a2e52a3137c7" id="r_a979967befc2255ba57c5a2e52a3137c7"><td class="memItemLeft" align="right" valign="top"><a id="a979967befc2255ba57c5a2e52a3137c7" name="a979967befc2255ba57c5a2e52a3137c7"></a>
+<tr class="separator:a14666f059493728501c103cadf6882f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07d3c21b61f2706211992daf31762abb" id="r_a07d3c21b61f2706211992daf31762abb"><td class="memItemLeft" align="right" valign="top"><a id="a07d3c21b61f2706211992daf31762abb" name="a07d3c21b61f2706211992daf31762abb"></a>
 auto&#160;</td><td class="memItemRight" valign="bottom"><b>location_count</b> () const noexcept -&gt; VIPRA::size</td></tr>
-<tr class="separator:a979967befc2255ba57c5a2e52a3137c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0c69e1da0cfd1b089113db0f7b8724b1" id="r_a0c69e1da0cfd1b089113db0f7b8724b1"><td class="memItemLeft" align="right" valign="top"><a id="a0c69e1da0cfd1b089113db0f7b8724b1" name="a0c69e1da0cfd1b089113db0f7b8724b1"></a>
+<tr class="separator:a07d3c21b61f2706211992daf31762abb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a828848e90b2d11feec327f769acb39f0" id="r_a828848e90b2d11feec327f769acb39f0"><td class="memItemLeft" align="right" valign="top"><a id="a828848e90b2d11feec327f769acb39f0" name="a828848e90b2d11feec327f769acb39f0"></a>
 auto&#160;</td><td class="memItemRight" valign="bottom"><b>selector_count</b> () noexcept -&gt; VIPRA::size</td></tr>
-<tr class="separator:a0c69e1da0cfd1b089113db0f7b8724b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a717e904094b4e61bd4782533276617e5" id="r_a717e904094b4e61bd4782533276617e5"><td class="memItemLeft" align="right" valign="top"><a id="a717e904094b4e61bd4782533276617e5" name="a717e904094b4e61bd4782533276617e5"></a>
+<tr class="separator:a828848e90b2d11feec327f769acb39f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6abaa71cf90d84ecb34d3e7db5d971fd" id="r_a6abaa71cf90d84ecb34d3e7db5d971fd"><td class="memItemLeft" align="right" valign="top"><a id="a6abaa71cf90d84ecb34d3e7db5d971fd" name="a6abaa71cf90d84ecb34d3e7db5d971fd"></a>
 auto&#160;</td><td class="memItemRight" valign="bottom"><b>action_count</b> () const noexcept -&gt; VIPRA::size</td></tr>
-<tr class="separator:a717e904094b4e61bd4782533276617e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17eaadf7004e926cfe3cedd8f7edb7cf" id="r_a17eaadf7004e926cfe3cedd8f7edb7cf"><td class="memItemLeft" align="right" valign="top"><a id="a17eaadf7004e926cfe3cedd8f7edb7cf" name="a17eaadf7004e926cfe3cedd8f7edb7cf"></a>
+<tr class="separator:a6abaa71cf90d84ecb34d3e7db5d971fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab61fa8110f4e8718ec2583f5a88f55a4" id="r_ab61fa8110f4e8718ec2583f5a88f55a4"><td class="memItemLeft" align="right" valign="top"><a id="ab61fa8110f4e8718ec2583f5a88f55a4" name="ab61fa8110f4e8718ec2583f5a88f55a4"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_seed</b> (VIPRA::seed seed)</td></tr>
-<tr class="separator:a17eaadf7004e926cfe3cedd8f7edb7cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:ab61fa8110f4e8718ec2583f5a88f55a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename pedset_t, typename map_t, typename goals_t&gt;<br />
-class VIPRA::Behaviors::HumanBehavior&lt; pedset_t, map_t, goals_t &gt;</div><p>Describes a specific human behavior. Implementations can either define the behavior directly in C++ or use a DSL. </p>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename pedset_t, typename obstacles_t, typename goals_t&gt;<br />
+class VIPRA::Behaviors::HumanBehavior&lt; pedset_t, obstacles_t, goals_t &gt;</div><p>Describes a specific human behavior. Implementations can either define the behavior directly in C++ or use a DSL. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a174088047c2f1769dddbf4353f1ee369" name="a174088047c2f1769dddbf4353f1ee369"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a174088047c2f1769dddbf4353f1ee369">&#9670;&#160;</a></span>initialize()</h2>
+<a id="aae94045fcd6e4bd5587642f96efc735d" name="aae94045fcd6e4bd5587642f96efc735d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae94045fcd6e4bd5587642f96efc735d">&#9670;&#160;</a></span>initialize()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename pedset_t , typename map_t , typename goals_t &gt; </div>
+template&lt;typename pedset_t , typename obstacles_t , typename goals_t &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../de/dfa/classVIPRA_1_1Behaviors_1_1HumanBehavior.html">VIPRA::Behaviors::HumanBehavior</a>&lt; pedset_t, map_t, goals_t &gt;::initialize </td>
+          <td class="memname">void <a class="el" href="../../de/dfa/classVIPRA_1_1Behaviors_1_1HumanBehavior.html">VIPRA::Behaviors::HumanBehavior</a>&lt; pedset_t, obstacles_t, goals_t &gt;::initialize </td>
           <td>(</td>
           <td class="paramtype">pedset_t const &amp;</td>          <td class="paramname"><span class="paramname"><em>pedset</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">map_t const &amp;</td>          <td class="paramname"><span class="paramname"><em>map</em></span>, </td>
+          <td class="paramtype">obstacles_t const &amp;</td>          <td class="paramname"><span class="paramname"><em>obstacles</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -224,23 +224,23 @@ template&lt;typename pedset_t , typename map_t , typename goals_t &gt; </div>
 
 </div>
 </div>
-<a id="a06a4fc91a153d82979c19c3c96fa375f" name="a06a4fc91a153d82979c19c3c96fa375f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a06a4fc91a153d82979c19c3c96fa375f">&#9670;&#160;</a></span>timestep()</h2>
+<a id="a891432074c32d6efea642b61dace946b" name="a891432074c32d6efea642b61dace946b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a891432074c32d6efea642b61dace946b">&#9670;&#160;</a></span>timestep()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename pedset_t , typename map_t , typename goals_t &gt; </div>
+template&lt;typename pedset_t , typename obstacles_t , typename goals_t &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../de/dfa/classVIPRA_1_1Behaviors_1_1HumanBehavior.html">VIPRA::Behaviors::HumanBehavior</a>&lt; pedset_t, map_t, goals_t &gt;::timestep </td>
+          <td class="memname">void <a class="el" href="../../de/dfa/classVIPRA_1_1Behaviors_1_1HumanBehavior.html">VIPRA::Behaviors::HumanBehavior</a>&lt; pedset_t, obstacles_t, goals_t &gt;::timestep </td>
           <td>(</td>
           <td class="paramtype">pedset_t &amp;</td>          <td class="paramname"><span class="paramname"><em>pedset</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">map_t &amp;</td>          <td class="paramname"><span class="paramname"><em>map</em></span>, </td>
+          <td class="paramtype">obstacles_t &amp;</td>          <td class="paramname"><span class="paramname"><em>map</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -264,7 +264,7 @@ template&lt;typename pedset_t , typename map_t , typename goals_t &gt; </div>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">pedset_t</td><td></td></tr>
-    <tr><td class="paramname">map_t</td><td></td></tr>
+    <tr><td class="paramname">obstacles_t</td><td></td></tr>
     <tr><td class="paramname">goals_t</td><td></td></tr>
   </table>
   </dd>
@@ -272,7 +272,7 @@ template&lt;typename pedset_t , typename map_t , typename goals_t &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pedset</td><td></td></tr>
-    <tr><td class="paramname">map</td><td></td></tr>
+    <tr><td class="paramname">obstacles</td><td></td></tr>
     <tr><td class="paramname">goals</td><td></td></tr>
     <tr><td class="paramname">state</td><td></td></tr>
     <tr><td class="paramname">deltaT</td><td></td></tr>

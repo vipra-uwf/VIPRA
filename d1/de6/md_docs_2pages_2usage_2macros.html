@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.11.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>VIPRA Documentation: macros</title>
+<title>VIPRA Documentation: Macros</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -84,21 +84,14 @@ $(function(){ initResizable(false); });
 </div><!-- top -->
 <div id="doc-content">
 <div><div class="header">
-  <div class="headertitle"><div class="title">macros</div></div>
+  <div class="headertitle"><div class="title">Macros</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2><a class="anchor" id="autotoc_md267"></a>
-autotoc_md267</h2>
-<p>title: Helper Macros layout: template </p>
-<h2><a class="anchor" id="autotoc_md268"></a>
-filename: macros.md</h2>
-<h1><a class="anchor" id="autotoc_md269"></a>
-Macros</h1>
-<p>For reference on how to use these macros, you can look at <code>modules/model/calm_model/calm_model.hpp</code></p>
-<h2><a class="anchor" id="autotoc_md270"></a>
-Base Module Macros</h2>
-<h4><a class="anchor" id="autotoc_md271"></a>
-VIPRA_MODULE_TYPE(type)</h4>
+<div class="textblock"><p><a class="anchor" id="autotoc_md317"></a> For reference on how to use these macros, you can look at <code>modules/model/calm_model/calm_model.hpp</code></p>
+<h1><a class="anchor" id="autotoc_md318"></a>
+Base Module Macros</h1>
+<h3><a class="anchor" id="autotoc_md319"></a>
+VIPRA_MODULE_TYPE(type)</h3>
 <p><code>VIPRA_MODULE_TYPE</code> sets the modules type</p><ul>
 <li>MODEL,</li>
 <li>GOALS,</li>
@@ -111,17 +104,17 @@ VIPRA_MODULE_TYPE(type)</h4>
 </ul>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line">VIPRA_MODULE_TYPE(MODEL)</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md272"></a>
-VIPRA_MODULE_NAME(name)</h4>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md320"></a>
+VIPRA_MODULE_NAME(name)</h3>
 <p><code>VIPRA_MODULE_NAME</code> sets the modules name, the name is used to grab the correct parameters.</p>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="keyword">class </span>ExampleModel {</div>
 <div class="line">  VIPRA_MODULE_NAME(<span class="stringliteral">&quot;example_model&quot;</span>)</div>
 <div class="line">};</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md273"></a>
-VIPRA_REGISTER_PARAMS</h4>
-<h4><a class="anchor" id="autotoc_md274"></a>
-VIPRA_PARAM</h4>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md321"></a>
+VIPRA_REGISTER_PARAMS</h3>
+<h3><a class="anchor" id="autotoc_md322"></a>
+VIPRA_PARAM</h3>
 <p><code>VIPRA_REGISTER_PARAMS</code> provides the proper function signature for the parameter registration step.</p>
 <p><code>VIPRA_PARAM</code> registers a parameter in the parameter registration step.</p>
 <p>When the parameters are loaded the variable is filled with the proper value.</p>
@@ -137,12 +130,12 @@ VIPRA_PARAM</h4>
 <div class="line">   <span class="keywordtype">int</span> _example1;</div>
 <div class="line">   std::string _example2;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md275"></a>
-VIPRA_CONFIG_STEP</h4>
-<h4><a class="anchor" id="autotoc_md276"></a>
-VIPRA_GET_PARAM</h4>
-<h4><a class="anchor" id="autotoc_md277"></a>
-VIPRA_GET_ARRAY_PARAM</h4>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md323"></a>
+VIPRA_CONFIG_STEP</h3>
+<h3><a class="anchor" id="autotoc_md324"></a>
+VIPRA_GET_PARAM</h3>
+<h3><a class="anchor" id="autotoc_md325"></a>
+VIPRA_GET_ARRAY_PARAM</h3>
 <p><code>VIPRA_CONFIG_STEP</code> provides the proper function signature for the module configuration step.</p>
 <p><code>VIPRA_GET_PARAM</code> loads the parameter into a variable.</p>
 <p><code>VIPRA_GET_ARRAY_PARAM</code> loads an array parameter into a vector.</p>
@@ -158,10 +151,10 @@ VIPRA_GET_ARRAY_PARAM</h4>
 <div class="line">    VIPRA::f_pnt _meanMass;</div>
 <div class="line">    std::vector&lt;std::string&gt; _arrayExample;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md278"></a>
-Model Macros</h2>
-<h4><a class="anchor" id="autotoc_md279"></a>
-VIPRA_MODEL_INIT_STEP</h4>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md326"></a>
+Model Macros</h1>
+<h3><a class="anchor" id="autotoc_md327"></a>
+VIPRA_MODEL_INIT_STEP</h3>
 <p><code>VIPRA_MODEL_INIT_STEP</code> provides the proper function signature for the model initialization step.</p>
 <p>It provides the parameters:</p><ul>
 <li>pedset: the pedestrian set module</li>
@@ -177,8 +170,8 @@ VIPRA_MODEL_INIT_STEP</h4>
 <div class="line">      <span class="comment">// initialize model values</span></div>
 <div class="line">    }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md280"></a>
-VIPRA_MODEL_TIMESTEP</h4>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md328"></a>
+VIPRA_MODEL_TIMESTEP</h3>
 <p><code>VIPRA_MODEL_TIMESTEP</code> provides the proper function signature for the model timestep step.</p>
 <p>It provides the parameters:</p><ul>
 <li>pedset: the pedestrian set module</li>
@@ -197,10 +190,10 @@ VIPRA_MODEL_TIMESTEP</h4>
 <div class="line">      <span class="comment">// update state parameter</span></div>
 <div class="line">    }</div>
 <div class="line">};</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md281"></a>
-Goals Macros</h2>
-<h4><a class="anchor" id="autotoc_md282"></a>
-VIPRA_GOALS_INIT_STEP</h4>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md329"></a>
+Goals Macros</h1>
+<h3><a class="anchor" id="autotoc_md330"></a>
+VIPRA_GOALS_INIT_STEP</h3>
 <p><code>VIPRA_GOALS_INIT_STEP</code> provides the proper function signature for the goals initialization step.</p>
 <p>It provides the parameters:</p><ul>
 <li>pedset: the pedestrian set module</li>
