@@ -3,7 +3,9 @@
 #include <functional>
 #include <optional>
 
+#include "vipra/logging/logging.hpp"
 #include "vipra/types/idx.hpp"
+
 #include "vipra/vipra_behaviors/events/event_status.hpp"
 #include "vipra/vipra_behaviors/util/bool_latch.hpp"
 #include "vipra/vipra_behaviors/util/timed_latch.hpp"
@@ -70,7 +72,7 @@ void Event<cond_t>::evaluate(auto pack)
     if ( _endCondition ) {
       _endCondition.value().evaluate(pack, peds, met, {}, temp);
       if ( met[0] ) {
-        // spdlog::info("Event {} is Ending", _name);
+        VIPRA::Log::debug("Event {} is Ending", _name);
         _status = EventStatus::ENDING;
       }
     }
@@ -80,7 +82,7 @@ void Event<cond_t>::evaluate(auto pack)
 
   _startCondition.evaluate(pack, peds, met, {}, temp);
   if ( met[0] ) {
-    // spdlog::info("Event {} is Starting", _name);
+    VIPRA::Log::debug("Event {} is Starting", _name);
     _occurred = true;
     _status = EventStatus::STARTING;
   }

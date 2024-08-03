@@ -1,6 +1,8 @@
 #pragma once
 
+#include "vipra/logging/logging.hpp"
 #include "vipra/types/idx.hpp"
+
 #include "vipra/vipra_behaviors/selectors/selector.hpp"
 #include "vipra/vipra_behaviors/selectors/subselector.hpp"
 #include "vipra/vipra_behaviors/values/numeric_value.hpp"
@@ -31,7 +33,7 @@ struct SelectorLocation {
       }
     }
 
-    // spdlog::debug("Selector Exaclty N: Selecting {} Pedestrians", pedCnt);
+    VIPRA::Log::debug("Selector Exaclty N: Selecting {} Pedestrians", pedCnt);
 
     return {false, groupPeds};
   }

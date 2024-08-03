@@ -1,5 +1,7 @@
 #pragma once
 
+#include "vipra/logging/logging.hpp"
+
 #include "vipra/vipra_behaviors/selectors/selector.hpp"
 #include "vipra/vipra_behaviors/selectors/subselector.hpp"
 
@@ -30,7 +32,7 @@ struct SelectorPercent {
       count = group.size();
     }
 
-    // spdlog::debug("Selector Percent: Selecting {} Pedestrians", count);
+    VIPRA::Log::debug("Selector Percent: Selecting {} Pedestrians", count);
 
     std::shuffle(groupPeds.begin(), groupPeds.end(), pack.context.engine);
     groupPeds.resize(count);

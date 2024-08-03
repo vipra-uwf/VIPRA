@@ -1,6 +1,9 @@
 #pragma once
 
 #include <stdexcept>
+
+#include "vipra/logging/logging.hpp"
+
 #include "vipra/vipra_behaviors/actions/action.hpp"
 #include "vipra/vipra_behaviors/definitions/behavior_context.hpp"
 #include "vipra/vipra_behaviors/definitions/pedestrian_types.hpp"
@@ -34,8 +37,8 @@ class Selector {
   std::vector<select_t> _subSelectors;
   GroupsContainer       _pedGroups;
 
-  [[nodiscard]] auto select_peds_from_group(select_t& /*selector*/, auto pack, std::string const& /*unused*/)
-      -> VIPRA::idxVec;
+  [[nodiscard]] auto select_peds_from_group(select_t& /*selector*/, auto pack,
+                                            std::string const& behaviorName) -> VIPRA::idxVec;
 
   void check_for_duplicates(const VIPRA::idxVec& order);
 
@@ -107,7 +110,7 @@ void Selector<select_t, context_t>::run_selectors(const VIPRA::idxVec& selectorI
  */
 template <typename select_t, typename context_t>
 auto Selector<select_t, context_t>::select_peds_from_group(select_t& selector, auto pack,
-                                                           std::string const& /*unused*/) -> VIPRA::idxVec
+                                                           std::string const& behaviorName) -> VIPRA::idxVec
 {
   auto const& fullGroup = _pedGroups.get_group(selector.group);
   auto        usablegroup = filter_used_peds(fullGroup, _pedGroups.get_used(selector.group));
@@ -118,13 +121,13 @@ auto Selector<select_t, context_t>::select_peds_from_group(select_t& selector, a
   }
 
   if ( selector.required ) {
-    // spdlog::error("Behavior: {}, Required Selector Starved For Type: {} From Group: {}", behaviorName,
-    // selector.type.fullType, selector.group);
-    throw std::runtime_error("");
+    VIPRA::Log::error("Behavior: {}, Required Selector Starved For Type: {} From Group: {}", behaviorName,
+                      selector.type.fullType, selector.group);
+    std::exit(1);
   }
 
-  // spdlog::warn("Behavior: {}, Starved Selector For Type: {} From Group: {}", behaviorName,
-  //  selector.type.fullType, selector.group);
+  VIPRA::Log::debug("Behavior: {}, Starved Selector For Type: {} From Group: {}", behaviorName,
+                    selector.type.fullType, selector.group);
   return result.group;
 }
 
@@ -138,11 +141,11 @@ auto Selector<select_t, context_t>::select_peds_from_group(select_t& selector, a
  */
 template <typename select_t, typename context_t>
 void Selector<select_t, context_t>::update_ped_groups(const VIPRA::idxVec& selectedPeds, select_t& selector,
-                                                      context_t& context, std::string const& /*unused*/)
+                                                      context_t& context, std::string const& behaviorName)
 {
   std::for_each(selectedPeds.begin(), selectedPeds.end(), [&](auto& pedIdx) {
     selector.type.for_each_type([&](typeUID type) {
-      // spdlog::debug("Behavior: {}, Selecting Ped {} for Type: {}", behaviorName, pedIdx, type);
+      VIPRA::Log::debug("Behavior: {}, Selecting Ped {} for Type: {}", behaviorName, pedIdx, type);
       context.types[pedIdx] += type;
       _pedGroups.add_ped(pedIdx, type);
     });
@@ -198,7 +201,7 @@ void Selector<select_t, context_t>::check_for_duplicates(const VIPRA::idxVec& or
   for ( VIPRA::idx i = 0; i < order.size(); ++i ) {
     for ( VIPRA::idx j = i + 1; j < order.size(); ++j ) {
       if ( order[i] == order[j] ) {
-        // spdlog::error("Duplicate Selector in Selectors");
+        VIPRA::Log::error("Duplicate Selector in Selectors");
         throw std::runtime_error("");
       }
     }

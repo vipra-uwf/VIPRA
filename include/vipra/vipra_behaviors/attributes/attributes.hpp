@@ -268,7 +268,7 @@ class AttributeHandling {
 
     switch ( value1.type ) {
       case Type::INVALID:
-        throw std::runtime_error("Invalid Type");
+        throw std::runtime_error("Invalid Attribute Type");
         return false;
       case Type::NUMBER:
         return value1.as<VIPRA::f_pnt>() == value2.as<VIPRA::f_pnt>();

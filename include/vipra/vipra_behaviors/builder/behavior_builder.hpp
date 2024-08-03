@@ -4,6 +4,7 @@
 #include <stdexcept>
 
 #include "vipra/geometry/f3d.hpp"
+#include "vipra/logging/logging.hpp"
 
 #include "vipra/vipra_behaviors/_grammar/generated/BehaviorBaseVisitor.h"
 #include "vipra/vipra_behaviors/_grammar/generated/BehaviorLexer.h"
@@ -155,9 +156,9 @@ class BehaviorBuilder : public BehaviorBaseVisitor {
    * @param values : values to format message with
    */
   template <typename... args_t>
-  [[noreturn]] static void error(std::string const& /*message*/, args_t&&... /*values*/)
+  [[noreturn]] static void error(fmt::format_string<args_t...> message, args_t&&... values)
   {
-    // spdlog::error(message, std::forward<args_t>(values)...);
+    VIPRA::Log::error(message, std::forward<args_t>(values)...);
     BuilderException::error();
   }
 
@@ -359,11 +360,11 @@ auto BehaviorBuilder<pedset_t, obstacles_t, goals_t>::build(std::string         
                                                             seed seedNum) -> HumanBehavior
 {
   if ( ! std::filesystem::exists(filepath) ) {
-    // spdlog::error("Behavior \"{}\" Does NOT Exist at {}", behaviorName, filepath.c_str());
+    VIPRA::Log::error("Behavior \"{}\" Does NOT Exist at {}", behaviorName, filepath.c_str());
     BuilderException::error();
   }
 
-  // spdlog::debug("Loading Behavior: {} at {}", behaviorName, std::filesystem::canonical(filepath).c_str());
+  VIPRA::Log::debug("Loading Behavior: {} at {}", behaviorName, std::filesystem::canonical(filepath).c_str());
   initial_behavior_setup(behaviorName, seedNum);
 
   std::ifstream dslFile(filepath);
@@ -468,12 +469,12 @@ template <typename pedset_t, typename obstacles_t, typename goals_t>
 void BehaviorBuilder<pedset_t, obstacles_t, goals_t>::end_behavior_check()
 {
   if ( _currentBehavior.selector_count() == 0 ) {
-    // spdlog::error("Behavior Error: No Pedestrian Selector Defined For Behavior: \"{}\"",
-    // _currentBehavior.get_name());
+    VIPRA::Log::error("Behavior Error: No Pedestrian Selector Defined For Behavior: \"{}\"",
+                      _currentBehavior.get_name());
     BuilderException::error();
   }
   if ( _currentBehavior.action_count() == 0 ) {
-    // spdlog::warn("Behavior Error: No Actions Defined For Behavior: \"{}\"", _currentBehavior.get_name());
+    VIPRA::Log::warn("Behavior Error: No Actions Defined For Behavior: \"{}\"", _currentBehavior.get_name());
   }
 }
 
@@ -550,7 +551,7 @@ void BehaviorBuilder<pedset_t, obstacles_t, goals_t>::add_sub_condition(
     return;
   }
 
-  // spdlog::error("Behavior Error: No Valid SubCondition For: \"{}\"", subcond->getText());
+  VIPRA::Log::error("Behavior Error: No Valid SubCondition For: \"{}\"", subcond->getText());
   BuilderException::error();
 }
 template <typename pedset_t, typename obstacles_t, typename goals_t>
@@ -622,7 +623,8 @@ auto BehaviorBuilder<pedset_t, obstacles_t, goals_t>::build_sub_selector(slType 
     return build_location_selector(type, selector, group, required);
   }
 
-  // spdlog::error("Behavior Error: Unable To Create Selector For Behavior \"{}\"", _currentBehavior.get_name());
+  VIPRA::Log::error("Behavior Error: Unable To Create Selector For Behavior \"{}\"",
+                    _currentBehavior.get_name());
   BuilderException::error();
 }
 
@@ -672,7 +674,7 @@ void BehaviorBuilder<pedset_t, obstacles_t, goals_t>::add_atom_to_action(
     return;
   }
 
-  // spdlog::error("Behavior Error: No Atom");
+  VIPRA::Log::error("Behavior Error: No Atom");
   BuilderException::error();
 }
 
@@ -1060,7 +1062,7 @@ auto BehaviorBuilder<pedset_t, obstacles_t, goals_t>::add_event(BehaviorParser::
   if ( ! ctx ) error("Behavior Error: Event Not Given a Name: \"{}\"", _currentBehavior.get_name());
 
   auto eventName = ctx->ID()->toString();
-  // spdlog::debug(R"(Behavior "{}": Adding Lasting Event: "{}")", _currentBehavior.get_name(), eventName);
+  VIPRA::Log::debug(R"(Behavior "{}": Adding Lasting Event: "{}")", _currentBehavior.get_name(), eventName);
 
   VIPRA::idx eventIdx = _currentBehavior.event_count();
   _eventsMap[eventName] = eventIdx;
@@ -1087,7 +1089,7 @@ auto BehaviorBuilder<pedset_t, obstacles_t, goals_t>::visitLocation(BehaviorPars
   auto [center, dimensions, rotation] = make_dimensions(dims.value());
 
   _locations[locName] = _currentBehavior.add_location(Location{center, dimensions, rotation});
-  // spdlog::debug(R"(Behavior "{}": Adding Location "{}")", _currentBehavior.get_name(), locName);
+  VIPRA::Log::debug(R"(Behavior "{}": Adding Location "{}")", _currentBehavior.get_name(), locName);
 
   return BehaviorBaseVisitor::visitLocation(ctx);
 }
@@ -1112,13 +1114,13 @@ auto BehaviorBuilder<pedset_t, obstacles_t, goals_t>::visitEvent(BehaviorParser:
 
   Event event(eventName);
 
-  // spdlog::debug(R"(Behavior "{}": Event: "{}" Adding Start Condition)", _currentBehavior.get_name(),
-  // eventName);
+  VIPRA::Log::debug(R"(Behavior "{}": Event: "{}" Adding Start Condition)", _currentBehavior.get_name(),
+                    eventName);
   event.set_start_condition(build_condition(startCond.value()->condition()));
 
   if ( endCond ) {
-    // spdlog::debug(R"(Behavior "{}": Event: "{}" Adding End Condition)", _currentBehavior.get_name(),
-    // eventName);
+    VIPRA::Log::debug(R"(Behavior "{}": Event: "{}" Adding End Condition)", _currentBehavior.get_name(),
+                      eventName);
     event.set_end_condition(build_condition(endCond.value()->condition()));
   }
 
@@ -1142,7 +1144,7 @@ auto BehaviorBuilder<pedset_t, obstacles_t, goals_t>::visitAction(BehaviorParser
   auto const typeStr = ctx->ID()->toString();
   auto const type = get_check_type(typeStr);
 
-  // spdlog::debug("Behavior \"{}\": Adding Action For {}", _currentBehavior.get_name(), typeStr);
+  VIPRA::Log::debug("Behavior \"{}\": Adding Action For {}", _currentBehavior.get_name(), typeStr);
 
   auto atoms = response.value()->sub_action()->action_atom();
   std::for_each(atoms.begin(), atoms.end(),
@@ -1186,8 +1188,8 @@ auto BehaviorBuilder<pedset_t, obstacles_t, goals_t>::visitDecl_Ped_State(
 
   for ( auto* state : stateNames ) {
     auto name = state->toString();
-    // spdlog::debug("Behavior \"{}\": Adding Pedestrian State {}, id: {}", _currentBehavior.get_name(), name,
-    // _currState);
+    VIPRA::Log::debug("Behavior \"{}\": Adding Pedestrian State {}, id: {}", _currentBehavior.get_name(),
+                      name, static_cast<uint64_t>(_currState));
     _states[name] = _currState;
     ++_currState;
   }
@@ -1203,14 +1205,14 @@ auto BehaviorBuilder<pedset_t, obstacles_t, goals_t>::visitDecl_Ped(BehaviorPars
 
   for ( auto* type : typeNames ) {
     auto name = type->toString();
-    // spdlog::debug("Behavior \"{}\": Adding Pedestrian Type {}, id: {}", _currentBehavior.get_name(), name,
-    // _currType);
+    VIPRA::Log::debug("Behavior \"{}\": Adding Pedestrian Type {}, id: {}", _currentBehavior.get_name(), name,
+                      _currType);
     _types[name] = _currType;
     allTypes += _currType;
     _currType = _currType << 1U;
   }
 
-  // spdlog::debug("Behavior \"{}\": All Types: {}", _currentBehavior.get_name(), allTypes.fullType);
+  VIPRA::Log::debug("Behavior \"{}\": All Types: {}", _currentBehavior.get_name(), allTypes.fullType);
   _currentBehavior.set_all_ped_types(allTypes);
   return BehaviorBaseVisitor::visitDecl_Ped(ctx);
 }
@@ -1296,8 +1298,8 @@ auto BehaviorBuilder<pedset_t, obstacles_t, goals_t>::build_time_elapsed_subcond
 {
   Behaviors::NumericValue dur = get_numeric(ctx->value_numeric(), _currSeed);
   std::string             evName = ctx->EVNT()->toString();
-  // spdlog::debug(R"(Behavior "{}": Adding SubCondition: Elapsed Time From "{}" Event)",
-  // _currentBehavior.get_name(), evName);
+  VIPRA::Log::debug(R"(Behavior "{}": Adding SubCondition: Elapsed Time From "{}" Event)",
+                    _currentBehavior.get_name(), evName);
   auto event = get_check_event(evName);
 
   return {dur, event};
@@ -1314,8 +1316,8 @@ auto BehaviorBuilder<pedset_t, obstacles_t, goals_t>::build_event_occurred_subco
     BehaviorParser::Condition_Event_OccurredContext* ctx) -> SubConditionEventOccurred
 {
   std::string evName = ctx->EVNT()->toString();
-  // spdlog::debug(R"(Behavior "{}": Adding SubCondition: Event "{}" Occurred)", _currentBehavior.get_name(),
-  // evName);
+  VIPRA::Log::debug(R"(Behavior "{}": Adding SubCondition: Event "{}" Occurred)", _currentBehavior.get_name(),
+                    evName);
   auto event = get_check_event(evName);
   return SubConditionEventOccurred(event);
 }
@@ -1331,8 +1333,8 @@ auto BehaviorBuilder<pedset_t, obstacles_t, goals_t>::build_event_occurring_subc
     BehaviorParser::Condition_Event_OccurringContext* ctx) -> SubConditionEventOccurring
 {
   std::string evName = ctx->EVNT()->toString();
-  // spdlog::debug(R"(Behavior "{}": Adding SubCondition: Event "{}" Occurring)", _currentBehavior.get_name(),
-  // evName);
+  VIPRA::Log::debug(R"(Behavior "{}": Adding SubCondition: Event "{}" Occurring)",
+                    _currentBehavior.get_name(), evName);
   auto event = get_check_event(evName);
   return SubConditionEventOccurring(event);
 }
@@ -1348,8 +1350,8 @@ auto BehaviorBuilder<pedset_t, obstacles_t, goals_t>::build_event_starting_subco
     BehaviorParser::Condition_Event_StartingContext* ctx) -> SubConditionEventStarting
 {
   std::string evName = ctx->EVNT()->toString();
-  // spdlog::debug(R"(Behavior "{}": Adding SubCondition: Event "{}" Occurring)", _currentBehavior.get_name(),
-  // evName);
+  VIPRA::Log::debug(R"(Behavior "{}": Adding SubCondition: Event "{}" Occurring)",
+                    _currentBehavior.get_name(), evName);
   auto event = get_check_event(evName);
 
   return SubConditionEventStarting(event);
@@ -1366,8 +1368,8 @@ auto BehaviorBuilder<pedset_t, obstacles_t, goals_t>::build_event_ending_subcond
     BehaviorParser::Condition_Event_EndingContext* ctx) -> SubConditionEventEnding
 {
   std::string evName = ctx->EVNT()->toString();
-  // spdlog::debug(R"(Behavior "{}": Adding SubCondition: Event "{}" Occurring)", _currentBehavior.get_name(),
-  // evName);
+  VIPRA::Log::debug(R"(Behavior "{}": Adding SubCondition: Event "{}" Occurring)",
+                    _currentBehavior.get_name(), evName);
   auto event = get_check_event(evName);
   return SubConditionEventEnding(event);
 }
@@ -1383,7 +1385,7 @@ auto BehaviorBuilder<pedset_t, obstacles_t, goals_t>::build_spatial_subcond(
     BehaviorParser::Condition_SpatialContext* ctx) -> SubConditionSpatial
 {
   auto distance = get_numeric(ctx->value_numeric(), _currSeed);
-  // spdlog::debug(R"(Behavior "{}": Adding SubCondition: Spatial)", _currentBehavior.get_name());
+  VIPRA::Log::debug(R"(Behavior "{}": Adding SubCondition: Spatial)", _currentBehavior.get_name());
   return SubConditionSpatial(distance);
 }
 template <typename pedset_t, typename obstacles_t, typename goals_t>
@@ -1392,8 +1394,8 @@ auto BehaviorBuilder<pedset_t, obstacles_t, goals_t>::build_in_location_subcond(
 {
   auto location = get_check_location(ctx->LOC_NAME()->toString());
 
-  // spdlog::debug(R"(Behavior "{}": Adding SubCondition: Inside Location "{}")", _currentBehavior.get_name(),
-  // ctx->LOC_NAME()->toString());
+  VIPRA::Log::debug(R"(Behavior "{}": Adding SubCondition: Inside Location "{}")",
+                    _currentBehavior.get_name(), ctx->LOC_NAME()->toString());
   return SubConditionInLocation{location};
 }
 
@@ -1412,8 +1414,8 @@ auto BehaviorBuilder<pedset_t, obstacles_t, goals_t>::build_attribute_subcond(
   auto attrValue = make_attribute_value(ctx->attr_value());
   bool negative = ctx->NOT() != nullptr;
 
-  // spdlog::debug(R"(Behavior "{}": Adding SubCondition: Attribute "{}")", _currentBehavior.get_name(),
-  // attrStr);
+  VIPRA::Log::debug(R"(Behavior "{}": Adding SubCondition: Attribute "{}")", _currentBehavior.get_name(),
+                    attrStr);
   return SubConditionAttribute{attr, attrValue, negative};
 }
 
@@ -1436,8 +1438,8 @@ auto BehaviorBuilder<pedset_t, obstacles_t, goals_t>::build_exists_subcond(
   auto attrValue = make_attribute_value(ctx->attr_value());
   bool negative = ctx->NOT() != nullptr;
 
-  // spdlog::debug(R"(Behavior "{}": Adding SubCondition: Exists Attribute \"{}\")", _currentBehavior.get_name(),
-  // attrStr);
+  VIPRA::Log::debug(R"(Behavior "{}": Adding SubCondition: Exists Attribute \"{}\")",
+                    _currentBehavior.get_name(), attrStr);
   return SubConditionExists{targetModifier.has_value() ? targetModifier.value() : TargetModifier{},
                             SubConditionAttribute{attr, attrValue, negative}};
 }
@@ -1461,8 +1463,8 @@ void BehaviorBuilder<pedset_t, obstacles_t, goals_t>::add_nearest_type_target(
   auto  typeStrs = make_list_strs(types);
   bool  allPeds = ! ctx->id_list()->PEDESTRIAN().empty();
 
-  // spdlog::debug(R"(Behavior: "{}": Adding Target: Nearest "{}")", _currentBehavior.get_name(),
-  // fmt::join(typeStrs, " or "));
+  VIPRA::Log::debug(R"(Behavior: "{}": Adding Target: Nearest "{}")", _currentBehavior.get_name(),
+                    fmt::join(typeStrs, " or "));
   action.add_target(
       TargetSelector<TargetFunc>(TargetNearest<TargetModifier>{comPtype, allPeds, std::move(modifier)}));
 }
@@ -1534,8 +1536,8 @@ auto BehaviorBuilder<pedset_t, obstacles_t, goals_t>::build_everyone_selector(sl
 
   auto typeStrs = make_list_strs(types);
 
-  // spdlog::debug(R"(Behavior "{}": Adding Selector: "Everyone" Is Ped Type: {})", _currentBehavior.get_name(),
-  // fmt::join(typeStrs, ", "));
+  VIPRA::Log::debug(R"(Behavior "{}": Adding Selector: "Everyone" Is Ped Type: {})",
+                    _currentBehavior.get_name(), fmt::join(typeStrs, ", "));
   return SubSelector{0, comPtype, required, SelectorEveryone{}};
 }
 
@@ -1562,8 +1564,8 @@ auto BehaviorBuilder<pedset_t, obstacles_t, goals_t>::build_exactly_n_selector(s
 
   NumericValue nPeds =
       get_numeric(selector->selector()->selector_Exactly_N_Random()->value_number(), _currSeed);
-  // spdlog::debug(R"(Behavior "{}": Adding Selector: "Exactly {}" of {} Are Ped Type: {})",
-  // _currentBehavior.get_name(), nPeds.value(0), groupName, fmt::join(typeStrs, ", "));
+  VIPRA::Log::debug(R"(Behavior "{}": Adding Selector: "Exactly {}" of {} Are Ped Type: {})",
+                    _currentBehavior.get_name(), nPeds.value(0), groupName, fmt::join(typeStrs, ", "));
   return SubSelector{groupType, comPtype, required, SelectorExactlyN{nPeds}};
 }
 
@@ -1587,8 +1589,8 @@ auto BehaviorBuilder<pedset_t, obstacles_t, goals_t>::build_percent_selector(slT
   auto [groupType, groupName] = get_group(group);
 
   NumericValue percentage = get_numeric(selector->selector()->selector_Percent()->value_number(), _currSeed);
-  // spdlog::debug(R"(Behavior "{}": Adding Selector: "{} Percent" of {} Are Ped Type: {})",
-  // _currentBehavior.get_name(), percentage.value(0), groupName, fmt::join(typeStrs, ", "));
+  VIPRA::Log::debug(R"(Behavior "{}": Adding Selector: "{} Percent" of {} Are Ped Type: {})",
+                    _currentBehavior.get_name(), percentage.value(0), groupName, fmt::join(typeStrs, ", "));
   return SubSelector{groupType, comPtype, required, SelectorPercent{percentage.value(0) / 100.0F}};
 }
 
@@ -1614,8 +1616,8 @@ auto BehaviorBuilder<pedset_t, obstacles_t, goals_t>::build_location_selector(sl
   auto locName = selector->selector()->selector_Location()->LOC_NAME()->toString();
   auto location = get_check_location(locName);
 
-  // spdlog::debug(R"(Behavior "{}": Adding Selector: "In {}" Are Ped Type: {})", _currentBehavior.get_name(),
-  // locName, groupName, fmt::join(typeStrs, ", "));
+  VIPRA::Log::debug(R"(Behavior "{}": Adding Selector: "In {}" Are Ped Type: {})",
+                    _currentBehavior.get_name(), locName, groupName, fmt::join(typeStrs, ", "));
   return SubSelector{groupType, comPtype, required, SelectorLocation{location}};
 }
 

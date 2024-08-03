@@ -105,10 +105,7 @@ This `Obstacle Set` module uses the [Quad Tree](usage/data_structures.md) to hol
 
 VIPRA::simulation(
   ...
-  VIPRA::Module::Map{
-    VIPRA::Input::JSON{"filepath"} // Map requires an Input module
     VIPRA::Obstacles::QuadTree{} // Obstacle sets go inside the Map module
-  }
   ...
 )
 ```
@@ -148,17 +145,11 @@ This `Input` module loads JSON data, using [nlohmann JSON](https://github.com/nl
 ```C++
 #include "vipra.hpp"
 
-VIPRA::simulation(
-  ...
-  VIPRA::Module::Map {
-    VIPRA::Input::JSON{"filepath"} // Input modules are usually used in other modules
-    ...
-  }
+sim(
+  VIPRA::Input::JSON{"pedestrians.json"}, // Pedestrian Input
+  VIPRA::Input::JSON{"obstacles.json"},   // Obstacle Input
+  VIPRA::Parameters{VIPRA::Input::JSON{"module_params.json"}} // Parameter Input
 );
-
-sim(VIPRA::Parameters{
-  VIPRA::Input::JSON{"filepath"} // Or for loading parameters
-});
 ```
 
 #### Parameters:

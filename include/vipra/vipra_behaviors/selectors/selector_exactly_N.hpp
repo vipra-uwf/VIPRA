@@ -1,6 +1,8 @@
 
 #pragma once
 
+#include "vipra/logging/logging.hpp"
+
 #include "vipra/vipra_behaviors/selectors/selector.hpp"
 #include "vipra/vipra_behaviors/selectors/subselector.hpp"
 #include "vipra/vipra_behaviors/values/numeric_value.hpp"
@@ -31,7 +33,7 @@ struct SelectorExactlyN {
       pedCnt = group.size();
     }
 
-    // spdlog::debug("Selector Exaclty N: Selecting {} Pedestrians", pedCnt);
+    VIPRA::Log::debug("Selector Exaclty N: Selecting {} Pedestrians", pedCnt);
 
     std::shuffle(groupPeds.begin(), groupPeds.end(), pack.context.engine);
     groupPeds.resize(pedCnt);
