@@ -9,9 +9,13 @@
 #include <vipra.hpp>
 
 #include "modules/model/calm_model/calm_model.hpp"
+#include "vipra/logging/logging.hpp"
 
 auto main(int argc, char** argv) -> int
 {
+  // Set the logging level to info, default is ERROR
+  VIPRA::Log::set_level(VIPRA::Log::Level::INFO);
+
   // Initialize MPI engine
   VIPRA::ParameterSweep::initialize(argc, argv);
 
@@ -24,7 +28,7 @@ auto main(int argc, char** argv) -> int
   size_t simCount = std::stoul(argv[1]);
 
   // Create Simulation
-  auto sim = VIPRA::simulation(CALM::Model{}, 
+  auto sim = VIPRA::simulation(CALM::Model{},
                                VIPRA::Goals::AStar{}, 
                                VIPRA::Pedestrians::Grid{},
                                VIPRA::CoordModules::Output{
@@ -42,9 +46,7 @@ auto main(int argc, char** argv) -> int
                              VIPRA::Parameters{VIPRA::Input::JSON{"examples/module_params.json"}}, simCount,
                              [](VIPRA::idx simId)
                              {
-                               std::cout << "Simulation id: " << simId
-                                         << " complete on: " << VIPRA::ParameterSweep::get_rank()
-                                         << std::endl;
+                               VIPRA::Log::info("Simulation id: {} complete on: {}", simId, VIPRA::ParameterSweep::get_rank());
                              });
 
   // Only the master node prints the time taken
@@ -56,7 +58,7 @@ auto main(int argc, char** argv) -> int
         time -= seconds;
         auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(time);
 
-        std::cout << "Time taken: " << seconds.count() << "s " << milliseconds.count() << "ms" << std::endl;
+        VIPRA::Log::info("Time taken: {}s {}ms", seconds.count(), milliseconds.count());
         VIPRA_OUTPUT_PERFORMANCE;
       });
 }

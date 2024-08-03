@@ -1,7 +1,9 @@
 #pragma once
 
 #include <ostream>
+
 #include "antlr4-runtime.h"
+#include "behavior/exceptions.hpp"
 
 namespace VIPRA::Behaviors {
 class BehaviorErrorListener : public antlr4::BaseErrorListener {
@@ -20,7 +22,7 @@ class BehaviorErrorListener : public antlr4::BaseErrorListener {
     }
     std::flush(std::cerr);
 
-    std::exit(1);
+    throw BuilderException();
   }
 
   void reportAmbiguity(antlr4::Parser* recognizer, antlr4::dfa::DFA const& dfa, size_t startIndex,
@@ -30,7 +32,7 @@ class BehaviorErrorListener : public antlr4::BaseErrorListener {
     std::fprintf(stderr, "Behavior Ambiguity Error: Line %zu:%zu\n", startIndex, stopIndex);
     std::flush(std::cerr);
 
-    std::exit(1);
+    throw BuilderException();
   }
 
   void reportAttemptingFullContext(antlr4::Parser* recognizer, antlr4::dfa::DFA const& dfa, size_t startIndex,

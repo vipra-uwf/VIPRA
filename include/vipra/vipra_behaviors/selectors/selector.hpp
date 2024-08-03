@@ -2,6 +2,7 @@
 
 #include <stdexcept>
 
+#include "behavior/exceptions.hpp"
 #include "vipra/logging/logging.hpp"
 
 #include "vipra/vipra_behaviors/actions/action.hpp"
@@ -123,7 +124,7 @@ auto Selector<select_t, context_t>::select_peds_from_group(select_t& selector, a
   if ( selector.required ) {
     VIPRA::Log::error("Behavior: {}, Required Selector Starved For Type: {} From Group: {}", behaviorName,
                       selector.type.fullType, selector.group);
-    std::exit(1);
+    DSLException::error();
   }
 
   VIPRA::Log::debug("Behavior: {}, Starved Selector For Type: {} From Group: {}", behaviorName,

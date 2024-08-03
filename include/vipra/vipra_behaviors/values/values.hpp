@@ -130,7 +130,8 @@ using RangeVal = std::pair<VIPRA::f_pnt, VIPRA::f_pnt>;
   if ( ctx->value_range() ) return get_numeric(ctx->value_range(), seed);
 
   VIPRA::Log::error("Numeric Value Context Missing Children (you should never see this error)");
-  std::exit(1);
+  DSLException::error();
+
   return {};
 }
 
