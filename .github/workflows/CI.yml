@@ -36,6 +36,7 @@ jobs:
           publish_dir: ./docs/html
 
   run-lint:
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
     - uses: cpp-linter/cpp-linter-action@v2
