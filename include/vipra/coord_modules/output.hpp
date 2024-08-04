@@ -24,8 +24,6 @@ class Output : public Modules::Module<Output<output_ts...>>, public Modules::Out
   //                   - maybe require a path parameter for each output module, in their constructor?
   //                            - this would require a recompile for changing paths
 
-  // TODO(rolland): when running a parameter sweep switch output directory to a new directory for each run
-
   template <typename output_t>
   // NOLINTNEXTLINE(readability-identifier-naming) helper struct
   struct write_helper {
@@ -107,7 +105,7 @@ class Output : public Modules::Module<Output<output_ts...>>, public Modules::Out
    * @param key 
    * @param value 
    */
-  void sim_value(char const* key, auto&& value)
+  void sim_value(std::string const& key, auto&& value)
   {
     std::apply([&key, &value](auto&&... outputs) { (outputs.sim_value(key, value), ...); }, _outputs);
   }
@@ -118,7 +116,7 @@ class Output : public Modules::Module<Output<output_ts...>>, public Modules::Out
    * @param key 
    * @param value 
    */
-  void timestep_value(char const* key, VIPRA::timestep timestep, auto&& value)
+  void timestep_value(std::string const& key, VIPRA::timestep timestep, auto&& value)
   {
     std::apply(
         [&key, &timestep, &value](auto&&... outputs) { (outputs.timestep_value(key, timestep, value), ...); },
@@ -132,7 +130,7 @@ class Output : public Modules::Module<Output<output_ts...>>, public Modules::Out
    * @param key 
    * @param value 
    */
-  void ped_value(VIPRA::idx pedIdx, char const* key, auto&& value)
+  void ped_value(VIPRA::idx pedIdx, std::string const& key, auto&& value)
   {
     std::apply([&pedIdx, &key, &value](auto&&... outputs) { (outputs.ped_value(pedIdx, key, value), ...); },
                _outputs);
@@ -145,7 +143,7 @@ class Output : public Modules::Module<Output<output_ts...>>, public Modules::Out
    * @param key 
    * @param value 
    */
-  void ped_timestep_value(VIPRA::idx pedIdx, VIPRA::timestep timestep, char const* key, auto&& value)
+  void ped_timestep_value(VIPRA::idx pedIdx, VIPRA::timestep timestep, std::string const& key, auto&& value)
   {
     std::apply([&pedIdx, &timestep, &key, &value](
                    auto&&... outputs) { (outputs.ped_timestep_value(pedIdx, timestep, key, value), ...); },

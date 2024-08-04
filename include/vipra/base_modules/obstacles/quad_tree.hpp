@@ -44,21 +44,21 @@ class QuadTree : public VIPRA::Modules::Module<QuadTree>, public VIPRA::Modules:
     }
   }
 
-  [[nodiscard]] auto get_dimensions() const -> VIPRA::f3d { return _dimensions; }
+  [[nodiscard]] auto get_dimensions_impl() const -> VIPRA::f3d { return _dimensions; }
 
-  [[nodiscard]] auto collision(VIPRA::f3d point) const -> bool
+  [[nodiscard]] auto collision_impl(VIPRA::f3d point) const -> bool
   {
     return std::any_of(_obstacles.begin(), _obstacles.end(),
                        [&](auto const& obstacle) { return obstacle.is_point_inside(point); });
   }
 
-  [[nodiscard]] auto collision(VIPRA::Geometry::Circle circle) const -> bool
+  [[nodiscard]] auto collision_impl(VIPRA::Geometry::Circle circle) const -> bool
   {
     return std::any_of(_obstacles.begin(), _obstacles.end(),
                        [&](auto const& obstacle) { return obstacle.does_intersect(circle); });
   }
 
-  [[nodiscard]] auto ray_hit(VIPRA::f3d start, VIPRA::f3d end) const -> VIPRA::f_pnt
+  [[nodiscard]] auto ray_hit_impl(VIPRA::f3d start, VIPRA::f3d end) const -> VIPRA::f_pnt
   {
     VIPRA_PERF_FUNCTION("quad_tree::ray_hit");
 
@@ -73,9 +73,9 @@ class QuadTree : public VIPRA::Modules::Module<QuadTree>, public VIPRA::Modules:
     return hit;
   }
 
-  [[nodiscard]] auto get_object_types() const -> std::vector<std::string> const& { return _objectTypes; }
+  [[nodiscard]] auto get_object_types_impl() const -> std::vector<std::string> const& { return _objectTypes; }
 
-  [[nodiscard]] auto get_objects(std::string const& objType) const -> const VIPRA::f3dVec&
+  [[nodiscard]] auto get_objects_impl(std::string const& objType) const -> const VIPRA::f3dVec&
   {
     return _objects.at(objType);
   }

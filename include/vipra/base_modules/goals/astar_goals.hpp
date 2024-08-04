@@ -82,7 +82,7 @@ class AStar : public Modules::Module<AStar>, public Modules::Goals<AStar> {
      * @param pedIdx
      * @param newGoal
      */
-  void change_end_goal(VIPRA::idx pedIdx, VIPRA::f3d pos, VIPRA::f3d newGoal)
+  void change_end_goal_impl(VIPRA::idx pedIdx, VIPRA::f3d pos, VIPRA::f3d newGoal)
   {
     assert(pedIdx < _endGoals.size());
 
@@ -91,29 +91,29 @@ class AStar : public Modules::Module<AStar>, public Modules::Goals<AStar> {
     find_path(pedIdx, pos);
   }
 
-  [[nodiscard]] auto end_goals() const -> VIPRA::f3dVec const& { return _endGoals; }
-  [[nodiscard]] auto current_goals() const -> VIPRA::f3dVec const& { return _currentGoals; }
-  [[nodiscard]] auto current_goal(VIPRA::idx pedIdx) const -> VIPRA::f3d const&
+  [[nodiscard]] auto end_goals_impl() const -> VIPRA::f3dVec const& { return _endGoals; }
+  [[nodiscard]] auto current_goals_impl() const -> VIPRA::f3dVec const& { return _currentGoals; }
+  [[nodiscard]] auto current_goal_impl(VIPRA::idx pedIdx) const -> VIPRA::f3d const&
   {
     assert(pedIdx < _currentGoals.size());
     return _currentGoals[pedIdx];
   }
-  [[nodiscard]] auto end_goal(VIPRA::idx pedIdx) const -> VIPRA::f3d const&
+  [[nodiscard]] auto end_goal_impl(VIPRA::idx pedIdx) const -> VIPRA::f3d const&
   {
     assert(pedIdx < _endGoals.size());
     return _endGoals[pedIdx];
   }
-  [[nodiscard]] auto is_goal_met(VIPRA::idx pedIdx) const -> bool
+  [[nodiscard]] auto is_goal_met_impl(VIPRA::idx pedIdx) const -> bool
   {
     assert(pedIdx < _paths.size());
     return _paths[pedIdx].empty();
   }
-  [[nodiscard]] auto is_sim_goal_met() const -> bool
+  [[nodiscard]] auto is_sim_goal_met_impl() const -> bool
   {
     return std::all_of(_paths.begin(), _paths.end(), [](auto const& path) { return path.empty(); });
   }
 
-  [[nodiscard]] auto time_since_last_goal(VIPRA::idx pedIdx) const -> VIPRA::f_pnt
+  [[nodiscard]] auto time_since_last_goal_impl(VIPRA::idx pedIdx) const -> VIPRA::f_pnt
   {
     assert(_timeSinceLastGoal.size() > pedIdx);
     return _timeSinceLastGoal[pedIdx];

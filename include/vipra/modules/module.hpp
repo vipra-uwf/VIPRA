@@ -8,6 +8,8 @@
 #include <utility>
 #include <vector>
 
+#include "vipra/logging/logging.hpp"
+
 #include "vipra/concepts/has_parameters.hpp"
 #include "vipra/debug/debug_do.hpp"
 #include "vipra/modules.hpp"
@@ -50,7 +52,7 @@ void Module<class_t>::register_params(paramreader_t&& paramIn)
 {
   static_assert(Concepts::has_parameters<class_t>, "Module is missing VIPRA_REGISTER_PARAMS");
 
-  Debug::debug_do([&]() { std::cout << "Registering Params For: " << self().module_name() << "\n"; });
+  VIPRA::Log::debug("Registering Params For: {}", self().module_name());
 
   // get module parameters customization point
   auto params = self().parameters();
@@ -82,7 +84,7 @@ void Module<class_t>::config(paramreader_t& paramIn, VIPRA::Random::Engine& engi
 {
   static_assert(Concepts::has_parameters<class_t>, "Module is missing VIPRA_REGISTER_PARAMS");
 
-  Debug::debug_do([&]() { std::cout << "Configuring Module: " << self().module_name() << "\n"; });
+  VIPRA::Log::debug("Configuring Module: {}", self().module_name());
 
   // get module parameters customization point
   auto const& params = self().parameters();

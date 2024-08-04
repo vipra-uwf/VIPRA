@@ -50,28 +50,28 @@ class Obstacles : public Util::CRTP<Obstacles<module_t>> {
     return self().init_step(obsCoords.value(), objTypes.value(), objMap);
   }
 
-  [[nodiscard]] auto get_dimensions() const -> VIPRA::f3d { return self().get_dimensions(); }
+  [[nodiscard]] auto get_dimensions() const -> VIPRA::f3d { return self().get_dimensions_impl(); }
 
-  [[nodiscard]] auto collision(VIPRA::f3d point) const -> bool { return self().collision(point); }
+  [[nodiscard]] auto collision(VIPRA::f3d point) const -> bool { return self().collision_impl(point); }
 
   [[nodiscard]] auto collision(VIPRA::Geometry::Circle radius) const -> bool
   {
-    return self().collision(radius);
+    return self().collision_impl(radius);
   }
 
   [[nodiscard]] auto ray_hit(VIPRA::f3d start, VIPRA::f3d end) const -> VIPRA::f_pnt
   {
-    return self().ray_hit(start, end);
+    return self().ray_hit_impl(start, end);
   }
 
   [[nodiscard]] auto get_object_types() const -> std::vector<std::string> const&
   {
-    return self().get_object_types();
+    return self().get_object_types_impl();
   }
 
   [[nodiscard]] auto get_objects(std::string const& type) const -> const VIPRA::f3dVec&
   {
-    return self().get_objects(type);
+    return self().get_objects_impl(type);
   }
 };
 

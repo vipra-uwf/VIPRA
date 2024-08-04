@@ -32,30 +32,30 @@ class Goals : public Util::CRTP<Goals<module_t>> {
 
   void change_end_goal(VIPRA::idx pedIdx, VIPRA::f3d currPos, VIPRA::f3d goalPos)
   {
-    return self().change_end_goal(pedIdx, currPos, goalPos);
+    return self().change_end_goal_impl(pedIdx, currPos, goalPos);
   }
 
-  [[nodiscard]] auto current_goals() const -> const VIPRA::f3dVec& { return self().current_goals(); }
+  [[nodiscard]] auto current_goals() const -> const VIPRA::f3dVec& { return self().current_goals_impl(); }
 
-  [[nodiscard]] auto end_goals() const -> const VIPRA::f3dVec& { return self().end_goals(); }
+  [[nodiscard]] auto end_goals() const -> const VIPRA::f3dVec& { return self().end_goals_impl(); }
 
   [[nodiscard]] auto current_goal(VIPRA::idx pedIdx) const -> VIPRA::f3d const&
   {
-    return self().current_goal(pedIdx);
+    return self().current_goal_impl(pedIdx);
   }
 
   [[nodiscard]] auto end_goal(VIPRA::idx pedIdx) const -> VIPRA::f3d const&
   {
-    return self().end_goal(pedIdx);
+    return self().end_goal_impl(pedIdx);
   }
 
-  [[nodiscard]] auto is_goal_met(VIPRA::idx pedIdx) const -> bool { return self().is_goal_met(pedIdx); }
+  [[nodiscard]] auto is_goal_met(VIPRA::idx pedIdx) const -> bool { return self().is_goal_met_impl(pedIdx); }
 
-  [[nodiscard]] auto is_sim_goal_met() const -> bool { return self().is_sim_goal_met(); }
+  [[nodiscard]] auto is_sim_goal_met() const -> bool { return self().is_sim_goal_met_impl(); }
 
   [[nodiscard]] auto time_since_last_goal(VIPRA::idx pedIdx) const -> VIPRA::f_pnt
   {
-    return self().time_since_last_goal(pedIdx);
+    return self().time_since_last_goal_impl(pedIdx);
   }
 };
 

@@ -3,6 +3,8 @@
 
 # Required Methods
 
+In addition to the [Base Module](module.md) requirements `Goals` require the following:
+
 ```C++
 VIPRA_PEDS_INIT_STEP;
 VIPRA_PEDS_UPDATE_STEP;

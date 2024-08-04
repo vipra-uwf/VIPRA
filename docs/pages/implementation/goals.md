@@ -3,20 +3,20 @@
 
 # Required Methods
 
-In addition to the [Base Module](module.md) methods `Goals` require the following:
+In addition to the [Base Module](module.md) requirements `Goals` require the following:
 
 ```C++
-  VIPRA_GOALS_INIT_STEP
-  VIPRA_GOALS_UPDATE_STEP
+  VIPRA_GOALS_INIT_STEP {}
+  VIPRA_GOALS_UPDATE_STEP {}
 
-  void                  change_end_goal(VIPRA::idx pedIdx, VIPRA::f3d currPos, VIPRA::f3d goalPos);
-  const VIPRA::f3dVec&  current_goals() const;
-  const VIPRA::f3dVec&  end_goals() const;
-  const VIPRA::f3d&     current_goal(VIPRA::idx pedIdx) const;
-  const VIPRA::f3d&     end_goal(VIPRA::idx pedIdx) const;
-  bool                  is_goal_met(VIPRA::idx pedIdx) const;
-  bool                  is_sim_goal_met() const;
-  VIPRA::f_pnt          time_since_last_goal(VIPRA::idx pedIdx) const;
+  void                  change_end_goal_impl(VIPRA::idx pedIdx, VIPRA::f3d currPos, VIPRA::f3d goalPos);
+  const VIPRA::f3dVec&  current_goals_impl() const;
+  const VIPRA::f3dVec&  end_goals_impl() const;
+  const VIPRA::f3d&     current_goal_impl(VIPRA::idx pedIdx) const;
+  const VIPRA::f3d&     end_goal_impl(VIPRA::idx pedIdx) const;
+  bool                  is_goal_met_impl(VIPRA::idx pedIdx) const;
+  bool                  is_sim_goal_met_impl() const;
+  VIPRA::f_pnt          time_since_last_goal_impl(VIPRA::idx pedIdx) const;
 ```
 
 # Details
@@ -34,7 +34,7 @@ VIPRA_GOALS_INIT_STEP
 
 `NONE`
 
-### Expected Affects
+### Expected Effects
 
 Each pedestrian has their goals initialized and ready for the first timestep of the simulation
 
@@ -54,14 +54,14 @@ VIPRA_GOALS_UPDATE_STEP
 
 `NONE`
 
-### Expected Affects
+### Expected Effects
 
 Each pedestrian has their current goals updated 
 
 ---
 
 ```
-void change_end_goal(VIPRA::idx pedIdx, VIPRA::f3d currPos, VIPRA::f3d goalPos);
+void change_end_goal_impl(VIPRA::idx pedIdx, VIPRA::f3d currPos, VIPRA::f3d goalPos);
 ```
 
 ### Parameters
@@ -74,14 +74,14 @@ void change_end_goal(VIPRA::idx pedIdx, VIPRA::f3d currPos, VIPRA::f3d goalPos);
 
 `NONE`
 
-### Expected Affects
+### Expected Effects
 
 Pedestrian # pedIdx has their end goal changed to `goalPos`
 
 ---
 
 ```C++
-const VIPRA::f3dVec&  current_goals() const;
+const VIPRA::f3dVec&  current_goals_impl() const;
 ```
 
 ### Parameters
@@ -92,14 +92,14 @@ const VIPRA::f3dVec&  current_goals() const;
 
 `const VIPRA::f3dVec&` - vector containing the point each pedestrian is currently trying to reach
 
-### Expected Affects
+### Expected Effects
 
 `NONE`
 
 ---
 
 ```C++
-const VIPRA::f3dVec&  end_goals() const;
+const VIPRA::f3dVec&  end_goals_impl() const;
 ```
 
 ### Parameters
@@ -110,14 +110,14 @@ const VIPRA::f3dVec&  end_goals() const;
 
 `const VIPRA::f3dVec&` - vector containing the point of each pedestrians end goal
 
-### Expected Affects
+### Expected Effects
 
 `NONE`
 
 ---
 
 ```C++
-const VIPRA::f3d& current_goal(VIPRA::idx pedIdx) const;
+const VIPRA::f3d& current_goal_impl(VIPRA::idx pedIdx) const;
 ```
 
 ### Parameters
@@ -128,14 +128,14 @@ const VIPRA::f3d& current_goal(VIPRA::idx pedIdx) const;
 
 `VIPRA::f3d` - the point the pedestrian with ID `pedIdx` is currently trying to reach
 
-### Expected Affects
+### Expected Effects
 
 `NONE`
 
 ---
 
 ```C++
-const VIPRA::f3d& end_goal(VIPRA::idx pedIdx) const;
+const VIPRA::f3d& end_goal_impl(VIPRA::idx pedIdx) const;
 ```
 
 ### Parameters
@@ -146,14 +146,14 @@ const VIPRA::f3d& end_goal(VIPRA::idx pedIdx) const;
 
 `VIPRA::f3d` - the point the pedestrian with ID `pedIdx` is ulimately trying to reach
 
-### Expected Affects
+### Expected Effects
 
 `NONE`
 
 ---
 
 ```C++
-bool is_goal_met(VIPRA::idx pedIdx) const;
+bool is_goal_met_impl(VIPRA::idx pedIdx) const;
 ```
 
 ### Parameters
@@ -164,14 +164,14 @@ bool is_goal_met(VIPRA::idx pedIdx) const;
 
 `bool` - `true` if the pedestrian has met their end goal, `false` if they have not
 
-### Expected Affects
+### Expected Effects
 
 `NONE`
 
 ---
 
 ```C++
-bool is_sim_goal_met() const;
+bool is_sim_goal_met_impl() const;
 ```
 
 ### Parameters
@@ -182,14 +182,14 @@ bool is_sim_goal_met() const;
 
 `bool` - `true` if each of the pedestrian has achieved their goal, `false` if at least one pedestrian has not reached their end
 
-### Expected Affects
+### Expected Effects
 
 `NONE`
 
 ---
 
 ```C++
-VIPRA::f_pnt time_since_last_goal(VIPRA::idx pedIdx) const;
+VIPRA::f_pnt time_since_last_goal_impl(VIPRA::idx pedIdx) const;
 ```
 
 ### Parameters
@@ -200,6 +200,6 @@ VIPRA::f_pnt time_since_last_goal(VIPRA::idx pedIdx) const;
 
 `VIPRA::f_pnt` - simulated time since the pedestrian with ID `pedIdx` has reached their last goal
 
-### Expected Affects
+### Expected Effects
 
 `NONE`

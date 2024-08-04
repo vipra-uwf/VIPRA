@@ -15,11 +15,13 @@ This build takes one argument, the number of simulations to run, and generates a
 
 The following are requirement for running the VIPRA simulation.
 
-1. [CMake](https://cmake.org/download/) version 3.22.2 or newer.
-2. A compiler that can run C++20 or newer.
-3. [OpenMPI](https://www.open-mpi.org/software/ompi/v5.0/) version 5.05 or newer.
+1. [CMake](https://cmake.org/download/) version 3.14 or newer.
+2. A compiler that supports C++20.
 
-The following are required for development.
+Additionally for Parameter Sweeps:
+3. MPI, either [openMPI](https://www.open-mpi.org/software/ompi/v5.0/) or [mpich](https://www.mpich.org/)
+
+The following are required for development of the Behaviors DSL.
 
 1. ANTLR4 - version 4.13.1 or newer.
 
@@ -40,14 +42,15 @@ Alternatively, run one of the following (recommended for developers only):
 
 ---
 
-## Running the Example
+## Running the Provided Simulation
 
-The [Example Simulation](../examples/simulation.md) provided can be run with:
+The VIPRA repo comes with a `main.cpp` that follows the [Parameter Sweep Example Simulation](../examples/parameter_sweep.md)
+
 ```
-./VIPRA (optional)<number_of_simulations>
+./VIPRA <number_of_simulations>
 ```
 
-See the [Usage Page](usage.md) for how to use VIPRA as a standalone program
+See the [Usage Page](usage.md) for how to modify the simulation.
 
 ---
 

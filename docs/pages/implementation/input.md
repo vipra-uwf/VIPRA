@@ -6,13 +6,13 @@
 There are several sub-sets of `Input Modules`:
 1. 
 
-# Required Module
+# Required Methods
 
 ```C++
 void load();
 
 template <typename data_t, typename... key_ts>
-auto get(key_ts const&...) -> data_t;
+data_t get(key_ts const&...);
 ```
 
 # Details
@@ -22,7 +22,7 @@ auto get(key_ts const&...) -> data_t;
 Serializable Input modules additionally require:
 
 ```C++
-auto serialize() -> std::string;
+std::string serialize();
 void deserialize(std::string const&);
 ```
 
@@ -32,7 +32,7 @@ Parameter Input modules additionally require:
 
 ```C++
 template <typename data_t, typename... key_ts>
-auto get<VIPRA::Parameter<data_t>>(key_ts const&...) -> std::optional<VIPRA::Parameter<data_t>>;
+std::optional<VIPRA::Parameter<data_t>> get<VIPRA::Parameter<data_t>>(key_ts const&...);
 ```
 
 <!-- TODO: add in how the values should be handled -->
@@ -43,5 +43,5 @@ Polygon Input modules additionally require:
 
 ```C++
 template <typename... key_ts>
-auto load_polygons(key_ts const&...) -> std::optional<std::vector<VIPRA::Geometry::Polygon>>;
+std::optional<std::vector<VIPRA::Geometry::Polygon>> load_polygons(key_ts const&...);
 ```

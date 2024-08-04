@@ -60,6 +60,8 @@ NEW_VIPRA_MODULE(Model, Model)
     calc_betas();
     update_state(pedset, goals, state, deltaT);
 
+    output.timestep_value("test", timestep, "testval");
+
     if ( timestep > 0 ) {
       _collision.race_detection(pedset, _peds, goals, timestep, obstacles);
       _collision.assign_race_statuses(_raceStatuses, _inRace);
