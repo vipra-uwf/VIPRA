@@ -128,37 +128,32 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  }</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> data_t&gt;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  <span class="keywordtype">void</span> sim_value(<span class="keywordtype">char</span> <span class="keyword">const</span>* key, data_t&amp;&amp; value)</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  <span class="keywordtype">void</span> sim_value(std::string <span class="keyword">const</span>&amp; key, data_t&amp;&amp; value)</div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  {</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    self().set_sim_value(key, std::forward&lt;data_t&gt;(value));</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>  }</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> data_t&gt;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  <span class="keywordtype">void</span> timestep_value(<span class="keywordtype">char</span> <span class="keyword">const</span>* key, VIPRA::idx timestep, data_t&amp;&amp; value)</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  <span class="keywordtype">void</span> timestep_value(std::string <span class="keyword">const</span>&amp; key, VIPRA::idx timestep, data_t&amp;&amp; value)</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  {</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    self().set_timestep_value(key, timestep, std::forward&lt;data_t&gt;(value));</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>  }</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> data_t&gt;</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  <span class="keywordtype">void</span> ped_value(VIPRA::idx pedIdx, <span class="keywordtype">char</span> <span class="keyword">const</span>* key, data_t&amp;&amp; value)</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  <span class="keywordtype">void</span> ped_value(VIPRA::idx pedIdx, std::string <span class="keyword">const</span>&amp; key, data_t&amp;&amp; value)</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  {</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    self().set_ped_value(pedIdx, key, std::forward&lt;data_t&gt;(value));</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  }</div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> data_t&gt;</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>  <span class="keywordtype">void</span> ped_timestep_value(VIPRA::idx pedIdx, VIPRA::idx timestep, <span class="keywordtype">char</span> <span class="keyword">const</span>* key, data_t&amp;&amp; value)</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>  <span class="keywordtype">void</span> ped_timestep_value(VIPRA::idx pedIdx, VIPRA::idx timestep, std::string <span class="keyword">const</span>&amp; key, data_t&amp;&amp; value)</div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>  {</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    self().set_ped_timestep_value(pedIdx, timestep, key, std::forward&lt;data_t&gt;(value));</div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  }</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>  <span class="keywordtype">void</span> set_filename(std::string <span class="keyword">const</span>&amp; filename) { _filename = filename; }</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>  std::string _filename;</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>};</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>};</div>
 </div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>}  <span class="comment">// namespace VIPRA::Modules</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>}  <span class="comment">// namespace VIPRA::Modules</span></div>
 <div class="ttc" id="aclassVIPRA_1_1Modules_1_1Output_html"><div class="ttname"><a href="../../d4/de8/classVIPRA_1_1Modules_1_1Output.html">VIPRA::Modules::Output</a></div><div class="ttdoc">Dummy output for use in other concepts.</div><div class="ttdef"><b>Definition</b> output.hpp:23</div></div>
 <div class="ttc" id="aclassVIPRA_1_1Util_1_1CRTP_html"><div class="ttname"><a href="../../da/d35/classVIPRA_1_1Util_1_1CRTP.html">VIPRA::Util::CRTP</a></div><div class="ttdef"><b>Definition</b> crtp.hpp:6</div></div>
 </div><!-- fragment --></div><!-- contents -->

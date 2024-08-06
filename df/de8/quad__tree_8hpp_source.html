@@ -134,21 +134,21 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    }</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  }</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  [[nodiscard]] <span class="keyword">auto</span> get_dimensions() <span class="keyword">const</span> -&gt; <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> { <span class="keywordflow">return</span> _dimensions; }</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  [[nodiscard]] <span class="keyword">auto</span> get_dimensions_impl() <span class="keyword">const</span> -&gt; <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> { <span class="keywordflow">return</span> _dimensions; }</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>  [[nodiscard]] <span class="keyword">auto</span> collision(<a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> point) <span class="keyword">const</span> -&gt; <span class="keywordtype">bool</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>  [[nodiscard]] <span class="keyword">auto</span> collision_impl(<a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> point) <span class="keyword">const</span> -&gt; <span class="keywordtype">bool</span></div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>  {</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keywordflow">return</span> std::any_of(_obstacles.begin(), _obstacles.end(),</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>                       [&amp;](<span class="keyword">auto</span> <span class="keyword">const</span>&amp; obstacle) { return obstacle.is_point_inside(point); });</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  }</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  [[nodiscard]] <span class="keyword">auto</span> collision(<a class="code hl_class" href="../../de/df6/classVIPRA_1_1Geometry_1_1Circle.html">VIPRA::Geometry::Circle</a> circle) <span class="keyword">const</span> -&gt; <span class="keywordtype">bool</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  [[nodiscard]] <span class="keyword">auto</span> collision_impl(<a class="code hl_class" href="../../de/df6/classVIPRA_1_1Geometry_1_1Circle.html">VIPRA::Geometry::Circle</a> circle) <span class="keyword">const</span> -&gt; <span class="keywordtype">bool</span></div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  {</div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="keywordflow">return</span> std::any_of(_obstacles.begin(), _obstacles.end(),</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>                       [&amp;](<span class="keyword">auto</span> <span class="keyword">const</span>&amp; obstacle) { return obstacle.does_intersect(circle); });</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>  }</div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  [[nodiscard]] <span class="keyword">auto</span> ray_hit(<a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> start, <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> end) <span class="keyword">const</span> -&gt; VIPRA::f_pnt</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  [[nodiscard]] <span class="keyword">auto</span> ray_hit_impl(<a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> start, <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> end) <span class="keyword">const</span> -&gt; VIPRA::f_pnt</div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  {</div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    VIPRA_PERF_FUNCTION(<span class="stringliteral">&quot;quad_tree::ray_hit&quot;</span>);</div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
@@ -163,9 +163,9 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    <span class="keywordflow">return</span> hit;</div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>  }</div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>  [[nodiscard]] <span class="keyword">auto</span> get_object_types() <span class="keyword">const</span> -&gt; std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; { <span class="keywordflow">return</span> _objectTypes; }</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>  [[nodiscard]] <span class="keyword">auto</span> get_object_types_impl() <span class="keyword">const</span> -&gt; std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; { <span class="keywordflow">return</span> _objectTypes; }</div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>  [[nodiscard]] <span class="keyword">auto</span> get_objects(std::string <span class="keyword">const</span>&amp; objType) <span class="keyword">const</span> -&gt; <span class="keyword">const</span> VIPRA::f3dVec&amp;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>  [[nodiscard]] <span class="keyword">auto</span> get_objects_impl(std::string <span class="keyword">const</span>&amp; objType) <span class="keyword">const</span> -&gt; <span class="keyword">const</span> VIPRA::f3dVec&amp;</div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>  {</div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    <span class="keywordflow">return</span> _objects.at(objType);</div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>  }</div>
@@ -181,7 +181,7 @@ $(function(){ initResizable(false); });
 </div>
 <div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>}  <span class="comment">// namespace VIPRA::Obstacles</span></div>
 <div class="ttc" id="aclassVIPRA_1_1Geometry_1_1Circle_html"><div class="ttname"><a href="../../de/df6/classVIPRA_1_1Geometry_1_1Circle.html">VIPRA::Geometry::Circle</a></div><div class="ttdef"><b>Definition</b> circle.hpp:7</div></div>
-<div class="ttc" id="aclassVIPRA_1_1Modules_1_1Module_html"><div class="ttname"><a href="../../dc/dab/classVIPRA_1_1Modules_1_1Module.html">VIPRA::Modules::Module</a></div><div class="ttdoc">VIPRA Module Base CRTP Class.</div><div class="ttdef"><b>Definition</b> module.hpp:26</div></div>
+<div class="ttc" id="aclassVIPRA_1_1Modules_1_1Module_html"><div class="ttname"><a href="../../dc/dab/classVIPRA_1_1Modules_1_1Module.html">VIPRA::Modules::Module</a></div><div class="ttdoc">VIPRA Module Base CRTP Class.</div><div class="ttdef"><b>Definition</b> module.hpp:28</div></div>
 <div class="ttc" id="aclassVIPRA_1_1Modules_1_1Obstacles_html"><div class="ttname"><a href="../../dc/db0/classVIPRA_1_1Modules_1_1Obstacles.html">VIPRA::Modules::Obstacles</a></div><div class="ttdoc">Dummy obstacle set for use in other concepts.</div><div class="ttdef"><b>Definition</b> obstacles.hpp:22</div></div>
 <div class="ttc" id="aclassVIPRA_1_1Obstacles_1_1QuadTree_html"><div class="ttname"><a href="../../d7/dc5/classVIPRA_1_1Obstacles_1_1QuadTree.html">VIPRA::Obstacles::QuadTree</a></div><div class="ttdoc">Obstacle module that uses a quadtree to store obstacles.</div><div class="ttdef"><b>Definition</b> quad_tree.hpp:21</div></div>
 <div class="ttc" id="astructVIPRA_1_1f3d_html"><div class="ttname"><a href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a></div><div class="ttdef"><b>Definition</b> f3d.hpp:18</div></div>

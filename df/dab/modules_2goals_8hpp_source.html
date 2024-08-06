@@ -122,30 +122,30 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>  <span class="keywordtype">void</span> change_end_goal(VIPRA::idx pedIdx, <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> currPos, <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> goalPos)</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  {</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keywordflow">return</span> self().change_end_goal(pedIdx, currPos, goalPos);</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keywordflow">return</span> self().change_end_goal_impl(pedIdx, currPos, goalPos);</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>  }</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  [[nodiscard]] <span class="keyword">auto</span> current_goals() <span class="keyword">const</span> -&gt; <span class="keyword">const</span> VIPRA::f3dVec&amp; { <span class="keywordflow">return</span> self().current_goals(); }</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  [[nodiscard]] <span class="keyword">auto</span> current_goals() <span class="keyword">const</span> -&gt; <span class="keyword">const</span> VIPRA::f3dVec&amp; { <span class="keywordflow">return</span> self().current_goals_impl(); }</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>  [[nodiscard]] <span class="keyword">auto</span> end_goals() <span class="keyword">const</span> -&gt; <span class="keyword">const</span> VIPRA::f3dVec&amp; { <span class="keywordflow">return</span> self().end_goals(); }</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>  [[nodiscard]] <span class="keyword">auto</span> end_goals() <span class="keyword">const</span> -&gt; <span class="keyword">const</span> VIPRA::f3dVec&amp; { <span class="keywordflow">return</span> self().end_goals_impl(); }</div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  [[nodiscard]] <span class="keyword">auto</span> current_goal(VIPRA::idx pedIdx) <span class="keyword">const</span> -&gt; <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> <span class="keyword">const</span>&amp;</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>  {</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="keywordflow">return</span> self().current_goal(pedIdx);</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="keywordflow">return</span> self().current_goal_impl(pedIdx);</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  }</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  [[nodiscard]] <span class="keyword">auto</span> end_goal(VIPRA::idx pedIdx) <span class="keyword">const</span> -&gt; <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> <span class="keyword">const</span>&amp;</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  {</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keywordflow">return</span> self().end_goal(pedIdx);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keywordflow">return</span> self().end_goal_impl(pedIdx);</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>  }</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>  [[nodiscard]] <span class="keyword">auto</span> is_goal_met(VIPRA::idx pedIdx) <span class="keyword">const</span> -&gt; <span class="keywordtype">bool</span> { <span class="keywordflow">return</span> self().is_goal_met(pedIdx); }</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>  [[nodiscard]] <span class="keyword">auto</span> is_goal_met(VIPRA::idx pedIdx) <span class="keyword">const</span> -&gt; <span class="keywordtype">bool</span> { <span class="keywordflow">return</span> self().is_goal_met_impl(pedIdx); }</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  [[nodiscard]] <span class="keyword">auto</span> is_sim_goal_met() <span class="keyword">const</span> -&gt; <span class="keywordtype">bool</span> { <span class="keywordflow">return</span> self().is_sim_goal_met(); }</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  [[nodiscard]] <span class="keyword">auto</span> is_sim_goal_met() <span class="keyword">const</span> -&gt; <span class="keywordtype">bool</span> { <span class="keywordflow">return</span> self().is_sim_goal_met_impl(); }</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  [[nodiscard]] <span class="keyword">auto</span> time_since_last_goal(VIPRA::idx pedIdx) <span class="keyword">const</span> -&gt; VIPRA::f_pnt</div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  {</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keywordflow">return</span> self().time_since_last_goal(pedIdx);</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keywordflow">return</span> self().time_since_last_goal_impl(pedIdx);</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>  }</div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>};</div>
 </div>

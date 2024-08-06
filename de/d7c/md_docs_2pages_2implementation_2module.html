@@ -87,12 +87,51 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">Module</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md240"></a> </p>
-<h1><a class="anchor" id="autotoc_md241"></a>
-Required Module</h1>
-<h1><a class="anchor" id="autotoc_md242"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md263"></a> All modules are required to have the following:</p>
+<h1><a class="anchor" id="autotoc_md264"></a>
+Required</h1>
+<div class="fragment"><div class="line"> ++</div>
+<div class="line">VIPRA_MODULE_TYPE(type)</div>
+<div class="line">VIPRA_MODULE_NAME(<span class="stringliteral">&quot;name&quot;</span>)</div>
+<div class="line">VIPRA_REGISTER_PARAMS</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md265"></a>
 Details</h1>
-</div></div><!-- contents -->
+<div class="fragment"><div class="line"> ++</div>
+<div class="line">VIPRA_MODULE_TYPE(type)</div>
+</div><!-- fragment --><p>Possible Choices: </p><div class="fragment"><div class="line"> ++</div>
+<div class="line">MODEL,</div>
+<div class="line">GOALS,</div>
+<div class="line">INPUT,</div>
+<div class="line">OUTPUT,</div>
+<div class="line">PEDESTRIANS,</div>
+<div class="line">OBSTACLES,</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md266"></a>
+Effects</h2>
+<p>This sets the type of the module, making sure it receives the proper parameters and is used correctly.</p>
+<hr  />
+<div class="fragment"><div class="line"> ++</div>
+<div class="line">VIPRA_MODULE_NAME(<span class="stringliteral">&quot;name&quot;</span>)</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md268"></a>
+Effects</h2>
+<p>This sets the name of the module, making sure it receives the proper parameters</p>
+<hr  />
+<div class="fragment"><div class="line"> ++</div>
+<div class="line">VIPRA_REGISTER_PARAMS {}</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md270"></a>
+Effects</h2>
+<p>This adds parameters to the module that are loaded in at the start of a simulation</p>
+<h2><a class="anchor" id="autotoc_md271"></a>
+Example:</h2>
+<div class="fragment"><div class="line"> ++</div>
+<div class="line"><span class="comment">// Example Member variables that will hold the parameter values</span></div>
+<div class="line"><span class="keywordtype">int</span> param1;</div>
+<div class="line">std::string param2;</div>
+<div class="line"> </div>
+<div class="line">VIPRA_REGISTER_PARAMS {</div>
+<div class="line">  VIPRA_PARAM(<span class="stringliteral">&quot;param1&quot;</span>, param1),</div>
+<div class="line">  VIPRA_PARAM(<span class="stringliteral">&quot;param2&quot;</span>, param2)</div>
+<div class="line">}</div>
+</div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

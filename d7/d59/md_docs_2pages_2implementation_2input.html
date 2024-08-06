@@ -94,33 +94,98 @@ $(function(){ initResizable(false); });
 <li></li>
 </ol>
 <h1><a class="anchor" id="autotoc_md230"></a>
-Required Module</h1>
+Required Methods</h1>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="keywordtype">void</span> load();</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> data_t, <span class="keyword">typename</span>... key_ts&gt;</div>
-<div class="line"><span class="keyword">auto</span> get(key_ts <span class="keyword">const</span>&amp;...) -&gt; data_t;</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md231"></a>
-Details</h1>
-<h1><a class="anchor" id="autotoc_md232"></a>
+<div class="line">std::optional&lt;data_t&gt; get(key_ts <span class="keyword">const</span>&amp;...);</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md231"></a>
+Details</h2>
+<div class="fragment"><div class="line"> ++</div>
+<div class="line"><span class="keywordtype">void</span> load();</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md232"></a>
+Parameters</h3>
+<p><code>NONE</code></p>
+<h3><a class="anchor" id="autotoc_md233"></a>
+Returns</h3>
+<p><code>NONE</code></p>
+<h3><a class="anchor" id="autotoc_md234"></a>
+Expected Effects</h3>
+<p>The input is ready to return its loaded data</p>
+<div class="fragment"><div class="line"> ++</div>
+<div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> data_t, <span class="keyword">typename</span>... key_ts&gt;</div>
+<div class="line">std::optional&lt;data_t&gt; get(key_ts <span class="keyword">const</span>&amp;...);</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md235"></a>
+Parameters</h3>
+<p><code>keys</code> - a variadic number of keys to identify an input value</p>
+<h3><a class="anchor" id="autotoc_md236"></a>
+Returns</h3>
+<p><code>std::optional&lt;data_t&gt;</code> - an optional with the value, <code>std::nullopt</code> if the value was unable to be returned</p>
+<h3><a class="anchor" id="autotoc_md237"></a>
+Expected Effects</h3>
+<p><code>NONE</code></p>
+<h1><a class="anchor" id="autotoc_md238"></a>
 Serializable Input Implementation</h1>
 <p>Serializable Input modules additionally require:</p>
 <div class="fragment"><div class="line"> ++</div>
-<div class="line"><span class="keyword">auto</span> serialize() -&gt; std::string;</div>
+<div class="line">std::string serialize();</div>
 <div class="line"><span class="keywordtype">void</span> deserialize(std::string <span class="keyword">const</span>&amp;);</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md233"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md239"></a>
+Details</h2>
+<div class="fragment"><div class="line"> ++</div>
+<div class="line">std::string serialize()</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md240"></a>
+Parameters</h3>
+<p><code>NONE</code></p>
+<h3><a class="anchor" id="autotoc_md241"></a>
+Returns</h3>
+<p><code>std::string</code> - the string represenation of the input data, to be used in <code>deserialize</code></p>
+<h3><a class="anchor" id="autotoc_md242"></a>
+Expected Effects</h3>
+<p><code>NONE</code></p>
+<div class="fragment"><div class="line"> ++</div>
+<div class="line"><span class="keywordtype">void</span> deserialize(std::string <span class="keyword">const</span>&amp;);</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md243"></a>
+Parameters</h3>
+<p><code>data</code> - the serialized data to be deserialized</p>
+<h3><a class="anchor" id="autotoc_md244"></a>
+Returns</h3>
+<p><code>NONE</code></p>
+<h3><a class="anchor" id="autotoc_md245"></a>
+Expected Effects</h3>
+<p>The serialized data is deserialized and loaded into the input module</p>
+<h1><a class="anchor" id="autotoc_md246"></a>
 Parameter Input Implementation</h1>
 <p>Parameter Input modules additionally require:</p>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> data_t, <span class="keyword">typename</span>... key_ts&gt;</div>
-<div class="line"><span class="keyword">auto</span> get&lt;VIPRA::Parameter&lt;data_t&gt;&gt;(key_ts <span class="keyword">const</span>&amp;...) -&gt; std::optional&lt;VIPRA::Parameter&lt;data_t&gt;&gt;;</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md234"></a>
+<div class="line">std::optional&lt;VIPRA::Parameter&lt;data_t&gt;&gt; get&lt;VIPRA::Parameter&lt;data_t&gt;&gt;(key_ts <span class="keyword">const</span>&amp;...);</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md247"></a>
+Parameters</h3>
+<p><code>keys</code> - a variadic number of keys to identify an input value</p>
+<h3><a class="anchor" id="autotoc_md248"></a>
+Returns</h3>
+<p><code>std::optional&lt;VIPRA::Parameter&lt;data_t&gt;&gt;</code> - an optional with a the parameter value, <code>std::nullopt</code> if the value was unable to be returned</p>
+<h3><a class="anchor" id="autotoc_md249"></a>
+Expected Effects</h3>
+<p><code>NONE</code></p>
+<h1><a class="anchor" id="autotoc_md250"></a>
 Polygon Input Implementation</h1>
 <p>Polygon Input modules additionally require:</p>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span>... key_ts&gt;</div>
-<div class="line"><span class="keyword">auto</span> load_polygons(key_ts <span class="keyword">const</span>&amp;...) -&gt; std::optional&lt;std::vector&lt;VIPRA::Geometry::Polygon&gt;&gt;;</div>
-</div><!-- fragment --> </div></div><!-- contents -->
+<div class="line">std::optional&lt;std::vector&lt;VIPRA::Geometry::Polygon&gt;&gt; load_polygons(key_ts <span class="keyword">const</span>&amp;...);</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md251"></a>
+Parameters</h3>
+<p><code>keys</code> - a variadic number of keys to identify an input value</p>
+<h3><a class="anchor" id="autotoc_md252"></a>
+Returns</h3>
+<p><code>std::optional&lt;std::vector&lt;VIPRA::Geometry::Polygon&gt;&gt;</code> - an optional with a vector of polygons described by a map input, <code>std::nullopt</code> if the value was unable to be returned</p>
+<h3><a class="anchor" id="autotoc_md253"></a>
+Expected Effects</h3>
+<p><code>NONE</code> </p>
+</div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

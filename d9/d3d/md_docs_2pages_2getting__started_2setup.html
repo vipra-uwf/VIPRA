@@ -100,11 +100,13 @@ Standalone Build</h1>
 Requirements</h2>
 <p>The following are requirement for running the VIPRA simulation.</p>
 <ol type="1">
-<li><a href="https://cmake.org/download/">CMake</a> version 3.22.2 or newer.</li>
-<li>A compiler that can run C++20 or newer.</li>
-<li><a href="https://www.open-mpi.org/software/ompi/v5.0/">OpenMPI</a> version 5.05 or newer.</li>
+<li><a href="https://cmake.org/download/">CMake</a> version 3.14 or newer.</li>
+<li>A compiler that supports C++20.</li>
 </ol>
-<p>The following are required for development.</p>
+<p>Additionally for Parameter Sweeps:</p><ol type="1">
+<li>MPI, either <a href="https://www.open-mpi.org/software/ompi/v5.0/">openMPI</a> or <a href="https://www.mpich.org/">mpich</a></li>
+</ol>
+<p>The following are required for development of the Behaviors DSL.</p>
 <ol type="1">
 <li>ANTLR4 - version 4.13.1 or newer.</li>
 </ol>
@@ -120,9 +122,10 @@ Build</h2>
 </ul>
 <hr  />
 <h2><a class="anchor" id="autotoc_md180"></a>
-Running the Example</h2>
-<p>The <a class="el" href="../../d2/d01/md_docs_2pages_2examples_2simulation.html">Example Simulation</a> provided can be run with: </p><div class="fragment"><div class="line">./VIPRA (optional)&lt;number_of_simulations&gt;</div>
-</div><!-- fragment --><p>See the <a class="el" href="../../d1/d7f/md_docs_2pages_2getting__started_2usage.html">Usage Page</a> for how to use VIPRA as a standalone program</p>
+Running the Provided Simulation</h2>
+<p>The VIPRA repo comes with a <code>main.cpp</code> that follows the <a class="el" href="../../d9/d97/md_docs_2pages_2examples_2parameter__sweep.html">Parameter Sweep Example Simulation</a></p>
+<div class="fragment"><div class="line">./VIPRA &lt;number_of_simulations&gt;</div>
+</div><!-- fragment --><p>See the <a class="el" href="../../d1/d7f/md_docs_2pages_2getting__started_2usage.html">Usage Page</a> for how to modify the simulation.</p>
 <hr  />
 <h2><a class="anchor" id="autotoc_md182"></a>
 Library</h2>

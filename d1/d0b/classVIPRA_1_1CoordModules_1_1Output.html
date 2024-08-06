@@ -149,18 +149,18 @@ template&lt;typename paramreader_t &gt; </td></tr>
 <tr class="memitem:a9799159f4985a40e747afdbc612e12ee" id="r_a9799159f4985a40e747afdbc612e12ee"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9799159f4985a40e747afdbc612e12ee">write</a> () -&gt; std::tuple&lt; Util::result_or_VOID_t&lt; decltype(std::declval&lt; output_ts &gt;().write(std::declval&lt; std::filesystem::path &gt;()))&gt;... &gt;</td></tr>
 <tr class="memdesc:a9799159f4985a40e747afdbc612e12ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls write on all outputs, returning a tuple of the results or VOID.  <br /></td></tr>
 <tr class="separator:a9799159f4985a40e747afdbc612e12ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac10e1cf4bea5fae5a4009b54edbd7c79" id="r_ac10e1cf4bea5fae5a4009b54edbd7c79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac10e1cf4bea5fae5a4009b54edbd7c79">sim_value</a> (char const *key, auto &amp;&amp;value)</td></tr>
-<tr class="memdesc:ac10e1cf4bea5fae5a4009b54edbd7c79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls sim_value on all output modules.  <br /></td></tr>
-<tr class="separator:ac10e1cf4bea5fae5a4009b54edbd7c79"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab0f763d90972ceb6355e66f5c02428aa" id="r_ab0f763d90972ceb6355e66f5c02428aa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab0f763d90972ceb6355e66f5c02428aa">timestep_value</a> (char const *key, VIPRA::timestep timestep, auto &amp;&amp;value)</td></tr>
-<tr class="memdesc:ab0f763d90972ceb6355e66f5c02428aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls timestep_value on all output modules.  <br /></td></tr>
-<tr class="separator:ab0f763d90972ceb6355e66f5c02428aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae894fa07e550e49e1c226c4c0374a0a0" id="r_ae894fa07e550e49e1c226c4c0374a0a0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae894fa07e550e49e1c226c4c0374a0a0">ped_value</a> (VIPRA::idx pedIdx, char const *key, auto &amp;&amp;value)</td></tr>
-<tr class="memdesc:ae894fa07e550e49e1c226c4c0374a0a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls ped_value on all output modules.  <br /></td></tr>
-<tr class="separator:ae894fa07e550e49e1c226c4c0374a0a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0c2578701fee3a97f5a66d22d5777f70" id="r_a0c2578701fee3a97f5a66d22d5777f70"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0c2578701fee3a97f5a66d22d5777f70">ped_timestep_value</a> (VIPRA::idx pedIdx, VIPRA::timestep timestep, char const *key, auto &amp;&amp;value)</td></tr>
-<tr class="memdesc:a0c2578701fee3a97f5a66d22d5777f70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls ped_timestep_value on all output modules.  <br /></td></tr>
-<tr class="separator:a0c2578701fee3a97f5a66d22d5777f70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9c230b02ced3e4d5f0469e7b4180de7" id="r_ac9c230b02ced3e4d5f0469e7b4180de7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac9c230b02ced3e4d5f0469e7b4180de7">sim_value</a> (std::string const &amp;key, auto &amp;&amp;value)</td></tr>
+<tr class="memdesc:ac9c230b02ced3e4d5f0469e7b4180de7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls sim_value on all output modules.  <br /></td></tr>
+<tr class="separator:ac9c230b02ced3e4d5f0469e7b4180de7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2cdbb71bc49b360d54bc464af78cbd9" id="r_aa2cdbb71bc49b360d54bc464af78cbd9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa2cdbb71bc49b360d54bc464af78cbd9">timestep_value</a> (std::string const &amp;key, VIPRA::timestep timestep, auto &amp;&amp;value)</td></tr>
+<tr class="memdesc:aa2cdbb71bc49b360d54bc464af78cbd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls timestep_value on all output modules.  <br /></td></tr>
+<tr class="separator:aa2cdbb71bc49b360d54bc464af78cbd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ccf616484d0d35f334003452ad5d32d" id="r_a7ccf616484d0d35f334003452ad5d32d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7ccf616484d0d35f334003452ad5d32d">ped_value</a> (VIPRA::idx pedIdx, std::string const &amp;key, auto &amp;&amp;value)</td></tr>
+<tr class="memdesc:a7ccf616484d0d35f334003452ad5d32d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls ped_value on all output modules.  <br /></td></tr>
+<tr class="separator:a7ccf616484d0d35f334003452ad5d32d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cdd6efc78b26baf1856231b13271a3c" id="r_a2cdd6efc78b26baf1856231b13271a3c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2cdd6efc78b26baf1856231b13271a3c">ped_timestep_value</a> (VIPRA::idx pedIdx, VIPRA::timestep timestep, std::string const &amp;key, auto &amp;&amp;value)</td></tr>
+<tr class="memdesc:a2cdd6efc78b26baf1856231b13271a3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls ped_timestep_value on all output modules.  <br /></td></tr>
+<tr class="separator:a2cdd6efc78b26baf1856231b13271a3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3902e5cf89403e8ea62ae9ba94adcd6" id="r_af3902e5cf89403e8ea62ae9ba94adcd6"><td class="memItemLeft" align="right" valign="top"><a id="af3902e5cf89403e8ea62ae9ba94adcd6" name="af3902e5cf89403e8ea62ae9ba94adcd6"></a>
 constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>Output</b> (output_ts... outputs)</td></tr>
 <tr class="separator:af3902e5cf89403e8ea62ae9ba94adcd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -175,21 +175,18 @@ constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>Output</b> (outp
 <tr class="memitem:a41dbf770ef10c4c45e0320c3e3ec7830 inherit pub_methods_classVIPRA_1_1Modules_1_1Output" id="r_a41dbf770ef10c4c45e0320c3e3ec7830"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>write</b> (std::filesystem::path const &amp;outputDir)</td></tr>
 <tr class="separator:a41dbf770ef10c4c45e0320c3e3ec7830 inherit pub_methods_classVIPRA_1_1Modules_1_1Output"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad15db9300b1a0307ec545af42fcc3b21 inherit pub_methods_classVIPRA_1_1Modules_1_1Output" id="r_ad15db9300b1a0307ec545af42fcc3b21"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><b>sim_value</b> (char const *key, data_t &amp;&amp;value)</td></tr>
-<tr class="separator:ad15db9300b1a0307ec545af42fcc3b21 inherit pub_methods_classVIPRA_1_1Modules_1_1Output"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91f6d08bc042c030cd11528a9e661220 inherit pub_methods_classVIPRA_1_1Modules_1_1Output" id="r_a91f6d08bc042c030cd11528a9e661220"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><b>timestep_value</b> (char const *key, VIPRA::idx timestep, data_t &amp;&amp;value)</td></tr>
-<tr class="separator:a91f6d08bc042c030cd11528a9e661220 inherit pub_methods_classVIPRA_1_1Modules_1_1Output"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a552963d12942e531bc8de298031e6aa6 inherit pub_methods_classVIPRA_1_1Modules_1_1Output" id="r_a552963d12942e531bc8de298031e6aa6"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><b>ped_value</b> (VIPRA::idx pedIdx, char const *key, data_t &amp;&amp;value)</td></tr>
-<tr class="separator:a552963d12942e531bc8de298031e6aa6 inherit pub_methods_classVIPRA_1_1Modules_1_1Output"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a781a96e0446e6ff8d263c6252a3731bf inherit pub_methods_classVIPRA_1_1Modules_1_1Output" id="r_a781a96e0446e6ff8d263c6252a3731bf"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><b>ped_timestep_value</b> (VIPRA::idx pedIdx, VIPRA::idx timestep, char const *key, data_t &amp;&amp;value)</td></tr>
-<tr class="separator:a781a96e0446e6ff8d263c6252a3731bf inherit pub_methods_classVIPRA_1_1Modules_1_1Output"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a178efa494ed4dd1fb5be931e5005a34e inherit pub_methods_classVIPRA_1_1Modules_1_1Output" id="r_a178efa494ed4dd1fb5be931e5005a34e"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_filename</b> (std::string const &amp;filename)</td></tr>
-<tr class="separator:a178efa494ed4dd1fb5be931e5005a34e inherit pub_methods_classVIPRA_1_1Modules_1_1Output"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0314f5dc21a8a2807d04ba3603c4dad inherit pub_methods_classVIPRA_1_1Modules_1_1Output" id="r_af0314f5dc21a8a2807d04ba3603c4dad"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>sim_value</b> (std::string const &amp;key, data_t &amp;&amp;value)</td></tr>
+<tr class="separator:af0314f5dc21a8a2807d04ba3603c4dad inherit pub_methods_classVIPRA_1_1Modules_1_1Output"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abe4dff777dfd4629b21361d8ae379072 inherit pub_methods_classVIPRA_1_1Modules_1_1Output" id="r_abe4dff777dfd4629b21361d8ae379072"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>timestep_value</b> (std::string const &amp;key, VIPRA::idx timestep, data_t &amp;&amp;value)</td></tr>
+<tr class="separator:abe4dff777dfd4629b21361d8ae379072 inherit pub_methods_classVIPRA_1_1Modules_1_1Output"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15b913fac41c3a0af83564f8e549ce4c inherit pub_methods_classVIPRA_1_1Modules_1_1Output" id="r_a15b913fac41c3a0af83564f8e549ce4c"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ped_value</b> (VIPRA::idx pedIdx, std::string const &amp;key, data_t &amp;&amp;value)</td></tr>
+<tr class="separator:a15b913fac41c3a0af83564f8e549ce4c inherit pub_methods_classVIPRA_1_1Modules_1_1Output"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c7f604f09a3ac305c7e3b867bab5dcb inherit pub_methods_classVIPRA_1_1Modules_1_1Output" id="r_a5c7f604f09a3ac305c7e3b867bab5dcb"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ped_timestep_value</b> (VIPRA::idx pedIdx, VIPRA::idx timestep, std::string const &amp;key, data_t &amp;&amp;value)</td></tr>
+<tr class="separator:a5c7f604f09a3ac305c7e3b867bab5dcb inherit pub_methods_classVIPRA_1_1Modules_1_1Output"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="aa617ec37a769e30e0eb7d1f6284843e5" name="aa617ec37a769e30e0eb7d1f6284843e5"></a>
@@ -227,8 +224,8 @@ template&lt;typename... output_ts&gt; </div>
 
 </div>
 </div>
-<a id="a0c2578701fee3a97f5a66d22d5777f70" name="a0c2578701fee3a97f5a66d22d5777f70"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0c2578701fee3a97f5a66d22d5777f70">&#9670;&#160;</a></span>ped_timestep_value()</h2>
+<a id="a2cdd6efc78b26baf1856231b13271a3c" name="a2cdd6efc78b26baf1856231b13271a3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cdd6efc78b26baf1856231b13271a3c">&#9670;&#160;</a></span>ped_timestep_value()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -251,7 +248,7 @@ template&lt;typename... output_ts&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">char const *</td>          <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
+          <td class="paramtype">std::string const &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -278,8 +275,8 @@ template&lt;typename... output_ts&gt; </div>
 
 </div>
 </div>
-<a id="ae894fa07e550e49e1c226c4c0374a0a0" name="ae894fa07e550e49e1c226c4c0374a0a0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae894fa07e550e49e1c226c4c0374a0a0">&#9670;&#160;</a></span>ped_value()</h2>
+<a id="a7ccf616484d0d35f334003452ad5d32d" name="a7ccf616484d0d35f334003452ad5d32d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ccf616484d0d35f334003452ad5d32d">&#9670;&#160;</a></span>ped_value()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -297,7 +294,7 @@ template&lt;typename... output_ts&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">char const *</td>          <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
+          <td class="paramtype">std::string const &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -367,8 +364,8 @@ template&lt;typename paramreader_t &gt; </div>
 
 </div>
 </div>
-<a id="ac10e1cf4bea5fae5a4009b54edbd7c79" name="ac10e1cf4bea5fae5a4009b54edbd7c79"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac10e1cf4bea5fae5a4009b54edbd7c79">&#9670;&#160;</a></span>sim_value()</h2>
+<a id="ac9c230b02ced3e4d5f0469e7b4180de7" name="ac9c230b02ced3e4d5f0469e7b4180de7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9c230b02ced3e4d5f0469e7b4180de7">&#9670;&#160;</a></span>sim_value()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -381,7 +378,7 @@ template&lt;typename... output_ts&gt; </div>
         <tr>
           <td class="memname">void <a class="el" href="../../d1/d0b/classVIPRA_1_1CoordModules_1_1Output.html">VIPRA::CoordModules::Output</a>&lt; output_ts &gt;::sim_value </td>
           <td>(</td>
-          <td class="paramtype">char const *</td>          <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
+          <td class="paramtype">std::string const &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -407,8 +404,8 @@ template&lt;typename... output_ts&gt; </div>
 
 </div>
 </div>
-<a id="ab0f763d90972ceb6355e66f5c02428aa" name="ab0f763d90972ceb6355e66f5c02428aa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab0f763d90972ceb6355e66f5c02428aa">&#9670;&#160;</a></span>timestep_value()</h2>
+<a id="aa2cdbb71bc49b360d54bc464af78cbd9" name="aa2cdbb71bc49b360d54bc464af78cbd9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2cdbb71bc49b360d54bc464af78cbd9">&#9670;&#160;</a></span>timestep_value()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -421,7 +418,7 @@ template&lt;typename... output_ts&gt; </div>
         <tr>
           <td class="memname">void <a class="el" href="../../d1/d0b/classVIPRA_1_1CoordModules_1_1Output.html">VIPRA::CoordModules::Output</a>&lt; output_ts &gt;::timestep_value </td>
           <td>(</td>
-          <td class="paramtype">char const *</td>          <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
+          <td class="paramtype">std::string const &amp;</td>          <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>

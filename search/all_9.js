@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['base_20module_20macros_0',['Base Module Macros',['../d1/de6/md_docs_2pages_2usage_2macros.html#autotoc_md318',1,'']]],
+  ['base_20module_20macros_0',['Base Module Macros',['../d1/de6/md_docs_2pages_2usage_2macros.html#autotoc_md374',1,'']]],
   ['base_5fmodules_1',['base_modules',['../d7/de5/md_docs_2pages_2base__modules.html',1,'']]],
   ['basic_5fappender_2',['basic_appender',['../d4/d12/classbasic__appender.html',1,'']]],
   ['basic_5fappender_3c_20char_20_3e_3',['basic_appender&lt; Char &gt;',['../d4/d12/classbasic__appender.html',1,'']]],
@@ -34,7 +34,7 @@ var searchData=
   ['behaviorcontext_31',['BehaviorContext',['../d0/d96/structVIPRA_1_1Behaviors_1_1BehaviorContext.html',1,'VIPRA::Behaviors']]],
   ['behaviorerrorlistener_32',['BehaviorErrorListener',['../d6/d72/classVIPRA_1_1Behaviors_1_1BehaviorErrorListener.html',1,'VIPRA::Behaviors']]],
   ['behaviormodel_33',['BehaviorModel',['../d5/d56/classVIPRA_1_1BehaviorModel.html',1,'VIPRA']]],
-  ['behaviors_34',['Behaviors',['../d6/dc0/md_docs_2pages_2behaviors_2adding__behaviors.html',1,'Adding Behaviors'],['../d9/db0/md_docs_2pages_2researchers.html#autotoc_md291',1,'Behaviors'],['../d2/dd2/md_docs_2pages_2behaviors_2VIPRA__behaviors.html#autotoc_md36',1,'VIPRA Behaviors']]],
+  ['behaviors_34',['Behaviors',['../d6/dc0/md_docs_2pages_2behaviors_2adding__behaviors.html',1,'Adding Behaviors'],['../d9/db0/md_docs_2pages_2researchers.html#autotoc_md347',1,'Behaviors'],['../d2/dd2/md_docs_2pages_2behaviors_2VIPRA__behaviors.html#autotoc_md36',1,'VIPRA Behaviors']]],
   ['bg_35',['bg',['../dc/d60/classtext__style.html#ae85aa6f7e0b7a5f146778c0c92c70921',1,'text_style']]],
   ['big_5fdecimal_5ffp_36',['big_decimal_fp',['../db/da7/structdetail_1_1big__decimal__fp.html',1,'detail']]],
   ['bigint_37',['bigint',['../df/dda/classdetail_1_1bigint.html',1,'detail']]],

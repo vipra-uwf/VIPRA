@@ -87,30 +87,50 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">Model</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md235"></a> </p>
-<h1><a class="anchor" id="autotoc_md236"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md254"></a> </p>
+<h1><a class="anchor" id="autotoc_md255"></a>
 Required Methods</h1>
+<p>In addition to the <a class="el" href="../../de/d7c/md_docs_2pages_2implementation_2module.html">Base Module</a> requirements <code>Goals</code> require the following:</p>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line">VIPRA_MODEL_TIMESTEP;</div>
 <div class="line"> </div>
 <div class="line">VIPRA_MODEL_INIT_STEP;</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md237"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md256"></a>
 Details</h1>
 <div class="fragment"><div class="line">VIPRA_MODEL_TIMESTEP;</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md238"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md257"></a>
 Parameters</h3>
 <ul>
-<li><code>pedset</code> - the Pedestrians Model implementation</li>
-<li><code>obstacles</code> -</li>
-<li><code>goals</code> -</li>
-<li><code>output</code> -</li>
-<li><code>state</code> -</li>
-<li><code>deltaT</code> -</li>
-<li><code>timestep</code> -</li>
+<li><code>pedset</code> - the <a class="el" href="../../d2/dea/md_docs_2pages_2modules_2pedestrians.html">Pedestrians Model implementation</a></li>
+<li><code>obstacles</code> - the <a class="el" href="../../d6/d2a/md_docs_2pages_2modules_2obstacles.html">Obstacle Set implementation</a></li>
+<li><code>goals</code> - the <a class="el" href="../../dc/d2a/md_docs_2pages_2modules_2goals.html">Goals implementation</a></li>
+<li><code>output</code> - the <a class="el" href="../../db/de7/md_docs_2pages_2modules_2special__modules.html">Output Coordinator</a></li>
+<li><code>state</code> - the <a href="../../../usage/types.md#state">State</a> to write the new positions and velocities to</li>
+<li><code>deltaT</code> - the timestep size</li>
+<li><code>timestep</code> - the current timestep number</li>
 </ul>
+<h3><a class="anchor" id="autotoc_md258"></a>
+Returns</h3>
+<p><code>NONE</code></p>
+<h3><a class="anchor" id="autotoc_md259"></a>
+Expected Effects</h3>
+<p><code>state</code> contains the updated positions and velocities of each pedestrian</p>
 <hr  />
 <div class="fragment"><div class="line">VIPRA_MODEL_INIT_STEP;</div>
-</div><!-- fragment --> </div></div><!-- contents -->
+</div><!-- fragment --><ul>
+<li><code>pedset</code> - the <a class="el" href="../../d2/dea/md_docs_2pages_2modules_2pedestrians.html">Pedestrians Model implementation</a></li>
+<li><code>obstacles</code> - the <a class="el" href="../../d6/d2a/md_docs_2pages_2modules_2obstacles.html">Obstacle Set implementation</a></li>
+<li><code>goals</code> - the <a class="el" href="../../dc/d2a/md_docs_2pages_2modules_2goals.html">Goals implementation</a></li>
+<li><code>output</code> - the <a class="el" href="../../db/de7/md_docs_2pages_2modules_2special__modules.html">Output Coordinator</a></li>
+<li><code>engine</code> - the <a class="el" href="../../da/d62/md_docs_2pages_2usage_2randomization.html">Randomization engine</a></li>
+</ul>
+<h3><a class="anchor" id="autotoc_md261"></a>
+Returns</h3>
+<p><code>NONE</code></p>
+<h3><a class="anchor" id="autotoc_md262"></a>
+Exepected Effects</h3>
+<p>The pedestrian dynamics model is ready for the first simulation timestep </p>
+</div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

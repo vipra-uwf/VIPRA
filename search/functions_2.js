@@ -2,7 +2,7 @@ var searchData=
 [
   ['c_5fstr_0',['c_str',['../d7/d1a/classformat__int.html#ab733b9e9edf2ec1661deae1bb5d003a0',1,'format_int::c_str()'],['../d0/dff/classbasic__cstring__view.html#afee1380c4722894a55b8b6895f6bf255',1,'basic_cstring_view::c_str()']]],
   ['capacity_1',['capacity',['../de/d0d/classdetail_1_1buffer.html#ac7ff14268d6b32d3d878291445ff4dd3',1,'detail::buffer']]],
-  ['change_5fend_5fgoal_2',['change_end_goal',['../d8/d10/classVIPRA_1_1Goals_1_1AStar.html#aee64dcaac1e4c87b564ff433df383158',1,'VIPRA::Goals::AStar']]],
+  ['change_5fend_5fgoal_5fimpl_2',['change_end_goal_impl',['../d8/d10/classVIPRA_1_1Goals_1_1AStar.html#a7f96cae6c260c17e02614f34552cc60a',1,'VIPRA::Goals::AStar']]],
   ['check_3',['check',['../d7/d00/classVIPRA_1_1Behaviors_1_1TargetModifier.html#a5d1900e4f8aedd0287800f38ffb80114',1,'VIPRA::Behaviors::TargetModifier::check()'],['../d5/d12/classVIPRA_1_1Behaviors_1_1TimedLatchCollection.html#a4e679d7971b4d22d20adf662c02c6f80',1,'VIPRA::Behaviors::TimedLatchCollection::check()']]],
   ['check_5farg_5fid_4',['check_arg_id',['../d9/d9f/classbasic__format__parse__context.html#a83f130644eeb162a932245c95447cf63',1,'basic_format_parse_context']]],
   ['clean_5fused_5',['clean_used',['../d7/d24/classVIPRA_1_1Behaviors_1_1GroupsContainer.html#aae1d83f790eda628a530dd3ba1be8011',1,'VIPRA::Behaviors::GroupsContainer']]],
