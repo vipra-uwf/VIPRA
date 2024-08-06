@@ -1,7 +1,7 @@
 var searchData=
 [
   ['n_0',['Exactly N',['../d2/dd2/md_docs_2pages_2behaviors_2VIPRA__behaviors.html#autotoc_md72',1,'']]],
-  ['name_1',['VIPRA_MODULE_NAME(name)',['../d1/de6/md_docs_2pages_2usage_2macros.html#autotoc_md376',1,'']]],
+  ['name_1',['VIPRA_MODULE_NAME(name)',['../d1/de6/md_docs_2pages_2usage_2macros.html#autotoc_md377',1,'']]],
   ['named_5farg_2',['named_arg',['../d8/dd6/structdetail_1_1named__arg.html',1,'detail']]],
   ['named_5farg_5finfo_3',['named_arg_info',['../db/d3f/structdetail_1_1named__arg__info.html',1,'detail']]],
   ['named_5farg_5finfo_3c_20char_5ftype_20_3e_4',['named_arg_info&lt; char_type &gt;',['../db/d3f/structdetail_1_1named__arg__info.html',1,'detail']]],

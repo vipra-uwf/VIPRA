@@ -87,8 +87,8 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">Goals Modules</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md187"></a> </p>
-<h1><a class="anchor" id="autotoc_md188"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md188"></a> </p>
+<h1><a class="anchor" id="autotoc_md189"></a>
 Required Methods</h1>
 <p>In addition to the <a class="el" href="../../de/d7c/md_docs_2pages_2implementation_2module.html">Base Module</a> requirements <code>Goals</code> require the following:</p>
 <div class="fragment"><div class="line">++</div>
@@ -104,135 +104,135 @@ Required Methods</h1>
 <div class="line"> <span class="keywordtype">bool</span>                  is_sim_goal_met_impl() <span class="keyword">const</span>;</div>
 <div class="line"> VIPRA::f_pnt          time_since_last_goal_impl(VIPRA::idx pedIdx) <span class="keyword">const</span>;</div>
 <div class="ttc" id="astructVIPRA_1_1f3d_html"><div class="ttname"><a href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a></div><div class="ttdef"><b>Definition</b> f3d.hpp:18</div></div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md189"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md190"></a>
 Details</h1>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line">VIPRA_GOALS_INIT_STEP</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md190"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md191"></a>
 Parameters</h3>
 <ul>
 <li><code>pedset</code> - <a class="el" href="../../d2/dea/md_docs_2pages_2modules_2pedestrians.html">Pedestrians module implementation</a></li>
 <li><code>obstalces</code> - Obstalces module implementation</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md191"></a>
+<h3><a class="anchor" id="autotoc_md192"></a>
 Returns</h3>
 <p><code>NONE</code></p>
-<h3><a class="anchor" id="autotoc_md192"></a>
+<h3><a class="anchor" id="autotoc_md193"></a>
 Expected Effects</h3>
 <p>Each pedestrian has their goals initialized and ready for the first timestep of the simulation</p>
 <hr  />
 <div class="fragment"><div class="line"> ++</div>
 <div class="line">VIPRA_GOALS_UPDATE_STEP</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md194"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md195"></a>
 Parameters</h3>
 <ul>
 <li><code>pedset</code> - <a class="el" href="../../d2/dea/md_docs_2pages_2modules_2pedestrians.html">Pedestrians module implementation</a></li>
 <li><code>obstalces</code> - Obstalces module implementation</li>
 <li><code>deltaT</code> : VIPRA::f_pnt - amount of time since last time step</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md195"></a>
+<h3><a class="anchor" id="autotoc_md196"></a>
 Returns</h3>
 <p><code>NONE</code></p>
-<h3><a class="anchor" id="autotoc_md196"></a>
+<h3><a class="anchor" id="autotoc_md197"></a>
 Expected Effects</h3>
 <p>Each pedestrian has their current goals updated</p>
 <hr  />
 <div class="fragment"><div class="line">void change_end_goal_impl(VIPRA::idx pedIdx, VIPRA::f3d currPos, VIPRA::f3d goalPos);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md198"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md199"></a>
 Parameters</h3>
 <ul>
 <li><code>pedIdx</code> : VIPRA::idx - ID of pedestrian to update</li>
 <li><code>currPos</code> : VIPRA::f3d - the current position of the pedestrian to update</li>
 <li><code>goalPos</code> : VIPRA::f3d - the position of the new end goal</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md199"></a>
+<h3><a class="anchor" id="autotoc_md200"></a>
 Returns</h3>
 <p><code>NONE</code></p>
-<h3><a class="anchor" id="autotoc_md200"></a>
+<h3><a class="anchor" id="autotoc_md201"></a>
 Expected Effects</h3>
 <p>Pedestrian # pedIdx has their end goal changed to <code>goalPos</code></p>
 <hr  />
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="keyword">const</span> VIPRA::f3dVec&amp;  current_goals_impl() <span class="keyword">const</span>;</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md202"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md203"></a>
 Parameters</h3>
 <p><code>NONE</code></p>
-<h3><a class="anchor" id="autotoc_md203"></a>
+<h3><a class="anchor" id="autotoc_md204"></a>
 Returns</h3>
 <p><code>const VIPRA::f3dVec&amp;</code> - vector containing the point each pedestrian is currently trying to reach</p>
-<h3><a class="anchor" id="autotoc_md204"></a>
+<h3><a class="anchor" id="autotoc_md205"></a>
 Expected Effects</h3>
 <p><code>NONE</code></p>
 <hr  />
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="keyword">const</span> VIPRA::f3dVec&amp;  end_goals_impl() <span class="keyword">const</span>;</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md206"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md207"></a>
 Parameters</h3>
 <p><code>NONE</code></p>
-<h3><a class="anchor" id="autotoc_md207"></a>
+<h3><a class="anchor" id="autotoc_md208"></a>
 Returns</h3>
 <p><code>const VIPRA::f3dVec&amp;</code> - vector containing the point of each pedestrians end goal</p>
-<h3><a class="anchor" id="autotoc_md208"></a>
+<h3><a class="anchor" id="autotoc_md209"></a>
 Expected Effects</h3>
 <p><code>NONE</code></p>
 <hr  />
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="keyword">const</span> <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a>&amp; current_goal_impl(VIPRA::idx pedIdx) <span class="keyword">const</span>;</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md210"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md211"></a>
 Parameters</h3>
 <p><code>pedIdx</code> : VIPRA::idx - ID of pedestrian to retreive the current goal of</p>
-<h3><a class="anchor" id="autotoc_md211"></a>
+<h3><a class="anchor" id="autotoc_md212"></a>
 Returns</h3>
 <p><code>VIPRA::f3d</code> - the point the pedestrian with ID <code>pedIdx</code> is currently trying to reach</p>
-<h3><a class="anchor" id="autotoc_md212"></a>
+<h3><a class="anchor" id="autotoc_md213"></a>
 Expected Effects</h3>
 <p><code>NONE</code></p>
 <hr  />
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="keyword">const</span> <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a>&amp; end_goal_impl(VIPRA::idx pedIdx) <span class="keyword">const</span>;</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md214"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md215"></a>
 Parameters</h3>
 <p><code>pedIdx</code> : VIPRA::idx - ID of pedestrian to retreive the end goal of</p>
-<h3><a class="anchor" id="autotoc_md215"></a>
+<h3><a class="anchor" id="autotoc_md216"></a>
 Returns</h3>
 <p><code>VIPRA::f3d</code> - the point the pedestrian with ID <code>pedIdx</code> is ulimately trying to reach</p>
-<h3><a class="anchor" id="autotoc_md216"></a>
+<h3><a class="anchor" id="autotoc_md217"></a>
 Expected Effects</h3>
 <p><code>NONE</code></p>
 <hr  />
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="keywordtype">bool</span> is_goal_met_impl(VIPRA::idx pedIdx) <span class="keyword">const</span>;</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md218"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md219"></a>
 Parameters</h3>
 <p><code>pedIdx</code> : VIPRA::idx - ID of pedestrian to check</p>
-<h3><a class="anchor" id="autotoc_md219"></a>
+<h3><a class="anchor" id="autotoc_md220"></a>
 Returns</h3>
 <p><code>bool</code> - <code>true</code> if the pedestrian has met their end goal, <code>false</code> if they have not</p>
-<h3><a class="anchor" id="autotoc_md220"></a>
+<h3><a class="anchor" id="autotoc_md221"></a>
 Expected Effects</h3>
 <p><code>NONE</code></p>
 <hr  />
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="keywordtype">bool</span> is_sim_goal_met_impl() <span class="keyword">const</span>;</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md222"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md223"></a>
 Parameters</h3>
 <p><code>NONE</code></p>
-<h3><a class="anchor" id="autotoc_md223"></a>
+<h3><a class="anchor" id="autotoc_md224"></a>
 Returns</h3>
 <p><code>bool</code> - <code>true</code> if each of the pedestrian has achieved their goal, <code>false</code> if at least one pedestrian has not reached their end</p>
-<h3><a class="anchor" id="autotoc_md224"></a>
+<h3><a class="anchor" id="autotoc_md225"></a>
 Expected Effects</h3>
 <p><code>NONE</code></p>
 <hr  />
 <div class="fragment"><div class="line"> ++</div>
 <div class="line">VIPRA::f_pnt time_since_last_goal_impl(VIPRA::idx pedIdx) <span class="keyword">const</span>;</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md226"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md227"></a>
 Parameters</h3>
 <p><code>pedIdx</code> : VIPRA::idx - ID of pedestrian to get time of</p>
-<h3><a class="anchor" id="autotoc_md227"></a>
+<h3><a class="anchor" id="autotoc_md228"></a>
 Returns</h3>
 <p><code>VIPRA::f_pnt</code> - simulated time since the pedestrian with ID <code>pedIdx</code> has reached their last goal</p>
-<h3><a class="anchor" id="autotoc_md228"></a>
+<h3><a class="anchor" id="autotoc_md229"></a>
 Expected Effects</h3>
 <p><code>NONE</code> </p>
 </div></div><!-- contents -->

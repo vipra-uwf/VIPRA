@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['base_20module_20macros_0',['Base Module Macros',['../d1/de6/md_docs_2pages_2usage_2macros.html#autotoc_md374',1,'']]],
+  ['base_20module_20macros_0',['Base Module Macros',['../d1/de6/md_docs_2pages_2usage_2macros.html#autotoc_md375',1,'']]],
   ['base_5fmodules_1',['base_modules',['../d7/de5/md_docs_2pages_2base__modules.html',1,'']]],
   ['basic_5fappender_2',['basic_appender',['../d4/d12/classbasic__appender.html',1,'']]],
   ['basic_5fappender_3c_20char_20_3e_3',['basic_appender&lt; Char &gt;',['../d4/d12/classbasic__appender.html',1,'']]],
@@ -23,7 +23,7 @@ var searchData=
   ['basic_5fstring_5fview_20',['basic_string_view',['../d6/d63/classbasic__string__view.html',1,'basic_string_view&lt; Char &gt;'],['../d6/d63/classbasic__string__view.html#aae708273ca864680a424c10441799605',1,'basic_string_view::basic_string_view(const Char *s, size_t count) noexcept'],['../d6/d63/classbasic__string__view.html#ac33dd8c4bd4745b749a26cc6b363cd82',1,'basic_string_view::basic_string_view(const Char *s)'],['../d6/d63/classbasic__string__view.html#a2f1d654bab449755061a67f3c99538a5',1,'basic_string_view::basic_string_view(const S &amp;s) noexcept']]],
   ['basic_5fstring_5fview_3c_20char_20_3e_21',['basic_string_view&lt; char &gt;',['../d6/d63/classbasic__string__view.html',1,'']]],
   ['basic_5fstring_5fview_3c_20char_5ftype_20_3e_22',['basic_string_view&lt; char_type &gt;',['../d6/d63/classbasic__string__view.html',1,'']]],
-  ['be_20under_20tt_20output_20trajectories_20json_20tt_23',['The output will be under &lt;tt&gt;./output/trajectories.json&lt;/tt&gt;',['../d9/dad/md_docs_2pages_2examples_2model__example.html#autotoc_md171',1,'']]],
+  ['be_20under_20tt_20output_20trajectories_20json_20tt_23',['The output will be under &lt;tt&gt;./output/trajectories.json&lt;/tt&gt;',['../d9/dad/md_docs_2pages_2examples_2model__example.html#autotoc_md172',1,'']]],
   ['begin_24',['begin',['../d9/d9f/classbasic__format__parse__context.html#afb21ddaa0d32b5430f99eed530666ea9',1,'basic_format_parse_context']]],
   ['behavior_25',['Behavior',['../d6/dc0/md_docs_2pages_2behaviors_2behavior__examples.html#autotoc_md29',1,'Ex. Creating An Example Behavior'],['../d6/dc0/md_docs_2pages_2behaviors_2behavior__examples.html#autotoc_md30',1,'Ex.1. The Simplest Behavior']]],
   ['behavior_20examples_26',['Behavior Examples',['../d6/dc0/md_docs_2pages_2behaviors_2behavior__examples.html#autotoc_md28',1,'']]],
@@ -34,7 +34,7 @@ var searchData=
   ['behaviorcontext_31',['BehaviorContext',['../d0/d96/structVIPRA_1_1Behaviors_1_1BehaviorContext.html',1,'VIPRA::Behaviors']]],
   ['behaviorerrorlistener_32',['BehaviorErrorListener',['../d6/d72/classVIPRA_1_1Behaviors_1_1BehaviorErrorListener.html',1,'VIPRA::Behaviors']]],
   ['behaviormodel_33',['BehaviorModel',['../d5/d56/classVIPRA_1_1BehaviorModel.html',1,'VIPRA']]],
-  ['behaviors_34',['Behaviors',['../d6/dc0/md_docs_2pages_2behaviors_2adding__behaviors.html',1,'Adding Behaviors'],['../d9/db0/md_docs_2pages_2researchers.html#autotoc_md347',1,'Behaviors'],['../d2/dd2/md_docs_2pages_2behaviors_2VIPRA__behaviors.html#autotoc_md36',1,'VIPRA Behaviors']]],
+  ['behaviors_34',['Behaviors',['../d6/dc0/md_docs_2pages_2behaviors_2adding__behaviors.html',1,'Adding Behaviors'],['../d9/db0/md_docs_2pages_2researchers.html#autotoc_md348',1,'Behaviors'],['../d2/dd2/md_docs_2pages_2behaviors_2VIPRA__behaviors.html#autotoc_md36',1,'VIPRA Behaviors']]],
   ['bg_35',['bg',['../dc/d60/classtext__style.html#ae85aa6f7e0b7a5f146778c0c92c70921',1,'text_style']]],
   ['big_5fdecimal_5ffp_36',['big_decimal_fp',['../db/da7/structdetail_1_1big__decimal__fp.html',1,'detail']]],
   ['bigint_37',['bigint',['../df/dda/classdetail_1_1bigint.html',1,'detail']]],
@@ -48,7 +48,7 @@ var searchData=
   ['buffer_3c_20wchar_5ft_20_3e_45',['buffer&lt; wchar_t &gt;',['../de/d0d/classdetail_1_1buffer.html',1,'detail']]],
   ['buffer_5ftraits_46',['buffer_traits',['../d0/d6a/structdetail_1_1buffer__traits.html',1,'detail']]],
   ['buffered_5ffile_47',['buffered_file',['../dd/d93/classbuffered__file.html',1,'']]],
-  ['build_48',['Build',['../d9/d3d/md_docs_2pages_2getting__started_2setup.html#autotoc_md178',1,'Build'],['../d9/d3d/md_docs_2pages_2getting__started_2setup.html#autotoc_md175',1,'Standalone Build']]],
+  ['build_48',['Build',['../d9/d3d/md_docs_2pages_2getting__started_2setup.html#autotoc_md179',1,'Build'],['../d9/d3d/md_docs_2pages_2getting__started_2setup.html#autotoc_md176',1,'Standalone Build']]],
   ['build_49',['build',['../d7/d28/classVIPRA_1_1Behaviors_1_1BehaviorBuilder.html#afe83c5122324af355ec78bd5ce946fa1',1,'VIPRA::Behaviors::BehaviorBuilder']]],
   ['builderexception_50',['BuilderException',['../d7/d47/classVIPRA_1_1Behaviors_1_1BuilderException.html',1,'VIPRA::Behaviors']]],
   ['bytes_51',['bytes',['../de/dd1/classbytes.html',1,'']]]
