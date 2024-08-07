@@ -36,13 +36,13 @@ class Input : public Util::CRTP<Input<module_t>> {
    * @param keys 
    * @return std::optional<data_t> 
    */
-  template <typename data_t, Concepts::StringView... keys_t>
-  auto get(keys_t&&... keys) const -> std::optional<data_t>
+  template <typename data_t>
+  auto get(std::vector<std::string> const& keys) const -> std::optional<data_t>
   {
     assert(_loaded);
 
     try {
-      return self().template get_impl<data_t>(std::string_view(std::forward<keys_t>(keys))...);
+      return self().template get_impl<data_t>(keys);
     }
     catch ( std::exception& ex ) {
       // TODO(rolland): if the input module has an issue should we just let it throw or just return nullopt like this?

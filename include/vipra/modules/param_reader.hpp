@@ -28,19 +28,19 @@ class ParamReader : public Util::CRTP<ParamReader<module_t>> {
   auto get_param(std::string const& type, std::string const& moduleName, std::string const& paramName,
                  VIPRA::Random::Engine& engine) const -> std::optional<std::remove_cvref_t<data_t>>
   {
-    auto singleValue = this->self().template get<std::remove_cvref_t<data_t>>(type, moduleName, paramName);
+    auto singleValue = this->self().template get<std::remove_cvref_t<data_t>>({type, moduleName, paramName});
     if ( singleValue ) {
       return singleValue;
     }
 
     auto arrayValue =
-        this->self().template get<std::vector<std::remove_cvref_t<data_t>>>(type, moduleName, paramName);
+        this->self().template get<std::vector<std::remove_cvref_t<data_t>>>({type, moduleName, paramName});
     if ( arrayValue ) {
       return get_discrete_value<std::remove_cvref_t<data_t>>(arrayValue.value(), engine);
     }
 
     auto mapValue = this->self().template get<std::map<std::string, std::remove_cvref_t<data_t>>>(
-        type, moduleName, paramName);
+        {type, moduleName, paramName});
     if ( mapValue ) {
       if constexpr ( Concepts::Numeric<std::remove_cvref_t<data_t>> ) {
         // NOTE(rolland): strings cannot be ranges

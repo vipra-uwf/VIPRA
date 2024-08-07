@@ -27,13 +27,13 @@ class Obstacles : public Util::CRTP<Obstacles<module_t>> {
   void initialize(auto&& input)
   {
     // load object types from input
-    auto const objTypes = input.template get<std::vector<std::string>>("obj_types");
+    auto const objTypes = input.template get<std::vector<std::string>>({"obj_types"});
     if ( ! objTypes ) throw std::runtime_error("Could not find object types in input file");
 
     // load object locations for each type
     auto objMap = std::map<std::string, std::vector<VIPRA::f3d>>{};
     std::for_each(objTypes->begin(), objTypes->end(), [&](auto const& objType) {
-      const auto positions = input.template get<std::vector<VIPRA::f3d>>(objType);
+      const auto positions = input.template get<std::vector<VIPRA::f3d>>({objType});
       if ( ! positions ) {
         throw std::runtime_error("Could not get object positions from input");
       }
@@ -43,7 +43,7 @@ class Obstacles : public Util::CRTP<Obstacles<module_t>> {
     });
 
     // load obstacle polygons
-    auto const obsCoords = input.template load_polygons("obstacles");
+    auto const obsCoords = input.template load_polygons({"obstacles"});
     if ( ! obsCoords ) throw std::runtime_error("Could not get obstacle polygons from input");
 
     // initialize derived obstacles module

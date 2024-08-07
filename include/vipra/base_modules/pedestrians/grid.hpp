@@ -37,7 +37,7 @@ class Grid : public Modules::Module<Grid>, public Modules::Pedestrians<Grid> {
 
   VIPRA_PEDS_INIT_STEP
   {
-    auto coords = input.template get<std::vector<VIPRA::f3d>>("coords");
+    auto coords = input.template get<std::vector<VIPRA::f3d>>({"coords"});
     if ( ! coords ) throw std::runtime_error("Could not find pedestrian coordinates in input file");
 
     auto dimensions = obstacles.get_dimensions();

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <cstddef>
 #include <cstdint>
 #include <filesystem>
@@ -7,6 +8,7 @@
 #include <functional>
 #include <iostream>
 #include <optional>
+#include <string>
 #include <tuple>
 #include <type_traits>
 #include <utility>
@@ -51,17 +53,14 @@ class JSON : public VIPRA::Modules::Module<JSON>,
 
   void load_impl();
 
-  template <typename data_t, Concepts::StringView... keys_t>
-  [[nodiscard]] auto get_impl(keys_t&&... keys) const -> std::optional<data_t>;
+  template <typename data_t>
+  [[nodiscard]] auto get_impl(std::vector<std::string> const& keys) const -> std::optional<data_t>;
 
   [[nodiscard]] auto to_string() -> std::string { return _json.dump(); }
 
  private:
   nlohmann::json        _json;
   std::filesystem::path _filepath;
-
-  template <typename... key_ts>
-  [[nodiscard]] auto get_value_at_key(key_ts&&... keys) const -> std::optional<json_cref>;
 
   template <typename data_t>
   [[nodiscard]] auto get_value(json_cref const& value) const -> std::optional<data_t>;
@@ -79,6 +78,27 @@ class JSON : public VIPRA::Modules::Module<JSON>,
 
   template <typename data_t>
   [[nodiscard]] auto get_map(json_cref const& value) const -> std::optional<std::map<std::string, data_t>>;
+
+  [[nodiscard]] auto get_value_at_key(std::vector<std::string> const& keys) const -> std::optional<json_cref>
+  {
+    auto value = std::cref(_json);
+    bool found = true;
+
+    std::for_each(keys.begin(), keys.end(), [&](std::string const& key) {
+      if ( ! found ) return;
+
+      if ( ! value.get().contains(key) ) {
+        found = false;
+        return;
+      }
+
+      value = std::cref(value.get().at(key));
+    });
+
+    if ( ! found ) return std::nullopt;
+
+    return value;
+  }
 
  public:
   void parse_impl(std::string const& data)
@@ -104,10 +124,10 @@ class JSON : public VIPRA::Modules::Module<JSON>,
    * @param keys 
    * @return std::optional<data_t> 
    */
-template <typename data_t, VIPRA::Concepts::StringView... key_ts>
-auto VIPRA::Input::JSON::get_impl(key_ts&&... keys) const -> std::optional<data_t>
+template <typename data_t>
+auto VIPRA::Input::JSON::get_impl(std::vector<std::string> const& keys) const -> std::optional<data_t>
 {
-  auto value = get_value_at_key(std::forward<key_ts>(keys)...);
+  auto value = get_value_at_key(keys);
   if ( ! value ) return std::nullopt;
 
   return get_value<data_t>(value.value());
@@ -200,38 +220,6 @@ inline void VIPRA::Input::JSON::load_impl()
   }
 
   file.close();
-}
-
-/**
- * @brief Returns the json value at the provided key location
- * 
- * @tparam key_ts 
- * @param keys 
- * @return std::optional<json_cref> 
- */
-template <typename... key_ts>
-[[nodiscard]] auto VIPRA::Input::JSON::get_value_at_key(key_ts&&... keys) const -> std::optional<json_cref>
-{
-  auto value = std::cref(_json);
-  bool found = true;
-
-  auto const findKey = [&](std::string_view key) {
-    if ( ! found ) return;
-
-    if ( ! value.get().contains(key) ) {
-      found = false;
-      return;
-    }
-
-    value = std::cref(value.get().at(key));
-  };
-
-  // drill through each key to get the final value
-  (findKey(keys), ...);
-
-  if ( ! found ) return std::nullopt;
-
-  return value;
 }
 
 /**
