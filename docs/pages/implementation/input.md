@@ -1,25 +1,26 @@
 
 # Input Implementation
 
-> !!! Important Note: Inputs should hold off on loading their input until their `load` method is called. This reduces the amount of I/O during parallel runs.
+> !!! Important Note: Inputs should hold off on loading their input until their `load_impl` method is called. This reduces the amount of I/O during parallel runs.
 
 There are several sub-sets of `Input Modules`:
-1. 
+1. [Serializable Input](#serializable-input-implementation)
+2. [Polygon Input](#polygon-input-implementation)
 
 # Required Methods
 
 ```C++
-void load();
+void load_impl();
 
-template <typename data_t, typename... key_ts>
-std::optional<data_t> get(key_ts const&...);
+template <typename data_t>
+std::optional<data_t> get(std::vector<std::string> const&);
 ```
 
 
 ## Details
 
 ```C++
-void load();
+void load_impl();
 ```
 
 ### Parameters
@@ -35,8 +36,8 @@ void load();
 The input is ready to return its loaded data
 
 ```C++
-template <typename data_t, typename... key_ts>
-std::optional<data_t> get(key_ts const&...);
+template <typename data_t>
+std::optional<data_t> get(std::vector<std::string> const&);
 ```
 
 ### Parameters
@@ -94,45 +95,8 @@ void deserialize(std::string const&);
 
 The serialized data is deserialized and loaded into the input module
 
-
-# Parameter Input Implementation
-
-Parameter Input modules additionally require:
-
-```C++
-template <typename data_t, typename... key_ts>
-std::optional<VIPRA::Parameter<data_t>> get<VIPRA::Parameter<data_t>>(key_ts const&...);
-```
-
-### Parameters
-
-`keys` - a variadic number of keys to identify an input value
-
-### Returns
-
-`std::optional<VIPRA::Parameter<data_t>>` - an optional with a the parameter value, `std::nullopt` if the value was unable to be returned 
-
-### Expected Effects
-
-`NONE`
-
 # Polygon Input Implementation
 
-Polygon Input modules additionally require:
+Polygon Input modules additionally requires:
 
-```C++
-template <typename... key_ts>
-std::optional<std::vector<VIPRA::Geometry::Polygon>> load_polygons(key_ts const&...);
-```
-
-### Parameters
-
-`keys` - a variadic number of keys to identify an input value
-
-### Returns
-
-`std::optional<std::vector<VIPRA::Geometry::Polygon>>` - an optional with a vector of polygons described by a map input, `std::nullopt` if the value was unable to be returned 
-
-### Expected Effects
-
-`NONE`
+`get`: can load values of type: `std::vector<VIPRA::Geometry::Polygon>`
