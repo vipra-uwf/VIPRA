@@ -129,7 +129,11 @@ auto main() -> int {
 
 5. Adding `CMakeLists.txt`
 
+```CMake
+vipra_add_all()
+```
 
+See the [Base Module Implementation](../implementation/module.md) to see more.
 
 6. Compile Simulation
 
