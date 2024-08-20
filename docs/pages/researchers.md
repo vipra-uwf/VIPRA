@@ -31,6 +31,12 @@ Simulation output is discussed in detail in [Output](modules/output.md)
 
 ---
 
+## Parameter Sweep
+
+Parallel Processing and Randomized parameters can be achieved through a [Parameter Sweep](parameter_sweep.md)
+
+---
+
 ## Visualizer
 
 The included visualizer program allows for the viewing of simulation output as a video or animated image format.

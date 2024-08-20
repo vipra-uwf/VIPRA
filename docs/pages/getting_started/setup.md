@@ -40,6 +40,17 @@ Alternatively, run one of the following (recommended for developers only):
 - `make debug` for compiling in debug mode.
 - `make perf` for compiling the performance testing version.
 
+## Using MPI
+
+`MPI` is enabled with the addition of `mpi=on` to the make command
+
+Example:
+```
+make release mpi=on
+```
+
+> !!! IMPORTANT NOTE: currently only [openMPI](https://www.open-mpi.org/) is known to work, this will be fixed in the future
+
 ---
 
 ## Running the Provided Simulation

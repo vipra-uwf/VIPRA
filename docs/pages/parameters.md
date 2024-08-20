@@ -3,7 +3,7 @@
 
 Parameters are loaded into each module before they are initizalized. The exact steps of a simulation run are shown in [`Simluation Steps`](sim_overview.md).
 
-Parameters can use any [`Parameter Input`](modules/input.md) module, the [`JSON`](base_modules.md) input module provided works for this.
+Parameters can use any [`ParaReader`](modules/input.md) module, the [`JSON`](base_modules.md) input module provided works for this.
 
 The format for JSON parameters is:
 ```JSON
@@ -32,3 +32,7 @@ Example of a [`Goals`](modules/goals.md) module parameters:
   ...
 }
 ```
+
+## Parameter Sweep
+
+Parameters can be randomized through a [Parameter Sweep](parameter_sweep.md)
