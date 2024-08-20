@@ -12,8 +12,8 @@ project(
   LANGUAGES CXX
 )
 
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake.options)
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake.utils)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake.options)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/include/vipra)
 add_subdirectory(modules)

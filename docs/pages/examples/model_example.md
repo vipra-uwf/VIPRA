@@ -8,6 +8,7 @@ This Model will simply have pedestrians walking in circles around their initial 
   We will create the following: 
   - `modules/model/example_model`
   - `modules/model/example_model/example_model.hpp`
+  - `modules/model/example_model/CMakeLists.txt`
 
 2. Create the model
 ```C++
@@ -126,14 +127,18 @@ auto main() -> int {
 }
 ```
 
-5. Compile Simulation
+5. Adding `CMakeLists.txt`
+
+
+
+6. Compile Simulation
 
 The simulation can be compiled by running
 ```
 make
 ```
 
-6. Run
+7. Run
 
 Run the simulation with
 ```

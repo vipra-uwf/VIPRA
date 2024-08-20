@@ -24,28 +24,34 @@ macro(vipra_add_all)
 endmacro()
 
 # Fetchs and adds a library from a given URL, or finds and adds it if no URL is provided
-function(vipra_add_library libname liburl)
-  message(STATUS "Getting " ${libname})
+function(vipra_add_library)
+  set(options)
+  set(oneValueArgs LIBNAME URL)
+  set(multiValueArgs)
+  cmake_parse_arguments(GET_LIB "${options}" "${oneValueArgs}"
+    "${multiValueArgs}" ${ARGN})
 
-  if(NOT liburl)
+  message(STATUS "Getting " ${GET_LIB_LIBNAME})
+
+  if(NOT GET_LIB_URL)
     message(STATUS "Searching Locally")
-    find_package(${libname} REQUIRED)
+    find_package(${GET_LIB_LIBNAME} REQUIRED)
   else()
-    message(STATUS "Fetching URL " ${liburl})
+    message(STATUS "Fetching URL " ${GET_LIB_URL})
     include(FetchContent)
-    FetchContent_Declare(${libname} URL ${liburl})
-    FetchContent_MakeAvailable(${libname})
-    FetchContent_GetProperties(${libname})
+    FetchContent_Declare(${GET_LIB_LIBNAME} URL ${GET_LIB_URL})
+    FetchContent_MakeAvailable(${GET_LIB_LIBNAME})
+    FetchContent_GetProperties(${GET_LIB_LIBNAME})
 
-    if(NOT ${libname}_POPULATED)
-      message(FATAL_ERROR "Unable to Get " ${libname})
+    if(NOT ${GET_LIB_LIBNAME}_POPULATED)
+      message(FATAL_ERROR "Unable to Get " ${GET_LIB_LIBNAME})
     endif()
   endif()
 
   target_link_libraries(
     ${VIPRA_PROJECT_NAME}
     PUBLIC
-    ${libname}
+    ${GET_LIB_LIBNAME}
   )
-  message(STATUS "Done Getting" ${libname})
+  message(STATUS "Done Getting" ${GET_LIB_LIBNAME})
 endfunction()

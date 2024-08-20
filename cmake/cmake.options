@@ -47,10 +47,5 @@ endif()
 # Only Include MPI if the option is turned on
 if(VIPRA_USE_MPI)
   add_definitions(-DVIPRA_USE_MPI)
-  find_package(MPI REQUIRED)
-  target_link_libraries(
-    ${VIPRA_PROJECT_NAME}
-    PUBLIC
-    MPI::MPI_CXX
-  )
+  vipra_add_library(LIBNAME MPI)
 endif()
