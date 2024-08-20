@@ -1,0 +1,51 @@
+# Gets a list of all directories in a directory
+macro(SUBDIRLIST result curdir)
+  file(GLOB children RELATIVE ${curdir} ${curdir}/*)
+  set(dirlist "")
+
+  foreach(child ${children})
+    if(IS_DIRECTORY ${curdir}/${child})
+      list(APPEND dirlist ${child})
+    endif()
+  endforeach()
+
+  set(${result} ${dirlist})
+endmacro()
+
+# Adds all .cpp and .hpp files to the project
+macro(vipra_add_all)
+  file(GLOB TEMP_SOURCES *.cpp *.hpp */*.cpp */*.hpp)
+
+  target_sources(
+    ${VIPRA_PROJECT_NAME}
+    PRIVATE
+    ${TEMP_SOURCES}
+  )
+endmacro()
+
+# Fetchs and adds a library from a given URL, or finds and adds it if no URL is provided
+function(vipra_add_library libname liburl)
+  message(STATUS "Getting " ${libname})
+
+  if(NOT liburl)
+    message(STATUS "Searching Locally")
+    find_package(${libname} REQUIRED)
+  else()
+    message(STATUS "Fetching URL " ${liburl})
+    include(FetchContent)
+    FetchContent_Declare(${libname} URL ${liburl})
+    FetchContent_MakeAvailable(${libname})
+    FetchContent_GetProperties(${libname})
+
+    if(NOT ${libname}_POPULATED)
+      message(FATAL_ERROR "Unable to Get " ${libname})
+    endif()
+  endif()
+
+  target_link_libraries(
+    ${VIPRA_PROJECT_NAME}
+    PUBLIC
+    ${libname}
+  )
+  message(STATUS "Done Getting" ${libname})
+endfunction()
