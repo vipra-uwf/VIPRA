@@ -5,6 +5,7 @@ OPTION(VIPRA_BUILD_LIBRARY ON "Build the library")
 OPTION(VIPRA_BUILD_EXECUTABLE OFF "Build the executable")
 OPTION(VIPRA_DEBUG_MODE OFF "Build in debug mode")
 OPTION(VIPRA_PERF_TESTING OFF "Enable performance testing")
+OPTION(VIPRA_USE_MPI OFF "Enable MPI for parameter sweeps")
 
 if (VIPRA_BUILD_LIBRARY AND VIPRA_BUILD_EXECUTABLE)
   message(FATAL_ERROR "Cannot build both library and executable")
@@ -60,6 +61,7 @@ endif()
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/include/vipra)
 add_subdirectory(modules)
 
+# TODO(rolland): issue #36 this should not be required unless using the JSON modules
 include(FetchContent)
 message(STATUS "Getting nlohmann_json")
 FetchContent_Declare(nlohmann_json URL https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz)
@@ -70,14 +72,22 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 include(ExternalAntlr4Cpp)
 include_directories(${ANTLR4_INCLUDE_DIRS})
 
-find_package(MPI REQUIRED)
+# Only Include MPI if the option is turned on
+if (VIPRA_USE_MPI)
+  add_definitions(-DVIPRA_USE_MPI)
+  find_package(MPI REQUIRED)
+  target_link_libraries(
+    ${VIPRA_PROJECT_NAME}
+    PUBLIC
+    MPI::MPI_CXX
+  )
+endif()
 
 target_link_libraries(
   ${VIPRA_PROJECT_NAME}
   PUBLIC
   nlohmann_json::nlohmann_json
   antlr4_static
-  MPI::MPI_CXX
 )
 
 target_include_directories(

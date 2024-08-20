@@ -4,7 +4,10 @@
 
 namespace VIPRA {
 // NOLINTBEGIN(cppcoreguidelines-avoid-non-const-global-variables) Bug in clang-tidy
-MPI_Comm                        ParameterSweep::comm{};
+#ifdef VIPRA_USE_MPI
+MPI_Comm ParameterSweep::comm{};
+#endif
+
 int                             ParameterSweep::rank{};
 int                             ParameterSweep::size{};
 ParameterSweep::DeferedFinalize ParameterSweep::_finalize{};

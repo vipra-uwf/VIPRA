@@ -1,30 +1,35 @@
 #pragma once
 
-#include <string>
-
+#ifdef VIPRA_USE_MPI
 #include <mpi.h>
+#endif
+
 #include <cstddef>
+#include <string>
 #include <type_traits>
 
-#include "vipra/special_modules/parameters.hpp"
-
 #include "vipra/types/idx.hpp"
-#include "vipra/types/parameter.hpp"
 #include "vipra/types/util/result_or_void.hpp"
 
-#include "vipra/util/all_of_type.hpp"
-
 #include "vipra/parameter_sweep/ps_util.hpp"
+
+#include "vipra/logging/logging.hpp"
 
 namespace VIPRA {
 class ParameterSweep {
  public:
   static void initialize(int argc, char** argv)
   {
+#ifdef VIPRA_USE_MPI
     MPI_Init(&argc, &argv);
     MPI_Comm_dup(MPI_COMM_WORLD, &comm);
     MPI_Comm_rank(comm, &rank);
     MPI_Comm_size(comm, &size);
+    Log::info("MPI Initialized, rank: {}, size: {}", rank, size);
+#else
+    rank = 0;
+    size = 1;
+#endif
   }
 
   /**
@@ -87,7 +92,10 @@ class ParameterSweep {
 
     // update each worker to the correct sim count
     sim.set_sim_id(count);
+
+#ifdef VIPRA_USE_MPI
     MPI_Barrier(MPI_COMM_WORLD);
+#endif
   }
 
   [[nodiscard]] static auto get_rank() -> int { return rank; }
@@ -116,14 +124,18 @@ class ParameterSweep {
     DeferedFinalize() = default;
     ~DeferedFinalize()
     {
+#ifdef VIPRA_USE_MPI
       int flag = 0;
       MPI_Initialized(&flag);
       if ( flag ) MPI_Finalize();
+#endif
     }
   };
 
-  // NOLINTBEGIN
-  static MPI_Comm        comm;
+// NOLINTBEGIN
+#ifdef VIPRA_USE_MPI
+  static MPI_Comm comm;
+#endif
   static int             rank;
   static int             size;
   static DeferedFinalize _finalize;
@@ -149,6 +161,7 @@ class ParameterSweep {
       length = static_cast<int>(serialized.size());
     }
 
+#ifdef VIPRA_USE_MPI
     MPI_Bcast(&length, 1, MPI_INT, 0, comm);
 
     if ( rank != 0 ) {
@@ -160,6 +173,7 @@ class ParameterSweep {
     if ( rank != 0 ) {
       input.parse(serialized);
     }
+#endif
   }
 
   /**
@@ -180,6 +194,7 @@ class ParameterSweep {
       length = static_cast<int>(serialized.size());
     }
 
+#ifdef VIPRA_USE_MPI
     MPI_Bcast(&length, 1, MPI_INT, 0, comm);
 
     if ( rank != 0 ) {
@@ -191,6 +206,7 @@ class ParameterSweep {
     if ( rank != 0 ) {
       input.parse(serialized);
     }
+#endif
   }
 };
 }  // namespace VIPRA
