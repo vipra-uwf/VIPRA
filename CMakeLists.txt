@@ -66,6 +66,15 @@ FetchContent_Declare(nlohmann_json URL https://github.com/nlohmann/json/releases
 FetchContent_MakeAvailable(nlohmann_json)
 message(STATUS "Done Getting nlohmann_json")
 
+message(STATUS "Getting libdxfrw")
+FetchContent_Declare(
+  libdxfrw
+  GIT_REPOSITORY https://github.com/LibreCAD/libdxfrw.git
+)
+FetchContent_MakeAvailable(libdxfrw)
+message(STATUS "Done Getting libdxfrw")
+
+
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 include(ExternalAntlr4Cpp)
 include_directories(${ANTLR4_INCLUDE_DIRS})
@@ -78,6 +87,7 @@ target_link_libraries(
   nlohmann_json::nlohmann_json
   antlr4_static
   MPI::MPI_CXX
+  dxfrw
 )
 
 target_include_directories(
