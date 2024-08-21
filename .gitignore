@@ -50,7 +50,7 @@ latex
 html
 
 # Simulation
-VIPRA
+/VIPRA
 sim_output
 
 # Python
@@ -58,3 +58,6 @@ __pycache__
 *.gif
 *.jpeg
 *.png
+
+# dxf
+dwg2dxf
