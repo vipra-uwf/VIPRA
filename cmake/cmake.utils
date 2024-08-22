@@ -24,14 +24,22 @@ macro(vipra_add_all)
 endmacro()
 
 # Fetchs and adds a library from a given URL, or finds and adds it if no URL is provided
-function(vipra_add_library)
+macro(vipra_add_library)
   set(options)
-  set(oneValueArgs LIBNAME URL)
+  set(oneValueArgs LIBNAME URL LINK)
   set(multiValueArgs)
   cmake_parse_arguments(GET_LIB "${options}" "${oneValueArgs}"
     "${multiValueArgs}" ${ARGN})
 
+  if(NOT GET_LIB_LIBNAME)
+    message(FATAL_ERROR "vipra_add_library missing LIBNAME")
+  endif()
+
   message(STATUS "Getting " ${GET_LIB_LIBNAME})
+
+  if(NOT GET_LIB_LINK)
+    set(GET_LIB_LINK ${GET_LIB_LIBNAME})
+  endif()
 
   if(NOT GET_LIB_URL)
     message(STATUS "Searching Locally")
@@ -51,7 +59,7 @@ function(vipra_add_library)
   target_link_libraries(
     ${VIPRA_PROJECT_NAME}
     PUBLIC
-    ${GET_LIB_LIBNAME}
+    ${GET_LIB_LINK}
   )
-  message(STATUS "Done Getting" ${GET_LIB_LIBNAME})
-endfunction()
+  message(STATUS "Done Getting " ${GET_LIB_LIBNAME})
+endmacro()

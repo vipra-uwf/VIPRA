@@ -16,6 +16,8 @@ auto main(int argc, char** argv) -> int
   // Set the logging level to info, default is ERROR
   VIPRA::Log::set_level(VIPRA::Log::Level::INFO);
 
+
+
   // Initialize MPI engine
   VIPRA::ParameterSweep::initialize(argc, argv);
 

@@ -89,12 +89,14 @@ Additionally, if any external libraries are needed they can be added with:
 ```CMake
 vipra_add_library(
   LIBNAME *name*
-  LIBURL *url*
+  LIBURL  *url*
+  LINK    *library name*
 )
 ```
 with `liburl` being an optional url to pull the library from.
-
 If the url is not provided CMake will search for the library locally.
+
+`LINK` is the name used by the linker (`-l*LINK*`)  it defaults equal to `LIBNAME`.
 
 > !!! Important Note: vipra_add_library may not work for some libraries, in that case add the library manually through normal CMake commands. Let us know of any libraries that don't work.
 
