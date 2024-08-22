@@ -46,17 +46,14 @@ Each Declaration has a subset of components.
 
 Each section goes over what components are available for each.
 
-
+Example:
 ```
 Selector:
   Type: injured_person
   Select: 10%
 .
 ```
-
-// TODO(tyler): Consider removing this, may be redundant with the actual selector section.   
 `Type` and `Select` are both components of the [`Selector`](#selectors) declaration
-
 
 ---
 
@@ -456,7 +453,6 @@ Select: In @Elevator
 ---
 
 ## Selectors General Syntax Rules
-TODO(tyler): We should either put something in here, or take it out. 
 
 ---
 
@@ -1072,13 +1068,9 @@ With the difference being that:
 `Range Values` are written as follows:
 ```
 // Number Value Range -> 1, 2, or 3
-1-3
-or
 1 to 3
 
 // Float Value Range -> 1.0, 1.003, 1.11, 2.3, 2.5, 3.0, etc.
-1.0-3.0
-or
 1.0 to 3.0
 ```
 
@@ -1088,7 +1080,7 @@ Example:
 ```
 Selector:
   Type: typeA
-  Select: 10-20%
+  Select: 10 to 20%
 .
 ```
 
@@ -1116,13 +1108,9 @@ With the difference being that:
 Random Values are written as follows:
 ```
 // Number Random Value -> 1, 2, or 3 (different for each pedestrian)
-random 1-3
-// or
 random 1 to 3
 
 // Float Random Value -> 1.0, 1.003, 1.11, 2.3, 2.5, 3.0, etc. (different for each pedestrian)
-random 1.0-3.0
-// or
 random 1.0 to 3.0
 
 ```
@@ -1193,5 +1181,3 @@ States:
   waiting
 .
 ```
-
-\tableofcontents

@@ -23,5 +23,5 @@ Selector:
 Action (Luggage_Grabber):
   Condition: enter @Aisle
   Response: set velocity to {0}
-  Duration: random 10 - 30 seconds
+  Duration: random 10 to 30 seconds
 .
