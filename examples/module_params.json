@@ -4,7 +4,8 @@
       "max_timestep": 40000,
       "timestep_size": 0.005,
       "output_frequency": 100,
-      "random_seed": 12346345
+      "random_seed": 12346345,
+      "output_params": true
     }
   },
   "model": {

@@ -90,13 +90,33 @@ class Output : public Modules::Module<Output<output_ts...>>, public Modules::Out
    * @return Util::result_or_VOID_tuple<std::tuple<output_ts...>>::type 
    */
   auto write() -> std::tuple<Util::result_or_VOID_t<
-      decltype(std::declval<output_ts>().write(std::declval<std::filesystem::path>()))>...>
+                   decltype(std::declval<output_ts>().write(std::declval<std::filesystem::path>()))>...>
   {
     return std::apply(
         [&](auto&&... outputs) {
           return std::make_tuple(write_helper<decltype(outputs)>::write(outputs, _current_output_dir)...);
         },
         _outputs);
+  }
+
+  /**
+   * @brief Writes a string to a file in the current output directory
+   * 
+   * @param filename 
+   * @param value 
+   */
+  void write_to_file(std::string const& filename, std::string const& value)
+  {
+    std::filesystem::path filepath = _current_output_dir / filename;
+    std::ofstream         file(filepath);
+
+    if ( ! file.is_open() ) {
+      throw std::runtime_error("Could not open file for writing: " + filepath.string());
+    }
+
+    file << value;
+
+    file.close();
   }
 
   /**

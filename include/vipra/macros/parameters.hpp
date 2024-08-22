@@ -1,7 +1,5 @@
 #pragma once
 
-#include <type_traits>
-
 #define VIPRA_REGISTER_PARAMS(params...) \
   [[nodiscard]] auto parameters() { return std::make_tuple(params); }
 

@@ -1,13 +1,11 @@
 #pragma once
 
-#include "vipra/coord_modules/output.hpp"
-#include "vipra/modules.hpp"
 #include "vipra/modules/goals.hpp"
 #include "vipra/modules/input.hpp"
 #include "vipra/modules/model.hpp"
 #include "vipra/modules/obstacles.hpp"
-#include "vipra/modules/output.hpp"
 #include "vipra/modules/pedestrians.hpp"
+#include "vipra/special_modules/output.hpp"
 #include "vipra/util/template_specialization.hpp"
 
 namespace VIPRA::Checks {

@@ -1,14 +1,9 @@
 #pragma once
 
-#include <cstddef>
-#include <iostream>
-#include <tuple>
 #include <type_traits>
 #include <utility>
 
 #include "vipra/macros/parameters.hpp"
-
-#include "vipra/modules/model.hpp"
 
 #include "vipra/parameter_sweep/parameter_sweep.hpp"
 
@@ -17,16 +12,10 @@
 #include "vipra/special_modules/behavior_model.hpp"
 
 #include "vipra/types/float.hpp"
-#include "vipra/types/parameter.hpp"
 #include "vipra/types/seed.hpp"
 #include "vipra/types/state.hpp"
 #include "vipra/types/time.hpp"
-#include "vipra/types/util/result_or_void.hpp"
 #include "vipra/types/util/sim_output.hpp"
-
-#include "vipra/debug/debug_do.hpp"
-
-#include "vipra/util/all_of_type.hpp"
 
 // TODO(rolland): go through everything and handle errors more gracefully, currently we just throw
 
@@ -46,7 +35,8 @@ class SimType : public Modules::Module<SimType<model_t, output_t, pedset_t, goal
 
   VIPRA_REGISTER_PARAMS(VIPRA_PARAM("max_timestep", _maxTimestep),
                         VIPRA_PARAM("timestep_size", _timestepSize),
-                        VIPRA_PARAM("output_frequency", _outputFrequency), VIPRA_PARAM("random_seed", _seed))
+                        VIPRA_PARAM("output_frequency", _outputFrequency), VIPRA_PARAM("random_seed", _seed),
+                        VIPRA_PARAM("output_params", _outputParams))
 
   template <typename pedinput_t, typename obsinput_t, typename params_t>
   auto operator()(pedinput_t&& pedInput, obsinput_t&& obsInput, params_t&& params) -> output_data_t;
@@ -66,7 +56,7 @@ class SimType : public Modules::Module<SimType<model_t, output_t, pedset_t, goal
   obstacles_t                                   _map;
   BehaviorModel<pedset_t, obstacles_t, goals_t> _behaviorModel;
 
-  VIPRA::Random::Engine _engine{};
+  VIPRA::Random::Engine _engine;
 
   VIPRA::idx      _currSimIdx{};
   VIPRA::timestep _currTimestep{};
@@ -74,6 +64,7 @@ class SimType : public Modules::Module<SimType<model_t, output_t, pedset_t, goal
   VIPRA::timestep _maxTimestep{};
   VIPRA::seed     _seed{};
   VIPRA::timestep _outputFrequency{};
+  bool            _outputParams{false};
 
   void register_step(auto&& params);
   void config_step(auto const& params);
@@ -104,10 +95,8 @@ class SimType : public Modules::Module<SimType<model_t, output_t, pedset_t, goal
    */
 template <typename model_t, typename output_t, typename pedset_t, typename goals_t, typename obstacles_t>
 template <typename pedinput_t, typename obsinput_t, typename params_t>
-auto SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::operator()(pedinput_t&& pedInput,
-                                                                            obsinput_t&& obsInput,
-                                                                            params_t&&   params)
-    -> output_data_t
+auto SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::operator()(
+    pedinput_t&& pedInput, obsinput_t&& obsInput, params_t&& params) -> output_data_t
 {
   // TODO(rolland): issue #25 this assumes that a only a single node should ever run this function, there may be sitations where this isn't user friendly?
   if ( ! ParameterSweep::is_root() ) return {};
@@ -130,10 +119,8 @@ auto SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::operator()(pedi
 //                  - this is needed because of the delayed loading of parameters, with the operator() every node would load the parameters when they've already been updated
 template <typename model_t, typename output_t, typename pedset_t, typename goals_t, typename obstacles_t>
 template <typename pedinput_t, typename obsinput_t, typename params_t>
-auto SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::parallel_run(pedinput_t&& pedInput,
-                                                                              obsinput_t&& obsInput,
-                                                                              params_t&&   params)
-    -> output_data_t
+auto SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::parallel_run(
+    pedinput_t&& pedInput, obsinput_t&& obsInput, params_t&& params) -> output_data_t
 {
   if constexpr ( std::is_same_v<output_data_t, void> ) {
     run_sim(std::forward<pedinput_t>(pedInput), std::forward<obsinput_t>(obsInput),
@@ -151,6 +138,8 @@ auto SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::run_sim(pedinpu
                                                                          obsinput_t const& obsInput,
                                                                          params_t&& params) -> output_data_t
 {
+  params.reset();
+
   // initialize parameters, etc
   register_step(std::forward<params_t>(params));
 
@@ -172,6 +161,8 @@ auto SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::run_sim(pedinpu
     output_positions();
     ++_currTimestep;
   }
+
+  if ( _outputParams ) _output.write_to_file("parameters.json", params.get_used_parameters());
 
   // write output and if output returns a value, return that
   if constexpr ( std::is_same_v<output_data_t, void> ) {

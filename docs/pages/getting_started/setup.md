@@ -49,7 +49,7 @@ Example:
 make release mpi=on
 ```
 
-> !!! IMPORTANT NOTE: currently only [openMPI](https://www.open-mpi.org/) is known to work, this will be fixed in the future
+> !!! IMPORTANT NOTE: make sure that the version of MPI you are compiling with matches the version you run the simulation with.
 
 ---
 
