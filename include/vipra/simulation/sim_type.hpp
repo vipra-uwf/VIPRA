@@ -154,7 +154,7 @@ auto SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::run_sim(pedinpu
 
   // main loop
   while ( _currTimestep < _maxTimestep && ! _goals.is_sim_goal_met() ) {
-    _model.timestep(_pedset, _map, _goals, _output, state, _timestepSize, _currTimestep);
+    _model.timestep(_pedset, _map, _goals, state, _timestepSize, _currTimestep);
     _behaviorModel.timestep(_pedset, _map, _goals, state, _timestepSize);
     _pedset.update(state);
     _goals.update(_pedset, _map, _timestepSize);
@@ -205,7 +205,7 @@ void SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::initialize(pedi
   _map.initialize(obsInput);
   _pedset.initialize(pedInput, _map);
   _goals.initialize(_pedset, _map);
-  _model.initialize(_pedset, _map, _goals, _output, _engine);
+  _model.initialize(_pedset, _map, _goals, _engine);
   _behaviorModel.initialize(_pedset, _map, _goals, _seed);
 }
 

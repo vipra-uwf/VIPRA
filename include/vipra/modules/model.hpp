@@ -1,9 +1,5 @@
 #pragma once
 
-#include <utility>
-
-#include "vipra/modules/module.hpp"
-
 #include "vipra/random/random.hpp"
 
 #include "vipra/types/state.hpp"
@@ -20,19 +16,18 @@ class Model : public Util::CRTP<Model<class_t>> {
   using Util::CRTP<Model<class_t>>::self;
 
  public:
-  template <typename pedset_t, typename obstacles_t, typename goals_t, typename output_t>
+  template <typename pedset_t, typename obstacles_t, typename goals_t>
   void initialize(pedset_t const& pedset, obstacles_t const& obstacles, goals_t const& goals,
-                  output_t& output, VIPRA::Random::Engine& engine)
+                  VIPRA::Random::Engine& engine)
   {
-    self().init_step(pedset, obstacles, goals, output, engine);
+    self().init_step(pedset, obstacles, goals, engine);
   }
 
-  template <typename pedset_t, typename obstacles_t, typename goals_t, typename output_t>
+  template <typename pedset_t, typename obstacles_t, typename goals_t>
   void take_timestep(pedset_t const& pedset, obstacles_t const& obstacles, goals_t const& goals,
-                     output_t const& output, VIPRA::State& state, VIPRA::delta_t deltaT,
-                     VIPRA::timestep timestep)
+                     VIPRA::State& state, VIPRA::delta_t deltaT, VIPRA::timestep timestep)
   {
-    self().timestep(pedset, obstacles, goals, output, state, deltaT, timestep);
+    self().timestep(pedset, obstacles, goals, state, deltaT, timestep);
   }
 };
 

@@ -3,7 +3,6 @@
 // TODO(rolland): add all the includes
 
 #include "vipra/base_modules.hpp"
-#include "vipra/coordination_modules.hpp"
 #include "vipra/geometry/geometry.hpp"
 #include "vipra/macros/all_macros.hpp"
 #include "vipra/parameter_sweep/parameter_sweep.hpp"
