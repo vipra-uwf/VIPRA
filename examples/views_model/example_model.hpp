@@ -15,7 +15,7 @@ NEW_VIPRA_MODULE(ExampleModel, Model)
   VIPRA_MODEL_INIT_STEP { _initialPoints = pedset.all_coords(); }
 
   // Add in the timestep, this is where the model updates the pedestrians state
-  // Using VIPRA::Views the method can be defined in the .cpp file
+  // Using VIPRA::Views the method can be defined in the .cpp file, speeding up compilation times
   // This reduces performance and it is recommended to not use them for finalized modules
   VIPRA_MODEL_TIMESTEP { views_timestep(pedset, state, deltaT, timestep); }
 
@@ -23,6 +23,8 @@ NEW_VIPRA_MODULE(ExampleModel, Model)
   VIPRA::f_pnt  _radius;
   VIPRA::f3dVec _initialPoints;
 
+  // Using VIPRA::Views the method can be defined in the .cpp file, speeding up compilation times
+  // This reduces performance and it is recommended to not use them for finalized modules
   void views_timestep(VIPRA::Views::Pedestrians pedset, VIPRA::State & state, VIPRA::delta_t deltaT,
                       VIPRA::timestep timestep);
 };
