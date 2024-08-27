@@ -1,9 +1,7 @@
 #pragma once
 
 #include "vipra/base_modules/goals/pathing_graph.hpp"
-#include "vipra/data_structures/graph.hpp"
 
-#include "vipra/geometry/circle.hpp"
 #include "vipra/geometry/f3d.hpp"
 
 #include "vipra/macros/goals.hpp"
@@ -29,8 +27,6 @@ class AStar : public Modules::Module<AStar>, public Modules::Goals<AStar> {
 
   VIPRA_GOALS_INIT_STEP
   {
-    VIPRA_PERF_FUNCTION("astar::init");
-
     assert(pedset.num_pedestrians() > 0);
 
     VIPRA::size const pedCnt = pedset.num_pedestrians();
@@ -58,8 +54,6 @@ class AStar : public Modules::Module<AStar>, public Modules::Goals<AStar> {
 
   VIPRA_GOALS_UPDATE_STEP
   {
-    VIPRA_PERF_FUNCTION("astar::update");
-
     assert(pedset.num_pedestrians() > 0);
 
     for ( VIPRA::idx pedIdx = 0; pedIdx < pedset.num_pedestrians(); ++pedIdx ) {

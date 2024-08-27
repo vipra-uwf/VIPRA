@@ -2,23 +2,17 @@
 
 #include <algorithm>
 #include <concepts>
-#include <functional>
-#include <numeric>
 #include <optional>
 #include <queue>
 #include <type_traits>
-
-#include <iostream>
 #include <unordered_set>
-
-#include "vipra/geometry/f3d.hpp"
 
 #include "vipra/types/float.hpp"
 #include "vipra/types/idx.hpp"
-
 #include "vipra/types/util/result_or_void.hpp"
 
-#include "vipra/debug/debug_do.hpp"
+#include "vipra/macros/performance.hpp"
+
 #include "vipra/util/invoke_result_or.hpp"
 
 namespace VIPRA::Algo {
@@ -30,11 +24,8 @@ namespace AStar {
  * @tparam graph_t 
  */
 template <typename graph_t>
-concept Graph = requires(const graph_t graph, VIPRA::idx idx)
-{
-  {
-    graph.neighbors(idx)
-    } -> std::same_as<std::vector<VIPRA::idx> const&>;
+concept Graph = requires(const graph_t graph, VIPRA::idx idx) {
+  { graph.neighbors(idx) } -> std::same_as<std::vector<VIPRA::idx> const&>;
 };
 
 /**
@@ -43,11 +34,8 @@ concept Graph = requires(const graph_t graph, VIPRA::idx idx)
  * @tparam func_t 
  */
 template <typename func_t>
-concept distance_func = requires(func_t func, VIPRA::idx idx1, VIPRA::idx idx2)
-{
-  {
-    func(idx1, idx2)
-    } -> std::same_as<VIPRA::f_pnt>;
+concept distance_func = requires(func_t func, VIPRA::idx idx1, VIPRA::idx idx2) {
+  { func(idx1, idx2) } -> std::same_as<VIPRA::f_pnt>;
 };
 
 /**
@@ -56,9 +44,8 @@ concept distance_func = requires(func_t func, VIPRA::idx idx1, VIPRA::idx idx2)
  * @tparam func_t 
  */
 template <typename func_t>
-concept conversion_func = std::is_same_v<func_t, VOID> || requires(func_t func, VIPRA::idx idx1)
-{
-  {func(idx1)};
+concept conversion_func = std::is_same_v<func_t, VOID> || requires(func_t func, VIPRA::idx idx1) {
+  { func(idx1) };
 };
 }  // namespace AStar
 
@@ -76,9 +63,9 @@ concept conversion_func = std::is_same_v<func_t, VOID> || requires(func_t func, 
  */
 template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
           AStar::conversion_func conversion_f_t = VOID>
-[[nodiscard]] constexpr auto astar(VIPRA::idx start, VIPRA::idx end, graph_t const& graph,
-                                   distance_f_t&&   distance_func,
-                                   conversion_f_t&& conversion_func = VOID{}) noexcept
+VIPRA_PERF_FUNC [[nodiscard]] constexpr auto astar(VIPRA::idx start, VIPRA::idx end, graph_t const& graph,
+                                                   distance_f_t&&   distance_func,
+                                                   conversion_f_t&& conversion_func = VOID{}) noexcept
     -> std::optional<std::vector<
         std::remove_reference_t<Util::invoke_result_or_t<VIPRA::idx, conversion_f_t, VIPRA::idx>>>>
 {

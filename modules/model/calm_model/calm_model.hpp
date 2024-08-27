@@ -1,16 +1,13 @@
 #pragma once
 
-#include <filesystem>
-#include <tuple>
-#include <type_traits>
-
+#include <gperftools/profiler.h>
+#include "vipra/macros/performance.hpp"
 #include "vipra/modules/model.hpp"
 
 #include "vipra/macros/model.hpp"
 #include "vipra/macros/module.hpp"
 #include "vipra/macros/parameters.hpp"
 
-#include "vipra/modules/module.hpp"
 #include "vipra/random/distributions.hpp"
 
 #include "calm_collision.hpp"
@@ -38,7 +35,6 @@ NEW_VIPRA_MODULE(Model, Model)
   {
     _peds.resize(pedset.num_pedestrians());
     _collision.initialize(pedset, goals, _peds);
-    _collision.assign_race_statuses(_raceStatuses, _inRace);
 
     _peds.masses = VIPRA::Random::make_distribution<VIPRA::Random::normal_distribution<>>(
         {_config.meanMass, _config.massStdDev}, _peds.size(), engine);
@@ -53,8 +49,6 @@ NEW_VIPRA_MODULE(Model, Model)
   // NOLINTNEXTLINE(bugprone-easily-swappable-parameters, misc-unused-parameters)
   VIPRA_MODEL_TIMESTEP
   {
-    VIPRA_PERF_FUNCTION("calm::model_step");
-
     calc_shoulders(pedset.all_coords(), goals.current_goals());
     calc_neighbors(pedset, obstacles, goals);
     calc_betas();
@@ -62,43 +56,46 @@ NEW_VIPRA_MODULE(Model, Model)
 
     if ( timestep > 0 ) {
       _collision.race_detection(pedset, _peds, goals, timestep, obstacles);
-      _collision.assign_race_statuses(_raceStatuses, _inRace);
     }
   }
 
  private:
   ModelData       _peds;
-  ConfigData      _config;
+  ConfigData      _config{};
   CALM::Collision _collision;
 
-  std::vector<RaceStatus>         _raceStatuses;
-  std::vector<std::vector<bool>>  _inRace;
   static constexpr VIPRA::delta_t SLIDING_GOAL_TIME = 0.1F;
   static constexpr VIPRA::f_pnt   EQUILIBRIUM_DISTANCE = 0.382;
   static constexpr VIPRA::f_pnt   EQUILIBRIUM_RESOLUTION = 0.01F;
 
-  void calc_neighbors(auto const& pedset, auto const& /*obstacles*/, auto const& goals);
-  void update_state(auto const& pedset, auto const& goals, VIPRA::State& state, VIPRA::delta_t deltaT);
-  auto is_path_blocked(VIPRA::idx pedIdx, VIPRA::f3d veloc, VIPRA::f_pnt maxDist, auto const& obstacles)
-      ->VIPRA::f_pnt;
+  VIPRA_PERF_FUNC void calc_neighbors(auto const& pedset, auto const& /*obstacles*/, auto const& goals);
+  VIPRA_PERF_FUNC void update_state(auto const& pedset, auto const& goals, VIPRA::State& state,
+                                    VIPRA::delta_t deltaT);
+  VIPRA_PERF_FUNC auto is_path_blocked(VIPRA::idx pedIdx, VIPRA::f3d veloc, VIPRA::f_pnt maxDist,
+                                       auto const& obstacles) -> VIPRA::f_pnt;
 
-  void        calc_shoulders(VIPRA::f3dVec const&, VIPRA::f3dVec const&);
-  static auto obj_spatial_test(const VIPRA::Geometry::Rectangle&, VIPRA::f3d, VIPRA::f3d)->bool;
-  static auto obj_direction_test(VIPRA::f3d, VIPRA::f3d, VIPRA::f3d)->bool;
-  static auto is_ped_toward_goal(VIPRA::f3d, VIPRA::f3d, VIPRA::f3d)->bool;
+  VIPRA_PERF_FUNC void        calc_shoulders(VIPRA::f3dVec const&, VIPRA::f3dVec const&);
+  VIPRA_PERF_FUNC static auto obj_spatial_test(const VIPRA::Geometry::Rectangle&, VIPRA::f3d,
+                                               VIPRA::f3d) -> bool;
+  VIPRA_PERF_FUNC static auto obj_direction_test(VIPRA::f3d, VIPRA::f3d, VIPRA::f3d)->bool;
+  VIPRA_PERF_FUNC static auto is_ped_toward_goal(VIPRA::f3d, VIPRA::f3d, VIPRA::f3d)->bool;
 
-  auto rect_from_shoulders(VIPRA::idx, VIPRA::f3d, VIPRA::f3d)->VIPRA::Geometry::Rectangle;
+  VIPRA_PERF_FUNC auto rect_from_shoulders(VIPRA::idx, VIPRA::f3d, VIPRA::f3d)->VIPRA::Geometry::Rectangle;
 
-  void                  calc_betas();
-  static constexpr auto calc_beta(VIPRA::f_pnt distance)->VIPRA::f_pnt;
+  VIPRA_PERF_FUNC void                               calc_betas();
+  VIPRA_PERF_FUNC VIPRA_INLINE static constexpr auto calc_beta(VIPRA::f_pnt distance) -> VIPRA::f_pnt
+  {
+    constexpr VIPRA::f_pnt VAL_A = -2.11;
+    constexpr VIPRA::f_pnt VAL_B = 0.366;
+    constexpr VIPRA::f_pnt VAL_C = 0.966;
+    return (VAL_C - std::exp(VAL_A * (distance - VAL_B)));
+  }
 };
 
 // ------------------- IMPLEMENTATIONS -----------------------------------------------------
 
 void Model::calc_neighbors(auto const& pedset, auto const& /*obstacles*/, auto const& goals)
 {
-  VIPRA_PERF_FUNCTION("calm::calc_neighbors")
-
   const VIPRA::size pedCnt = pedset.num_pedestrians();
   auto const&       coords = pedset.all_coords();
 
@@ -109,13 +106,13 @@ void Model::calc_neighbors(auto const& pedset, auto const& /*obstacles*/, auto c
     VIPRA::f3d                 pedGoal = goals.current_goal(i);
     VIPRA::Geometry::Rectangle pedRect = rect_from_shoulders(i, pedCoords, pedGoal);
 
-    auto nearest = pedset.closest_ped(i, [&](VIPRA::idx other) {
+    auto nearest = pedset.closest_ped(i, [&](VIPRA::idx other) VIPRA_PERF_FUNC {
       if ( i == other || goals.is_goal_met(other) ) return false;
 
       auto         otherCoords = coords[other];
       VIPRA::f_pnt distance = pedCoords.distance_to(otherCoords);
 
-      if ( (_raceStatuses[i] == 0 && _raceStatuses[other] == 1) ||
+      if ( (_collision.raceStatuses[i] == 0 && _collision.raceStatuses[other] == 1) ||
            std::fabs(distance - EQUILIBRIUM_DISTANCE) < EQUILIBRIUM_RESOLUTION )
         return false;
 
@@ -138,8 +135,6 @@ void Model::calc_neighbors(auto const& pedset, auto const& /*obstacles*/, auto c
 
 void Model::update_state(auto const& pedset, auto const& goals, VIPRA::State& state, VIPRA::delta_t deltaT)
 {
-  VIPRA_PERF_FUNCTION("calm::update_state")
-
   const VIPRA::size pedCnt = pedset.num_pedestrians();
   auto const&       velocities = pedset.all_velocities();
   auto const&       coords = pedset.all_coords();
@@ -174,8 +169,6 @@ void Model::update_state(auto const& pedset, auto const& goals, VIPRA::State& st
 auto Model::is_path_blocked(VIPRA::idx pedIdx, VIPRA::f3d velocity, VIPRA::f_pnt maxDist,
                             auto const& obstacles) -> VIPRA::f_pnt
 {
-  VIPRA_PERF_FUNCTION("calm::is_path_blocked")
-
   VIPRA::Geometry::Line shoulders = _peds.shoulders[pedIdx];
   if ( shoulders.start == shoulders.end ) {
     return -1;
@@ -197,5 +190,3 @@ auto Model::is_path_blocked(VIPRA::idx pedIdx, VIPRA::f3d velocity, VIPRA::f_pnt
 }
 
 }  // namespace CALM
-
-// CHECK_MODULE(ModelModule, CALM::Model)

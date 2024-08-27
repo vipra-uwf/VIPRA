@@ -72,8 +72,8 @@ class PathingGraph : public VIPRA::DataStructures::GraphMixin<PathingGraph, Grid
    * @param xCount
    * @return VIPRA::idx
    */
-  [[nodiscard]] static auto get_index(VIPRA::size gridX, VIPRA::size gridY, VIPRA::size xCount) noexcept
-      -> VIPRA::idx
+  [[nodiscard]] static auto get_index(VIPRA::size gridX, VIPRA::size gridY,
+                                      VIPRA::size xCount) noexcept -> VIPRA::idx
   {
     return gridX + (gridY * xCount);
   }

@@ -51,6 +51,10 @@ make release mpi=on
 
 > !!! IMPORTANT NOTE: make sure that the version of MPI you are compiling with matches the version you run the simulation with.
 
+## Using Gperftools
+
+[Gperftools](https://github.com/gperftools/gperftools) can be used with `make perf gperf=on`
+
 ---
 
 ## Running the Provided Simulation

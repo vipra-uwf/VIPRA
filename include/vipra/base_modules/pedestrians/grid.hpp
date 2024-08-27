@@ -58,15 +58,14 @@ class Grid : public Modules::Module<Grid>, public Modules::Pedestrians<Grid> {
     _spatialGrid.update_grids(get_coordinates(), state.positions);
   }
 
-  [[nodiscard]] auto conditional_closest_ped_impl(VIPRA::idx ped, auto&& condition) const -> VIPRA::idx
+  VIPRA_PERF_FUNC [[nodiscard]] auto conditional_closest_ped_impl(VIPRA::idx ped,
+                                                                  auto&&     condition) const -> VIPRA::idx
   {
-    VIPRA_PERF_FUNCTION("grid::conditional_closest_ped")
-
     VIPRA::f_pnt minDist = std::numeric_limits<VIPRA::f_pnt>::max();
     VIPRA::idx   minIdx = ped;
 
     // Check all surrounding grids for the nearest pedestrian that matches the predicate
-    _spatialGrid.for_each_neighbor(ped_coords(ped), [&](VIPRA::idx other) {
+    _spatialGrid.for_each_neighbor(ped_coords(ped), [&](VIPRA::idx other) VIPRA_PERF_FUNC {
       VIPRA::f_pnt dist = distance(ped, other);
 
       if ( dist < minDist ) {
@@ -80,15 +79,13 @@ class Grid : public Modules::Module<Grid>, public Modules::Pedestrians<Grid> {
     return minIdx;
   }
 
-  [[nodiscard]] auto closest_ped_impl(VIPRA::idx ped) const -> VIPRA::idx
+  VIPRA_PERF_FUNC [[nodiscard]] auto closest_ped_impl(VIPRA::idx ped) const -> VIPRA::idx
   {
-    VIPRA_PERF_FUNCTION("grid::closest_ped")
-
     VIPRA::f_pnt minDist = std::numeric_limits<VIPRA::f_pnt>::max();
     VIPRA::idx   minIdx = ped;
 
     // Check all surrounding grids for the nearest pedestrian that matches the predicate
-    _spatialGrid.for_each_neighbor(ped_coords(ped), [&](VIPRA::idx other) {
+    _spatialGrid.for_each_neighbor(ped_coords(ped), [&](VIPRA::idx other) VIPRA_PERF_FUNC {
       VIPRA::f_pnt dist = ped_coords(ped).distance_to(ped_coords(other));
 
       if ( dist < minDist ) {
@@ -98,6 +95,22 @@ class Grid : public Modules::Module<Grid>, public Modules::Pedestrians<Grid> {
     });
 
     return minIdx;
+  }
+
+  VIPRA_PERF_FUNC [[nodiscard]] auto all_neighbors_within_impl(VIPRA::idx pedIdx, VIPRA::f_pnt radius) const
+      -> std::vector<VIPRA::idx>
+  {
+    std::vector<VIPRA::idx> neighbors;
+
+    _spatialGrid.for_each_neighbor(ped_coords(pedIdx), [&](VIPRA::idx other) VIPRA_PERF_FUNC {
+      VIPRA::f_pnt dist = ped_coords(pedIdx).distance_to(ped_coords(other));
+
+      if ( dist <= radius ) {
+        neighbors.push_back(other);
+      }
+    });
+
+    return neighbors;
   }
 
  private:

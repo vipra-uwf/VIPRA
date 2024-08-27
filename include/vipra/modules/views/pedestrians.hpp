@@ -20,18 +20,21 @@ class Pedestrians : public Modules::Pedestrians<Pedestrians> {
   using allvelocs_func_t = std::vector<VIPRA::f3d> const&(void const*);
   using closest_func_t = VIPRA::idx(void const*, VIPRA::idx);
   using condclosest_func_t = VIPRA::idx(void const*, VIPRA::idx, std::function<bool(VIPRA::idx)> const&);
+  using allneighborswithin_func_t = std::vector<VIPRA::idx>(void const*, VIPRA::idx pedIdx,
+                                                            VIPRA::f_pnt radius);
 
  private:
   void const* _module;
 
-  dist_func_t*        _dist;
-  numped_func_t*      _numpeds;
-  pedcoords_func_t*   _pedcoords;
-  allcoords_func_t*   _allcoords;
-  pedveloc_func_t*    _pedveloc;
-  allvelocs_func_t*   _allveloc;
-  closest_func_t*     _closestped;
-  condclosest_func_t* _condclosest;
+  dist_func_t*               _dist;
+  numped_func_t*             _numpeds;
+  pedcoords_func_t*          _pedcoords;
+  allcoords_func_t*          _allcoords;
+  pedveloc_func_t*           _pedveloc;
+  allvelocs_func_t*          _allveloc;
+  closest_func_t*            _closestped;
+  condclosest_func_t*        _condclosest;
+  allneighborswithin_func_t* _allneighborswithin;
 
  public:
   template <typename module_t>
@@ -67,6 +70,11 @@ class Pedestrians : public Modules::Pedestrians<Pedestrians> {
 
     _condclosest = +[](void const* ptr, VIPRA::idx pedIdx, std::function<bool(VIPRA::idx)> const& cond) {
       return static_cast<module_t const*>(ptr)->conditional_closest_ped_impl(pedIdx, cond);
+    };
+
+    _allneighborswithin =
+        +[](void const* ptr, VIPRA::idx pedIdx, VIPRA::f_pnt radius) -> std::vector<VIPRA::idx> {
+      return static_cast<module_t const*>(ptr)->all_neighbors_within(pedIdx, radius);
     };
 
     // NOLINTEND(cppcoreguidelines-prefer-member-initializer)
@@ -107,6 +115,12 @@ class Pedestrians : public Modules::Pedestrians<Pedestrians> {
     else {
       return _condclosest(_module, pedIdx, std::forward<condition_t>(condition));
     }
+  }
+
+  [[nodiscard]] auto all_neighbors_within(VIPRA::idx   pedIdx,
+                                          VIPRA::f_pnt radius) const -> std::vector<VIPRA::idx>
+  {
+    return _allneighborswithin(_module, pedIdx, radius);
   }
 };
 }  // namespace VIPRA::Views

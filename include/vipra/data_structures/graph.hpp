@@ -3,6 +3,9 @@
 #include <vector>
 
 #include "vipra/algorithms/astar.hpp"
+
+#include "vipra/geometry/f3d.hpp"
+
 #include "vipra/types/idx.hpp"
 
 namespace VIPRA::DataStructures {
@@ -87,8 +90,7 @@ class GraphMixin {
  * @tparam data_t 
  */
 template <typename data_t>
-class Graph : public GraphMixin<void, data_t> {
-};
+class Graph : public GraphMixin<void, data_t> {};
 
 static_assert(Algo::AStar::Graph<Graph<VIPRA::f3d>>);
 }  // namespace VIPRA::DataStructures
