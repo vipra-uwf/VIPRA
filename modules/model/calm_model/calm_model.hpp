@@ -1,6 +1,5 @@
 #pragma once
 
-#include <gperftools/profiler.h>
 #include "vipra/macros/performance.hpp"
 #include "vipra/modules/model.hpp"
 

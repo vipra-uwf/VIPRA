@@ -4,12 +4,11 @@
  * 
  */
 
-#include <iostream>
-
 #include <vipra.hpp>
 
 #include "modules/model/calm_model/calm_model.hpp"
 #include "vipra/logging/logging.hpp"
+#include "vipra/util/cli_arguments.hpp"
 
 auto main(int argc, char** argv) -> int
 {
@@ -19,13 +18,12 @@ auto main(int argc, char** argv) -> int
   // Initialize MPI engine
   VIPRA::ParameterSweep::initialize(argc, argv);
 
-  // Get sim count from arguments
-  if ( argc != 2 )
-  {
-    std::cerr << "Usage: " << argv[0] << " <simCount>" << std::endl;
-    return 1;
-  }
-  size_t simCount = std::stoul(argv[1]);
+  // Register Command Line Arguments
+  VIPRA::Args::register_arg("count", "1", VIPRA::ArgType::REQUIRED | VIPRA::ArgType::VALUE_REQUIRED);
+  VIPRA::Args::register_arg("map", VIPRA::ArgType::REQUIRED | VIPRA::ArgType::VALUE_REQUIRED);
+  VIPRA::Args::register_arg("peds", VIPRA::ArgType::REQUIRED | VIPRA::ArgType::VALUE_REQUIRED);
+  VIPRA::Args::register_arg("params", "module_params.json", VIPRA::ArgType::REQUIRED | VIPRA::ArgType::VALUE_REQUIRED);
+  VIPRA::Args::parse(argc, argv);
 
   // Create Simulation
   auto sim = VIPRA::simulation(
@@ -45,10 +43,10 @@ auto main(int argc, char** argv) -> int
   // Run the parameter sweep
   VIPRA::ParameterSweep::run(
     sim,
-    VIPRA::Input::JSON{"maps/pedestrians/a320/a320_144_pedestrians.json"},
-    VIPRA::Input::JSON{"maps/obstacles/a320/a320_polygons.json"},
-    VIPRA::Parameters{VIPRA::Input::JSON{"examples/module_params.json"}},
-    simCount,
+    VIPRA::Input::JSON{VIPRA::Args::get("peds")},
+    VIPRA::Input::JSON{VIPRA::Args::get("map")},
+    VIPRA::Parameters{VIPRA::Input::JSON{VIPRA::Args::get("params")}},
+    VIPRA::Args::get<size_t>("count"),
     [](VIPRA::idx simId) {
       VIPRA::Log::info("Simulation id: {} complete on: {}", simId, VIPRA::ParameterSweep::get_rank());
     });
