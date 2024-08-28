@@ -22,7 +22,6 @@
 #include "vipra/macros/module.hpp"
 
 namespace VIPRA::Input {
-
 /**
   * @brief Parameter and Polygon qualified dxf input module
   * 
@@ -46,7 +45,6 @@ public:
   [[nodiscard]] static auto get_polygons(std::vector<std::shared_ptr<DRW_Vertex>>& vertexList)
       -> std::optional<std::vector<VIPRA::Geometry::Polygon>>;
 
-
 private:
   std::filesystem::path _filepath;
 
@@ -54,6 +52,7 @@ private:
 
 };
 }
+
 
 /**
    * @brief Loads the DXF file from the given path
@@ -94,6 +93,7 @@ inline auto VIPRA::Input::DXF::get_impl<std::vector<VIPRA::Geometry::Polygon>> (
 }
 
 
+
 class DRW_Reader : public DRW_Interface {
 public:
   static const int NUM_SUBDIVISIONS = 126;
@@ -101,7 +101,15 @@ public:
   ~DRW_Reader() {}
 
   const std::vector<VIPRA::Geometry::Polygon> &getVipraPolygons() {
-    return this->vipra_polygons;
+    return this->obstacles;
+  };
+
+  const std::vector<VIPRA::Geometry::Polygon> &getVipraGoals() {
+    return this->goals;
+  };
+
+  const std::vector<VIPRA::Geometry::Polygon> &getVipraPedestrians() {
+    return this->pedestrians;
   };
 
   /** Called when header is parsed.  */
@@ -300,101 +308,53 @@ public:
   };
 
 
+  /***************************
+   * Unused, expand as needed.
+   **************************/
   /** Called for every spline */
   void addSpline(const DRW_Spline* data) {};
-
-
   /** Called for every spline knot value */
   void addKnot(const DRW_Entity& data) {};
-
-
   /** Called for every insert. */
   void addInsert(const DRW_Insert& data) {};
-  
   /** Called for every trace start */
   void addTrace(const DRW_Trace& data) {};
-  
   /** Called for every 3dface start */
   void add3dFace(const DRW_3Dface& data) {};
-
   /** Called for every solid start */
   void addSolid(const DRW_Solid& data) {};
-
   /** Called for every Multi Text entity. */
   void addMText(const DRW_MText& data) {};
-
   /** Called for every Text entity. */
   void addText(const DRW_Text& data) {};
-
-  /**
-   * Called for every aligned dimension entity. 
-   */
+  /** Called for every aligned dimension entity. */
   void addDimAlign(const DRW_DimAligned *data) {};
-  /**
-   * Called for every linear or rotated dimension entity. 
-   */
+  /** Called for every linear or rotated dimension entity. */
   void addDimLinear(const DRW_DimLinear *data) {};
-
-  /**
-   * Called for every radial dimension entity. 
-   */
+  /** Called for every radial dimension entity. */
   void addDimRadial(const DRW_DimRadial *data) {};
-
-  /**
-   * Called for every diametric dimension entity. 
-   */
+  /** Called for every diametric dimension entity. */
   void addDimDiametric(const DRW_DimDiametric *data) {};
-
-  /**
-   * Called for every angular dimension (2 lines version) entity. 
-   */
+  /** Called for every angular dimension (2 lines version) entity. */
   void addDimAngular(const DRW_DimAngular *data) {};
-
-  /**
-   * Called for every angular dimension (3 points version) entity. 
-   */
+  /** Called for every angular dimension (3 points version) entity. */
   void addDimAngular3P(const DRW_DimAngular3p *data) {};
-
-  /**
-   * Called for every ordinate dimension entity. 
-   */
-  void addDimOrdinate(const DRW_DimOrdinate *data) {};
-  
-  /** 
-   * Called for every leader start. 
-   */
+  /** Called for every ordinate dimension entity. */
+  void addDimOrdinate(const DRW_DimOrdinate *data) {};  
+  /** Called for every leader start. */
   void addLeader(const DRW_Leader *data) {};
-
-  /** 
-   * Called for every hatch entity. 
-   */
+  /** Called for every hatch entity. */
   void addHatch(const DRW_Hatch *data) {};
-
-  /**
-   * Called for every viewport entity.
-   */
+  /** Called for every viewport entity. */
   void addViewport(const DRW_Viewport& data) {};
-
-  /**
-   * Called for every image entity. 
-   */
+  /** Called for every image entity. */
   void addImage(const DRW_Image *data) {};
-
-  /**
-   * Called for every image definition.
-   */
+  /** Called for every image definition. */
   void linkImage(const DRW_ImageDef *data) {};
-
-  /**
-   * Called for every comment in the DXF file (code 999).
-   */
+  /** Called for every comment in the DXF file (code 999). */
   void addComment(const char* comment) {};
-
-  /**
-   * Called for PLOTSETTINGS object definition.
-   */
+  /** Called for PLOTSETTINGS object definition. */
   void addPlotSettings(const DRW_PlotSettings *data) {};
-
   void writeHeader(DRW_Header& data) {};
   void writeBlocks() {};
   void writeBlockRecords() {};
@@ -406,6 +366,8 @@ public:
   void writeDimstyles() {};
   void writeObjects() {};
   void writeAppId() {};
+  /**************************/
+
 
   private:
     std::vector<VIPRA::Geometry::Polygon> vipra_polygons;
@@ -451,6 +413,7 @@ inline auto DRW_Reader::get_polygon(std::vector<std::shared_ptr<DRW_Vertex>>& dx
   return points;
 }
 
+
 /**
  * @brief Takes in a list of vectors in the form of DRW_Vertex and returns a polygon (f3d) usable by VIPRA
  * 
@@ -472,6 +435,7 @@ inline auto DRW_Reader::get_2D_vector_polygon(std::vector<std::shared_ptr<DRW_Ve
 
   return points;
 }
+
 
 /**
  * @brief Takes in a list of vectors in the form of DRW_Vertex and returns a polygon (f3d) usable by VIPRA
