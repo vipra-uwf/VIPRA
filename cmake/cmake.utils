@@ -26,8 +26,8 @@ endmacro()
 # Fetchs and adds a library from a given URL, or finds and adds it if no URL is provided
 macro(vipra_add_library)
   set(options)
-  set(oneValueArgs LIBNAME URL LINK)
-  set(multiValueArgs)
+  set(oneValueArgs LIBNAME URL LINK GIT_URL GIT_TAG)
+  set(multiValueArgs TURN_ON TURN_OFF)
   cmake_parse_arguments(GET_LIB "${options}" "${oneValueArgs}"
     "${multiValueArgs}" ${ARGN})
 
@@ -35,25 +35,43 @@ macro(vipra_add_library)
     message(FATAL_ERROR "vipra_add_library missing LIBNAME")
   endif()
 
+  foreach( opt IN LISTS GET_LIB_TURN_ON )
+    message(STATUS "Turning ON " ${GET_LIB_LIBNAME} ": "  ${opt})
+    set (${opt} ON)
+  endforeach()
+
+  foreach( opt IN LISTS GET_LIB_TURN_OFF )
+    message(STATUS "Turning OFF " ${GET_LIB_LIBNAME} ": "  ${opt})
+    set (${opt} ON)
+  endforeach()
+  
   message(STATUS "Getting " ${GET_LIB_LIBNAME})
 
   if(NOT GET_LIB_LINK)
-    set(GET_LIB_LINK ${GET_LIB_LIBNAME})
+      set(GET_LIB_LINK ${GET_LIB_LIBNAME})
   endif()
 
-  if(NOT GET_LIB_URL)
+  if( NOT GET_LIB_URL AND NOT GET_LIB_GIT_URL )
     message(STATUS "Searching Locally")
     find_package(${GET_LIB_LIBNAME} REQUIRED)
   else()
-    message(STATUS "Fetching URL " ${GET_LIB_URL})
     include(FetchContent)
-    FetchContent_Declare(${GET_LIB_LIBNAME} URL ${GET_LIB_URL})
+
+    if ( GET_LIB_GIT_URL )
+      message(STATUS "Fetching From Git " ${GET_LIB_GIT_URL} ":" ${GET_LIB_GIT_TAG})
+      FetchContent_Declare(${GET_LIB_LIBNAME} GIT_REPOSITORY ${GET_LIB_GIT_URL} GIT_TAG ${GET_LIB_GIT_TAG})
+    else()
+      message(STATUS "Fetching From URL " ${GET_LIB_URL})
+      FetchContent_Declare(${GET_LIB_LIBNAME} URL ${GET_LIB_URL})
+    endif()
+    
     FetchContent_MakeAvailable(${GET_LIB_LIBNAME})
     FetchContent_GetProperties(${GET_LIB_LIBNAME})
 
     if(NOT ${GET_LIB_LIBNAME}_POPULATED)
       message(FATAL_ERROR "Unable to Get " ${GET_LIB_LIBNAME})
     endif()
+
   endif()
 
   target_link_libraries(

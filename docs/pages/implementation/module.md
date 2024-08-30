@@ -87,14 +87,33 @@ This will add all source and header files to the VIPRA project.
 
 Additionally, if any external libraries are needed they can be added with:
 ```CMake
+# If searching locally
+vipra_add_library(
+  LIBNAME *name*
+  LINK    *library name for linker, optional*
+  TURN_ON *list of options to turn on, optional*
+  TURN_OFF *list of options to turn off, optional*
+)
+
+# If pulling a .tar file
 vipra_add_library(
   LIBNAME *name*
   LIBURL  *url*
-  LINK    *library name*
+  LINK    *library name for linker, optional*
+  TURN_ON *list of options to turn on, optional*
+  TURN_OFF *list of options to turn off, optional*
+)
+
+# If pulling from git
+vipra_add_library(
+  LIBNAME *name*
+  GIT_URL *url*
+  GIT_TAG *tag, optional*
+  LINK    *library name for linker, optional*
+  TURN_ON *list of options to turn on, optional*
+  TURN_OFF *list of options to turn off, optional*
 )
 ```
-with `liburl` being an optional url to pull the library from.
-If the url is not provided CMake will search for the library locally.
 
 `LINK` is the name used by the linker (`-l*LINK*`)  it defaults equal to `LIBNAME`.
 
@@ -109,6 +128,6 @@ vipra_add_all()
 
 vipra_add_library(
   LIBNAME nlohmann_json
-  URL https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz
+  URL https://github.com/nlohmann/json.git
 )
 ```
