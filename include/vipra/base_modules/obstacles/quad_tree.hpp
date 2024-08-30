@@ -60,8 +60,6 @@ class QuadTree : public VIPRA::Modules::Module<QuadTree>, public VIPRA::Modules:
 
   [[nodiscard]] auto ray_hit_impl(VIPRA::f3d start, VIPRA::f3d end) const -> VIPRA::f_pnt
   {
-    VIPRA_PERF_FUNCTION("quad_tree::ray_hit");
-
     VIPRA::f_pnt hit = std::numeric_limits<VIPRA::f_pnt>::max();
     for ( auto const& obstacle : _obstacles ) {
       for ( auto const& edge : obstacle.edges ) {

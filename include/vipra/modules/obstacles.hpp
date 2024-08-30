@@ -1,11 +1,7 @@
 #pragma once
 
-#include <concepts>
 #include <map>
-#include <utility>
 #include <vector>
-
-#include "vipra/modules/module.hpp"
 
 #include "vipra/geometry/f3d.hpp"
 #include "vipra/geometry/polygon.hpp"

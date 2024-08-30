@@ -1,23 +1,24 @@
 option(VIPRA_BUILD_LIBRARY ON "Build as a library")
 option(VIPRA_BUILD_EXECUTABLE OFF "Build as an executable")
 option(VIPRA_DEBUG_MODE OFF "Build in debug mode")
-option(VIPRA_PERF_TESTING OFF "Enable performance testing")
+option(VIPRA_PERF_TESTING OFF "Enable performance profiling")
+option(VIPRA_USE_GPERF OFF "Use Gperftools for profiling")
 option(VIPRA_USE_MPI OFF "Enable MPI for parameter sweeps")
 
-if(VIPRA_BUILD_LIBRARY AND VIPRA_BUILD_EXECUTABLE)
+if ( VIPRA_BUILD_LIBRARY AND VIPRA_BUILD_EXECUTABLE )
   message(FATAL_ERROR "Cannot build both library and executable")
 endif()
 
-if(NOT VIPRA_BUILD_LIBRARY AND NOT VIPRA_BUILD_EXECUTABLE)
+if ( NOT VIPRA_BUILD_LIBRARY AND NOT VIPRA_BUILD_EXECUTABLE )
   set(VIPRA_BUILD_LIBRARY ON)
 endif()
 
-if(VIPRA_BUILD_LIBRARY)
+if ( VIPRA_BUILD_LIBRARY )
   message("Building VIPRA as library")
-elseif(VIPRA_BUILD_EXECUTABLE)
+elseif ( VIPRA_BUILD_EXECUTABLE )
   message("Building VIPRA as executable")
 
-  if(VIPRA_DEBUG_MODE)
+  if ( VIPRA_DEBUG_MODE )
     message("Building in debug mode")
     set(CMAKE_BUILD_TYPE Debug)
   else()
@@ -26,13 +27,13 @@ elseif(VIPRA_BUILD_EXECUTABLE)
   endif()
 endif()
 
-if(VIPRA_BUILD_LIBRARY)
+if ( VIPRA_BUILD_LIBRARY )
   add_library(
     ${VIPRA_PROJECT_NAME}
     STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include/vipra/vipra.cpp
   )
-elseif(VIPRA_BUILD_EXECUTABLE)
+elseif ( VIPRA_BUILD_EXECUTABLE )
   add_executable(
     ${VIPRA_PROJECT_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
@@ -40,12 +41,17 @@ elseif(VIPRA_BUILD_EXECUTABLE)
   set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR})
 endif()
 
-if(VIPRA_PERF_TESTING)
+if ( VIPRA_PERF_TESTING )
+  add_compile_options(-pg)
   add_definitions(-DVIPRA_PERF_TESTING)
 endif()
 
+if ( VIPRA_USE_GPERF )
+  target_link_libraries(${VIPRA_PROJECT_NAME} PUBLIC tcmalloc_and_profiler)
+endif()
+
 # Only Include MPI if the option is turned on
-if(VIPRA_USE_MPI)
+if ( VIPRA_USE_MPI )
   add_definitions(-DVIPRA_USE_MPI)
   vipra_add_library(LIBNAME MPI LINK MPI::MPI_CXX)
   include_directories(SYSTEM ${MPI_CXX_INCLUDE_PATH})

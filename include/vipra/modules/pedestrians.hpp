@@ -10,6 +10,7 @@
 
 #include "vipra/random/random.hpp"
 
+#include "vipra/types/float.hpp"
 #include "vipra/types/idx.hpp"
 #include "vipra/types/size.hpp"
 #include "vipra/types/state.hpp"
@@ -42,6 +43,12 @@ class Pedestrians : public Util::CRTP<Pedestrians<module_t>> {
       _coords[pedIdx] = state.positions[pedIdx];
       _velocities[pedIdx] = state.velocities[pedIdx];
     }
+  }
+
+  [[nodiscard]] auto all_neighbors_within(VIPRA::idx   pedIdx,
+                                          VIPRA::f_pnt radius) const -> std::vector<VIPRA::idx>
+  {
+    return self().all_neighbors_within_impl(pedIdx, radius);
   }
 
   template <Condition condition_t>

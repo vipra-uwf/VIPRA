@@ -2,6 +2,8 @@
 
 #include "vipra/geometry/f3d.hpp"
 
+#include "vipra/macros/performance.hpp"
+
 namespace VIPRA::Geometry {
 enum class Orientation { COLLINEAR, CLOCKWISE, COUNTERCLOCKWISE };
 
@@ -20,7 +22,8 @@ struct Line {
    * @param point3 
    * @return 
    */
-  [[nodiscard]] static constexpr auto orientation_to(Line line, VIPRA::f3d point) noexcept -> Orientation
+  [[nodiscard]] VIPRA_INLINE static constexpr auto orientation_to(Line       line,
+                                                                  VIPRA::f3d point) noexcept -> Orientation
   {
     VIPRA::f_pnt val = (line.end.y - line.start.y) * (point.x - line.end.x) -
                        (line.end.x - line.start.x) * (point.y - line.end.y);
@@ -36,7 +39,7 @@ struct Line {
    * @param point 
    * @return VIPRA::f3d 
    */
-  [[nodiscard]] inline constexpr auto closest_point(VIPRA::f3d point) const noexcept -> VIPRA::f3d
+  [[nodiscard]] VIPRA_INLINE constexpr auto closest_point(VIPRA::f3d point) const noexcept -> VIPRA::f3d
   {
     // TODO(rolland): issue #18 verify
     const VIPRA::f_pnt lineLength = start.distance_to(end);
@@ -52,7 +55,7 @@ struct Line {
    * @return true 
    * @return false 
    */
-  [[nodiscard]] inline constexpr auto is_point_on(VIPRA::f3d point) const -> bool
+  [[nodiscard]] VIPRA_INLINE constexpr auto is_point_on(VIPRA::f3d point) const -> bool
   {
     return point.x <= std::max(start.x, end.x) && point.y <= std::max(start.y, end.y) &&
            point.x >= std::min(start.x, end.x) && point.y >= std::min(start.y, end.y);
@@ -65,7 +68,7 @@ struct Line {
    * @return true 
    * @return false 
    */
-  [[nodiscard]] constexpr auto does_intersect(Line other) const noexcept -> bool
+  [[nodiscard]] VIPRA_INLINE constexpr auto does_intersect(Line other) const noexcept -> bool
   {
     return do_intersect(*this, other);
   }
