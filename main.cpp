@@ -7,8 +7,6 @@
 #include <vipra.hpp>
 
 #include "modules/model/calm_model/calm_model.hpp"
-#include "vipra/logging/logging.hpp"
-#include "vipra/util/cli_arguments.hpp"
 
 auto main(int argc, char** argv) -> int
 {
@@ -28,7 +26,7 @@ auto main(int argc, char** argv) -> int
   // Create Simulation
   auto sim = VIPRA::simulation(
     CALM::Model{},
-    VIPRA::Goals::AStar{}, 
+    VIPRA::Goals::AStar{},
     VIPRA::Pedestrians::Grid{},
     VIPRA::CoordModules::Output{
       VIPRA::Output::Trajectories::JSON{}
@@ -40,14 +38,16 @@ auto main(int argc, char** argv) -> int
   VIPRA::Util::Clock<VIPRA::Util::milli> timer{};
   timer.start();
 
+  auto params = VIPRA::Parameters{VIPRA::Input::JSON{VIPRA::Args::get("params")}};
+
   // Run the parameter sweep
   VIPRA::ParameterSweep::run(
     sim,
-    VIPRA::Input::JSON{VIPRA::Args::get("peds")},
-    VIPRA::Input::JSON{VIPRA::Args::get("map")},
-    VIPRA::Parameters{VIPRA::Input::JSON{VIPRA::Args::get("params")}},
-    VIPRA::Args::get<size_t>("count"),
-    [](VIPRA::idx simId) {
+    VIPRA::Input::JSON{VIPRA::Args::get("peds")}, // Pedestrian Input
+    VIPRA::Input::JSON{VIPRA::Args::get("map")},  // Obstacles Input
+    params,
+    VIPRA::Args::get<size_t>("count"), // Number of simulations to run in total
+    [](VIPRA::idx simId) {  // Callback function called after each simulation run
       VIPRA::Log::info("Simulation id: {} complete on: {}", simId, VIPRA::ParameterSweep::get_rank());
     });
 
