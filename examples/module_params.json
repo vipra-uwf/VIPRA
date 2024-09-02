@@ -9,7 +9,7 @@
     }
   },
   "model": {
-    "calm_model": {
+    "calm": {
       "meanMass": 1.0,
       "massStdDev": [
         0.1,
@@ -28,7 +28,7 @@
     }
   },
   "goals": {
-    "astar": {
+    "AStar": {
       "endGoalType": "exit",
       "gridSize": 0.1,
       "closestObstacle": 0.25,
@@ -36,12 +36,12 @@
     }
   },
   "pedestrians": {
-    "grid": {
+    "Grid": {
       "gridSize": 0.5
     }
   },
   "obstacles": {
-    "quad_tree": {
+    "QuadTree": {
       "minQuadSize": 0.05
     }
   },
@@ -49,13 +49,13 @@
     "coordinator": {
       "output_dir": "./sim_output"
     },
-    "trajectories_json": {
+    "TrajectoriesJson": {
       "filename": "trajectories.json"
     }
   },
   "behavior_model": {
     "main": {
-      "behaviors_dir": "./behaviors",
+      "behaviors_dir": "../../behaviors",
       "behaviors": [
         "luggage"
       ]

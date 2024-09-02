@@ -7,5 +7,6 @@
     "pedestrians": "JSON",
     "obstacles": "JSON"
   },
-  "output": "TrajectoriesJson"
+  "output": "TrajectoriesJson",
+  "use_mpi": true
 }

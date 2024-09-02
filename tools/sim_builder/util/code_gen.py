@@ -1,7 +1,9 @@
 
 import os
+import subprocess
 
 from .modules import MODULE_TYPES
+from .loading import Loader
 
 CURR_DIR = os.path.dirname(os.path.realpath(__file__))
 BASE_VIPRA_DIR = os.path.realpath(CURR_DIR  + '/../../../')
@@ -122,11 +124,17 @@ def _generate_sim(modules):
 
   return None
 
-def build_sim(modules, installpath):
-  code = _generate_sim(modules)
+def _compile_sim(mainpath, installpath, config):
+  with Loader('Configuring Build Files...'):
+    subprocess.check_output([ 'cmake', '-B', f'{BASE_VIPRA_DIR}/build', BASE_VIPRA_DIR, f'-DVIPRA_USE_MPI={config['use_mpi']}', f'-DVIPRA_MAIN_FILE={mainpath}', f'-DVIPRA_EXECUTABLE_PATH={installpath}' ], stderr=subprocess.DEVNULL)
+  
+  with Loader('Compiling Simulation...'):
+    subprocess.check_output([ 'cmake', '--build', f'{BASE_VIPRA_DIR}/build' ], stderr=subprocess.DEVNULL)
+
+def build_sim(config, installpath):
+  code = _generate_sim(config)
 
   with open(f'{installpath}/main.cpp', 'w+') as main:
     main.write(code)
-
   
-  
+  _compile_sim(f'{installpath}/main.cpp', installpath, config)

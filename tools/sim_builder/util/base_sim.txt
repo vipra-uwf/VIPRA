@@ -19,13 +19,13 @@ auto main(int argc, char** argv) -> int
 
   // Create Simulation
   auto sim = VIPRA::simulation(
-    $model,
-    $goals,
-    $pedestrians,
+    $model{},
+    $goals{},
+    $pedestrians{},
     VIPRA::CoordModules::Output{
-      $output
+      $output{}
     },
-    $obstacles
+    $obstacles{}
   );
 
   // Create a Timer and start it

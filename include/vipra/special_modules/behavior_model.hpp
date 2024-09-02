@@ -18,7 +18,7 @@ template <typename pedset_t, typename obstacles_t, typename goals_t>
 class BehaviorModel : public VIPRA::Modules::Module<BehaviorModel<pedset_t, obstacles_t, goals_t>> {
  public:
   VIPRA_MODULE_NAME("main");
-  VIPRA_MODULE_TYPE(BEHAVIOR_MODEL);
+  VIPRA_MODULE_TYPE(Behavior_model);
 
   // NOLINTNEXTLINE(misc-unused-parameters)
   VIPRA_REGISTER_PARAMS(VIPRA_PARAM("behaviors_dir", _behaviorsDir), VIPRA_PARAM("behaviors", _behaviorNames))
