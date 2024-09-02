@@ -1,0 +1,11 @@
+{
+  "model": "calm",
+  "pedestrians": "Grid",
+  "goals": "AStar",
+  "obstacles": "QuadTree",
+  "input": {
+    "pedestrians": "JSON",
+    "obstacles": "JSON"
+  },
+  "output": "TrajectoriesJson"
+}

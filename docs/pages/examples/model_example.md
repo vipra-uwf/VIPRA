@@ -19,7 +19,7 @@ VIPRA_NEW_MODULE(ExampleModel, Model) {
  public:
   // Give the module a name and set its type
   VIPRA_MODULE_NAME("example_model")
-  VIPRA_MODULE_TYPE(MODEL)
+  VIPRA_MODULE_TYPE(Model)
 
   // Add in the parameter registration step, this is where we tell VIPRA what parameters the module needs
   VIPRA_REGISTER_PARAMS ( 
@@ -60,16 +60,16 @@ auto main() -> int {
       VIPRA::Pedestrians::Grid{},             // Pedestrian Set Module
       VIPRA::Obstacles::QuadTree{}            // Obstacle Set Module
       VIPRA::Module::Output{                  // Output Coordinator
-        VIPRA::Output::Trajectories::JSON{}   // Output Module
+        VIPRA::Output::Trajectories::Json{}   // Output Module
       }
   );
 
   // Run the simulation, passing in parameters
   sim(
     VIPRA::Parameters{
-      VIPRA::Input::JSON{"maps/pedestrians/a320/a320_144_pedestrians.json"}, // Input Module for pedestrians
-      VIPRA::Input::JSON{"maps/obstacles/a320/a320_polygons.json"} // Input Module for obstalces
-      VIPRA::Input::JSON{"module_params.json"} // Input Module for loading the parameters
+      VIPRA::Input::Json{"maps/pedestrians/a320/a320_144_pedestrians.json"}, // Input Module for pedestrians
+      VIPRA::Input::Json{"maps/obstacles/a320/a320_polygons.json"} // Input Module for obstalces
+      VIPRA::Input::Json{"module_params.json"} // Input Module for loading the parameters
     }
   );
 }

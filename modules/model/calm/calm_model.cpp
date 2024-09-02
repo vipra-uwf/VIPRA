@@ -1,9 +1,7 @@
 
-#include "calm_model.hpp"
+#include "calm.hpp"
 
-namespace CALM {
-
-void Model::calc_shoulders(VIPRA::f3dVec const& coords, VIPRA::f3dVec const& goals)
+void Model::calm::calc_shoulders(VIPRA::f3dVec const& coords, VIPRA::f3dVec const& goals)
 {
   VIPRA::size pedCnt = coords.size();
 
@@ -16,8 +14,8 @@ void Model::calc_shoulders(VIPRA::f3dVec const& coords, VIPRA::f3dVec const& goa
   }
 }
 
-auto Model::obj_spatial_test(const VIPRA::Geometry::Rectangle& collisionRect, VIPRA::f3d objLeft,
-                             VIPRA::f3d objRight) -> bool
+auto Model::calm::obj_spatial_test(const VIPRA::Geometry::Rectangle& collisionRect, VIPRA::f3d objLeft,
+                                   VIPRA::f3d objRight) -> bool
 {
   if ( collisionRect.p1() == collisionRect.p2() ) {
     return false;
@@ -29,7 +27,7 @@ auto Model::obj_spatial_test(const VIPRA::Geometry::Rectangle& collisionRect, VI
          collisionRect.is_point_inside(objRight);
 }
 
-auto Model::obj_direction_test(VIPRA::f3d pedCoord, VIPRA::f3d veloc, VIPRA::f3d objCoords) -> bool
+auto Model::calm::obj_direction_test(VIPRA::f3d pedCoord, VIPRA::f3d veloc, VIPRA::f3d objCoords) -> bool
 {
   const VIPRA::f3d displacement = objCoords - pedCoord;
 
@@ -39,7 +37,7 @@ auto Model::obj_direction_test(VIPRA::f3d pedCoord, VIPRA::f3d veloc, VIPRA::f3d
   return dotProduct > 0;
 }
 
-auto Model::is_ped_toward_goal(VIPRA::f3d pedCoords, VIPRA::f3d goal, VIPRA::f3d otherCoords) -> bool
+auto Model::calm::is_ped_toward_goal(VIPRA::f3d pedCoords, VIPRA::f3d goal, VIPRA::f3d otherCoords) -> bool
 {
   VIPRA::f3d pedDirection = goal - pedCoords;
   VIPRA::f3d secondDirection = otherCoords - pedCoords;
@@ -47,8 +45,8 @@ auto Model::is_ped_toward_goal(VIPRA::f3d pedCoords, VIPRA::f3d goal, VIPRA::f3d
   return pedDirection.dot(secondDirection) > 0;
 }
 
-auto Model::rect_from_shoulders(VIPRA::idx pedIdx, VIPRA::f3d pedCoords,
-                                VIPRA::f3d goal) -> VIPRA::Geometry::Rectangle
+auto Model::calm::rect_from_shoulders(VIPRA::idx pedIdx, VIPRA::f3d pedCoords,
+                                      VIPRA::f3d goal) -> VIPRA::Geometry::Rectangle
 {
   const VIPRA::Geometry::Line pedShldr = _peds.shoulders[pedIdx];
   const VIPRA::f3d            range = (goal - pedCoords).unit();
@@ -57,9 +55,8 @@ auto Model::rect_from_shoulders(VIPRA::idx pedIdx, VIPRA::f3d pedCoords,
                                     pedShldr.end};
 }
 
-void Model::calc_betas()
+void Model::calm::calc_betas()
 {
   std::transform(_peds.betas.begin(), _peds.betas.end(), _peds.nearestDists.begin(), _peds.betas.begin(),
                  [](VIPRA::f_pnt /**/, VIPRA::f_pnt distance) { return calc_beta(distance); });
 }
-}  // namespace CALM

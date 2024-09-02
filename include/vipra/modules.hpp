@@ -4,38 +4,40 @@
 
 namespace VIPRA::Modules {
 
+// NOLINTBEGIN(readability-identifier-naming)
 enum class Type {
-  MODEL,
-  GOALS,
-  INPUT,
-  OUTPUT,
-  PEDESTRIANS,
-  PARAMETERS,
-  OBSTACLES,
-  SIMULATION,
-  BEHAVIOR_MODEL,
+  Model,
+  Goals,
+  Input,
+  Output,
+  Pedestrians,
+  Parameters,
+  Obstacles,
+  Simulation,
+  Behavior_model,
 };
+// NOLINTEND(readability-identifier-naming)
 
 inline auto to_string(Type type) -> std::string
 {
   switch ( type ) {
-    case Type::MODEL:
+    case Type::Model:
       return "model";
-    case Type::GOALS:
+    case Type::Goals:
       return "goals";
-    case Type::INPUT:
+    case Type::Input:
       return "input";
-    case Type::OUTPUT:
+    case Type::Output:
       return "output";
-    case Type::PEDESTRIANS:
+    case Type::Pedestrians:
       return "pedestrians";
-    case Type::PARAMETERS:
+    case Type::Parameters:
       return "parameters";
-    case Type::OBSTACLES:
+    case Type::Obstacles:
       return "obstacles";
-    case Type::SIMULATION:
+    case Type::Simulation:
       return "simulation";
-    case Type::BEHAVIOR_MODEL:
+    case Type::Behavior_model:
       return "behavior_model";
   }
 
