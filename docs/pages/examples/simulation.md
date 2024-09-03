@@ -14,7 +14,7 @@ auto main() -> int {
       CALM::Model{},                          // Pedestrian Dynamics Model
       VIPRA::Goals::AStar{},                  // Goals Module
       VIPRA::Pedestrians::Grid{},             // Pedestrian Set Module
-      VIPRA::Obstacles::QuadTree{}            // Obstacle Set Module
+      VIPRA::Map::QuadTree{}                  // Map Module
       VIPRA::Module::Output{                  // Output Coordinator
         VIPRA::Output::Trajectories::JSON{}   // Output Module
       }
@@ -24,7 +24,7 @@ auto main() -> int {
   sim(
     VIPRA::Parameters{
       VIPRA::Input::JSON{"maps/pedestrians/a320/a320_144_pedestrians.json"}, // Input Module for pedestrians
-      VIPRA::Input::JSON{"maps/obstacles/a320/a320_polygons.json"} // Input Module for obstalces
+      VIPRA::Input::JSON{"maps/obstacles/a320/a320_polygons.json"} // Input Module for map
       VIPRA::Input::JSON{"module_params.json"} // Input Module for loading the parameters
     }
   );

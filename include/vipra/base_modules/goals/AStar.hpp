@@ -36,8 +36,8 @@ class AStar : public Modules::Module<AStar>, public Modules::Goals<AStar> {
     _timeSinceLastGoal = std::vector<VIPRA::f_pnt>(pedCnt, 0);
 
     // Create map graph
-    _graph = PathingGraph(obstacles, _gridSize, _closestObstacle);
-    set_end_goals(pedset, obstacles);
+    _graph = PathingGraph(map, _gridSize, _closestObstacle);
+    set_end_goals(pedset, map);
     _paths.clear();
     _paths.resize(pedCnt);
 
@@ -130,18 +130,18 @@ class AStar : public Modules::Module<AStar>, public Modules::Goals<AStar> {
    * @brief Sets the end goals for each pedestrian
    *
    * @param pedset
-   * @param obstacles
+   * @param map
    */
-  void set_end_goals(auto const& pedset, auto const& obstacles)
+  void set_end_goals(auto const& pedset, auto const& map)
   {
     assert(pedset.num_pedestrians() > 0);
 
     const VIPRA::size pedCnt = pedset.num_pedestrians();
 
     // find the end goals, provided as a module parameter
-    auto const& objects = obstacles.get_objects(_endGoalType);
+    auto const& objects = map.get_objects(_endGoalType);
     if ( objects.empty() ) {
-      throw std::runtime_error("No objects of type " + _endGoalType + " found in obstacles");
+      throw std::runtime_error("No objects of type " + _endGoalType + " found in map");
     }
 
     // set each pedestrians end goal as the nearest of that type

@@ -15,7 +15,7 @@ The simulation is started using either `operator()` or `run_sim()`.
 
 These both take
 1. [`Input Module`](modules/input.md) - Loads Pedestrians
-2. [`Polygon Input Module`](modules/input.md) - Loads Obstacles
+2. [`Map Input Module`](modules/input.md) - Loads Map geometry
 3. [`Parameter Module`](module/input.md) - Loads Parameters
 
 as their arguments.
@@ -36,7 +36,7 @@ The loaded parameters are passed in to each module.
 
 #### 6. Modules Initialized
 
-The [`Obstacles`](modules/obstacles.md), [`Goals`](modules/goals.md), [`Model`](modules/model.md), and [`Behavior Model`](behaviors/behavior_model.md) have their `INIT_STEP` methods called.
+The [`Map`](modules/map.md), [`Goals`](modules/goals.md), [`Model`](modules/model.md), and [`Behavior Model`](behaviors/behavior_model.md) have their `INIT_STEP` methods called.
 
 This allows each module to setup any necessary pre-simulation work.
 

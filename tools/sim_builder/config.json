@@ -2,10 +2,10 @@
   "model": "calm",
   "pedestrians": "Grid",
   "goals": "AStar",
-  "obstacles": "QuadTree",
+  "map": "QuadTree",
   "input": {
     "pedestrians": "JSON",
-    "obstacles": "JSON"
+    "map": "JSON"
   },
   "output": "TrajectoriesJson",
   "use_mpi": true

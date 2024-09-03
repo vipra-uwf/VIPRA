@@ -21,13 +21,13 @@
 
 namespace VIPRA {
 
-template <typename model_t, typename output_t, typename pedset_t, typename goals_t, typename obstacles_t>
-class SimType : public Modules::Module<SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>> {
+template <typename model_t, typename output_t, typename pedset_t, typename goals_t, typename map_t>
+class SimType : public Modules::Module<SimType<model_t, output_t, pedset_t, goals_t, map_t>> {
   // type definitions
   using base_output_t = decltype(std::declval<output_t>().write());
   using output_data_t = VIPRA::sim_output_t<output_t>;
-  using Modules::Module<SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>>::config;
-  using Modules::Module<SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>>::register_params;
+  using Modules::Module<SimType<model_t, output_t, pedset_t, goals_t, map_t>>::config;
+  using Modules::Module<SimType<model_t, output_t, pedset_t, goals_t, map_t>>::register_params;
 
  public:
   VIPRA_MODULE_NAME("main");
@@ -49,12 +49,12 @@ class SimType : public Modules::Module<SimType<model_t, output_t, pedset_t, goal
   [[nodiscard]] auto get_sim_id() -> VIPRA::idx { return _currSimIdx; }
 
  private:
-  output_t                                      _output;
-  model_t                                       _model;
-  pedset_t                                      _pedset;
-  goals_t                                       _goals;
-  obstacles_t                                   _map;
-  BehaviorModel<pedset_t, obstacles_t, goals_t> _behaviorModel;
+  output_t                                _output;
+  model_t                                 _model;
+  pedset_t                                _pedset;
+  goals_t                                 _goals;
+  map_t                                   _map;
+  BehaviorModel<pedset_t, map_t, goals_t> _behaviorModel;
 
   VIPRA::Random::Engine _engine;
 
@@ -76,9 +76,8 @@ class SimType : public Modules::Module<SimType<model_t, output_t, pedset_t, goal
   void output_positions();
 
  public:
-  constexpr SimType(output_t&& output, model_t&& model, pedset_t&& pedset, goals_t&& goals,
-                    obstacles_t&& obstacles)
-      : _output(output), _model(model), _pedset(pedset), _goals(goals), _map(obstacles)
+  constexpr SimType(output_t&& output, model_t&& model, pedset_t&& pedset, goals_t&& goals, map_t&& map)
+      : _output(output), _model(model), _pedset(pedset), _goals(goals), _map(map)
   {
   }
 };
@@ -93,10 +92,11 @@ class SimType : public Modules::Module<SimType<model_t, output_t, pedset_t, goal
    * @param params parameter module to use for the simulation
    * @return output_data_t Tuple of the output data
    */
-template <typename model_t, typename output_t, typename pedset_t, typename goals_t, typename obstacles_t>
+template <typename model_t, typename output_t, typename pedset_t, typename goals_t, typename map_t>
 template <typename pedinput_t, typename obsinput_t, typename params_t>
-auto SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::operator()(
-    pedinput_t&& pedInput, obsinput_t&& obsInput, params_t&& params) -> output_data_t
+auto SimType<model_t, output_t, pedset_t, goals_t, map_t>::operator()(pedinput_t&& pedInput,
+                                                                      obsinput_t&& obsInput,
+                                                                      params_t&&   params) -> output_data_t
 {
   // TODO(rolland): issue #25 this assumes that a only a single node should ever run this function, there may be sitations where this isn't user friendly?
   if ( ! ParameterSweep::is_root() ) return {};
@@ -117,10 +117,11 @@ auto SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::operator()(
 
 // TODO(rolland): issue #25 the simulation shouldn't have to know that it is being run in parallel
 //                  - this is needed because of the delayed loading of parameters, with the operator() every node would load the parameters when they've already been updated
-template <typename model_t, typename output_t, typename pedset_t, typename goals_t, typename obstacles_t>
+template <typename model_t, typename output_t, typename pedset_t, typename goals_t, typename map_t>
 template <typename pedinput_t, typename obsinput_t, typename params_t>
-auto SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::parallel_run(
-    pedinput_t&& pedInput, obsinput_t&& obsInput, params_t&& params) -> output_data_t
+auto SimType<model_t, output_t, pedset_t, goals_t, map_t>::parallel_run(pedinput_t&& pedInput,
+                                                                        obsinput_t&& obsInput,
+                                                                        params_t&&   params) -> output_data_t
 {
   if constexpr ( std::is_same_v<output_data_t, void> ) {
     run_sim(std::forward<pedinput_t>(pedInput), std::forward<obsinput_t>(obsInput),
@@ -132,11 +133,11 @@ auto SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::parallel_run(
   }
 }
 
-template <typename model_t, typename output_t, typename pedset_t, typename goals_t, typename obstacles_t>
+template <typename model_t, typename output_t, typename pedset_t, typename goals_t, typename map_t>
 template <typename pedinput_t, typename obsinput_t, typename params_t>
-auto SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::run_sim(pedinput_t const& pedInput,
-                                                                         obsinput_t const& obsInput,
-                                                                         params_t&& params) -> output_data_t
+auto SimType<model_t, output_t, pedset_t, goals_t, map_t>::run_sim(pedinput_t const& pedInput,
+                                                                   obsinput_t const& obsInput,
+                                                                   params_t&&        params) -> output_data_t
 {
   params.reset();
 
@@ -173,9 +174,9 @@ auto SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::run_sim(pedinpu
   }
 }
 
-template <typename model_t, typename output_t, typename pedset_t, typename goals_t, typename obstacles_t>
+template <typename model_t, typename output_t, typename pedset_t, typename goals_t, typename map_t>
 template <typename params_t>
-void SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::register_step(params_t&& params)
+void SimType<model_t, output_t, pedset_t, goals_t, map_t>::register_step(params_t&& params)
 {
   register_params(params);
   _output.register_params(std::forward<params_t>(params));
@@ -192,11 +193,11 @@ void SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::register_step(p
    * @param params parameter module to use for the simulation
    * @return auto Tuple of the max timestep, timestep size, random seed, and the initial state
    */
-template <typename model_t, typename output_t, typename pedset_t, typename goals_t, typename obstacles_t>
+template <typename model_t, typename output_t, typename pedset_t, typename goals_t, typename map_t>
 template <typename pedinput_t, typename obsinput_t, typename params_t>
-void SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::initialize(pedinput_t const& pedInput,
-                                                                            obsinput_t const& obsInput,
-                                                                            params_t&&        params)
+void SimType<model_t, output_t, pedset_t, goals_t, map_t>::initialize(pedinput_t const& pedInput,
+                                                                      obsinput_t const& obsInput,
+                                                                      params_t&&        params)
 {
   config_step(std::forward<params_t>(params));
 
@@ -209,9 +210,9 @@ void SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::initialize(pedi
   _behaviorModel.initialize(_pedset, _map, _goals, _seed);
 }
 
-template <typename model_t, typename output_t, typename pedset_t, typename goals_t, typename obstacles_t>
+template <typename model_t, typename output_t, typename pedset_t, typename goals_t, typename map_t>
 template <typename params_t>
-void SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::config_step(params_t const& params)
+void SimType<model_t, output_t, pedset_t, goals_t, map_t>::config_step(params_t const& params)
 {
   config(params, _engine);
   _output.config(params, _engine);
@@ -226,8 +227,8 @@ void SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::config_step(par
    * @brief Adds pedestrian trajectories to the output
    * 
    */
-template <typename model_t, typename output_t, typename pedset_t, typename goals_t, typename obstacles_t>
-void SimType<model_t, output_t, pedset_t, goals_t, obstacles_t>::output_positions()
+template <typename model_t, typename output_t, typename pedset_t, typename goals_t, typename map_t>
+void SimType<model_t, output_t, pedset_t, goals_t, map_t>::output_positions()
 {
   if ( _currTimestep % _outputFrequency != 0 ) {
     return;

@@ -19,8 +19,8 @@
 
 #include "vipra/modules/input.hpp"
 
+#include "vipra/modules/map_input.hpp"
 #include "vipra/modules/param_reader.hpp"
-#include "vipra/modules/polygon_input.hpp"
 #include "vipra/modules/serializable.hpp"
 
 #include "vipra/geometry/polygon.hpp"
@@ -42,7 +42,7 @@ class JSON : public VIPRA::Modules::Module<JSON>,
              public VIPRA::Modules::Input<JSON>,
              public VIPRA::Modules::ParamReader<JSON>,
              public VIPRA::Modules::Serializable<JSON>,
-             public VIPRA::Modules::PolygonInput<JSON> {
+             public VIPRA::Modules::MapInput<JSON> {
   using json_cref = std::reference_wrapper<const nlohmann::json>;
 
  public:

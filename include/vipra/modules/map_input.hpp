@@ -11,12 +11,12 @@
 namespace VIPRA::Modules {
 
 /**
- * @brief Dummy polygon input for use in other concepts
+ * @brief Base MapInput Module
  * 
  */
 template <typename module_t>
-class PolygonInput : public Util::CRTP<PolygonInput<module_t>> {
-  using Util::CRTP<PolygonInput<module_t>>::self;
+class MapInput : public Util::CRTP<MapInput<module_t>> {
+  using Util::CRTP<MapInput<module_t>>::self;
 
  public:
   /**

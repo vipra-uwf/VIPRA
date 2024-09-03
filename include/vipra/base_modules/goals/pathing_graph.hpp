@@ -15,11 +15,11 @@ struct GridPoint {
 
 class PathingGraph : public VIPRA::DataStructures::GraphMixin<PathingGraph, GridPoint> {
  public:
-  template <typename obstacles_t>
-  PathingGraph(obstacles_t const& obstacles, VIPRA::f_pnt gridSize, VIPRA::f_pnt closestObstacle)
+  template <typename map_t>
+  PathingGraph(map_t const& map, VIPRA::f_pnt gridSize, VIPRA::f_pnt closestObstacle)
       : _gridSize(gridSize), _closestObstacle(closestObstacle)
   {
-    construct_graph(obstacles);
+    construct_graph(map);
   }
 
   /**
@@ -51,11 +51,11 @@ class PathingGraph : public VIPRA::DataStructures::GraphMixin<PathingGraph, Grid
   /**
    * @brief Sets the number of grid points in the x and y directions
    *
-   * @param obstacles
+   * @param map
    */
-  void set_grid_counts(auto const& obstacles)
+  void set_grid_counts(auto const& map)
   {
-    const VIPRA::f3d dimensions = obstacles.get_dimensions();
+    const VIPRA::f3d dimensions = map.get_dimensions();
 
     assert(dimensions.x > 0 && dimensions.y > 0);
     assert(_gridSize > 0 && _closestObstacle > 0);
@@ -81,12 +81,12 @@ class PathingGraph : public VIPRA::DataStructures::GraphMixin<PathingGraph, Grid
   /**
      * @brief Constructs the graph of grid points
      *
-     * @param obstacles
+     * @param map
      */
-  void construct_graph(auto const& obstacles)
+  void construct_graph(auto const& map)
   {
     clear();
-    set_grid_counts(obstacles);
+    set_grid_counts(map);
 
     assert(_xCount > 0 && _yCount > 0);
 
@@ -102,8 +102,8 @@ class PathingGraph : public VIPRA::DataStructures::GraphMixin<PathingGraph, Grid
 
       for ( VIPRA::idx currX = 0; currX < _xCount; ++currX ) {
         center.x += _gridSize;
-        const VIPRA::idx currIdx = add_node(
-            GridPoint{center, ! obstacles.collision(VIPRA::Geometry::Circle{center, _closestObstacle})});
+        const VIPRA::idx currIdx =
+            add_node(GridPoint{center, ! map.collision(VIPRA::Geometry::Circle{center, _closestObstacle})});
 
         if ( ! data(currIdx).traversable ) {
           continue;

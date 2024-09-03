@@ -6,7 +6,7 @@
 
 #include <vipra.hpp>
 
-#include "modules/model/calm_model/calm_model.hpp"
+#include "model/calm/calm.hpp"
 
 auto main(int argc, char** argv) -> int
 {
@@ -25,13 +25,13 @@ auto main(int argc, char** argv) -> int
 
   // Create Simulation
   auto sim = VIPRA::simulation(
-    CALM::Model{},
+    Model::calm{},
     VIPRA::Goals::AStar{},
     VIPRA::Pedestrians::Grid{},
     VIPRA::CoordModules::Output{
-      VIPRA::Output::Trajectories::JSON{}
+      VIPRA::Output::TrajectoriesJson{}
     },
-    VIPRA::Obstacles::QuadTree{}
+    VIPRA::Map::QuadTree{}
   );
 
   // Create a Timer and start it
@@ -44,7 +44,7 @@ auto main(int argc, char** argv) -> int
   VIPRA::ParameterSweep::run(
     sim,
     VIPRA::Input::JSON{VIPRA::Args::get("peds")}, // Pedestrian Input
-    VIPRA::Input::JSON{VIPRA::Args::get("map")},  // Obstacles Input
+    VIPRA::Input::JSON{VIPRA::Args::get("map")},  // Map Input
     params,
     VIPRA::Args::get<size_t>("count"), // Number of simulations to run in total
     [](VIPRA::idx simId) {  // Callback function called after each simulation run

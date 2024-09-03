@@ -13,8 +13,7 @@
 
 #include "vipra/modules/input.hpp"
 
-#include "vipra/modules/param_reader.hpp"
-#include "vipra/modules/polygon_input.hpp"
+#include "vipra/modules/map_input.hpp"
 #include "vipra/modules/serializable.hpp"
 
 #include "vipra/geometry/polygon.hpp"
@@ -30,7 +29,7 @@ namespace VIPRA::Input {
 class DXF : public VIPRA::Modules::Module<DXF>,
             public VIPRA::Modules::Input<DXF>,
             public VIPRA::Modules::Serializable<DXF>,
-            public VIPRA::Modules::PolygonInput<DXF> {
+            public VIPRA::Modules::MapInput<DXF> {
  public:
   VIPRA_MODULE_TYPE(Input);
   VIPRA_MODULE_NAME("DXF");

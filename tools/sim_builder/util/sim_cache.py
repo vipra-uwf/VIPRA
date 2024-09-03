@@ -32,6 +32,10 @@ class SimCache:
     else:
       if not os.path.exists(f'{fullpath}/config.json'):
         raise Exception(f'Simulation \"{name}\" was never provided a configuration file. Provide the path with the -f/--file argument')
+    
+    self.simMap[name] = {
+      'path': fullpath
+    }
 
   def has_sim(self, name):
     return (name in self.simMap)

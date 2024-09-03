@@ -95,7 +95,9 @@ void deserialize(std::string const&);
 
 The serialized data is deserialized and loaded into the input module
 
-# Polygon Input Implementation
+# Map Input Implementation
+
+<!-- TODO: Update -->
 
 Polygon Input modules additionally requires:
 

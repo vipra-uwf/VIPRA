@@ -2,8 +2,8 @@
 
 #include "vipra/modules/goals.hpp"
 #include "vipra/modules/input.hpp"
+#include "vipra/modules/map.hpp"
 #include "vipra/modules/model.hpp"
-#include "vipra/modules/obstacles.hpp"
 #include "vipra/modules/pedestrians.hpp"
 #include "vipra/special_modules/output.hpp"
 #include "vipra/util/template_specialization.hpp"
@@ -40,8 +40,8 @@ struct Goals {
 };
 
 template <typename type_t>
-struct Obstacles {
+struct Map {
   // NOLINTNEXTLINE(readability-identifier-naming) lowercase is a regular naming convetion here
-  static constexpr bool value = std::derived_from<type_t, VIPRA::Modules::Obstacles<type_t>>;
+  static constexpr bool value = std::derived_from<type_t, VIPRA::Modules::Map<type_t>>;
 };
 }  // namespace VIPRA::Checks

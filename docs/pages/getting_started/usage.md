@@ -11,7 +11,7 @@ auto sim = VIPRA::simulation(CALM::Model{},
                              VIPRA::CoordModules::Output{
                               VIPRA::Output::Trajectories::JSON{}
                              },
-                             VIPRA::Obstacles::QuadTree{});
+                             VIPRA::Map::QuadTree{});
 ```
 
 `VIPRA::simulation` is the method used to create a simulation
@@ -20,7 +20,7 @@ Each simulation requires one of each of the [Module Types](../modules.md):
 1. Pedestrian Dynamics Model
 2. Goals
 3. Pedestrian Set
-4. Obstacle Set
+4. Map
 5. Output Coordinator (with any number of Input modules)
 
 **To change what modules to use** simply switch out the module type here and re-run `make`
@@ -37,7 +37,7 @@ auto sim = VIPRA::simulation(ExampleModel{},
                              VIPRA::CoordModules::Output{
                               VIPRA::Output::Trajectories::JSON{}
                              },
-                             VIPRA::Obstacles::QuadTree{});
+                             VIPRA::Map::QuadTree{});
 ```
 
 We can then run `make` and our simulation will now use the `ExampleModel`

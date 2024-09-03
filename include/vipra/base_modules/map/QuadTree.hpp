@@ -6,26 +6,26 @@
 #include <string>
 #include <vector>
 
+#include "vipra/macros/map.hpp"
 #include "vipra/macros/module.hpp"
-#include "vipra/macros/obstacles.hpp"
 
 #include "vipra/macros/parameters.hpp"
 #include "vipra/macros/performance.hpp"
-#include "vipra/modules/obstacles.hpp"
+#include "vipra/modules/map.hpp"
 
-namespace VIPRA::Obstacles {
+namespace VIPRA::Map {
 /**
- * @brief Obstacle module that uses a quadtree to store obstacles
+ * @brief Map module that uses a quadtree to store obstacles
  * 
  */
-class QuadTree : public VIPRA::Modules::Module<QuadTree>, public VIPRA::Modules::Obstacles<QuadTree> {
+class QuadTree : public VIPRA::Modules::Module<QuadTree>, public VIPRA::Modules::Map<QuadTree> {
  public:
   VIPRA_MODULE_NAME("QuadTree");
-  VIPRA_MODULE_TYPE(Obstacles);
+  VIPRA_MODULE_TYPE(Map);
 
   VIPRA_REGISTER_PARAMS(VIPRA_PARAM("minQuadSize", _obsDistance))
 
-  VIPRA_OBSTACLES_INIT
+  VIPRA_MAP_INIT
   {
     _objectTypes = types;
     _objects = objects;
@@ -86,4 +86,4 @@ class QuadTree : public VIPRA::Modules::Module<QuadTree>, public VIPRA::Modules:
   VIPRA::f_pnt _obsDistance;
   VIPRA::f3d   _dimensions;
 };
-}  // namespace VIPRA::Obstacles
+}  // namespace VIPRA::Map

@@ -23,7 +23,7 @@ auto main(int argc, char** argv) -> int
   // Create Simulation
   auto sim = VIPRA::simulation(CALM::Model{}, VIPRA::Goals::AStar{}, VIPRA::Pedestrians::Grid{},
                                VIPRA::CoordModules::Output{VIPRA::Output::Trajectories::JSON{}},
-                               VIPRA::Obstacles::QuadTree{});
+                               VIPRA::Map::QuadTree{});
 
   // Run the parameter sweep
   VIPRA::ParameterSweep::run(

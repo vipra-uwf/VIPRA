@@ -29,7 +29,7 @@ class Collision {
   }
 
   VIPRA_PERF_FUNC void race_detection(auto const& pedset, ModelData const& data, auto const& goals,
-                                      VIPRA::timestep timestep, auto const& obstacles)
+                                      VIPRA::timestep timestep, auto const& map)
   {
     calc_collision_rectangles(pedset, goals, data);
     const VIPRA::size pedCnt = pedset.num_pedestrians();

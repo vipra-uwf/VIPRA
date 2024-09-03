@@ -22,7 +22,7 @@ VIPRA_PEDS_INIT_STEP;
 ### Parameters
 
 - `input` - [Input module implementation](../modules/input.md)
-- `obstacles` - [Obstacle module implementation](../modules/obstacles.md)
+- `map` - [Map module implementation](../modules/map.md)
 
 ### Returns
 

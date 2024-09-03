@@ -29,14 +29,14 @@ int main(int argc, char** argv)
     VIPRA::CoordModules::Output {         // Output Coordinator
       VIPRA::Output::Trajectories::JSON{} // Output Module
     },
-    VIPRA::Obstacles::QuadTree{}          // Obstacle Set
+    VIPRA::Map::QuadTree{}          // Map Module
   );
 
   // Run the parameter sweep
   VIPRA::ParameterSweep::run(
     sim,                                                                      // Simulation Object
     VIPRA::Input::JSON{"maps/pedestrians/a320/a320_144_pedestrians.json"},    // Pedestrian Input
-    VIPRA::Input::JSON{"maps/obstacles/a320/a320_polygons.json"},             // Obstacle Input
+    VIPRA::Input::JSON{"maps/obstacles/a320/a320_polygons.json"},             // Map Input
     VIPRA::Parameters{VIPRA::Input::JSON{"examples/module_params.json"}}, simCount, // Parameter Input
     [](VIPRA::idx simId) { // Optional callback function when each simulation run completes
       std::cout << "Simulation id: " << simId 

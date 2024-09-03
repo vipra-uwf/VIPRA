@@ -10,7 +10,7 @@ There are several modules included with VIPRA.
 **Goals**:
 - [AStar](#astar-goals)
 
-**Obstacle Set**:
+**Map**:
 - [QuadTree](#quadtree-obstalce-set)
 
 **Pedestrian Set**:
@@ -100,9 +100,9 @@ In **module_params.json**:
   },
 ```
 
-# QuadTree Obstacle Set 
+# QuadTree Map 
 
-This `Obstacle Set` module uses the [Quad Tree](usage/data_structures.md) to hold the map geometry.
+This `Map` module uses the [Quad Tree](usage/data_structures.md) to hold the map geometry.
 
 ## Use:
 ```C++
@@ -110,7 +110,7 @@ This `Obstacle Set` module uses the [Quad Tree](usage/data_structures.md) to hol
 
 VIPRA::simulation(
   ...
-    VIPRA::Obstacles::QuadTree{} // Obstacle sets go inside the Map module
+    VIPRA::Map::QuadTree{} // Map sets go inside the Map module
   ...
 )
 ```

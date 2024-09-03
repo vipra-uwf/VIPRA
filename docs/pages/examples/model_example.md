@@ -58,7 +58,7 @@ auto main() -> int {
       Example::Model{},                       // Here, we use our new model
       VIPRA::Goals::AStar{},                  // Goals Module
       VIPRA::Pedestrians::Grid{},             // Pedestrian Set Module
-      VIPRA::Obstacles::QuadTree{}            // Obstacle Set Module
+      VIPRA::Map::QuadTree{}                  // Map Module
       VIPRA::Module::Output{                  // Output Coordinator
         VIPRA::Output::Trajectories::Json{}   // Output Module
       }

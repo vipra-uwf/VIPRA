@@ -10,4 +10,4 @@
 
 #include "vipra/base_modules/pedestrians/Grid.hpp"
 
-#include "vipra/base_modules/obstacles/QuadTree.hpp"
+#include "vipra/base_modules/map/QuadTree.hpp"

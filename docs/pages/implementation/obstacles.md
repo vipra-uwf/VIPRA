@@ -1,14 +1,14 @@
 
-# Obstacle Set Implementation
+# Map Implementation
 
-Obstacle Set modules hold the geometry of the environment and handle map/pedestrian collision detection.
+Map modules hold the geometry of the environment and handle map/pedestrian collision detection.
 
 # Required Methods
 
 In addition to the [Base Module](module.md) requirements `Goals` require the following:
 
 ```C++
-VIPRA_OBSTACLES_INIT
+VIPRA_MAP_INIT
 
 std::vector<std::string> const& get_object_types_impl();
 std::vector<VIPRA::f3d> const& get_objects_impl(std::string const& type);
@@ -24,10 +24,12 @@ VIPRA::f3d get_dimensions_impl() const;
 
 
 ```C++
-VIPRA_OBSTACLES_INIT
+VIPRA_MAP_INIT
 ```
 
 ## Parameters
+
+<!-- TODO: update this -->
 
 - `obstacles` : std::vector<[VIPRA::Polygon](../usage/types.md)> - vector containing the VIPRA::Polygons for each obstacle
 - `types` : std::vector<std::string> - vector containing a list of the types of objects in the map
@@ -35,7 +37,7 @@ VIPRA_OBSTACLES_INIT
 
 ## Expected Effects
 
-The obstacle set is ready for the first timestep of the simulation
+The Map is ready for the first timestep of the simulation
 
 ---
 

@@ -12,7 +12,7 @@ enum class Type {
   Output,
   Pedestrians,
   Parameters,
-  Obstacles,
+  Map,
   Simulation,
   Behavior_model,
 };
@@ -33,8 +33,8 @@ inline auto to_string(Type type) -> std::string
       return "pedestrians";
     case Type::Parameters:
       return "parameters";
-    case Type::Obstacles:
-      return "obstacles";
+    case Type::Map:
+      return "map";
     case Type::Simulation:
       return "simulation";
     case Type::Behavior_model:

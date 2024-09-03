@@ -19,9 +19,9 @@ For an example of a Model module, see the included [Calm Model module](base_modu
 
 [Goals](modules/goals.md) modules handle pathfinding for the simulation.
 
-### Obstacle Set
+### Map
 
-[Obstacle Set](modules/obstacles.md) modules hold the geometry of the environment and handle map/pedestrian collision detection.
+[Map](modules/map.md) modules hold the geometry of the environment and handle map/pedestrian collision detection.
 
 
 ### Pedestrian Set
@@ -34,7 +34,7 @@ For an example of a Model module, see the included [Calm Model module](base_modu
 [Input](modules/input.md) modules handle loading input for the simulation. There are several specialized input types:
 - [Serializable Input](modules/input.md#seiralizable-input) modules are inputs that allow for serialization of their values. Needed for [Parameter Sweep](parameter_sweep.md) runs.
 - [Parameter Input](modules/input.md#parameter-input) modules are able to load parameters
-- [Polygon Input](modules/input.md#polygon-input) modules are able to load polygons for use in obstacle sets
+- [Map Input](modules/input.md#polygon-input) modules are able to load the geometry for maps
 
 
 ### Output

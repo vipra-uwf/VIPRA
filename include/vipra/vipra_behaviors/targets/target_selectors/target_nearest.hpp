@@ -89,7 +89,7 @@ struct TargetNearest {
         if ( ! modifier->check(pack, other, self) ) return false;
       }
 
-      if ( pack.obsset.ray_hit(currCoords, coords[other]) != -1 ) return false;
+      if ( pack.map.ray_hit(currCoords, coords[other]) != -1 ) return false;
 
       return true;
     });

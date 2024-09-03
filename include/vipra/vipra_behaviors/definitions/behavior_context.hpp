@@ -25,9 +25,9 @@ class Event;
  * @brief The context in which a simulation is run. This includes the elapsed time, the random number generator, the current state of pedestrians, and the current events.
  *
  */
-template <typename pedset_t, typename obstacles_t, typename goals_t>
+template <typename pedset_t, typename map_t, typename goals_t>
 struct BehaviorContext {
-  using pack_t = Simpack<pedset_t, obstacles_t, goals_t>;
+  using pack_t = Simpack<pedset_t, map_t, goals_t>;
   VIPRA::delta_t                                      elapsedTime = 0;
   VIPRA::Random::Engine                               engine;
   std::vector<Behaviors::stateUID>                    pedStates;

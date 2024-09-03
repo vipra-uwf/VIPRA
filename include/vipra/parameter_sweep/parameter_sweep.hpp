@@ -177,7 +177,7 @@ class ParameterSweep {
   }
 
   /**
-   * @brief Load in the pedestrian or obstacle files and broadcast them to all workers
+   * @brief Load in the pedestrian or map files and broadcast them to all workers
    * 
    * @tparam params_t 
    * @param params 

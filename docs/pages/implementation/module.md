@@ -25,12 +25,12 @@ VIPRA_MODULE_TYPE(type)
 
 Possible Choices:
 ```C++
-MODEL,
-GOALS,
-INPUT,
-OUTPUT,
-PEDESTRIANS,
-OBSTACLES,
+Model,
+Goals,
+Input,
+Output,
+Pedestrians,
+Map,
 ```
 
 ## Effects

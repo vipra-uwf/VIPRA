@@ -48,12 +48,12 @@ NEW_VIPRA_MODULE(calm, Model)
   VIPRA_MODEL_TIMESTEP
   {
     calc_shoulders(pedset.all_coords(), goals.current_goals());
-    calc_neighbors(pedset, obstacles, goals);
+    calc_neighbors(pedset, map, goals);
     calc_betas();
     update_state(pedset, goals, state, deltaT);
 
     if ( timestep > 0 ) {
-      _collision.race_detection(pedset, _peds, goals, timestep, obstacles);
+      _collision.race_detection(pedset, _peds, goals, timestep, map);
     }
   }
 
@@ -66,11 +66,11 @@ NEW_VIPRA_MODULE(calm, Model)
   static constexpr VIPRA::f_pnt   EQUILIBRIUM_DISTANCE = 0.382;
   static constexpr VIPRA::f_pnt   EQUILIBRIUM_RESOLUTION = 0.01F;
 
-  VIPRA_PERF_FUNC void calc_neighbors(auto const& pedset, auto const& /*obstacles*/, auto const& goals);
+  VIPRA_PERF_FUNC void calc_neighbors(auto const& pedset, auto const& /*map*/, auto const& goals);
   VIPRA_PERF_FUNC void update_state(auto const& pedset, auto const& goals, VIPRA::State& state,
                                     VIPRA::delta_t deltaT);
   VIPRA_PERF_FUNC auto is_path_blocked(VIPRA::idx pedIdx, VIPRA::f3d veloc, VIPRA::f_pnt maxDist,
-                                       auto const& obstacles) -> VIPRA::f_pnt;
+                                       auto const& map) -> VIPRA::f_pnt;
 
   VIPRA_PERF_FUNC void        calc_shoulders(VIPRA::f3dVec const&, VIPRA::f3dVec const&);
   VIPRA_PERF_FUNC static auto obj_spatial_test(const VIPRA::Geometry::Rectangle&, VIPRA::f3d,
@@ -92,7 +92,7 @@ NEW_VIPRA_MODULE(calm, Model)
 
 // ------------------- IMPLEMENTATIONS -----------------------------------------------------
 
-void Model::calm::calc_neighbors(auto const& pedset, auto const& /*obstacles*/, auto const& goals)
+void Model::calm::calc_neighbors(auto const& pedset, auto const& /*map*/, auto const& goals)
 {
   const VIPRA::size pedCnt = pedset.num_pedestrians();
   auto const&       coords = pedset.all_coords();
@@ -166,17 +166,15 @@ void Model::calm::update_state(auto const& pedset, auto const& goals, VIPRA::Sta
 }
 
 auto Model::calm::is_path_blocked(VIPRA::idx pedIdx, VIPRA::f3d velocity, VIPRA::f_pnt maxDist,
-                                  auto const& obstacles) -> VIPRA::f_pnt
+                                  auto const& map) -> VIPRA::f_pnt
 {
   VIPRA::Geometry::Line shoulders = _peds.shoulders[pedIdx];
   if ( shoulders.start == shoulders.end ) {
     return -1;
   }
 
-  VIPRA::f_pnt const leftDist =
-      obstacles.ray_hit(shoulders.start, shoulders.start + (velocity.unit() * maxDist));
-  VIPRA::f_pnt const rightDist =
-      obstacles.ray_hit(shoulders.end, shoulders.end + (velocity.unit() * maxDist));
+  VIPRA::f_pnt const leftDist = map.ray_hit(shoulders.start, shoulders.start + (velocity.unit() * maxDist));
+  VIPRA::f_pnt const rightDist = map.ray_hit(shoulders.end, shoulders.end + (velocity.unit() * maxDist));
 
   if ( leftDist == -1 ) {
     return rightDist;

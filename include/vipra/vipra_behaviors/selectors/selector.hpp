@@ -44,8 +44,8 @@ class Selector {
   void check_for_duplicates(const VIPRA::idxVec& order);
 
   [[nodiscard]] auto        order_selectors() -> VIPRA::idxVec;
-  [[nodiscard]] static auto filter_used_peds(const VIPRA::idxVec& /*peds*/, std::vector<bool> const& /*used*/)
-      -> VIPRA::idxVec;
+  [[nodiscard]] static auto filter_used_peds(const VIPRA::idxVec& /*peds*/,
+                                             std::vector<bool> const& /*used*/) -> VIPRA::idxVec;
 
   void run_selectors(const VIPRA::idxVec& /*selectorIdxs*/, std::string const& /*behaviorName*/, auto pack);
   void update_ped_groups(const VIPRA::idxVec& /*selectedPeds*/, select_t& /*selector*/,
@@ -59,7 +59,7 @@ class Selector {
  * @param behaviorName : 
  * @param seed : 
  * @param pedSet : 
- * @param obsSet : 
+ * @param map : 
  * @param goals : 
  */
 template <typename select_t, typename context_t>
@@ -81,7 +81,7 @@ void Selector<select_t, context_t>::initialize(std::string const& behaviorName, 
  * @param seed : 
  * @param context : 
  * @param pedSet : 
- * @param obsSet : 
+ * @param map : 
  * @param goals : 
  */
 template <typename select_t, typename context_t>
@@ -104,7 +104,7 @@ void Selector<select_t, context_t>::run_selectors(const VIPRA::idxVec& selectorI
  * @param selector : 
  * @param seed : 
  * @param pedSet : 
- * @param obsSet : 
+ * @param map : 
  * @param goals : 
  * @param behaviorName : 
  * @return VIPRA::idxVec 
@@ -163,8 +163,8 @@ void Selector<select_t, context_t>::update_ped_groups(const VIPRA::idxVec& selec
  * @return VIPRA::idxVec 
  */
 template <typename select_t, typename context_t>
-auto Selector<select_t, context_t>::filter_used_peds(const VIPRA::idxVec& peds, std::vector<bool> const& used)
-    -> VIPRA::idxVec
+auto Selector<select_t, context_t>::filter_used_peds(const VIPRA::idxVec&     peds,
+                                                     std::vector<bool> const& used) -> VIPRA::idxVec
 {
   VIPRA::idxVec ret;
 

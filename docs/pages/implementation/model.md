@@ -18,7 +18,7 @@ VIPRA_MODEL_TIMESTEP;
 ### Parameters
 
 - `pedset` - the [Pedestrians Model implementation](../modules/pedestrians.md)
-- `obstacles` - the [Obstacle Set implementation](../modules/obstacles.md)
+- `map` - the [Map module implementation](../modules/map.md)
 - `goals` - the [Goals implementation](../modules/goals.md)
 - `output` - the [Output Coordinator](../modules/special_modules.md)
 - `state` - the [State](../usage/types.md#state) to write the new positions and velocities to
@@ -40,7 +40,7 @@ VIPRA_MODEL_INIT_STEP;
 ```
 
 - `pedset` - the [Pedestrians Model implementation](../modules/pedestrians.md)
-- `obstacles` - the [Obstacle Set implementation](../modules/obstacles.md)
+- `map` - the [Map module implementation](../modules/map.md)
 - `goals` - the [Goals implementation](../modules/goals.md)
 - `output` - the [Output Coordinator](../modules/special_modules.md)
 - `engine` - the [Randomization engine](../usage/randomization.md)

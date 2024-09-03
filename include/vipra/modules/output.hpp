@@ -8,7 +8,7 @@
 
 namespace VIPRA::Modules {
 /**
- * @brief Dummy output for use in other concepts
+ * @brief Base Output module
  * 
  */
 template <typename module_t>

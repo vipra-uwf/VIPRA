@@ -7,14 +7,12 @@ For reference on how to use these macros, you can look at `modules/model/calm_mo
 #### VIPRA_MODULE_TYPE(type)
 
 `VIPRA_MODULE_TYPE` sets the modules type
-- MODEL,
-- GOALS,
-- INPUT,
-- OUTPUT,
-- PEDESTRIANS,
-- PARAMETERS,
-- MAP,
-- OBSTACLES,
+- Model,
+- Goals,
+- Input,
+- Output,
+- Pedestrians,
+- Map,
 
 ```C++
 VIPRA_MODULE_TYPE(MODEL)

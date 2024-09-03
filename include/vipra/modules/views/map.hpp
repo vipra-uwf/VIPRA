@@ -1,9 +1,9 @@
 #pragma once
 
-#include "vipra/modules/obstacles.hpp"
+#include "vipra/modules/map.hpp"
 
 namespace VIPRA::Views {
-class Obstacles : public Modules::Obstacles<Obstacles> {
+class Map : public Modules::Map<Map> {
   using get_dimensions_impl_func_t = VIPRA::f3d(void const*);
   using f3d_collision_impl_func_t = bool(void const*, VIPRA::f3d);
   using circle_collision_impl_func_t = bool(void const*, VIPRA::Geometry::Circle);
@@ -23,7 +23,7 @@ class Obstacles : public Modules::Obstacles<Obstacles> {
  public:
   template <typename module_t>
   // NOLINTNEXTLINE(google-explicit-constructor)
-  Obstacles(module_t const& module) : _module(&module)
+  Map(module_t const& module) : _module(&module)
   {
     // NOLINTBEGIN(cppcoreguidelines-prefer-member-initializer)
 

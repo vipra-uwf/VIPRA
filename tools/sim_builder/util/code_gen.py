@@ -46,19 +46,19 @@ def _get_namespace_name(moduleName, moduleType, base):
 def _get_input_modules(modules):
   if not modules['pedestrians']:
     raise Exception('Pedestrians Input missing')
-  if not modules['obstacles']:
-    raise Exception('Pedestrians Obstacles missing')
+  if not modules['map']:
+    raise Exception('Map Input missing')
 
   peds = _find_module(modules['pedestrians'], 'input')
-  obs = _find_module(modules['obstacles'], 'input')
+  obs = _find_module(modules['map'], 'input')
 
   inputModules = {
     'pedestrians': {
       'name': _get_namespace_name(modules['pedestrians'], 'Input', peds['base']),
       'path': peds['path']
     },
-    'obstacles': {
-      'name': _get_namespace_name(modules['obstacles'], 'Input', obs['base']),
+    'map': {
+      'name': _get_namespace_name(modules['map'], 'Input', obs['base']),
       'path': obs['path']
     }
   }
@@ -95,7 +95,7 @@ def _make_includes(moduleList):
   for key in moduleList:
     if key == 'input':
       includes.append(moduleList[key]['pedestrians']['path'])
-      includes.append(moduleList[key]['obstacles']['path'])
+      includes.append(moduleList[key]['map']['path'])
       continue
     
     includes.append(moduleList[key]['path'])
@@ -116,7 +116,7 @@ def _generate_sim(modules):
     for moduleType in MODULE_TYPES:
       if moduleType == 'input':
         code = code.replace('$input_pedestrians', moduleList['input']['pedestrians']['name'])
-        code = code.replace('$input_obstacles', moduleList['input']['obstacles']['name'])
+        code = code.replace('$input_map', moduleList['input']['map']['name'])
         continue
 
       code = code.replace(f'${moduleType}', moduleList[moduleType]['name'])
@@ -125,11 +125,8 @@ def _generate_sim(modules):
   return None
 
 def _compile_sim(mainpath, installpath, config):
-  with Loader('Configuring Build Files...'):
-    subprocess.check_output([ 'cmake', '-B', f'{BASE_VIPRA_DIR}/build', BASE_VIPRA_DIR, f'-DVIPRA_USE_MPI={config['use_mpi']}', f'-DVIPRA_MAIN_FILE={mainpath}', f'-DVIPRA_EXECUTABLE_PATH={installpath}' ], stderr=subprocess.DEVNULL)
-  
-  with Loader('Compiling Simulation...'):
-    subprocess.check_output([ 'cmake', '--build', f'{BASE_VIPRA_DIR}/build' ], stderr=subprocess.DEVNULL)
+    subprocess.run([ 'cmake', '-B', f'{BASE_VIPRA_DIR}/build', BASE_VIPRA_DIR, f'-DVIPRA_USE_MPI={config['use_mpi']}', f'-DVIPRA_MAIN_FILE={mainpath}', f'-DVIPRA_EXECUTABLE_PATH={installpath}' ], check=True)
+    subprocess.run([ 'cmake', '--build', f'{BASE_VIPRA_DIR}/build' ], check=True)
 
 def build_sim(config, installpath):
   code = _generate_sim(config)

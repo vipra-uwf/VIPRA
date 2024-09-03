@@ -11,12 +11,12 @@
 
 namespace VIPRA::Modules {
 /**
- * @brief Dummy obstacle set for use in other concepts
+ * @brief Base Map Module Class
  * 
  */
 template <typename module_t>
-class Obstacles : public Util::CRTP<Obstacles<module_t>> {
-  using Util::CRTP<Obstacles<module_t>>::self;
+class Map : public Util::CRTP<Map<module_t>> {
+  using Util::CRTP<Map<module_t>>::self;
 
   // NOLINTBEGIN
  public:

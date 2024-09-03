@@ -5,7 +5,7 @@ MODULE_TYPES = [
   "model",
   "pedestrians",
   "goals",
-  "obstacles",
+  "map",
   "output",
   "input"
 ]

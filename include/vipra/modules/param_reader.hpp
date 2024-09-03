@@ -17,7 +17,7 @@
 namespace VIPRA::Modules {
 
 /**
- * @brief Dummy parameter input for use in other concepts
+ * @brief Base ParamReader Module
  * 
  */
 template <typename module_t>
@@ -63,9 +63,9 @@ class ParamReader : public Util::CRTP<ParamReader<module_t>> {
   }
 
   template <typename data_t>
-  requires Concepts::Numeric<data_t>
-  auto get_range_value(std::map<std::string, data_t> const& data, VIPRA::Random::Engine& engine) const
-      -> data_t
+    requires Concepts::Numeric<data_t>
+  auto get_range_value(std::map<std::string, data_t> const& data,
+                       VIPRA::Random::Engine&               engine) const -> data_t
   {
     VIPRA::Random::uniform_distribution<data_t> dist(data.at("min"), data.at("max"));
     return dist(engine);

@@ -25,7 +25,7 @@ concept Condition = std::is_invocable_r<bool, func_t, VIPRA::idx>::value || std:
 // TODO(rolland): add getting direction between pedestrians ?
 
 /**
- * @brief Dummy pedestrian set for use in other concepts
+ * @brief Base Pedestrians module
  * 
  */
 template <typename module_t>
@@ -33,7 +33,7 @@ class Pedestrians : public Util::CRTP<Pedestrians<module_t>> {
   using Util::CRTP<Pedestrians<module_t>>::self;
 
  public:
-  void initialize(auto& input, auto const& obstacles) { self().init_step(input, obstacles); }
+  void initialize(auto& input, auto const& map) { self().init_step(input, map); }
 
   void update(VIPRA::State const& state)
   {

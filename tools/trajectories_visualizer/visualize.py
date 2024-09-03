@@ -17,7 +17,7 @@ if (args['overrides']):
 
 peds = helpers.getPeds(args['peds'])
 difCoords = helpers.getPeds(args['dif'])
-obstacles = helpers.getObs(args['obs']);
+map = helpers.getObs(args['obs']);
 pedColors = helpers.makeColors(peds, args)
 timestepCnt = len(peds["timesteps"])
 

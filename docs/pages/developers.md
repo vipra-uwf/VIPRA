@@ -9,7 +9,7 @@ Here are the requirements for each of the module types.
 
 3. [Goals](./implementation/goals.md)
 
-4. [Obstacles](./implementation/obstacles.md)
+4. [Maps](./implementation/map.md)
 
 5. [Pedestrians](./implementation/pedestrians.md)
 
