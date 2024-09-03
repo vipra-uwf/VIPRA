@@ -30,8 +30,8 @@ namespace VIPRA::Pedestrians {
  */
 class Grid : public Modules::Module<Grid>, public Modules::Pedestrians<Grid> {
  public:
-  VIPRA_MODULE_NAME("grid");
-  VIPRA_MODULE_TYPE(PEDESTRIANS);
+  VIPRA_MODULE_NAME("Grid");
+  VIPRA_MODULE_TYPE(Pedestrians);
 
   VIPRA_REGISTER_PARAMS(VIPRA_PARAM("gridSize", _cellSize))
 

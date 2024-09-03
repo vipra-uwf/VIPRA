@@ -52,6 +52,7 @@ html
 # Simulation
 /VIPRA
 sim_output
+simcache
 
 # Python
 __pycache__

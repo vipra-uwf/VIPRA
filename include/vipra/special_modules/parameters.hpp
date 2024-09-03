@@ -19,7 +19,7 @@ namespace VIPRA {
 template <typename input_t>
 class Parameters {
  public:
-  VIPRA_MODULE_TYPE(PARAMETERS)
+  VIPRA_MODULE_TYPE(Parameters)
 
   explicit Parameters<input_t>(input_t&& input) : _input(input) {}
 

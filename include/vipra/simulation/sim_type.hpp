@@ -31,7 +31,7 @@ class SimType : public Modules::Module<SimType<model_t, output_t, pedset_t, goal
 
  public:
   VIPRA_MODULE_NAME("main");
-  VIPRA_MODULE_TYPE(SIMULATION);
+  VIPRA_MODULE_TYPE(Simulation);
 
   VIPRA_REGISTER_PARAMS(VIPRA_PARAM("max_timestep", _maxTimestep),
                         VIPRA_PARAM("timestep_size", _timestepSize),

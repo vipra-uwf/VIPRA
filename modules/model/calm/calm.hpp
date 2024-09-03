@@ -12,12 +12,11 @@
 #include "calm_collision.hpp"
 #include "calm_model_types.hpp"
 
-namespace CALM {
-NEW_VIPRA_MODULE(Model, Model)
+NEW_VIPRA_MODULE(calm, Model)
 {
  public:
-  VIPRA_MODULE_TYPE(MODEL);
-  VIPRA_MODULE_NAME("calm_model");
+  VIPRA_MODULE_NAME("calm")
+  VIPRA_MODULE_TYPE(Model)
 
   VIPRA_REGISTER_PARAMS(
       VIPRA_PARAM("meanMass", _config.meanMass), VIPRA_PARAM("massStdDev", _config.massStdDev),
@@ -59,9 +58,9 @@ NEW_VIPRA_MODULE(Model, Model)
   }
 
  private:
-  ModelData       _peds;
-  ConfigData      _config{};
-  CALM::Collision _collision;
+  CALM::ModelData  _peds;
+  CALM::ConfigData _config{};
+  CALM::Collision  _collision;
 
   static constexpr VIPRA::delta_t SLIDING_GOAL_TIME = 0.1F;
   static constexpr VIPRA::f_pnt   EQUILIBRIUM_DISTANCE = 0.382;
@@ -93,7 +92,7 @@ NEW_VIPRA_MODULE(Model, Model)
 
 // ------------------- IMPLEMENTATIONS -----------------------------------------------------
 
-void Model::calc_neighbors(auto const& pedset, auto const& /*obstacles*/, auto const& goals)
+void Model::calm::calc_neighbors(auto const& pedset, auto const& /*obstacles*/, auto const& goals)
 {
   const VIPRA::size pedCnt = pedset.num_pedestrians();
   auto const&       coords = pedset.all_coords();
@@ -132,14 +131,15 @@ void Model::calc_neighbors(auto const& pedset, auto const& /*obstacles*/, auto c
   }
 }
 
-void Model::update_state(auto const& pedset, auto const& goals, VIPRA::State& state, VIPRA::delta_t deltaT)
+void Model::calm::update_state(auto const& pedset, auto const& goals, VIPRA::State& state,
+                               VIPRA::delta_t deltaT)
 {
   const VIPRA::size pedCnt = pedset.num_pedestrians();
   auto const&       velocities = pedset.all_velocities();
   auto const&       coords = pedset.all_coords();
 
   for ( VIPRA::idx i = 0; i < pedCnt; ++i ) {
-    if ( goals.is_goal_met(i) || _collision.status(i) == WAIT ) {
+    if ( goals.is_goal_met(i) || _collision.status(i) == CALM::WAIT ) {
       state.velocities[i] = VIPRA::f3d{};
       continue;
     }
@@ -165,8 +165,8 @@ void Model::update_state(auto const& pedset, auto const& goals, VIPRA::State& st
   }
 }
 
-auto Model::is_path_blocked(VIPRA::idx pedIdx, VIPRA::f3d velocity, VIPRA::f_pnt maxDist,
-                            auto const& obstacles) -> VIPRA::f_pnt
+auto Model::calm::is_path_blocked(VIPRA::idx pedIdx, VIPRA::f3d velocity, VIPRA::f_pnt maxDist,
+                                  auto const& obstacles) -> VIPRA::f_pnt
 {
   VIPRA::Geometry::Line shoulders = _peds.shoulders[pedIdx];
   if ( shoulders.start == shoulders.end ) {
@@ -187,5 +187,4 @@ auto Model::is_path_blocked(VIPRA::idx pedIdx, VIPRA::f3d velocity, VIPRA::f_pnt
 
   return std::min(leftDist, rightDist);
 }
-
-}  // namespace CALM
+}

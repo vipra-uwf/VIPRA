@@ -42,7 +42,7 @@ class Output : public Modules::Module<Output<output_ts...>>, public Modules::Out
 
  public:
   VIPRA_MODULE_NAME("coordinator");
-  VIPRA_MODULE_TYPE(OUTPUT);
+  VIPRA_MODULE_TYPE(Output);
 
   VIPRA_REGISTER_PARAMS(VIPRA_PARAM("output_dir", _base_output_dir))
 

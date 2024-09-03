@@ -9,4 +9,5 @@
   constexpr auto module_name() const -> const char* { return name; }
 
 #define NEW_VIPRA_MODULE(Name, Type) \
+  namespace Type {                   \
   class Name : public VIPRA::Modules::Module<Name>, public VIPRA::Modules::Type<Name>

@@ -32,8 +32,8 @@ class DXF : public VIPRA::Modules::Module<DXF>,
             public VIPRA::Modules::Serializable<DXF>,
             public VIPRA::Modules::PolygonInput<DXF> {
  public:
-  VIPRA_MODULE_TYPE(INPUT);
-  VIPRA_MODULE_NAME("dxf");
+  VIPRA_MODULE_TYPE(Input);
+  VIPRA_MODULE_NAME("DXF");
 
   void load_impl();
 

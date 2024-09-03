@@ -46,8 +46,8 @@ class JSON : public VIPRA::Modules::Module<JSON>,
   using json_cref = std::reference_wrapper<const nlohmann::json>;
 
  public:
-  VIPRA_MODULE_NAME("json");
-  VIPRA_MODULE_TYPE(INPUT);
+  VIPRA_MODULE_NAME("JSON");
+  VIPRA_MODULE_TYPE(Input);
 
   explicit JSON(std::filesystem::path filepath) : _filepath(std::move(filepath)) {}
 

@@ -4,4 +4,4 @@
 add_subdirectory(goals)
 add_subdirectory(model)
 add_subdirectory(obstacles)
-add_subdirectory(pedset)
+add_subdirectory(pedestrians)

@@ -19,8 +19,8 @@ namespace VIPRA::Goals {
  */
 class AStar : public Modules::Module<AStar>, public Modules::Goals<AStar> {
  public:
-  VIPRA_MODULE_NAME("astar");
-  VIPRA_MODULE_TYPE(GOALS);
+  VIPRA_MODULE_NAME("AStar");
+  VIPRA_MODULE_TYPE(Goals);
 
   VIPRA_REGISTER_PARAMS(VIPRA_PARAM("endGoalType", _endGoalType), VIPRA_PARAM("goalRange", _goalRange),
                         VIPRA_PARAM("gridSize", _gridSize), VIPRA_PARAM("closestObstacle", _closestObstacle))

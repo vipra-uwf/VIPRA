@@ -20,8 +20,8 @@ namespace VIPRA::Obstacles {
  */
 class QuadTree : public VIPRA::Modules::Module<QuadTree>, public VIPRA::Modules::Obstacles<QuadTree> {
  public:
-  VIPRA_MODULE_NAME("quad_tree");
-  VIPRA_MODULE_TYPE(OBSTACLES);
+  VIPRA_MODULE_NAME("QuadTree");
+  VIPRA_MODULE_TYPE(Obstacles);
 
   VIPRA_REGISTER_PARAMS(VIPRA_PARAM("minQuadSize", _obsDistance))
 
