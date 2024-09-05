@@ -1,22 +1,18 @@
 #pragma once
 
 #include <algorithm>
-#include <cstddef>
-#include <cstdint>
 #include <filesystem>
 #include <fstream>
 #include <functional>
 #include <iostream>
 #include <optional>
 #include <string>
-#include <tuple>
 #include <type_traits>
 #include <utility>
 
 #include <nlohmann/json.hpp>
 
-#include "vipra/concepts/string_view.hpp"
-
+#include "vipra/logging/logging.hpp"
 #include "vipra/modules/input.hpp"
 
 #include "vipra/modules/map_input.hpp"
@@ -24,8 +20,6 @@
 #include "vipra/modules/serializable.hpp"
 
 #include "vipra/geometry/polygon.hpp"
-
-#include "vipra/random/distributions.hpp"
 
 #include "vipra/util/is_map.hpp"
 #include "vipra/util/template_specialization.hpp"
@@ -58,6 +52,12 @@ class JSON : public VIPRA::Modules::Module<JSON>,
 
   [[nodiscard]] auto to_string() -> std::string { return _json.dump(); }
 
+  [[nodiscard]] auto get_obstacles_impl() const -> std::optional<std::vector<VIPRA::Geometry::Polygon>>;
+  [[nodiscard]] auto get_spawns_impl() const -> std::optional<std::vector<VIPRA::Geometry::Polygon>>;
+  [[nodiscard]] auto get_objectives_impl() const
+      -> std::optional<std::map<std::string, std::vector<VIPRA::Geometry::Polygon>>>;
+  [[nodiscard]] auto get_areas_impl() const -> std::optional<std::map<std::string, VIPRA::Geometry::Polygon>>;
+
  private:
   nlohmann::json        _json;
   std::filesystem::path _filepath;
@@ -70,14 +70,14 @@ class JSON : public VIPRA::Modules::Module<JSON>,
   [[nodiscard]] static auto get_f3d(json_cref const& value) -> std::optional<VIPRA::f3d>;
   [[nodiscard]] static auto get_f3d_vec(json_cref const& value) -> std::optional<VIPRA::f3dVec>;
 
-  [[nodiscard]] static auto get_polygons(json_cref const& value)
-      -> std::optional<std::vector<VIPRA::Geometry::Polygon>>;
-
   template <typename data_t>
   [[nodiscard]] auto get_vector(json_cref const& value) const -> std::optional<std::vector<data_t>>;
 
   template <typename data_t>
   [[nodiscard]] auto get_map(json_cref const& value) const -> std::optional<std::map<std::string, data_t>>;
+
+  [[nodiscard]] static auto get_polygons(json_cref const& value)
+      -> std::optional<std::vector<VIPRA::Geometry::Polygon>>;
 
   [[nodiscard]] auto get_value_at_key(std::vector<std::string> const& keys) const -> std::optional<json_cref>
   {
@@ -223,11 +223,6 @@ inline void VIPRA::Input::JSON::load_impl()
 }
 
 /**
-
-   *
-   */
-
-/**
  * @brief Returns polygons from the JSON file
  * @note Requires the JSON for the polygons to be in the format: {"key": [[{"x": 0, "y": 0}, {"x": 1, "y": 1}, ...], ...]} 
  * 
@@ -298,9 +293,54 @@ template <typename data_t>
   return std::nullopt;
 }
 
+inline auto VIPRA::Input::JSON::get_obstacles_impl() const
+    -> std::optional<std::vector<VIPRA::Geometry::Polygon>>
+{
+  return get_polygons(_json["obstacles"]);
+}
+
+inline auto VIPRA::Input::JSON::get_spawns_impl() const
+    -> std::optional<std::vector<VIPRA::Geometry::Polygon>>
+{
+  return get_polygons(_json["spawns"]);
+}
+
+inline auto VIPRA::Input::JSON::get_objectives_impl() const
+    -> std::optional<std::map<std::string, std::vector<VIPRA::Geometry::Polygon>>>
+{
+  if ( ! _json.contains("objectives") ) return std::nullopt;
+  if ( ! _json["objectives"].is_array() ) return std::nullopt;
+
+  std::map<std::string, std::vector<VIPRA::Geometry::Polygon>> objectives;
+
+  for ( const auto& value : _json["objectives"] ) {
+    // TODO(rolland): should this error? currently just skips any that don't match format
+    if ( ! (value.contains("type") && value.contains("polygons")) ) continue;
+    if ( ! (value["type"].is_string() && value["polygons"].is_array()) ) continue;
+
+    VIPRA::Log::debug("Adding Objectives of Type: {}", value["type"].get<std::string>());
+
+    auto objPolys = get_polygons(value["polygons"]);
+    if ( ! objPolys ) continue;
+
+    objectives[value["type"].get<std::string>()] = objPolys.value();
+
+    VIPRA::Log::debug("Added {} Objectives of Type: {}", objectives[value["type"].get<std::string>()].size(),
+                      value["type"].get<std::string>());
+  }
+
+  return objectives;
+}
+
+inline auto VIPRA::Input::JSON::get_areas_impl() const
+    -> std::optional<std::map<std::string, VIPRA::Geometry::Polygon>>
+{
+  // TODO(rolland): handle areas, currently just returns an empty map
+  return std::map<std::string, VIPRA::Geometry::Polygon>{};
+}
+
 template <typename data_t>
-[[nodiscard]] auto VIPRA::Input::JSON::get_map(json_cref const& value) const
-    -> std::optional<std::map<std::string, data_t>>
+auto VIPRA::Input::JSON::get_map(json_cref const& value) const -> std::optional<std::map<std::string, data_t>>
 {
   try {
     return value.get().get<std::map<std::string, data_t>>();

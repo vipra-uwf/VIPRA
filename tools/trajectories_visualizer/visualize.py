@@ -31,7 +31,7 @@ def animate(i):
   [compX, compY] = helpers.getPoints(difCoords[i]) if args['dif'] else [[], []]
 
   helpers.prepPlot(ax, i, args)
-  helpers.plotObs(obstacles, ax, args)
+  helpers.plotObs(map, ax, args)
   helpers.plotShoulders(pointsX, pointsY, pedColors, ax, args)
   points = helpers.plotPeds(pointsX, pointsY, pedColors, ax, args) if not args['dif'] else helpers.plotDif(pointsX, pointsY, compX, compY, pedColors, ax, args)
   helpers.plotIndexes(pointsX, pointsY, pedColors, ax, args)

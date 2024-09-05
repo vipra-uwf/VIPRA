@@ -4,6 +4,8 @@
 
 #include "vipra/geometry/f3d.hpp"
 
+#include "vipra/geometry/polygon.hpp"
+#include "vipra/logging/logging.hpp"
 #include "vipra/macros/goals.hpp"
 #include "vipra/macros/module.hpp"
 #include "vipra/macros/parameters.hpp"
@@ -139,7 +141,7 @@ class AStar : public Modules::Module<AStar>, public Modules::Goals<AStar> {
     const VIPRA::size pedCnt = pedset.num_pedestrians();
 
     // find the end goals, provided as a module parameter
-    auto const& objects = map.get_objects(_endGoalType);
+    auto const& objects = map.get_objectives(_endGoalType);
     if ( objects.empty() ) {
       throw std::runtime_error("No objects of type " + _endGoalType + " found in map");
     }
@@ -148,10 +150,10 @@ class AStar : public Modules::Module<AStar>, public Modules::Goals<AStar> {
     for ( VIPRA::idx pedIdx = 0; pedIdx < pedCnt; ++pedIdx ) {
       auto const pos = pedset.ped_coords(pedIdx);
 
-      auto const nearestGoal = get_nearest_goal(pos, objects);
+      auto const nearestGoalIter = get_nearest_goal(pos, objects);
 
-      if ( nearestGoal != objects.end() ) {
-        _endGoals[pedIdx] = *nearestGoal;
+      if ( nearestGoalIter != objects.end() ) {
+        _endGoals[pedIdx] = (*nearestGoalIter).random_point();
       }
       else {
         throw std::runtime_error("No goal found for pedestrian");
@@ -190,13 +192,14 @@ class AStar : public Modules::Module<AStar>, public Modules::Goals<AStar> {
    * @param goals
    * @return VIPRA::f3dVec::const_iterator
    */
-  [[nodiscard]] static auto get_nearest_goal(VIPRA::f3d pos, std::vector<VIPRA::f3d> const& goals)
-      -> VIPRA::f3dVec::const_iterator
+  [[nodiscard]] static auto get_nearest_goal(VIPRA::f3d                                   pos,
+                                             std::vector<VIPRA::Geometry::Polygon> const& goals)
+      -> std::vector<VIPRA::Geometry::Polygon>::const_iterator
   {
     assert(goals.empty() == false);
 
     return std::min_element(goals.begin(), goals.end(), [&](auto const& left, auto const& right) {
-      return pos.distance_to(left) < pos.distance_to(right);
+      return pos.distance_to(left.center()) < pos.distance_to(right.center());
     });
   }
 
@@ -219,13 +222,14 @@ class AStar : public Modules::Module<AStar>, public Modules::Goals<AStar> {
     auto const path = VIPRA::Algo::astar(
         startIdx, endIdx, _graph,
         [&](VIPRA::idx left, VIPRA::idx right) -> VIPRA::f_pnt {
+          // distance comparison function
           return _graph.data(left).pos.distance_to(_graph.data(right).pos);
         },
         [&](VIPRA::idx nodeIdx) -> VIPRA::f3d { return _graph.data(nodeIdx).pos; });
 
     if ( ! path ) {
       // No path found
-      throw std::runtime_error("No path found for pedestrian");
+      throw std::runtime_error("No path found for pedestrian " + std::to_string(pedIdx));
     }
 
     // set their path, squash nodes that all go in the same direction into one node

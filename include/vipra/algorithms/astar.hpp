@@ -7,6 +7,7 @@
 #include <type_traits>
 #include <unordered_set>
 
+#include "vipra/logging/logging.hpp"
 #include "vipra/types/float.hpp"
 #include "vipra/types/idx.hpp"
 #include "vipra/types/util/result_or_void.hpp"
