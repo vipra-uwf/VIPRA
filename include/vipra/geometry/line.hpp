@@ -3,6 +3,7 @@
 #include "vipra/geometry/f3d.hpp"
 
 #include "vipra/macros/performance.hpp"
+#include "vipra/types/float.hpp"
 
 namespace VIPRA::Geometry {
 enum class Orientation { COLLINEAR, CLOCKWISE, COUNTERCLOCKWISE };
@@ -43,8 +44,9 @@ struct Line {
   {
     // TODO(rolland): issue #18 verify
     const VIPRA::f_pnt lineLength = start.distance_to(end);
-    const VIPRA::f_pnt t =
-        std::max(0.0, std::min(1.0, (point - start).dot(end - start) / (lineLength * lineLength)));
+    const VIPRA::f_pnt t = std::max(static_cast<VIPRA::f_pnt>(0.0),
+                                    std::min(static_cast<VIPRA::f_pnt>(1.0),
+                                             (point - start).dot(end - start) / (lineLength * lineLength)));
     return start + (end - start) * t;
   }
 

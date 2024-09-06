@@ -1,6 +1,7 @@
 #pragma once
 
 #include "vipra/modules.hpp"
+#include "vipra/modules/module.hpp"
 
 #define VIPRA_MODULE_TYPE(type) \
   constexpr auto module_type() const -> VIPRA::Modules::Type { return VIPRA::Modules::Type::type; }

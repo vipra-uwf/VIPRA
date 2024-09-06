@@ -1,12 +1,16 @@
 #pragma once
 
-#include <concepts>
-#include <type_traits>
+#include <algorithm>
 
 #include "vipra/geometry/f3d.hpp"
-#include "vipra/modules/module.hpp"
+
+#include "vipra/macros/performance.hpp"
+#include "vipra/types/float.hpp"
 #include "vipra/types/idx.hpp"
+#include "vipra/types/size.hpp"
 #include "vipra/types/time.hpp"
+
+#include "vipra/util/crtp.hpp"
 
 namespace VIPRA::Modules {
 /**
@@ -21,13 +25,36 @@ class Goals : public Util::CRTP<Goals<module_t>> {
   template <typename pedset_t, typename map_t>
   void initialize(pedset_t const& pedset, map_t const& map)
   {
+    assert(pedset.num_pedestrians() > 0);
+
+    VIPRA::size const pedCnt = pedset.num_pedestrians();
+
+    _currentGoals.resize(pedCnt);
+    _endGoals.resize(pedCnt);
+    _timeSinceLastGoal = std::vector<VIPRA::f_pnt>(pedCnt, 0);
+    _met = std::vector<bool>(pedCnt, false);
+
     return self().init_step(pedset, map);
   }
 
   template <typename pedset_t, typename map_t>
-  void update(pedset_t const& pedset, map_t const& map, VIPRA::delta_t deltaT)
+  VIPRA_PERF_FUNC void update(pedset_t const& pedset, map_t const& map, VIPRA::delta_t deltaT)
   {
-    return self().update_step(pedset, map, deltaT);
+    assert(pedset.num_pedestrians() > 0);
+
+    for ( VIPRA::idx pedIdx = 0; pedIdx < pedset.num_pedestrians(); ++pedIdx ) {
+      if ( _met[pedIdx] ) continue;
+
+      auto const pos = pedset.ped_coords(pedIdx);
+      _timeSinceLastGoal[pedIdx] += deltaT;
+
+      if ( pos.distance_to(current_goal(pedIdx)) < MIN_GOAL_DIST ) {
+        _met[pedIdx] = self().next_goal(pedIdx, pedset, map, deltaT);
+        _timeSinceLastGoal[pedIdx] = 0.0F;
+      }
+    }
+
+    self().update_step(pedset, map, deltaT);
   }
 
   void change_end_goal(VIPRA::idx pedIdx, VIPRA::f3d currPos, VIPRA::f3d goalPos)
@@ -35,28 +62,44 @@ class Goals : public Util::CRTP<Goals<module_t>> {
     return self().change_end_goal_impl(pedIdx, currPos, goalPos);
   }
 
-  [[nodiscard]] auto current_goals() const -> const VIPRA::f3dVec& { return self().current_goals_impl(); }
+  [[nodiscard]] VIPRA_INLINE auto current_goals() const -> const VIPRA::f3dVec& { return _currentGoals; }
 
-  [[nodiscard]] auto end_goals() const -> const VIPRA::f3dVec& { return self().end_goals_impl(); }
+  [[nodiscard]] VIPRA_INLINE auto end_goals() const -> const VIPRA::f3dVec& { return _endGoals; }
 
-  [[nodiscard]] auto current_goal(VIPRA::idx pedIdx) const -> VIPRA::f3d const&
+  [[nodiscard]] VIPRA_INLINE auto current_goal(VIPRA::idx pedIdx) const -> VIPRA::f3d const&
   {
-    return self().current_goal_impl(pedIdx);
+    return _currentGoals[pedIdx];
   }
 
-  [[nodiscard]] auto end_goal(VIPRA::idx pedIdx) const -> VIPRA::f3d const&
+  [[nodiscard]] VIPRA_INLINE auto end_goal(VIPRA::idx pedIdx) const -> VIPRA::f3d const&
   {
-    return self().end_goal_impl(pedIdx);
+    return _endGoals[pedIdx];
   }
 
-  [[nodiscard]] auto is_goal_met(VIPRA::idx pedIdx) const -> bool { return self().is_goal_met_impl(pedIdx); }
+  [[nodiscard]] VIPRA_INLINE auto is_goal_met(VIPRA::idx pedIdx) const -> bool { return _met[pedIdx]; }
 
-  [[nodiscard]] auto is_sim_goal_met() const -> bool { return self().is_sim_goal_met_impl(); }
-
-  [[nodiscard]] auto time_since_last_goal(VIPRA::idx pedIdx) const -> VIPRA::f_pnt
+  [[nodiscard]] VIPRA_INLINE auto is_sim_goal_met() const -> bool
   {
-    return self().time_since_last_goal_impl(pedIdx);
+    return std::all_of(_met.begin(), _met.end(), [](bool met) { return met; });
   }
+
+  [[nodiscard]] VIPRA_INLINE auto time_since_last_goal(VIPRA::idx pedIdx) const -> VIPRA::f_pnt
+  {
+    assert(_timeSinceLastGoal.size() > pedIdx);
+    return _timeSinceLastGoal[pedIdx];
+  }
+
+ private:
+  VIPRA::f3dVec             _currentGoals;
+  VIPRA::f3dVec             _endGoals;
+  std::vector<VIPRA::f_pnt> _timeSinceLastGoal;
+
+  std::vector<bool> _met;
+
+  static constexpr VIPRA::f_pnt MIN_GOAL_DIST = 0.1;
+
+ protected:
+  VIPRA_INLINE void set_end_goal(VIPRA::idx pedIdx, VIPRA::f3d pos) { _endGoals[pedIdx] = pos; }
+  VIPRA_INLINE void set_current_goal(VIPRA::idx pedIdx, VIPRA::f3d pos) { _currentGoals[pedIdx] = pos; }
 };
-
 }  // namespace VIPRA::Modules

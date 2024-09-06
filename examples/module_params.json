@@ -30,8 +30,8 @@
   "goals": {
     "AStar": {
       "endGoalType": "exit",
-      "gridSize": 0.1,
-      "closestObstacle": 0.25,
+      "gridSize": 0.05,
+      "closestObstacle": 0.20,
       "goalRange": 0.05
     }
   },
@@ -40,7 +40,7 @@
       "gridSize": 0.5
     }
   },
-  "obstacles": {
+  "map": {
     "QuadTree": {
       "minQuadSize": 0.05
     }
