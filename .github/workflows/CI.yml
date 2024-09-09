@@ -30,7 +30,7 @@ jobs:
           doxyfile-path: ./doxyfile
           working-directory: .
       - name: Copy Workshop Pages
-        run: cp -a ./docs/workshop/ ./docs/html/
+        run: cp -a ./docs/workshop/. ./docs/html/
       - name: VIPRA Documentation
         uses: peaceiris/actions-gh-pages@v3
         with:
