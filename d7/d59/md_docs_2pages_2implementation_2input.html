@@ -87,7 +87,7 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">Input Implementation</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md234"></a></p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md235"></a></p>
 <blockquote class="doxtable">
 <p>&zwj;!!! Important Note: Inputs should hold off on loading their input until their <code>load_impl</code> method is called. This reduces the amount of I/O during parallel runs. </p>
 </blockquote>
@@ -95,69 +95,69 @@ $(function(){ initResizable(false); });
 <li>Serializable Input</li>
 <li>Polygon Input</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md235"></a>
+<h1><a class="anchor" id="autotoc_md236"></a>
 Required Methods</h1>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="keywordtype">void</span> load_impl();</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> data_t&gt;</div>
 <div class="line">std::optional&lt;data_t&gt; get(std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp;);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md236"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md237"></a>
 Details</h2>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="keywordtype">void</span> load_impl();</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md237"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md238"></a>
 Parameters</h3>
 <p><code>NONE</code></p>
-<h3><a class="anchor" id="autotoc_md238"></a>
+<h3><a class="anchor" id="autotoc_md239"></a>
 Returns</h3>
 <p><code>NONE</code></p>
-<h3><a class="anchor" id="autotoc_md239"></a>
+<h3><a class="anchor" id="autotoc_md240"></a>
 Expected Effects</h3>
 <p>The input is ready to return its loaded data</p>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> data_t&gt;</div>
 <div class="line">std::optional&lt;data_t&gt; get(std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp;);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md240"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md241"></a>
 Parameters</h3>
 <p><code>keys</code> - a variadic number of keys to identify an input value</p>
-<h3><a class="anchor" id="autotoc_md241"></a>
+<h3><a class="anchor" id="autotoc_md242"></a>
 Returns</h3>
 <p><code>std::optional&lt;data_t&gt;</code> - an optional with the value, <code>std::nullopt</code> if the value was unable to be returned</p>
-<h3><a class="anchor" id="autotoc_md242"></a>
+<h3><a class="anchor" id="autotoc_md243"></a>
 Expected Effects</h3>
 <p><code>NONE</code></p>
-<h1><a class="anchor" id="autotoc_md243"></a>
+<h1><a class="anchor" id="autotoc_md244"></a>
 Serializable Input Implementation</h1>
 <p>Serializable Input modules additionally require:</p>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line">std::string serialize();</div>
 <div class="line"><span class="keywordtype">void</span> deserialize(std::string <span class="keyword">const</span>&amp;);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md244"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md245"></a>
 Details</h2>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line">std::string serialize()</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md245"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md246"></a>
 Parameters</h3>
 <p><code>NONE</code></p>
-<h3><a class="anchor" id="autotoc_md246"></a>
+<h3><a class="anchor" id="autotoc_md247"></a>
 Returns</h3>
 <p><code>std::string</code> - the string represenation of the input data, to be used in <code>deserialize</code></p>
-<h3><a class="anchor" id="autotoc_md247"></a>
+<h3><a class="anchor" id="autotoc_md248"></a>
 Expected Effects</h3>
 <p><code>NONE</code></p>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="keywordtype">void</span> deserialize(std::string <span class="keyword">const</span>&amp;);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md248"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md249"></a>
 Parameters</h3>
 <p><code>data</code> - the serialized data to be deserialized</p>
-<h3><a class="anchor" id="autotoc_md249"></a>
+<h3><a class="anchor" id="autotoc_md250"></a>
 Returns</h3>
 <p><code>NONE</code></p>
-<h3><a class="anchor" id="autotoc_md250"></a>
+<h3><a class="anchor" id="autotoc_md251"></a>
 Expected Effects</h3>
 <p>The serialized data is deserialized and loaded into the input module</p>
-<h1><a class="anchor" id="autotoc_md251"></a>
+<h1><a class="anchor" id="autotoc_md252"></a>
 Map Input Implementation</h1>
 <p>Polygon Input modules additionally requires:</p>
 <p><code>get</code>: can load values of type: <code>std::vector&lt;VIPRA::Geometry::Polygon&gt;</code> </p>

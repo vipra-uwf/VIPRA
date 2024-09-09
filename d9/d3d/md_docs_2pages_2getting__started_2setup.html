@@ -88,15 +88,15 @@ $(function(){ initResizable(false); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><b>File Path:</b> <a class="el" href="../../index.html#md_docs_2docs">Home</a> / <a class="el" href="../../d9/d3d/md_docs_2pages_2getting__started_2setup.html">Setup</a> </p>
-<h1><a class="anchor" id="autotoc_md177"></a>
+<h1><a class="anchor" id="autotoc_md178"></a>
 Setup</h1>
 <p>VIPRA can either be used as a Library for use in other projects or built as a Standalone Simulation.</p>
 <p>An example of how to use the simulation function is provided here: <a class="el" href="../../d2/d01/md_docs_2pages_2examples_2simulation.html">Example Simulation</a>.</p>
-<h1><a class="anchor" id="autotoc_md178"></a>
+<h1><a class="anchor" id="autotoc_md179"></a>
 Standalone Build</h1>
 <p>The <code>VIPRA</code> repository comes with a ready <code>main.cpp</code> that follows the <a class="el" href="../../d2/d01/md_docs_2pages_2examples_2simulation.html">Example Simulation</a>.</p>
 <p>This build takes one argument, the number of simulations to run, and generates a number of "trajectories.json" files based on that parameter. This output file can then be used with the <a class="el" href="../../da/d11/md_docs_2pages_2tools_2visualizer.html">visualizer program</a> also included in this project to generate a visual representation of pedestrians in motion.</p>
-<h2><a class="anchor" id="autotoc_md179"></a>
+<h2><a class="anchor" id="autotoc_md180"></a>
 Requirements</h2>
 <p>The following are requirement for running the VIPRA simulation.</p>
 <ol type="1">
@@ -111,7 +111,7 @@ Requirements</h2>
 <li>ANTLR4 - version 4.13.1 or newer.</li>
 </ol>
 <hr  />
-<h2><a class="anchor" id="autotoc_md181"></a>
+<h2><a class="anchor" id="autotoc_md182"></a>
 Build</h2>
 <p>To build the simulation, in the parent directory run: </p><div class="fragment"><div class="line">make</div>
 </div><!-- fragment --><p>Alternatively, run one of the following (recommended for developers only):</p>
@@ -120,24 +120,24 @@ Build</h2>
 <li><code>make debug</code> for compiling in debug mode.</li>
 <li><code>make perf</code> for compiling the performance testing version.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md182"></a>
+<h2><a class="anchor" id="autotoc_md183"></a>
 Using MPI</h2>
 <p><code>MPI</code> is enabled with the addition of <code>mpi=on</code> to the make command</p>
 <p>Example: </p><div class="fragment"><div class="line">make release mpi=on</div>
 </div><!-- fragment --><blockquote class="doxtable">
 <p>&zwj;!!! IMPORTANT NOTE: make sure that the version of MPI you are compiling with matches the version you run the simulation with. </p>
 </blockquote>
-<h2><a class="anchor" id="autotoc_md183"></a>
+<h2><a class="anchor" id="autotoc_md184"></a>
 Using Gperftools</h2>
 <p><a href="https://github.com/gperftools/gperftools">Gperftools</a> can be used with <code>make perf gperf=on</code></p>
 <hr  />
-<h2><a class="anchor" id="autotoc_md185"></a>
+<h2><a class="anchor" id="autotoc_md186"></a>
 Running the Provided Simulation</h2>
 <p>The VIPRA repo comes with a <code>main.cpp</code> that follows the <a class="el" href="../../d9/d97/md_docs_2pages_2examples_2parameter__sweep.html">Parameter Sweep Example Simulation</a></p>
 <div class="fragment"><div class="line">./VIPRA &lt;number_of_simulations&gt;</div>
 </div><!-- fragment --><p>See the <a class="el" href="../../d1/d7f/md_docs_2pages_2getting__started_2usage.html">Usage Page</a> for how to modify the simulation.</p>
 <hr  />
-<h2><a class="anchor" id="autotoc_md187"></a>
+<h2><a class="anchor" id="autotoc_md188"></a>
 Library</h2>
 <p><code>VIPRA</code> can be included in a project using <a href="https://cmake.org/">CMake</a></p>
 <div class="fragment"><div class="line">target_link_libraries(</div>

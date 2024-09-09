@@ -87,9 +87,9 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">Module</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md261"></a></p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md262"></a></p>
 <p>All modules are required to have the following:</p>
-<h1><a class="anchor" id="autotoc_md262"></a>
+<h1><a class="anchor" id="autotoc_md263"></a>
 Required</h1>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line">VIPRA_MODULE_TYPE(type)</div>
@@ -99,7 +99,7 @@ Required</h1>
 <div class="line"><span class="comment">// Also require a seperate file to go along with source</span></div>
 <div class="line">CMakeLists.txt</div>
 </div><!-- fragment --><p>The CMakeLists.txt is at the bottom</p>
-<h1><a class="anchor" id="autotoc_md263"></a>
+<h1><a class="anchor" id="autotoc_md264"></a>
 Details</h1>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line">VIPRA_MODULE_TYPE(type)</div>
@@ -110,22 +110,22 @@ Details</h1>
 <div class="line">Output,</div>
 <div class="line">Pedestrians,</div>
 <div class="line">Map,</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md264"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md265"></a>
 Effects</h2>
 <p>This sets the type of the module, making sure it receives the proper parameters and is used correctly.</p>
 <hr  />
 <div class="fragment"><div class="line"> ++</div>
 <div class="line">VIPRA_MODULE_NAME(<span class="stringliteral">&quot;name&quot;</span>)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md266"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md267"></a>
 Effects</h2>
 <p>This sets the name of the module, making sure it receives the proper parameters</p>
 <hr  />
 <div class="fragment"><div class="line"> ++</div>
 <div class="line">VIPRA_REGISTER_PARAMS {}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md268"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md269"></a>
 Effects</h2>
 <p>This adds parameters to the module that are loaded in at the start of a simulation</p>
-<h2><a class="anchor" id="autotoc_md269"></a>
+<h2><a class="anchor" id="autotoc_md270"></a>
 Example:</h2>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="comment">// Example Member variables that will hold the parameter values</span></div>
@@ -137,12 +137,12 @@ Example:</h2>
 <div class="line">  VIPRA_PARAM(<span class="stringliteral">&quot;param2&quot;</span>, param2)</div>
 <div class="line">}</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md271"></a>
+<h1><a class="anchor" id="autotoc_md272"></a>
 CMakeLists.txt</h1>
 <p>A CMakeLists.txt file tells the build system how to include the module using <a href="https://cmake.org/">CMake</a></p>
 <p>Most modules simply require the following: </p><div class="fragment"><div class="line">vipra_add_all()</div>
 </div><!-- fragment --><p>This will add all source and header files to the VIPRA project.</p>
-<h3><a class="anchor" id="autotoc_md272"></a>
+<h3><a class="anchor" id="autotoc_md273"></a>
 Adding External Libraries</h3>
 <p>Additionally, if any external libraries are needed they can be added with: </p><div class="fragment"><div class="line"># If searching locally</div>
 <div class="line">vipra_add_library(</div>
@@ -174,7 +174,7 @@ Adding External Libraries</h3>
 <blockquote class="doxtable">
 <p>&zwj;!!! Important Note: vipra_add_library may not work for some libraries, in that case add the library manually through normal CMake commands. Let us know of any libraries that don't work. </p>
 </blockquote>
-<h3><a class="anchor" id="autotoc_md273"></a>
+<h3><a class="anchor" id="autotoc_md274"></a>
 Example</h3>
 <p>This example is from the <a class="el" href="../../d7/de5/md_docs_2pages_2base__modules.html">JSON Input Module</a></p>
 <div class="fragment"><div class="line">vipra_add_all()</div>
