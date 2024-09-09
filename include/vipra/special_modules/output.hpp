@@ -16,6 +16,8 @@
 #include "vipra/types/time.hpp"
 #include "vipra/types/util/result_or_void.hpp"
 
+// TODO(rolland): add a write to module method, that writes to a module if loaded, does nothing if not
+
 namespace VIPRA::CoordModules {
 template <typename... output_ts>
 class Output : public Modules::Module<Output<output_ts...>>, public Modules::Output<Output<output_ts...>> {
