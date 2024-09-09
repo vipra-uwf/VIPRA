@@ -29,10 +29,6 @@ jobs:
         with:
           doxyfile-path: ./doxyfile
           working-directory: .
-      - name: Set permissions for the docs directory
-        run: chmod -R 755 ./docs/html/
-      - name: Copy Workshop Pages
-        run: cp -a ./docs/workshop/ ./docs/html/
       - name: VIPRA Documentation
         uses: peaceiris/actions-gh-pages@v3
         with:
