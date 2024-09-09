@@ -21,8 +21,10 @@ This project includes a modular pedestrian dynamics code to which input from dif
 ## Examples
 [Examples for developing and running simulations](pages/examples/list.md)
 
+---
+
 # VIPRA Oct 2024 Workshop
 
-[Check out our Oct 2024 Workshop](https://vipra-uwf.github.io/vipra/workshop.html)
+[Check out our Oct 2024 Workshop](https://vipra-uwf.github.io/VIPRA/workshop.html)
 
 ---
