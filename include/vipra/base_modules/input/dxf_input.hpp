@@ -14,7 +14,7 @@
 #include "vipra/modules/input.hpp"
 
 #include "vipra/modules/param_reader.hpp"
-#include "vipra/modules/polygon_input.hpp"
+#include "vipra/modules/map_input.hpp"
 #include "vipra/modules/serializable.hpp"
 
 #include "vipra/geometry/polygon.hpp"
@@ -30,17 +30,34 @@ namespace VIPRA::Input {
 class DXF : public VIPRA::Modules::Module<DXF>,
             public VIPRA::Modules::Input<DXF>,
             public VIPRA::Modules::Serializable<DXF>,
-            public VIPRA::Modules::PolygonInput<DXF> {
+            public VIPRA::Modules::MapInput<DXF> {
  public:
-  VIPRA_MODULE_TYPE(INPUT);
   VIPRA_MODULE_NAME("dxf");
+  VIPRA_MODULE_TYPE(Input);
 
   void load_impl();
 
   template <typename data_t>
-  [[nodiscard]] auto get_impl(std::vector<std::string> const& keys) const -> std::optional<data_t>
+  [[nodiscard]] auto get_impl(std::vector<std::string> const& keys) const -> std::optional<data_t> { return std::nullopt }
+
+  [[nodiscard]] auto get_obstacles_impl() const -> std::optional<std::vector<VIPRA::Geometry::Polygon>>;
+  [[nodiscard]] auto get_spawns_impl() const -> std::optional<std::vector<VIPRA::Geometry::Polygon>>;
+  [[nodiscard]] auto get_objectives_impl() const
+      -> std::optional<std::map<std::string, std::vector<VIPRA::Geometry::Polygon>>>;
+  [[nodiscard]] auto get_areas_impl() const -> std::optional<std::map<std::string, VIPRA::Geometry::Polygon>>;
+
+  [[nodiscard]] auto VIPRA::Input::DXF::get_objective_types(std::vector<std::string> const& keys) const
+      -> std::optional<std::vector<std::string>>
   {
-    return std::nullopt
+    if ( keys.size() != 1 ) return std::nullopt;
+    if ( keys[0] != "obj_types" ) return std::nullopt;
+
+    std::vector<std::string> types;
+    for ( auto const& [type, coords] : _objectives ) {
+      types.push_back(type);
+    }
+
+    return {types};
   }
 
   [[nodiscard]] static auto get_polygons(std::vector<std::shared_ptr<DRW_Vertex>>& vertexList)
@@ -49,55 +66,74 @@ class DXF : public VIPRA::Modules::Module<DXF>,
  private:
   std::filesystem::path _filepath;
 
-  // _objMap is a map of strings and vectors of f3d points. 
-  std::map<std::string, std::vector<VIPRA::f3d>> _objMap;
+  std::map<std::string, std::vector<VIPRA::Geometry::Polygon>> _objectives;
   std::vector<VIPRA::Geometry::Polygon> _obstacles;
-  std::vector<VIPRA::f3d> _pedestrians;
+  std::vector<VIPRA::Geometry::Polygon> _spawns;
+
+  std::map<std::string, VIPRA::Geometry::Polygon> _areas;
 
   DRW_Reader drw_reader;
 };
 }  // namespace VIPRA::Input
 
-template <>
-auto VIPRA::Input::DXF::get_impl<std::vector<std::string>>(std::vector<std::string> const& keys) const
-    -> std::optional<std::vector<std::string>>
-{
-  if ( keys.size() != 1 ) return std::nullopt;
-  if ( keys[0] != "obj_types" ) return std::nullopt;
-
-  std::vector<std::string> types;
-  for ( auto const& [type, coords] : _objMap ) {
-    types.push_back(type);
-  }
-
-  return {types};
-}
-
-template <>
-auto VIPRA::Input::DXF::get_impl<std::vector<VIPRA::f3d>>(std::vector<std::string> const& keys) const
-    -> std::optional<std::vector<VIPRA::f3d>>
-{
-  if ( keys.size() != 1 ) return std::nullopt;
-
-  auto iter = _objMap.find(keys[0]);
-  if ( iter == _objMap.end() ) return std::nullopt;
-
-  return {iter->second};
-}
 
 /**
- * @brief Returns polygons from the JSON file
- * @note Requires the JSON for the polygons to be in the format: {"key": [[{"x": 0, "y": 0}, {"x": 1, "y": 1}, ...], ...]} 
+ * @brief Returns polygons from the DXF file
  * 
  * @param keys 
  * @return std::optional<std::vector<VIPRA::Geometry::Polygon>> 
  */
 template <>
-inline auto VIPRA::Input::DXF::get_impl<std::vector<VIPRA::Geometry::Polygon>>(
-    std::vector<std::string> const& keys) const -> std::optional<std::vector<VIPRA::Geometry::Polygon>>
+inline auto VIPRA::Input::DXF::get_impl<std::vector<VIPRA::Geometry::Polygon>>(std::vector<std::string> const& keys) const 
+    -> std::optional<std::vector<VIPRA::Geometry::Polygon>>
 {
   return drw_reader.getVipraPolygons();
 }
+
+/**
+ * @brief Returns obstacles geometry from the .dxf file
+ *  
+ * @return std::optional<std::vector<VIPRA::Geometry::Polygon>> 
+ */
+inline auto VIPRA::Input::DXF::get_obstacles_impl() const
+    -> std::optional<std::vector<VIPRA::Geometry::Polygon>>
+{
+  return {_obstacles};
+}
+
+/**
+ * @brief Returns spawn area geometry from the .dxf file
+ *  
+ * @return std::optional<std::vector<VIPRA::Geometry::Polygon>> 
+ */
+inline auto VIPRA::Input::DXF::get_spawns_impl() const
+    -> std::optional<std::vector<VIPRA::Geometry::Polygon>>
+{
+  return;
+}
+
+/**
+ * @brief Returns Objectives map from the .dxf file
+ *  
+ * @return std::optional<std::vector<VIPRA::Geometry::Polygon>> 
+ */
+inline auto VIPRA::Input::DXF::get_objectives_impl() const
+    -> std::optional<std::map<std::string, std::vector<VIPRA::Geometry::Polygon>>>
+{
+  return _objectives;
+}
+
+/**
+ * @brief Returns spawn area geometry from the .dxf file
+ *  
+ * @return std::optional<std::vector<VIPRA::Geometry::Polygon>> 
+ */
+inline auto VIPRA::Input::DXF::get_areas_impl() const
+    -> std::optional<std::map<std::string, VIPRA::Geometry::Polygon>>
+{
+  return;
+}
+
 
 /**
    * @brief Loads the DXF file from the given path
@@ -122,9 +158,10 @@ inline void VIPRA::Input::DXF::load_impl()
   dxfReader.read(&drw_reader, 1);
 
   // Get the items stored in reader and add to private variables. 
-  _objMap = drw_reader.getObjectives();
+  _objectives = drw_reader.getObjectives();
   _obstacles = drw_reader.getObstacles();
-  _pedestrians = drw_reader.getPedestrians();
+  _spawns = drw_reader.getPedestrians();
+  _areas = drw_reader.getAreas();
 }
 
 class DRW_Reader : public DRW_Interface {
@@ -135,9 +172,9 @@ class DRW_Reader : public DRW_Interface {
 
   const std::vector<VIPRA::Geometry::Polygon>& getVipraPolygons() { return this->_obstacles; };
 
-  const std::map<std::string, std::vector<VIPRA::f3d>>& getVipraGoals() { return this->_objectives; };
+  const std::map<std::string, std::vector<VIPRA::Geometry::Polygon>>& getVipraGoals() { return this->_objectives; };
 
-  const std::vector<VIPRA::f3d>& getVipraPedestrians() { return this->_pedestrians; };
+  const std::vector<VIPRA::Geometry::Polygon>& getVipraPedestrians() { return this->_spawns; };
 
   /** Called when header is parsed.  */
   void addHeader(const DRW_Header* data) {
@@ -145,8 +182,9 @@ class DRW_Reader : public DRW_Interface {
   };
 
   std::vector<VIPRA::Geometry::Polygon> getObstacles() {return _obstacles;}
-  std::map<std::string, std::vector<VIPRA::f3d>> getObjectives() {return _objectives;}
-  std::vector<VIPRA::f3d> getPedestrians() {return _pedestrians;}
+  std::map<std::string, std::vector<VIPRA::Geometry::Polygon>> getObjectives() {return _objectives;}
+  std::vector<VIPRA::Geometry::Polygon> getPedestrians() {return _spawns;}
+  std::map<std::string, VIPRA::Geometry::Polygon> getAreas() {return _areas;}
 
   /** Called for every line Type.  */
   void addLType(const DRW_LType& data) {};
@@ -194,8 +232,7 @@ class DRW_Reader : public DRW_Interface {
     _vipraPolygons.emplace_back(points);
 
     std::string layer = data.layer;
-    add_points(points, layer);
-    // add_obstacle(points, layer);
+    add_obstacle(points, layer);
   };
 
   /** Called for every line */
@@ -252,16 +289,11 @@ class DRW_Reader : public DRW_Interface {
   /** Called for every arc */
   void addArc(const DRW_Arc& data)
   {
-    // Get arc
     DRW_Arc data_cpy = data;
 
-    // TODO: functions for getting points using radius and points
     double    radius = data_cpy.radius();
     DRW_Coord center = data_cpy.basePoint;
 
-    // TODO:  Create points the same way we would on a circle, but end at the given angle (in radians).
-    //        End on the last angle
-    //        Add to vipra_polyline vector.
     auto vipra_polyline = DRW_Reader::get_arc_as_polygon(center, radius, data.staangle, data.endangle);
 
     _vipraPolygons.emplace_back(vipra_polyline);
@@ -273,16 +305,11 @@ class DRW_Reader : public DRW_Interface {
   /** Called for every circle */
   void addCircle(const DRW_Circle& data)
   {
-    // Get ellipse into polyline
     DRW_Circle data_cpy = data;
 
-    // TODO: functions for getting points using radius and points
     double    radius = data_cpy.radious;
     DRW_Coord center = data_cpy.basePoint;
 
-    // TODO:  Create points the same way we would on a circle, but end at the given angle (in radians).
-    //        End on the last angle
-    //        Add to vipra_polyline vector.
     auto vipra_polyline = DRW_Reader::get_arc_as_polygon(center, radius, 0.00, (2 * M_PI));
 
     _vipraPolygons.emplace_back(vipra_polyline);
@@ -305,7 +332,6 @@ class DRW_Reader : public DRW_Interface {
 
     _vipraPolygons.emplace_back(vipra_polyline);
 
-    // TODO: Get layer and check if name is "obstacle. Add to Obstacles"
     std::string layer = data.layer;
     add_obstacle(vipra_polyline, layer);
   };
@@ -332,7 +358,6 @@ class DRW_Reader : public DRW_Interface {
 
     _vipraPolygons.emplace_back(vipra_polyline);
 
-    // TODO: Get layer and check if name is "obstacle. Add to Obstacles"
     std::string layer = data.layer;
     add_obstacle(vipra_polyline, layer);
   };
@@ -401,13 +426,11 @@ class DRW_Reader : public DRW_Interface {
   std::vector<VIPRA::Geometry::Polygon> _vipraPolygons;
 
   std::vector<VIPRA::Geometry::Polygon> _obstacles;
-  std::map<std::string, std::vector<VIPRA::f3d>> _objectives;
-  std::vector<VIPRA::f3d> _pedestrians;
+  std::map<std::string, std::vector<VIPRA::Geometry::Polygon>> _objectives;
+  std::vector<VIPRA::Geometry::Polygon> _spawns;
+  std::map<std::string, VIPRA::Geometry::Polygon> _areas;
 
   [[nodiscard]] auto DRW_Reader::add_obstacle(std::vector<VIPRA::f3d> points,
-                                              std::string             object_type) -> std::vector<VIPRA::f3d>;
-
-  [[nodiscard]] auto DRW_Reader::add_points(std::vector<VIPRA::f3d> points,
                                               std::string             object_type) -> std::vector<VIPRA::f3d>;
 
   [[nodiscard]] static auto get_polygon(std::vector<std::shared_ptr<DRW_Vertex>>& vertexList)
@@ -421,7 +444,7 @@ class DRW_Reader : public DRW_Interface {
 };
 
 /**
- * @brief Takes in a list of vectors in the form of DRW_Vertex and returns a polygon (f3d) usable by VIPRA
+ * @brief Takes in a list of vectors in the form of DRW_Vertex and returns a set of f3d points usable by VIPRA
  * 
  * @param dxf_polygon_vertices - A list of vectors in the form of DRW_Vertex
  * @return std::vector<VIPRA::f3d>
@@ -440,7 +463,7 @@ inline auto DRW_Reader::get_polygon(std::vector<std::shared_ptr<DRW_Vertex>>& dx
 }
 
 /**
- * @brief Takes in a list of vectors in the form of DRW_Vertex and returns a polygon (f3d) usable by VIPRA
+ * @brief Takes in a list of vectors in the form of DRW_Vertex and returns a set of f3d points usable by VIPRA
  * 
  * @param dxf_polygon_vertices - A list of vectors in the form of DRW_Vertex
  * @return std::vector<VIPRA::f3d> 
@@ -459,7 +482,7 @@ inline auto DRW_Reader::get_2D_vector_polygon(
 }
 
 /**
- * @brief Takes in a list of vectors in the form of DRW_Vertex and returns a polygon (f3d) usable by VIPRA
+ * @brief Takes in a list of vectors in the form of DRW_Vertex and returns a set of f3d points usable by VIPRA
  * 
  * @param dxf_polygon_vertices - A list of vectors in the form of DRW_Vertex
  * @return std::vector<VIPRA::f3d>
@@ -492,29 +515,6 @@ inline auto DRW_Reader::get_arc_as_polygon(DRW_Coord center, double radius, doub
   return points;
 }
 
-
-inline auto DRW_Reader::add_points( std::vector<VIPRA::f3d> points,
-                                    std::string             object_type) -> std::vector<VIPRA::f3d>
-{
-  transform(object_type.begin(), object_type.end(), object_type.begin(), ::toupper);
-
-  if (object_type.compare("OBSTACLES")) {
-    _obstacles.emplace_back(points);
-  } else if( object_type.compare("PEDESTRIANS") ) {
-    _pedestrians.insert(_pedestrians.end(), points.begin(), points.end());
-  }
-  else {
-    // Should be a map of <std::string, std::vector<VIPRA::f3d>>
-    // goals.emplace_back(points);
-    if (_objectives[object_type].empty()) {
-      _objectives[object_type] = points;
-    } else {
-      _objectives[object_type].insert(_objectives[object_type].end(), points.begin(), points.end());
-    }
-  }
-}
-
-
 /**
  * @brief Uses the layer name to identify which vector this should go in based on the layer. 
  * 
@@ -525,5 +525,23 @@ inline auto DRW_Reader::add_points( std::vector<VIPRA::f3d> points,
 inline auto DRW_Reader::add_obstacle(std::vector<VIPRA::f3d> points,
                                      std::string             object_type) -> std::vector<VIPRA::f3d>
 {
-  _obstacles.emplace_back(points);
+  transform(object_type.begin(), object_type.end(), object_type.begin(), ::toupper);
+
+  VIPRA::Geometry::Polygon shape(points);
+
+  if (object_type.compare("OBSTACLES")) {
+    _obstacles.emplace_back(shape);
+  } else if( object_type.compare("PEDESTRIANS") ) {
+    // _spawns.insert(_spawns.end(), points.begin(), points.end());
+    _spawns.emplace_back(shape);
+  }
+  else if( object_type.find("AREAS") != std::string::npos) {
+    _areas[object_type] = shape;
+  } else {
+    if (_objectives[object_type].empty()) {
+      _objectives[object_type] = {shape};
+    } else {
+      _objectives[object_type].emplace_back(shape);
+    }
+  }
 };
