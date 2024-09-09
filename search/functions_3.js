@@ -1,8 +1,19 @@
 var searchData=
 [
-  ['data_0',['data',['../d6/d63/classbasic__string__view.html#a39cdfe061dc6d64a3adc230b62d8a026',1,'basic_string_view::data()'],['../de/d0d/classdetail_1_1buffer.html#aeb33e0a2d2be2bbca9e0236c148089c8',1,'detail::buffer::data()'],['../d7/d1a/classformat__int.html#a3c40c79eff9933c6f27cd0cdceabbb86',1,'format_int::data()']]],
-  ['debug_1',['debug',['../d6/d85/classVIPRA_1_1Log.html#a52f1b69a2aa5afae3bf016012d033284',1,'VIPRA::Log']]],
-  ['do_5fintersect_2',['do_intersect',['../da/d49/structVIPRA_1_1Geometry_1_1Line.html#a8d1bdf34a4c3f4add91de6d03173e94f',1,'VIPRA::Geometry::Line']]],
-  ['does_5fintersect_3',['does_intersect',['../da/d49/structVIPRA_1_1Geometry_1_1Line.html#aefad7d31e2973487cb4662275aa0c6c5',1,'VIPRA::Geometry::Line::does_intersect()'],['../d8/d9a/classVIPRA_1_1Geometry_1_1Rectangle.html#a5b55ae2af71c3e47c6683b0829abbfc6',1,'VIPRA::Geometry::Rectangle::does_intersect(Rectangle const &amp;other) const noexcept -&gt; bool'],['../d8/d9a/classVIPRA_1_1Geometry_1_1Rectangle.html#a17b5c0653f23bb0da0bbb684b3abfd46',1,'VIPRA::Geometry::Rectangle::does_intersect(Line const &amp;other) const noexcept -&gt; bool']]],
-  ['dot_4',['dot',['../d8/d28/structVIPRA_1_1f3d.html#a3bf083513d42ddcc979206a2551bda13',1,'VIPRA::f3d']]]
+  ['c_5fstr_0',['c_str',['../d7/d1a/classformat__int.html#ab733b9e9edf2ec1661deae1bb5d003a0',1,'format_int::c_str()'],['../d0/dff/classbasic__cstring__view.html#afee1380c4722894a55b8b6895f6bf255',1,'basic_cstring_view::c_str()']]],
+  ['capacity_1',['capacity',['../de/d0d/classdetail_1_1buffer.html#ac7ff14268d6b32d3d878291445ff4dd3',1,'detail::buffer']]],
+  ['center_2',['center',['../de/d4d/structVIPRA_1_1Geometry_1_1Polygon.html#ae173d8c5e7260a99de5824cce0c80055',1,'VIPRA::Geometry::Polygon']]],
+  ['check_3',['check',['../d7/d00/classVIPRA_1_1Behaviors_1_1TargetModifier.html#a5d1900e4f8aedd0287800f38ffb80114',1,'VIPRA::Behaviors::TargetModifier::check()'],['../d5/d12/classVIPRA_1_1Behaviors_1_1TimedLatchCollection.html#a4e679d7971b4d22d20adf662c02c6f80',1,'VIPRA::Behaviors::TimedLatchCollection::check()']]],
+  ['check_5farg_5fid_4',['check_arg_id',['../d9/d9f/classbasic__format__parse__context.html#a83f130644eeb162a932245c95447cf63',1,'basic_format_parse_context']]],
+  ['check_5fif_5fcollide_5',['check_if_collide',['../d9/df1/classCALM_1_1Collision.html#acc72c31a412b618fa56c29ea9a176db1',1,'CALM::Collision']]],
+  ['clean_5fused_6',['clean_used',['../d7/d24/classVIPRA_1_1Behaviors_1_1GroupsContainer.html#aae1d83f790eda628a530dd3ba1be8011',1,'VIPRA::Behaviors::GroupsContainer']]],
+  ['clear_7',['clear',['../d1/dad/classdynamic__format__arg__store.html#a94763fc905f02222d575f7c03161c212',1,'dynamic_format_arg_store::clear()'],['../de/d0d/classdetail_1_1buffer.html#a8174757a0d86698229670044730dc59b',1,'detail::buffer::clear()']]],
+  ['click_8',['click',['../d5/d6c/classVIPRA_1_1Util_1_1Clock.html#a43fd4f08d0be575cc17fab20f44f10b0',1,'VIPRA::Util::Clock']]],
+  ['closest_5fpoint_9',['closest_point',['../da/d49/structVIPRA_1_1Geometry_1_1Line.html#a1c7ba1f2512c250976781aa2f6e95a9f',1,'VIPRA::Geometry::Line']]],
+  ['config_10',['config',['../dc/dab/classVIPRA_1_1Modules_1_1Module.html#a137d050f9d40275edcc1a36b945a9485',1,'VIPRA::Modules::Module']]],
+  ['contains_11',['contains',['../d0/d27/classVIPRA_1_1Behaviors_1_1Location.html#a68b53f7f4f5a4c017313d31298ca0d3e',1,'VIPRA::Behaviors::Location']]],
+  ['context_12',['context',['../da/d04/classcontext.html#adad83dfd237fee0e8ea86937ef1802c6',1,'context']]],
+  ['coord_5floc_5fcompare_13',['coord_loc_compare',['../d7/d93/classVIPRA_1_1Behaviors_1_1AttributeHandling.html#ae3dd5ead8aa2096a39ed94a8a6daf3ac',1,'VIPRA::Behaviors::AttributeHandling']]],
+  ['count_14',['count',['../de/d93/classVIPRA_1_1Args.html#a23f0c1dfa9da9c6ffb75d370f4a46142',1,'VIPRA::Args']]],
+  ['cross_15',['cross',['../d8/d28/structVIPRA_1_1f3d.html#a20702c229447c098985ab35b572b8cfb',1,'VIPRA::f3d']]]
 ];

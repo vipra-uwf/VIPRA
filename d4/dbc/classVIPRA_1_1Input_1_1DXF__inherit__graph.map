@@ -1,0 +1,19 @@
+<map id="VIPRA::Input::DXF" name="VIPRA::Input::DXF">
+<area shape="rect" id="Node000001" title="Parameter and Polygon qualified dxf input module." alt="" coords="439,112,567,137"/>
+<area shape="rect" id="Node000002" href="$dc/dab/classVIPRA_1_1Modules_1_1Module.html" title=" " alt="" coords="215,5,379,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="376,50,392,57,442,83,483,109,480,113,439,88,390,61,374,55"/>
+<area shape="rect" id="Node000003" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="12,5,148,46"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="164,23,214,23,214,28,164,28"/>
+<area shape="rect" id="Node000004" href="$db/dd6/classVIPRA_1_1Modules_1_1Input.html" title=" " alt="" coords="221,71,372,111"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="388,103,439,111,438,117,387,108"/>
+<area shape="rect" id="Node000005" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="12,71,148,111"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="163,88,221,88,221,94,163,94"/>
+<area shape="rect" id="Node000006" href="$d5/d4f/classVIPRA_1_1Modules_1_1Serializable.html" title=" " alt="" coords="203,136,391,177"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="406,137,438,132,439,137,407,142"/>
+<area shape="rect" id="Node000007" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="5,136,155,177"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="170,154,202,154,202,159,170,159"/>
+<area shape="rect" id="Node000008" href="$d4/d1e/classVIPRA_1_1Modules_1_1MapInput.html" title=" " alt="" coords="209,201,385,242"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="374,193,390,186,439,160,480,135,483,140,441,165,392,191,376,198"/>
+<area shape="rect" id="Node000009" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="11,201,149,242"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="164,219,208,219,208,224,164,224"/>
+</map>

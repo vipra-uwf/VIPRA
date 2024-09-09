@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$df/d70/structVIPRA_1_1Util_1_1FindIndex_3_01index__t_00_01check__t_00_01type__t_00_01types__t_8_8_8_01_4.html" title=" " alt="" coords="5,5,163,61"/>
+<area shape="rect" id="Node000000" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="5,5,195,46"/>
+<area shape="rect" id="Node000001" href="$d5/da1/classVIPRA_1_1Modules_1_1ParamReader.html" title="Base ParamReader Module." alt="" coords="243,5,444,46"/>
+<area shape="poly" id="edge173_Node000000_Node000001" title=" " alt="" coords="210,23,242,23,242,28,210,28"/>
 </map>

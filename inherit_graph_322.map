@@ -1,11 +1,15 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="14,5,170,46"/>
-<area shape="rect" id="Node000001" href="$dc/dab/classVIPRA_1_1Modules_1_1Module.html" title=" " alt="" coords="235,5,400,46"/>
-<area shape="poly" id="edge152_Node000000_Node000001" title=" " alt="" coords="186,23,235,23,235,28,186,28"/>
-<area shape="rect" id="Node000002" href="$d7/dc5/classVIPRA_1_1Obstacles_1_1QuadTree.html" title="Obstacle module that uses a quadtree to store obstacles." alt="" coords="456,46,645,72"/>
-<area shape="poly" id="edge153_Node000001_Node000002" title=" " alt="" coords="416,37,457,43,456,48,415,42"/>
-<area shape="rect" id="Node000004" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="5,71,179,111"/>
-<area shape="rect" id="Node000003" href="$dc/db0/classVIPRA_1_1Modules_1_1Obstacles.html" title=" " alt="" coords="227,71,408,111"/>
-<area shape="poly" id="edge154_Node000004_Node000003" title=" " alt="" coords="194,88,226,88,226,94,194,94"/>
-<area shape="poly" id="edge155_Node000003_Node000002" title=" " alt="" coords="423,74,455,69,456,75,424,79"/>
+<area shape="rect" id="Node000000" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="14,5,153,46"/>
+<area shape="rect" id="Node000001" href="$d5/df3/classVIPRA_1_1Modules_1_1Map.html" title=" " alt="" coords="227,5,374,46"/>
+<area shape="poly" id="edge147_Node000000_Node000001" title=" " alt="" coords="169,23,226,23,226,28,169,28"/>
+<area shape="rect" id="Node000002" href="$d3/d13/classVIPRA_1_1Map_1_1QuadTree.html" title="Map module that uses a quadtree to store obstacles." alt="" coords="456,52,611,77"/>
+<area shape="poly" id="edge148_Node000001_Node000002" title=" " alt="" coords="390,38,456,49,455,54,389,43"/>
+<area shape="rect" id="Node000006" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="5,71,162,111"/>
+<area shape="rect" id="Node000003" href="$dc/dab/classVIPRA_1_1Modules_1_1Module.html" title=" " alt="" coords="218,71,382,111"/>
+<area shape="poly" id="edge149_Node000006_Node000003" title=" " alt="" coords="177,88,218,88,218,94,177,94"/>
+<area shape="poly" id="edge150_Node000003_Node000002" title=" " alt="" coords="398,77,455,71,456,76,398,82"/>
+<area shape="rect" id="Node000004" href="$d7/dc5/classVIPRA_1_1Obstacles_1_1QuadTree.html" title="Obstacle module that uses a quadtree to store obstacles." alt="" coords="439,105,628,130"/>
+<area shape="poly" id="edge151_Node000003_Node000004" title=" " alt="" coords="398,99,439,104,438,109,398,105"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="210,136,391,161"/>
+<area shape="poly" id="edge152_Node000005_Node000004" title=" " alt="" coords="406,132,438,127,439,133,407,137"/>
 </map>

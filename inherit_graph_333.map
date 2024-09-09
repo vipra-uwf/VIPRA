@@ -1,3 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$de/d82/structVIPRA_1_1Util_1_1get__map__specialization_3_01std_1_1map_3_01k__t_00_01v__t_01_4_01_4.html" title="Utility struct that gets the specialization of a templated type." alt="" coords="5,5,149,61"/>
+<area shape="rect" id="Node000000" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="5,5,201,46"/>
+<area shape="rect" id="Node000001" href="$d0/d2d/classVIPRA_1_1Modules_1_1Pedestrians.html" title=" " alt="" coords="249,5,440,46"/>
+<area shape="poly" id="edge175_Node000000_Node000001" title=" " alt="" coords="216,23,248,23,248,28,216,28"/>
+<area shape="rect" id="Node000002" href="$d3/d55/classVIPRA_1_1Views_1_1Pedestrians.html" title=" " alt="" coords="488,13,666,38"/>
+<area shape="poly" id="edge176_Node000001_Node000002" title=" " alt="" coords="456,23,487,23,487,28,456,28"/>
 </map>

@@ -1,5 +1,11 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" title=" " alt="" coords="5,5,110,31"/>
-<area shape="rect" id="Node000001" href="$dc/d78/structdetail_1_1is__integral.html" title=" " alt="" coords="158,5,305,31"/>
-<area shape="poly" id="edge86_Node000000_Node000001" title=" " alt="" coords="125,16,157,16,157,21,125,21"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,112,150,137"/>
+<area shape="rect" id="Node000001" href="$da/d18/structdetail_1_1is__range___3_01T_00_01void_01_4.html" title=" " alt="" coords="222,5,344,46"/>
+<area shape="poly" id="edge81_Node000000_Node000001" title=" " alt="" coords="113,101,197,57,225,44,227,49,199,61,115,106"/>
+<area shape="rect" id="Node000002" href="$d1/d2f/structdetail_1_1is__same__arithmetic__type.html" title=" " alt="" coords="198,71,369,111"/>
+<area shape="poly" id="edge82_Node000000_Node000002" title=" " alt="" coords="164,108,197,102,197,108,165,113"/>
+<area shape="rect" id="Node000003" href="$d9/d46/structdetail_1_1range__format__kind__.html" title=" " alt="" coords="216,136,350,177"/>
+<area shape="poly" id="edge83_Node000000_Node000003" title=" " alt="" coords="165,135,216,143,215,149,164,140"/>
+<area shape="rect" id="Node000004" href="$d0/d55/structdetail_1_1type__constant.html" title=" " alt="" coords="214,201,353,242"/>
+<area shape="poly" id="edge84_Node000000_Node000004" title=" " alt="" coords="116,143,199,186,227,198,225,203,197,191,113,147"/>
 </map>

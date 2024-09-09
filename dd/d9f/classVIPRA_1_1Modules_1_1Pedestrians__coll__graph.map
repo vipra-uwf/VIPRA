@@ -1,5 +1,5 @@
 <map id="VIPRA::Modules::Pedestrians&lt; module_t &gt;" name="VIPRA::Modules::Pedestrians&lt; module_t &gt;">
-<area shape="rect" id="Node000001" title="Dummy pedestrian set for use in other concepts." alt="" coords="5,94,197,135"/>
+<area shape="rect" id="Node000001" title="Base Pedestrians module." alt="" coords="5,94,197,135"/>
 <area shape="rect" id="Node000002" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="11,5,191,46"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="104,62,104,94,98,94,98,62"/>
 </map>

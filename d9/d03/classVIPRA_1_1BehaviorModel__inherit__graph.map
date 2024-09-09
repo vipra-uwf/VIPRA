@@ -1,7 +1,7 @@
-<map id="VIPRA::BehaviorModel&lt; pedset_t, obstacles_t, goals_t &gt;" name="VIPRA::BehaviorModel&lt; pedset_t, obstacles_t, goals_t &gt;">
-<area shape="rect" id="Node000001" title="BehaviorModel is a special module that is responsible for loading and managing all behaviors." alt="" coords="17,228,171,283"/>
-<area shape="rect" id="Node000002" href="$dc/dab/classVIPRA_1_1Modules_1_1Module.html" title=" " alt="" coords="5,124,183,180"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,195,97,227,91,227,91,195"/>
-<area shape="rect" id="Node000003" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="12,5,176,76"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="97,92,97,124,91,124,91,92"/>
+<map id="VIPRA::BehaviorModel&lt; pedset_t, map_t, goals_t &gt;" name="VIPRA::BehaviorModel&lt; pedset_t, map_t, goals_t &gt;">
+<area shape="rect" id="Node000001" title="BehaviorModel is a special module that is responsible for loading and managing all behaviors." alt="" coords="5,228,191,268"/>
+<area shape="rect" id="Node000002" href="$dc/dab/classVIPRA_1_1Modules_1_1Module.html" title=" " alt="" coords="14,124,182,180"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="101,195,101,227,95,227,95,195"/>
+<area shape="rect" id="Node000003" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="16,5,180,76"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="101,92,101,124,95,124,95,92"/>
 </map>

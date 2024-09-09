@@ -1,5 +1,5 @@
 <map id="VIPRA::Modules::Output&lt; module_t &gt;" name="VIPRA::Modules::Output&lt; module_t &gt;">
-<area shape="rect" id="Node000001" title="Dummy output for use in other concepts." alt="" coords="5,94,167,135"/>
+<area shape="rect" id="Node000001" title="Base Output module." alt="" coords="5,94,167,135"/>
 <area shape="rect" id="Node000002" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="11,5,161,46"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="89,62,89,94,83,94,83,62"/>
 </map>

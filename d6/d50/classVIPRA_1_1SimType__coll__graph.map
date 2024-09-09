@@ -1,7 +1,7 @@
-<map id="VIPRA::SimType&lt; model_t, output_t, pedset_t, goals_t, obstacles_t &gt;" name="VIPRA::SimType&lt; model_t, output_t, pedset_t, goals_t, obstacles_t &gt;">
-<area shape="rect" id="Node000001" title=" " alt="" coords="510,13,676,68"/>
-<area shape="rect" id="Node000002" href="$dc/dab/classVIPRA_1_1Modules_1_1Module.html" title=" " alt="" coords="228,13,462,68"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="478,38,510,38,510,43,478,43"/>
+<map id="VIPRA::SimType&lt; model_t, output_t, pedset_t, goals_t, map_t &gt;" name="VIPRA::SimType&lt; model_t, output_t, pedset_t, goals_t, map_t &gt;">
+<area shape="rect" id="Node000001" title=" " alt="" coords="479,13,643,68"/>
+<area shape="rect" id="Node000002" href="$dc/dab/classVIPRA_1_1Modules_1_1Module.html" title=" " alt="" coords="228,13,431,68"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="447,38,479,38,479,43,447,43"/>
 <area shape="rect" id="Node000003" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="5,5,180,76"/>
 <area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="195,38,227,38,227,43,195,43"/>
 </map>

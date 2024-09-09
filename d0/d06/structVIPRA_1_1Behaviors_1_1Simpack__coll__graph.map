@@ -1,7 +1,7 @@
-<map id="VIPRA::Behaviors::Simpack&lt; pedset_t, obstacles_t, goals_t &gt;" name="VIPRA::Behaviors::Simpack&lt; pedset_t, obstacles_t, goals_t &gt;">
-<area shape="rect" id="Node000001" title="Holds references to commonly used parameters for simpler passing." alt="" coords="81,109,263,165"/>
+<map id="VIPRA::Behaviors::Simpack&lt; pedset_t, map_t, goals_t &gt;" name="VIPRA::Behaviors::Simpack&lt; pedset_t, map_t, goals_t &gt;">
+<area shape="rect" id="Node000001" title="Holds references to commonly used parameters for simpler passing." alt="" coords="79,109,265,150"/>
 <area shape="rect" id="Node000002" href="$d7/d24/classVIPRA_1_1Behaviors_1_1GroupsContainer.html" title="Holds the indexes for pedestrians in each type group." alt="" coords="5,5,179,46"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="117,57,154,107,150,110,113,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="119,57,159,107,155,110,115,60"/>
 <area shape="rect" id="Node000003" href="$d4/da2/structVIPRA_1_1State.html" title="Struct that holds the updated positions and velocities of all pedestrians." alt="" coords="203,13,301,38"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="236,53,194,110,190,107,232,50"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="235,53,190,110,185,107,231,49"/>
 </map>
