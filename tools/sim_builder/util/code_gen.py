@@ -18,7 +18,7 @@ def _find_module_in(moduleName, moduleType, baseDir):
     moduleDir += f'/{moduleName}'
 
   if not os.path.isfile(f'{moduleDir}/CMakeLists.txt'):
-    raise Exception(f'No CMakeLists in {moduleDir}')
+    return None
 
   if os.path.isfile(f'{moduleDir}/{moduleName}.hpp'):
     return f'{moduleDir}/{moduleName}.hpp'
@@ -26,7 +26,7 @@ def _find_module_in(moduleName, moduleType, baseDir):
   if os.path.isfile(f'{moduleDir}/{moduleName}.h'):
     return f'{moduleDir}/{moduleName}.h'
 
-  raise Exception(f'Unable to find {moduleName} in {moduleDir}')
+  return None
 
 
 def _find_module(moduleName, moduleType):
@@ -34,7 +34,12 @@ def _find_module(moduleName, moduleType):
   if module:
     return {'path': module, 'base': False}
 
-  return {'path': _find_module_in(moduleName, moduleType, BASE_MODULES_DIR), 'base': True}
+  path = _find_module_in(moduleName, moduleType, BASE_MODULES_DIR)
+  if (path == None):
+    raise Exception(f'Unable to find module {moduleName}')
+
+  return {'path': path, 'base': True}
+  
 
 def _get_namespace_name(moduleName, moduleType, base):
   moduleName = f'{moduleType.capitalize()}::{moduleName}'
