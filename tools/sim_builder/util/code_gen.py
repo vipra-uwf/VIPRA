@@ -125,7 +125,7 @@ def _generate_sim(modules):
   return None
 
 def _compile_sim(mainpath, installpath, config):
-    subprocess.run([ 'cmake', '-B', f'{BASE_VIPRA_DIR}/build', BASE_VIPRA_DIR, f'-DVIPRA_USE_MPI={config['use_mpi']}', f'-DVIPRA_MAIN_FILE={mainpath}', f'-DVIPRA_EXECUTABLE_PATH={installpath}' ], check=True)
+    subprocess.run([ 'cmake', '-B', f'{BASE_VIPRA_DIR}/build', BASE_VIPRA_DIR, f'-DVIPRA_USE_MPI={config["use_mpi"]}', f'-DVIPRA_MAIN_FILE={mainpath}', f'-DVIPRA_EXECUTABLE_PATH={installpath}' ], check=True)
     subprocess.run([ 'cmake', '--build', f'{BASE_VIPRA_DIR}/build' ], check=True)
 
 def build_sim(config, installpath):
