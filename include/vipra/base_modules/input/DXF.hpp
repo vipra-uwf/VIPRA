@@ -42,7 +42,7 @@ class DXF : public VIPRA::Modules::Module<DXF>,
 
   // TODO(rolland): implement
   [[nodiscard]] auto to_string() const -> std::string { return ""; }
-  void               parse_impl() { return; }
+  void               parse_impl(std::string const&) { return; }
 
   [[nodiscard]] auto get_obstacles_impl() const -> std::optional<std::vector<VIPRA::Geometry::Polygon>>;
   [[nodiscard]] auto get_spawns_impl() const -> std::optional<std::vector<VIPRA::Geometry::Polygon>>;
