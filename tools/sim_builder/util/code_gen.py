@@ -18,7 +18,7 @@ def _find_module_in(moduleName, moduleType, baseDir):
     moduleDir += f'/{moduleName}'
 
   if not os.path.isfile(f'{moduleDir}/CMakeLists.txt'):
-    return None
+    raise Exception(f'No CMakeLists in {moduleDir}')
 
   if os.path.isfile(f'{moduleDir}/{moduleName}.hpp'):
     return f'{moduleDir}/{moduleName}.hpp'
@@ -26,7 +26,7 @@ def _find_module_in(moduleName, moduleType, baseDir):
   if os.path.isfile(f'{moduleDir}/{moduleName}.h'):
     return f'{moduleDir}/{moduleName}.h'
 
-  return None
+  raise Exception(f'Unable to find {moduleName} in {moduleDir}')
 
 
 def _find_module(moduleName, moduleType):
@@ -94,10 +94,15 @@ def _make_includes(moduleList):
 
   for key in moduleList:
     if key == 'input':
+      if (not moduleList[key]['map']['path'] or not moduleList[key]['pedestrians']['path']):
+        raise Exception("Missing Input Module Paths")
       includes.append(moduleList[key]['pedestrians']['path'])
       includes.append(moduleList[key]['map']['path'])
       continue
     
+    if (not moduleList[key]['path']):
+      raise Exception("Missing Module Path")
+
     includes.append(moduleList[key]['path'])
 
   return includes
