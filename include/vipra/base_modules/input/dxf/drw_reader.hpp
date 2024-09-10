@@ -1,7 +1,5 @@
 #pragma once
 
-// NOLINTBEGIN
-
 #include "drw_interface.h"
 
 #include "vipra/geometry/polygon.hpp"
@@ -396,5 +394,3 @@ inline void DrwReader::add_obstacle(std::vector<VIPRA::f3d> const& points, std::
   }
 };
 }  // namespace VIPRA
-
-//NOLINTEND

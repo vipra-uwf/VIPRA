@@ -16,8 +16,6 @@
 
 #include "dxf/drw_reader.hpp"
 
-// NOLINTBEGIN
-
 namespace VIPRA::Input {
 /**
   * @brief Parameter and Polygon qualified dxf input module
@@ -166,5 +164,3 @@ inline void VIPRA::Input::DXF::load_impl()
   _spawns = drw_reader.getPedestrians();
   _areas = drw_reader.getAreas();
 }
-
-// NOLINTEND
