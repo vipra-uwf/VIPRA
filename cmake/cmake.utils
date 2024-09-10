@@ -74,10 +74,13 @@ macro(vipra_add_library)
 
   endif()
 
+  target_include_directories(${VIPRA_PROJECT_NAME} PUBLIC ${${GET_LIB_LIBNAME}_SOURCE_DIR}/src)
+
   target_link_libraries(
     ${VIPRA_PROJECT_NAME}
     PUBLIC
     ${GET_LIB_LINK}
   )
+
   message(STATUS "Done Getting " ${GET_LIB_LIBNAME})
 endmacro()

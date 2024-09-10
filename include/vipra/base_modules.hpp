@@ -4,6 +4,7 @@
 
 #include "vipra/base_modules/goals/AStar.hpp"
 
+#include "vipra/base_modules/input/DXF.hpp"
 #include "vipra/base_modules/input/JSON.hpp"
 
 #include "vipra/base_modules/output/TrajectoriesJson.hpp"

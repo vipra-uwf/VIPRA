@@ -38,7 +38,7 @@ struct Polygon {
    * @return true 
    * @return false 
    */
-  [[nodiscard]] inline auto is_point_inside(VIPRA::f3d point) const noexcept -> bool
+  [[nodiscard]] VIPRA_INLINE auto is_point_inside(VIPRA::f3d point) const noexcept -> bool
   {
     // TODO(rolland): verify this
     bool isInside = false;
@@ -60,7 +60,7 @@ struct Polygon {
    * @return true 
    * @return false 
    */
-  [[nodiscard]] inline auto does_intersect(VIPRA::Geometry::Circle const& circle) const noexcept -> bool
+  [[nodiscard]] VIPRA_INLINE auto does_intersect(VIPRA::Geometry::Circle const& circle) const noexcept -> bool
   {
     return std::any_of(edges.begin(), edges.end(),
                        [&](auto const& edge) { return circle.does_intersect(edge); });
@@ -71,7 +71,7 @@ struct Polygon {
    * 
    * @return VIPRA::f3d 
    */
-  [[nodiscard]] inline auto center() const noexcept -> VIPRA::f3d
+  [[nodiscard]] VIPRA_INLINE auto center() const noexcept -> VIPRA::f3d
   {
     VIPRA::f3d center;
     std::for_each(edges.begin(), edges.end(),
@@ -80,10 +80,16 @@ struct Polygon {
     return center /= edges.size();
   }
 
-  [[nodiscard]] inline auto random_point() const noexcept -> VIPRA::f3d
+  [[nodiscard]] VIPRA_INLINE auto random_point() const noexcept -> VIPRA::f3d
   {
     // TODO(rolland, issue #19): implement a proper random_point method
     return center();
   }
+
+  Polygon() = default;
+  Polygon(Polygon const&) = default;
+  Polygon(Polygon&&) noexcept = default;
+  auto operator=(Polygon const&) -> Polygon& = default;
+  auto operator=(Polygon&&) noexcept -> Polygon& = default;
 };
 }  // namespace VIPRA::Geometry
