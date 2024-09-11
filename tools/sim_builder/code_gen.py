@@ -2,45 +2,14 @@
 import os
 import subprocess
 
-from .modules import MODULE_TYPES
+from .modules import MODULE_TYPES, find_module
 from .loading import Loader
 
 CURR_DIR = os.path.dirname(os.path.realpath(__file__))
-BASE_VIPRA_DIR = os.path.realpath(CURR_DIR  + '/../../../')
+BASE_VIPRA_DIR = os.path.realpath(CURR_DIR  + '/../../')
 MODULES_DIR = BASE_VIPRA_DIR + '/modules'
 BASE_MODULES_DIR = BASE_VIPRA_DIR + '/include/vipra/base_modules'
-
-
-def _find_module_in(moduleName, moduleType, baseDir):
-  moduleDir = baseDir + f'/{moduleType}'
-
-  if os.path.isdir(f'{moduleDir}/{moduleName}'):
-    moduleDir += f'/{moduleName}'
-
-  if not os.path.isfile(f'{moduleDir}/CMakeLists.txt'):
-    return None
-
-  if os.path.isfile(f'{moduleDir}/{moduleName}.hpp'):
-    return f'{moduleDir}/{moduleName}.hpp'
-
-  if os.path.isfile(f'{moduleDir}/{moduleName}.h'):
-    return f'{moduleDir}/{moduleName}.h'
-
-  return None
-
-
-def _find_module(moduleName, moduleType):
-  module = _find_module_in(moduleName, moduleType, MODULES_DIR)
-  if module:
-    return {'path': module, 'base': False}
-
-  path = _find_module_in(moduleName, moduleType, BASE_MODULES_DIR)
-  if (path == None):
-    raise Exception(f'Unable to find module {moduleName}')
-
-  return {'path': path, 'base': True}
   
-
 def _get_namespace_name(moduleName, moduleType, base):
   moduleName = f'{moduleType.capitalize()}::{moduleName}'
   if base:
@@ -54,8 +23,8 @@ def _get_input_modules(modules):
   if not modules['map']:
     raise Exception('Map Input missing')
 
-  peds = _find_module(modules['pedestrians'], 'input')
-  obs = _find_module(modules['map'], 'input')
+  peds = find_module(modules['pedestrians'], 'input')
+  obs = find_module(modules['map'], 'input')
 
   inputModules = {
     'pedestrians': {
@@ -78,7 +47,7 @@ def _get_modules(modules):
       continue
 
     moduleName = modules[moduleType]
-    module = _find_module(moduleName, moduleType)
+    module = find_module(moduleName, moduleType)
     if not module['path']:
       raise Exception(f'Unable to find module named: {moduleName}')
 

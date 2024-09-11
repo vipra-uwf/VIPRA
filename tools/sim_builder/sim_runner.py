@@ -1,10 +1,13 @@
 
 import subprocess
 
-import util.input_handling as input
+import tools.sim_builder.input_handling as input
 
-def run(installpath):
-  mpirun = input.get_yes_no('MPI Run?')
+def run(installpath, name, cache):
+  if cache.use_mpi(name):
+    mpirun = input.get_yes_no('MPI Run?')
+  else:
+    mpirun = False
   cores = 1
   if mpirun:
     cores = input.get_int('Number of Nodes')
