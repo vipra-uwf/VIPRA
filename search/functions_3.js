@@ -2,7 +2,7 @@ var searchData=
 [
   ['c_5fstr_0',['c_str',['../d7/d1a/classformat__int.html#ab733b9e9edf2ec1661deae1bb5d003a0',1,'format_int::c_str()'],['../d0/dff/classbasic__cstring__view.html#afee1380c4722894a55b8b6895f6bf255',1,'basic_cstring_view::c_str()']]],
   ['capacity_1',['capacity',['../de/d0d/classdetail_1_1buffer.html#ac7ff14268d6b32d3d878291445ff4dd3',1,'detail::buffer']]],
-  ['center_2',['center',['../de/d4d/structVIPRA_1_1Geometry_1_1Polygon.html#ae173d8c5e7260a99de5824cce0c80055',1,'VIPRA::Geometry::Polygon']]],
+  ['center_2',['center',['../de/d4d/structVIPRA_1_1Geometry_1_1Polygon.html#a2eba40d1d543bbe1c8dda1f2ce9d762a',1,'VIPRA::Geometry::Polygon']]],
   ['check_3',['check',['../d7/d00/classVIPRA_1_1Behaviors_1_1TargetModifier.html#a5d1900e4f8aedd0287800f38ffb80114',1,'VIPRA::Behaviors::TargetModifier::check()'],['../d5/d12/classVIPRA_1_1Behaviors_1_1TimedLatchCollection.html#a4e679d7971b4d22d20adf662c02c6f80',1,'VIPRA::Behaviors::TimedLatchCollection::check()']]],
   ['check_5farg_5fid_4',['check_arg_id',['../d9/d9f/classbasic__format__parse__context.html#a83f130644eeb162a932245c95447cf63',1,'basic_format_parse_context']]],
   ['check_5fif_5fcollide_5',['check_if_collide',['../d9/df1/classCALM_1_1Collision.html#acc72c31a412b618fa56c29ea9a176db1',1,'CALM::Collision']]],

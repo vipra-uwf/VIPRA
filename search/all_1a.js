@@ -26,7 +26,7 @@ var searchData=
   ['set_20implementation_23',['Pedestrian Set Implementation',['../d9/d71/md_docs_2pages_2implementation_2pedestrians.html',1,'']]],
   ['set_5fused_24',['set_used',['../d7/d24/classVIPRA_1_1Behaviors_1_1GroupsContainer.html#a6eda1b757550c18a88a3a4ac85ac3b4e',1,'VIPRA::Behaviors::GroupsContainer']]],
   ['set_5fvalue_25',['set_value',['../d7/d93/classVIPRA_1_1Behaviors_1_1AttributeHandling.html#aac21db59e7afcb7b7d8927e272f2274d',1,'VIPRA::Behaviors::AttributeHandling']]],
-  ['setblock_26',['setBlock',['../d8/d41/classDRW__Reader.html#afe5a3eecd4fec3b8d95dd43f9e85772e',1,'DRW_Reader']]],
+  ['setblock_26',['setBlock',['../da/dea/classVIPRA_1_1DrwReader.html#a32352f3542176618803b038c80a81bf8',1,'VIPRA::DrwReader']]],
   ['setup_27',['Setup',['../d9/d3d/md_docs_2pages_2getting__started_2setup.html#autotoc_md178',1,'Setup'],['../da/d11/md_docs_2pages_2tools_2visualizer.html#autotoc_md378',1,'Setup']]],
   ['setup_28',['setup',['../d9/d3d/md_docs_2pages_2getting__started_2setup.html',1,'']]],
   ['setup_20and_20run_29',['Setup and Run',['../d9/db0/md_docs_2pages_2researchers.html#autotoc_md354',1,'']]],

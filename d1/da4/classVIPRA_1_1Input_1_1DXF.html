@@ -157,6 +157,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2f835aa4b8c69bdbee1281b7746faab8" id="r_a2f835aa4b8c69bdbee1281b7746faab8"><td class="memItemLeft" align="right" valign="top"><a id="a2f835aa4b8c69bdbee1281b7746faab8" name="a2f835aa4b8c69bdbee1281b7746faab8"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>VIPRA_MODULE_TYPE</b> (Input)</td></tr>
 <tr class="separator:a2f835aa4b8c69bdbee1281b7746faab8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2feb4e3a0fd11836ce193436db1ba19" id="r_aa2feb4e3a0fd11836ce193436db1ba19"><td class="memItemLeft" align="right" valign="top"><a id="aa2feb4e3a0fd11836ce193436db1ba19" name="aa2feb4e3a0fd11836ce193436db1ba19"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>DXF</b> (std::filesystem::path filepath)</td></tr>
+<tr class="separator:aa2feb4e3a0fd11836ce193436db1ba19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adeab34950cbc30ad56cef4813c4201a0" id="r_adeab34950cbc30ad56cef4813c4201a0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adeab34950cbc30ad56cef4813c4201a0">load_impl</a> ()</td></tr>
 <tr class="memdesc:adeab34950cbc30ad56cef4813c4201a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the DXF file from the given path.  <br /></td></tr>
 <tr class="separator:adeab34950cbc30ad56cef4813c4201a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -164,6 +167,12 @@ Public Member Functions</h2></td></tr>
 template&lt;typename data_t &gt; </td></tr>
 <tr class="memitem:a3a6e1437c815d36086c1decba5972356"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>get_impl</b> (std::vector&lt; std::string &gt; const &amp;keys) const -&gt; std::optional&lt; data_t &gt;</td></tr>
 <tr class="separator:a3a6e1437c815d36086c1decba5972356"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3aac4af7a09def4b91d1d87e203caeaa" id="r_a3aac4af7a09def4b91d1d87e203caeaa"><td class="memItemLeft" align="right" valign="top"><a id="a3aac4af7a09def4b91d1d87e203caeaa" name="a3aac4af7a09def4b91d1d87e203caeaa"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>to_string</b> () const -&gt; std::string</td></tr>
+<tr class="separator:a3aac4af7a09def4b91d1d87e203caeaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a335d4e5923950c62b249eb971e5190d7" id="r_a335d4e5923950c62b249eb971e5190d7"><td class="memItemLeft" align="right" valign="top"><a id="a335d4e5923950c62b249eb971e5190d7" name="a335d4e5923950c62b249eb971e5190d7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>parse_impl</b> (std::string const &amp;)</td></tr>
+<tr class="separator:a335d4e5923950c62b249eb971e5190d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a40f4a1bdef168a29c81d33d158fb9c73" id="r_a40f4a1bdef168a29c81d33d158fb9c73"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a40f4a1bdef168a29c81d33d158fb9c73">get_obstacles_impl</a> () const -&gt; std::optional&lt; std::vector&lt; <a class="el" href="../../de/d4d/structVIPRA_1_1Geometry_1_1Polygon.html">VIPRA::Geometry::Polygon</a> &gt; &gt;</td></tr>
 <tr class="memdesc:a40f4a1bdef168a29c81d33d158fb9c73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns obstacles geometry from the .dxf file.  <br /></td></tr>
 <tr class="separator:a40f4a1bdef168a29c81d33d158fb9c73"><td class="memSeparator" colspan="2">&#160;</td></tr>

@@ -216,7 +216,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    });</div>
 <div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
 <div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    <span class="keywordflow">if</span> ( nearest == i ) {</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>      _peds.nearestDists[i] = 100.0;</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>      _peds.nearestDists[i] = std::numeric_limits&lt;VIPRA::f_pnt&gt;::max();</div>
 <div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    }</div>
 <div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>      _peds.nearestDists[i] = pedCoords.distance_to(coords[nearest]);</div>

@@ -8,7 +8,7 @@ var searchData=
   ['capacity_5',['capacity',['../de/d0d/classdetail_1_1buffer.html#ac7ff14268d6b32d3d878291445ff4dd3',1,'detail::buffer']]],
   ['caselessstrcompare_6',['CaselessStrCompare',['../d9/da6/structVIPRA_1_1Behaviors_1_1CaselessStrCompare.html',1,'VIPRA::Behaviors']]],
   ['cattributevalue_7',['CAttributeValue',['../db/df7/structVIPRA_1_1Behaviors_1_1CAttributeValue.html',1,'VIPRA::Behaviors']]],
-  ['center_8',['center',['../de/d4d/structVIPRA_1_1Geometry_1_1Polygon.html#ae173d8c5e7260a99de5824cce0c80055',1,'VIPRA::Geometry::Polygon']]],
+  ['center_8',['center',['../de/d4d/structVIPRA_1_1Geometry_1_1Polygon.html#a2eba40d1d543bbe1c8dda1f2ce9d762a',1,'VIPRA::Geometry::Polygon']]],
   ['change_20modules_9',['How to Change Modules',['../d6/dad/md_docs_2pages_2modules.html#autotoc_md333',1,'']]],
   ['char_5fconverter_10',['char_converter',['../df/ddc/classdetail_1_1char__converter.html',1,'detail']]],
   ['char_5ftype_11',['char_type',['../da/d04/classcontext.html#aa052f7eee8b862c523db57b537636cdd',1,'context']]],

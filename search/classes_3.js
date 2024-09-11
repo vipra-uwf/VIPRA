@@ -6,7 +6,7 @@ var searchData=
   ['deferedcleanup_3',['DeferedCleanup',['../d8/db7/structVIPRA_1_1Behaviors_1_1AttributeHandling_1_1DeferedCleanup.html',1,'VIPRA::Behaviors::AttributeHandling']]],
   ['digit_5fgrouping_4',['digit_grouping',['../d0/d58/classdetail_1_1digit__grouping.html',1,'detail']]],
   ['drng_5',['DRNG',['../d2/db3/classVIPRA_1_1Behaviors_1_1DRNG.html',1,'VIPRA::Behaviors']]],
-  ['drw_5freader_6',['DRW_Reader',['../d8/d41/classDRW__Reader.html',1,'']]],
+  ['drwreader_6',['DrwReader',['../da/dea/classVIPRA_1_1DrwReader.html',1,'VIPRA']]],
   ['dslexception_7',['DSLException',['../d0/d16/classVIPRA_1_1Behaviors_1_1DSLException.html',1,'VIPRA::Behaviors']]],
   ['duration_8',['Duration',['../d6/d18/classVIPRA_1_1Behaviors_1_1Duration.html',1,'VIPRA::Behaviors']]],
   ['dxf_9',['DXF',['../d1/da4/classVIPRA_1_1Input_1_1DXF.html',1,'VIPRA::Input']]],
