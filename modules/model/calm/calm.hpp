@@ -123,7 +123,7 @@ void Model::calm::calc_neighbors(auto const& pedset, auto const& /*map*/, auto c
     });
 
     if ( nearest == i ) {
-      _peds.nearestDists[i] = 100.0;
+      _peds.nearestDists[i] = std::numeric_limits<VIPRA::f_pnt>::max();
     }
     else {
       _peds.nearestDists[i] = pedCoords.distance_to(coords[nearest]);

@@ -30,8 +30,8 @@
   "goals": {
     "AStar": {
       "endGoalType": "exit",
-      "gridSize": 0.05,
-      "closestObstacle": 0.20,
+      "gridSize": 0.07,
+      "closestObstacle": 0.25,
       "goalRange": 0.05
     }
   },
@@ -55,7 +55,7 @@
   },
   "behavior_model": {
     "main": {
-      "behaviors_dir": "../../behaviors",
+      "behaviors_dir": "behaviors",
       "behaviors": [
         "luggage"
       ]

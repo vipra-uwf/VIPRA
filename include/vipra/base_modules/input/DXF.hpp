@@ -14,7 +14,7 @@
 #include "vipra/modules/map_input.hpp"
 #include "vipra/modules/serializable.hpp"
 
-#include "dxf/drw_reader.hpp"
+#include "drw_reader/drw_reader.hpp"
 
 namespace VIPRA::Input {
 /**

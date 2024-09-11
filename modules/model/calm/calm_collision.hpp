@@ -175,8 +175,8 @@ class Collision {
       auto coords1 = pedset.ped_coords(pedIdx);
       auto coords2 = pedset.ped_coords(otherIdx);
 
-      constexpr float DIST2 = 2 * RECTANGLE_RANGE;
-      if ( coords1.distance_to(coords2) >= DIST2 ) continue;
+      constexpr float DIST2 = (4 * RECTANGLE_RANGE * RECTANGLE_RANGE);
+      if ( coords1.distance_to_sqrd(coords2) >= DIST2 ) continue;
 
       bool cr2in1 = collisionRectangles[pedIdx].is_point_inside(coords2);
       bool cr1in2 = collisionRectangles[otherIdx].is_point_inside(coords1);
@@ -213,7 +213,7 @@ class Collision {
 
       // If goals match, use distance comparision
       if ( goal1 == goal2 ) {
-        if ( coords1.distance_to(goal1) > coords2.distance_to(goal2) ) {
+        if ( coords1.distance_to_sqrd(goal1) > coords2.distance_to_sqrd(goal2) ) {
           inRace[otherIdx][pedIdx] = true;
           inRace[pedIdx][otherIdx] = true;
           flag = false;
@@ -243,9 +243,9 @@ class Collision {
       else {
         collisionMidpoint = intersectionMidpoints[pedIdx][otherIdx];
       }
-      if ( coords1.distance_to(collisionMidpoint) > coords2.distance_to(collisionMidpoint) )
+      if ( coords1.distance_to_sqrd(collisionMidpoint) > coords2.distance_to_sqrd(collisionMidpoint) )
         flag = false;
-      else if ( coords1.distance_to(collisionMidpoint) == coords2.distance_to(collisionMidpoint) ) {
+      else if ( coords1.distance_to_sqrd(collisionMidpoint) == coords2.distance_to_sqrd(collisionMidpoint) ) {
         if ( pedIdx < otherIdx ) flag = false;
       }
     }
