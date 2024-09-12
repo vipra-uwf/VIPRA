@@ -8,6 +8,8 @@
 
 #include <libdxfrw.h>
 
+#include "vipra.hpp"
+
 #include "vipra/geometry/polygon.hpp"
 #include "vipra/macros/module.hpp"
 #include "vipra/modules/input.hpp"
@@ -111,7 +113,15 @@ inline auto VIPRA::Input::DXF::get_obstacles_impl() const
  */
 inline auto VIPRA::Input::DXF::get_spawns_impl() const -> std::optional<std::vector<VIPRA::Geometry::Polygon>>
 {
-  return std::nullopt;
+  VIPRA::Log::info("Pedestrians");
+  for (auto &polygon : _spawns) {
+    for (auto &edge : polygon.edges) {
+      VIPRA::Log::info("{}, {}, {}", edge.start.x, edge.start.y, edge.start.z);
+    }
+  }
+  VIPRA::Log::info("End Pedestrians");
+
+  return _spawns;
 }
 
 /**
@@ -128,12 +138,14 @@ inline auto VIPRA::Input::DXF::get_objectives_impl() const
 /**
  * @brief Returns spawn area geometry from the .dxf file
  *
- * @return std::optional<std::vector<VIPRA::Geometry::Polygon>>
+ * @return std::optional<std::string, std::vector<VIPRA::Geometry::Polygon>>
  */
 inline auto VIPRA::Input::DXF::get_areas_impl() const
     -> std::optional<std::map<std::string, VIPRA::Geometry::Polygon>>
 {
-  return std::nullopt;
+  // TODO(tyler):
+  std::map<std::string, VIPRA::Geometry::Polygon> areas;
+  return areas;
 }
 
 /**
