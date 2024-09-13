@@ -104,9 +104,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac1ae504be860b4cbd2cf468f28e83052" id="r_ac1ae504be860b4cbd2cf468f28e83052"><td class="memItemLeft" align="right" valign="top"><a id="ac1ae504be860b4cbd2cf468f28e83052" name="ac1ae504be860b4cbd2cf468f28e83052"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>init</b> (self, cachepath)</td></tr>
 <tr class="separator:ac1ae504be860b4cbd2cf468f28e83052"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab686cda66b815993cb296ec36d596e7c" id="r_ab686cda66b815993cb296ec36d596e7c"><td class="memItemLeft" align="right" valign="top"><a id="ab686cda66b815993cb296ec36d596e7c" name="ab686cda66b815993cb296ec36d596e7c"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>add_sim</b> (self, name, configpath)</td></tr>
-<tr class="separator:ab686cda66b815993cb296ec36d596e7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28fbfb4cd633d5542d3d8182f73bba4a" id="r_a28fbfb4cd633d5542d3d8182f73bba4a"><td class="memItemLeft" align="right" valign="top"><a id="a28fbfb4cd633d5542d3d8182f73bba4a" name="a28fbfb4cd633d5542d3d8182f73bba4a"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>configure_sim</b> (self, name)</td></tr>
+<tr class="separator:a28fbfb4cd633d5542d3d8182f73bba4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0265bebbda8835f14f7778cbe7546025" id="r_a0265bebbda8835f14f7778cbe7546025"><td class="memItemLeft" align="right" valign="top"><a id="a0265bebbda8835f14f7778cbe7546025" name="a0265bebbda8835f14f7778cbe7546025"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>has_sim</b> (self, name)</td></tr>
 <tr class="separator:a0265bebbda8835f14f7778cbe7546025"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -116,6 +116,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a96d4dfe651437bdb6cae06a36dc1323e" id="r_a96d4dfe651437bdb6cae06a36dc1323e"><td class="memItemLeft" align="right" valign="top"><a id="a96d4dfe651437bdb6cae06a36dc1323e" name="a96d4dfe651437bdb6cae06a36dc1323e"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>config_path</b> (self, name)</td></tr>
 <tr class="separator:a96d4dfe651437bdb6cae06a36dc1323e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85ad0d7f71498a02886294b37d2ff70c" id="r_a85ad0d7f71498a02886294b37d2ff70c"><td class="memItemLeft" align="right" valign="top"><a id="a85ad0d7f71498a02886294b37d2ff70c" name="a85ad0d7f71498a02886294b37d2ff70c"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>use_mpi</b> (self, name)</td></tr>
+<tr class="separator:a85ad0d7f71498a02886294b37d2ff70c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a286de6e4706902b7119d3671e1450e83" id="r_a286de6e4706902b7119d3671e1450e83"><td class="memItemLeft" align="right" valign="top"><a id="a286de6e4706902b7119d3671e1450e83" name="a286de6e4706902b7119d3671e1450e83"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>configured</b> (self, name)</td></tr>
+<tr class="separator:a286de6e4706902b7119d3671e1450e83"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -141,13 +147,13 @@ dict&#160;</td><td class="memItemRight" valign="bottom"><b>simMap</b> = {}</td><
       </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">=  {</div>
-<div class="line">          <span class="stringliteral">&#39;path&#39;</span>: os.path.realpath(f<span class="stringliteral">&#39;{cachepath}/{dir}&#39;</span>)</div>
+<div class="line">          <span class="stringliteral">&#39;path&#39;</span>: os.path.realpath(f<span class="stringliteral">&#39;{cachepath}/{dir}&#39;</span>),</div>
 <div class="line">        }</div>
 </div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>tools/sim_builder/util/<b>sim_cache.py</b></li>
+<li>tools/sim_builder/<b>sim_cache.py</b></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
