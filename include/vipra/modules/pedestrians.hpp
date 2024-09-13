@@ -35,10 +35,17 @@ class Pedestrians : public Util::CRTP<Pedestrians<module_t>> {
   using Util::CRTP<Pedestrians<module_t>>::self;
 
  public:
-  REGISTER_BASE_PARAMS(VIPRA_PARAM("random_count", _randomPedCnt), VIPRA_PARAM("spawn_random", _randomSpawn))
+  REGISTER_BASE_PARAMS(VIPRA_PARAM("random_count", _randomPedCnt), VIPRA_PARAM("spawn_random", _randomSpawn),
+                       VIPRA_PARAM("use_file", _useFile))
 
   void initialize(auto& input, auto const& map, VIPRA::Random::Engine& engine)
   {
+    if ( ! _randomSpawn || _useFile )
+      throw std::runtime_error(
+          "Random spawning and using the pedestrian file input is turned off in parameters (Cannot Add any "
+          "Pedestrians, "
+          "one needs to be true)");
+
     init_specific_peds(input);
 
     if ( _randomSpawn && _randomPedCnt > 0 ) {
@@ -110,6 +117,7 @@ class Pedestrians : public Util::CRTP<Pedestrians<module_t>> {
 
   size_t _randomPedCnt{0};
   bool   _randomSpawn{false};
+  bool   _useFile{true};
 
  protected:
   void set_velocities(VIPRA::f3dVec const& velocities) { _velocities = velocities; }
@@ -154,21 +162,17 @@ class Pedestrians : public Util::CRTP<Pedestrians<module_t>> {
 
   void init_specific_peds(auto& input)
   {
-    if constexpr ( std::is_same_v<VOID, decltype(input)> ) {
-      // no input provided, just return
-      return;
-    }
-    else {
-      auto coords = input.template get<std::vector<VIPRA::f3d>>({"pedestrians"});
-      if ( ! (coords || _randomSpawn) )
-        throw std::runtime_error(
-            "Could not find pedestrian coordinates in input file and random spawning is turned off (No "
-            "Pedestrians Added)");
+    if ( ! _useFile ) return;
 
-      VIPRA::Log::debug("{} pedestrians added at {} specific spots", (*coords).size(), (*coords).size());
-      set_coordinates(std::move(*coords));
-      set_velocities(std::vector<VIPRA::f3d>(_coords.size()));
-    }
+    auto coords = input.template get<std::vector<VIPRA::f3d>>({"pedestrians"});
+    if ( ! (coords || _randomSpawn) )
+      throw std::runtime_error(
+          "Could not find pedestrian coordinates in input file and random spawning is turned off (No "
+          "Pedestrians Added)");
+
+    VIPRA::Log::debug("{} pedestrians added at {} specific spots", (*coords).size(), (*coords).size());
+    set_coordinates(std::move(*coords));
+    set_velocities(std::vector<VIPRA::f3d>(_coords.size()));
   }
 };
 }  // namespace VIPRA::Modules

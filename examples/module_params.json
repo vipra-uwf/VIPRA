@@ -37,6 +37,7 @@
   },
   "pedestrians": {
     "Grid": {
+      "use_file": true,
       "spawn_random": false,
       "random_count": 0,
       "gridSize": 0.5
