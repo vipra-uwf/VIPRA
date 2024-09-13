@@ -18,25 +18,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-documentation:
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Run Doxygen
-        uses: mattnotmitt/doxygen-action@v1.2.1
-        with:
-          doxyfile-path: ./doxyfile
-          working-directory: .
-      - name: VIPRA Documentation
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs/html
-          keep_files: true
-          enable_jekyll: true
-
   run-lint:
     runs-on: ubuntu-latest
     steps:
