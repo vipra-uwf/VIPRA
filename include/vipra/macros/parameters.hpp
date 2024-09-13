@@ -1,7 +1,7 @@
 #pragma once
 
 #define VIPRA_REGISTER_PARAMS(params...) \
-  [[nodiscard]] auto parameters() { return std::make_tuple(params); }
+  [[nodiscard]] auto module_params() { return std::make_tuple(params); }
 
 #define VIPRA_PARAM(name, output) \
   std::pair<char const*, std::remove_cvref_t<decltype(output)>&> { name, output }

@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "vipra/geometry/polygon.hpp"
+#include "vipra/modules/util.hpp"
 #include "vipra/util/crtp.hpp"
 
 namespace VIPRA::Modules {
@@ -18,6 +19,8 @@ class MapInput : public Util::CRTP<MapInput<module_t>> {
   using Util::CRTP<MapInput<module_t>>::self;
 
  public:
+  FORWARD_REGISTER_PARAMS;
+
   /**
      * @brief Returns polygons as loaded from the input module, std::nullopt if incorrect type / doesn't exist
      *

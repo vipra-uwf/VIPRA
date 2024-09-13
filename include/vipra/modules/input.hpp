@@ -9,6 +9,7 @@
 
 #include "vipra/modules/module.hpp"
 
+#include "vipra/modules/util.hpp"
 #include "vipra/util/crtp.hpp"
 
 // TODO(rolland): remember to add in documentation that inputs should hold off on loading until their load() method is called
@@ -20,6 +21,8 @@ class Input : public Util::CRTP<Input<module_t>> {
   using Util::CRTP<Input<module_t>>::self;
 
  public:
+  FORWARD_REGISTER_PARAMS;
+
   void load()
   {
     // TODO(rolland) maybe have load_impl return a bool and handle if it failed?

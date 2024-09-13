@@ -1,5 +1,6 @@
 #pragma once
 
+#include "vipra/modules/util.hpp"
 #include "vipra/random/random.hpp"
 
 #include "vipra/types/state.hpp"
@@ -16,6 +17,8 @@ class Model : public Util::CRTP<Model<class_t>> {
   using Util::CRTP<Model<class_t>>::self;
 
  public:
+  FORWARD_REGISTER_PARAMS;
+
   template <typename pedset_t, typename map_t, typename goals_t>
   void initialize(pedset_t const& pedset, map_t const& map, goals_t const& goals,
                   VIPRA::Random::Engine& engine)

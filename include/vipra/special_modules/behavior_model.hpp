@@ -4,6 +4,7 @@
 
 #include "vipra/macros/parameters.hpp"
 #include "vipra/modules/module.hpp"
+#include "vipra/modules/util.hpp"
 #include "vipra/types/seed.hpp"
 #include "vipra/vipra_behaviors/attributes/attributes.hpp"
 #include "vipra/vipra_behaviors/behavior/human_behavior.hpp"
@@ -21,7 +22,14 @@ class BehaviorModel : public VIPRA::Modules::Module<BehaviorModel<pedset_t, map_
   VIPRA_MODULE_TYPE(Behavior_model);
 
   // NOLINTNEXTLINE(misc-unused-parameters)
-  VIPRA_REGISTER_PARAMS(VIPRA_PARAM("behaviors_dir", _behaviorsDir), VIPRA_PARAM("behaviors", _behaviorNames))
+  [[nodiscard]] auto parameters()
+  {
+    return std ::make_tuple(
+        std ::pair<char const*, std ::remove_cvref_t<decltype(_behaviorsDir)>&>{"behaviors_dir",
+                                                                                _behaviorsDir},
+        std ::pair<char const*, std ::remove_cvref_t<decltype(_behaviorNames)>&>{"behaviors",
+                                                                                 _behaviorNames});
+  }
 
   void initialize(pedset_t& pedset, map_t& map, goals_t& goals, VIPRA::seed seed)
   {

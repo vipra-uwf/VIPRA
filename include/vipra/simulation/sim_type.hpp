@@ -33,10 +33,13 @@ class SimType : public Modules::Module<SimType<model_t, output_t, pedset_t, goal
   VIPRA_MODULE_NAME("main");
   VIPRA_MODULE_TYPE(Simulation);
 
-  VIPRA_REGISTER_PARAMS(VIPRA_PARAM("max_timestep", _maxTimestep),
-                        VIPRA_PARAM("timestep_size", _timestepSize),
-                        VIPRA_PARAM("output_frequency", _outputFrequency), VIPRA_PARAM("random_seed", _seed),
-                        VIPRA_PARAM("output_params", _outputParams))
+  [[nodiscard]] auto parameters()
+  {
+    return std ::make_tuple(VIPRA_PARAM("max_timestep", _maxTimestep),
+                            VIPRA_PARAM("timestep_size", _timestepSize),
+                            VIPRA_PARAM("output_frequency", _outputFrequency),
+                            VIPRA_PARAM("random_seed", _seed), VIPRA_PARAM("output_params", _outputParams));
+  }
 
   template <typename pedinput_t, typename obsinput_t, typename params_t>
   auto operator()(pedinput_t&& pedInput, obsinput_t&& obsInput, params_t&& params) -> output_data_t;
@@ -204,8 +207,8 @@ void SimType<model_t, output_t, pedset_t, goals_t, map_t>::initialize(pedinput_t
   _engine.reseed(_seed + (_currSimIdx * _currSimIdx));
 
   _map.initialize(obsInput);
-  _pedset.initialize(pedInput, _map);
-  _goals.initialize(_pedset, _map);
+  _pedset.initialize(pedInput, _map, _engine);
+  _goals.initialize(_pedset, _map, _engine);
   _model.initialize(_pedset, _map, _goals, _engine);
   _behaviorModel.initialize(_pedset, _map, _goals, _seed);
 }

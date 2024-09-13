@@ -6,7 +6,7 @@
 
 #define VIPRA_GOALS_INIT_STEP                  \
   template <typename pedset_t, typename map_t> \
-  void init_step(pedset_t const& pedset, map_t const& map)
+  void init_step(pedset_t const& pedset, map_t const& map, VIPRA::Random::Engine& engine)
 
 #define VIPRA_GOALS_UPDATE_STEP                                                           \
   template <typename pedset_t, typename map_t>                                            \

@@ -5,6 +5,7 @@
 
 #include "vipra/geometry/circle.hpp"
 #include "vipra/geometry/line.hpp"
+#include "vipra/random/random.hpp"
 
 // TODO(rolland): issue #19 add in iterators
 namespace VIPRA::Geometry {
@@ -80,7 +81,7 @@ struct Polygon {
     return center /= edges.size();
   }
 
-  [[nodiscard]] VIPRA_INLINE auto random_point() const noexcept -> VIPRA::f3d
+  [[nodiscard]] VIPRA_INLINE auto random_point(VIPRA::Random::Engine& /*engine*/) const noexcept -> VIPRA::f3d
   {
     // TODO(rolland, issue #19): implement a proper random_point method
     return center();

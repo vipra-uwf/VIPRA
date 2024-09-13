@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <fstream>
 
+#include "vipra/modules/util.hpp"
 #include "vipra/types/idx.hpp"
 #include "vipra/util/crtp.hpp"
 
@@ -16,6 +17,8 @@ class Output : public Util::CRTP<Output<module_t>> {
   using Util::CRTP<Output<module_t>>::self;
 
  public:
+  FORWARD_REGISTER_PARAMS;
+
   void write(std::filesystem::path const& outputDir)
   {
     std::filesystem::path filepath = outputDir / self().filename();

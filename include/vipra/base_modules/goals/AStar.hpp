@@ -11,6 +11,7 @@
 #include "vipra/macros/parameters.hpp"
 
 #include "vipra/modules/goals.hpp"
+#include "vipra/random/random.hpp"
 #include "vipra/types/size.hpp"
 
 namespace VIPRA {
@@ -29,13 +30,11 @@ NEW_VIPRA_MODULE(AStar, Goals)
 
   VIPRA_GOALS_INIT_STEP
   {
-    assert(pedset.num_pedestrians() > 0);
-
     VIPRA::size const pedCnt = pedset.num_pedestrians();
 
     // Create map graph
     _graph = PathingGraph(map, _gridSize, _closestObstacle);
-    set_end_goals(pedset, map);
+    set_end_goals(pedset, map, engine);
 
     _paths.clear();
     _paths.resize(pedCnt);
@@ -46,9 +45,6 @@ NEW_VIPRA_MODULE(AStar, Goals)
       set_current_goal(pedIdx, _paths[pedIdx].back());
     }
 
-    assert(_timeSinceLastGoal.size() == pedCnt);
-    assert(_currentGoals.size() == pedCnt);
-    assert(_endGoals.size() == pedCnt);
     assert(_paths.size() == pedCnt);
   }
 
@@ -73,8 +69,6 @@ NEW_VIPRA_MODULE(AStar, Goals)
      */
   VIPRA_GOALS_CHANGE_GOAL
   {
-    assert(pedIdx < _endGoals.size());
-
     // uses A* to find the path to the new end goal
     set_end_goal(pedIdx, newGoal);
     find_path(pedIdx, pos);
@@ -95,7 +89,7 @@ NEW_VIPRA_MODULE(AStar, Goals)
    * @param pedset
    * @param map
    */
-  void set_end_goals(auto const& pedset, auto const& map)
+  void set_end_goals(auto const& pedset, auto const& map, VIPRA::Random::Engine& engine)
   {
     assert(pedset.num_pedestrians() > 0);
 
@@ -114,7 +108,7 @@ NEW_VIPRA_MODULE(AStar, Goals)
       auto const nearestGoalIter = get_nearest_goal(pos, objects);
 
       if ( nearestGoalIter != objects.end() ) {
-        set_end_goal(pedIdx, (*nearestGoalIter).random_point());
+        set_end_goal(pedIdx, (*nearestGoalIter).random_point(engine));
       }
       else {
         throw std::runtime_error("No goal found for pedestrian");

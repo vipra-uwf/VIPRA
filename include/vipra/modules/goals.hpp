@@ -5,6 +5,8 @@
 #include "vipra/geometry/f3d.hpp"
 
 #include "vipra/macros/performance.hpp"
+#include "vipra/modules/util.hpp"
+#include "vipra/random/random.hpp"
 #include "vipra/types/float.hpp"
 #include "vipra/types/idx.hpp"
 #include "vipra/types/size.hpp"
@@ -22,8 +24,10 @@ class Goals : public Util::CRTP<Goals<module_t>> {
   using Util::CRTP<Goals<module_t>>::self;
 
  public:
+  FORWARD_REGISTER_PARAMS;
+
   template <typename pedset_t, typename map_t>
-  void initialize(pedset_t const& pedset, map_t const& map)
+  void initialize(pedset_t const& pedset, map_t const& map, VIPRA::Random::Engine& engine)
   {
     assert(pedset.num_pedestrians() > 0);
 
@@ -34,7 +38,11 @@ class Goals : public Util::CRTP<Goals<module_t>> {
     _timeSinceLastGoal = std::vector<VIPRA::f_pnt>(pedCnt, 0);
     _met = std::vector<bool>(pedCnt, false);
 
-    return self().init_step(pedset, map);
+    self().init_step(pedset, map, engine);
+
+    assert(_timeSinceLastGoal.size() == pedCnt);
+    assert(_currentGoals.size() == pedCnt);
+    assert(_endGoals.size() == pedCnt);
   }
 
   template <typename pedset_t, typename map_t>
@@ -59,6 +67,7 @@ class Goals : public Util::CRTP<Goals<module_t>> {
 
   void change_end_goal(VIPRA::idx pedIdx, VIPRA::f3d currPos, VIPRA::f3d goalPos)
   {
+    assert(pedIdx < _endGoals.size());
     return self().change_end_goal_impl(pedIdx, currPos, goalPos);
   }
 

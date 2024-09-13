@@ -9,6 +9,7 @@
 #include "vipra/geometry/polygon.hpp"
 
 #include "vipra/logging/logging.hpp"
+#include "vipra/modules/util.hpp"
 #include "vipra/types/float.hpp"
 #include "vipra/util/crtp.hpp"
 
@@ -23,6 +24,8 @@ class Map : public Util::CRTP<Map<module_t>> {
 
   // NOLINTBEGIN
  public:
+  FORWARD_REGISTER_PARAMS;
+
   void initialize(auto&& input)
   {
     auto const obstacles = input.template get_obstacles();
