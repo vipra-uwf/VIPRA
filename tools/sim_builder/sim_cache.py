@@ -65,4 +65,4 @@ class SimCache:
     return self.simMap[name]['config']['use_mpi']
 
   def configured(self, name):
-    return os.path.isfile(f'{self.simMap[name]['path']}/config.json')
+    return os.path.isfile(f'{self.simMap[name]["path"]}/config.json')

@@ -27,10 +27,14 @@ def load_config(filepath):
 def _find_module_in(moduleName, moduleType, baseDir):
   moduleDir = baseDir + f'/{moduleType}'
 
+  print(moduleDir)
+  print(f'{moduleDir}/{moduleName}')
+
   if os.path.isdir(f'{moduleDir}/{moduleName}'):
     moduleDir += f'/{moduleName}'
 
   if not os.path.isfile(f'{moduleDir}/CMakeLists.txt'):
+    print("returning None")
     return None
 
   if os.path.isfile(f'{moduleDir}/{moduleName}.hpp'):
@@ -64,12 +68,12 @@ def get_module_options(moduleType):
 def _config_input(config):
   config['input'] = {}
 
-  print(f'Options: {", ".join(get_module_options('input'))}')
+  print(f'Options: {", ".join(get_module_options("input"))}')
   config['input']['pedestrians'] = input('pedestrian input module: ')
   if find_module(config['input']['pedestrians'], 'input') == None:
       raise Exception(f'Unable to find input module: {config[moduleType]}')
 
-  print(f'Options: {", ".join(get_module_options('input'))}')
+  print(f'Options: {", ".join(get_module_options("input"))}')
   config['input']['map'] = input('map input module: ')
   if find_module(config['input']['map'], 'input') == None:
       raise Exception(f'Unable to find input module: {config[moduleType]}')

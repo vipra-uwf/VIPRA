@@ -1,6 +1,6 @@
 #pragma once
 
-#include "vipra/base_modules/goals/astar/pathing_graph.hpp"
+#include "vipra/base_modules/goals/pathing/pathing_graph.hpp"
 
 #include "vipra/geometry/f3d.hpp"
 

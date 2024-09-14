@@ -1,5 +1,7 @@
 #pragma once
 
+#include "vipra.hpp"
+
 #include "drw_interface.h"
 
 #include "vipra/geometry/polygon.hpp"
@@ -25,7 +27,7 @@ class DrwReader : public DRW_Interface {
 
   /** Called when header is parsed.  */
   void addHeader(const DRW_Header* data) override {
-
+    
   };
 
   std::vector<VIPRA::Geometry::Polygon>                        getObstacles() { return _obstacles; }

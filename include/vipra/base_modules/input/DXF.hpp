@@ -18,6 +18,24 @@
 
 #include "drw_reader/drw_reader.hpp"
 
+/* ERRORS:
+0   BAD_NONE
+1   BAD_UNKNOWN
+2   BAD_OPEN
+3   BAD_VERSION
+4   BAD_READ_METADATA
+5   BAD_READ_FILE_HEADER
+6   BAD_READ_HEADER
+7   BAD_READ_HANDLES
+8   BAD_READ_CLASSES
+9   BAD_READ_TABLES
+10  BAD_READ_BLOCKS
+11  BAD_READ_ENTITIES
+12  BAD_READ_OBJECTS
+13  BAD_READ_SECTION
+14  BAD_CODE_PARSED
+*/
+
 namespace VIPRA::Input {
 /**
   * @brief Parameter and Polygon qualified dxf input module
@@ -103,6 +121,14 @@ inline auto VIPRA::Input::DXF::get_impl<std::vector<VIPRA::Geometry::Polygon>>(
 inline auto VIPRA::Input::DXF::get_obstacles_impl() const
     -> std::optional<std::vector<VIPRA::Geometry::Polygon>>
 {
+  VIPRA::Log::info("Obstacles");
+  for (auto &polygon : _obstacles) {
+    for (auto &edge : polygon.edges) {
+      VIPRA::Log::info("{}, {}, {}", edge.start.x, edge.start.y, edge.start.z);
+    }
+  }
+  VIPRA::Log::info("End Obstacles");
+
   return {_obstacles};
 }
 
@@ -157,6 +183,8 @@ inline auto VIPRA::Input::DXF::get_areas_impl() const
    */
 inline void VIPRA::Input::DXF::load_impl()
 {
+  std::string loadingFilepath = "Loading " + _filepath.string();
+  VIPRA::Log::info("{}", loadingFilepath);
   // Check Exists
   if ( ! std::filesystem::exists(_filepath) )
     throw std::runtime_error("File does not exist at: " + _filepath.string());
@@ -165,14 +193,20 @@ inline void VIPRA::Input::DXF::load_impl()
   if ( ! std::filesystem::is_regular_file(_filepath) )
     throw std::runtime_error("File is not a regular file at: " + _filepath.string());
 
-  const char* fileCharArr = _filepath.string().c_str();
-  dxfRW       dxfReader = dxfRW(fileCharArr);
+  const char* fileCharArr = _filepath.c_str();
 
+  dxfRW       dxfReader = dxfRW(fileCharArr);
+  VIPRA::Log::info("Reading {}", _filepath.string());
+  dxfReader.setDebug(DRW::DebugLevel::Debug);
   dxfReader.read(&drw_reader, 1);
+  // Error: 2, Error opening file
+  std::cout << "ERROR: " << dxfReader.getError() << std::endl;
 
   // Get the items stored in reader and add to private variables.
   _objectives = drw_reader.getObjectives();
   _obstacles = drw_reader.getObstacles();
   _spawns = drw_reader.getPedestrians();
   _areas = drw_reader.getAreas();
+
+  VIPRA::Log::info("DXF Loaded");
 }
