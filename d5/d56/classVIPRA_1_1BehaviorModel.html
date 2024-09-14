@@ -90,7 +90,6 @@ $(function(){ initResizable(false); });
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="../../dc/dc8/classVIPRA_1_1BehaviorModel-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">VIPRA::BehaviorModel&lt; pedset_t, map_t, goals_t &gt; Class Template Reference</div></div>
 </div><!--header-->
@@ -133,18 +132,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aae52daecdd6c77c99a22395f38f524a0" id="r_aae52daecdd6c77c99a22395f38f524a0"><td class="memItemLeft" align="right" valign="top"><a id="aae52daecdd6c77c99a22395f38f524a0" name="aae52daecdd6c77c99a22395f38f524a0"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>VIPRA_MODULE_TYPE</b> (Behavior_model)</td></tr>
 <tr class="separator:aae52daecdd6c77c99a22395f38f524a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a439f744f0f7da6ea37b41b5876385788" id="r_a439f744f0f7da6ea37b41b5876385788"><td class="memItemLeft" align="right" valign="top"><a id="a439f744f0f7da6ea37b41b5876385788" name="a439f744f0f7da6ea37b41b5876385788"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>VIPRA_REGISTER_PARAMS</b> (VIPRA_PARAM(&quot;behaviors_dir&quot;, _behaviorsDir), VIPRA_PARAM(&quot;behaviors&quot;, _behaviorNames)) void initialize(pedset_t &amp;pedset</td></tr>
-<tr class="separator:a439f744f0f7da6ea37b41b5876385788"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a69b592ae25c72c6db03790f0b8d25d75" id="r_a69b592ae25c72c6db03790f0b8d25d75"><td class="memItemLeft" align="right" valign="top"><a id="a69b592ae25c72c6db03790f0b8d25d75" name="a69b592ae25c72c6db03790f0b8d25d75"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Behaviors::AttributeHandling::cleanup</b> ()</td></tr>
-<tr class="separator:a69b592ae25c72c6db03790f0b8d25d75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9bf02a665d08e16851c8b40415515049" id="r_a9bf02a665d08e16851c8b40415515049"><td class="memItemLeft" align="right" valign="top"><a id="a9bf02a665d08e16851c8b40415515049" name="a9bf02a665d08e16851c8b40415515049"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>load_behaviors</b> (seed)</td></tr>
-<tr class="separator:a9bf02a665d08e16851c8b40415515049"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f2643804012d232ab11b6cc72b838db" id="r_a3f2643804012d232ab11b6cc72b838db"><td class="memItemLeft" align="right" valign="top"><a id="a3f2643804012d232ab11b6cc72b838db" name="a3f2643804012d232ab11b6cc72b838db"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>for</b> (auto &amp;behavior :_behaviors)</td></tr>
-<tr class="separator:a3f2643804012d232ab11b6cc72b838db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1eb2885802b34c99f294551b4bae7ea3" id="r_a1eb2885802b34c99f294551b4bae7ea3"><td class="memItemLeft" align="right" valign="top"><a id="a1eb2885802b34c99f294551b4bae7ea3" name="a1eb2885802b34c99f294551b4bae7ea3"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>parameters</b> ()</td></tr>
+<tr class="separator:a1eb2885802b34c99f294551b4bae7ea3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5891e61c7c5edd2f5702c96bb92c868" id="r_ab5891e61c7c5edd2f5702c96bb92c868"><td class="memItemLeft" align="right" valign="top"><a id="ab5891e61c7c5edd2f5702c96bb92c868" name="ab5891e61c7c5edd2f5702c96bb92c868"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>initialize</b> (pedset_t &amp;pedset, map_t &amp;map, goals_t &amp;goals, VIPRA::seed seed)</td></tr>
+<tr class="separator:ab5891e61c7c5edd2f5702c96bb92c868"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d0bd4df49910f15eafa32c758419bbf" id="r_a4d0bd4df49910f15eafa32c758419bbf"><td class="memItemLeft" align="right" valign="top"><a id="a4d0bd4df49910f15eafa32c758419bbf" name="a4d0bd4df49910f15eafa32c758419bbf"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>timestep</b> (pedset_t &amp;pedset, map_t &amp;map, goals_t &amp;goals, <a class="el" href="../../d4/da2/structVIPRA_1_1State.html">VIPRA::State</a> &amp;state, VIPRA::delta_t deltaT)</td></tr>
 <tr class="separator:a4d0bd4df49910f15eafa32c758419bbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -167,43 +160,11 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a cla
 <tr class="memitem:a137d050f9d40275edcc1a36b945a9485 inherit pub_methods_classVIPRA_1_1Modules_1_1Module" id="r_a137d050f9d40275edcc1a36b945a9485"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/dab/classVIPRA_1_1Modules_1_1Module.html#a137d050f9d40275edcc1a36b945a9485">config</a> (paramreader_t &amp;paramIn, <a class="el" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a> &amp;engine)</td></tr>
 <tr class="memdesc:a137d050f9d40275edcc1a36b945a9485 inherit pub_methods_classVIPRA_1_1Modules_1_1Module"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads in all parameters for the module.  <br /></td></tr>
 <tr class="separator:a137d050f9d40275edcc1a36b945a9485 inherit pub_methods_classVIPRA_1_1Modules_1_1Module"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a8f06c4933edc85b5e21bfeea7ef245cb" id="r_a8f06c4933edc85b5e21bfeea7ef245cb"><td class="memItemLeft" align="right" valign="top"><a id="a8f06c4933edc85b5e21bfeea7ef245cb" name="a8f06c4933edc85b5e21bfeea7ef245cb"></a>
-map_t &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>map</b></td></tr>
-<tr class="separator:a8f06c4933edc85b5e21bfeea7ef245cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc42c81ea45b87eabcd17856eadb8f70" id="r_abc42c81ea45b87eabcd17856eadb8f70"><td class="memItemLeft" align="right" valign="top"><a id="abc42c81ea45b87eabcd17856eadb8f70" name="abc42c81ea45b87eabcd17856eadb8f70"></a>
-map_t goals_t &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>goals</b></td></tr>
-<tr class="separator:abc42c81ea45b87eabcd17856eadb8f70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e322005f5b040991b5b79c7a18d52ad" id="r_a6e322005f5b040991b5b79c7a18d52ad"><td class="memItemLeft" align="right" valign="top">map_t goals_t VIPRA::seed&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6e322005f5b040991b5b79c7a18d52ad">seed</a></td></tr>
-<tr class="separator:a6e322005f5b040991b5b79c7a18d52ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename pedset_t, typename map_t, typename goals_t&gt;<br />
 class VIPRA::BehaviorModel&lt; pedset_t, map_t, goals_t &gt;</div><p>BehaviorModel is a special module that is responsible for loading and managing all behaviors. </p>
-</div><h2 class="groupheader">Member Data Documentation</h2>
-<a id="a6e322005f5b040991b5b79c7a18d52ad" name="a6e322005f5b040991b5b79c7a18d52ad"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6e322005f5b040991b5b79c7a18d52ad">&#9670;&#160;</a></span>seed</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename pedset_t , typename map_t , typename goals_t &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">map_t goals_t VIPRA::seed <a class="el" href="../../d5/d56/classVIPRA_1_1BehaviorModel.html">VIPRA::BehaviorModel</a>&lt; pedset_t, map_t, goals_t &gt;::seed</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">    </div>
-<div class="line"> </div>
-<div class="line">    _behaviors.clear()</div>
-</div><!-- fragment -->
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+</div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/vipra/special_modules/<a class="el" href="../../d7/d0e/behavior__model_8hpp_source.html">behavior_model.hpp</a></li>
 </ul>
 </div><!-- contents -->

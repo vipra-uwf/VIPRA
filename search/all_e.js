@@ -14,9 +14,9 @@ var searchData=
   ['findindex_3c_20index_5ft_2c_20check_5ft_20_3e_11',['FindIndex&lt; index_t, check_t &gt;',['../de/d55/structVIPRA_1_1Util_1_1FindIndex_3_01index__t_00_01check__t_01_4.html',1,'VIPRA::Util']]],
   ['findindex_3c_20index_5ft_2c_20check_5ft_2c_20type_5ft_2c_20types_5ft_2e_2e_2e_20_3e_12',['FindIndex&lt; index_t, check_t, type_t, types_t... &gt;',['../df/d70/structVIPRA_1_1Util_1_1FindIndex_3_01index__t_00_01check__t_00_01type__t_00_01types__t_8_8_8_01_4.html',1,'VIPRA::Util']]],
   ['fixed_5fbuffer_5ftraits_13',['fixed_buffer_traits',['../d8/d91/classdetail_1_1fixed__buffer__traits.html',1,'detail']]],
-  ['flags_14',['Flags',['../da/d11/md_docs_2pages_2tools_2visualizer.html#autotoc_md381',1,'Flags'],['../d9/d88/md_tools_2sim__builder_2README.html#autotoc_md406',1,'Flags']]],
-  ['float_20random_20values_20vs_20number_20random_20values_15',['Float Random Values vs. Number Random Values',['../d2/dd2/md_docs_2pages_2behaviors_2VIPRA__behaviors.html#autotoc_md165',1,'']]],
-  ['float_20value_20ranges_20vs_20number_20value_20ranges_16',['Float Value Ranges  vs. Number Value Ranges',['../d2/dd2/md_docs_2pages_2behaviors_2VIPRA__behaviors.html#autotoc_md160',1,'']]],
+  ['flags_14',['Flags',['../df/d5b/md_docs_2pages_2researchers_2tools_2visualizer.html#autotoc_md378',1,'Flags'],['../d9/d88/md_tools_2sim__builder_2README.html#autotoc_md394',1,'Flags']]],
+  ['float_20random_20values_20vs_20number_20random_20values_15',['Float Random Values vs. Number Random Values',['../df/d1b/md_docs_2pages_2researchers_2behaviors_2behaviors__syntax.html#autotoc_md347',1,'']]],
+  ['float_20value_20ranges_20vs_20number_20value_20ranges_16',['Float Value Ranges  vs. Number Value Ranges',['../df/d1b/md_docs_2pages_2researchers_2behaviors_2behaviors__syntax.html#autotoc_md342',1,'']]],
   ['float_5finfo_17',['float_info',['../d4/d02/structdetail_1_1dragonbox_1_1float__info.html',1,'detail::dragonbox']]],
   ['float_5finfo_3c_20double_20_3e_18',['float_info&lt; double &gt;',['../d2/d36/structdetail_1_1dragonbox_1_1float__info_3_01double_01_4.html',1,'detail::dragonbox']]],
   ['float_5finfo_3c_20float_20_3e_19',['float_info&lt; float &gt;',['../d2/d62/structdetail_1_1dragonbox_1_1float__info_3_01float_01_4.html',1,'detail::dragonbox']]],
@@ -84,5 +84,5 @@ var searchData=
   ['formatter_3c_20weekday_2c_20char_20_3e_81',['formatter&lt; weekday, Char &gt;',['../dc/df0/structformatter_3_01weekday_00_01Char_01_4.html',1,'']]],
   ['formatter_3c_20year_2c_20char_20_3e_82',['formatter&lt; year, Char &gt;',['../d2/d6b/structformatter_3_01year_00_01Char_01_4.html',1,'']]],
   ['formatter_3c_20year_5fmonth_5fday_2c_20char_20_3e_83',['formatter&lt; year_month_day, Char &gt;',['../d2/dac/structformatter_3_01year__month__day_00_01Char_01_4.html',1,'']]],
-  ['from_20groups_84',['Selecting From Groups',['../d2/dd2/md_docs_2pages_2behaviors_2VIPRA__behaviors.html#autotoc_md62',1,'']]]
+  ['from_20groups_84',['Selecting From Groups',['../df/d1b/md_docs_2pages_2researchers_2behaviors_2behaviors__syntax.html#autotoc_md244',1,'']]]
 ];

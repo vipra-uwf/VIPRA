@@ -121,15 +121,17 @@ Collaboration diagram for VIPRA::Pedestrians::Grid:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d4/deb/classVIPRA_1_1Pedestrians_1_1Grid__coll__graph.png" border="0" usemap="#aVIPRA_1_1Pedestrians_1_1Grid_coll__map" alt="Collaboration graph"/></div>
 <map name="aVIPRA_1_1Pedestrians_1_1Grid_coll__map" id="aVIPRA_1_1Pedestrians_1_1Grid_coll__map">
-<area shape="rect" title="Pedestrian module that uses a grid to store pedestrians." alt="" coords="119,183,256,223"/>
-<area shape="rect" href="../../dc/dab/classVIPRA_1_1Modules_1_1Module.html" title=" " alt="" coords="5,94,170,135"/>
-<area shape="poly" title=" " alt="" coords="123,143,167,180,163,184,120,147"/>
-<area shape="rect" href="../../da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="19,5,156,46"/>
-<area shape="poly" title=" " alt="" coords="90,62,90,94,85,94,85,62"/>
-<area shape="rect" href="../../d0/d2d/classVIPRA_1_1Modules_1_1Pedestrians.html" title=" " alt="" coords="193,94,384,135"/>
-<area shape="poly" title=" " alt="" coords="256,147,212,184,209,180,253,143"/>
-<area shape="rect" href="../../da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="214,5,364,46"/>
-<area shape="poly" title=" " alt="" coords="292,62,292,94,286,94,286,62"/>
+<area shape="rect" title="Pedestrian module that uses a grid to store pedestrians." alt="" coords="495,39,632,79"/>
+<area shape="rect" href="../../dc/dab/classVIPRA_1_1Modules_1_1Module.html" title=" " alt="" coords="268,5,432,46"/>
+<area shape="poly" title=" " alt="" coords="449,38,496,46,495,51,448,44"/>
+<area shape="rect" href="../../da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="17,5,154,46"/>
+<area shape="poly" title=" " alt="" coords="169,23,268,23,268,28,169,28"/>
+<area shape="rect" href="../../d0/d2d/classVIPRA_1_1Modules_1_1Pedestrians.html" title=" " alt="" coords="255,71,446,111"/>
+<area shape="poly" title=" " alt="" coords="461,72,495,67,495,72,462,77"/>
+<area shape="rect" href="../../da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="10,71,161,111"/>
+<area shape="poly" title=" " alt="" coords="177,88,254,88,254,94,177,94"/>
+<area shape="rect" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html" title="Psuedo Random number engine." alt="" coords="5,136,166,161"/>
+<area shape="poly" title=" " alt="" coords="163,129,253,109,255,114,164,134"/>
 </map>
 <center><span class="legend">[<a href="../../graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -141,21 +143,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab7520139e4a3d773ce8f954d7c35aa34" id="r_ab7520139e4a3d773ce8f954d7c35aa34"><td class="memItemLeft" align="right" valign="top"><a id="ab7520139e4a3d773ce8f954d7c35aa34" name="ab7520139e4a3d773ce8f954d7c35aa34"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>VIPRA_MODULE_TYPE</b> (Pedestrians)</td></tr>
 <tr class="separator:ab7520139e4a3d773ce8f954d7c35aa34"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08ce385a317f1888bae99f7d463051bb" id="r_a08ce385a317f1888bae99f7d463051bb"><td class="memItemLeft" align="right" valign="top"><a id="a08ce385a317f1888bae99f7d463051bb" name="a08ce385a317f1888bae99f7d463051bb"></a>
-std::vector&lt; VIPRA::idx &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>tempIndexes</b> ((*coords).size())</td></tr>
-<tr class="separator:a08ce385a317f1888bae99f7d463051bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86dc4ce5d9f9e07d7a7e3e009e2de2eb" id="r_a86dc4ce5d9f9e07d7a7e3e009e2de2eb"><td class="memItemLeft" align="right" valign="top"><a id="a86dc4ce5d9f9e07d7a7e3e009e2de2eb" name="a86dc4ce5d9f9e07d7a7e3e009e2de2eb"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>std::iota</b> (std::begin(tempIndexes), std::end(tempIndexes), 0)</td></tr>
 <tr class="separator:a86dc4ce5d9f9e07d7a7e3e009e2de2eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a32f4a4181b47ccb4a570fa18cd02e92d" id="r_a32f4a4181b47ccb4a570fa18cd02e92d"><td class="memItemLeft" align="right" valign="top"><a id="a32f4a4181b47ccb4a570fa18cd02e92d" name="a32f4a4181b47ccb4a570fa18cd02e92d"></a>
-_spatialGrid&#160;</td><td class="memItemRight" valign="bottom"><b>initialize</b> (_cellSize, dimensions.x, dimensions.y, *coords, tempIndexes)</td></tr>
-<tr class="separator:a32f4a4181b47ccb4a570fa18cd02e92d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63f7b04e8d573c8fc492843d36ab21c8" id="r_a63f7b04e8d573c8fc492843d36ab21c8"><td class="memItemLeft" align="right" valign="top"><a id="a63f7b04e8d573c8fc492843d36ab21c8" name="a63f7b04e8d573c8fc492843d36ab21c8"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>set_velocities</b> (std::vector&lt; <a class="el" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> &gt;((*coords).size()))</td></tr>
-<tr class="separator:a63f7b04e8d573c8fc492843d36ab21c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adead2ea20aab5ddf9ec51e916372275e" id="r_adead2ea20aab5ddf9ec51e916372275e"><td class="memItemLeft" align="right" valign="top"><a id="adead2ea20aab5ddf9ec51e916372275e" name="adead2ea20aab5ddf9ec51e916372275e"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>set_coordinates</b> (std::move(*coords))</td></tr>
-<tr class="separator:adead2ea20aab5ddf9ec51e916372275e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc00149a3ab7124c78cb6bea859df312" id="r_acc00149a3ab7124c78cb6bea859df312"><td class="memItemLeft" align="right" valign="top"><a id="acc00149a3ab7124c78cb6bea859df312" name="acc00149a3ab7124c78cb6bea859df312"></a>
+_spatialGrid&#160;</td><td class="memItemRight" valign="bottom"><b>initialize</b> (_cellSize, dimensions.x, dimensions.y, get_coordinates(), tempIndexes)</td></tr>
+<tr class="separator:acc00149a3ab7124c78cb6bea859df312"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e80fd14469cf4788f75483829c118ba" id="r_a7e80fd14469cf4788f75483829c118ba"><td class="memItemLeft" align="right" valign="top"><a id="a7e80fd14469cf4788f75483829c118ba" name="a7e80fd14469cf4788f75483829c118ba"></a>
 VIPRA_PERF_FUNC auto&#160;</td><td class="memItemRight" valign="bottom"><b>conditional_closest_ped_impl</b> (VIPRA::idx ped, auto &amp;&amp;condition) const -&gt; VIPRA::idx</td></tr>
 <tr class="separator:a7e80fd14469cf4788f75483829c118ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -173,9 +166,27 @@ VIPRA_PERF_FUNC auto&#160;</td><td class="memItemRight" valign="bottom"><b>all_n
 <tr class="memdesc:a137d050f9d40275edcc1a36b945a9485 inherit pub_methods_classVIPRA_1_1Modules_1_1Module"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads in all parameters for the module.  <br /></td></tr>
 <tr class="separator:a137d050f9d40275edcc1a36b945a9485 inherit pub_methods_classVIPRA_1_1Modules_1_1Module"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classVIPRA_1_1Modules_1_1Pedestrians"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classVIPRA_1_1Modules_1_1Pedestrians')"><img src="../../closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="../../d0/d2d/classVIPRA_1_1Modules_1_1Pedestrians.html">VIPRA::Modules::Pedestrians&lt; Grid &gt;</a></td></tr>
-<tr class="memitem:acb5b5624259f848449554d6436e3d8a0 inherit pub_methods_classVIPRA_1_1Modules_1_1Pedestrians" id="r_acb5b5624259f848449554d6436e3d8a0"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><b>initialize</b> (auto &amp;input, auto const &amp;map)</td></tr>
-<tr class="separator:acb5b5624259f848449554d6436e3d8a0 inherit pub_methods_classVIPRA_1_1Modules_1_1Pedestrians"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27383f3ac8658a2f958e9e7a1cebae7e inherit pub_methods_classVIPRA_1_1Modules_1_1Pedestrians" id="r_a27383f3ac8658a2f958e9e7a1cebae7e"><td class="memItemLeft" align="right" valign="top">
+&#160;</td><td class="memItemRight" valign="bottom"><b>REGISTER_BASE_PARAMS</b> (VIPRA_PARAM(&quot;random_count&quot;, _randomPedCnt), VIPRA_PARAM(&quot;spawn_random&quot;, _randomSpawn), VIPRA_PARAM(&quot;use_file&quot;, _useFile)) void initialize(auto &amp;input</td></tr>
+<tr class="separator:a27383f3ac8658a2f958e9e7a1cebae7e inherit pub_methods_classVIPRA_1_1Modules_1_1Pedestrians"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca69c57a404fa6ab199746e0eb9aae6f inherit pub_methods_classVIPRA_1_1Modules_1_1Pedestrians" id="r_aca69c57a404fa6ab199746e0eb9aae6f"><td class="memItemLeft" align="right" valign="top">
+&#160;</td><td class="memItemRight" valign="bottom"><b>init_specific_peds</b> (input)</td></tr>
+<tr class="separator:aca69c57a404fa6ab199746e0eb9aae6f inherit pub_methods_classVIPRA_1_1Modules_1_1Pedestrians"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20c4875f90896031c10bd531af7bd5bd inherit pub_methods_classVIPRA_1_1Modules_1_1Pedestrians" id="r_a20c4875f90896031c10bd531af7bd5bd"><td class="memItemLeft" align="right" valign="top">
+&#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (_randomSpawn &amp;&amp;_randomPedCnt &gt; 0)</td></tr>
+<tr class="separator:a20c4875f90896031c10bd531af7bd5bd inherit pub_methods_classVIPRA_1_1Modules_1_1Pedestrians"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b71138f5774b8f5446c96f5ca2e5f04 inherit pub_methods_classVIPRA_1_1Modules_1_1Pedestrians" id="r_a4b71138f5774b8f5446c96f5ca2e5f04"><td class="memItemLeft" align="right" valign="top">
+&#160;</td><td class="memItemRight" valign="bottom"><b>assert</b> (_coords.size() &gt; 0)</td></tr>
+<tr class="separator:a4b71138f5774b8f5446c96f5ca2e5f04 inherit pub_methods_classVIPRA_1_1Modules_1_1Pedestrians"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9d86d6b77e0dad19e08a1e43f5e8b1a inherit pub_methods_classVIPRA_1_1Modules_1_1Pedestrians" id="r_aa9d86d6b77e0dad19e08a1e43f5e8b1a"><td class="memItemLeft" align="right" valign="top">
+&#160;</td><td class="memItemRight" valign="bottom"><b>assert</b> (_coords.size()==_velocities.size())</td></tr>
+<tr class="separator:aa9d86d6b77e0dad19e08a1e43f5e8b1a inherit pub_methods_classVIPRA_1_1Modules_1_1Pedestrians"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a724bce3564da3566b7a287812fece3ca inherit pub_methods_classVIPRA_1_1Modules_1_1Pedestrians" id="r_a724bce3564da3566b7a287812fece3ca"><td class="memItemLeft" align="right" valign="top">
+&#160;</td><td class="memItemRight" valign="bottom"><b>VIPRA::Log::debug</b> (&quot;{} total pedestrians added&quot;, _coords.size())</td></tr>
+<tr class="separator:a724bce3564da3566b7a287812fece3ca inherit pub_methods_classVIPRA_1_1Modules_1_1Pedestrians"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acecfcd993db12e260f7f09153e44b4b4 inherit pub_methods_classVIPRA_1_1Modules_1_1Pedestrians" id="r_acecfcd993db12e260f7f09153e44b4b4"><td class="memItemLeft" align="right" valign="top">
+&#160;</td><td class="memItemRight" valign="bottom"><b>self</b> ().init_step(map</td></tr>
+<tr class="separator:acecfcd993db12e260f7f09153e44b4b4 inherit pub_methods_classVIPRA_1_1Modules_1_1Pedestrians"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa869aa76c173bf7c75605f322030d3ba inherit pub_methods_classVIPRA_1_1Modules_1_1Pedestrians" id="r_aa869aa76c173bf7c75605f322030d3ba"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>update</b> (<a class="el" href="../../d4/da2/structVIPRA_1_1State.html">VIPRA::State</a> const &amp;state)</td></tr>
 <tr class="separator:aa869aa76c173bf7c75605f322030d3ba inherit pub_methods_classVIPRA_1_1Modules_1_1Pedestrians"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -208,15 +219,28 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><b>all_velocities</b> ()
 Public Attributes</h2></td></tr>
 <tr class="memitem:a6cf9ee212ece1d8aab2dae679075f08b" id="r_a6cf9ee212ece1d8aab2dae679075f08b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6cf9ee212ece1d8aab2dae679075f08b">VIPRA_PEDS_INIT_STEP</a></td></tr>
 <tr class="separator:a6cf9ee212ece1d8aab2dae679075f08b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f6a93711ddf4be2e51cf5bf6c235e5f" id="r_a2f6a93711ddf4be2e51cf5bf6c235e5f"><td class="memItemLeft" align="right" valign="top"><a id="a2f6a93711ddf4be2e51cf5bf6c235e5f" name="a2f6a93711ddf4be2e51cf5bf6c235e5f"></a>
-if(! coords) throw std auto&#160;</td><td class="memItemRight" valign="bottom"><b>dimensions</b> = map.get_dimensions()</td></tr>
-<tr class="separator:a2f6a93711ddf4be2e51cf5bf6c235e5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a135d2e4e4476771b2a2aaaa086a5e7b3" id="r_a135d2e4e4476771b2a2aaaa086a5e7b3"><td class="memItemLeft" align="right" valign="top"><a id="a135d2e4e4476771b2a2aaaa086a5e7b3" name="a135d2e4e4476771b2a2aaaa086a5e7b3"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>dimensions</b> = map.get_dimensions()</td></tr>
+<tr class="separator:a135d2e4e4476771b2a2aaaa086a5e7b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac47db46be7bbd0ed89de8d7289d5ae0f" id="r_ac47db46be7bbd0ed89de8d7289d5ae0f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac47db46be7bbd0ed89de8d7289d5ae0f">VIPRA_PEDS_UPDATE_STEP</a></td></tr>
 <tr class="separator:ac47db46be7bbd0ed89de8d7289d5ae0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_attribs_classVIPRA_1_1Modules_1_1Pedestrians"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_attribs_classVIPRA_1_1Modules_1_1Pedestrians')"><img src="../../closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="../../d0/d2d/classVIPRA_1_1Modules_1_1Pedestrians.html">VIPRA::Modules::Pedestrians&lt; Grid &gt;</a></td></tr>
+<tr class="memitem:a0c1ce489ff69638d2e88d8adc64535f1 inherit pub_attribs_classVIPRA_1_1Modules_1_1Pedestrians" id="r_a0c1ce489ff69638d2e88d8adc64535f1"><td class="memItemLeft" align="right" valign="top">
+auto const &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>map</b></td></tr>
+<tr class="separator:a0c1ce489ff69638d2e88d8adc64535f1 inherit pub_attribs_classVIPRA_1_1Modules_1_1Pedestrians"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55135792d57e5585c77a530220b8590d inherit pub_attribs_classVIPRA_1_1Modules_1_1Pedestrians" id="r_a55135792d57e5585c77a530220b8590d"><td class="memItemLeft" align="right" valign="top">
+auto const <a class="el" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>engine</b></td></tr>
+<tr class="separator:a55135792d57e5585c77a530220b8590d inherit pub_attribs_classVIPRA_1_1Modules_1_1Pedestrians"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d1f0a09cacc1d519bca11d8095d34ca inherit pub_attribs_classVIPRA_1_1Modules_1_1Pedestrians" id="r_a4d1f0a09cacc1d519bca11d8095d34ca"><td class="memItemLeft" align="right" valign="top">
+&#160;</td><td class="memItemRight" valign="bottom"><b>engine</b></td></tr>
+<tr class="separator:a4d1f0a09cacc1d519bca11d8095d34ca inherit pub_attribs_classVIPRA_1_1Modules_1_1Pedestrians"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_methods_classVIPRA_1_1Modules_1_1Pedestrians"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_classVIPRA_1_1Modules_1_1Pedestrians')"><img src="../../closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="../../d0/d2d/classVIPRA_1_1Modules_1_1Pedestrians.html">VIPRA::Modules::Pedestrians&lt; Grid &gt;</a></td></tr>
+<tr class="memitem:aa8d3ba22cfd7f80c73dd5d3f9a24618a inherit pro_methods_classVIPRA_1_1Modules_1_1Pedestrians" id="r_aa8d3ba22cfd7f80c73dd5d3f9a24618a"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>init_specific_peds</b> (auto &amp;input)</td></tr>
+<tr class="separator:aa8d3ba22cfd7f80c73dd5d3f9a24618a inherit pro_methods_classVIPRA_1_1Modules_1_1Pedestrians"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af8858c1355df07cfa057a75a57a203ea inherit pro_methods_classVIPRA_1_1Modules_1_1Pedestrians" id="r_af8858c1355df07cfa057a75a57a203ea"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>set_velocities</b> (VIPRA::f3dVec const &amp;velocities)</td></tr>
 <tr class="separator:af8858c1355df07cfa057a75a57a203ea inherit pro_methods_classVIPRA_1_1Modules_1_1Pedestrians"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -235,6 +259,9 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><b>get_velocities</b> ()
 <tr class="memitem:a613a18696b5941c6ebd84de8c2665f16 inherit pro_methods_classVIPRA_1_1Modules_1_1Pedestrians" id="r_a613a18696b5941c6ebd84de8c2665f16"><td class="memItemLeft" align="right" valign="top">
 auto&#160;</td><td class="memItemRight" valign="bottom"><b>get_coordinates</b> () const -&gt; VIPRA::f3dVec const &amp;</td></tr>
 <tr class="separator:a613a18696b5941c6ebd84de8c2665f16 inherit pro_methods_classVIPRA_1_1Modules_1_1Pedestrians"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a568cf2eded24ac734f1017d26b1d5d8d inherit pro_methods_classVIPRA_1_1Modules_1_1Pedestrians" id="r_a568cf2eded24ac734f1017d26b1d5d8d"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>init_random_peds</b> (auto const &amp;map, <a class="el" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a> &amp;engine)</td></tr>
+<tr class="separator:a568cf2eded24ac734f1017d26b1d5d8d inherit pro_methods_classVIPRA_1_1Modules_1_1Pedestrians"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Pedestrian module that uses a grid to store pedestrians. </p>
@@ -251,7 +278,8 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><b>get_coordinates</b> (
       </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">    <span class="keyword">auto</span> coords = input.template get&lt;std::vector&lt;VIPRA::f3d&gt;&gt;({<span class="stringliteral">&quot;coords&quot;</span>})</div>
+<div class="line">    </div>
+<div class="line">    std::vector&lt;VIPRA::idx&gt; tempIndexes(get_coordinates().size())</div>
 </div><!-- fragment -->
 </div>
 </div>

@@ -90,7 +90,6 @@ $(function(){ initResizable(false); });
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="../../db/db6/classVIPRA_1_1SimType-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">VIPRA::SimType&lt; model_t, output_t, pedset_t, goals_t, map_t &gt; Class Template Reference</div></div>
 </div><!--header-->
@@ -128,12 +127,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa73e0c4125b1e0d826d733e495f55407" id="r_aa73e0c4125b1e0d826d733e495f55407"><td class="memItemLeft" align="right" valign="top"><a id="aa73e0c4125b1e0d826d733e495f55407" name="aa73e0c4125b1e0d826d733e495f55407"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>VIPRA_MODULE_TYPE</b> (Simulation)</td></tr>
 <tr class="separator:aa73e0c4125b1e0d826d733e495f55407"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3dd64ff2cae0ac0914096ce7d8e6ed5" id="r_af3dd64ff2cae0ac0914096ce7d8e6ed5"><td class="memItemLeft" align="right" valign="top"><a id="af3dd64ff2cae0ac0914096ce7d8e6ed5" name="af3dd64ff2cae0ac0914096ce7d8e6ed5"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>VIPRA_REGISTER_PARAMS</b> (VIPRA_PARAM(&quot;max_timestep&quot;, _maxTimestep), VIPRA_PARAM(&quot;timestep_size&quot;, _timestepSize), VIPRA_PARAM(&quot;output_frequency&quot;, _outputFrequency), VIPRA_PARAM(&quot;random_seed&quot;, _seed), VIPRA_PARAM(&quot;output_params&quot;, _outputParams)) template&lt; typename pedinput_t</td></tr>
-<tr class="separator:af3dd64ff2cae0ac0914096ce7d8e6ed5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1fad475f1fcb47657a36ad0f6386ec47" id="r_a1fad475f1fcb47657a36ad0f6386ec47"><td class="memItemLeft" align="right" valign="top">params_t auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1fad475f1fcb47657a36ad0f6386ec47">operator()</a> (pedinput_t &amp;&amp;pedInput, obsinput_t &amp;&amp;obsInput, params_t &amp;&amp;params) -&gt; output_data_t</td></tr>
-<tr class="memdesc:a1fad475f1fcb47657a36ad0f6386ec47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs the simulation with the given parameters.  <br /></td></tr>
-<tr class="separator:a1fad475f1fcb47657a36ad0f6386ec47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a215446191f95c35615a8552bd1ca9fa1" id="r_a215446191f95c35615a8552bd1ca9fa1"><td class="memItemLeft" align="right" valign="top"><a id="a215446191f95c35615a8552bd1ca9fa1" name="a215446191f95c35615a8552bd1ca9fa1"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>parameters</b> ()</td></tr>
+<tr class="separator:a215446191f95c35615a8552bd1ca9fa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9836a1241bd8867cb815729947fdea5" id="r_aa9836a1241bd8867cb815729947fdea5"><td class="memTemplParams" colspan="2">template&lt;typename pedinput_t , typename obsinput_t , typename params_t &gt; </td></tr>
+<tr class="memitem:aa9836a1241bd8867cb815729947fdea5"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aa9836a1241bd8867cb815729947fdea5">operator()</a> (pedinput_t &amp;&amp;pedInput, obsinput_t &amp;&amp;obsInput, params_t &amp;&amp;params) -&gt; output_data_t</td></tr>
+<tr class="memdesc:aa9836a1241bd8867cb815729947fdea5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs the simulation with the given parameters.  <br /></td></tr>
+<tr class="separator:aa9836a1241bd8867cb815729947fdea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b0b597138149cda25a650d8bc924852" id="r_a1b0b597138149cda25a650d8bc924852"><td class="memTemplParams" colspan="2"><a id="a1b0b597138149cda25a650d8bc924852" name="a1b0b597138149cda25a650d8bc924852"></a>
 template&lt;typename pedinput_t , typename obsinput_t , typename params_t &gt; </td></tr>
 <tr class="memitem:a1b0b597138149cda25a650d8bc924852"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><b>parallel_run</b> (pedinput_t &amp;&amp;pedInput, obsinput_t &amp;&amp;obsInput, params_t &amp;&amp;params) -&gt; output_data_t</td></tr>
@@ -157,21 +157,17 @@ constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>SimType</b> (out
 <tr class="memitem:a137d050f9d40275edcc1a36b945a9485 inherit pub_methods_classVIPRA_1_1Modules_1_1Module" id="r_a137d050f9d40275edcc1a36b945a9485"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/dab/classVIPRA_1_1Modules_1_1Module.html#a137d050f9d40275edcc1a36b945a9485">config</a> (paramreader_t &amp;paramIn, <a class="el" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a> &amp;engine)</td></tr>
 <tr class="memdesc:a137d050f9d40275edcc1a36b945a9485 inherit pub_methods_classVIPRA_1_1Modules_1_1Module"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads in all parameters for the module.  <br /></td></tr>
 <tr class="separator:a137d050f9d40275edcc1a36b945a9485 inherit pub_methods_classVIPRA_1_1Modules_1_1Module"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:aed89d22e4b67084f0c9aa6311b5b763a" id="r_aed89d22e4b67084f0c9aa6311b5b763a"><td class="memItemLeft" align="right" valign="top"><a id="aed89d22e4b67084f0c9aa6311b5b763a" name="aed89d22e4b67084f0c9aa6311b5b763a"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>obsinput_t</b></td></tr>
-<tr class="separator:aed89d22e4b67084f0c9aa6311b5b763a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a1fad475f1fcb47657a36ad0f6386ec47" name="a1fad475f1fcb47657a36ad0f6386ec47"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1fad475f1fcb47657a36ad0f6386ec47">&#9670;&#160;</a></span>operator()()</h2>
+<a id="aa9836a1241bd8867cb815729947fdea5" name="aa9836a1241bd8867cb815729947fdea5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9836a1241bd8867cb815729947fdea5">&#9670;&#160;</a></span>operator()()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename model_t , typename output_t , typename pedset_t , typename goals_t , typename map_t &gt; </div>
+<div class="memtemplate">
+template&lt;typename pedinput_t , typename obsinput_t , typename params_t &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">auto <a class="el" href="../../da/d73/classVIPRA_1_1SimType.html">VIPRA::SimType</a>&lt; model_t, output_t, pedset_t, goals_t, map_t &gt;::operator() </td>

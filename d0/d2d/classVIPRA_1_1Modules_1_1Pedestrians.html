@@ -90,6 +90,7 @@ $(function(){ initResizable(false); });
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="../../d4/dab/classVIPRA_1_1Modules_1_1Pedestrians-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">VIPRA::Modules::Pedestrians&lt; module_t &gt; Class Template Reference</div></div>
@@ -115,17 +116,37 @@ Collaboration diagram for VIPRA::Modules::Pedestrians&lt; module_t &gt;:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../dd/d9f/classVIPRA_1_1Modules_1_1Pedestrians__coll__graph.png" border="0" usemap="#aVIPRA_1_1Modules_1_1Pedestrians_3_01module__t_01_4_coll__map" alt="Collaboration graph"/></div>
 <map name="aVIPRA_1_1Modules_1_1Pedestrians_3_01module__t_01_4_coll__map" id="aVIPRA_1_1Modules_1_1Pedestrians_3_01module__t_01_4_coll__map">
-<area shape="rect" title="Base Pedestrians module." alt="" coords="5,94,197,135"/>
-<area shape="rect" href="../../da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="11,5,191,46"/>
-<area shape="poly" title=" " alt="" coords="104,62,104,94,98,94,98,62"/>
+<area shape="rect" title="Base Pedestrians module." alt="" coords="95,109,287,150"/>
+<area shape="rect" href="../../da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="5,5,185,46"/>
+<area shape="poly" title=" " alt="" coords="126,55,174,107,171,110,122,59"/>
+<area shape="rect" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html" title="Psuedo Random number engine." alt="" coords="208,13,368,38"/>
+<area shape="poly" title=" " alt="" coords="268,52,212,110,208,107,264,48"/>
 </map>
 <center><span class="legend">[<a href="../../graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:acb5b5624259f848449554d6436e3d8a0" id="r_acb5b5624259f848449554d6436e3d8a0"><td class="memItemLeft" align="right" valign="top"><a id="acb5b5624259f848449554d6436e3d8a0" name="acb5b5624259f848449554d6436e3d8a0"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>initialize</b> (auto &amp;input, auto const &amp;map)</td></tr>
-<tr class="separator:acb5b5624259f848449554d6436e3d8a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27383f3ac8658a2f958e9e7a1cebae7e" id="r_a27383f3ac8658a2f958e9e7a1cebae7e"><td class="memItemLeft" align="right" valign="top"><a id="a27383f3ac8658a2f958e9e7a1cebae7e" name="a27383f3ac8658a2f958e9e7a1cebae7e"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>REGISTER_BASE_PARAMS</b> (VIPRA_PARAM(&quot;random_count&quot;, _randomPedCnt), VIPRA_PARAM(&quot;spawn_random&quot;, _randomSpawn), VIPRA_PARAM(&quot;use_file&quot;, _useFile)) void initialize(auto &amp;input</td></tr>
+<tr class="separator:a27383f3ac8658a2f958e9e7a1cebae7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca69c57a404fa6ab199746e0eb9aae6f" id="r_aca69c57a404fa6ab199746e0eb9aae6f"><td class="memItemLeft" align="right" valign="top"><a id="aca69c57a404fa6ab199746e0eb9aae6f" name="aca69c57a404fa6ab199746e0eb9aae6f"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>init_specific_peds</b> (input)</td></tr>
+<tr class="separator:aca69c57a404fa6ab199746e0eb9aae6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20c4875f90896031c10bd531af7bd5bd" id="r_a20c4875f90896031c10bd531af7bd5bd"><td class="memItemLeft" align="right" valign="top"><a id="a20c4875f90896031c10bd531af7bd5bd" name="a20c4875f90896031c10bd531af7bd5bd"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (_randomSpawn &amp;&amp;_randomPedCnt &gt; 0)</td></tr>
+<tr class="separator:a20c4875f90896031c10bd531af7bd5bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b71138f5774b8f5446c96f5ca2e5f04" id="r_a4b71138f5774b8f5446c96f5ca2e5f04"><td class="memItemLeft" align="right" valign="top"><a id="a4b71138f5774b8f5446c96f5ca2e5f04" name="a4b71138f5774b8f5446c96f5ca2e5f04"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>assert</b> (_coords.size() &gt; 0)</td></tr>
+<tr class="separator:a4b71138f5774b8f5446c96f5ca2e5f04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9d86d6b77e0dad19e08a1e43f5e8b1a" id="r_aa9d86d6b77e0dad19e08a1e43f5e8b1a"><td class="memItemLeft" align="right" valign="top"><a id="aa9d86d6b77e0dad19e08a1e43f5e8b1a" name="aa9d86d6b77e0dad19e08a1e43f5e8b1a"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>assert</b> (_coords.size()==_velocities.size())</td></tr>
+<tr class="separator:aa9d86d6b77e0dad19e08a1e43f5e8b1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a724bce3564da3566b7a287812fece3ca" id="r_a724bce3564da3566b7a287812fece3ca"><td class="memItemLeft" align="right" valign="top"><a id="a724bce3564da3566b7a287812fece3ca" name="a724bce3564da3566b7a287812fece3ca"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>VIPRA::Log::debug</b> (&quot;{} total pedestrians added&quot;, _coords.size())</td></tr>
+<tr class="separator:a724bce3564da3566b7a287812fece3ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acecfcd993db12e260f7f09153e44b4b4" id="r_acecfcd993db12e260f7f09153e44b4b4"><td class="memItemLeft" align="right" valign="top"><a id="acecfcd993db12e260f7f09153e44b4b4" name="acecfcd993db12e260f7f09153e44b4b4"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>self</b> ().init_step(map</td></tr>
+<tr class="separator:acecfcd993db12e260f7f09153e44b4b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa869aa76c173bf7c75605f322030d3ba" id="r_aa869aa76c173bf7c75605f322030d3ba"><td class="memItemLeft" align="right" valign="top"><a id="aa869aa76c173bf7c75605f322030d3ba" name="aa869aa76c173bf7c75605f322030d3ba"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>update</b> (<a class="el" href="../../d4/da2/structVIPRA_1_1State.html">VIPRA::State</a> const &amp;state)</td></tr>
 <tr class="separator:aa869aa76c173bf7c75605f322030d3ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -155,6 +176,17 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><b>ped_velocity</b> (VIP
 auto&#160;</td><td class="memItemRight" valign="bottom"><b>all_velocities</b> () const -&gt; std::vector&lt; <a class="el" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> &gt; const &amp;</td></tr>
 <tr class="separator:ad6cdade1acfc79804b6a12f2c8bb46e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a0c1ce489ff69638d2e88d8adc64535f1" id="r_a0c1ce489ff69638d2e88d8adc64535f1"><td class="memItemLeft" align="right" valign="top"><a id="a0c1ce489ff69638d2e88d8adc64535f1" name="a0c1ce489ff69638d2e88d8adc64535f1"></a>
+auto const  &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>map</b></td></tr>
+<tr class="separator:a0c1ce489ff69638d2e88d8adc64535f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55135792d57e5585c77a530220b8590d" id="r_a55135792d57e5585c77a530220b8590d"><td class="memItemLeft" align="right" valign="top">auto const <a class="el" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a55135792d57e5585c77a530220b8590d">engine</a></td></tr>
+<tr class="separator:a55135792d57e5585c77a530220b8590d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d1f0a09cacc1d519bca11d8095d34ca" id="r_a4d1f0a09cacc1d519bca11d8095d34ca"><td class="memItemLeft" align="right" valign="top"><a id="a4d1f0a09cacc1d519bca11d8095d34ca" name="a4d1f0a09cacc1d519bca11d8095d34ca"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>engine</b></td></tr>
+<tr class="separator:a4d1f0a09cacc1d519bca11d8095d34ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:af8858c1355df07cfa057a75a57a203ea" id="r_af8858c1355df07cfa057a75a57a203ea"><td class="memItemLeft" align="right" valign="top"><a id="af8858c1355df07cfa057a75a57a203ea" name="af8858c1355df07cfa057a75a57a203ea"></a>
@@ -175,11 +207,40 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><b>get_velocities</b> ()
 <tr class="memitem:a613a18696b5941c6ebd84de8c2665f16" id="r_a613a18696b5941c6ebd84de8c2665f16"><td class="memItemLeft" align="right" valign="top"><a id="a613a18696b5941c6ebd84de8c2665f16" name="a613a18696b5941c6ebd84de8c2665f16"></a>
 auto&#160;</td><td class="memItemRight" valign="bottom"><b>get_coordinates</b> () const -&gt; VIPRA::f3dVec const &amp;</td></tr>
 <tr class="separator:a613a18696b5941c6ebd84de8c2665f16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a568cf2eded24ac734f1017d26b1d5d8d" id="r_a568cf2eded24ac734f1017d26b1d5d8d"><td class="memItemLeft" align="right" valign="top"><a id="a568cf2eded24ac734f1017d26b1d5d8d" name="a568cf2eded24ac734f1017d26b1d5d8d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>init_random_peds</b> (auto const &amp;map, <a class="el" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a> &amp;engine)</td></tr>
+<tr class="separator:a568cf2eded24ac734f1017d26b1d5d8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8d3ba22cfd7f80c73dd5d3f9a24618a" id="r_aa8d3ba22cfd7f80c73dd5d3f9a24618a"><td class="memItemLeft" align="right" valign="top"><a id="aa8d3ba22cfd7f80c73dd5d3f9a24618a" name="aa8d3ba22cfd7f80c73dd5d3f9a24618a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>init_specific_peds</b> (auto &amp;input)</td></tr>
+<tr class="separator:aa8d3ba22cfd7f80c73dd5d3f9a24618a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename module_t&gt;<br />
 class VIPRA::Modules::Pedestrians&lt; module_t &gt;</div><p>Base Pedestrians module. </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="a55135792d57e5585c77a530220b8590d" name="a55135792d57e5585c77a530220b8590d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55135792d57e5585c77a530220b8590d">&#9670;&#160;</a></span>engine</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename module_t &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">auto const <a class="el" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a>&amp; <a class="el" href="../../d0/d2d/classVIPRA_1_1Modules_1_1Pedestrians.html">VIPRA::Modules::Pedestrians</a>&lt; module_t &gt;::engine</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">    <span class="keywordflow">if</span> ( ! _randomSpawn || _useFile )</div>
+<div class="line">      <span class="keywordflow">throw</span> std::runtime_error(</div>
+<div class="line">          <span class="stringliteral">&quot;Random spawning and using the pedestrian file input is turned off in parameters (Cannot Add any &quot;</span></div>
+<div class="line">          <span class="stringliteral">&quot;Pedestrians, &quot;</span></div>
+<div class="line">          <span class="stringliteral">&quot;one needs to be true)&quot;</span>)</div>
+</div><!-- fragment -->
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/vipra/modules/<a class="el" href="../../d9/d20/modules_2pedestrians_8hpp_source.html">pedestrians.hpp</a></li>
 </ul>
 </div><!-- contents -->

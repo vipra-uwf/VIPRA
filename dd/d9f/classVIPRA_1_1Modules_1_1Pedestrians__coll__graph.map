@@ -1,5 +1,7 @@
 <map id="VIPRA::Modules::Pedestrians&lt; module_t &gt;" name="VIPRA::Modules::Pedestrians&lt; module_t &gt;">
-<area shape="rect" id="Node000001" title="Base Pedestrians module." alt="" coords="5,94,197,135"/>
-<area shape="rect" id="Node000002" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="11,5,191,46"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="104,62,104,94,98,94,98,62"/>
+<area shape="rect" id="Node000001" title="Base Pedestrians module." alt="" coords="95,109,287,150"/>
+<area shape="rect" id="Node000002" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="5,5,185,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="126,55,174,107,171,110,122,59"/>
+<area shape="rect" id="Node000003" href="$df/d63/classVIPRA_1_1Random_1_1Engine.html" title="Psuedo Random number engine." alt="" coords="208,13,368,38"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="268,52,212,110,208,107,264,48"/>
 </map>
