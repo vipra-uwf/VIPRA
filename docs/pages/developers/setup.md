@@ -1,11 +1,11 @@
-**File Path:** [Home](../../docs.md) / [Setup](setup.md)
-# Setup
 
-VIPRA can either be used as a [Library](#library) for use in other projects or built as a [Standalone Simulation](#standalone-build).
+# Developer Setup
 
-An example of how to use the simulation function is provided here: [Example Simulation](../examples/simulation.md).
+VIPRA can either be used:
+ - as a [Library](#library) for use in other projects
+ - as a [Standalone Simulation](#standalone-build)
 
-# Standalone Build
+# Standalone Simulation
 
 The `VIPRA` repository comes with a ready `main.cpp` that follows the [Example Simulation](../examples/simulation.md).
 

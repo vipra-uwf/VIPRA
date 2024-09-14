@@ -1,22 +1,10 @@
-**File Path:** [Home](../../docs.md) / [Behaviors](VIPRA_behaviors.md)
-# VIPRA Behaviors
 
-VIPRA Behaviors is a DSL for creating human behaviors for use in pedestrian dynamics simulations.
-Its goal is to provide an easy way for researchers without programming experience to test how human behaviors may affect pedestrian dynamics.
+| [Main Page](../../../docs.md) | [How To Use](../usage.md) | [Provided Modules](../base_modules.md) | [VIPRA Behaviors](../behaviors/behaviors.md) | [Module Parameters](parameters.md) | [Developing Modules](../../developers/overview.md) |
+| --- | --- | --- | --- | --- | --- |
 
-`Behaviors` are a way to describe `Actions` that pedestrians take under a certain `Condition` without the use of a traditional programming language.
+# VIPRA Behaviors Syntax Reference
 
-`Behaviors` are comprised of four major parts:
-1. [Types](#types)
-2. [Selectors](#selectors)
-3. [Events](#events)
-4. [Actions](#actions)
-
-*See also [Behavior Examples](behavior_examples.md)*
-
-***Document Note:** Text wrapped with `<` and `>`, denote a placeholder value. You should not include `<` and `>` when writing Behaviors.*
-
----
+>**Document Note:** Text wrapped with `<` and `>`, denote a placeholder value. You should not include `<` and `>` when writing Behaviors.*
 
 # Behavior Layout
 

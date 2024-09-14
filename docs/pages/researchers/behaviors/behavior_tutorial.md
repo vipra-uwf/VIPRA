@@ -1,5 +1,10 @@
-**File Path:** [Home](../../docs.md) / [Behaviors](VIPRA_behaviors.md) / [Examples](behavior_examples.md)
-# Behavior Examples
+
+| [Main Page](../../../docs.md) | [How To Use](../usage.md) | [Provided Modules](../base_modules.md) | [VIPRA Behaviors](../behaviors/behaviors.md) | [Module Parameters](parameters.md) | [Developing Modules](../../developers/overview.md) |
+| --- | --- | --- | --- | --- | --- |
+
+# VIPRA Behavior Tutorial
+
+§ markers point to the [Behavior Syntax Reference](behaviors_syntax.md)
 
 # Ex. Creating An Example Behavior
 
@@ -13,20 +18,19 @@ This example is a simple `Behavior` that causes every pedestrian to stand still 
 <summary>Code</summary>
 
 ```
-Types:           // Types Declaration (§T.) says what types of pedestrians there are
+Types:           // Types Declarations (§T.) say what types of pedestrians there are
   person
 .
 
-Selector:        // Selector (§S.) says who is of that type
+Selector:        // Selectors (§S.) set how pedestrians are chosen to have the type
   Type: person
-  Select: Everyone
+  Select: Everyone  // in this case everyone is selected
 .
 
-Action (person): // Action (§A.) says what people of that type do
-  Response: set velocity {0}
+Action (person): // Actions (§A.) decide what pedestrians of the given type do
+  Response: set velocity {0}  // in this case they are always stopped
 .
 ```
-
 </details>
 
 ---
@@ -56,7 +60,7 @@ Event:                                // Event (§E.)
 .
 
 Action (Listener):                    // Action (§A.)
-  Condition: !Announcement occurring  // Condition (§C.)
+  Condition: !Announcement occurring  // Condition (§C.) sets what causes the pedestrian to do this action
   Response: set velocity {0}
 . 
 ```
@@ -65,6 +69,7 @@ Action (Listener):                    // Action (§A.)
 In this example, an announcement will start after 10 seconds and last for 10 seconds.
 
 While the announcement is occurring, every pedestrian will be stopped to listen.
+
 
 ### Ex.2.1. A bit more realistic
 
@@ -143,48 +148,3 @@ Action (Parital_Listener):            // Action (§A.)
 </details>
 
 In this 10% of pedestrians stop to listen, another 25% slow down to listen, and the rest behave normally.
-
-## Ex.3. Pedestrians Interacting
-
-This example `Behavior` has pedestrians "fighting", to show that pedestrians can interact.
-
-<details open>
-<summary>Code</summary>
-
-
-```
-Types:
-  teamA_fan
-  teamB_fan
-  aggressive_fan
-.
-
-Selector:
-  Type: teamA_fan
-  Select: 25%
-.
-
-Selector:                   // Selector (§S.) 10% of teamA fans are "aggressive"
-  Type: aggressive_fan
-  Select: 10%
-  From: teamA_fan
-.
-
-Selector:
-  Type: teamB_fan
-  Select: 15%
-.
-
-Action (aggressive_fan):
-  Stimulus: target within 1.0                                  // Condition (§C.)
-  Response: set velocity to {0}, set target velocity to {0}    // Atoms (§A.4.) to set self and targets velocity to zero 
-  Duration: random 60-120 seconds                              // Duration (§A.3.) to have fights last a random amount of time 
-  Target: nearest teamB_fan                                    // Target (§A.6.) has aggressive_fans only interact with teamB_fans 
-.
-```
-
-</details>
-
-Go To [VIPRA Behaviors](./VIPRA_Behaviors.md)
-
-\tableofcontents

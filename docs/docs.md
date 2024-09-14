@@ -1,4 +1,7 @@
-**File Path:** [Home](docs.md) / 
+
+| [How To Use](pages/researchers/usage.md) | [Developing Modules](pages/developers/overview.md) | [Using as a Library](pages/developers/library.md)
+| --- | --- | --- |
+
 # Introduction
 
 This project provides tools for interdisciplinary analysis of fine-scaled pedestrian movement, especially for science-based decision-making. It is motivated by the fact that local movement and interaction patterns of individuals congregated in public locations, such as entertainment venues and transportation hubs, impacts public health in myriad ways. For instance, infectious disease transmission in crowded areas, such as the 2016 measles outbreak in Disney world that resulted in 125 cases, is affected by the evolution of the pedestrian contact network.
@@ -9,17 +12,26 @@ Pedestrian dynamics enables such analysis by simulating the trajectories of indi
 
 This project includes a modular pedestrian dynamics code to which input from different domains could be easily included. In addition, it includes tools to democratize use by users with limited computing background by including a domain specific language to specify human behavior and policy. We also separately provide a recommender system, as a complementary project, to suggested suitable models to use.
 
-# Getting Started
+VIPRA can either be used:
+ - as a [Library](pages/developers/library.md) for use in other projects
+ - as a [Standalone Simulation](pages/researchers/usage.md)
 
-## Researchers
-[How to use VIPRA](pages/researchers.md)  
-[Jump straight to Setup](pages/getting_started/setup.md)
+# Researchers
 
-## Developers
-[How to add functionality.](pages/developers.md)
+For those that intend to:
+- use premade models / modules for running simulations
 
-## Examples
-[Examples for developing and running simulations](pages/examples/list.md)
+1. [How to use VIPRA](pages/researchers/usage.md)
+
+---
+
+# Developers
+
+For those that intend to:
+- develop new models / module implementations
+- Use VIPRA in their projects
+
+1. [Developer Setup](pages/developers/setup.md)
 
 ---
 

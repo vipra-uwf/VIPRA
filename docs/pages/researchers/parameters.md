@@ -1,28 +1,44 @@
+| [Main Page](../../docs.md) | [How To Use](usage.md) | [Provided Modules](base_modules.md) | [VIPRA Behaviors](behaviors/behaviors.md) | [Module Parameters](parameters.md) | [Developing Modules](../developers/overview.md) |
+| --- | --- | --- | --- | --- | --- |
 
-**File Path:** [Home](../docs.md) / [Researchers](researchers.md) / [Parameter Sweep](parameter_sweep.md)
 
-# Parameter Sweep
+# Module Parameters
 
-The VIPRA Parameter sweep allows the user to run a randomized parameter sweep. This can be done on a single machine or a cluster, through the use of [openMPI](https://www.open-mpi.org/)
+Parameters are loaded into each module before they are initizalized. The exact steps of a simulation run are shown in [`Simluation Steps`](sim_overview.md).
 
-# Use
+Parameters can use any [`ParaReader`](modules/input.md) module, the [`JSON`](base_modules.md) input module provided works for this.
 
-A [Simple Parameter Sweep Example](examples/parameter_sweep.md) is provided.
-
-The provided `main.cpp` also implements a parameter sweep.
-
-### Building with MPI
-
-`MPI` is enabled with the addition of `mpi=on` to the make command
-
-Example:
+The format for JSON parameters is:
+```JSON
+{
+  "module type": {
+    "module name": {
+      "parameter name": "parameter value"
+    }
+  },
+  ...
+}
 ```
-make release mpi=on
+
+Example of a [`Goals`](modules/goals.md) module parameters:
+```JSON
+{
+  ...
+  "goals": {                  // Module Type
+    "astar": {                // Module Name
+      "endGoalType": "exit",  // Parameter values
+      "gridSize": 0.1,
+      "closestObstacle": 0.25,
+      "goalRange": 0.05
+    }
+  },
+  ...
+}
 ```
 
-Without this, the parameter sweep with be run serially on one core.
+# Parameter Sweeps
 
-> !!! IMPORTANT NOTE: currently only [openMPI](https://www.open-mpi.org/) is known to work, this will be fixed in the future
+Parameter sweeps run many simulations with randomized parameters to get a better idea of the possible outcomes.
 
 # Parameters
 

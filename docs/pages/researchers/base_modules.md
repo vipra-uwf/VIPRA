@@ -1,5 +1,7 @@
 
-**File Path:** [Home](../docs.md) / [Researchers](researchers.md) / [Included Modules](base_modules.md)
+| [Main Page](../../docs.md) | [How To Use](usage.md) | [Provided Modules](base_modules.md) | [VIPRA Behaviors](behaviors/behaviors.md) | [Module Parameters](parameters.md) | [Developing Modules](../developers/overview.md) |
+| --- | --- | --- | --- | --- | --- |
+
 # Included Modules
 
 There are several modules included with VIPRA.
@@ -24,24 +26,13 @@ There are several modules included with VIPRA.
 
 ---
 
-# Calm Model
+# Models
+
+## Calm Model
 
 This `Model` module implements the [Calm Model](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0229690)
 
-## Use:
-
-In **main.cpp**:
-```C++
-#include "modules/model/calm_model/calm_model.hpp"
-
-VIPRA::simulation(
-  ...
-  CALM::Model{},
-  ...
-);
-```
-
-## Parameters:
+### Parameters:
 - `meanMass` : Mean mass for population
 - `massStdDev` : Standard Deviation for mass
 - `meanReactionTime` : Mean reaction time for population
@@ -54,7 +45,7 @@ VIPRA::simulation(
 In **module_params.json**:
 ```json
   "model": {
-    "calm_model": {
+    "calm": {
       "meanMass": 1.0,
       "massStdDev": 0.1,
       "meanReactionTime": 0.5,
@@ -67,22 +58,15 @@ In **module_params.json**:
   },
 ```
 
-# AStar Goals
+---
+
+# Goals
+
+## AStar Goals
 
 This `Goals` module uses the [A* algorithm](usage/algorithms.md) to find paths for each pedestrian.
 
-## Use:
-```C++
-#include "vipra.hpp"
-
-VIPRA::simulation(
-  ...
-  VIPRA::Goals::AStar{},
-  ...
-);
-```
-
-## Parameters:
+### Parameters:
 - `endGoalType` : Name of object in map each pedestrian tries to reach (e.g. "exit")
 - `goalRange` : Range, in meters, before a goal is counted as "reached" (e.g. 0.05)
 - `gridSize` : Length of each side, in meters, of each grid in the pathing graph (e.g. 0.1)
@@ -91,7 +75,7 @@ VIPRA::simulation(
 In **module_params.json**:
 ```json
   "goals": {
-    "astar": {
+    "AStar": {
       endGoalType: "exit",
       goalRange: 0.1,
       gridSize: 0.1,
@@ -100,102 +84,67 @@ In **module_params.json**:
   },
 ```
 
-# QuadTree Map 
+---
+
+# Maps
+
+## QuadTree Map 
 
 This `Map` module uses the [Quad Tree](usage/data_structures.md) to hold the map geometry.
 
-## Use:
-```C++
-#include "vipra.hpp"
-
-VIPRA::simulation(
-  ...
-    VIPRA::Map::QuadTree{} // Map sets go inside the Map module
-  ...
-)
-```
-
-## Parameters:
+### Parameters:
 
 - `minQuadSize` : Size at which quads stop being subdivided
 
 In **module_params.json**:
 ```json
-  "obstacles": {
-    "quad_tree": {
+  "map": {
+    "QuadTree": {
       "minQuadSize": 0.05
     }
   },
 ```
 
-# Grid Pedestrian Set
+---
+
+# Pedestrian Sets
+
+## Grid Pedestrian Set
 
 This `Pedestrian Set` module holds pedestrians in a grid of cells, allowing for more efficient lookup of nearest neighbors
 
-## Use:
-```C++
-#include "vipra.hpp"
-
-VIPRA::simulation(
-  ...
-  VIPRA::Pedestrians::Grid{},
-  ...
-);
-```
-
-## Parameters:
+### Parameters:
 
 - `gridSize`: Size of each grid cell
 
 In **module_params.json**:
 ```json
   "pedestrians": {
-    "grid": {
+    "Grid": {
       "gridSize": 0.5
     }
   },
 ```
 
-# JSON Input
+# Inputs
+
+## JSON Input
 
 This `Input` module loads JSON data, using [nlohmann JSON](https://github.com/nlohmann/json).
-- Qualifies as a:
-  - Polygon Input
-  - Parameter Input
 
-## Use:
-
-```C++
-#include "vipra.hpp"
-
-sim(
-  VIPRA::Input::JSON{"pedestrians.json"}, // Pedestrian Input
-  VIPRA::Input::JSON{"obstacles.json"},   // Obstacle Input
-  VIPRA::Parameters{VIPRA::Input::JSON{"module_params.json"}} // Parameter Input
-);
-```
-
-## Parameters:
+### Parameters:
 
 - NONE
 
-# JSON Output
+---
+
+# Outputs
+
+## TrajectoriesJson Output
 
 This `Output` module creates a JSON file containing the positions of each pedestrian for each timestep that matches the output frequency in the simulation module parameters.
 
-## Use:
-
-```C++
-VIPRA::simulation(
-  ...
-  VIPRA::Module::Output{
-    VIPRA::Output::Trajectories::JSON{}
-  },
-  ...
-)
-```
-
-## Parameters:
+### Parameters:
 
 - `filename`: Name of the output file
 
@@ -205,7 +154,7 @@ In **module_params.json**:
     "coordinator": {  // Output is special in that it has a coordinator for when there are multiple output modules
       "output_dir": "./sim_output"
     },
-    "trajectories_json": {
+    "TrajectoriesJson": {
       "filename": "trajectories.json"
     }
   },
