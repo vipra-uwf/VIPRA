@@ -2,12 +2,8 @@
 
 #include <cassert>
 #include <optional>
-#include <stdexcept>
+#include <string>
 #include <vector>
-
-#include "vipra/concepts/string_view.hpp"
-
-#include "vipra/modules/module.hpp"
 
 #include "vipra/modules/util.hpp"
 #include "vipra/util/crtp.hpp"

@@ -1,13 +1,13 @@
 
 #include <gtest/gtest.h>
 
-#include "model/calm_model/calm_model.hpp"
+#include "model/calm/calm.hpp"
 #include "vipra.hpp"
 
 TEST(VipraFullSim, FullSim)
 {
-  auto sim = VIPRA::simulation(CALM::Model{}, VIPRA::Goals::AStar{}, VIPRA::Pedestrians::Grid{},
-                               VIPRA::CoordModules::Output{VIPRA::Output::Trajectories::JSON{}},
+  auto sim = VIPRA::simulation(Model::calm{}, VIPRA::Goals::AStar{}, VIPRA::Pedestrians::Grid{},
+                               VIPRA::CoordModules::Output{VIPRA::Output::TrajectoriesJson{}},
                                VIPRA::Map::QuadTree{});
 
   // Run the simulation with the module parameters in 'module_params.json'

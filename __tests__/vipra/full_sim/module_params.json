@@ -1,14 +1,15 @@
 {
   "simulation": {
     "main": {
-      "max_timestep": 100,
+      "max_timestep": 300,
       "timestep_size": 0.005,
       "output_frequency": 100,
-      "random_seed": 12346345
+      "random_seed": 12346345,
+      "output_params": true
     }
   },
   "model": {
-    "calm_model": {
+    "calm": {
       "meanMass": 1.0,
       "massStdDev": [
         0.1,
@@ -27,20 +28,23 @@
     }
   },
   "goals": {
-    "astar": {
+    "AStar": {
       "endGoalType": "exit",
-      "gridSize": 0.1,
+      "gridSize": 0.07,
       "closestObstacle": 0.25,
       "goalRange": 0.05
     }
   },
   "pedestrians": {
-    "grid": {
+    "Grid": {
+      "use_file": true,
+      "spawn_random": false,
+      "random_count": 0,
       "gridSize": 0.5
     }
   },
-  "obstacles": {
-    "quad_tree": {
+  "map": {
+    "QuadTree": {
       "minQuadSize": 0.05
     }
   },
@@ -48,7 +52,7 @@
     "coordinator": {
       "output_dir": "./sim_output"
     },
-    "trajectories_json": {
+    "TrajectoriesJson": {
       "filename": "trajectories.json"
     }
   },

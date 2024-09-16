@@ -40,9 +40,9 @@ class Pedestrians : public Util::CRTP<Pedestrians<module_t>> {
 
   void initialize(auto& input, auto const& map, VIPRA::Random::Engine& engine)
   {
-    if ( ! _randomSpawn || _useFile )
+    if ( ! (_randomSpawn || _useFile) )
       throw std::runtime_error(
-          "Random spawning and using the pedestrian file input is turned off in parameters (Cannot Add any "
+          "Random spawning AND Using the pedestrian file input is turned off in parameters (Cannot Add any "
           "Pedestrians, "
           "one needs to be true)");
 
