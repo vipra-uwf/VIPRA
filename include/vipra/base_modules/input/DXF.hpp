@@ -121,13 +121,13 @@ inline auto VIPRA::Input::DXF::get_impl<std::vector<VIPRA::Geometry::Polygon>>(
 inline auto VIPRA::Input::DXF::get_obstacles_impl() const
     -> std::optional<std::vector<VIPRA::Geometry::Polygon>>
 {
-  VIPRA::Log::info("Obstacles");
-  for (auto &polygon : _obstacles) {
-    for (auto &edge : polygon.edges) {
-      VIPRA::Log::info("{}, {}, {}", edge.start.x, edge.start.y, edge.start.z);
-    }
-  }
-  VIPRA::Log::info("End Obstacles");
+  // VIPRA::Log::info("Obstacles");
+  // for (auto &polygon : _obstacles) {
+  //   for (auto &edge : polygon.edges) {
+  //     VIPRA::Log::info("{}, {}, {}", edge.start.x, edge.start.y, edge.start.z);
+  //   }
+  // }
+  // VIPRA::Log::info("End Obstacles");
 
   return {_obstacles};
 }
@@ -139,13 +139,13 @@ inline auto VIPRA::Input::DXF::get_obstacles_impl() const
  */
 inline auto VIPRA::Input::DXF::get_spawns_impl() const -> std::optional<std::vector<VIPRA::Geometry::Polygon>>
 {
-  VIPRA::Log::info("Pedestrians");
-  for (auto &polygon : _spawns) {
-    for (auto &edge : polygon.edges) {
-      VIPRA::Log::info("{}, {}, {}", edge.start.x, edge.start.y, edge.start.z);
-    }
-  }
-  VIPRA::Log::info("End Pedestrians");
+  // VIPRA::Log::info("Pedestrians");
+  // for (auto &polygon : _spawns) {
+  //   for (auto &edge : polygon.edges) {
+  //     VIPRA::Log::info("x: {}, y: {}, z: {},", edge.start.x, edge.start.y, edge.start.z);
+  //   }
+  // }
+  // VIPRA::Log::info("End Pedestrians");
 
   return _spawns;
 }
@@ -158,6 +158,12 @@ inline auto VIPRA::Input::DXF::get_spawns_impl() const -> std::optional<std::vec
 inline auto VIPRA::Input::DXF::get_objectives_impl() const
     -> std::optional<std::map<std::string, std::vector<VIPRA::Geometry::Polygon>>>
 {
+  // VIPRA::Log::info("Objectives");
+  // for (auto const &[key, val] : _objectives) {
+  //   VIPRA::Log::info("{}", key);
+  // }
+  // VIPRA::Log::info("End Objectives");
+
   return _objectives;
 }
 
@@ -200,7 +206,7 @@ inline void VIPRA::Input::DXF::load_impl()
   dxfReader.setDebug(DRW::DebugLevel::Debug);
   dxfReader.read(&drw_reader, 1);
   // Error: 2, Error opening file
-  std::cout << "ERROR: " << dxfReader.getError() << std::endl;
+  // std::cout << "ERROR: " << dxfReader.getError() << std::endl;
 
   // Get the items stored in reader and add to private variables.
   _objectives = drw_reader.getObjectives();

@@ -372,6 +372,7 @@ inline auto DrwReader::get_arc_as_polygon(DRW_Coord center, double radius, doubl
  */
 inline void DrwReader::add_obstacle(std::vector<VIPRA::f3d> const& points, std::string object_type)
 {
+  std::string object_type_caseless = object_type;
   transform(object_type.begin(), object_type.end(), object_type.begin(), ::toupper);
 
   VIPRA::Geometry::Polygon shape(points);
@@ -387,11 +388,11 @@ inline void DrwReader::add_obstacle(std::vector<VIPRA::f3d> const& points, std::
     _areas[object_type] = shape;
   }
   else {
-    if ( _objectives[object_type].empty() ) {
-      _objectives[object_type] = {shape};
+    if ( _objectives[object_type_caseless].empty() ) {
+      _objectives[object_type_caseless] = {shape};
     }
     else {
-      _objectives[object_type].emplace_back(shape);
+      _objectives[object_type_caseless].emplace_back(shape);
     }
   }
 };
