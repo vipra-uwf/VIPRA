@@ -37,6 +37,9 @@ class uniform_distribution {
                                                    static_cast<double>(_range.second - _range.first)));
   }
 
+  [[nodiscard]] auto min() -> data_t { return _range.first; }
+  [[nodiscard]] auto max() -> data_t { return _range.second; }
+
  private:
   std::pair<data_t, data_t> _range{};
 };
@@ -97,8 +100,8 @@ class normal_distribution {
  * @return std::vector<data_t> 
  */
 template <typename dist_t, Concepts::Numeric data_t = VIPRA::f_pnt>
-inline auto make_distribution(dist_t&& distr, VIPRA::size count, VIPRA::Random::Engine& engine)
-    -> std::vector<data_t>
+inline auto make_distribution(dist_t&& distr, VIPRA::size count,
+                              VIPRA::Random::Engine& engine) -> std::vector<data_t>
 {
   std::vector<data_t> ret(count);
 

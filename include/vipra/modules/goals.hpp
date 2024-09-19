@@ -4,6 +4,7 @@
 
 #include "vipra/geometry/f3d.hpp"
 
+#include "vipra/logging/logging.hpp"
 #include "vipra/macros/performance.hpp"
 #include "vipra/modules/util.hpp"
 #include "vipra/random/random.hpp"
@@ -31,6 +32,8 @@ class Goals : public Util::CRTP<Goals<module_t>> {
   {
     assert(pedset.num_pedestrians() > 0);
 
+    VIPRA::Log::debug("Initializing Goals");
+
     VIPRA::size const pedCnt = pedset.num_pedestrians();
 
     _currentGoals.resize(pedCnt);
@@ -43,6 +46,8 @@ class Goals : public Util::CRTP<Goals<module_t>> {
     assert(_timeSinceLastGoal.size() == pedCnt);
     assert(_currentGoals.size() == pedCnt);
     assert(_endGoals.size() == pedCnt);
+
+    VIPRA::Log::debug("Goals Initialized");
   }
 
   template <typename pedset_t, typename map_t>

@@ -4,7 +4,7 @@
 
 # Module Parameters
 
-Parameters are loaded into each module before they are initizalized. The exact steps of a simulation run are shown in [`Simluation Steps`](sim_overview.md).
+Parameters are loaded into each module before they are initizalized. The exact steps of a simulation run are shown in [`Simluation Steps`](../developers/overview.md#simulation-steps).
 
 Parameters can use any [`ParaReader`](modules/input.md) module, the [`JSON`](base_modules.md) input module provided works for this.
 

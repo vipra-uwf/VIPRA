@@ -8,6 +8,9 @@
 
 #include "model/calm/calm.hpp"
 
+#include "vipra/geometry/polygon.hpp"
+#include "vipra/geometry/triangle.hpp"
+
 auto main(int argc, char** argv) -> int
 {
   // Set the logging level to info, default is ERROR
@@ -44,7 +47,7 @@ auto main(int argc, char** argv) -> int
   VIPRA::ParameterSweep::run(
     sim,
     VIPRA::Input::JSON{VIPRA::Args::get("peds")}, // Pedestrian Input
-    VIPRA::Input::JSON{VIPRA::Args::get("map")},  // Map Input
+    VIPRA::Input::DXF{VIPRA::Args::get("map")},  // Map Input
     params,
     VIPRA::Args::get<size_t>("count"), // Number of simulations to run in total
     [](VIPRA::idx simId) {  // Callback function called after each simulation run

@@ -1,5 +1,5 @@
 
-| [How To Use](pages/researchers/usage.md) | [Developing Modules](pages/developers/overview.md) | [Using as a Library](pages/developers/library.md)
+| [How To Use](pages/researchers/usage.md) | [Developing Modules](pages/developers/overview.md) | [Using as a Library](pages/developers/library.md) |
 | --- | --- | --- |
 
 # Introduction

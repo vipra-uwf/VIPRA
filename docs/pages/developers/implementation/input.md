@@ -5,7 +5,7 @@
 
 There are several sub-sets of `Input Modules`:
 1. [Serializable Input](#serializable-input-implementation)
-2. [Polygon Input](#polygon-input-implementation)
+2. [Map Input](#map-input-implementation)
 
 # Required Methods
 
@@ -42,7 +42,7 @@ std::optional<data_t> get(std::vector<std::string> const&);
 
 ### Parameters
 
-`keys` - a variadic number of keys to identify an input value
+`keys` - a list of keys that should uniquely identify a requested value
 
 ### Returns
 
@@ -52,19 +52,21 @@ std::optional<data_t> get(std::vector<std::string> const&);
 
 `NONE`
 
+---
+
 # Serializable Input Implementation
 
 Serializable Input modules additionally require:
 
 ```C++
-std::string serialize();
-void deserialize(std::string const&);
+std::string to_string();
+void parse_impl(std::string const&);
 ```
 
 ## Details
 
 ```C++
-std::string serialize()
+std::string to_string()
 ```
 
 ### Parameters
@@ -80,7 +82,7 @@ std::string serialize()
 `NONE`
 
 ```C++
-void deserialize(std::string const&);
+void parse_impl(std::string const&);
 ```
 
 ### Parameters
@@ -97,8 +99,93 @@ The serialized data is deserialized and loaded into the input module
 
 # Map Input Implementation
 
-<!-- TODO: Update -->
+```C++
+std::optional<std::vector<VIPRA::Geometry::Polygon>> get_obstacles_impl() const;
+std::optional<std::vector<VIPRA::Geometry::Polygon>> get_spawns_impl() const;
+std::optional<std::map<std::string, std::vector<VIPRA::Geometry::Polygon>>> get_objectives_impl() const;
+std::optional<std::map<std::string, VIPRA::Geometry::Polygon>> get_areas_impl() const;
+```
 
-Polygon Input modules additionally requires:
+```C++
+std::optional<std::vector<VIPRA::Geometry::Polygon>> get_obstacles_impl() const;
+```
 
-`get`: can load values of type: `std::vector<VIPRA::Geometry::Polygon>`
+### Parameters
+
+`NONE`
+
+### Returns
+
+The map obstacles
+
+- an empty std::vector, if there are no map obstacles
+- `std::nullopt`, if there was an issue loading the map obstacles
+
+### Expected Effects
+
+`NONE`
+
+---
+
+```C++
+std::optional<std::vector<VIPRA::Geometry::Polygon>> get_spawns_impl() const;
+```
+
+### Parameters
+
+`NONE`
+
+### Returns
+
+The map spawns
+
+- an empty std::vector, if there are no map spawns
+- `std::nullopt`, if there was an issue loading the map spawns
+
+### Expected Effects
+
+`NONE`
+
+---
+
+```C++
+std::optional<std::map<std::string, std::vector<VIPRA::Geometry::Polygon>>> get_objectives_impl() const;
+```
+
+### Parameters
+
+`NONE`
+
+### Returns
+
+The map objectives
+
+- an empty std::map, if there are no map objectives
+- `std::nullopt`, if there was an issue loading the map objectives
+
+### Expected Effects
+
+`NONE`
+
+---
+
+```C++
+std::optional<std::map<std::string, VIPRA::Geometry::Polygon>> get_areas_impl() const;
+```
+
+### Parameters
+
+`NONE`
+
+### Returns
+
+The map areas
+
+- an empty std::map, if there are no map areas
+- `std::nullopt`, if there was an issue loading the map areas
+
+### Expected Effects
+
+`NONE`
+
+---

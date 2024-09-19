@@ -6,6 +6,7 @@
 
 #include "vipra/geometry/polygon.hpp"
 
+#include "vipra/logging/logging.hpp"
 #include "vipra/macros/goals.hpp"
 #include "vipra/macros/module.hpp"
 #include "vipra/macros/parameters.hpp"
@@ -42,6 +43,7 @@ NEW_VIPRA_MODULE(AStar, Goals)
     // for each pedestrian, find their path to their end goal
     for ( VIPRA::idx pedIdx = 0; pedIdx < pedCnt; ++pedIdx ) {
       find_path(pedIdx, pedset.ped_coords(pedIdx));
+      VIPRA::Log::debug("Found Path for Ped {}", pedIdx);
       set_current_goal(pedIdx, _paths[pedIdx].back());
     }
 
@@ -106,9 +108,13 @@ NEW_VIPRA_MODULE(AStar, Goals)
       auto const pos = pedset.ped_coords(pedIdx);
 
       auto const nearestGoalIter = get_nearest_goal(pos, objects);
+      VIPRA::Log::debug("Ped {} Nearest End Goal: ({}, {})", pedIdx, (*nearestGoalIter).center().x,
+                        (*nearestGoalIter).center().y);
 
       if ( nearestGoalIter != objects.end() ) {
-        set_end_goal(pedIdx, (*nearestGoalIter).random_point(engine));
+        const auto point = (*nearestGoalIter).random_point(engine);
+        VIPRA::Log::debug("Ped {} Final End Goal: ({}, {})", pedIdx, point.x, point.y);
+        set_end_goal(pedIdx, point);
       }
       else {
         throw std::runtime_error("No goal found for pedestrian");

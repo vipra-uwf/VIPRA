@@ -1,7 +1,5 @@
 #pragma once
 
-#include "vipra.hpp"
-
 #include "drw_interface.h"
 
 #include "vipra/geometry/polygon.hpp"
@@ -27,7 +25,7 @@ class DrwReader : public DRW_Interface {
 
   /** Called when header is parsed.  */
   void addHeader(const DRW_Header* data) override {
-    
+
   };
 
   std::vector<VIPRA::Geometry::Polygon>                        getObstacles() { return _obstacles; }
@@ -380,7 +378,7 @@ inline void DrwReader::add_obstacle(std::vector<VIPRA::f3d> const& points, std::
   if ( object_type == "OBSTACLES" ) {
     _obstacles.emplace_back(shape);
   }
-  else if ( object_type == "PEDESTRIANS" ) {
+  else if ( object_type == "SPAWNS" ) {
     // _spawns.insert(_spawns.end(), points.begin(), points.end());
     _spawns.emplace_back(shape);
   }

@@ -8,21 +8,27 @@ In addition to the [Base Module](module.md) requirements `Goals` require the fol
 ```C++
   VIPRA_GOALS_INIT_STEP {}
   VIPRA_GOALS_UPDATE_STEP {}
-
-  void                  change_end_goal_impl(VIPRA::idx pedIdx, VIPRA::f3d currPos, VIPRA::f3d goalPos);
-  const VIPRA::f3dVec&  current_goals_impl() const;
-  const VIPRA::f3dVec&  end_goals_impl() const;
-  const VIPRA::f3d&     current_goal_impl(VIPRA::idx pedIdx) const;
-  const VIPRA::f3d&     end_goal_impl(VIPRA::idx pedIdx) const;
-  bool                  is_goal_met_impl(VIPRA::idx pedIdx) const;
-  bool                  is_sim_goal_met_impl() const;
-  VIPRA::f_pnt          time_since_last_goal_impl(VIPRA::idx pedIdx) const;
 ```
 
-# Details
+# Optional Methods
+
+These methods are optional, default behavior is used if not provided.
 
 ```C++
-VIPRA_GOALS_INIT_STEP
+  void                  change_end_goal(VIPRA::idx pedIdx, VIPRA::f3d currPos, VIPRA::f3d goalPos);
+  const VIPRA::f3dVec&  current_goals() const;
+  const VIPRA::f3dVec&  end_goals() const;
+  const VIPRA::f3d&     current_goal(VIPRA::idx pedIdx) const;
+  const VIPRA::f3d&     end_goal(VIPRA::idx pedIdx) const;
+  bool                  is_goal_met(VIPRA::idx pedIdx) const;
+  bool                  is_sim_goal_met() const;
+  VIPRA::f_pnt          time_since_last_goal(VIPRA::idx pedIdx) const;
+```
+
+# Required Method Details
+
+```C++
+VIPRA_GOALS_INIT_STEP {}
 ```
 
 ### Parameters
@@ -41,7 +47,7 @@ Each pedestrian has their goals initialized and ready for the first timestep of 
 ---
 
 ```C++
-VIPRA_GOALS_UPDATE_STEP
+VIPRA_GOALS_UPDATE_STEP {}
 ```
 
 ### Parameters
@@ -60,8 +66,10 @@ Each pedestrian has their current goals updated
 
 ---
 
+# Optional Method Details
+
 ```
-void change_end_goal_impl(VIPRA::idx pedIdx, VIPRA::f3d currPos, VIPRA::f3d goalPos);
+void change_end_goal(VIPRA::idx pedIdx, VIPRA::f3d currPos, VIPRA::f3d goalPos);
 ```
 
 ### Parameters
@@ -81,7 +89,7 @@ Pedestrian # pedIdx has their end goal changed to `goalPos`
 ---
 
 ```C++
-const VIPRA::f3dVec&  current_goals_impl() const;
+const VIPRA::f3dVec&  current_goals() const;
 ```
 
 ### Parameters
@@ -99,7 +107,7 @@ const VIPRA::f3dVec&  current_goals_impl() const;
 ---
 
 ```C++
-const VIPRA::f3dVec&  end_goals_impl() const;
+const VIPRA::f3dVec&  end_goals() const;
 ```
 
 ### Parameters
@@ -117,7 +125,7 @@ const VIPRA::f3dVec&  end_goals_impl() const;
 ---
 
 ```C++
-const VIPRA::f3d& current_goal_impl(VIPRA::idx pedIdx) const;
+const VIPRA::f3d& current_goal(VIPRA::idx pedIdx) const;
 ```
 
 ### Parameters
@@ -135,7 +143,7 @@ const VIPRA::f3d& current_goal_impl(VIPRA::idx pedIdx) const;
 ---
 
 ```C++
-const VIPRA::f3d& end_goal_impl(VIPRA::idx pedIdx) const;
+const VIPRA::f3d& end_goal(VIPRA::idx pedIdx) const;
 ```
 
 ### Parameters
@@ -153,7 +161,7 @@ const VIPRA::f3d& end_goal_impl(VIPRA::idx pedIdx) const;
 ---
 
 ```C++
-bool is_goal_met_impl(VIPRA::idx pedIdx) const;
+bool is_goal_met(VIPRA::idx pedIdx) const;
 ```
 
 ### Parameters
@@ -171,7 +179,7 @@ bool is_goal_met_impl(VIPRA::idx pedIdx) const;
 ---
 
 ```C++
-bool is_sim_goal_met_impl() const;
+bool is_sim_goal_met() const;
 ```
 
 ### Parameters
@@ -189,7 +197,7 @@ bool is_sim_goal_met_impl() const;
 ---
 
 ```C++
-VIPRA::f_pnt time_since_last_goal_impl(VIPRA::idx pedIdx) const;
+VIPRA::f_pnt time_since_last_goal(VIPRA::idx pedIdx) const;
 ```
 
 ### Parameters

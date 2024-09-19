@@ -17,7 +17,9 @@ void Model::calm::calc_shoulders(VIPRA::f3dVec const& coords, VIPRA::f3dVec cons
 auto Model::calm::obj_spatial_test(const VIPRA::Geometry::Rectangle& collisionRect, VIPRA::f3d objLeft,
                                    VIPRA::f3d objRight) -> bool
 {
-  if ( collisionRect.p1() == collisionRect.p2() ) {
+  auto const& sides = collisionRect.sides();
+
+  if ( sides[0].start == sides[1].start ) {
     return false;
   }
 
@@ -51,8 +53,8 @@ auto Model::calm::rect_from_shoulders(VIPRA::idx pedIdx, VIPRA::f3d pedCoords,
   const VIPRA::Geometry::Line pedShldr = _peds.shoulders[pedIdx];
   const VIPRA::f3d            range = (goal - pedCoords).unit();
 
-  return VIPRA::Geometry::Rectangle{pedShldr.start, pedShldr.start + range, pedShldr.end + range,
-                                    pedShldr.end};
+  return VIPRA::Geometry::Rectangle(pedShldr.start, pedShldr.start + range, pedShldr.end + range,
+                                    pedShldr.end);
 }
 
 void Model::calm::calc_betas()

@@ -28,6 +28,8 @@ class Map : public Util::CRTP<Map<module_t>> {
 
   void initialize(auto&& input)
   {
+    VIPRA::Log::debug("Initializing Map");
+
     auto const obstacles = input.template get_obstacles();
     if ( ! obstacles ) throw std::runtime_error("Input Module failed to load map obstacles");
 
@@ -53,6 +55,8 @@ class Map : public Util::CRTP<Map<module_t>> {
 
     // initialize derived obstacles module
     return self().init_step(_obstacles, _objectives, _spawns, _areas);
+
+    VIPRA::Log::debug("Map Initialized");
   }
 
   [[nodiscard]] auto get_dimensions() const -> VIPRA::f3d { return _dimensions; }
@@ -65,6 +69,8 @@ class Map : public Util::CRTP<Map<module_t>> {
 
   [[nodiscard]] auto collision(VIPRA::Geometry::Circle radius) const -> bool
   {
+    if ( collision(radius.center()) ) return true;
+
     return std::any_of(_obstacles.begin(), _obstacles.end(),
                        [&](auto const& obstacle) { return obstacle.does_intersect(radius); });
   }
@@ -73,7 +79,7 @@ class Map : public Util::CRTP<Map<module_t>> {
   {
     VIPRA::f_pnt hit = std::numeric_limits<VIPRA::f_pnt>::max();
     for ( auto const& obstacle : _obstacles ) {
-      for ( auto const& edge : obstacle.edges ) {
+      for ( auto const& edge : obstacle.sides() ) {
         if ( ! edge.does_intersect({start, end}) ) continue;
         auto intersection = edge.intersection_point({start, end});
         hit = std::min(hit, start.distance_to(intersection));
@@ -129,7 +135,7 @@ class Map : public Util::CRTP<Map<module_t>> {
                        std::map<std::string, VIPRA::Geometry::Polygon> const&              areas)
   {
     auto setToMax = [&](auto const& polygon) {
-      for ( auto const& edge : polygon.edges ) {
+      for ( auto const& edge : polygon.sides() ) {
         _dimensions.x = std::max({_dimensions.x, edge.start.x, edge.end.x});
         _dimensions.y = std::max({_dimensions.y, edge.start.y, edge.end.y});
         _dimensions.z = std::max({_dimensions.z, edge.start.z, edge.end.z});

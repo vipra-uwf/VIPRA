@@ -3,6 +3,7 @@
 #include <type_traits>
 #include <vector>
 
+#include "vipra/geometry/circle.hpp"
 #include "vipra/logging/logging.hpp"
 #include "vipra/macros/parameters.hpp"
 
@@ -40,6 +41,7 @@ class Pedestrians : public Util::CRTP<Pedestrians<module_t>> {
 
   void initialize(auto& input, auto const& map, VIPRA::Random::Engine& engine)
   {
+    VIPRA::Log::debug("Initializing Pedestrians");
     if ( ! (_randomSpawn || _useFile) )
       throw std::runtime_error(
           "Random spawning AND Using the pedestrian file input is turned off in parameters (Cannot Add any "
@@ -52,12 +54,15 @@ class Pedestrians : public Util::CRTP<Pedestrians<module_t>> {
       init_random_peds(map, engine);
     }
 
+    for ( size_t i = 0; i < _coords.size(); ++i ) {
+      VIPRA::Log::debug("Ped {} At: {}, {}", i, _coords[i].x, _coords[i].y);
+    }
+
     assert(_coords.size() > 0);
     assert(_coords.size() == _velocities.size());
 
-    VIPRA::Log::debug("{} total pedestrians added", _coords.size());
-
     self().init_step(map, engine);
+    VIPRA::Log::debug("Pedestrians Initialized");
   }
 
   void update(VIPRA::State const& state)
@@ -152,9 +157,13 @@ class Pedestrians : public Util::CRTP<Pedestrians<module_t>> {
     // go through each pedestrian and give them a random point inside one of the spawn points
     for ( size_t i = startSize; i < _coords.size(); ++i ) {
       // TODO(rolland, issue #50): effectively infinite loop if the spawn is covered by an obstacle
+      VIPRA::idx spawnIdx = polyDist(engine);
+
       do {
-        _coords[i] = spawnAreas[polyDist(engine)].random_point(engine);
-      } while ( ! map.collision(_coords[i]) );
+        _coords[i] = spawnAreas[spawnIdx].random_point(engine);
+        VIPRA::Log::debug("Random Point: ({}, {}) Collides: {}", _coords[i].x, _coords[i].y,
+                          map.collision(_coords[i]));
+      } while ( map.collision(Geometry::Circle{_coords[i], 0.4}) );
     }
 
     VIPRA::Log::debug("{} pedestrians added randomly to {} spawn areas", _randomPedCnt, spawnAreas.size());

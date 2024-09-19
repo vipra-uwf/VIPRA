@@ -1,5 +1,6 @@
 #pragma once
 
+#include "vipra/logging/logging.hpp"
 #include "vipra/modules/util.hpp"
 #include "vipra/random/random.hpp"
 
@@ -23,7 +24,9 @@ class Model : public Util::CRTP<Model<class_t>> {
   void initialize(pedset_t const& pedset, map_t const& map, goals_t const& goals,
                   VIPRA::Random::Engine& engine)
   {
+    VIPRA::Log::debug("Initializing Model");
     self().init_step(pedset, map, goals, engine);
+    VIPRA::Log::debug("Model Initialized");
   }
 
   template <typename pedset_t, typename map_t, typename goals_t>

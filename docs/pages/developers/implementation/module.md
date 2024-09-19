@@ -1,21 +1,31 @@
 
 # Module
 
-All modules are required to have the following:
+Each module type has its own requirements, these are the requirements common to all.
 
-# Required
+# File / Naming Requirements
+
+For the module to be correctly identified by [vipra.py](../../researchers/usage.md)
+
+1. The module files must be placed under `modules/*type*/*module name*`
+2. The module .hpp file must be named *module name*.hpp
+3. The module class name and VIPRA_MODULE_NAME() must match the .hpp *module name*
+4. The module class must be under the *type* namespace
+5. A `CMakeLists.txt` must be placed in the module directory
+
+- Note: 3 & 4 are covered when using the `NEW_VIPRA_MODULE(*name*, *type*)` macro
+
+[The CMakeLists.txt requirements are at the bottom](#CMakeLists)
+
+# Class Requirements
+
+The module class is required to have the following. Each is explained in more details below.
 
 ```C++
 VIPRA_MODULE_TYPE(type)
 VIPRA_MODULE_NAME("name")
-VIPRA_REGISTER_PARAMS
-
-// Also require a seperate file to go along with source
-CMakeLists.txt
+VIPRA_REGISTER_PARAMS {}
 ```
-
-[The CMakeLists.txt is at the bottom](#CMakeLists)
-
 
 # Details
 
@@ -121,7 +131,7 @@ vipra_add_library(
 
 ### Example
 
-This example is from the [JSON Input Module](../base_modules.md)
+This example is from the [JSON Input Module](../../researchers/base_modules.md)
 
 ```CMake
 vipra_add_all()

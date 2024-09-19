@@ -5,12 +5,6 @@ VIPRA can either be used:
  - as a [Library](#library) for use in other projects
  - as a [Standalone Simulation](#standalone-build)
 
-# Standalone Simulation
-
-The `VIPRA` repository comes with a ready `main.cpp` that follows the [Example Simulation](../examples/simulation.md).
-
-This build takes one argument, the number of simulations to run, and generates a number of "trajectories.json" files based on that parameter. This output file can then be used with the [visualizer program](../tools/visualizer.md) also included in this project to generate a visual representation of pedestrians in motion. 
-
 ## Requirements
 
 The following are requirement for running the VIPRA simulation.
@@ -27,14 +21,32 @@ The following are required for development of the Behaviors DSL.
 
 ---
 
-## Build
+# Library
+
+`VIPRA` can be included in a project using [CMake](https://cmake.org/)
+
+```
+target_link_libraries(
+  **project**
+  PUBLIC
+  VIPRA
+)
+```
+
+- Replace `**project**` with the name of your CMake project
+
+---
+
+# Standalone Simulation
+
+A MakeFile is provided with the proper command to build a standalone simulation from the provided `main.cpp` in the top level directory.
 
 To build the simulation, in the parent directory run:
 ```
 make
 ```
 
-Alternatively, run one of the following (recommended for developers only):
+Alternatively, run one of the following:
 
 - `make release` for compiling in release mode.
 - `make debug` for compiling in debug mode.
@@ -57,31 +69,18 @@ make release mpi=on
 
 ---
 
-## Running the Provided Simulation
+# Running the Provided Simulation
 
 The VIPRA repo comes with a `main.cpp` that follows the [Parameter Sweep Example Simulation](../examples/parameter_sweep.md)
 
 ```
-./VIPRA <number_of_simulations>
+./VIPRA -count=<sim count> -map=<map file path> -peds=<pedestrian file path> -params=<parameters file path>
 ```
 
-See the [Usage Page](usage.md) for how to modify the simulation.
-
----
-
-## Library
-
-`VIPRA` can be included in a project using [CMake](https://cmake.org/)
-
+Example:
 ```
-target_link_libraries(
-  **project**
-  PUBLIC
-  VIPRA
-)
+./VIPRA -count=1 -map=maps/obstacles/a320/a320_polygons.json -peds=maps/pedestrians/a320/a320_144_pedestrians.json -params=examples/module_params.json
 ```
-
-- Replace `**project**` with the name of your CMake project
 
 ---
 

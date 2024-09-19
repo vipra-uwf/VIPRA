@@ -15,6 +15,8 @@ struct Line {
   // TODO(rolland): issue #18 add more to the line class
   constexpr Line(VIPRA::f3d start, VIPRA::f3d end) : start(start), end(end) {}
 
+  F3D_FUNC auto length() const noexcept -> VIPRA::f_pnt { return start.distance_to(end); }
+
   /**
    * @brief Calculates the orientation of a point relative to a line.
    * 

@@ -8,8 +8,6 @@
 
 #include <libdxfrw.h>
 
-#include "vipra.hpp"
-
 #include "vipra/geometry/polygon.hpp"
 #include "vipra/macros/module.hpp"
 #include "vipra/modules/input.hpp"
@@ -190,7 +188,6 @@ inline auto VIPRA::Input::DXF::get_areas_impl() const
 inline void VIPRA::Input::DXF::load_impl()
 {
   std::string loadingFilepath = "Loading " + _filepath.string();
-  VIPRA::Log::info("{}", loadingFilepath);
   // Check Exists
   if ( ! std::filesystem::exists(_filepath) )
     throw std::runtime_error("File does not exist at: " + _filepath.string());
@@ -201,9 +198,7 @@ inline void VIPRA::Input::DXF::load_impl()
 
   const char* fileCharArr = _filepath.c_str();
 
-  dxfRW       dxfReader = dxfRW(fileCharArr);
-  VIPRA::Log::info("Reading {}", _filepath.string());
-  dxfReader.setDebug(DRW::DebugLevel::Debug);
+  dxfRW dxfReader = dxfRW(fileCharArr);
   dxfReader.read(&drw_reader, 1);
   // Error: 2, Error opening file
   // std::cout << "ERROR: " << dxfReader.getError() << std::endl;
@@ -213,6 +208,4 @@ inline void VIPRA::Input::DXF::load_impl()
   _obstacles = drw_reader.getObstacles();
   _spawns = drw_reader.getPedestrians();
   _areas = drw_reader.getAreas();
-
-  VIPRA::Log::info("DXF Loaded");
 }

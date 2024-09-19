@@ -30,16 +30,16 @@
   "goals": {
     "AStar": {
       "endGoalType": "exit",
-      "gridSize": 0.07,
-      "closestObstacle": 0.25,
+      "gridSize": 0.05,
+      "closestObstacle": 0.05,
       "goalRange": 0.05
     }
   },
   "pedestrians": {
     "Grid": {
-      "use_file": true,
-      "spawn_random": false,
-      "random_count": 0,
+      "use_file": false,
+      "spawn_random": true,
+      "random_count": 100,
       "gridSize": 0.5
     }
   },

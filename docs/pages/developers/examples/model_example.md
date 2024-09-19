@@ -6,9 +6,9 @@ This Model will simply have pedestrians walking in circles around their initial 
 
 1. Create Folder and Files
   We will create the following: 
-  - `modules/model/example_model`
-  - `modules/model/example_model/example_model.hpp`
-  - `modules/model/example_model/CMakeLists.txt`
+  - `modules/model/ExampleModel`
+  - `modules/model/ExampleModel/ExampleModel.hpp`
+  - `modules/model/ExampleModel/CMakeLists.txt`
 
 2. Create the model
 ```C++
@@ -18,7 +18,7 @@ This Model will simply have pedestrians walking in circles around their initial 
 VIPRA_NEW_MODULE(ExampleModel, Model) {
  public:
   // Give the module a name and set its type
-  VIPRA_MODULE_NAME("example_model")
+  VIPRA_MODULE_NAME("ExampleModel")
   VIPRA_MODULE_TYPE(Model)
 
   // Add in the parameter registration step, this is where we tell VIPRA what parameters the module needs
@@ -41,6 +41,7 @@ VIPRA_NEW_MODULE(ExampleModel, Model) {
   }
 
  private:
+  // Member variables to hold the parameters
   VIPRA::f_pnt  _radius;
   VIPRA::f3dVec _initialPoints;
 };
@@ -54,6 +55,8 @@ VIPRA_NEW_MODULE(ExampleModel, Model) {
 #include "modules/model/calm_model/calm_model.hpp"
 
 auto main() -> int {
+
+  // Create the simulation object, modules can be placed in any order so long as they are all there
   auto sim = VIPRA::simulation(
       Example::Model{},                       // Here, we use our new model
       VIPRA::Goals::AStar{},                  // Goals Module
@@ -69,7 +72,7 @@ auto main() -> int {
     VIPRA::Parameters{
       VIPRA::Input::Json{"maps/pedestrians/a320/a320_144_pedestrians.json"}, // Input Module for pedestrians
       VIPRA::Input::Json{"maps/obstacles/a320/a320_polygons.json"} // Input Module for obstalces
-      VIPRA::Input::Json{"module_params.json"} // Input Module for loading the parameters
+      VIPRA::Input::Json{"examples/module_params.json"} // Input Module for loading the parameters
     }
   );
 }

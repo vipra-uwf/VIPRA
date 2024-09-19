@@ -27,14 +27,10 @@ def load_config(filepath):
 def _find_module_in(moduleName, moduleType, baseDir):
   moduleDir = baseDir + f'/{moduleType}'
 
-  print(moduleDir)
-  print(f'{moduleDir}/{moduleName}')
-
   if os.path.isdir(f'{moduleDir}/{moduleName}'):
     moduleDir += f'/{moduleName}'
 
   if not os.path.isfile(f'{moduleDir}/CMakeLists.txt'):
-    print("returning None")
     return None
 
   if os.path.isfile(f'{moduleDir}/{moduleName}.hpp'):
