@@ -1,5 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="5,5,147,46"/>
-<area shape="rect" id="Node000001" href="$dc/dab/classVIPRA_1_1Modules_1_1Module.html" title="VIPRA Module Base CRTP Class." alt="" coords="195,5,359,46"/>
-<area shape="poly" id="edge155_Node000000_Node000001" title=" " alt="" coords="162,23,194,23,194,28,162,28"/>
+<area shape="rect" id="Node000000" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="5,5,169,76"/>
+<area shape="rect" id="Node000001" href="$dc/dab/classVIPRA_1_1Modules_1_1Module.html" title=" " alt="" coords="217,13,385,68"/>
+<area shape="poly" id="edge155_Node000000_Node000001" title=" " alt="" coords="184,38,216,38,216,43,184,43"/>
+<area shape="rect" id="Node000002" href="$d5/d56/classVIPRA_1_1BehaviorModel.html" title="BehaviorModel is a special module that is responsible for loading and managing all behaviors." alt="" coords="433,20,618,61"/>
+<area shape="poly" id="edge156_Node000001_Node000002" title=" " alt="" coords="401,38,433,38,433,43,401,43"/>
 </map>

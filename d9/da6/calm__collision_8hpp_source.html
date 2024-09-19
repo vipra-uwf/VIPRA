@@ -123,7 +123,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>  }</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>  VIPRA_PERF_FUNC <span class="keywordtype">void</span> race_detection(<span class="keyword">auto</span> <span class="keyword">const</span>&amp; pedset, <a class="code hl_struct" href="../../da/d17/structCALM_1_1ModelData.html">ModelData</a> <span class="keyword">const</span>&amp; data, <span class="keyword">auto</span> <span class="keyword">const</span>&amp; goals,</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>                                      VIPRA::timestep timestep, <span class="keyword">auto</span> <span class="keyword">const</span>&amp; map)</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>                                      VIPRA::timestep timestep, <span class="keyword">auto</span> <span class="keyword">const</span>&amp; <span class="comment">/*map*/</span>)</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>  {</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    calc_collision_rectangles(pedset, goals, data);</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keyword">const</span> VIPRA::size pedCnt = pedset.num_pedestrians();</div>
@@ -154,7 +154,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>      <span class="keyword">auto</span> shldr2 = (<a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a>{goalDirection.y, -goalDirection.x}.<a class="code hl_function" href="../../d8/d28/structVIPRA_1_1f3d.html#a6e57dfdf33f28aa298c1fadd7adaeb30">unit</a>() * shldrs[i]) + coords;</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>      <span class="keyword">const</span> <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> range = (goalDirection.unit() * RECTANGLE_RANGE);</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>      collisionRectangles[i] = {shldr1, shldr1 + range, shldr2 + range, shldr2};</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>      collisionRectangles[i] = <a class="code hl_class" href="../../d8/d9a/classVIPRA_1_1Geometry_1_1Rectangle.html">Rectangle</a>{shldr1, shldr1 + range, shldr2 + range, shldr2};</div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    }</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>  }</div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
@@ -166,9 +166,9 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  std::vector&lt;std::vector&lt;VIPRA::f3d&gt;&gt; intersectionMidpoints;</div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>  std::vector&lt;VIPRA::f3d&gt;              velocityDirections;</div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>  <span class="keyword">static</span> <span class="keyword">constexpr</span> VIPRA::size MAX_COUNT = 500;</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>  <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">float</span>       MINSPEED = 0.00000001F;</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>  <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">float</span>       RECTANGLE_RANGE = 0.4;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>  <span class="keyword">static</span> <span class="keyword">constexpr</span> VIPRA::size  MAX_COUNT = 500;</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>  <span class="keyword">static</span> <span class="keyword">constexpr</span> VIPRA::f_pnt MINSPEED = 0.00000001F;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>  <span class="keyword">static</span> <span class="keyword">constexpr</span> VIPRA::f_pnt RECTANGLE_RANGE = 0.4;</div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>  VIPRA_PERF_FUNC <span class="keywordtype">void</span> calc_collision_rectangles(<span class="keyword">auto</span> <span class="keyword">const</span>&amp; pedset, <span class="keyword">auto</span> <span class="keyword">const</span>&amp; goals, <a class="code hl_struct" href="../../da/d17/structCALM_1_1ModelData.html">ModelData</a> <span class="keyword">const</span>&amp; data)</div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>  {</div>
@@ -188,196 +188,196 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        <span class="keyword">auto</span> shldr2 = (<a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a>{goalDirection.y, -goalDirection.x}.<a class="code hl_function" href="../../d8/d28/structVIPRA_1_1f3d.html#a6e57dfdf33f28aa298c1fadd7adaeb30">unit</a>() * shldrs[i]) + coords[i];</div>
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        <span class="keyword">const</span> <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> range = (goalDirection.unit() * RECTANGLE_RANGE);</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        collisionRectangles[i] = {shldr1, shldr1 + range, shldr2 + range, shldr2};</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        collisionRectangles[i] = <a class="code hl_class" href="../../d8/d9a/classVIPRA_1_1Geometry_1_1Rectangle.html">Rectangle</a>{shldr1, shldr1 + range, shldr2 + range, shldr2};</div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        <span class="keywordflow">continue</span>;</div>
 <div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>      }</div>
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>      <span class="keyword">const</span> <a class="code hl_struct" href="../../da/d49/structVIPRA_1_1Geometry_1_1Line.html">Line</a>       shoulders = <a class="code hl_function" href="../../d9/df1/classCALM_1_1Collision.html#aa5cad5bdeae65fe40a4cfd303e279e99">get_shoulder_points</a>(coords[i], pedVel, shldrs[i]);</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>      <span class="keyword">const</span> <a class="code hl_struct" href="../../da/d49/structVIPRA_1_1Geometry_1_1Line.html">Line</a>       shoulders = <a class="code hl_function" href="../../d9/df1/classCALM_1_1Collision.html#a24243903ad8eef36112c3581221061c3">get_shoulder_points</a>(coords[i], pedVel, shldrs[i]);</div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>      <span class="keyword">const</span> <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> range = (pedVel.<a class="code hl_function" href="../../d8/d28/structVIPRA_1_1f3d.html#a6e57dfdf33f28aa298c1fadd7adaeb30">unit</a>() * RECTANGLE_RANGE);</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>      collisionRectangles[i] = {shoulders.start, shoulders.start + range, shoulders.end + range,</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>                                shoulders.end};</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>      collisionRectangles[i] =</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>          <a class="code hl_class" href="../../d8/d9a/classVIPRA_1_1Geometry_1_1Rectangle.html">Rectangle</a>{shoulders.start, shoulders.start + range, shoulders.end + range, shoulders.end};</div>
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    }</div>
 <div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>  }</div>
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>  VIPRA_PERF_FUNC <span class="keyword">static</span> <span class="keywordtype">void</span> add_intersection_points(<a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> p1, <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> q1, <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> p2,</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>                                                      <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> q2, VIPRA::f3dVec&amp; intersectionPoints)</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>  VIPRA_PERF_FUNC <span class="keyword">static</span> <span class="keywordtype">void</span> add_intersection_points(<a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> start1, <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> end1, <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> start2,</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>                                                      <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> end2, VIPRA::f3dVec&amp; intersectionPoints)</div>
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>  {</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <span class="keywordtype">float</span> a1 = q1.y - p1.y;</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    <span class="keywordtype">float</span> b1 = p1.x - q1.x;</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    <span class="keywordtype">float</span> a2 = q2.y - p2.y;</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    <span class="keywordtype">float</span> b2 = p2.x - q2.x;</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    <span class="keywordtype">float</span> c1 = a1 * p1.x + b1 * p1.y;</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    <span class="keywordtype">float</span> c2 = a2 * p2.x + b2 * p2.y;</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    <span class="keywordtype">float</span> det = a1 * b2 - a2 * b1;</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <span class="comment">// NOLINTBEGIN(readability-identifier-length)</span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    VIPRA::f_pnt a1 = end1.y - start1.y;</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    VIPRA::f_pnt b1 = start1.x - end1.x;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    VIPRA::f_pnt a2 = end2.y - start2.y;</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    VIPRA::f_pnt b2 = start2.x - end2.x;</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    VIPRA::f_pnt c1 = a1 * start1.x + b1 * start1.y;</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    VIPRA::f_pnt c2 = a2 * start2.x + b2 * start2.y;</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    <span class="comment">// NOLINTEND(readability-identifier-length)</span></div>
 <div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    <span class="keywordflow">if</span> ( det == 0 ) {</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>      <span class="keywordflow">if</span> ( <a class="code hl_struct" href="../../da/d49/structVIPRA_1_1Geometry_1_1Line.html">Line</a>{p1, q1}.<a class="code hl_function" href="../../da/d49/structVIPRA_1_1Geometry_1_1Line.html#a358b9e546d9c70ccf40e4f6a3980fdd3">is_point_on</a>(p2) ) intersectionPoints.push_back(p2);</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>      <span class="keywordflow">if</span> ( <a class="code hl_struct" href="../../da/d49/structVIPRA_1_1Geometry_1_1Line.html">Line</a>{p1, q1}.<a class="code hl_function" href="../../da/d49/structVIPRA_1_1Geometry_1_1Line.html#a358b9e546d9c70ccf40e4f6a3980fdd3">is_point_on</a>(q2) ) intersectionPoints.push_back(q2);</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>      <span class="keywordflow">if</span> ( <a class="code hl_struct" href="../../da/d49/structVIPRA_1_1Geometry_1_1Line.html">Line</a>{p2, q2}.<a class="code hl_function" href="../../da/d49/structVIPRA_1_1Geometry_1_1Line.html#a358b9e546d9c70ccf40e4f6a3980fdd3">is_point_on</a>(p1) ) intersectionPoints.push_back(p1);</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>      <span class="keywordflow">if</span> ( <a class="code hl_struct" href="../../da/d49/structVIPRA_1_1Geometry_1_1Line.html">Line</a>{p2, q2}.<a class="code hl_function" href="../../da/d49/structVIPRA_1_1Geometry_1_1Line.html#a358b9e546d9c70ccf40e4f6a3980fdd3">is_point_on</a>(q1) ) intersectionPoints.push_back(q1);</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    }</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>      <span class="keywordtype">float</span> pX{};</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>      <span class="keywordtype">float</span> pY{};</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>      pX = (b2 * c1 - b1 * c2) / det;</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>      pY = -(a2 * c1 - a1 * c2) / det;</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>      intersectionPoints.emplace_back(pX, pY);</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    }</div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>  }</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>  [[nodiscard]] VIPRA_PERF_FUNC <span class="keyword">auto</span> get_collision_area_midpoint(VIPRA::idx index1,</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>                                                                 VIPRA::idx index2) -&gt; <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a></div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>  {</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    <a class="code hl_class" href="../../d8/d9a/classVIPRA_1_1Geometry_1_1Rectangle.html">Rectangle</a> <span class="keyword">const</span>&amp; r1 = collisionRectangles[index1];</div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    <a class="code hl_class" href="../../d8/d9a/classVIPRA_1_1Geometry_1_1Rectangle.html">Rectangle</a> <span class="keyword">const</span>&amp; r2 = collisionRectangles[index2];</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> </div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    std::array&lt;Line, 4&gt; s1{</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>        <a class="code hl_struct" href="../../da/d49/structVIPRA_1_1Geometry_1_1Line.html">Line</a>{r1.p1(), r1.p2()}, {r1.p2(), r1.p3()}, {r1.p3(), r1.p4()}, {r1.p4(), r1.p1()}};</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    std::array&lt;Line, 4&gt; s2{</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>        <a class="code hl_struct" href="../../da/d49/structVIPRA_1_1Geometry_1_1Line.html">Line</a>{r2.p1(), r2.p2()}, {r2.p2(), r2.p3()}, {r2.p3(), r2.p4()}, {r2.p4(), r2.p1()}};</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    VIPRA::f_pnt det = a1 * b2 - a2 * b1;</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    <span class="keywordflow">if</span> ( det == 0 ) {</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>      <span class="keywordflow">if</span> ( <a class="code hl_struct" href="../../da/d49/structVIPRA_1_1Geometry_1_1Line.html">Line</a>{start1, end1}.<a class="code hl_function" href="../../da/d49/structVIPRA_1_1Geometry_1_1Line.html#a358b9e546d9c70ccf40e4f6a3980fdd3">is_point_on</a>(start2) ) intersectionPoints.push_back(start2);</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>      <span class="keywordflow">if</span> ( <a class="code hl_struct" href="../../da/d49/structVIPRA_1_1Geometry_1_1Line.html">Line</a>{start1, end1}.<a class="code hl_function" href="../../da/d49/structVIPRA_1_1Geometry_1_1Line.html#a358b9e546d9c70ccf40e4f6a3980fdd3">is_point_on</a>(end2) ) intersectionPoints.push_back(end2);</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>      <span class="keywordflow">if</span> ( <a class="code hl_struct" href="../../da/d49/structVIPRA_1_1Geometry_1_1Line.html">Line</a>{start2, end2}.<a class="code hl_function" href="../../da/d49/structVIPRA_1_1Geometry_1_1Line.html#a358b9e546d9c70ccf40e4f6a3980fdd3">is_point_on</a>(start1) ) intersectionPoints.push_back(start1);</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>      <span class="keywordflow">if</span> ( <a class="code hl_struct" href="../../da/d49/structVIPRA_1_1Geometry_1_1Line.html">Line</a>{start2, end2}.<a class="code hl_function" href="../../da/d49/structVIPRA_1_1Geometry_1_1Line.html#a358b9e546d9c70ccf40e4f6a3980fdd3">is_point_on</a>(end1) ) intersectionPoints.push_back(start1);</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    }</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>      VIPRA::f_pnt pointX{};</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>      VIPRA::f_pnt pointY{};</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>      pointX = (b2 * c1 - b1 * c2) / det;</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>      pointY = -(a2 * c1 - a1 * c2) / det;</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>      intersectionPoints.emplace_back(pointX, pointY);</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    }</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>  }</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>  [[nodiscard]] VIPRA_PERF_FUNC <span class="keyword">auto</span> get_collision_area_midpoint(VIPRA::idx index1,</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>                                                                 VIPRA::idx index2) -&gt; <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a></div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>  {</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    <a class="code hl_class" href="../../d8/d9a/classVIPRA_1_1Geometry_1_1Rectangle.html">Rectangle</a> <span class="keyword">const</span>&amp; rec1 = collisionRectangles[index1];</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    <a class="code hl_class" href="../../d8/d9a/classVIPRA_1_1Geometry_1_1Rectangle.html">Rectangle</a> <span class="keyword">const</span>&amp; rec2 = collisionRectangles[index2];</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span> </div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    <span class="keyword">auto</span> <span class="keyword">const</span>&amp; sides1 = rec1.sides();</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    <span class="keyword">auto</span> <span class="keyword">const</span>&amp; sides2 = rec2.sides();</div>
 <div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
 <div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    VIPRA::f3dVec intersectionPoints;</div>
 <div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    <span class="keywordflow">for</span> ( <span class="keywordtype">size_t</span> i = 0; i &lt; 4; i++ ) {</div>
 <div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>      <span class="keywordflow">for</span> ( <span class="keywordtype">size_t</span> j = 0; j &lt; 4; j++ ) {</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        <span class="keywordflow">if</span> ( s1[i].does_intersect(s2[j]) ) {</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>          add_intersection_points(s1[i].start, s1[i].end, s2[j].start, s2[j].end, intersectionPoints);</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        }</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>      }</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    }</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> midpoint(0, 0, 0);</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>    <span class="keywordflow">for</span> ( <span class="keyword">auto</span> <span class="keyword">const</span>&amp; intersectionPoint : intersectionPoints ) {</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>      midpoint += intersectionPoint;</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    }</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    midpoint /= intersectionPoints.size();</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> </div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    <span class="keywordflow">return</span> midpoint;</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>  }</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span> </div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>  [[nodiscard]] VIPRA_PERF_FUNC <span class="keyword">auto</span> check_if_highest_priority(<span class="keyword">auto</span> <span class="keyword">const</span>&amp; pedset, <span class="keyword">auto</span> <span class="keyword">const</span>&amp; goals,</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>                                                               VIPRA::idx      pedIdx,</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>                                                               VIPRA::timestep timestep) -&gt; <span class="keywordtype">bool</span></div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>  {</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    <span class="keyword">auto</span> neighbors = pedset.all_neighbors_within(pedIdx, 1);</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span> </div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    <span class="keywordtype">bool</span> flag = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    <span class="keywordflow">for</span> ( VIPRA::idx otherIdx : neighbors ) {</div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>      <span class="keywordflow">if</span> ( otherIdx == pedIdx ) <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>      <span class="keywordflow">if</span> ( goals.is_goal_met(otherIdx) ) <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span> </div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>      <span class="keyword">auto</span> coords1 = pedset.ped_coords(pedIdx);</div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>      <span class="keyword">auto</span> coords2 = pedset.ped_coords(otherIdx);</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span> </div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>      <span class="keyword">constexpr</span> <span class="keywordtype">float</span> DIST2 = (4 * RECTANGLE_RANGE * RECTANGLE_RANGE);</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>      <span class="keywordflow">if</span> ( coords1.distance_to_sqrd(coords2) &gt;= DIST2 ) <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span> </div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>      <span class="keywordtype">bool</span> cr2in1 = collisionRectangles[pedIdx].is_point_inside(coords2);</div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>      <span class="keywordtype">bool</span> cr1in2 = collisionRectangles[otherIdx].is_point_inside(coords1);</div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span> </div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>      <span class="keyword">auto</span> goal1 = goals.current_goal(pedIdx);</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>      <span class="keyword">auto</span> goal2 = goals.current_goal(otherIdx);</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> </div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>      <span class="comment">// If goals don&#39;t match, check if coordinates of the pedestrians are in</span></div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>      <span class="comment">// each others collision rectangles</span></div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>      <span class="keywordflow">if</span> ( goal1 != goal2 ) {</div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        <span class="keywordflow">if</span> ( ! cr2in1 ) {</div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>          inRace[pedIdx][otherIdx] = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>          inRace[otherIdx][pedIdx] = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>          <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>        }</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span> </div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>        <span class="keywordflow">if</span> ( ! cr1in2 ) {</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>          inRace[otherIdx][pedIdx] = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>          inRace[pedIdx][otherIdx] = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>          flag = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>          <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>        }</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>      }</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span> </div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>      <span class="comment">// Check if pedestrians collide, if not continue onto next passenger</span></div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>      <span class="keywordtype">bool</span> collisionCheck = <a class="code hl_function" href="../../d9/df1/classCALM_1_1Collision.html#acc72c31a412b618fa56c29ea9a176db1">check_if_collide</a>(pedIdx, otherIdx);</div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>      <span class="keywordflow">if</span> ( ! collisionCheck ) {</div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        <span class="keywordflow">if</span> ( inRace[pedIdx][otherIdx] ) {</div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>          inRace[pedIdx][otherIdx] = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>          inRace[otherIdx][pedIdx] = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>        }</div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>        <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>      }</div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span> </div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>      <span class="comment">// If goals match, use distance comparision</span></div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>      <span class="keywordflow">if</span> ( goal1 == goal2 ) {</div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>        <span class="keywordflow">if</span> ( coords1.distance_to_sqrd(goal1) &gt; coords2.distance_to_sqrd(goal2) ) {</div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>          inRace[otherIdx][pedIdx] = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>          inRace[pedIdx][otherIdx] = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>          flag = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>        }</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>        <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>          <span class="keywordflow">if</span> ( inRace[pedIdx][otherIdx] ) {</div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>            inRace[pedIdx][otherIdx] = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>            inRace[otherIdx][pedIdx] = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>          }</div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>        }</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>        <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>      }</div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span> </div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>      <span class="comment">// If goals don&#39;t match, use collision midpoint to resolve race condition</span></div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>      <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> collisionMidpoint;</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>      <span class="keywordflow">if</span> ( ! inRace[pedIdx][otherIdx] ) {</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>        collisionMidpoint = get_collision_area_midpoint(pedIdx, otherIdx);</div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span> </div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>        velocityDirections[pedIdx] = pedset.ped_velocity(pedIdx).unit();</div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span> </div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>        intersectionMidpoints[pedIdx][otherIdx] = collisionMidpoint;</div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>        intersectionMidpoints[otherIdx][pedIdx] = collisionMidpoint;</div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span> </div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        inRace[otherIdx][pedIdx] = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>        inRace[pedIdx][otherIdx] = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>      }</div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>      <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>        collisionMidpoint = intersectionMidpoints[pedIdx][otherIdx];</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>      }</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>      <span class="keywordflow">if</span> ( coords1.distance_to_sqrd(collisionMidpoint) &gt; coords2.distance_to_sqrd(collisionMidpoint) )</div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>        flag = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>      <span class="keywordflow">else</span> <span class="keywordflow">if</span> ( coords1.distance_to_sqrd(collisionMidpoint) == coords2.distance_to_sqrd(collisionMidpoint) ) {</div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>        <span class="keywordflow">if</span> ( pedIdx &lt; otherIdx ) flag = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>      }</div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>    }</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>    <span class="keywordflow">return</span> flag;</div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>  }</div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span> </div>
-<div class="foldopen" id="foldopen00263" data-start="{" data-end="}">
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno"><a class="line" href="../../d9/df1/classCALM_1_1Collision.html#acc72c31a412b618fa56c29ea9a176db1">  263</a></span>  VIPRA_PERF_FUNC <span class="keyword">auto</span> <a class="code hl_function" href="../../d9/df1/classCALM_1_1Collision.html#acc72c31a412b618fa56c29ea9a176db1">check_if_collide</a>(VIPRA::idx index1, VIPRA::idx index2) -&gt; <span class="keywordtype">bool</span></div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>  {</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    <a class="code hl_class" href="../../d8/d9a/classVIPRA_1_1Geometry_1_1Rectangle.html">Rectangle</a> <span class="keyword">const</span>&amp; rect1 = collisionRectangles[index1];</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>    <a class="code hl_class" href="../../d8/d9a/classVIPRA_1_1Geometry_1_1Rectangle.html">Rectangle</a> <span class="keyword">const</span>&amp; rect2 = collisionRectangles[index2];</div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>    <span class="keywordflow">return</span> rect1.<a class="code hl_function" href="../../d8/d9a/classVIPRA_1_1Geometry_1_1Rectangle.html#a343e38a28ffa912efc5817882402da28">does_intersect</a>(rect2);</div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>  }</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        <span class="keywordflow">if</span> ( sides1[i].does_intersect(sides2[j]) ) {</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>          add_intersection_points(sides1[i].start, sides1[i].end, sides2[j].start, sides2[j].end,</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>                                  intersectionPoints);</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>        }</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>      }</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    }</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> </div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>    <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> midpoint(0, 0, 0);</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    <span class="keywordflow">for</span> ( <span class="keyword">auto</span> <span class="keyword">const</span>&amp; intersectionPoint : intersectionPoints ) {</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>      midpoint += intersectionPoint;</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    }</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    midpoint /= intersectionPoints.size();</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> </div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>    <span class="keywordflow">return</span> midpoint;</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>  }</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> </div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>  [[nodiscard]] VIPRA_PERF_FUNC <span class="keyword">auto</span> check_if_highest_priority(<span class="keyword">auto</span> <span class="keyword">const</span>&amp; pedset, <span class="keyword">auto</span> <span class="keyword">const</span>&amp; goals,</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>                                                               VIPRA::idx pedIdx,</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>                                                               VIPRA::timestep <span class="comment">/*timestep*/</span>) -&gt; <span class="keywordtype">bool</span></div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>  {</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>    <span class="keyword">auto</span> neighbors = pedset.all_neighbors_within(pedIdx, 1);</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span> </div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    <span class="keywordtype">bool</span> flag = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    <span class="keywordflow">for</span> ( VIPRA::idx otherIdx : neighbors ) {</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>      <span class="keywordflow">if</span> ( otherIdx == pedIdx ) <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>      <span class="keywordflow">if</span> ( goals.is_goal_met(otherIdx) ) <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span> </div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>      <span class="keyword">auto</span> coords1 = pedset.ped_coords(pedIdx);</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>      <span class="keyword">auto</span> coords2 = pedset.ped_coords(otherIdx);</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span> </div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>      <span class="keyword">constexpr</span> VIPRA::f_pnt DIST2 = (4 * RECTANGLE_RANGE * RECTANGLE_RANGE);</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>      <span class="keywordflow">if</span> ( coords1.distance_to_sqrd(coords2) &gt;= DIST2 ) <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span> </div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>      <span class="keywordtype">bool</span> cr2in1 = collisionRectangles[pedIdx].is_point_inside(coords2);</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>      <span class="keywordtype">bool</span> cr1in2 = collisionRectangles[otherIdx].is_point_inside(coords1);</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span> </div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>      <span class="keyword">auto</span> goal1 = goals.current_goal(pedIdx);</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>      <span class="keyword">auto</span> goal2 = goals.current_goal(otherIdx);</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> </div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>      <span class="comment">// If goals don&#39;t match, check if coordinates of the pedestrians are in</span></div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>      <span class="comment">// each others collision rectangles</span></div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>      <span class="keywordflow">if</span> ( goal1 != goal2 ) {</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>        <span class="keywordflow">if</span> ( ! cr2in1 ) {</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>          inRace[pedIdx][otherIdx] = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>          inRace[otherIdx][pedIdx] = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>          <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        }</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span> </div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>        <span class="keywordflow">if</span> ( ! cr1in2 ) {</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>          inRace[otherIdx][pedIdx] = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>          inRace[pedIdx][otherIdx] = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>          flag = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>          <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>        }</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>      }</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span> </div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>      <span class="comment">// Check if pedestrians collide, if not continue onto next passenger</span></div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>      <span class="keywordtype">bool</span> collisionCheck = <a class="code hl_function" href="../../d9/df1/classCALM_1_1Collision.html#acc72c31a412b618fa56c29ea9a176db1">check_if_collide</a>(pedIdx, otherIdx);</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>      <span class="keywordflow">if</span> ( ! collisionCheck ) {</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>        <span class="keywordflow">if</span> ( inRace[pedIdx][otherIdx] ) {</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>          inRace[pedIdx][otherIdx] = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>          inRace[otherIdx][pedIdx] = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>        }</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>        <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>      }</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span> </div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>      <span class="comment">// If goals match, use distance comparision</span></div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>      <span class="keywordflow">if</span> ( goal1 == goal2 ) {</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>        <span class="keywordflow">if</span> ( coords1.distance_to_sqrd(goal1) &gt; coords2.distance_to_sqrd(goal2) ) {</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>          inRace[otherIdx][pedIdx] = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>          inRace[pedIdx][otherIdx] = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>          flag = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>        }</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>        <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>          <span class="keywordflow">if</span> ( inRace[pedIdx][otherIdx] ) {</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>            inRace[pedIdx][otherIdx] = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>            inRace[otherIdx][pedIdx] = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>          }</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>        }</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>      }</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span> </div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>      <span class="comment">// If goals don&#39;t match, use collision midpoint to resolve race condition</span></div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>      <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> collisionMidpoint;</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>      <span class="keywordflow">if</span> ( ! inRace[pedIdx][otherIdx] ) {</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>        collisionMidpoint = get_collision_area_midpoint(pedIdx, otherIdx);</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span> </div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>        velocityDirections[pedIdx] = pedset.ped_velocity(pedIdx).unit();</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span> </div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>        intersectionMidpoints[pedIdx][otherIdx] = collisionMidpoint;</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>        intersectionMidpoints[otherIdx][pedIdx] = collisionMidpoint;</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span> </div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>        inRace[otherIdx][pedIdx] = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>        inRace[pedIdx][otherIdx] = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>      }</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>      <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>        collisionMidpoint = intersectionMidpoints[pedIdx][otherIdx];</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>      }</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>      <span class="keywordflow">if</span> ( coords1.distance_to_sqrd(collisionMidpoint) &gt; coords2.distance_to_sqrd(collisionMidpoint) )</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>        flag = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>      <span class="keywordflow">else</span> <span class="keywordflow">if</span> ( coords1.distance_to_sqrd(collisionMidpoint) == coords2.distance_to_sqrd(collisionMidpoint) ) {</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>        <span class="keywordflow">if</span> ( pedIdx &lt; otherIdx ) flag = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>      }</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>    }</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>    <span class="keywordflow">return</span> flag;</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>  }</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span> </div>
+<div class="foldopen" id="foldopen00264" data-start="{" data-end="}">
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno"><a class="line" href="../../d9/df1/classCALM_1_1Collision.html#acc72c31a412b618fa56c29ea9a176db1">  264</a></span>  VIPRA_PERF_FUNC <span class="keyword">auto</span> <a class="code hl_function" href="../../d9/df1/classCALM_1_1Collision.html#acc72c31a412b618fa56c29ea9a176db1">check_if_collide</a>(VIPRA::idx index1, VIPRA::idx index2) -&gt; <span class="keywordtype">bool</span></div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>  {</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>    <a class="code hl_class" href="../../d8/d9a/classVIPRA_1_1Geometry_1_1Rectangle.html">Rectangle</a> <span class="keyword">const</span>&amp; rect1 = collisionRectangles[index1];</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>    <a class="code hl_class" href="../../d8/d9a/classVIPRA_1_1Geometry_1_1Rectangle.html">Rectangle</a> <span class="keyword">const</span>&amp; rect2 = collisionRectangles[index2];</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    <span class="keywordflow">return</span> rect1.does_intersect(rect2);</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>  }</div>
 </div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span> </div>
-<div class="foldopen" id="foldopen00278" data-start="{" data-end="}">
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno"><a class="line" href="../../d9/df1/classCALM_1_1Collision.html#aa5cad5bdeae65fe40a4cfd303e279e99">  278</a></span>  [[nodiscard]] VIPRA_PERF_FUNC VIPRA_INLINE <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code hl_function" href="../../d9/df1/classCALM_1_1Collision.html#aa5cad5bdeae65fe40a4cfd303e279e99">get_shoulder_points</a>(</div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>      <span class="keyword">const</span> <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a>&amp; coords, <span class="keyword">const</span> <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a>&amp; velocity, <span class="keywordtype">float</span> shoulderWidth) <span class="keyword">noexcept</span> -&gt; <a class="code hl_struct" href="../../da/d49/structVIPRA_1_1Geometry_1_1Line.html">Line</a></div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>  {</div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>    <span class="keywordflow">if</span> ( velocity == <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a>{} ) {</div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>      <span class="keywordflow">return</span> {(<a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a>{0, shoulderWidth}), (<a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a>{0, -shoulderWidth})};</div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>    }</div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span> </div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>    <span class="keywordflow">return</span> {(<a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a>{-velocity.y, velocity.x}.<a class="code hl_function" href="../../d8/d28/structVIPRA_1_1f3d.html#a6e57dfdf33f28aa298c1fadd7adaeb30">unit</a>() * shoulderWidth) + coords,</div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>            (<a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a>{velocity.y, -velocity.x}.<a class="code hl_function" href="../../d8/d28/structVIPRA_1_1f3d.html#a6e57dfdf33f28aa298c1fadd7adaeb30">unit</a>() * shoulderWidth) + coords};</div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>  }</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span> </div>
+<div class="foldopen" id="foldopen00279" data-start="{" data-end="}">
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno"><a class="line" href="../../d9/df1/classCALM_1_1Collision.html#a24243903ad8eef36112c3581221061c3">  279</a></span>  [[nodiscard]] VIPRA_PERF_FUNC VIPRA_INLINE <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code hl_function" href="../../d9/df1/classCALM_1_1Collision.html#a24243903ad8eef36112c3581221061c3">get_shoulder_points</a>(</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>      <span class="keyword">const</span> <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a>&amp; coords, <span class="keyword">const</span> <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a>&amp; velocity, VIPRA::f_pnt shoulderWidth) <span class="keyword">noexcept</span> -&gt; <a class="code hl_struct" href="../../da/d49/structVIPRA_1_1Geometry_1_1Line.html">Line</a></div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>  {</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>    <span class="keywordflow">if</span> ( velocity == <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a>{} ) {</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>      <span class="keywordflow">return</span> {(<a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a>{0, shoulderWidth}), (<a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a>{0, -shoulderWidth})};</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>    }</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span> </div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>    <span class="keywordflow">return</span> {(<a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a>{-velocity.y, velocity.x}.<a class="code hl_function" href="../../d8/d28/structVIPRA_1_1f3d.html#a6e57dfdf33f28aa298c1fadd7adaeb30">unit</a>() * shoulderWidth) + coords,</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>            (<a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a>{velocity.y, -velocity.x}.<a class="code hl_function" href="../../d8/d28/structVIPRA_1_1f3d.html#a6e57dfdf33f28aa298c1fadd7adaeb30">unit</a>() * shoulderWidth) + coords};</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>  }</div>
 </div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>};</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>};</div>
 </div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>}  <span class="comment">// namespace CALM</span></div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>}  <span class="comment">// namespace CALM</span></div>
 <div class="ttc" id="aclassCALM_1_1Collision_html"><div class="ttname"><a href="../../d9/df1/classCALM_1_1Collision.html">CALM::Collision</a></div><div class="ttdef"><b>Definition</b> calm_collision.hpp:15</div></div>
-<div class="ttc" id="aclassCALM_1_1Collision_html_aa5cad5bdeae65fe40a4cfd303e279e99"><div class="ttname"><a href="../../d9/df1/classCALM_1_1Collision.html#aa5cad5bdeae65fe40a4cfd303e279e99">CALM::Collision::get_shoulder_points</a></div><div class="ttdeci">VIPRA_PERF_FUNC static VIPRA_INLINE auto get_shoulder_points(const VIPRA::f3d &amp;coords, const VIPRA::f3d &amp;velocity, float shoulderWidth) noexcept -&gt; Line</div><div class="ttdoc">Gets the shoulder points of a pedestrian.</div><div class="ttdef"><b>Definition</b> calm_collision.hpp:278</div></div>
-<div class="ttc" id="aclassCALM_1_1Collision_html_acc72c31a412b618fa56c29ea9a176db1"><div class="ttname"><a href="../../d9/df1/classCALM_1_1Collision.html#acc72c31a412b618fa56c29ea9a176db1">CALM::Collision::check_if_collide</a></div><div class="ttdeci">VIPRA_PERF_FUNC auto check_if_collide(VIPRA::idx index1, VIPRA::idx index2) -&gt; bool</div><div class="ttdoc">Checks if two indices' collision rectangles collide.</div><div class="ttdef"><b>Definition</b> calm_collision.hpp:263</div></div>
-<div class="ttc" id="aclassVIPRA_1_1Geometry_1_1Rectangle_html"><div class="ttname"><a href="../../d8/d9a/classVIPRA_1_1Geometry_1_1Rectangle.html">VIPRA::Geometry::Rectangle</a></div><div class="ttdef"><b>Definition</b> rectangle.hpp:13</div></div>
-<div class="ttc" id="aclassVIPRA_1_1Geometry_1_1Rectangle_html_a343e38a28ffa912efc5817882402da28"><div class="ttname"><a href="../../d8/d9a/classVIPRA_1_1Geometry_1_1Rectangle.html#a343e38a28ffa912efc5817882402da28">VIPRA::Geometry::Rectangle::does_intersect</a></div><div class="ttdeci">VIPRA_INLINE constexpr auto does_intersect(Rectangle const &amp;other) const noexcept -&gt; bool</div><div class="ttdoc">Checks if the rectangle intersects another.</div><div class="ttdef"><b>Definition</b> rectangle.hpp:63</div></div>
+<div class="ttc" id="aclassCALM_1_1Collision_html_a24243903ad8eef36112c3581221061c3"><div class="ttname"><a href="../../d9/df1/classCALM_1_1Collision.html#a24243903ad8eef36112c3581221061c3">CALM::Collision::get_shoulder_points</a></div><div class="ttdeci">VIPRA_PERF_FUNC static VIPRA_INLINE auto get_shoulder_points(const VIPRA::f3d &amp;coords, const VIPRA::f3d &amp;velocity, VIPRA::f_pnt shoulderWidth) noexcept -&gt; Line</div><div class="ttdoc">Gets the shoulder points of a pedestrian.</div><div class="ttdef"><b>Definition</b> calm_collision.hpp:279</div></div>
+<div class="ttc" id="aclassCALM_1_1Collision_html_acc72c31a412b618fa56c29ea9a176db1"><div class="ttname"><a href="../../d9/df1/classCALM_1_1Collision.html#acc72c31a412b618fa56c29ea9a176db1">CALM::Collision::check_if_collide</a></div><div class="ttdeci">VIPRA_PERF_FUNC auto check_if_collide(VIPRA::idx index1, VIPRA::idx index2) -&gt; bool</div><div class="ttdoc">Checks if two indices' collision rectangles collide.</div><div class="ttdef"><b>Definition</b> calm_collision.hpp:264</div></div>
+<div class="ttc" id="aclassVIPRA_1_1Geometry_1_1Rectangle_html"><div class="ttname"><a href="../../d8/d9a/classVIPRA_1_1Geometry_1_1Rectangle.html">VIPRA::Geometry::Rectangle</a></div><div class="ttdef"><b>Definition</b> rectangle.hpp:6</div></div>
 <div class="ttc" id="astructCALM_1_1ModelData_html"><div class="ttname"><a href="../../da/d17/structCALM_1_1ModelData.html">CALM::ModelData</a></div><div class="ttdef"><b>Definition</b> calm_model_types.hpp:22</div></div>
 <div class="ttc" id="astructVIPRA_1_1Geometry_1_1Line_html"><div class="ttname"><a href="../../da/d49/structVIPRA_1_1Geometry_1_1Line.html">VIPRA::Geometry::Line</a></div><div class="ttdef"><b>Definition</b> line.hpp:11</div></div>
-<div class="ttc" id="astructVIPRA_1_1Geometry_1_1Line_html_a358b9e546d9c70ccf40e4f6a3980fdd3"><div class="ttname"><a href="../../da/d49/structVIPRA_1_1Geometry_1_1Line.html#a358b9e546d9c70ccf40e4f6a3980fdd3">VIPRA::Geometry::Line::is_point_on</a></div><div class="ttdeci">VIPRA_INLINE constexpr auto is_point_on(VIPRA::f3d point) const -&gt; bool</div><div class="ttdoc">Checks if a point is on the line.</div><div class="ttdef"><b>Definition</b> line.hpp:60</div></div>
+<div class="ttc" id="astructVIPRA_1_1Geometry_1_1Line_html_a358b9e546d9c70ccf40e4f6a3980fdd3"><div class="ttname"><a href="../../da/d49/structVIPRA_1_1Geometry_1_1Line.html#a358b9e546d9c70ccf40e4f6a3980fdd3">VIPRA::Geometry::Line::is_point_on</a></div><div class="ttdeci">VIPRA_INLINE constexpr auto is_point_on(VIPRA::f3d point) const -&gt; bool</div><div class="ttdoc">Checks if a point is on the line.</div><div class="ttdef"><b>Definition</b> line.hpp:62</div></div>
 <div class="ttc" id="astructVIPRA_1_1f3d_html"><div class="ttname"><a href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a></div><div class="ttdef"><b>Definition</b> f3d.hpp:22</div></div>
 <div class="ttc" id="astructVIPRA_1_1f3d_html_a6e57dfdf33f28aa298c1fadd7adaeb30"><div class="ttname"><a href="../../d8/d28/structVIPRA_1_1f3d.html#a6e57dfdf33f28aa298c1fadd7adaeb30">VIPRA::f3d::unit</a></div><div class="ttdeci">F3D_FUNC auto unit() const noexcept -&gt; f3d</div><div class="ttdoc">Returns the unit vector in the direction of the f3d.</div><div class="ttdef"><b>Definition</b> f3d.hpp:211</div></div>
 </div><!-- fragment --></div><!-- contents -->

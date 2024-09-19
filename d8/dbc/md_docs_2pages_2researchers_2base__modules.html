@@ -88,7 +88,7 @@ $(function(){ initResizable(false); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>| <a class="el" href="../../index.html#md_docs_2docs">Main Page</a> | <a class="el" href="../../dc/d8d/md_docs_2pages_2researchers_2usage.html">How To Use</a> | <a class="el" href="../../d8/dbc/md_docs_2pages_2researchers_2base__modules.html">Provided Modules</a> | <a class="el" href="../../d1/d94/md_docs_2pages_2researchers_2behaviors_2behaviors.html">VIPRA Behaviors</a> | <a class="el" href="../../d8/dc5/md_docs_2pages_2researchers_2parameters.html">Module Parameters</a> | <a class="el" href="../../dc/db3/md_docs_2pages_2developers_2overview.html">Developing Modules</a> | | &mdash; | &mdash; | &mdash; | &mdash; | &mdash; | &mdash; |</p>
-<h1><a class="anchor" id="autotoc_md188"></a>
+<h1><a class="anchor" id="autotoc_md216"></a>
 Included Modules</h1>
 <p>There are several modules included with VIPRA.</p>
 <p><b>Model</b>:</p><ul>
@@ -110,12 +110,12 @@ Included Modules</h1>
 <li>JSON</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md190"></a>
+<h1><a class="anchor" id="autotoc_md218"></a>
 Models</h1>
-<h2><a class="anchor" id="autotoc_md191"></a>
+<h2><a class="anchor" id="autotoc_md219"></a>
 Calm Model</h2>
 <p>This <code>Model</code> module implements the <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0229690">Calm Model</a></p>
-<h3><a class="anchor" id="autotoc_md192"></a>
+<h3><a class="anchor" id="autotoc_md220"></a>
 Parameters:</h3>
 <ul>
 <li><code>meanMass</code> : Mean mass for population</li>
@@ -141,12 +141,12 @@ Parameters:</h3>
 <div class="line">  }</div>
 <div class="line">},</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md194"></a>
+<h1><a class="anchor" id="autotoc_md222"></a>
 Goals</h1>
-<h2><a class="anchor" id="autotoc_md195"></a>
+<h2><a class="anchor" id="autotoc_md223"></a>
 AStar Goals</h2>
 <p>This <code>Goals</code> module uses the A* algorithm to find paths for each pedestrian.</p>
-<h3><a class="anchor" id="autotoc_md196"></a>
+<h3><a class="anchor" id="autotoc_md224"></a>
 Parameters:</h3>
 <ul>
 <li><code>endGoalType</code> : Name of object in map each pedestrian tries to reach (e.g. "exit")</li>
@@ -163,12 +163,12 @@ Parameters:</h3>
 <div class="line">  }</div>
 <div class="line">},</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md198"></a>
+<h1><a class="anchor" id="autotoc_md226"></a>
 Maps</h1>
-<h2><a class="anchor" id="autotoc_md199"></a>
+<h2><a class="anchor" id="autotoc_md227"></a>
 QuadTree Map</h2>
 <p>This <code>Map</code> module uses the Quad Tree to hold the map geometry.</p>
-<h3><a class="anchor" id="autotoc_md200"></a>
+<h3><a class="anchor" id="autotoc_md228"></a>
 Parameters:</h3>
 <ul>
 <li><code>minQuadSize</code> : Size at which quads stop being subdivided</li>
@@ -179,12 +179,12 @@ Parameters:</h3>
 <div class="line">  }</div>
 <div class="line">},</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md202"></a>
+<h1><a class="anchor" id="autotoc_md230"></a>
 Pedestrian Sets</h1>
-<h2><a class="anchor" id="autotoc_md203"></a>
+<h2><a class="anchor" id="autotoc_md231"></a>
 Grid Pedestrian Set</h2>
 <p>This <code>Pedestrian Set</code> module holds pedestrians in a grid of cells, allowing for more efficient lookup of nearest neighbors</p>
-<h3><a class="anchor" id="autotoc_md204"></a>
+<h3><a class="anchor" id="autotoc_md232"></a>
 Parameters:</h3>
 <ul>
 <li><code>gridSize</code>: Size of each grid cell</li>
@@ -194,23 +194,23 @@ Parameters:</h3>
 <div class="line">    &quot;gridSize&quot;: 0.5</div>
 <div class="line">  }</div>
 <div class="line">},</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md205"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md233"></a>
 Inputs</h1>
-<h2><a class="anchor" id="autotoc_md206"></a>
+<h2><a class="anchor" id="autotoc_md234"></a>
 JSON Input</h2>
 <p>This <code>Input</code> module loads JSON data, using <a href="https://github.com/nlohmann/json">nlohmann JSON</a>.</p>
-<h3><a class="anchor" id="autotoc_md207"></a>
+<h3><a class="anchor" id="autotoc_md235"></a>
 Parameters:</h3>
 <ul>
 <li>NONE</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md209"></a>
+<h1><a class="anchor" id="autotoc_md237"></a>
 Outputs</h1>
-<h2><a class="anchor" id="autotoc_md210"></a>
+<h2><a class="anchor" id="autotoc_md238"></a>
 TrajectoriesJson Output</h2>
 <p>This <code>Output</code> module creates a JSON file containing the positions of each pedestrian for each timestep that matches the output frequency in the simulation module parameters.</p>
-<h3><a class="anchor" id="autotoc_md211"></a>
+<h3><a class="anchor" id="autotoc_md239"></a>
 Parameters:</h3>
 <ul>
 <li><code>filename</code>: Name of the output file</li>

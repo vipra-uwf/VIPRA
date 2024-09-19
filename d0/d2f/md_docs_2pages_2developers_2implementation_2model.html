@@ -87,18 +87,33 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">Model</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md72"></a></p>
-<h1><a class="anchor" id="autotoc_md73"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md121"></a></p>
+<h1><a class="anchor" id="autotoc_md122"></a>
 Required Methods</h1>
-<p>In addition to the <a class="el" href="../../d7/d90/md_docs_2pages_2developers_2implementation_2module.html">Base Module</a> requirements <code>Goals</code> require the following:</p>
+<p>In addition to the <a class="el" href="../../d7/d90/md_docs_2pages_2developers_2implementation_2module.html">Base Module</a> requirements <code>Model</code> modules require the following:</p>
 <div class="fragment"><div class="line"> ++</div>
-<div class="line">VIPRA_MODEL_TIMESTEP;</div>
+<div class="line">VIPRA_MODEL_INIT_STEP {}</div>
 <div class="line"> </div>
-<div class="line">VIPRA_MODEL_INIT_STEP;</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md74"></a>
+<div class="line">VIPRA_MODEL_TIMESTEP {}</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md123"></a>
 Details</h1>
-<div class="fragment"><div class="line">VIPRA_MODEL_TIMESTEP;</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md75"></a>
+<div class="fragment"><div class="line">VIPRA_MODEL_INIT_STEP {}</div>
+</div><!-- fragment --><ul>
+<li><code>pedset</code> - the Pedestrians Model implementation</li>
+<li><code>map</code> - the Map module implementation</li>
+<li><code>goals</code> - the Goals implementation</li>
+<li><code>output</code> - the Output Coordinator</li>
+<li><code>engine</code> - the <a class="el" href="../../d4/dfe/md_docs_2pages_2developers_2usage_2randomization.html">Randomization engine</a></li>
+</ul>
+<h3><a class="anchor" id="autotoc_md124"></a>
+Returns</h3>
+<p><code>NONE</code></p>
+<h3><a class="anchor" id="autotoc_md125"></a>
+Exepected Effects</h3>
+<p>The pedestrian dynamics model is ready for the first simulation timestep</p>
+<hr  />
+<div class="fragment"><div class="line">VIPRA_MODEL_TIMESTEP {}</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md127"></a>
 Parameters</h3>
 <ul>
 <li><code>pedset</code> - the Pedestrians Model implementation</li>
@@ -109,28 +124,14 @@ Parameters</h3>
 <li><code>deltaT</code> - the timestep size</li>
 <li><code>timestep</code> - the current timestep number</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md76"></a>
+<h3><a class="anchor" id="autotoc_md128"></a>
 Returns</h3>
 <p><code>NONE</code></p>
-<h3><a class="anchor" id="autotoc_md77"></a>
+<h3><a class="anchor" id="autotoc_md129"></a>
 Expected Effects</h3>
 <p><code>state</code> contains the updated positions and velocities of each pedestrian</p>
 <hr  />
-<div class="fragment"><div class="line">VIPRA_MODEL_INIT_STEP;</div>
-</div><!-- fragment --><ul>
-<li><code>pedset</code> - the Pedestrians Model implementation</li>
-<li><code>map</code> - the Map module implementation</li>
-<li><code>goals</code> - the Goals implementation</li>
-<li><code>output</code> - the Output Coordinator</li>
-<li><code>engine</code> - the <a class="el" href="../../d4/dfe/md_docs_2pages_2developers_2usage_2randomization.html">Randomization engine</a></li>
-</ul>
-<h3><a class="anchor" id="autotoc_md79"></a>
-Returns</h3>
-<p><code>NONE</code></p>
-<h3><a class="anchor" id="autotoc_md80"></a>
-Exepected Effects</h3>
-<p>The pedestrian dynamics model is ready for the first simulation timestep </p>
-</div></div><!-- contents -->
+ </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
