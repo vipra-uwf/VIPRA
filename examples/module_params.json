@@ -20,7 +20,7 @@
         "min": 0.4,
         "max": 0.6
       },
-      "reactionTimeStdDev": 0.05,
+      "reactionTimeStdDev": 0.03,
       "meanMaxSpeed": 1.0,
       "meanShoulderLen": 0.2,
       "maxSpeedStdDev": 0.1,

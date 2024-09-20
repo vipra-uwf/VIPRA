@@ -119,13 +119,13 @@ inline auto VIPRA::Input::DXF::get_impl<std::vector<VIPRA::Geometry::Polygon>>(
 inline auto VIPRA::Input::DXF::get_obstacles_impl() const
     -> std::optional<std::vector<VIPRA::Geometry::Polygon>>
 {
-  // VIPRA::Log::info("Obstacles");
+  // VIPRA::Log::debug("Obstacles");
   // for (auto &polygon : _obstacles) {
   //   for (auto &edge : polygon.edges) {
-  //     VIPRA::Log::info("{}, {}, {}", edge.start.x, edge.start.y, edge.start.z);
+  //     VIPRA::Log::debug("{}, {}, {}", edge.start.x, edge.start.y, edge.start.z);
   //   }
   // }
-  // VIPRA::Log::info("End Obstacles");
+  // VIPRA::Log::debug("End Obstacles");
 
   return {_obstacles};
 }
@@ -137,13 +137,14 @@ inline auto VIPRA::Input::DXF::get_obstacles_impl() const
  */
 inline auto VIPRA::Input::DXF::get_spawns_impl() const -> std::optional<std::vector<VIPRA::Geometry::Polygon>>
 {
-  // VIPRA::Log::info("Pedestrians");
+  // Uncomment below to get a print out of the pedestrian spawn points. 
+  // VIPRA::Log::debug("Pedestrians");
   // for (auto &polygon : _spawns) {
   //   for (auto &edge : polygon.edges) {
-  //     VIPRA::Log::info("x: {}, y: {}, z: {},", edge.start.x, edge.start.y, edge.start.z);
+  //     VIPRA::Log::debug("x: {},\t y: {},\t z: {},", edge.start.x, edge.start.y, edge.start.z);
   //   }
   // }
-  // VIPRA::Log::info("End Pedestrians");
+  // VIPRA::Log::debug("End Pedestrians");
 
   return _spawns;
 }
@@ -156,11 +157,11 @@ inline auto VIPRA::Input::DXF::get_spawns_impl() const -> std::optional<std::vec
 inline auto VIPRA::Input::DXF::get_objectives_impl() const
     -> std::optional<std::map<std::string, std::vector<VIPRA::Geometry::Polygon>>>
 {
-  // VIPRA::Log::info("Objectives");
+  // VIPRA::Log::debug("Objectives");
   // for (auto const &[key, val] : _objectives) {
-  //   VIPRA::Log::info("{}", key);
+  //   VIPRA::Log::debug("{}", key);
   // }
-  // VIPRA::Log::info("End Objectives");
+  // VIPRA::Log::debug("End Objectives");
 
   return _objectives;
 }
@@ -188,6 +189,7 @@ inline auto VIPRA::Input::DXF::get_areas_impl() const
 inline void VIPRA::Input::DXF::load_impl()
 {
   std::string loadingFilepath = "Loading " + _filepath.string();
+  VIPRA::Log::debug("{}", loadingFilepath);
   // Check Exists
   if ( ! std::filesystem::exists(_filepath) )
     throw std::runtime_error("File does not exist at: " + _filepath.string());
@@ -199,6 +201,8 @@ inline void VIPRA::Input::DXF::load_impl()
   const char* fileCharArr = _filepath.c_str();
 
   dxfRW dxfReader = dxfRW(fileCharArr);
+  VIPRA::Log::debug("Reading {}", _filepath.string());
+  dxfReader.setDebug(DRW::DebugLevel::Debug);
   dxfReader.read(&drw_reader, 1);
   // Error: 2, Error opening file
   // std::cout << "ERROR: " << dxfReader.getError() << std::endl;
@@ -208,4 +212,6 @@ inline void VIPRA::Input::DXF::load_impl()
   _obstacles = drw_reader.getObstacles();
   _spawns = drw_reader.getPedestrians();
   _areas = drw_reader.getAreas();
+
+  VIPRA::Log::debug("DXF Loaded");
 }
