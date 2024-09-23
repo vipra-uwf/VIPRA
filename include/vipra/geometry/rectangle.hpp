@@ -32,7 +32,7 @@ class Rectangle : public PolygonBase<4> {
     return atan2(_sides[0].end.y - _sides[0].start.y, _sides[0].end.x - _sides[0].start.x);
   }
 
-  POLY_FUNC auto triangularize() const noexcept -> std::vector<PolygonBase<3>>
+  [[nodiscard]] auto triangularize() const noexcept -> std::vector<PolygonBase<3>>
   {
     return {
         PolygonBase<3>{std::array{_sides[0], Line{_sides[0].start, center()}, Line{_sides[0].end, center()}}},
