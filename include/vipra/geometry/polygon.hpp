@@ -105,7 +105,7 @@ class PolygonBase {
     return PolygonBase<4>{std::array{botLeft, topLeft, topRight, botRight}};
   }
 
-  POLY_FUNC auto triangularize() -> std::vector<PolygonBase<3>>
+  [[nodiscard]] auto triangularize() -> std::vector<PolygonBase<3>>
   {
     // TODO(rolland): this ONLY works for convex polygons, need a better implementation
 
