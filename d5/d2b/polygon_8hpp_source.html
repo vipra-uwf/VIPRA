@@ -199,7 +199,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    <span class="keywordflow">return</span> <a class="code hl_class" href="../../d0/d36/classVIPRA_1_1Geometry_1_1PolygonBase.html">PolygonBase&lt;4&gt;</a>{std::array{botLeft, topLeft, topRight, botRight}};</div>
 <div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>  }</div>
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>  POLY_FUNC <span class="keyword">auto</span> triangularize() -&gt; std::vector&lt;PolygonBase&lt;3&gt;&gt;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>  [[nodiscard]] <span class="keyword">auto</span> triangularize() -&gt; std::vector&lt;PolygonBase&lt;3&gt;&gt;</div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>  {</div>
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    <span class="comment">// TODO(rolland): this ONLY works for convex polygons, need a better implementation</span></div>
 <div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
