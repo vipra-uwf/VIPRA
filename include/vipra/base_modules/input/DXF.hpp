@@ -140,7 +140,7 @@ inline auto VIPRA::Input::DXF::get_spawns_impl() const -> std::optional<std::vec
   // Uncomment below to get a print out of the pedestrian spawn points. 
   // VIPRA::Log::debug("Pedestrians");
   // for (auto &polygon : _spawns) {
-  //   for (auto &edge : polygon.edges) {
+  //   for (auto &edge : polygon.sides()) {
   //     VIPRA::Log::debug("x: {},\t y: {},\t z: {},", edge.start.x, edge.start.y, edge.start.z);
   //   }
   // }
