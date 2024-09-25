@@ -143,11 +143,6 @@ void Model::calm::update_state(auto const& pedset, auto const& goals, VIPRA::Sta
       state.velocities[i] = VIPRA::f3d{};
       continue;
     }
-    if ( goals.time_since_last_goal(i) > 0 && goals.time_since_last_goal(i) <= SLIDING_GOAL_TIME ) {
-      state.velocities[i].x = 0;
-      state.velocities[i].y = 0;
-      continue;
-    }
 
     const VIPRA::f3d   goal = goals.current_goal(i);
     const VIPRA::f3d   velocity = velocities[i];

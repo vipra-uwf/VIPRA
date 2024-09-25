@@ -61,19 +61,25 @@ class Goals : public Util::CRTP<Goals<module_t>> {
       auto const pos = pedset.ped_coords(pedIdx);
       _timeSinceLastGoal[pedIdx] += deltaT;
 
-      if ( pos.distance_to(current_goal(pedIdx)) < MIN_GOAL_DIST ) {
-        _met[pedIdx] = self().next_goal(pedIdx, pedset, map, deltaT);
-        _timeSinceLastGoal[pedIdx] = 0.0F;
+      if ( pos.distance_to(end_goal(pedIdx)) < MIN_GOAL_DIST ) {
+        _met[pedIdx] = true;
+      }
+      else {
+        if ( pos.distance_to(current_goal(pedIdx)) < MIN_GOAL_DIST ) {
+          if ( self().next_goal(pedIdx, pedset, map, deltaT) ) _met[pedIdx] = true;
+          _timeSinceLastGoal[pedIdx] = 0.0F;
+        }
       }
     }
 
     self().update_step(pedset, map, deltaT);
   }
 
-  void change_end_goal(VIPRA::idx pedIdx, VIPRA::f3d currPos, VIPRA::f3d goalPos)
+  void change_end_goal(VIPRA::idx pedIdx, VIPRA::f3d currPos, VIPRA::f3d goalPos,
+                       VIPRA::Random::Engine& engine)
   {
     assert(pedIdx < _endGoals.size());
-    return self().change_end_goal_impl(pedIdx, currPos, goalPos);
+    return self().change_end_goal_impl(pedIdx, currPos, goalPos, engine);
   }
 
   [[nodiscard]] VIPRA_INLINE auto current_goals() const -> const VIPRA::f3dVec& { return _currentGoals; }
@@ -110,9 +116,10 @@ class Goals : public Util::CRTP<Goals<module_t>> {
 
   std::vector<bool> _met;
 
-  static constexpr VIPRA::f_pnt MIN_GOAL_DIST = 0.1;
+  static constexpr VIPRA::f_pnt MIN_GOAL_DIST = 0.15;
 
  protected:
+  VIPRA_INLINE void set_goal_met(VIPRA::idx pedIdx, bool met) { _met[pedIdx] = met; }
   VIPRA_INLINE void set_end_goal(VIPRA::idx pedIdx, VIPRA::f3d pos) { _endGoals[pedIdx] = pos; }
   VIPRA_INLINE void set_current_goal(VIPRA::idx pedIdx, VIPRA::f3d pos) { _currentGoals[pedIdx] = pos; }
 };

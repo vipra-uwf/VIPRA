@@ -18,5 +18,6 @@
   VIPRA_PERF_FUNC VIPRA_INLINE auto next_goal(VIPRA::idx pedIdx, pedset_t const& pedset, map_t const& map, \
                                               VIPRA::delta_t deltaT) -> bool
 
-#define VIPRA_GOALS_CHANGE_GOAL \
-  void change_end_goal_impl(VIPRA::idx pedIdx, VIPRA::f3d pos, VIPRA::f3d newGoal)
+#define VIPRA_GOALS_CHANGE_GOAL                                                    \
+  void change_end_goal_impl(VIPRA::idx pedIdx, VIPRA::f3d pos, VIPRA::f3d newGoal, \
+                            VIPRA::Random::Engine& engine)

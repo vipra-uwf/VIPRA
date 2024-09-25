@@ -11,7 +11,7 @@
 namespace VIPRA::DataStructures {
 
 /**
- * @brief generic Graph datastructure mixin
+ * @brief generic undirected Graph datastructure mixin
  * 
  * @tparam data_t
  */

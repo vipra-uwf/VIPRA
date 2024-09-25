@@ -1,10 +1,6 @@
 
 #pragma once
 
-#include "vipra/modules/views/goals.hpp"
-#include "vipra/modules/views/map.hpp"
-#include "vipra/modules/views/pedestrians.hpp"
-
 #include "vipra/macros/performance.hpp"
 
 #define VIPRA_MODEL_TIMESTEP                                                                  \

@@ -42,7 +42,7 @@ NEW_VIPRA_MODULE(AStar, Goals)
 
     // for each pedestrian, find their path to their end goal
     for ( VIPRA::idx pedIdx = 0; pedIdx < pedCnt; ++pedIdx ) {
-      find_path(pedIdx, pedset.ped_coords(pedIdx));
+      find_path(pedIdx, pedset.ped_coords(pedIdx), engine);
       VIPRA::Log::debug("Found Path for Ped {}", pedIdx);
       set_current_goal(pedIdx, _paths[pedIdx].back());
     }
@@ -73,7 +73,7 @@ NEW_VIPRA_MODULE(AStar, Goals)
   {
     // uses A* to find the path to the new end goal
     set_end_goal(pedIdx, newGoal);
-    find_path(pedIdx, pos);
+    find_path(pedIdx, pos, engine);
   }
 
  private:
@@ -128,13 +128,15 @@ NEW_VIPRA_MODULE(AStar, Goals)
    * @param path
    * @return std::vector<VIPRA::f3d>
    */
-  [[nodiscard]] static auto squash_path(std::vector<VIPRA::f3d> const& path) -> std::vector<VIPRA::f3d>
+  [[nodiscard]] static auto squash_path(std::vector<VIPRA::f3d> const& path,
+                                        VIPRA::Random::Engine&         engine) -> std::vector<VIPRA::f3d>
   {
     assert(path.empty() == false);
 
     std::vector<VIPRA::f3d> squashedPath;
 
     VIPRA::f3d dif;
+
     for ( VIPRA::idx i = 1; i < path.size(); ++i ) {
       auto currDif = path[i] - path[i - 1];
       if ( currDif != dif ) {
@@ -170,7 +172,7 @@ NEW_VIPRA_MODULE(AStar, Goals)
    * @param pedIdx 
    * @param pos 
    */
-  void find_path(VIPRA::idx pedIdx, VIPRA::f3d startPos)
+  void find_path(VIPRA::idx pedIdx, VIPRA::f3d startPos, VIPRA::Random::Engine & engine)
   {
     // Get the pedestrian start and end grid location
     VIPRA::idx startIdx = _graph.get_closest_grid_idx(startPos);
@@ -195,7 +197,7 @@ NEW_VIPRA_MODULE(AStar, Goals)
     }
 
     // set their path, squash nodes that all go in the same direction into one node
-    _paths[pedIdx] = squash_path(*path);
+    _paths[pedIdx] = squash_path(*path, engine);
   }
 };
 }

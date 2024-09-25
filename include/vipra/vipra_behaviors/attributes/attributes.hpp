@@ -220,8 +220,8 @@ class AttributeHandling {
    * @return true : if one is a coordinate and the other is a location
    * @return false : if not
    */
-  [[nodiscard]] inline static auto is_coord_loc_compare(CAttributeValue value1, CAttributeValue value2)
-      -> bool
+  [[nodiscard]] inline static auto is_coord_loc_compare(CAttributeValue value1,
+                                                        CAttributeValue value2) -> bool
   {
     return (value1.type == Type::COORD && value2.type == Type::LOCATION) ||
            (value1.type == Type::LOCATION && value2.type == Type::COORD);
@@ -296,8 +296,8 @@ class AttributeHandling {
    * @return true : if not equal
    * @return false : if equal or not same type
    */
-  [[nodiscard]] inline static auto is_not_equal(CAttributeValue value1, CAttributeValue value2, auto pack)
-      -> bool
+  [[nodiscard]] inline static auto is_not_equal(CAttributeValue value1, CAttributeValue value2,
+                                                auto pack) -> bool
   {
     return ! is_equal(value1, value2, pack);
   }
@@ -409,8 +409,8 @@ class AttributeHandling {
    * @param pack : simulation pack
    * @return CAttributeValue 
    */
-  [[nodiscard]] inline static auto get_event_value(Target target, Attribute attr, auto pack)
-      -> CAttributeValue
+  [[nodiscard]] inline static auto get_event_value(Target target, Attribute attr,
+                                                   auto pack) -> CAttributeValue
   {
     switch ( attr ) {
       case Attribute::LOCATION:
@@ -431,8 +431,8 @@ class AttributeHandling {
    * @param pack : simulation pack
    * @return CAttributeValue 
    */
-  [[nodiscard]] inline static auto get_location_value(Target target, Attribute attr, auto pack)
-      -> CAttributeValue
+  [[nodiscard]] inline static auto get_location_value(Target target, Attribute attr,
+                                                      auto pack) -> CAttributeValue
   {
     switch ( attr ) {
       case Attribute::POSITION:
@@ -598,12 +598,14 @@ class AttributeHandling {
     auto const& pedset = pack.pedset;
 
     if ( value.type == Type::COORD ) {
-      goals.change_end_goal(target.targetIdx, pedset.ped_coords(target.targetIdx), value.as<VIPRA::f3d>());
+      goals.change_end_goal(target.targetIdx, pedset.ped_coords(target.targetIdx), value.as<VIPRA::f3d>(),
+                            context.engine);
     }
     else if ( value.type == Type::LOCATION ) {
       // TODO(rolland): this doesn't take into account two pedestrains going to the same location
       goals.change_end_goal(target.targetIdx, pedset.ped_coords(target.targetIdx),
-                            context.locations[value.as<VIPRA::idx>()].random_point(context.engine));
+                            context.locations[value.as<VIPRA::idx>()].random_point(context.engine),
+                            context.engine);
     }
 
     value.type_check(Type::COORD);

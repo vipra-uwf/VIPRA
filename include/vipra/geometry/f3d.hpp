@@ -8,6 +8,8 @@
 
 #include "vipra/concepts/numeric.hpp"
 #include "vipra/macros/performance.hpp"
+#include "vipra/random/distributions.hpp"
+#include "vipra/random/random.hpp"
 #include "vipra/types/float.hpp"
 
 #define F3D_FUNC [[nodiscard]] __attribute__((always_inline)) constexpr
@@ -34,6 +36,13 @@ struct f3d {
   F3D_FUNC                f3d(f3d&& other) noexcept = default;
   F3D_FUNC_W_DISCARD auto operator=(f3d const& other) noexcept -> f3d& = default;
   F3D_FUNC_W_DISCARD auto operator=(f3d&& other) noexcept -> f3d& = default;
+
+  F3D_FUNC static auto random(VIPRA::f_pnt magnitude, VIPRA::Random::Engine& engine) -> VIPRA::f3d
+  {
+    Random::uniform_distribution<VIPRA::f_pnt> dist{-1.0, 1.0};
+    VIPRA::f3d                                 retVal{dist(engine), dist(engine)};
+    return retVal.unit() * magnitude;
+  }
 
   template <Concepts::Numeric data_t>
   F3D_FUNC auto operator[](data_t index) -> VIPRA::f_pnt&
