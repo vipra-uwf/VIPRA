@@ -132,9 +132,9 @@ template&lt;typename pedset_t , typename map_t &gt; </td></tr>
 template&lt;typename pedset_t , typename map_t &gt; </td></tr>
 <tr class="memitem:ad689578c5fca9729022f508714979563"><td class="memTemplItemLeft" align="right" valign="top">VIPRA_PERF_FUNC void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>update</b> (pedset_t const &amp;pedset, map_t const &amp;map, VIPRA::delta_t deltaT)</td></tr>
 <tr class="separator:ad689578c5fca9729022f508714979563"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0e428c4e0798cea74d47ac3324790c3" id="r_af0e428c4e0798cea74d47ac3324790c3"><td class="memItemLeft" align="right" valign="top"><a id="af0e428c4e0798cea74d47ac3324790c3" name="af0e428c4e0798cea74d47ac3324790c3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>change_end_goal</b> (VIPRA::idx pedIdx, <a class="el" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> currPos, <a class="el" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> goalPos)</td></tr>
-<tr class="separator:af0e428c4e0798cea74d47ac3324790c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca5373226ef21338ba2efeca00e72d18" id="r_aca5373226ef21338ba2efeca00e72d18"><td class="memItemLeft" align="right" valign="top"><a id="aca5373226ef21338ba2efeca00e72d18" name="aca5373226ef21338ba2efeca00e72d18"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>change_end_goal</b> (VIPRA::idx pedIdx, <a class="el" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> currPos, <a class="el" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> goalPos, <a class="el" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a> &amp;engine)</td></tr>
+<tr class="separator:aca5373226ef21338ba2efeca00e72d18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a77082028facbee853d523bd2e4663f48" id="r_a77082028facbee853d523bd2e4663f48"><td class="memItemLeft" align="right" valign="top"><a id="a77082028facbee853d523bd2e4663f48" name="a77082028facbee853d523bd2e4663f48"></a>
 VIPRA_INLINE auto&#160;</td><td class="memItemRight" valign="bottom"><b>current_goals</b> () const -&gt; const VIPRA::f3dVec &amp;</td></tr>
 <tr class="separator:a77082028facbee853d523bd2e4663f48"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -165,6 +165,9 @@ Public Attributes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
+<tr class="memitem:a4b177cb8345d5eabcc7163a796bfdfcd" id="r_a4b177cb8345d5eabcc7163a796bfdfcd"><td class="memItemLeft" align="right" valign="top"><a id="a4b177cb8345d5eabcc7163a796bfdfcd" name="a4b177cb8345d5eabcc7163a796bfdfcd"></a>
+VIPRA_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><b>set_goal_met</b> (VIPRA::idx pedIdx, bool met)</td></tr>
+<tr class="separator:a4b177cb8345d5eabcc7163a796bfdfcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0a55285f617c62c3fc574db113cf3d25" id="r_a0a55285f617c62c3fc574db113cf3d25"><td class="memItemLeft" align="right" valign="top"><a id="a0a55285f617c62c3fc574db113cf3d25" name="a0a55285f617c62c3fc574db113cf3d25"></a>
 VIPRA_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><b>set_end_goal</b> (VIPRA::idx pedIdx, <a class="el" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> pos)</td></tr>
 <tr class="separator:a0a55285f617c62c3fc574db113cf3d25"><td class="memSeparator" colspan="2">&#160;</td></tr>

@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['n_0',['Exactly N',['../df/d1b/md_docs_2pages_2researchers_2behaviors_2behaviors__syntax.html#autotoc_md284',1,'']]],
-  ['name_1',['VIPRA_MODULE_NAME(name)',['../d6/d36/md_docs_2pages_2developers_2usage_2macros.html#autotoc_md203',1,'']]],
+  ['n_0',['Exactly N',['../df/d1b/md_docs_2pages_2researchers_2behaviors_2behaviors__syntax.html#autotoc_md282',1,'']]],
+  ['name_1',['VIPRA_MODULE_NAME(name)',['../d6/d36/md_docs_2pages_2developers_2usage_2macros.html#autotoc_md201',1,'']]],
   ['named_5farg_2',['named_arg',['../d8/dd6/structdetail_1_1named__arg.html',1,'detail']]],
   ['named_5farg_5finfo_3',['named_arg_info',['../db/d3f/structdetail_1_1named__arg__info.html',1,'detail']]],
   ['named_5farg_5finfo_3c_20char_5ftype_20_3e_4',['named_arg_info&lt; char_type &gt;',['../db/d3f/structdetail_1_1named__arg__info.html',1,'detail']]],
@@ -12,7 +12,7 @@ var searchData=
   ['native_5fformatter_9',['native_formatter',['../d1/dc0/structdetail_1_1native__formatter.html',1,'detail']]],
   ['native_5fformatter_3c_20detail_3a_3afloat128_2c_20char_2c_20detail_3a_3atype_3a_3afloat_5ftype_20_3e_10',['native_formatter&lt; detail::float128, Char, detail::type::float_type &gt;',['../d1/dc0/structdetail_1_1native__formatter.html',1,'detail']]],
   ['native_5fformatter_3c_20t_2c_20char_2c_20detail_3a_3atype_5fconstant_3c_20t_2c_20char_20_3e_3a_3avalue_20_3e_11',['native_formatter&lt; T, Char, detail::type_constant&lt; T, Char &gt;::value &gt;',['../d1/dc0/structdetail_1_1native__formatter.html',1,'detail']]],
-  ['nearest_12',['Nearest',['../df/d1b/md_docs_2pages_2researchers_2behaviors_2behaviors__syntax.html#autotoc_md315',1,'']]],
+  ['nearest_12',['Nearest',['../df/d1b/md_docs_2pages_2researchers_2behaviors_2behaviors__syntax.html#autotoc_md313',1,'']]],
   ['nested_5fformatter_13',['nested_formatter',['../d8/d30/structnested__formatter.html',1,'']]],
   ['nested_5fformatter_3c_20string_5fview_20_3e_14',['nested_formatter&lt; string_view &gt;',['../d8/d30/structnested__formatter.html',1,'']]],
   ['nested_5fview_15',['nested_view',['../da/d0f/structnested__view.html',1,'']]],
@@ -20,15 +20,15 @@ var searchData=
   ['next_5farg_5fid_17',['next_arg_id',['../d9/d9f/classbasic__format__parse__context.html#a152d3961cfbc244624a877d827fc1172',1,'basic_format_parse_context']]],
   ['node_18',['Node',['../d3/ddb/structVIPRA_1_1DataStructures_1_1GraphMixin_1_1Node.html',1,'VIPRA::DataStructures::GraphMixin']]],
   ['node_19',['node',['../d2/d42/structdetail_1_1node.html',1,'detail']]],
-  ['non_20random_20values_20',['Non-Random Values',['../d8/dc5/md_docs_2pages_2researchers_2parameters.html#autotoc_md398',1,'']]],
+  ['non_20random_20values_20',['Non-Random Values',['../d8/dc5/md_docs_2pages_2researchers_2parameters.html#autotoc_md396',1,'']]],
   ['normal_5fdistribution_21',['normal_distribution',['../da/dd5/classVIPRA_1_1Random_1_1normal__distribution.html',1,'VIPRA::Random']]],
   ['now_22',['now',['../d5/d6c/classVIPRA_1_1Util_1_1Clock.html#ae60dcb2d34b70d5ca44df509a3759b87',1,'VIPRA::Util::Clock']]],
   ['null_23',['null',['../d6/db9/structdetail_1_1null.html',1,'detail']]],
   ['null_5fchrono_5fspec_5fhandler_24',['null_chrono_spec_handler',['../da/d80/structdetail_1_1null__chrono__spec__handler.html',1,'detail']]],
   ['null_5fchrono_5fspec_5fhandler_3c_20chrono_5fformat_5fchecker_20_3e_25',['null_chrono_spec_handler&lt; chrono_format_checker &gt;',['../da/d80/structdetail_1_1null__chrono__spec__handler.html',1,'detail']]],
   ['null_5fchrono_5fspec_5fhandler_3c_20tm_5fformat_5fchecker_20_3e_26',['null_chrono_spec_handler&lt; tm_format_checker &gt;',['../da/d80/structdetail_1_1null__chrono__spec__handler.html',1,'detail']]],
-  ['number_20random_20values_27',['Float Random Values vs. Number Random Values',['../df/d1b/md_docs_2pages_2researchers_2behaviors_2behaviors__syntax.html#autotoc_md375',1,'']]],
-  ['number_20value_20ranges_28',['Float Value Ranges  vs. Number Value Ranges',['../df/d1b/md_docs_2pages_2researchers_2behaviors_2behaviors__syntax.html#autotoc_md370',1,'']]],
-  ['numerical_20values_29',['Numerical Values',['../df/d1b/md_docs_2pages_2researchers_2behaviors_2behaviors__syntax.html#autotoc_md364',1,'']]],
+  ['number_20random_20values_27',['Float Random Values vs. Number Random Values',['../df/d1b/md_docs_2pages_2researchers_2behaviors_2behaviors__syntax.html#autotoc_md373',1,'']]],
+  ['number_20value_20ranges_28',['Float Value Ranges  vs. Number Value Ranges',['../df/d1b/md_docs_2pages_2researchers_2behaviors_2behaviors__syntax.html#autotoc_md368',1,'']]],
+  ['numerical_20values_29',['Numerical Values',['../df/d1b/md_docs_2pages_2researchers_2behaviors_2behaviors__syntax.html#autotoc_md362',1,'']]],
   ['numericvalue_30',['NumericValue',['../d5/d6d/classVIPRA_1_1Behaviors_1_1NumericValue.html',1,'VIPRA::Behaviors']]]
 ];
