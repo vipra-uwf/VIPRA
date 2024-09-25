@@ -3,6 +3,7 @@
 #include "vipra/special_modules/parameters.hpp"
 
 #include "vipra/base_modules/goals/AStar.hpp"
+#include "vipra/base_modules/goals/PotentialField.hpp"
 
 #include "vipra/base_modules/input/DXF.hpp"
 #include "vipra/base_modules/input/JSON.hpp"
