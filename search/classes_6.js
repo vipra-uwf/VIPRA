@@ -13,8 +13,8 @@ var searchData=
   ['graphmixin_10',['GraphMixin',['../d8/de6/classVIPRA_1_1DataStructures_1_1GraphMixin.html',1,'VIPRA::DataStructures']]],
   ['graphmixin_3c_20pathinggraph_2c_20gridpoint_20_3e_11',['GraphMixin&lt; PathingGraph, GridPoint &gt;',['../d8/de6/classVIPRA_1_1DataStructures_1_1GraphMixin.html',1,'VIPRA::DataStructures']]],
   ['graphmixin_3c_20void_2c_20data_5ft_20_3e_12',['GraphMixin&lt; void, data_t &gt;',['../d8/de6/classVIPRA_1_1DataStructures_1_1GraphMixin.html',1,'VIPRA::DataStructures']]],
-  ['grid_13',['Grid',['../d8/df7/classVIPRA_1_1Pedestrians_1_1Grid.html',1,'VIPRA::Pedestrians']]],
-  ['gridpoint_14',['GridPoint',['../d1/d59/structVIPRA_1_1Goals_1_1GridPoint.html',1,'VIPRA::Goals']]],
+  ['grid_13',['Grid',['../d2/dc4/classVIPRA_1_1Goals_1_1Grid.html',1,'VIPRA::Goals::Grid'],['../d8/df7/classVIPRA_1_1Pedestrians_1_1Grid.html',1,'VIPRA::Pedestrians::Grid']]],
+  ['gridpoint_14',['GridPoint',['../db/d56/structVIPRA_1_1Goals_1_1Grid_1_1GridPoint.html',1,'VIPRA::Goals::Grid::GridPoint'],['../d1/d59/structVIPRA_1_1Goals_1_1GridPoint.html',1,'VIPRA::Goals::GridPoint']]],
   ['group_5fdigits_5fview_15',['group_digits_view',['../db/d2b/structgroup__digits__view.html',1,'']]],
   ['groupscontainer_16',['GroupsContainer',['../d7/d24/classVIPRA_1_1Behaviors_1_1GroupsContainer.html',1,'VIPRA::Behaviors']]]
 ];

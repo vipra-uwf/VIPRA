@@ -3,7 +3,7 @@ var searchData=
   ['get_0',['get',['../d0/d6f/classbasic__format__args.html#a3339d3a4e4daaf7bb0de1a8084e7f086',1,'basic_format_args::get()'],['../db/dd6/classVIPRA_1_1Modules_1_1Input.html#ac0792b5776ba61e6f60097b76505efe1',1,'VIPRA::Modules::Input::get()'],['../de/d93/classVIPRA_1_1Args.html#a12f622ce955c60b5093de097116d007e',1,'VIPRA::Args::get()']]],
   ['get_5fareas_1',['get_areas',['../d4/d1e/classVIPRA_1_1Modules_1_1MapInput.html#ade6c17cbaef5b78a7d1ed8064063f191',1,'VIPRA::Modules::MapInput']]],
   ['get_5fareas_5fimpl_2',['get_areas_impl',['../d1/da4/classVIPRA_1_1Input_1_1DXF.html#a02ed73a5c2a047bab135025dc2ce7c95',1,'VIPRA::Input::DXF']]],
-  ['get_5fclosest_5fgrid_5fidx_3',['get_closest_grid_idx',['../d6/d44/classVIPRA_1_1Goals_1_1PathingGraph.html#aa3dfcc7b091455c50ca3d109ac7957de',1,'VIPRA::Goals::PathingGraph']]],
+  ['get_5fclosest_5fgrid_5fidx_3',['get_closest_grid_idx',['../d2/dc4/classVIPRA_1_1Goals_1_1Grid.html#a5ffea4c12a5bc1884552d4413373a0b1',1,'VIPRA::Goals::Grid::get_closest_grid_idx()'],['../d6/d44/classVIPRA_1_1Goals_1_1PathingGraph.html#aa3dfcc7b091455c50ca3d109ac7957de',1,'VIPRA::Goals::PathingGraph::get_closest_grid_idx()']]],
   ['get_5fduration_4',['get_duration',['../d5/d12/classVIPRA_1_1Behaviors_1_1TimedLatchCollection.html#af08c024755ec8eafd0b00efadd3d5b38',1,'VIPRA::Behaviors::TimedLatchCollection']]],
   ['get_5fgroup_5',['get_group',['../d7/d24/classVIPRA_1_1Behaviors_1_1GroupsContainer.html#adcf562861346c8605f7dc68ee8c7dde8',1,'VIPRA::Behaviors::GroupsContainer']]],
   ['get_5fimpl_6',['get_impl',['../d1/d4b/classVIPRA_1_1Input_1_1JSON.html#a98f22620a309dd14fd6753bb41db165f',1,'VIPRA::Input::JSON']]],
