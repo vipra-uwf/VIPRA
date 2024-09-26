@@ -6112,9 +6112,9 @@ BehaviorParser::Decl_PedContext* BehaviorParser::decl_Ped() {
 }
 
 void BehaviorParser::initialize() {
-#if ANTLR4_USE_THREAD_LOCAL_CACHE
+// #if ANTLR4_USE_THREAD_LOCAL_CACHE
   behaviorParserInitialize();
-#else
-  ::antlr4::internal::call_once(behaviorParserOnceFlag, behaviorParserInitialize);
-#endif
+// #else
+//   ::antlr4::internal::call_once(behaviorParserOnceFlag, behaviorParserInitialize);
+// #endif
 }

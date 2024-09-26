@@ -202,7 +202,8 @@ inline void VIPRA::Input::DXF::load_impl()
 
   dxfRW dxfReader = dxfRW(fileCharArr);
   VIPRA::Log::debug("Reading {}", _filepath.string());
-  dxfReader.setDebug(DRW::DebugLevel::Debug);
+  // TODO tyler: Change this to the proper level
+  // dxfReader.setDebug(DRW::DebugLevel::Debug);
   dxfReader.read(&drw_reader, 1);
   // Error: 2, Error opening file
   // std::cout << "ERROR: " << dxfReader.getError() << std::endl;
