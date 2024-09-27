@@ -4,5 +4,5 @@
 
 namespace VIPRA {
 // NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables)
-Log::Level Log::level{Log::Level::ERROR};
+Log::Level Log::level{Log::Level::DEBUG};
 }  // namespace VIPRA

@@ -1,8 +1,11 @@
 #pragma once
 
+#include <algorithm>
 #include <memory>
 #include <string>
 
+#include "vipra/input/json.hpp"
+#include "vipra/logging/logging.hpp"
 #include "vipra/macros/parameters.hpp"
 
 #include "vipra/modules.hpp"
@@ -55,17 +58,17 @@ class SimType : public Modules::Module<SimType> {
   void set_module(Modules::Type type, std::string const& name)
   {
     const auto set = [&](auto& module) {
-      auto&& [mod, config] =
+      auto [mod, config] =
           load_module<decltype(*module.get())>(name, _installDir, type);
       module = std::move(mod);
-      _configs.push_back(config);
+      _configs[type] = std::move(config);
     };
 
     if ( type == Modules::Type::Output ) {
-      auto&& [mod, config] =
+      auto [mod, config] =
           load_module<Modules::Output>(name, _installDir, type);
       _output.add_output(std::move(mod));
-      _configs.push_back(config);
+      _configs[type] = std::move(config);
 
       return;
     }
@@ -84,9 +87,19 @@ class SimType : public Modules::Module<SimType> {
         set(_map);
         break;
       case Modules::Type::PedInput:
+        if ( name == "JSON" ) {
+          _pedInput = std::make_unique<VIPRA::Input::JSON>();
+          _configs[type] = [](void*, Parameters&, VIPRA::Random::Engine&) {};
+          break;
+        }
         set(_pedInput);
         break;
       case Modules::Type::MapInput:
+        if ( name == "JSON" ) {
+          _mapInput = std::make_unique<VIPRA::Input::JSON>();
+          _configs[type] = [](void*, Parameters&, VIPRA::Random::Engine&) {};
+          break;
+        }
         set(_mapInput);
         break;
       default:
@@ -104,7 +117,8 @@ class SimType : public Modules::Module<SimType> {
   std::unique_ptr<Modules::MapInput>        _mapInput;
   // BehaviorModel<pedset_t, map_t, goals_t> _behaviorModel;
 
-  std::vector<std::function<void(void*, Parameters&, VIPRA::Random::Engine&)>>
+  std::map<Modules::Type,
+           std::function<void(void*, Parameters&, VIPRA::Random::Engine&)>>
       _configs;
 
   VIPRA::Random::Engine _engine;
@@ -117,9 +131,6 @@ class SimType : public Modules::Module<SimType> {
   VIPRA::timestep _outputFrequency{};
   std::string     _installDir;
   bool            _outputParams{false};
-
-  void register_step(Parameters& params);
-  void config_step(Parameters const& params);
 
   void initialize(Parameters& params);
 
@@ -145,6 +156,7 @@ inline void SimType::operator()(std::string const& pedPath,
 
   _pedInput->load(pedPath);
   _mapInput->load(mapPath);
+
   Parameters params;
   params.get_input().load(paramsPath);
 
@@ -159,15 +171,13 @@ inline void SimType::parallel_run(
 {
   _pedInput = std::move(pedInput);
   _mapInput = std::move(mapInput);
+
   run_sim(params);
 }
 
 inline void SimType::run_sim(Parameters& params)
 {
   params.reset();
-
-  // initialize parameters, etc
-  register_step(params);
 
   initialize(params);
 
@@ -203,7 +213,17 @@ inline void SimType::run_sim(Parameters& params)
    */
 inline void SimType::initialize(Parameters& params)
 {
-  config_step(params);
+  register_params(params);
+  config(params, _engine);
+
+  _configs[Modules::Type::Model](_model.get(), params, _engine);
+  _configs[Modules::Type::Pedestrians](_pedset.get(), params, _engine);
+  _configs[Modules::Type::Goals](_goals.get(), params, _engine);
+  _configs[Modules::Type::Map](_map.get(), params, _engine);
+  _configs[Modules::Type::PedInput](_pedInput.get(), params, _engine);
+  _configs[Modules::Type::MapInput](_mapInput.get(), params, _engine);
+
+  // _behaviorModel->config(params, _engine);
 
   _engine.reseed(_seed + (_currSimIdx * _currSimIdx));
 

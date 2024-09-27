@@ -39,9 +39,9 @@ inline auto to_string(Type type) -> std::string
     case Type::Behavior_model:
       return "behavior_model";
     case Type::MapInput:
-      return "map_input";
+      [[fallthrough]];
     case Type::PedInput:
-      return "ped_input";
+      return "input";
   }
 
   return "unknown";

@@ -8,6 +8,7 @@
 
 #include <dlfcn.h>
 
+#include "vipra/logging/logging.hpp"
 #include "vipra/modules.hpp"
 #include "vipra/special_modules/parameters.hpp"
 
@@ -26,12 +27,16 @@ inline auto load_module(std::string const& name, std::string const& installDir,
   typedef void (*config_module)(void*, VIPRA::Parameters&,
                                 VIPRA::Random::Engine&);
 
-  std::string path = installDir + '/' + Modules::to_string(type) + '/' + name;
+  std::string path =
+      installDir + '/' + Modules::to_string(type) + "/lib" + name + ".so";
+
+  VIPRA::Log::debug("Loading Module: {} at {}", name, path);
 
   void* module = dlopen(path.c_str(), RTLD_LAZY);
 
   if ( module == nullptr ) {
     std::cerr << "module not found at: " << path << '\n';
+    fprintf(stderr, "dlopen failed: %s\n", dlerror());
     throw std::runtime_error("Module Not Found");
   }
 
@@ -41,15 +46,26 @@ inline auto load_module(std::string const& name, std::string const& installDir,
 
   if ( func == nullptr ) {
     std::cerr << "create_module not found in: " << path << '\n';
+    fprintf(stderr, "dlopen failed: %s\n", dlerror());
     throw std::runtime_error("Module Not Found");
   }
 
   if ( configFunc == nullptr ) {
     std::cerr << "setup_module not found in: " << path << '\n';
+    fprintf(stderr, "dlopen failed: %s\n", dlerror());
     throw std::runtime_error("Module Not Found");
   }
 
+  VIPRA::Log::debug("Creating Module");
+
   std::unique_ptr<mod_t> mod = func();
+
+  if ( mod.get() == nullptr ) {
+    std::cerr << "Module not created\n";
+    throw std::runtime_error("Module Not Found");
+  }
+
+  VIPRA::Log::debug("Returning Module");
 
   return {std::move(mod),
           std::function<void(void*, Parameters&, VIPRA::Random::Engine&)>(

@@ -20,16 +20,14 @@
   class Name : public VIPRA::Modules::Module<Name>, public VIPRA::Modules::Type
 
 #define VIPRA_REGISTER_MODULE(Name, Type)                             \
-  extern "C" auto create_module(                                      \
-      VIPRA::Parameters& params) -> VIPRA::Modules::Type*             \
+  extern "C" auto create_module() -> VIPRA::Modules::Type*            \
   {                                                                   \
     /* NOLINTNEXTLINE */                                              \
-    auto* mod = new Type::Name();                                     \
-    mod->register_params(params);                                     \
-    return mod;                                                       \
+    return new Type::Name;                                            \
   }                                                                   \
   extern "C" void setup_module(void* mod, VIPRA::Parameters& paramIn, \
                                VIPRA::Random::Engine& engine)         \
   {                                                                   \
+    static_cast<Type::Name*>(mod)->register_params(paramIn);          \
     static_cast<Type::Name*>(mod)->config(paramIn, engine);           \
   }

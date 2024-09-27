@@ -9,7 +9,7 @@
     }
   },
   "model": {
-    "calm": {
+    "Calm": {
       "meanMass": 1.0,
       "massStdDev": [
         0.1,

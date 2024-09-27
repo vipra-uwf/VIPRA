@@ -61,6 +61,8 @@ void Module<class_t>::register_params(Parameters& paramIn)
         (regis(restArgs), ...);
       },
       params);
+
+  VIPRA::Log::debug("Done Registering Params For: {}", self().module_name());
 }
 
 /**
@@ -86,9 +88,11 @@ void Module<class_t>::config(Parameters& paramIn, VIPRA::Random::Engine& engine)
       [&](auto const& first, auto const&... restArgs) {
         auto configure = [&](auto const& param) {
           using param_t = std::remove_cvref_t<decltype(param.second)>;
+          VIPRA::Log::debug("Loading Param: {}, {}", param.first,
+                            static_cast<void*>(&param.second));
 
           // set the parameter variable as loaded from input
-          param.second = paramIn.template get_param<param_t>(
+          param.second = paramIn.get_param<param_t>(
               self().module_type(), self().module_name(), param.first, engine);
         };
 
@@ -97,5 +101,7 @@ void Module<class_t>::config(Parameters& paramIn, VIPRA::Random::Engine& engine)
         (configure(restArgs), ...);
       },
       params);
+
+  VIPRA::Log::debug("Done Configuring Module: {}", self().module_name());
 }
 }  // namespace VIPRA::Modules

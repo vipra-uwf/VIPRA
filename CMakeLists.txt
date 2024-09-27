@@ -35,9 +35,13 @@ vipra_add_library(
   GIT_TAG v3.11.3
 )
 
+add_subdirectory(src)
+add_subdirectory(include/vipra)
+file(GLOB VIPRA_BASE_SOURCES src/*.cpp src/*.hpp src/*/*.cpp src/*/*.hpp)
+
+vipra_add_base_modules()
 
 vipra_find_all_modules()
-
 foreach(SUBDIR ${VIPRA_MODULE_DIRECTORIES})
     add_subdirectory(${SUBDIR})
 endforeach()

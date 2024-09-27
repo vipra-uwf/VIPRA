@@ -1,6 +1,8 @@
 
-#include "json.hpp"
+#include "vipra/input/json.hpp"
+
 #include "vipra/macros/module.hpp"
+#include "vipra/modules/map_input.hpp"
 
 namespace VIPRA::Input {
 

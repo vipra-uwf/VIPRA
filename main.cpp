@@ -5,6 +5,7 @@
  */
 
 #include <vipra.hpp>
+#include "vipra/logging/logging.hpp"
 #include "vipra/simulation/sim_type.hpp"
 
 auto main(int argc, char** argv) -> int
@@ -14,14 +15,19 @@ auto main(int argc, char** argv) -> int
 
   VIPRA::SimType sim;
 
-  sim.set_install_dir("install");
+  sim.set_install_dir("/home/rgoodenough/school/VIPRA/install");
+
+  VIPRA::Log::debug("setting Modules");
 
   sim.set_module(VIPRA::Modules::Type::Model, "Calm");
   sim.set_module(VIPRA::Modules::Type::Goals, "AStar");
   sim.set_module(VIPRA::Modules::Type::Map, "QuadTree");
-  sim.set_module(VIPRA::Modules::Type::Pedestrians, "Grid");
+  sim.set_module(VIPRA::Modules::Type::Pedestrians, "SpatialGrid");
+  sim.set_module(VIPRA::Modules::Type::Output, "Trajectories");
   sim.set_module(VIPRA::Modules::Type::PedInput, "JSON");
   sim.set_module(VIPRA::Modules::Type::MapInput, "JSON");
+
+  VIPRA::Log::debug("running");
 
   sim("/home/rgoodenough/school/VIPRA/maps/pedestrians/a320/"
       "a320_144_pedestrians.json",

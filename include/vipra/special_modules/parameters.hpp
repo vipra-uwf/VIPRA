@@ -6,10 +6,10 @@
 #include <set>
 #include <type_traits>
 
+#include "vipra/input/json.hpp"
+
 #include "vipra/modules.hpp"
 #include "vipra/random/random.hpp"
-
-#include "vipra/base_modules/input/json/json.hpp"
 
 // TODO(rolland): Check that all required parameters are provided (maybe not needed, they are checked when the module tries to get it)
 // TODO(rolland): issue #26 No way of checking what a parameter was, once get_param is called the random engine moves on
