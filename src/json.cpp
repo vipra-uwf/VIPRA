@@ -8,7 +8,7 @@ namespace VIPRA::Input {
 
 auto JSON::get_pedestrians() const -> std::optional<VIPRA::f3dVec>
 {
-  return {};
+  return get_f3d_vec(_json["pedestrians"]);
 }
 
 /**

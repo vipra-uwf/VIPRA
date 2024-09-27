@@ -1,16 +1,7 @@
 
 #include "Calm.hpp"
 
-extern "C" auto create_module() -> VIPRA ::Modules ::Model*
-{
-  return new Model::Calm();
-}
-extern "C" void setup_module(void* mod, VIPRA ::Parameters& paramIn,
-                             VIPRA ::Random ::Engine& engine)
-{
-  static_cast<Model ::Calm*>(mod)->register_params(paramIn);
-  static_cast<Model ::Calm*>(mod)->config(paramIn, engine);
-}
+VIPRA_REGISTER_MODULE(Calm, Model)
 
 void Model::Calm::calc_shoulders(VIPRA::f3dVec const& coords,
                                  VIPRA::f3dVec const& goals)
