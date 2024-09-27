@@ -1,21 +1,14 @@
 #pragma once
 
-#include <concepts>
-#include <cstddef>
-#include <iostream>
 #include <tuple>
 #include <type_traits>
-#include <utility>
-#include <vector>
 
 #include "vipra/logging/logging.hpp"
 
 #include "vipra/concepts/has_parameters.hpp"
-#include "vipra/debug/debug_do.hpp"
-#include "vipra/modules.hpp"
 #include "vipra/random/random.hpp"
+#include "vipra/special_modules/parameters.hpp"
 #include "vipra/util/crtp.hpp"
-#include "vipra/util/template_specialization.hpp"
 
 namespace VIPRA::Modules {
 
@@ -29,11 +22,9 @@ class Module : public Util::CRTP<Module<class_t>> {
   using Util::CRTP<Module<class_t>>::self;
 
  public:
-  template <typename paramreader_t>
-  void register_params(paramreader_t&& paramIn);
+  void register_params(Parameters& paramIn);
 
-  template <typename paramreader_t>
-  void config(paramreader_t& paramIn, VIPRA::Random::Engine& engine);
+  void config(Parameters& paramIn, VIPRA::Random::Engine& engine);
 };
 
 // ----------------------------------------------------------------------------------------------------------------
@@ -43,25 +34,26 @@ class Module : public Util::CRTP<Module<class_t>> {
 /**
    * @brief Registers the modules parameters with the parameter reader
    * 
-   * @tparam paramreader_t 
+   * @tparam Parameters 
    * @param paramIn
    */
 template <typename class_t>
-template <typename paramreader_t>
-void Module<class_t>::register_params(paramreader_t&& paramIn)
+void Module<class_t>::register_params(Parameters& paramIn)
 {
-  static_assert(Concepts::has_parameters<class_t>, "Module is missing VIPRA_REGISTER_PARAMS");
+  static_assert(Concepts::has_parameters<class_t>,
+                "Module is missing VIPRA_REGISTER_PARAMS");
 
   VIPRA::Log::debug("Registering Params For: {}", self().module_name());
 
   // get module parameters customization point
-  auto params = self().parameters();
+  auto params = self().module_params();
 
   // register all of the parameters with the parameter loader
   std::apply(
       [&](auto const& first, auto const&... restArgs) {
         auto regis = [&](auto const& param) {
-          paramIn.register_param(self().module_type(), self().module_name(), param.first);
+          paramIn.register_param(self().module_type(), self().module_name(),
+                                 param.first);
         };
 
         // recursively register each parameter
@@ -74,20 +66,20 @@ void Module<class_t>::register_params(paramreader_t&& paramIn)
 /**
    * @brief Loads in all parameters for the module
    * 
-   * @tparam paramreader_t 
+   * @tparam Parameters 
    * @param paramIn 
    * @param engine 
    */
 template <typename class_t>
-template <typename paramreader_t>
-void Module<class_t>::config(paramreader_t& paramIn, VIPRA::Random::Engine& engine)
+void Module<class_t>::config(Parameters& paramIn, VIPRA::Random::Engine& engine)
 {
-  static_assert(Concepts::has_parameters<class_t>, "Module is missing VIPRA_REGISTER_PARAMS");
+  static_assert(Concepts::has_parameters<class_t>,
+                "Module is missing VIPRA_REGISTER_PARAMS");
 
   VIPRA::Log::debug("Configuring Module: {}", self().module_name());
 
   // get module parameters customization point
-  auto const& params = self().parameters();
+  auto const& params = self().module_params();
 
   // load each parameter and apply it to the coresponding variable
   std::apply(
@@ -96,8 +88,8 @@ void Module<class_t>::config(paramreader_t& paramIn, VIPRA::Random::Engine& engi
           using param_t = std::remove_cvref_t<decltype(param.second)>;
 
           // set the parameter variable as loaded from input
-          param.second = paramIn.template get_param<param_t>(self().module_type(), self().module_name(),
-                                                             param.first, engine);
+          param.second = paramIn.template get_param<param_t>(
+              self().module_type(), self().module_name(), param.first, engine);
         };
 
         // recursively load the parameters

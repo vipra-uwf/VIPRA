@@ -1,9 +1,19 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.19)
 set(VIPRA_PROJECT_NAME VIPRA)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
+
+set(VIPRA_BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+set(
+  VIPRA_INCLUDE_DIRS
+  ${CMAKE_CURRENT_SOURCE_DIR}/include
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/vipra/vipra_behaviors
+  ${CMAKE_CURRENT_SOURCE_DIR}/modules
+  ${CMAKE_CURRENT_SOURCE_DIR}/deps
+)
+
 
 project(
   ${VIPRA_PROJECT_NAME}
@@ -15,12 +25,22 @@ project(
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake.utils)
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake.options)
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/include/vipra)
-add_subdirectory(modules)
-
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 include(ExternalAntlr4Cpp)
 include_directories(${ANTLR4_INCLUDE_DIRS})
+
+vipra_add_library(
+  LIBNAME nlohmann_json
+  GIT_URL https://github.com/nlohmann/json.git
+  GIT_TAG v3.11.3
+)
+
+
+vipra_find_all_modules()
+
+foreach(SUBDIR ${VIPRA_MODULE_DIRECTORIES})
+    add_subdirectory(${SUBDIR})
+endforeach()
 
 target_link_libraries(
   ${VIPRA_PROJECT_NAME}
@@ -31,9 +51,6 @@ target_link_libraries(
 target_include_directories(
   ${VIPRA_PROJECT_NAME}
   PUBLIC
-  ${CMAKE_CURRENT_SOURCE_DIR}/include
-  ${CMAKE_CURRENT_SOURCE_DIR}/include/vipra/vipra_behaviors
-  ${CMAKE_CURRENT_SOURCE_DIR}/modules
-  ${CMAKE_CURRENT_SOURCE_DIR}/deps
+  ${VIPRA_INCLUDE_DIRS}
   ${ANTLR4CPP_INCLUDE_DIRS}
 )

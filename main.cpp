@@ -5,64 +5,76 @@
  */
 
 #include <vipra.hpp>
-
-#include "model/calm/calm.hpp"
-
-#include "vipra/geometry/polygon.hpp"
-#include "vipra/geometry/triangle.hpp"
+#include "vipra/simulation/sim_type.hpp"
 
 auto main(int argc, char** argv) -> int
 {
   // Set the logging level to info, default is ERROR
-  VIPRA::Log::set_level(VIPRA::Log::Level::INFO);
+  VIPRA::Log::set_level(VIPRA::Log::Level::DEBUG);
 
-  // Initialize MPI engine
-  VIPRA::ParameterSweep::initialize(argc, argv);
+  VIPRA::SimType sim;
 
-  // Register Command Line Arguments
-  VIPRA::Args::register_arg("count", "1", VIPRA::ArgType::REQUIRED | VIPRA::ArgType::VALUE_REQUIRED);
-  VIPRA::Args::register_arg("map", VIPRA::ArgType::REQUIRED | VIPRA::ArgType::VALUE_REQUIRED);
-  VIPRA::Args::register_arg("peds", VIPRA::ArgType::REQUIRED | VIPRA::ArgType::VALUE_REQUIRED);
-  VIPRA::Args::register_arg("params", "module_params.json", VIPRA::ArgType::REQUIRED | VIPRA::ArgType::VALUE_REQUIRED);
-  VIPRA::Args::parse(argc, argv);
+  sim.set_install_dir("install");
 
-  // Create Simulation
-  auto sim = VIPRA::simulation(
-    Model::calm{},
-    VIPRA::Goals::AStar{},
-    VIPRA::Pedestrians::Grid{},
-    VIPRA::CoordModules::Output{
-      VIPRA::Output::TrajectoriesJson{}
-    },
-    VIPRA::Map::QuadTree{}
-  );
+  sim.set_module(VIPRA::Modules::Type::Model, "Calm");
+  sim.set_module(VIPRA::Modules::Type::Goals, "AStar");
+  sim.set_module(VIPRA::Modules::Type::Map, "QuadTree");
+  sim.set_module(VIPRA::Modules::Type::Pedestrians, "Grid");
+  sim.set_module(VIPRA::Modules::Type::PedInput, "JSON");
+  sim.set_module(VIPRA::Modules::Type::MapInput, "JSON");
 
-  // Create a Timer and start it
-  VIPRA::Util::Clock<VIPRA::Util::milli> timer{};
-  timer.start();
+  sim("/home/rgoodenough/school/VIPRA/maps/pedestrians/a320/"
+      "a320_144_pedestrians.json",
+      "/home/rgoodenough/school/VIPRA/maps/obstacles/a320/a320_polygons.json",
+      "/home/rgoodenough/school/VIPRA/examples/module_params.json");
 
-  auto params = VIPRA::Parameters{VIPRA::Input::JSON{VIPRA::Args::get("params")}};
+  // // Initialize MPI engine
+  // VIPRA::ParameterSweep::initialize(argc, argv);
 
-  // Run the parameter sweep
-  VIPRA::ParameterSweep::run(
-    sim,
-    VIPRA::Input::JSON{VIPRA::Args::get("peds")}, // Pedestrian Input
-    VIPRA::Input::DXF{VIPRA::Args::get("map")},  // Map Input
-    params,
-    VIPRA::Args::get<size_t>("count"), // Number of simulations to run in total
-    [](VIPRA::idx simId) {  // Callback function called after each simulation run
-      VIPRA::Log::info("Simulation id: {} complete on: {}", simId, VIPRA::ParameterSweep::get_rank());
-    });
+  // // Register Command Line Arguments
+  // VIPRA::Args::register_arg("count", "1", VIPRA::ArgType::REQUIRED | VIPRA::ArgType::VALUE_REQUIRED);
+  // VIPRA::Args::register_arg("map", VIPRA::ArgType::REQUIRED | VIPRA::ArgType::VALUE_REQUIRED);
+  // VIPRA::Args::register_arg("peds", VIPRA::ArgType::REQUIRED | VIPRA::ArgType::VALUE_REQUIRED);
+  // VIPRA::Args::register_arg("params", "module_params.json", VIPRA::ArgType::REQUIRED | VIPRA::ArgType::VALUE_REQUIRED);
+  // VIPRA::Args::parse(argc, argv);
 
-  // Only the master node prints the time taken
-  VIPRA::ParameterSweep::master_do(
-    [&]() {
-      auto time = timer.stop();
-      auto seconds = std::chrono::duration_cast<std::chrono::seconds>(time);
-      time -= seconds;
-      auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(time);
+  // // Create Simulation
+  // auto sim = VIPRA::simulation(
+  //   Model::calm{},
+  //   VIPRA::Goals::PotentialField{},
+  //   VIPRA::Pedestrians::Grid{},
+  //   VIPRA::CoordModules::Output{
+  //     VIPRA::Output::TrajectoriesJson{}
+  //   },
+  //   VIPRA::Map::QuadTree{}
+  // );
 
-      VIPRA::Log::info("Time taken: {}s {}ms", seconds.count(), milliseconds.count());
-    }
-  );
+  // // Create a Timer and start it
+  // VIPRA::Util::Clock<VIPRA::Util::milli> timer{};
+  // timer.start();
+
+  // auto params = VIPRA::Parameters{VIPRA::Input::JSON{VIPRA::Args::get("params")}};
+
+  // // Run the parameter sweep
+  // VIPRA::ParameterSweep::run(
+  //   sim,
+  //   VIPRA::Input::JSON{VIPRA::Args::get("peds")}, // Pedestrian Input
+  //   VIPRA::Input::DXF{VIPRA::Args::get("map")},  // Map Input
+  //   params,
+  //   VIPRA::Args::get<size_t>("count"), // Number of simulations to run in total
+  //   [](VIPRA::idx simId) {  // Callback function called after each simulation run
+  //     VIPRA::Log::info("Simulation id: {} complete on: {}", simId, VIPRA::ParameterSweep::get_rank());
+  //   });
+
+  // // Only the master node prints the time taken
+  // VIPRA::ParameterSweep::master_do(
+  //   [&]() {
+  //     auto time = timer.stop();
+  //     auto seconds = std::chrono::duration_cast<std::chrono::seconds>(time);
+  //     time -= seconds;
+  //     auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(time);
+
+  //     VIPRA::Log::info("Time taken: {}s {}ms", seconds.count(), milliseconds.count());
+  //   }
+  // );
 }

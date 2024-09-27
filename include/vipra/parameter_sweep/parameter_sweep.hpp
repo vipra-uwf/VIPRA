@@ -43,9 +43,10 @@ class ParameterSweep {
    * @param count 
    * @param callback 
    */
-  template <typename sim_t, typename pedinput_t, typename obsinput_t, typename params_t,
-            typename callback_t = VIPRA::VOID>
-  static void run(sim_t&& sim, pedinput_t&& pedInput, obsinput_t&& obsInput, params_t&& params, size_t count,
+  template <typename sim_t, typename pedinput_t, typename obsinput_t,
+            typename params_t, typename callback_t = VIPRA::VOID>
+  static void run(sim_t&& sim, pedinput_t&& pedInput, obsinput_t&& obsInput,
+                  params_t&& params, size_t count,
                   callback_t&& callback = VOID{})
   {
     load_params(params);
@@ -64,26 +65,31 @@ class ParameterSweep {
       // run the simulation
       // if a callback is provided, call that on completion
       if constexpr ( std::is_same_v<callback_t, VIPRA::VOID> ) {
-        sim.parallel_run(std::forward<pedinput_t>(pedInput), std::forward<obsinput_t>(obsInput),
+        sim.parallel_run(std::forward<pedinput_t>(pedInput),
+                         std::forward<obsinput_t>(obsInput),
                          std::forward<params_t>(params));
       }
       else {
         // TODO(rolland): issue #23 this doesn't properly warn that the callback is not being used
-        if constexpr ( std::is_invocable_v<callback_t,
-                                           decltype(sim.parallel_run(std::forward<pedinput_t>(pedInput),
-                                                                     std::forward<obsinput_t>(obsInput),
-                                                                     std::forward<params_t>(params)))> ) {
+        if constexpr ( std::is_invocable_v<
+                           callback_t, decltype(sim.parallel_run(
+                                           std::forward<pedinput_t>(pedInput),
+                                           std::forward<obsinput_t>(obsInput),
+                                           std::forward<params_t>(params)))> ) {
           callback(sim.get_sim_id(),
-                   sim.parallel_run(std::forward<pedinput_t>(pedInput), std::forward<obsinput_t>(obsInput),
+                   sim.parallel_run(std::forward<pedinput_t>(pedInput),
+                                    std::forward<obsinput_t>(obsInput),
                                     std::forward<params_t>(params)));
         }
         else if constexpr ( std::is_invocable_v<callback_t, VIPRA::idx> ) {
-          sim.parallel_run(std::forward<pedinput_t>(pedInput), std::forward<obsinput_t>(obsInput),
+          sim.parallel_run(std::forward<pedinput_t>(pedInput),
+                           std::forward<obsinput_t>(obsInput),
                            std::forward<params_t>(params));
           callback(sim.get_sim_id());
         }
         else {
-          sim.parallel_run(std::forward<pedinput_t>(pedInput), std::forward<obsinput_t>(obsInput),
+          sim.parallel_run(std::forward<pedinput_t>(pedInput),
+                           std::forward<obsinput_t>(obsInput),
                            std::forward<params_t>(params));
           callback();
         }

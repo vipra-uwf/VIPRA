@@ -50,6 +50,7 @@ latex
 
 # Simulation
 /VIPRA
+/install
 sim_output
 simcache
 

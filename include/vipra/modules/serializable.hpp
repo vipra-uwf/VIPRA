@@ -2,7 +2,6 @@
 
 #include <string>
 
-#include "vipra/modules/module.hpp"
 #include "vipra/util/crtp.hpp"
 
 namespace VIPRA::Modules {
