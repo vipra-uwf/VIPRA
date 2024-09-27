@@ -31,26 +31,26 @@ class OutputCoordinator : public Modules::Module<OutputCoordinator> {
 
   VIPRA_REGISTER_PARAMS(VIPRA_PARAM("output_dir", _base_output_dir))
 
-  void add_output(std::unique_ptr<Modules::Output>&& module)
+  void add_output(
+      std::unique_ptr<Modules::Output>&&                                module,
+      std::function<void(void*, Parameters&, VIPRA::Random::Engine&)>&& config)
   {
     _outputs.emplace_back(std::move(module));
+    _configs.emplace_back(std::move(config));
   }
-
-  /**
-   * @brief Registers the modules parameters with the parameter reader
-   * 
-   * @tparam paramreader_t 
-   * @param paramIn
-   */
-  void register_params(Parameters& paramIn) {}
 
   void config(Parameters& paramIn, VIPRA::Random::Engine& engine)
   {
+    paramIn.register_param(module_type(), module_name(), "output_dir");
     _base_output_dir = paramIn.get_param<std::string>(
         module_type(), module_name(), "output_dir", engine);
 
     _current_output_dir = _base_output_dir;
     create_output_directory(_current_output_dir);
+
+    for ( size_t i = 0; i < _outputs.size(); ++i ) {
+      _configs[i](_outputs[i].get(), paramIn, engine);
+    }
   }
 
   /**
@@ -106,6 +106,8 @@ class OutputCoordinator : public Modules::Module<OutputCoordinator> {
 
  private:
   std::vector<std::unique_ptr<VIPRA::Modules::Output>> _outputs;
+  std::vector<std::function<void(void*, Parameters&, VIPRA::Random::Engine&)>>
+      _configs;
 
   std::filesystem::path _base_output_dir;
   std::filesystem::path _current_output_dir;

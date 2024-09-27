@@ -67,8 +67,7 @@ class SimType : public Modules::Module<SimType> {
     if ( type == Modules::Type::Output ) {
       auto [mod, config] =
           load_module<Modules::Output>(name, _installDir, type);
-      _output.add_output(std::move(mod));
-      _configs[type] = std::move(config);
+      _output.add_output(std::move(mod), std::move(config));
 
       return;
     }
@@ -195,7 +194,10 @@ inline void SimType::run_sim(Parameters& params)
     // _behaviorModel.timestep(_pedset, _map, _goals, state, _timestepSize);
     _pedset->update(state);
     _goals->update(*_pedset, *_map, _timestepSize);
-    _output.timestep_update(_currTimestep, _timestepSize, state);
+
+    if ( _currTimestep % _outputFrequency == 0 )
+      _output.timestep_update(_currTimestep, _timestepSize, state);
+
     ++_currTimestep;
   }
 
@@ -215,6 +217,8 @@ inline void SimType::initialize(Parameters& params)
 {
   register_params(params);
   config(params, _engine);
+
+  _output.config(params, _engine);
 
   _configs[Modules::Type::Model](_model.get(), params, _engine);
   _configs[Modules::Type::Pedestrians](_pedset.get(), params, _engine);

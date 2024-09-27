@@ -15,12 +15,15 @@ auto main(int argc, char** argv) -> int
 
   VIPRA::SimType sim;
 
+  VIPRA::Util::Clock<VIPRA::Util::milli> timer{};
+  timer.start();
+
   sim.set_install_dir("/home/rgoodenough/school/VIPRA/install");
 
   VIPRA::Log::debug("setting Modules");
 
   sim.set_module(VIPRA::Modules::Type::Model, "Calm");
-  sim.set_module(VIPRA::Modules::Type::Goals, "AStar");
+  sim.set_module(VIPRA::Modules::Type::Goals, "PotentialField");
   sim.set_module(VIPRA::Modules::Type::Map, "QuadTree");
   sim.set_module(VIPRA::Modules::Type::Pedestrians, "SpatialGrid");
   sim.set_module(VIPRA::Modules::Type::Output, "Trajectories");
@@ -33,6 +36,15 @@ auto main(int argc, char** argv) -> int
       "a320_144_pedestrians.json",
       "/home/rgoodenough/school/VIPRA/maps/obstacles/a320/a320_polygons.json",
       "/home/rgoodenough/school/VIPRA/examples/module_params.json");
+
+  auto time = timer.stop();
+  auto seconds = std::chrono::duration_cast<std::chrono::seconds>(time);
+  time -= seconds;
+  auto milliseconds =
+      std::chrono::duration_cast<std::chrono::milliseconds>(time);
+
+  VIPRA::Log::info("Time taken: {}s {}ms", seconds.count(),
+                   milliseconds.count());
 
   // // Initialize MPI engine
   // VIPRA::ParameterSweep::initialize(argc, argv);
