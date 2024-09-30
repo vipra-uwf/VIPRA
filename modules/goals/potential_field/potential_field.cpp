@@ -3,6 +3,4 @@
 #include "potential_field.hpp"
 #include "vipra/macros/module.hpp"
 
-namespace VIPRA {
-VIPRA_REGISTER_MODULE(PotentialField, Goals)
-}
+VIPRA_REGISTER_MODULE(VIPRA::Goals::PotentialField, Goals)

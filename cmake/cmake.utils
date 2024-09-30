@@ -169,7 +169,6 @@ macro(vipra_module)
 
   project(${VIPRA_MODULE_NAME})
 
-
   # TODO(rolland): need to properly link the json module instead of cramming it into every module
   add_library(
     ${VIPRA_MODULE_NAME}

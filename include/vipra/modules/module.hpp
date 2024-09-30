@@ -48,19 +48,22 @@ void Module<class_t>::register_params(Parameters& paramIn)
   // get module parameters customization point
   auto params = self().module_params();
 
-  // register all of the parameters with the parameter loader
-  std::apply(
-      [&](auto const& first, auto const&... restArgs) {
-        auto regis = [&](auto const& param) {
-          paramIn.register_param(self().module_type(), self().module_name(),
-                                 param.first);
-        };
+  if constexpr ( ! std::is_same_v<std::tuple<>,
+                                  std::remove_cvref_t<decltype(params)>> ) {
+    // register all of the parameters with the parameter loader
+    std::apply(
+        [&](auto const& first, auto const&... restArgs) {
+          auto regis = [&](auto const& param) {
+            paramIn.register_param(self().module_type(), self().module_name(),
+                                   param.first);
+          };
 
-        // recursively register each parameter
-        regis(first);
-        (regis(restArgs), ...);
-      },
-      params);
+          // recursively register each parameter
+          regis(first);
+          (regis(restArgs), ...);
+        },
+        params);
+  }
 
   VIPRA::Log::debug("Done Registering Params For: {}", self().module_name());
 }
@@ -83,24 +86,28 @@ void Module<class_t>::config(Parameters& paramIn, VIPRA::Random::Engine& engine)
   // get module parameters customization point
   auto const& params = self().module_params();
 
-  // load each parameter and apply it to the coresponding variable
-  std::apply(
-      [&](auto const& first, auto const&... restArgs) {
-        auto configure = [&](auto const& param) {
-          using param_t = std::remove_cvref_t<decltype(param.second)>;
-          VIPRA::Log::debug("Loading Param: {}, {}", param.first,
-                            static_cast<void*>(&param.second));
+  if constexpr ( ! std::is_same_v<std::tuple<>,
+                                  std::remove_cvref_t<decltype(params)>> ) {
+    // load each parameter and apply it to the coresponding variable
+    std::apply(
+        [&](auto const& first, auto const&... restArgs) {
+          auto configure = [&](auto const& param) {
+            using param_t = std::remove_cvref_t<decltype(param.second)>;
+            VIPRA::Log::debug("Loading Param: {}, {}", param.first,
+                              static_cast<void*>(&param.second));
 
-          // set the parameter variable as loaded from input
-          param.second = paramIn.get_param<param_t>(
-              self().module_type(), self().module_name(), param.first, engine);
-        };
+            // set the parameter variable as loaded from input
+            param.second = paramIn.get_param<param_t>(self().module_type(),
+                                                      self().module_name(),
+                                                      param.first, engine);
+          };
 
-        // recursively load the parameters
-        configure(first);
-        (configure(restArgs), ...);
-      },
-      params);
+          // recursively load the parameters
+          configure(first);
+          (configure(restArgs), ...);
+        },
+        params);
+  }
 
   VIPRA::Log::debug("Done Configuring Module: {}", self().module_name());
 }

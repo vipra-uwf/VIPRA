@@ -4,11 +4,10 @@
 #include "vipra/macros/module.hpp"
 #include "vipra/types/time.hpp"
 
-namespace VIPRA {
-VIPRA_REGISTER_MODULE(TrajectoriesJson, Output)
-}
-
 namespace VIPRA::Output {
+
+VIPRA_REGISTER_MODULE(TrajectoriesJson, Output)
+
 void TrajectoriesJson::write(std::filesystem::path const& outputDir)
 {
   std::filesystem::path filepath = outputDir / _filename;

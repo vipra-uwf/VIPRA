@@ -2,6 +2,7 @@
 
 #include <stdexcept>
 
+#include "vipra/geometry/f3d.hpp"
 #include "vipra/macros/goals.hpp"
 #include "vipra/macros/module.hpp"
 #include "vipra/macros/parameters.hpp"
@@ -31,6 +32,10 @@ class PotentialField : public VIPRA::Modules::Module<PotentialField>,
     for ( VIPRA::idx pedIdx = 0; pedIdx < pedset.num_pedestrians(); ++pedIdx ) {
       VIPRA::f3d  pos = pedset.ped_coords(pedIdx);
       auto const& grid = _field.get_grid(pos);
+
+      if ( grid.end == _emptyf3d_ )
+        throw std::runtime_error("No Path Found for Pedestrian: " +
+                                 std::to_string(pedIdx));
 
       set_current_goal(pedIdx, pos + grid.direction);
       set_end_goal(pedIdx, grid.end);

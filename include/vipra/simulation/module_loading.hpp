@@ -23,7 +23,7 @@ inline auto load_module(std::string const& name, std::string const& installDir,
 {
   using mod_t = std::remove_cvref_t<module_t>;
 
-  typedef std::unique_ptr<mod_t> (*make_module)();
+  typedef mod_t* (*make_module)();
   typedef void (*config_module)(void*, VIPRA::Parameters&,
                                 VIPRA::Random::Engine&);
 
@@ -40,29 +40,31 @@ inline auto load_module(std::string const& name, std::string const& installDir,
 
   if ( module == nullptr ) {
     std::cerr << "module not found at: " << path << '\n';
-    fprintf(stderr, "dlopen failed: %s\n", dlerror());
+    VIPRA::Log::error("dlopen failed: {}\n", dlerror());
     throw std::runtime_error("Module Not Found");
   }
 
+  // NOLINTBEGIN(cppcoreguidelines-pro-type-reinterpret-cast)
   auto func = reinterpret_cast<make_module>(dlsym(module, "create_module"));
   auto configFunc =
       reinterpret_cast<config_module>(dlsym(module, "setup_module"));
+  // NOLINTEND(cppcoreguidelines-pro-type-reinterpret-cast)
 
   if ( func == nullptr ) {
     std::cerr << "create_module not found in: " << path << '\n';
-    fprintf(stderr, "dlopen failed: %s\n", dlerror());
+    VIPRA::Log::error("dlopen failed: {}\n", dlerror());
     throw std::runtime_error("Module Not Found");
   }
 
   if ( configFunc == nullptr ) {
     std::cerr << "setup_module not found in: " << path << '\n';
-    fprintf(stderr, "dlopen failed: %s\n", dlerror());
+    VIPRA::Log::error("dlopen failed: {}\n", dlerror());
     throw std::runtime_error("Module Not Found");
   }
 
   VIPRA::Log::debug("Creating Module");
 
-  std::unique_ptr<mod_t> mod = func();
+  std::unique_ptr<mod_t> mod(func());
 
   if ( mod.get() == nullptr ) {
     std::cerr << "Module not created\n";

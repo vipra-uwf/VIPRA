@@ -5,4 +5,4 @@
 #include "vipra/macros/module.hpp"
 #include "vipra/modules/pedestrians.hpp"
 
-VIPRA_REGISTER_MODULE(SpatialGrid, Pedestrians)
+VIPRA_REGISTER_MODULE(VIPRA::Pedestrians::SpatialGrid, Pedestrians)

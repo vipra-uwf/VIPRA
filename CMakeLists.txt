@@ -72,17 +72,23 @@ if (VIPRA_BUILD_EXECUTABLE)
     ${VIPRA_MAIN_FILE}
   )
 
-    target_link_libraries(
-      ${VIPRA_EXECUTABLE_NAME}
-      PUBLIC
-      ${VIPRA_LIBRARY_NAME}
-    )
+  target_link_libraries(
+    ${VIPRA_EXECUTABLE_NAME}
+    PUBLIC
+    ${VIPRA_LIBRARY_NAME}
+  )
 
   target_include_directories(
     ${VIPRA_EXECUTABLE_NAME}
     PUBLIC
     ${VIPRA_INCLUDE_DIRS}
   )
+
+  if ( NOT DEFINED VIPRA_EXECUTABLE_PATH )
+    set( VIPRA_EXECUTABLE_PATH ${CMAKE_CURRENT_SOURCE_DIR} )
+  endif()
+
+  set(EXECUTABLE_OUTPUT_PATH ${VIPRA_EXECUTABLE_PATH})
 endif()
 
 vipra_find_all_modules()

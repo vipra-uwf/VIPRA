@@ -18,7 +18,7 @@
 #include "vipra/types/float.hpp"
 #include "vipra/types/idx.hpp"
 
-namespace Pedestrians {
+namespace VIPRA::Pedestrians {
 
 /**
  * @brief Pedestrian module that uses a grid to store pedestrians
@@ -32,6 +32,7 @@ class SpatialGrid : public VIPRA::Modules::Module<SpatialGrid>,
 
   VIPRA_REGISTER_PARAMS(VIPRA_PARAM("gridSize", _cellSize))
 
+  // NOLINTNEXTLINE(misc-unused-parameters)
   VIPRA_PEDS_INIT_STEP override
   {
     // create temporary vector of indices to initialize spatial map with
@@ -120,4 +121,4 @@ class SpatialGrid : public VIPRA::Modules::Module<SpatialGrid>,
 
   VIPRA::DataStructures::SpatialMap<VIPRA::idx> _spatialGrid;
 };
-}  // namespace Pedestrians
+}  // namespace VIPRA::Pedestrians

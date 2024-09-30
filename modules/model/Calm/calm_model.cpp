@@ -1,7 +1,7 @@
 
 #include "Calm.hpp"
 
-VIPRA_REGISTER_MODULE(Calm, Model)
+VIPRA_REGISTER_MODULE(Model::Calm, Model)
 
 void Model::Calm::calc_shoulders(VIPRA::f3dVec const& coords,
                                  VIPRA::f3dVec const& goals)

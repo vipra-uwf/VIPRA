@@ -19,7 +19,7 @@ class Grid {
  public:
   struct GridPoint {
     VIPRA::f3d   direction;
-    VIPRA::f3d   end;
+    VIPRA::f3d   end{VIPRA::_emptyf3d_};
     VIPRA::f_pnt distance{std::numeric_limits<VIPRA::f_pnt>::max()};
   };
 
@@ -29,7 +29,10 @@ class Grid {
     construct_grid(map);
   }
 
-  [[nodiscard]] auto get_grid(VIPRA::f3d pos) -> GridPoint& { return _grid[get_closest_grid_idx(pos)]; }
+  [[nodiscard]] auto get_grid(VIPRA::f3d pos) -> GridPoint&
+  {
+    return _grid[get_closest_grid_idx(pos)];
+  }
   [[nodiscard]] auto get_grid(VIPRA::f3d pos) const -> GridPoint const&
   {
     return _grid[get_closest_grid_idx(pos)];
@@ -38,8 +41,14 @@ class Grid {
   [[nodiscard]] auto get_x_count() const -> size_t { return _xCount; }
   [[nodiscard]] auto get_y_count() const -> size_t { return _xCount; }
 
-  [[nodiscard]] auto begin() -> std::vector<GridPoint>::iterator { return _grid.begin(); }
-  [[nodiscard]] auto end() -> std::vector<GridPoint>::iterator { return _grid.end(); }
+  [[nodiscard]] auto begin() -> std::vector<GridPoint>::iterator
+  {
+    return _grid.begin();
+  }
+  [[nodiscard]] auto end() -> std::vector<GridPoint>::iterator
+  {
+    return _grid.end();
+  }
 
   void flood_fill(VIPRA::f3d start, auto const& map)
   {
@@ -54,7 +63,8 @@ class Grid {
       VIPRA::f3d currPos = next.front();
       next.pop();
 
-      if ( map.collision(Geometry::Circle{grid_center(currPos), _gridSize}) ) continue;
+      if ( map.collision(Geometry::Circle{grid_center(currPos), _gridSize}) )
+        continue;
 
       add_neighbors(currPos, start, next);
     }
@@ -74,7 +84,8 @@ class Grid {
     auto const idx = get_index(gridX, gridY, _xCount);
 
     if ( out_of_bounds(gridX, gridY) ) {
-      VIPRA::Log::error("Grid index is out of bounds Pos: ({}, {})", pos.x, pos.y);
+      VIPRA::Log::error("Grid index is out of bounds Pos: ({}, {})", pos.x,
+                        pos.y);
       throw std::runtime_error("Grid index is out of bounds");
     }
 
@@ -141,18 +152,22 @@ class Grid {
     _grid = std::vector<GridPoint>(_xCount * _yCount);
   }
 
-  [[nodiscard]] VIPRA_INLINE auto out_of_bounds(VIPRA::f_pnt gridX, VIPRA::f_pnt gridY) const -> bool
+  [[nodiscard]] VIPRA_INLINE auto out_of_bounds(
+      VIPRA::f_pnt gridX, VIPRA::f_pnt gridY) const -> bool
   {
-    return gridX < 0 || gridX >= static_cast<VIPRA::f_pnt>(_xCount) * _gridSize || gridY < 0 ||
-           gridY >= static_cast<VIPRA::f_pnt>(_yCount) * _gridSize;
+    return gridX < 0 ||
+           gridX >= static_cast<VIPRA::f_pnt>(_xCount) * _gridSize ||
+           gridY < 0 || gridY >= static_cast<VIPRA::f_pnt>(_yCount) * _gridSize;
   }
 
-  [[nodiscard]] VIPRA_INLINE auto out_of_bounds(size_t gridX, size_t gridY) const -> bool
+  [[nodiscard]] VIPRA_INLINE auto out_of_bounds(size_t gridX,
+                                                size_t gridY) const -> bool
   {
     return gridX < 0 || gridX >= _xCount || gridY < 0 || gridY >= _yCount;
   }
 
-  void add_neighbors(VIPRA::f3d curr, VIPRA::f3d end, std::queue<VIPRA::f3d>& queue)
+  void add_neighbors(VIPRA::f3d curr, VIPRA::f3d end,
+                     std::queue<VIPRA::f3d>& queue)
   {
     std::array<std::pair<int, int>, 8> directions{
         {{-1, 1}, {0, 1}, {1, 1}, {-1, 0}, {1, 0}, {-1, -1}, {0, -1}, {1, -1}}};
@@ -162,7 +177,8 @@ class Grid {
     for ( auto [i, j] : directions ) {
       if ( i == 0 && i == j ) continue;
 
-      VIPRA::f3d nextPos = VIPRA::f3d{curr.x + i * _gridSize, curr.y + j * _gridSize};
+      VIPRA::f3d nextPos =
+          VIPRA::f3d{curr.x + i * _gridSize, curr.y + j * _gridSize};
 
       if ( out_of_bounds(nextPos.x, nextPos.y) ) continue;
 
