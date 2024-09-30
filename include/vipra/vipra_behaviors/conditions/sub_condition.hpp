@@ -2,6 +2,7 @@
 
 #include <functional>
 
+#include "definitions/sim_pack.hpp"
 #include "vipra/vipra_behaviors/targets/target.hpp"
 
 namespace VIPRA::Behaviors {
@@ -17,8 +18,9 @@ enum class BoolOp { AND, OR };
  * @return true 
  * @return false 
  */
-inline constexpr auto short_circuit(VIPRA::idx idx, std::vector<bool>& met, std::vector<bool> const& prevMet,
-                                    BoolOp oper) -> bool
+inline constexpr auto short_circuit(VIPRA::idx idx, std::vector<bool>& met,
+                                    std::vector<bool> const& prevMet,
+                                    BoolOp                   oper) -> bool
 {
   if ( oper == BoolOp::AND && ! prevMet[idx] ) {
     met[idx] = false;
@@ -32,7 +34,7 @@ inline constexpr auto short_circuit(VIPRA::idx idx, std::vector<bool>& met, std:
   return false;
 }
 
-template <typename simpack_t>
-using SubCondition = std::function<void(simpack_t, VIPRA::idxVec const&, std::vector<Target> const&,
-                                        std::vector<bool>&, std::vector<bool> const&, BoolOp)>;
+using SubCondition = std::function<void(
+    Simpack, VIPRA::idxVec const&, std::vector<Target> const&,
+    std::vector<bool>&, std::vector<bool> const&, BoolOp)>;
 }  // namespace VIPRA::Behaviors

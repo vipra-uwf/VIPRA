@@ -3,9 +3,9 @@
 #include <stdexcept>
 
 #include "behavior/exceptions.hpp"
+#include "selectors/subselector.hpp"
 #include "vipra/logging/logging.hpp"
 
-#include "vipra/vipra_behaviors/actions/action.hpp"
 #include "vipra/vipra_behaviors/definitions/behavior_context.hpp"
 #include "vipra/vipra_behaviors/definitions/pedestrian_types.hpp"
 #include "vipra/vipra_behaviors/selectors/pedestrian_groups.hpp"
@@ -16,7 +16,6 @@ namespace VIPRA::Behaviors {
  * @brief Combines/Organizes SubSelectors to select pedestrians for types
  * 
  */
-template <typename select_t, typename context_t>
 class Selector {
   DEFAULT_CONSTRUCTIBLE(Selector)
   COPYABLE(Selector)
@@ -26,30 +25,44 @@ class Selector {
   void initialize(std::string const& /*behaviorName*/, auto pack);
 
   void set_all_types(Ptype types) { _allTypes = types; }
-  void add_sub_selector(select_t const& subselector) { _subSelectors.push_back(subselector); }
+  void add_sub_selector(SubSelector const& subselector)
+  {
+    _subSelectors.push_back(subselector);
+  }
 
   [[nodiscard]] auto get_groups() -> GroupsContainer& { return _pedGroups; }
-  [[nodiscard]] auto get_groups() const -> GroupsContainer const& { return _pedGroups; }
+  [[nodiscard]] auto get_groups() const -> GroupsContainer const&
+  {
+    return _pedGroups;
+  }
 
-  [[nodiscard]] auto selector_count() const -> VIPRA::size { return _subSelectors.size(); }
+  [[nodiscard]] auto selector_count() const -> VIPRA::size
+  {
+    return _subSelectors.size();
+  }
 
  private:
-  Ptype                 _allTypes;
-  std::vector<select_t> _subSelectors;
-  GroupsContainer       _pedGroups;
+  Ptype                    _allTypes;
+  std::vector<SubSelector> _subSelectors;
+  GroupsContainer          _pedGroups;
 
-  [[nodiscard]] auto select_peds_from_group(select_t& /*selector*/, auto pack,
-                                            std::string const& behaviorName) -> VIPRA::idxVec;
+  [[nodiscard]] auto select_peds_from_group(
+      SubSelector& /*selector*/, Simpack pack,
+      std::string const& behaviorName) -> VIPRA::idxVec;
 
-  void check_for_duplicates(const VIPRA::idxVec& order);
+  static void check_for_duplicates(const VIPRA::idxVec& order);
 
   [[nodiscard]] auto        order_selectors() -> VIPRA::idxVec;
   [[nodiscard]] static auto filter_used_peds(const VIPRA::idxVec& /*peds*/,
-                                             std::vector<bool> const& /*used*/) -> VIPRA::idxVec;
+                                             std::vector<bool> const& /*used*/)
+      -> VIPRA::idxVec;
 
-  void run_selectors(const VIPRA::idxVec& /*selectorIdxs*/, std::string const& /*behaviorName*/, auto pack);
-  void update_ped_groups(const VIPRA::idxVec& /*selectedPeds*/, select_t& /*selector*/,
-                         context_t& /*context*/, std::string const& /*unused*/);
+  void run_selectors(const VIPRA::idxVec& /*selectorIdxs*/,
+                     std::string const& /*behaviorName*/, auto pack);
+  void update_ped_groups(const VIPRA::idxVec& /*selectedPeds*/,
+                         SubSelector& /*selector*/,
+                         BehaviorContext& /*context*/,
+                         std::string const& /*unused*/);
   void sort_groups();
 };
 
@@ -62,8 +75,7 @@ class Selector {
  * @param map : 
  * @param goals : 
  */
-template <typename select_t, typename context_t>
-void Selector<select_t, context_t>::initialize(std::string const& behaviorName, auto pack)
+void Selector::initialize(std::string const& behaviorName, auto pack)
 {
   _pedGroups.initialize(_allTypes, pack.pedset.num_pedestrians());
 
@@ -84,15 +96,16 @@ void Selector<select_t, context_t>::initialize(std::string const& behaviorName, 
  * @param map : 
  * @param goals : 
  */
-template <typename select_t, typename context_t>
-void Selector<select_t, context_t>::run_selectors(const VIPRA::idxVec& selectorIdxs,
-                                                  std::string const& behaviorName, auto pack)
+void Selector::run_selectors(const VIPRA::idxVec& selectorIdxs,
+                             std::string const& behaviorName, auto pack)
 {
-  std::for_each(selectorIdxs.begin(), selectorIdxs.end(), [&](VIPRA::idx index) {
-    auto& selector = _subSelectors[index];
-    auto  selectedPeds = select_peds_from_group(selector, pack, behaviorName);
-    update_ped_groups(selectedPeds, selector, pack.context, behaviorName);
-  });
+  std::for_each(
+      selectorIdxs.begin(), selectorIdxs.end(), [&](VIPRA::idx index) {
+        auto& selector = _subSelectors[index];
+        auto  selectedPeds =
+            select_peds_from_group(selector, pack, behaviorName);
+        update_ped_groups(selectedPeds, selector, pack.context, behaviorName);
+      });
 
   _pedGroups[0].resize(pack.pedset.num_pedestrians());
   std::iota(_pedGroups[0].begin(), _pedGroups[0].end(), 0);
@@ -109,26 +122,29 @@ void Selector<select_t, context_t>::run_selectors(const VIPRA::idxVec& selectorI
  * @param behaviorName : 
  * @return VIPRA::idxVec 
  */
-template <typename select_t, typename context_t>
-auto Selector<select_t, context_t>::select_peds_from_group(select_t& selector, auto pack,
-                                                           std::string const& behaviorName) -> VIPRA::idxVec
+auto Selector::select_peds_from_group(SubSelector& selector, Simpack pack,
+                                      std::string const& behaviorName)
+    -> VIPRA::idxVec
 {
   auto const& fullGroup = _pedGroups.get_group(selector.group);
-  auto        usablegroup = filter_used_peds(fullGroup, _pedGroups.get_used(selector.group));
-  auto        result = selector.select_peds(fullGroup, usablegroup, pack);
+  auto        usablegroup =
+      filter_used_peds(fullGroup, _pedGroups.get_used(selector.group));
+  auto result = selector.select_peds(fullGroup, usablegroup, pack);
 
   if ( ! result.starved ) {
     return result.group;
   }
 
   if ( selector.required ) {
-    VIPRA::Log::error("Behavior: {}, Required Selector Starved For Type: {} From Group: {}", behaviorName,
-                      selector.type.fullType, selector.group);
+    VIPRA::Log::error(
+        "Behavior: {}, Required Selector Starved For Type: {} From Group: {}",
+        behaviorName, selector.type.fullType, selector.group);
     DSLException::error();
   }
 
-  VIPRA::Log::debug("Behavior: {}, Starved Selector For Type: {} From Group: {}", behaviorName,
-                    selector.type.fullType, selector.group);
+  VIPRA::Log::debug(
+      "Behavior: {}, Starved Selector For Type: {} From Group: {}",
+      behaviorName, selector.type.fullType, selector.group);
   return result.group;
 }
 
@@ -140,13 +156,15 @@ auto Selector<select_t, context_t>::select_peds_from_group(select_t& selector, a
  * @param context : 
  * @param behaviorName : 
  */
-template <typename select_t, typename context_t>
-void Selector<select_t, context_t>::update_ped_groups(const VIPRA::idxVec& selectedPeds, select_t& selector,
-                                                      context_t& context, std::string const& behaviorName)
+inline void Selector::update_ped_groups(const VIPRA::idxVec& selectedPeds,
+                                        SubSelector&         selector,
+                                        BehaviorContext&     context,
+                                        std::string const&   behaviorName)
 {
   std::for_each(selectedPeds.begin(), selectedPeds.end(), [&](auto& pedIdx) {
     selector.type.for_each_type([&](typeUID type) {
-      VIPRA::Log::debug("Behavior: {}, Selecting Ped {} for Type: {}", behaviorName, pedIdx, type);
+      VIPRA::Log::debug("Behavior: {}, Selecting Ped {} for Type: {}",
+                        behaviorName, pedIdx, type);
       context.types[pedIdx] += type;
       _pedGroups.add_ped(pedIdx, type);
     });
@@ -162,9 +180,8 @@ void Selector<select_t, context_t>::update_ped_groups(const VIPRA::idxVec& selec
  * @param used : 
  * @return VIPRA::idxVec 
  */
-template <typename select_t, typename context_t>
-auto Selector<select_t, context_t>::filter_used_peds(const VIPRA::idxVec&     peds,
-                                                     std::vector<bool> const& used) -> VIPRA::idxVec
+inline auto Selector::filter_used_peds(
+    const VIPRA::idxVec& peds, std::vector<bool> const& used) -> VIPRA::idxVec
 {
   VIPRA::idxVec ret;
 
@@ -181,8 +198,7 @@ auto Selector<select_t, context_t>::filter_used_peds(const VIPRA::idxVec&     pe
  * @brief Sorts all of the groups in the selector's group container
  * 
  */
-template <typename select_t, typename context_t>
-void Selector<select_t, context_t>::sort_groups()
+inline void Selector::sort_groups()
 {
   const VIPRA::size groupCnt = _pedGroups.size();
   for ( VIPRA::idx i = 1; i < groupCnt; ++i ) {
@@ -196,8 +212,7 @@ void Selector<select_t, context_t>::sort_groups()
  * 
  * @param order : 
  */
-template <typename select_t, typename context_t>
-void Selector<select_t, context_t>::check_for_duplicates(const VIPRA::idxVec& order)
+inline void Selector::check_for_duplicates(const VIPRA::idxVec& order)
 {
   for ( VIPRA::idx i = 0; i < order.size(); ++i ) {
     for ( VIPRA::idx j = i + 1; j < order.size(); ++j ) {
@@ -214,8 +229,7 @@ void Selector<select_t, context_t>::check_for_duplicates(const VIPRA::idxVec& or
  * 
  * @return VIPRA::idxVec 
  */
-template <typename select_t, typename context_t>
-auto Selector<select_t, context_t>::order_selectors() -> VIPRA::idxVec
+inline auto Selector::order_selectors() -> VIPRA::idxVec
 {
   VIPRA::idxVec order;
 
@@ -234,8 +248,10 @@ auto Selector<select_t, context_t>::order_selectors() -> VIPRA::idxVec
   });
 
   for ( VIPRA::idx selIdx = 0; selIdx < _subSelectors.size(); ++selIdx ) {
-    bool notInGraph = std::find_if(order.begin(), order.end(),
-                                   [&](VIPRA::idx index) { return index == selIdx; }) == order.end();
+    bool notInGraph =
+        std::find_if(order.begin(), order.end(), [&](VIPRA::idx index) {
+          return index == selIdx;
+        }) == order.end();
     if ( notInGraph ) {
       order.push_back(selIdx);
     }

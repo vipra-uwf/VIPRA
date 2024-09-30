@@ -15,7 +15,8 @@ inline auto get_type_count(VIPRA::Behaviors::Ptype allTypes) -> VIPRA::size
 {
   VIPRA::size typeCnt = 1;
   while ( allTypes.fullType != 0 ) {
-    VIPRA::Behaviors::typeUID currType = allTypes.fullType & (allTypes.fullType - 1);
+    VIPRA::Behaviors::typeUID currType =
+        allTypes.fullType & (allTypes.fullType - 1);
     allTypes.fullType = currType;
     ++typeCnt;
   }
@@ -48,7 +49,10 @@ void GroupsContainer::initialize(Ptype allTypes, VIPRA::size pedCnt)
  * @param type : type group to get
  * @return const VIPRA::idxVec& 
  */
-auto GroupsContainer::get_group(typeUID type) const -> const VIPRA::idxVec& { return _groups[index(type)]; }
+auto GroupsContainer::get_group(typeUID type) const -> const VIPRA::idxVec&
+{
+  return _groups[index(type)];
+}
 
 /**
  * @brief Adds a pedestrians index to the group with type
@@ -92,7 +96,10 @@ auto GroupsContainer::set_used(VIPRA::idx pedIdx, typeUID type) -> bool
  * @param type : group to get _used pedestrians from
  * @return const std::vector<bool>& 
  */
-auto GroupsContainer::get_used(typeUID type) const -> std::vector<bool> const& { return _used[index(type)]; }
+auto GroupsContainer::get_used(typeUID type) const -> std::vector<bool> const&
+{
+  return _used[index(type)];
+}
 
 /**
  * @brief Resets _used status of all pedestrians
@@ -124,7 +131,10 @@ auto GroupsContainer::remove_ped(VIPRA::idx pedIdx, typeUID type) -> bool
  * @param index : group index
  * @return VIPRA::idxVec& 
  */
-auto GroupsContainer::operator[](VIPRA::idx index) -> VIPRA::idxVec& { return _groups[index]; }
+auto GroupsContainer::operator[](VIPRA::idx index) -> VIPRA::idxVec&
+{
+  return _groups[index];
+}
 
 /**
  * @brief Gets the group at index
@@ -132,7 +142,10 @@ auto GroupsContainer::operator[](VIPRA::idx index) -> VIPRA::idxVec& { return _g
  * @param index : group index
  * @return VIPRA::idxVec& 
  */
-auto GroupsContainer::at(VIPRA::idx index) const -> const VIPRA::idxVec& { return _groups.at(index); }
+auto GroupsContainer::at(VIPRA::idx index) const -> const VIPRA::idxVec&
+{
+  return _groups.at(index);
+}
 
 /**
  * @brief Returns the number of _groups

@@ -12,14 +12,18 @@ class SubConditionSpatial {
   COPYABLE(SubConditionSpatial)
   MOVEABLE(SubConditionSpatial)
  public:
-  explicit SubConditionSpatial(NumericValue value) : _within(std::move(value)) {}
+  explicit SubConditionSpatial(NumericValue value) : _within(std::move(value))
+  {
+  }
 
-  void operator()(auto pack, const VIPRA::idxVec& peds, std::vector<Target> const& targets,
-                  std::vector<bool>& met, std::vector<bool> const& /*unused*/, BoolOp /*unused*/) const
+  void operator()(Simpack pack, const VIPRA::idxVec& peds,
+                  std::vector<Target> const& targets, std::vector<bool>& met,
+                  std::vector<bool> const& /*unused*/, BoolOp /*unused*/) const
   {
     for ( auto idx : peds ) {
       auto const& coords = pack.pedset.all_coords();
-      met[idx] = coords[idx].distance_to(coords[targets[idx].targetIdx]) <= _within.value(idx);
+      met[idx] = coords[idx].distance_to(coords[targets[idx].targetIdx]) <=
+                 _within.value(idx);
     }
   }
 

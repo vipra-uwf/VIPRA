@@ -20,13 +20,15 @@ class SubConditionElapsedTimeFromEvent {
   COPYABLE(SubConditionElapsedTimeFromEvent)
   MOVEABLE(SubConditionElapsedTimeFromEvent)
  public:
-  SubConditionElapsedTimeFromEvent(Behaviors::NumericValue time, VIPRA::idx event)
+  SubConditionElapsedTimeFromEvent(Behaviors::NumericValue time,
+                                   VIPRA::idx              event)
       : _event(event), _requiredTime(std::move(time))
   {
   }
 
-  void operator()(auto pack, const VIPRA::idxVec& peds, std::vector<Target> const& /*unused*/,
-                  std::vector<bool>& met, std::vector<bool> const& /*unused*/, BoolOp /*unused*/)
+  void operator()(Simpack pack, const VIPRA::idxVec& peds,
+                  std::vector<Target> const& /*unused*/, std::vector<bool>& met,
+                  std::vector<bool> const& /*unused*/, BoolOp /*unused*/)
   {
     for ( auto ped : peds ) {
       auto const& event = pack.context.events[_event];
@@ -46,7 +48,8 @@ class SubConditionElapsedTimeFromEvent {
   VIPRA::time_s           _startTime{};
 
   // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-  static inline constexpr auto in_time_step(VIPRA::time_s currTime, VIPRA::time_s checkTime,
+  static inline constexpr auto in_time_step(VIPRA::time_s  currTime,
+                                            VIPRA::time_s  checkTime,
                                             VIPRA::delta_t deltaT) -> bool
   {
     const VIPRA::delta_t left = checkTime - deltaT;

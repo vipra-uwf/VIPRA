@@ -1,8 +1,9 @@
 #pragma once
 
-#include <functional>
+#include "vipra/modules/map.hpp"
+#include "vipra/modules/pedestrians.hpp"
 
-#include "vipra/geometry/f3d.hpp"
+#include "vipra/modules/goals.hpp"
 
 #include "vipra/types/state.hpp"
 #include "vipra/types/time.hpp"
@@ -11,7 +12,6 @@
 
 namespace VIPRA::Behaviors {
 
-template <typename pedset_t, typename map_t, typename goals_t>
 struct BehaviorContext;
 
 // NOLINTBEGIN(cppcoreguidelines-avoid-const-or-ref-data-members)
@@ -19,15 +19,15 @@ struct BehaviorContext;
   * @brief Holds references to commonly used parameters for simpler passing
   * 
   */
-template <typename pedset_t, typename map_t, typename goals_t>
+
 struct Simpack {
-  pedset_t const&                            pedset;
-  map_t const&                               map;
-  goals_t&                                   goals;
-  GroupsContainer const&                     groups;
-  BehaviorContext<pedset_t, map_t, goals_t>& context;
-  VIPRA::State&                              state;
-  VIPRA::delta_t                             dT;
+  Modules::Pedestrians const& pedset;
+  Modules::Map const&         map;
+  Modules::Goals&             goals;
+  GroupsContainer const&      groups;
+  BehaviorContext&            context;
+  VIPRA::State&               state;
+  VIPRA::delta_t              dT;
 };
 // NOLINTEND(cppcoreguidelines-avoid-const-or-ref-data-members)
 }  // namespace VIPRA::Behaviors

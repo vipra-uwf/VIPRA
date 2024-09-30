@@ -2,7 +2,7 @@
 
 #include <functional>
 
-#include "vipra/geometry/f3d.hpp"
+#include "definitions/sim_pack.hpp"
 #include "vipra/types/idx.hpp"
 
 namespace VIPRA::Behaviors {
@@ -30,10 +30,9 @@ struct Self {
   Target target;
 };
 
-template <typename simpack_t>
 /**
  * @brief Function for selecting targets
  * 
  */
-using TargetFunc = std::function<Target(simpack_t, Self)>;
+using TargetFunc = std::function<Target(Simpack, Self)>;
 }  // namespace VIPRA::Behaviors

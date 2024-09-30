@@ -64,6 +64,7 @@
     "main": {
       "behaviors_dir": "behaviors",
       "behaviors": [
+        "luggage"
       ]
     }
   }

@@ -55,9 +55,8 @@ class Goals {
     VIPRA::Log::debug("Goals Initialized");
   }
 
-  template <typename pedset_t, typename map_t>
-  VIPRA_PERF_FUNC void update(pedset_t const& pedset, map_t const& map,
-                              VIPRA::delta_t deltaT)
+  VIPRA_PERF_FUNC void update(Modules::Pedestrians const& pedset,
+                              Modules::Map const& map, VIPRA::delta_t deltaT)
   {
     assert(pedset.num_pedestrians() > 0);
 

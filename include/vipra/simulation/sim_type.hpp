@@ -5,7 +5,6 @@
 #include <string>
 
 #include "vipra/input/json.hpp"
-#include "vipra/logging/logging.hpp"
 #include "vipra/macros/parameters.hpp"
 
 #include "vipra/modules.hpp"
@@ -19,7 +18,7 @@
 #include "vipra/random/random.hpp"
 
 #include "vipra/simulation/module_loading.hpp"
-// #include "vipra/special_modules/behavior_model.hpp"
+#include "vipra/special_modules/behavior_model.hpp"
 
 #include "vipra/special_modules/output.hpp"
 #include "vipra/special_modules/parameters.hpp"
@@ -114,7 +113,7 @@ class SimType : public Modules::Module<SimType> {
   std::unique_ptr<Modules::Map>             _map;
   std::unique_ptr<Modules::PedestrianInput> _pedInput;
   std::unique_ptr<Modules::MapInput>        _mapInput;
-  // BehaviorModel<pedset_t, map_t, goals_t> _behaviorModel;
+  BehaviorModel                             _behaviorModel;
 
   std::map<Modules::Type,
            std::function<void(void*, Parameters&, VIPRA::Random::Engine&)>>
@@ -191,7 +190,7 @@ inline void SimType::run_sim(Parameters& params)
   while ( _currTimestep < _maxTimestep && ! _goals->is_sim_goal_met() ) {
     _model->timestep(*_pedset, *_map, *_goals, state, _timestepSize,
                      _currTimestep);
-    // _behaviorModel.timestep(_pedset, _map, _goals, state, _timestepSize);
+    _behaviorModel.timestep(*_pedset, *_map, *_goals, state, _timestepSize);
     _pedset->update(state);
     _goals->update(*_pedset, *_map, _timestepSize);
 
@@ -227,7 +226,8 @@ inline void SimType::initialize(Parameters& params)
   _configs[Modules::Type::PedInput](_pedInput.get(), params, _engine);
   _configs[Modules::Type::MapInput](_mapInput.get(), params, _engine);
 
-  // _behaviorModel->config(params, _engine);
+  _behaviorModel.register_params(params);
+  _behaviorModel.config(params, _engine);
 
   _engine.reseed(_seed + (_currSimIdx * _currSimIdx));
 
@@ -235,6 +235,6 @@ inline void SimType::initialize(Parameters& params)
   _pedset->initialize(*_pedInput, *_map, _engine);
   _goals->initialize(*_pedset, *_map, _engine);
   _model->initialize(*_pedset, *_map, *_goals, _engine);
-  // _behaviorModel.initialize(_pedset, _map, _goals, _seed);
+  _behaviorModel.initialize(*_pedset, *_map, *_goals, _seed);
 }
 }  // namespace VIPRA

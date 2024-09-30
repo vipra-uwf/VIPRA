@@ -2,6 +2,7 @@
 
 #include <limits>
 #include <optional>
+#include <utility>
 
 #include "vipra/geometry/f3d.hpp"
 
@@ -15,18 +16,18 @@ namespace VIPRA::Behaviors {
   * @brief Selects the nearest pedestrian with any of the given types
   * 
   */
-template <typename modifier_t>
 struct TargetNearest {
   NON_DEFAULT_CONSTRUCTIBLE(TargetNearest)
   COPYABLE(TargetNearest)
   MOVEABLE(TargetNearest)
 
-  Ptype                     type;
-  bool                      allPeds;
-  std::optional<modifier_t> modifier;
+  Ptype                         type;
+  bool                          allPeds;
+  std::optional<TargetModifier> modifier;
 
-  explicit TargetNearest(Ptype type, bool allPeds = false, std::optional<modifier_t> modifier = std::nullopt)
-      : type(type), allPeds(allPeds), modifier(modifier)
+  explicit TargetNearest(Ptype type, bool allPeds = false,
+                         std::optional<TargetModifier> modifier = std::nullopt)
+      : type(type), allPeds(allPeds), modifier(std::move(modifier))
   {
   }
 
@@ -37,11 +38,13 @@ struct TargetNearest {
    * @param self : pedestrain calling the function
    * @return Target 
    */
-  inline auto operator()(auto pack, Self self) const -> Target
+  inline auto operator()(Simpack pack, Self self) const -> Target
   {
     if ( allPeds ) {
-      auto curr = nearest_in_group(pack, self.target.targetIdx, pack.groups.get_group(0));
-      if ( curr.second == VIPRA::INVALID_IDX ) return Target{TargetType::INVALID, 0};
+      auto curr = nearest_in_group(pack, self.target.targetIdx,
+                                   pack.groups.get_group(0));
+      if ( curr.second == VIPRA::INVALID_IDX )
+        return Target{TargetType::INVALID, 0};
       return {TargetType::PEDESTRIAN, curr.second};
     }
 
@@ -50,7 +53,8 @@ struct TargetNearest {
 
     type.for_each_type([&](typeUID type) {
       VIPRA::idx groupIdx = GroupsContainer::index(type);
-      auto       curr = nearest_in_group(pack, self.target.targetIdx, pack.groups.get_group(groupIdx));
+      auto       curr = nearest_in_group(pack, self.target.targetIdx,
+                                         pack.groups.get_group(groupIdx));
       if ( curr.first < shortest ) {
         shortest = curr.first;
         nearest = curr.second;
@@ -73,7 +77,8 @@ struct TargetNearest {
    * @param idxs : vector of pedestrian indexes in group
    * @return std::pair<VIPRA::dist, VIPRA::idx> : nearest distance and nearest pedestrian index
    */
-  [[nodiscard]] inline auto nearest_in_group(auto pack, VIPRA::idx self, VIPRA::idxVec const& idxs) const
+  [[nodiscard]] inline auto nearest_in_group(Simpack pack, VIPRA::idx self,
+                                             VIPRA::idxVec const& idxs) const
       -> std::pair<VIPRA::f_pnt, VIPRA::idx>
   {
     VIPRA::f_pnt shortest = std::numeric_limits<VIPRA::f_pnt>::max();
@@ -82,11 +87,12 @@ struct TargetNearest {
     auto const&      coords = pack.pedset.all_coords();
     const VIPRA::f3d currCoords = coords[self];
 
-    nearest = pack.pedset.closest_ped(self, [&](VIPRA::idx other) {
-      if ( std::find(idxs.begin(), idxs.end(), other) == idxs.end() ) return false;
+    nearest = pack.pedset.conditional_closest_ped(self, [&](VIPRA::idx other) {
+      if ( std::find(idxs.begin(), idxs.end(), other) == idxs.end() )
+        return false;
 
       if ( modifier ) {
-        if ( ! modifier->check(pack, other, self) ) return false;
+        if ( ! modifier->check(pack, self, other) ) return false;
       }
 
       if ( pack.map.ray_hit(currCoords, coords[other]) != -1 ) return false;

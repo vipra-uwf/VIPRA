@@ -3,6 +3,7 @@
 #include "vipra/data_structures/graph.hpp"
 
 #include "vipra/geometry/circle.hpp"
+#include "vipra/modules/map.hpp"
 #include "vipra/types/float.hpp"
 #include "vipra/types/idx.hpp"
 #include "vipra/types/size.hpp"
@@ -13,10 +14,11 @@ struct GridPoint {
   bool       traversable;
 };
 
-class PathingGraph : public VIPRA::DataStructures::GraphMixin<PathingGraph, GridPoint> {
+class PathingGraph
+    : public VIPRA::DataStructures::GraphMixin<PathingGraph, GridPoint> {
  public:
-  template <typename map_t>
-  PathingGraph(map_t const& map, VIPRA::f_pnt gridSize, VIPRA::f_pnt closestObstacle)
+  PathingGraph(Modules::Map const& map, VIPRA::f_pnt gridSize,
+               VIPRA::f_pnt closestObstacle)
       : _gridSize(gridSize), _closestObstacle(closestObstacle)
   {
     construct_graph(map);
@@ -103,7 +105,8 @@ class PathingGraph : public VIPRA::DataStructures::GraphMixin<PathingGraph, Grid
       for ( VIPRA::idx currX = 0; currX < _xCount; ++currX ) {
         center.x += _gridSize;
         const VIPRA::idx currIdx =
-            add_node(GridPoint{center, ! map.collision(VIPRA::Geometry::Circle{center, _closestObstacle})});
+            add_node(GridPoint{center, ! map.collision(VIPRA::Geometry::Circle{
+                                           center, _closestObstacle})});
 
         if ( ! data(currIdx).traversable ) {
           continue;
@@ -133,13 +136,16 @@ class PathingGraph : public VIPRA::DataStructures::GraphMixin<PathingGraph, Grid
       if ( data(currIdx - 1).traversable ) add_edge(currIdx, currIdx - 1);
     }
     if ( currY > 1 ) {
-      if ( data(currIdx - _xCount).traversable ) add_edge(currIdx, currIdx - _xCount);
+      if ( data(currIdx - _xCount).traversable )
+        add_edge(currIdx, currIdx - _xCount);
     }
     if ( currX > 1 && currY > 1 ) {
-      if ( data(currIdx - _xCount - 1).traversable ) add_edge(currIdx, currIdx - _xCount - 1);
+      if ( data(currIdx - _xCount - 1).traversable )
+        add_edge(currIdx, currIdx - _xCount - 1);
     }
     if ( currX < _xCount - 1 && currY > 1 ) {
-      if ( data(currIdx - _xCount + 1).traversable ) add_edge(currIdx, currIdx - _xCount + 1);
+      if ( data(currIdx - _xCount + 1).traversable )
+        add_edge(currIdx, currIdx - _xCount + 1);
     }
   }
 
