@@ -4,9 +4,7 @@
  * 
  */
 
-#include <vipra.hpp>
-#include "vipra/logging/logging.hpp"
-#include "vipra/simulation/sim_type.hpp"
+#include "vipra.hpp"
 
 auto main(int argc, char** argv) -> int
 {
@@ -22,9 +20,14 @@ auto main(int argc, char** argv) -> int
   VIPRA::Args::register_arg("peds", VIPRA::ArgType::REQUIRED | VIPRA::ArgType::VALUE_REQUIRED);
   VIPRA::Args::register_arg("params", "module_params.json", VIPRA::ArgType::REQUIRED | VIPRA::ArgType::VALUE_REQUIRED);
   VIPRA::Args::register_arg("modules", "sim_config.json", VIPRA::ArgType::REQUIRED | VIPRA::ArgType::VALUE_REQUIRED);
+  VIPRA::Args::register_arg("install", "install", VIPRA::ArgType::REQUIRED | VIPRA::ArgType::VALUE_REQUIRED);
   VIPRA::Args::parse(argc, argv);
 
-  VIPRA::Simulation sim(VIPRA::Args::get("modules"));
+  VIPRA::Simulation sim;
+
+  sim.set_install_dir(VIPRA::Args::get("install"));
+  sim.set_modules(VIPRA::Args::get("modules"));
+
   // Create a Timer and start it
   VIPRA::Util::Clock<VIPRA::Util::milli> timer{};
   timer.start();

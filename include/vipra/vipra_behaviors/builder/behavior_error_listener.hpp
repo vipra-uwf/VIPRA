@@ -3,7 +3,8 @@
 #include <ostream>
 
 #include "antlr4-runtime.h"
-#include "behavior/exceptions.hpp"
+
+#include "vipra/vipra_behaviors/behavior/exceptions.hpp"
 
 namespace VIPRA::Behaviors {
 class BehaviorErrorListener : public antlr4::BaseErrorListener {

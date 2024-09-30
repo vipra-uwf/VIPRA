@@ -1,4 +1,0 @@
-
-
-add_subdirectory(parameter_sweep)
-add_subdirectory(vipra_behaviors)

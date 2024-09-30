@@ -2,11 +2,12 @@
 
 #include <filesystem>
 
-#include "conditions/subconditions/subcondition_event_occurring.hpp"
-#include "conditions/subconditions/subcondition_event_starting.hpp"
-#include "conditions/subconditions/subcondition_exists.hpp"
-#include "conditions/subconditions/subcondition_in_location.hpp"
 #include "vipra/vipra_behaviors/attributes/attributes.hpp"
+#include "vipra/vipra_behaviors/conditions/subconditions/subcondition_event_occurring.hpp"
+#include "vipra/vipra_behaviors/conditions/subconditions/subcondition_event_starting.hpp"
+#include "vipra/vipra_behaviors/conditions/subconditions/subcondition_exists.hpp"
+#include "vipra/vipra_behaviors/conditions/subconditions/subcondition_in_location.hpp"
+
 
 #include "vipra/vipra_behaviors/behavior/human_behavior.hpp"
 #include "vipra/vipra_behaviors/builder/behavior_error_listener.hpp"

@@ -1,5 +1,5 @@
 
-#include "parameter_sweep.hpp"
+#include "vipra/parameter_sweep/parameter_sweep.hpp"
 
 namespace VIPRA {
 // NOLINTBEGIN(cppcoreguidelines-avoid-non-const-global-variables) Bug in clang-tidy

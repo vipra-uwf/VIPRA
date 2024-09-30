@@ -42,9 +42,10 @@ class Simulation : public Modules::Module<Simulation> {
                         VIPRA_PARAM("random_seed", _seed),
                         VIPRA_PARAM("output_params", _outputParams));
 
-  explicit Simulation(std::string const& modulesPath)
+  void set_modules(std::string const& modulesPath)
   {
     Input::JSON input{};
+
     input.load(modulesPath);
 
     std::array<Modules::Type, Modules::MODULE_COUNT> modules{

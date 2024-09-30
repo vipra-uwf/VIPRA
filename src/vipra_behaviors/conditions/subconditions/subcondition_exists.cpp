@@ -1,4 +1,4 @@
-#pragma once
+
 
 #include "vipra/vipra_behaviors/conditions/subconditions/subcondition_exists.hpp"
 

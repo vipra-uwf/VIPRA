@@ -1,6 +1,8 @@
-#pragma once
+
 
 #include "vipra/vipra_behaviors/conditions/subconditions/subcondition_elapsed_time.hpp"
+#include "vipra/vipra_behaviors/definitions/behavior_context.hpp"
+#include "vipra/vipra_behaviors/events/event.hpp"
 
 namespace VIPRA::Behaviors {
 

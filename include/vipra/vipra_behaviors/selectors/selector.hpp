@@ -3,6 +3,7 @@
 #include "vipra/vipra_behaviors/definitions/behavior_context.hpp"
 #include "vipra/vipra_behaviors/definitions/pedestrian_types.hpp"
 
+#include "vipra/vipra_behaviors/definitions/sim_pack.hpp"
 #include "vipra/vipra_behaviors/selectors/pedestrian_groups.hpp"
 #include "vipra/vipra_behaviors/selectors/subselector.hpp"
 
@@ -18,7 +19,7 @@ class Selector {
   MOVEABLE(Selector)
 
  public:
-  void initialize(std::string const& /*behaviorName*/, auto pack);
+  void initialize(std::string const& /*behaviorName*/, Simpack pack);
 
   void set_all_types(Ptype types) { _allTypes = types; }
   void add_sub_selector(SubSelector const& subselector)

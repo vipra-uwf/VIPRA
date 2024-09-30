@@ -1,4 +1,3 @@
-#pragma once
 
 #include "vipra/vipra_behaviors/actions/action.hpp"
 

@@ -13,8 +13,8 @@ struct AtomScale {
   Attribute       attribute;
   CAttributeValue value;
 
-  inline void operator()(Simpack pack, const VIPRA::idxVec& peds,
-                         std::vector<bool> const&   conditionMet,
-                         std::vector<Target> const& targets) const;
+  void operator()(Simpack pack, const VIPRA::idxVec& peds,
+                  std::vector<bool> const&   conditionMet,
+                  std::vector<Target> const& targets) const;
 };
 }  // namespace VIPRA::Behaviors

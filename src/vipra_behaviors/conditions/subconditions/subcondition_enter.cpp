@@ -1,6 +1,9 @@
-#pragma once
+
 
 #include "vipra/vipra_behaviors/conditions/subconditions/subcondition_enter.hpp"
+#include "vipra/vipra_behaviors/definitions/behavior_context.hpp"
+#include "vipra/vipra_behaviors/definitions/sim_pack.hpp"
+#include "vipra/vipra_behaviors/locations/location.hpp"
 
 namespace VIPRA::Behaviors {
 

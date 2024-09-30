@@ -1,4 +1,4 @@
-#pragma once
+
 
 #include "vipra/vipra_behaviors/actions/atoms/atom_scale.hpp"
 

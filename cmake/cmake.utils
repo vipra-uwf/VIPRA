@@ -14,12 +14,12 @@ macro(SUBDIRLIST result curdir)
   set(${result} ${dirlist})
 endmacro()
 
-# Adds all .cpp and .hpp files to the project
+# Adds all .cpp in children directories files to the project
 macro(vipra_add_all)
-  file(GLOB TEMP_SOURCES *.cpp */*.cpp  */*/*.cpp)
+  file(GLOB_RECURSE TEMP_SOURCES *.cpp)
 
   target_sources(
-    ${VIPRA_PROJECT_NAME}
+    ${VIPRA_LIBRARY_NAME}
     PRIVATE
     ${TEMP_SOURCES}
   )
@@ -31,7 +31,7 @@ macro(vipra_add_base_modules)
   file(GLOB TEMP_SOURCES ${VIPRA_BASE_MODULES_DIR}/*/*.cpp ${VIPRA_BASE_MODULES_DIR}/*/*/*.cpp)
 
   target_sources(
-    ${VIPRA_PROJECT_NAME}
+    ${VIPRA_LIBRARY_NAME}
     PUBLIC
     ${TEMP_SOURCES}
   )
@@ -40,10 +40,14 @@ endmacro()
 # Fetchs and adds a library from a given URL, or finds and adds it if no URL is provided
 macro(vipra_add_library)
   set(options)
-  set(oneValueArgs LIBNAME URL LINK GIT_URL GIT_TAG)
+  set(oneValueArgs PROJECT LIBNAME URL LINK GIT_URL GIT_TAG)
   set(multiValueArgs TURN_ON TURN_OFF)
   cmake_parse_arguments(GET_LIB "${options}" "${oneValueArgs}"
     "${multiValueArgs}" ${ARGN})
+
+  if(NOT GET_LIB_PROJECT)
+    message(FATAL_ERROR "vipra_add_library missing PROJECT")
+  endif()
 
   if(NOT GET_LIB_LIBNAME)
     message(FATAL_ERROR "vipra_add_library missing LIBNAME")
@@ -67,10 +71,10 @@ macro(vipra_add_library)
   if (TARGET ${GET_LIB_LIBNAME}_interface)
     message(STATUS "Using Pre-loaded " ${GET_LIB_LIBNAME})
 
-    target_include_directories(${PROJECT_NAME} PUBLIC ${${GET_LIB_LIBNAME}_interface_INCLUDE_DIRS})
+    target_include_directories(${GET_LIB_PROJECT} PUBLIC ${${GET_LIB_LIBNAME}_interface_INCLUDE_DIRS})
 
     target_link_libraries(
-        ${PROJECT_NAME}
+        ${GET_LIB_PROJECT}
         PUBLIC
         ${GET_LIB_LIBNAME}_interface
     )
@@ -105,10 +109,10 @@ macro(vipra_add_library)
     endif()
     endif()
 
-    target_include_directories(${PROJECT_NAME} PUBLIC ${${GET_LIB_LIBNAME}_INCLUDE_DIRS})
+    target_include_directories(${GET_LIB_PROJECT} PUBLIC ${${GET_LIB_LIBNAME}_INCLUDE_DIRS})
 
     target_link_libraries(
-      ${PROJECT_NAME}
+      ${GET_LIB_PROJECT}
       PUBLIC
       ${GET_LIB_LINK}
     )
@@ -171,10 +175,13 @@ macro(vipra_module)
     ${VIPRA_MODULE_NAME}
     SHARED
     ${VIPRA_MODULE_SOURCES}
-    ${VIPRA_BASE_SOURCES}
   )
 
-  vipra_add_library(LIBNAME nlohmann_json)
+  target_link_libraries(
+    ${VIPRA_MODULE_NAME}
+    PUBLIC
+    ${VIPRA_LIBRARY_NAME}
+  )
 
   target_include_directories(
     ${VIPRA_MODULE_NAME}

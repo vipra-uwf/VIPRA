@@ -12,7 +12,7 @@ namespace VIPRA::Behaviors {
  * @param map : 
  * @param goals : 
  */
-void Selector::initialize(std::string const& behaviorName, auto pack)
+void Selector::initialize(std::string const& behaviorName, Simpack pack)
 {
   _pedGroups.initialize(_allTypes, pack.pedset.num_pedestrians());
 
