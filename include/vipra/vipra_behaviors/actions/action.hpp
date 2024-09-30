@@ -2,10 +2,9 @@
 
 #include <optional>
 
-#include "targets/target.hpp"
-
-#include "targets/target_selector.hpp"
 #include "vipra/vipra_behaviors/actions/atom.hpp"
+#include "vipra/vipra_behaviors/targets/target.hpp"
+#include "vipra/vipra_behaviors/targets/target_selector.hpp"
 
 #include "vipra/vipra_behaviors/conditions/condition.hpp"
 
@@ -28,19 +27,10 @@ class Action {
   }
 
   void perform_action(Simpack pack, VIPRA::idxVec& peds,
-                      std::vector<Target> const& targets)
-  {
-    std::vector<bool> conditionMet;
-    std::for_each(_atoms.begin(), _atoms.end(),
-                  [&](Atom& atom) { atom(pack, peds, conditionMet, targets); });
-  }
+                      std::vector<Target> const& targets);
   void perform_action(Simpack pack, const VIPRA::idxVec& peds,
                       std::vector<bool> const&   conditionMet,
-                      std::vector<Target> const& targets)
-  {
-    std::for_each(_atoms.begin(), _atoms.end(),
-                  [&](Atom& atom) { atom(pack, peds, conditionMet, targets); });
-  }
+                      std::vector<Target> const& targets);
 
   void add_condition(Condition const& cond) { _condition = cond; }
   void add_atom(Atom&& atom) { _atoms.push_back(atom); }

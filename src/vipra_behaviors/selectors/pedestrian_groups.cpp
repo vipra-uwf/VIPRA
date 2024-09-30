@@ -1,5 +1,4 @@
 
-#include <algorithm>
 #include <numeric>
 
 #include "vipra/vipra_behaviors/selectors/pedestrian_groups.hpp"

@@ -14,7 +14,7 @@ namespace VIPRA::Behaviors {
 #define MOVEABLE(T)          \
  public:                     \
   T(T&&) noexcept = default; \
-  auto operator=(T&&) noexcept->T& = default;
+  auto operator=(T&&) noexcept -> T& = default;
 
 #define NON_DEFAULT_CONSTRUCTIBLE(T) \
  public:                             \

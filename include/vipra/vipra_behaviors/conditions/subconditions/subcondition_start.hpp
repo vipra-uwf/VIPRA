@@ -12,8 +12,9 @@ class SubConditionStart {
   MOVEABLE(SubConditionStart)
 
  public:
-  void operator()(auto /*unused*/, VIPRA::idxVec const& /*unused*/, std::vector<Target> const& /*unused*/,
-                  std::vector<bool>& met, std::vector<bool> const& /*unused*/, BoolOp /*unused*/) const
+  void operator()(auto /*unused*/, VIPRA::idxVec const& /*unused*/,
+                  std::vector<Target> const& /*unused*/, std::vector<bool>& met,
+                  std::vector<bool> const& /*unused*/, BoolOp /*unused*/) const
   {
     std::fill(met.begin(), met.end(), true);
   }

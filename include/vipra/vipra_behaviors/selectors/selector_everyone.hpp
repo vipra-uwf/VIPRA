@@ -1,6 +1,5 @@
 #pragma once
 
-#include "vipra/vipra_behaviors/selectors/selector.hpp"
 #include "vipra/vipra_behaviors/selectors/subselector.hpp"
 
 namespace VIPRA::Behaviors {
@@ -13,8 +12,8 @@ struct SelectorEveryone {
   COPYABLE(SelectorEveryone)
   MOVEABLE(SelectorEveryone)
 
-  auto operator()(const VIPRA::idxVec& /*unused*/, const VIPRA::idxVec& group, auto /*unused*/)
-      -> SelectorResult
+  auto operator()(const VIPRA::idxVec& /*unused*/, const VIPRA::idxVec& group,
+                  auto /*unused*/) -> SelectorResult
   {
     auto vec = VIPRA::idxVec(group.size());
     std::iota(vec.begin(), vec.end(), 0);

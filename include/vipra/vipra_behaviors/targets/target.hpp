@@ -1,9 +1,7 @@
 #pragma once
 
-#include <functional>
-
-#include "definitions/sim_pack.hpp"
 #include "vipra/types/idx.hpp"
+#include "vipra/vipra_behaviors/definitions/sim_pack.hpp"
 
 namespace VIPRA::Behaviors {
 enum class TargetType {

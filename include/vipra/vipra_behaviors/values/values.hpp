@@ -1,15 +1,11 @@
 #pragma once
 
-#include <stdexcept>
-
 #include "vipra/vipra_behaviors/_grammar/generated/BehaviorParser.h"
 
 #include "vipra/logging/logging.hpp"
 #include "vipra/random/random.hpp"
 
 #include "vipra/vipra_behaviors/behavior/exceptions.hpp"
-#include "vipra/vipra_behaviors/definitions/dsl_types.hpp"
-#include "vipra/vipra_behaviors/time/time.hpp"
 #include "vipra/vipra_behaviors/values/numeric_value.hpp"
 
 // TODO(rolland): Check that range values make sense (min < max)
@@ -29,8 +25,9 @@ using RangeVal = std::pair<VIPRA::f_pnt, VIPRA::f_pnt>;
  * @param max : maximum value
  * @return VIPRA::f_pnt 
  */
-[[nodiscard]] inline auto collapse_range_value(VIPRA::seed seed, VIPRA::f_pnt min, VIPRA::f_pnt max)
-    -> VIPRA::f_pnt
+[[nodiscard]] inline auto collapse_range_value(VIPRA::seed  seed,
+                                               VIPRA::f_pnt min,
+                                               VIPRA::f_pnt max) -> VIPRA::f_pnt
 {
   VIPRA::Random::Engine                             eng{seed};
   VIPRA::Random::uniform_distribution<VIPRA::f_pnt> distr{min, max};
@@ -44,8 +41,8 @@ using RangeVal = std::pair<VIPRA::f_pnt, VIPRA::f_pnt>;
  * @param seed : randomization seed
  * @return NumericValue 
  */
-[[nodiscard]] inline auto get_numeric(BehaviorParser::Value_numberContext* ctx, VIPRA::seed seed)
-    -> NumericValue
+[[nodiscard]] inline auto get_numeric(BehaviorParser::Value_numberContext* ctx,
+                                      VIPRA::seed seed) -> NumericValue
 {
   VIPRA::f_pnt val = std::stof(ctx->NUMBER()->toString());
   return NumericValue(seed, ExactValue{val});
@@ -58,8 +55,8 @@ using RangeVal = std::pair<VIPRA::f_pnt, VIPRA::f_pnt>;
  * @param seed : randomization seed
  * @return NumericValue 
  */
-[[nodiscard]] inline auto get_numeric(BehaviorParser::Value_randomContext* ctx, VIPRA::seed seed)
-    -> NumericValue
+[[nodiscard]] inline auto get_numeric(BehaviorParser::Value_randomContext* ctx,
+                                      VIPRA::seed seed) -> NumericValue
 {
   if ( ctx->random_float() ) {
     auto         numbers = ctx->random_float()->float_range()->FLOAT();
@@ -81,8 +78,8 @@ using RangeVal = std::pair<VIPRA::f_pnt, VIPRA::f_pnt>;
  * @param seed : randomization seed
  * @return NumericValue 
  */
-[[nodiscard]] inline auto get_numeric(BehaviorParser::Value_rangeContext* ctx, VIPRA::seed seed)
-    -> NumericValue
+[[nodiscard]] inline auto get_numeric(BehaviorParser::Value_rangeContext* ctx,
+                                      VIPRA::seed seed) -> NumericValue
 {
   if ( ctx->float_range() ) {
     auto         numbers = ctx->float_range()->FLOAT();
@@ -94,7 +91,8 @@ using RangeVal = std::pair<VIPRA::f_pnt, VIPRA::f_pnt>;
   auto         numbers = ctx->number_range()->NUMBER();
   VIPRA::f_pnt min = std::round(std::stof(numbers[0]->toString()));
   VIPRA::f_pnt max = std::round(std::stof(numbers[1]->toString()));
-  return NumericValue(seed, ExactValue{std::round(collapse_range_value(seed, min, max))});
+  return NumericValue(
+      seed, ExactValue{std::round(collapse_range_value(seed, min, max))});
 }
 
 /**
@@ -104,8 +102,8 @@ using RangeVal = std::pair<VIPRA::f_pnt, VIPRA::f_pnt>;
  * @param seed : not used
  * @return NumericValue 
  */
-[[nodiscard]] inline auto get_numeric(BehaviorParser::Value_floatContext* ctx, VIPRA::seed seed)
-    -> NumericValue
+[[nodiscard]] inline auto get_numeric(BehaviorParser::Value_floatContext* ctx,
+                                      VIPRA::seed seed) -> NumericValue
 {
   VIPRA::f_pnt val = std::stof(ctx->FLOAT()->toString());
   return NumericValue(seed, ExactValue{val});
@@ -118,8 +116,8 @@ using RangeVal = std::pair<VIPRA::f_pnt, VIPRA::f_pnt>;
  * @param seed : randomization seed
  * @return NumericValue 
  */
-[[nodiscard]] inline auto get_numeric(BehaviorParser::Value_numericContext* ctx, VIPRA::seed seed)
-    -> NumericValue
+[[nodiscard]] inline auto get_numeric(BehaviorParser::Value_numericContext* ctx,
+                                      VIPRA::seed seed) -> NumericValue
 {
   if ( ctx->value_float() ) return get_numeric(ctx->value_float(), seed);
 
@@ -129,7 +127,9 @@ using RangeVal = std::pair<VIPRA::f_pnt, VIPRA::f_pnt>;
 
   if ( ctx->value_range() ) return get_numeric(ctx->value_range(), seed);
 
-  VIPRA::Log::error("Numeric Value Context Missing Children (you should never see this error)");
+  VIPRA::Log::error(
+      "Numeric Value Context Missing Children (you should never see this "
+      "error)");
   DSLException::error();
 
   return {};
@@ -142,7 +142,8 @@ using RangeVal = std::pair<VIPRA::f_pnt, VIPRA::f_pnt>;
  * @param seed : randomization seed
  * @return VIPRA::f3d 
  */
-[[nodiscard]] inline auto get_coord(BehaviorParser::Value_coordContext* ctx, VIPRA::seed seed) -> VIPRA::f3d
+[[nodiscard]] inline auto get_coord(BehaviorParser::Value_coordContext* ctx,
+                                    VIPRA::seed seed) -> VIPRA::f3d
 {
   auto       values = ctx->value_numeric();
   VIPRA::f3d val;

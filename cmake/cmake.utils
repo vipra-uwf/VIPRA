@@ -16,7 +16,7 @@ endmacro()
 
 # Adds all .cpp and .hpp files to the project
 macro(vipra_add_all)
-  file(GLOB TEMP_SOURCES *.cpp *.hpp */*.cpp */*.hpp)
+  file(GLOB TEMP_SOURCES *.cpp */*.cpp  */*/*.cpp)
 
   target_sources(
     ${VIPRA_PROJECT_NAME}

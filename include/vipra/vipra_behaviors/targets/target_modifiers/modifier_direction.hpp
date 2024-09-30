@@ -2,7 +2,6 @@
 
 #include "vipra/vipra_behaviors/definitions/sim_pack.hpp"
 #include "vipra/vipra_behaviors/values/direction.hpp"
-#include "vipra/vipra_behaviors/values/numeric_value.hpp"
 
 namespace VIPRA::Behaviors {
 /**

@@ -2,10 +2,10 @@
 
 #include <optional>
 
-#include "conditions/condition.hpp"
 #include "vipra/logging/logging.hpp"
 #include "vipra/types/idx.hpp"
 
+#include "vipra/vipra_behaviors/conditions/condition.hpp"
 #include "vipra/vipra_behaviors/events/event_status.hpp"
 #include "vipra/vipra_behaviors/util/bool_latch.hpp"
 #include "vipra/vipra_behaviors/util/timed_latch.hpp"

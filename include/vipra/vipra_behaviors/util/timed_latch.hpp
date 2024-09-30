@@ -2,10 +2,8 @@
 
 #include <utility>
 
-#include "vipra/geometry/f3d.hpp"
 #include "vipra/types/time.hpp"
 
-#include "vipra/vipra_behaviors/definitions/dsl_types.hpp"
 #include "vipra/vipra_behaviors/values/numeric_value.hpp"
 
 namespace VIPRA::Behaviors {
@@ -16,7 +14,10 @@ namespace VIPRA::Behaviors {
  */
 class TimedLatchCollection {
  public:
-  explicit TimedLatchCollection(Behaviors::NumericValue value) : _duration(std::move(value)) {}
+  explicit TimedLatchCollection(Behaviors::NumericValue value)
+      : _duration(std::move(value))
+  {
+  }
 
   /**
    * @brief Sets the size of the container
@@ -63,7 +64,10 @@ class TimedLatchCollection {
    * @param pedIdx : pedestrian index to get duration of
    * @return VIPRA::f_pnt 
    */
-  auto get_duration(VIPRA::idx pedIdx) -> VIPRA::f_pnt { return _duration.value(pedIdx); }
+  auto get_duration(VIPRA::idx pedIdx) -> VIPRA::f_pnt
+  {
+    return _duration.value(pedIdx);
+  }
 
  private:
   Behaviors::NumericValue    _duration;
@@ -78,7 +82,8 @@ class TimedLatchCollection {
    * @return true : if inside time range
    * @return false : if NOT inside time range
    */
-  static inline constexpr auto in_time_step(VIPRA::time_s currTime, VIPRA::time_s checkTime,
+  static inline constexpr auto in_time_step(VIPRA::time_s  currTime,
+                                            VIPRA::time_s  checkTime,
                                             VIPRA::delta_t deltaT) -> bool
   {
     const VIPRA::delta_t left = checkTime - deltaT;

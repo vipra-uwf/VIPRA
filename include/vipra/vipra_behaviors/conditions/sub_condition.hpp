@@ -2,7 +2,7 @@
 
 #include <functional>
 
-#include "definitions/sim_pack.hpp"
+#include "vipra/vipra_behaviors/definitions/sim_pack.hpp"
 #include "vipra/vipra_behaviors/targets/target.hpp"
 
 namespace VIPRA::Behaviors {
