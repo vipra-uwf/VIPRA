@@ -56,9 +56,12 @@ class Simulation : public Modules::Module<Simulation> {
 
     for ( auto type : modules ) {
       auto module = input.get<std::string>({to_string(type)});
+
       if ( ! module ) {
         throw std::runtime_error("No " + to_string(type) + " Module Provided");
       }
+
+      VIPRA::Log::debug("Config: {} = {}", to_string(type), module.value());
 
       set_module(type, module.value());
     }
@@ -123,8 +126,11 @@ class Simulation : public Modules::Module<Simulation> {
         }
         set(_mapInput);
         break;
-      default:
-        break;
+      case Modules::Type::Output:
+      case Modules::Type::Parameters:
+      case Modules::Type::Simulation:
+      case Modules::Type::Behavior_model:
+        throw std::runtime_error("Can't Load " + to_string(type) + " Modules");
     }
   }
 

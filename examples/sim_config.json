@@ -4,6 +4,6 @@
   "map": "QuadTree",
   "pedestrians": "SpatialGrid",
   "output": "Trajectories",
-  "pedinput": "JSON",
-  "mapinput": "JSON"
+  "map_input": "JSON",
+  "ped_input": "JSON"
 }

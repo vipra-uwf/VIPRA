@@ -27,8 +27,12 @@ inline auto load_module(std::string const& name, std::string const& installDir,
   typedef void (*config_module)(void*, VIPRA::Parameters&,
                                 VIPRA::Random::Engine&);
 
-  std::string path =
-      installDir + '/' + Modules::to_string(type) + "/lib" + name + ".so";
+  std::string path;
+
+  if ( type == Modules::Type::PedInput || type == Modules::Type::MapInput )
+    path = installDir + "/input/lib" + name + ".so";
+  else
+    path = installDir + '/' + Modules::to_string(type) + "/lib" + name + ".so";
 
   VIPRA::Log::debug("Loading Module: {} at {}", name, path);
 
