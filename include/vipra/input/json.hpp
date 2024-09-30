@@ -30,7 +30,7 @@ namespace VIPRA::Input {
   * 
   */
 class JSON : public VIPRA::Modules::ParamReader<JSON>,
-             public VIPRA::Modules::Serializable<JSON>,
+             public VIPRA::Modules::Serializable,
              public VIPRA::Modules::MapInput,
              public VIPRA::Modules::PedestrianInput {
   using json_cref = std::reference_wrapper<const nlohmann::json>;
@@ -42,7 +42,10 @@ class JSON : public VIPRA::Modules::ParamReader<JSON>,
   [[nodiscard]] auto get(std::vector<std::string> const& keys) const
       -> std::optional<data_t>;
 
-  [[nodiscard]] auto to_string() -> std::string { return _json.dump(); }
+  [[nodiscard]] auto serialize() -> std::string override
+  {
+    return _json.dump();
+  }
 
   [[nodiscard]] auto get_pedestrians() const
       -> std::optional<VIPRA::f3dVec> override;
@@ -105,7 +108,7 @@ class JSON : public VIPRA::Modules::ParamReader<JSON>,
   }
 
  public:
-  void parse(std::string const& data)
+  void parse(std::string const& data) override
   {
     try {
       _json = nlohmann::json::parse(data);

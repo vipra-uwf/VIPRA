@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <memory>
+#include <stdexcept>
 #include <string>
 
 #include "vipra/input/json.hpp"
@@ -12,7 +13,6 @@
 #include "vipra/modules/model.hpp"
 #include "vipra/modules/output.hpp"
 #include "vipra/modules/pedestrian_input.hpp"
-// #include "vipra/parameter_sweep/parameter_sweep.hpp"
 
 #include "vipra/modules/pedestrians.hpp"
 #include "vipra/random/random.hpp"
@@ -31,7 +31,7 @@
 
 namespace VIPRA {
 
-class SimType : public Modules::Module<SimType> {
+class Simulation : public Modules::Module<Simulation> {
  public:
   VIPRA_MODULE_NAME("main");
   VIPRA_MODULE_TYPE(Simulation);
@@ -42,17 +42,39 @@ class SimType : public Modules::Module<SimType> {
                         VIPRA_PARAM("random_seed", _seed),
                         VIPRA_PARAM("output_params", _outputParams));
 
+  explicit Simulation(std::string const& modulesPath)
+  {
+    Input::JSON input{};
+    input.load(modulesPath);
+
+    std::array<Modules::Type, Modules::MODULE_COUNT> modules{
+        Modules::Type::Model,   Modules::Type::Goals,
+        Modules::Type::Map,     Modules::Type::Pedestrians,
+        Modules::Type::Output,  Modules::Type::PedInput,
+        Modules::Type::MapInput};
+
+    for ( auto type : modules ) {
+      auto module = input.get<std::string>({to_string(type)});
+      if ( ! module ) {
+        throw std::runtime_error("No " + to_string(type) + " Module Provided");
+      }
+
+      set_module(type, module.value());
+    }
+  }
+
+  void run_sim(Parameters& params);
   void operator()(std::string const& pedPath, std::string const& mapPath,
                   std::string const& paramsPath);
-  void parallel_run(std::unique_ptr<Modules::PedestrianInput>&& pedInput,
-                    std::unique_ptr<Modules::MapInput>&&        mapInput,
-                    Parameters&                                 params);
 
   void set_install_dir(std::string const& dir) { _installDir = dir; }
 
   void               set_sim_id(VIPRA::idx idx) { _currSimIdx = idx; }
   void               add_sim_id(VIPRA::idx idx) { _currSimIdx += idx; }
   [[nodiscard]] auto get_sim_id() const -> VIPRA::idx { return _currSimIdx; }
+
+  auto get_ped_input() -> Modules::PedestrianInput& { return *_pedInput; }
+  auto get_map_input() -> Modules::MapInput& { return *_mapInput; }
 
   void set_module(Modules::Type type, std::string const& name)
   {
@@ -131,8 +153,6 @@ class SimType : public Modules::Module<SimType> {
   bool            _outputParams{false};
 
   void initialize(Parameters& params);
-
-  void run_sim(Parameters& params);
 };
 
 // ----------------------------------------------------------------------------------------------------------------
@@ -145,9 +165,9 @@ class SimType : public Modules::Module<SimType> {
    * @param params parameter module to use for the simulation
    * @return output_data_t Tuple of the output data
    */
-inline void SimType::operator()(std::string const& pedPath,
-                                std::string const& mapPath,
-                                std::string const& paramsPath)
+inline void Simulation::operator()(std::string const& pedPath,
+                                   std::string const& mapPath,
+                                   std::string const& paramsPath)
 {
   // TODO(rolland): issue #25 this assumes that a only a single node should ever run this function, there may be sitations where this isn't user friendly?
   // if ( ! ParameterSweep::is_root() ) return;
@@ -163,17 +183,7 @@ inline void SimType::operator()(std::string const& pedPath,
 
 // TODO(rolland): issue #25 the simulation shouldn't have to know that it is being run in parallel
 //                  - this is needed because of the delayed loading of parameters, with the operator() every node would load the parameters when they've already been updated
-inline void SimType::parallel_run(
-    std::unique_ptr<Modules::PedestrianInput>&& pedInput,
-    std::unique_ptr<Modules::MapInput>&& mapInput, Parameters& params)
-{
-  _pedInput = std::move(pedInput);
-  _mapInput = std::move(mapInput);
-
-  run_sim(params);
-}
-
-inline void SimType::run_sim(Parameters& params)
+inline void Simulation::run_sim(Parameters& params)
 {
   params.reset();
 
@@ -212,7 +222,7 @@ inline void SimType::run_sim(Parameters& params)
    * @param params parameter module to use for the simulation
    * @return auto Tuple of the max timestep, timestep size, random seed, and the initial state
    */
-inline void SimType::initialize(Parameters& params)
+inline void Simulation::initialize(Parameters& params)
 {
   register_params(params);
   config(params, _engine);
