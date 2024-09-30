@@ -1,8 +1,12 @@
 var searchData=
 [
-  ['parse_0',['parse',['../de/d93/classVIPRA_1_1Args.html#a8eb59421103baed4feb69a05a8dd65f9',1,'VIPRA::Args']]],
-  ['ped_5frandom_5ffloat_1',['ped_random_float',['../d2/db3/classVIPRA_1_1Behaviors_1_1DRNG.html#acd85b757a43f7ca4ce0be5eba1a8137e',1,'VIPRA::Behaviors::DRNG']]],
-  ['ped_5ftimestep_5fvalue_2',['ped_timestep_value',['../d1/d0b/classVIPRA_1_1CoordModules_1_1Output.html#a2cdd6efc78b26baf1856231b13271a3c',1,'VIPRA::CoordModules::Output']]],
-  ['ped_5fvalue_3',['ped_value',['../d1/d0b/classVIPRA_1_1CoordModules_1_1Output.html#a7ccf616484d0d35f334003452ad5d32d',1,'VIPRA::CoordModules::Output']]],
-  ['push_5fback_4',['push_back',['../d1/dad/classdynamic__format__arg__store.html#a710e994685e69fd1cd4f56d29efc0d95',1,'dynamic_format_arg_store::push_back(const T &amp;arg)'],['../d1/dad/classdynamic__format__arg__store.html#ac58637a7965cbfeab47c2f50e923dc07',1,'dynamic_format_arg_store::push_back(std::reference_wrapper&lt; T &gt; arg)'],['../d1/dad/classdynamic__format__arg__store.html#a14baaad39c59b82fdf86dc4276f7d7cc',1,'dynamic_format_arg_store::push_back(const detail::named_arg&lt; char_type, T &gt; &amp;arg)']]]
+  ['register_5farg_0',['register_arg',['../de/d93/classVIPRA_1_1Args.html#aac53d011493b9bdc0814956c0dc4e024',1,'VIPRA::Args::register_arg(std::string const &amp;key)'],['../de/d93/classVIPRA_1_1Args.html#a9e4d974ea6d5b77a6e992a1967010566',1,'VIPRA::Args::register_arg(std::string const &amp;key, ArgType type)'],['../de/d93/classVIPRA_1_1Args.html#ad5dba955f88a9e0e9a4a0b112c116ecd',1,'VIPRA::Args::register_arg(std::string const &amp;key, std::string const &amp;defaultValue, ArgType type)']]],
+  ['register_5fparam_1',['register_param',['../dd/d44/classVIPRA_1_1Parameters.html#aa1be446b13aec66b4c2dd3c09e47f0ad',1,'VIPRA::Parameters']]],
+  ['register_5fparams_2',['register_params',['../dc/dab/classVIPRA_1_1Modules_1_1Module.html#aa28bac85c148150730692baec841f12b',1,'VIPRA::Modules::Module']]],
+  ['remove_5fped_3',['remove_ped',['../d7/d24/classVIPRA_1_1Behaviors_1_1GroupsContainer.html#aeaa255e2fff69e29ed594a156598f19e',1,'VIPRA::Behaviors::GroupsContainer']]],
+  ['reseed_4',['reseed',['../df/d63/classVIPRA_1_1Random_1_1Engine.html#a49e677f0a9609ce76b96a0e855da75e1',1,'VIPRA::Random::Engine']]],
+  ['reserve_5',['reserve',['../d1/dad/classdynamic__format__arg__store.html#a9c6983c46b69775b5066f6ad748be584',1,'dynamic_format_arg_store::reserve()'],['../d7/d4d/classbasic__memory__buffer.html#a27f096451ed4e6738d3a33161fda3e90',1,'basic_memory_buffer::reserve()']]],
+  ['reset_6',['reset',['../dd/d44/classVIPRA_1_1Parameters.html#af8e58953d73fdb789fe45e5b6bf03333',1,'VIPRA::Parameters::reset()'],['../de/d93/classVIPRA_1_1Args.html#a8f88c02a5d2b4c931b40acc6a7e2c217',1,'VIPRA::Args::reset()']]],
+  ['resize_7',['resize',['../d7/d4d/classbasic__memory__buffer.html#a153c47788d6d1a76ec97780748755ea1',1,'basic_memory_buffer::resize()'],['../d5/d12/classVIPRA_1_1Behaviors_1_1TimedLatchCollection.html#afb5b9d07d65794368b933e2f633439ce',1,'VIPRA::Behaviors::TimedLatchCollection::resize()']]],
+  ['run_8',['run',['../d3/da4/classVIPRA_1_1ParameterSweep.html#ac141cb5e1f1ce2860c3a840ba8554c5a',1,'VIPRA::ParameterSweep']]]
 ];

@@ -95,42 +95,42 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;optional&gt;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;vipra/vipra_behaviors/definitions/sim_pack.hpp&quot;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;vipra/vipra_behaviors/targets/target.hpp&quot;</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;vipra/vipra_behaviors/targets/target_selectors/target_self.hpp&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;vipra/vipra_behaviors/targets/target.hpp&quot;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">namespace </span>VIPRA::Behaviors {</div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span>VIPRA::Behaviors {</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> targetfunc_t&gt;</div>
-<div class="foldopen" id="foldopen00016" data-start="{" data-end="};">
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="../../da/d83/classVIPRA_1_1Behaviors_1_1TargetSelector.html">   16</a></span><span class="keyword">class </span><a class="code hl_class" href="../../da/d83/classVIPRA_1_1Behaviors_1_1TargetSelector.html">TargetSelector</a> {</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>  DEFAULT_CONSTRUCTIBLE(<a class="code hl_class" href="../../da/d83/classVIPRA_1_1Behaviors_1_1TargetSelector.html">TargetSelector</a>)</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  COPYABLE(<a class="code hl_class" href="../../da/d83/classVIPRA_1_1Behaviors_1_1TargetSelector.html">TargetSelector</a>)</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>  MOVEABLE(<a class="code hl_class" href="../../da/d83/classVIPRA_1_1Behaviors_1_1TargetSelector.html">TargetSelector</a>)</div>
+<div class="foldopen" id="foldopen00013" data-start="{" data-end="};">
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="../../da/d83/classVIPRA_1_1Behaviors_1_1TargetSelector.html">   13</a></span><span class="keyword">class </span><a class="code hl_class" href="../../da/d83/classVIPRA_1_1Behaviors_1_1TargetSelector.html">TargetSelector</a> {</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>  DEFAULT_CONSTRUCTIBLE(<a class="code hl_class" href="../../da/d83/classVIPRA_1_1Behaviors_1_1TargetSelector.html">TargetSelector</a>)</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>  COPYABLE(<a class="code hl_class" href="../../da/d83/classVIPRA_1_1Behaviors_1_1TargetSelector.html">TargetSelector</a>)</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>  MOVEABLE(<a class="code hl_class" href="../../da/d83/classVIPRA_1_1Behaviors_1_1TargetSelector.html">TargetSelector</a>)</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>  <span class="keyword">explicit</span> <a class="code hl_class" href="../../da/d83/classVIPRA_1_1Behaviors_1_1TargetSelector.html">TargetSelector</a>(TargetFunc&amp;&amp; func) : _select(func) {}</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>  <span class="keyword">explicit</span> <a class="code hl_class" href="../../da/d83/classVIPRA_1_1Behaviors_1_1TargetSelector.html">TargetSelector</a>(targetfunc_t&amp;&amp; func) : _select(func) {}</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>  <span class="keywordtype">void</span> get_targets(<span class="keyword">auto</span> pack, <span class="keyword">const</span> VIPRA::idxVec&amp; peds, std::vector&lt;Target&gt;&amp; targets)</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>  {</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keywordflow">if</span> ( ! _select ) {</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>      std::for_each(peds.begin(), peds.end(), [&amp;](<span class="keyword">auto</span> idx) {</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        targets[idx] = Target{TargetType::PEDESTRIAN, idx};</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>      });</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>      <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    }</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    std::for_each(peds.begin(), peds.end(), [&amp;](<span class="keyword">auto</span> idx) {</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>      targets[idx] = _select.value()(pack, Self{Target{TargetType::PEDESTRIAN, idx}});</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    });</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>  }</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  std::optional&lt;targetfunc_t&gt; _select;</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>};</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>  <span class="keywordtype">void</span> get_targets(<a class="code hl_struct" href="../../df/d0a/structVIPRA_1_1Behaviors_1_1Simpack.html">Simpack</a> pack, <span class="keyword">const</span> VIPRA::idxVec&amp; peds,</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>                   std::vector&lt;Target&gt;&amp; targets)</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>  {</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keywordflow">if</span> ( ! _select ) {</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>      std::for_each(peds.begin(), peds.end(), [&amp;](<span class="keyword">auto</span> idx) {</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        targets[idx] = Target{TargetType::PEDESTRIAN, idx};</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>      });</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>      <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    }</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    std::for_each(peds.begin(), peds.end(), [&amp;](<span class="keyword">auto</span> idx) {</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>      targets[idx] =</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>          _select.value()(pack, Self{Target{TargetType::PEDESTRIAN, idx}});</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    });</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>  }</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  std::optional&lt;TargetFunc&gt; _select;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>};</div>
 </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>}  <span class="comment">// namespace VIPRA::Behaviors</span></div>
-<div class="ttc" id="aclassVIPRA_1_1Behaviors_1_1TargetSelector_html"><div class="ttname"><a href="../../da/d83/classVIPRA_1_1Behaviors_1_1TargetSelector.html">VIPRA::Behaviors::TargetSelector</a></div><div class="ttdoc">Used to grab a target for either conditions or actions.</div><div class="ttdef"><b>Definition</b> target_selector.hpp:16</div></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>}  <span class="comment">// namespace VIPRA::Behaviors</span></div>
+<div class="ttc" id="aclassVIPRA_1_1Behaviors_1_1TargetSelector_html"><div class="ttname"><a href="../../da/d83/classVIPRA_1_1Behaviors_1_1TargetSelector.html">VIPRA::Behaviors::TargetSelector</a></div><div class="ttdoc">Used to grab a target for either conditions or actions.</div><div class="ttdef"><b>Definition</b> target_selector.hpp:13</div></div>
+<div class="ttc" id="astructVIPRA_1_1Behaviors_1_1Simpack_html"><div class="ttname"><a href="../../df/d0a/structVIPRA_1_1Behaviors_1_1Simpack.html">VIPRA::Behaviors::Simpack</a></div><div class="ttdoc">Holds references to commonly used parameters for simpler passing.</div><div class="ttdef"><b>Definition</b> sim_pack.hpp:23</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

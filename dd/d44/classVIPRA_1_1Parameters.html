@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>VIPRA Documentation: VIPRA::Parameters&lt; input_t &gt; Class Template Reference</title>
+<title>VIPRA Documentation: VIPRA::Parameters Class Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -91,46 +91,41 @@ $(function(){ initResizable(false); });
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="../../d1/d0b/classVIPRA_1_1Parameters-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">VIPRA::Parameters&lt; input_t &gt; Class Template Reference</div></div>
+  <div class="headertitle"><div class="title">VIPRA::Parameters Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a7e436a452a24ef7fb889e84a56e70cc6" id="r_a7e436a452a24ef7fb889e84a56e70cc6"><td class="memItemLeft" align="right" valign="top"><a id="a7e436a452a24ef7fb889e84a56e70cc6" name="a7e436a452a24ef7fb889e84a56e70cc6"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Parameters</b> (input_t &amp;&amp;input)</td></tr>
-<tr class="separator:a7e436a452a24ef7fb889e84a56e70cc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab9780e121363bd78934faf3bca16255e" id="r_ab9780e121363bd78934faf3bca16255e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab9780e121363bd78934faf3bca16255e">reset</a> ()</td></tr>
-<tr class="memdesc:ab9780e121363bd78934faf3bca16255e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the parameters, does NOT reset the input module.  <br /></td></tr>
-<tr class="separator:ab9780e121363bd78934faf3bca16255e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16cb849b6f7a63cb5387711e35b66289" id="r_a16cb849b6f7a63cb5387711e35b66289"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a16cb849b6f7a63cb5387711e35b66289">register_param</a> (Modules::Type module, std::string const &amp;moduleName, std::string const &amp;paramName)</td></tr>
-<tr class="memdesc:a16cb849b6f7a63cb5387711e35b66289"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a parameter for a module.  <br /></td></tr>
-<tr class="separator:a16cb849b6f7a63cb5387711e35b66289"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a729b7823a7127dbea3afe3e798a48968" id="r_a729b7823a7127dbea3afe3e798a48968"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a729b7823a7127dbea3afe3e798a48968">has_param</a> (Modules::Type module, std::string const &amp;moduleName, std::string const &amp;paramName) const -&gt; bool</td></tr>
-<tr class="memdesc:a729b7823a7127dbea3afe3e798a48968"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the parameter exists, otherwise false.  <br /></td></tr>
-<tr class="separator:a729b7823a7127dbea3afe3e798a48968"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa550487a4e00ae3c015acc2a729c2442" id="r_aa550487a4e00ae3c015acc2a729c2442"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa550487a4e00ae3c015acc2a729c2442">has_required_param</a> (Modules::Type module, std::string const &amp;moduleName, std::string const &amp;paramName) const -&gt; bool</td></tr>
-<tr class="memdesc:aa550487a4e00ae3c015acc2a729c2442"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the parameter exists, otherwise false.  <br /></td></tr>
-<tr class="separator:aa550487a4e00ae3c015acc2a729c2442"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab437221707fb6b52bf85f6e85618dcfe" id="r_ab437221707fb6b52bf85f6e85618dcfe"><td class="memItemLeft" align="right" valign="top"><a id="ab437221707fb6b52bf85f6e85618dcfe" name="ab437221707fb6b52bf85f6e85618dcfe"></a>
-auto&#160;</td><td class="memItemRight" valign="bottom"><b>get_input</b> () -&gt; input_t &amp;</td></tr>
-<tr class="separator:ab437221707fb6b52bf85f6e85618dcfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae966b401dc823b1ad95c770f50b1dfbf" id="r_ae966b401dc823b1ad95c770f50b1dfbf"><td class="memTemplParams" colspan="2">template&lt;typename data_t &gt; </td></tr>
-<tr class="memitem:ae966b401dc823b1ad95c770f50b1dfbf"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ae966b401dc823b1ad95c770f50b1dfbf">get_param</a> (Modules::Type module, std::string const &amp;moduleName, std::string const &amp;paramName, <a class="el" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">Random::Engine</a> &amp;engine) const -&gt; std::remove_cvref_t&lt; data_t &gt;</td></tr>
-<tr class="memdesc:ae966b401dc823b1ad95c770f50b1dfbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the value of the parameter if it exists, otherwise throws an error.  <br /></td></tr>
-<tr class="separator:ae966b401dc823b1ad95c770f50b1dfbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa59512c39072e5e48c4effbca95fee7f" id="r_aa59512c39072e5e48c4effbca95fee7f"><td class="memItemLeft" align="right" valign="top"><a id="aa59512c39072e5e48c4effbca95fee7f" name="aa59512c39072e5e48c4effbca95fee7f"></a>
+<tr class="memitem:af8e58953d73fdb789fe45e5b6bf03333" id="r_af8e58953d73fdb789fe45e5b6bf03333"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af8e58953d73fdb789fe45e5b6bf03333">reset</a> ()</td></tr>
+<tr class="memdesc:af8e58953d73fdb789fe45e5b6bf03333"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the parameters, does NOT reset the input module.  <br /></td></tr>
+<tr class="separator:af8e58953d73fdb789fe45e5b6bf03333"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1be446b13aec66b4c2dd3c09e47f0ad" id="r_aa1be446b13aec66b4c2dd3c09e47f0ad"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa1be446b13aec66b4c2dd3c09e47f0ad">register_param</a> (Modules::Type module, std::string const &amp;moduleName, std::string const &amp;paramName)</td></tr>
+<tr class="memdesc:aa1be446b13aec66b4c2dd3c09e47f0ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a parameter for a module.  <br /></td></tr>
+<tr class="separator:aa1be446b13aec66b4c2dd3c09e47f0ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a25519b3c0cdf2e735a946c3e64560def" id="r_a25519b3c0cdf2e735a946c3e64560def"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a25519b3c0cdf2e735a946c3e64560def">has_param</a> (Modules::Type module, std::string const &amp;moduleName, std::string const &amp;paramName) const -&gt; bool</td></tr>
+<tr class="memdesc:a25519b3c0cdf2e735a946c3e64560def"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the parameter exists, otherwise false.  <br /></td></tr>
+<tr class="separator:a25519b3c0cdf2e735a946c3e64560def"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b2819c6103bb596dc1b2d0e1c801bf1" id="r_a3b2819c6103bb596dc1b2d0e1c801bf1"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3b2819c6103bb596dc1b2d0e1c801bf1">has_required_param</a> (Modules::Type module, std::string const &amp;moduleName, std::string const &amp;paramName) const -&gt; bool</td></tr>
+<tr class="memdesc:a3b2819c6103bb596dc1b2d0e1c801bf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the parameter exists, otherwise false.  <br /></td></tr>
+<tr class="separator:a3b2819c6103bb596dc1b2d0e1c801bf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4437dc0679576a10d7feb8fa02c1056" id="r_ae4437dc0679576a10d7feb8fa02c1056"><td class="memItemLeft" align="right" valign="top"><a id="ae4437dc0679576a10d7feb8fa02c1056" name="ae4437dc0679576a10d7feb8fa02c1056"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>get_input</b> () -&gt; <a class="el" href="../../d1/d4b/classVIPRA_1_1Input_1_1JSON.html">VIPRA::Input::JSON</a> &amp;</td></tr>
+<tr class="separator:ae4437dc0679576a10d7feb8fa02c1056"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62b2d0787aa4766e22f6d847fd2468ed" id="r_a62b2d0787aa4766e22f6d847fd2468ed"><td class="memItemLeft" align="right" valign="top"><a id="a62b2d0787aa4766e22f6d847fd2468ed" name="a62b2d0787aa4766e22f6d847fd2468ed"></a>
 auto&#160;</td><td class="memItemRight" valign="bottom"><b>get_used_parameters</b> () const -&gt; std::string</td></tr>
-<tr class="separator:aa59512c39072e5e48c4effbca95fee7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a62b2d0787aa4766e22f6d847fd2468ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70910ba99fef727ac83eab24dfe55545" id="r_a70910ba99fef727ac83eab24dfe55545"><td class="memTemplParams" colspan="2">template&lt;typename data_t &gt; </td></tr>
+<tr class="memitem:a70910ba99fef727ac83eab24dfe55545"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a70910ba99fef727ac83eab24dfe55545">get_param</a> (Modules::Type module, std::string const &amp;moduleName, std::string const &amp;paramName, <a class="el" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">Random::Engine</a> &amp;engine) const -&gt; std::remove_cvref_t&lt; data_t &gt;</td></tr>
+<tr class="memdesc:a70910ba99fef727ac83eab24dfe55545"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the value of the parameter if it exists, otherwise throws an error.  <br /></td></tr>
+<tr class="separator:a70910ba99fef727ac83eab24dfe55545"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ae966b401dc823b1ad95c770f50b1dfbf" name="ae966b401dc823b1ad95c770f50b1dfbf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae966b401dc823b1ad95c770f50b1dfbf">&#9670;&#160;</a></span>get_param()</h2>
+<a id="a70910ba99fef727ac83eab24dfe55545" name="a70910ba99fef727ac83eab24dfe55545"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70910ba99fef727ac83eab24dfe55545">&#9670;&#160;</a></span>get_param()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename input_t &gt; </div>
 <div class="memtemplate">
 template&lt;typename data_t &gt; </div>
 <table class="mlabels">
@@ -138,7 +133,7 @@ template&lt;typename data_t &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../dd/d44/classVIPRA_1_1Parameters.html">VIPRA::Parameters</a>&lt; input_t &gt;::get_param </td>
+          <td class="memname">auto VIPRA::Parameters::get_param </td>
           <td>(</td>
           <td class="paramtype">Modules::Type</td>          <td class="paramname"><span class="paramname"><em>module</em></span>, </td>
         </tr>
@@ -184,19 +179,17 @@ template&lt;typename data_t &gt; </div>
 
 </div>
 </div>
-<a id="a729b7823a7127dbea3afe3e798a48968" name="a729b7823a7127dbea3afe3e798a48968"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a729b7823a7127dbea3afe3e798a48968">&#9670;&#160;</a></span>has_param()</h2>
+<a id="a25519b3c0cdf2e735a946c3e64560def" name="a25519b3c0cdf2e735a946c3e64560def"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25519b3c0cdf2e735a946c3e64560def">&#9670;&#160;</a></span>has_param()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename input_t &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../dd/d44/classVIPRA_1_1Parameters.html">VIPRA::Parameters</a>&lt; input_t &gt;::has_param </td>
+          <td class="memname">auto VIPRA::Parameters::has_param </td>
           <td>(</td>
           <td class="paramtype">Modules::Type</td>          <td class="paramname"><span class="paramname"><em>module</em></span>, </td>
         </tr>
@@ -233,19 +226,17 @@ false </dd></dl>
 
 </div>
 </div>
-<a id="aa550487a4e00ae3c015acc2a729c2442" name="aa550487a4e00ae3c015acc2a729c2442"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa550487a4e00ae3c015acc2a729c2442">&#9670;&#160;</a></span>has_required_param()</h2>
+<a id="a3b2819c6103bb596dc1b2d0e1c801bf1" name="a3b2819c6103bb596dc1b2d0e1c801bf1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b2819c6103bb596dc1b2d0e1c801bf1">&#9670;&#160;</a></span>has_required_param()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename input_t &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../dd/d44/classVIPRA_1_1Parameters.html">VIPRA::Parameters</a>&lt; input_t &gt;::has_required_param </td>
+          <td class="memname">auto VIPRA::Parameters::has_required_param </td>
           <td>(</td>
           <td class="paramtype">Modules::Type</td>          <td class="paramname"><span class="paramname"><em>module</em></span>, </td>
         </tr>
@@ -282,16 +273,14 @@ false </dd></dl>
 
 </div>
 </div>
-<a id="a16cb849b6f7a63cb5387711e35b66289" name="a16cb849b6f7a63cb5387711e35b66289"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a16cb849b6f7a63cb5387711e35b66289">&#9670;&#160;</a></span>register_param()</h2>
+<a id="aa1be446b13aec66b4c2dd3c09e47f0ad" name="aa1be446b13aec66b4c2dd3c09e47f0ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1be446b13aec66b4c2dd3c09e47f0ad">&#9670;&#160;</a></span>register_param()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename input_t &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../dd/d44/classVIPRA_1_1Parameters.html">VIPRA::Parameters</a>&lt; input_t &gt;::register_param </td>
+          <td class="memname">void VIPRA::Parameters::register_param </td>
           <td>(</td>
           <td class="paramtype">Modules::Type</td>          <td class="paramname"><span class="paramname"><em>module</em></span>, </td>
         </tr>
@@ -328,16 +317,14 @@ template&lt;typename input_t &gt; </div>
 
 </div>
 </div>
-<a id="ab9780e121363bd78934faf3bca16255e" name="ab9780e121363bd78934faf3bca16255e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab9780e121363bd78934faf3bca16255e">&#9670;&#160;</a></span>reset()</h2>
+<a id="af8e58953d73fdb789fe45e5b6bf03333" name="af8e58953d73fdb789fe45e5b6bf03333"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8e58953d73fdb789fe45e5b6bf03333">&#9670;&#160;</a></span>reset()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename input_t &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../dd/d44/classVIPRA_1_1Parameters.html">VIPRA::Parameters</a>&lt; input_t &gt;::reset </td>
+          <td class="memname">void VIPRA::Parameters::reset </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -348,15 +335,16 @@ template&lt;typename input_t &gt; </div>
 <p>Clears the parameters, does NOT reset the input module. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">input_t</td><td></td></tr>
+    <tr><td class="paramname">VIPRA::Input::JSON</td><td></td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/vipra/special_modules/<a class="el" href="../../d3/d7d/special__modules_2parameters_8hpp_source.html">parameters.hpp</a></li>
+<li>src/<b>parameters.cpp</b></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

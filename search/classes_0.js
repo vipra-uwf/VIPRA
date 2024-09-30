@@ -14,8 +14,9 @@ var searchData=
   ['arg_5fref_11',['arg_ref',['../d1/db2/structdetail_1_1arg__ref.html',1,'detail']]],
   ['arg_5fref_3c_20char_20_3e_12',['arg_ref&lt; char &gt;',['../d1/db2/structdetail_1_1arg__ref.html',1,'detail']]],
   ['args_13',['Args',['../de/d93/classVIPRA_1_1Args.html',1,'VIPRA']]],
-  ['atomscale_14',['AtomScale',['../db/df8/structVIPRA_1_1Behaviors_1_1AtomScale.html',1,'VIPRA::Behaviors']]],
-  ['atomset_15',['AtomSet',['../d8/ddd/structVIPRA_1_1Behaviors_1_1AtomSet.html',1,'VIPRA::Behaviors']]],
-  ['attributehandling_16',['AttributeHandling',['../d7/d93/classVIPRA_1_1Behaviors_1_1AttributeHandling.html',1,'VIPRA::Behaviors']]],
-  ['attributevalue_17',['AttributeValue',['../d6/d24/structVIPRA_1_1Behaviors_1_1AttributeValue.html',1,'VIPRA::Behaviors']]]
+  ['astar_14',['AStar',['../d8/d10/classVIPRA_1_1Goals_1_1AStar.html',1,'VIPRA::Goals']]],
+  ['atomscale_15',['AtomScale',['../db/df8/structVIPRA_1_1Behaviors_1_1AtomScale.html',1,'VIPRA::Behaviors']]],
+  ['atomset_16',['AtomSet',['../d8/ddd/structVIPRA_1_1Behaviors_1_1AtomSet.html',1,'VIPRA::Behaviors']]],
+  ['attributehandling_17',['AttributeHandling',['../d7/d93/classVIPRA_1_1Behaviors_1_1AttributeHandling.html',1,'VIPRA::Behaviors']]],
+  ['attributevalue_18',['AttributeValue',['../d6/d24/structVIPRA_1_1Behaviors_1_1AttributeValue.html',1,'VIPRA::Behaviors']]]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>VIPRA Documentation: VIPRA::Modules::Output&lt; module_t &gt; Class Template Reference</title>
+<title>VIPRA Documentation: VIPRA::Modules::Output Class Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -90,9 +90,8 @@ $(function(){ initResizable(false); });
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="../../de/db2/classVIPRA_1_1Modules_1_1Output-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">VIPRA::Modules::Output&lt; module_t &gt; Class Template Reference</div></div>
+  <div class="headertitle"><div class="title">VIPRA::Modules::Output Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -101,57 +100,39 @@ $(function(){ initResizable(false); });
 
 <p><code>#include &lt;<a class="el" href="../../dd/df7/modules_2output_8hpp_source.html">output.hpp</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for VIPRA::Modules::Output&lt; module_t &gt;:</div>
+Inheritance diagram for VIPRA::Modules::Output:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../dd/d3c/classVIPRA_1_1Modules_1_1Output__inherit__graph.png" border="0" usemap="#aVIPRA_1_1Modules_1_1Output_3_01module__t_01_4_inherit__map" alt="Inheritance graph"/></div>
-<map name="aVIPRA_1_1Modules_1_1Output_3_01module__t_01_4_inherit__map" id="aVIPRA_1_1Modules_1_1Output_3_01module__t_01_4_inherit__map">
-<area shape="rect" title="Base Output module." alt="" coords="5,94,167,135"/>
-<area shape="rect" href="../../da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="11,5,161,46"/>
-<area shape="poly" title=" " alt="" coords="89,62,89,94,83,94,83,62"/>
-</map>
-<center><span class="legend">[<a href="../../graph_legend.html">legend</a>]</span></center></div>
-<div class="dynheader">
-Collaboration diagram for VIPRA::Modules::Output&lt; module_t &gt;:</div>
-<div class="dyncontent">
-<div class="center"><img src="../../d4/d34/classVIPRA_1_1Modules_1_1Output__coll__graph.png" border="0" usemap="#aVIPRA_1_1Modules_1_1Output_3_01module__t_01_4_coll__map" alt="Collaboration graph"/></div>
-<map name="aVIPRA_1_1Modules_1_1Output_3_01module__t_01_4_coll__map" id="aVIPRA_1_1Modules_1_1Output_3_01module__t_01_4_coll__map">
-<area shape="rect" title="Base Output module." alt="" coords="5,94,167,135"/>
-<area shape="rect" href="../../da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="11,5,161,46"/>
-<area shape="poly" title=" " alt="" coords="89,62,89,94,83,94,83,62"/>
+<div class="center"><img src="../../dd/d3c/classVIPRA_1_1Modules_1_1Output__inherit__graph.png" border="0" usemap="#aVIPRA_1_1Modules_1_1Output_inherit__map" alt="Inheritance graph"/></div>
+<map name="aVIPRA_1_1Modules_1_1Output_inherit__map" id="aVIPRA_1_1Modules_1_1Output_inherit__map">
+<area shape="rect" title="Base Output module." alt="" coords="29,5,190,31"/>
+<area shape="rect" href="../../d0/deb/classVIPRA_1_1Output_1_1TrajectoriesJson.html" title="JSON output module for writing trajectories to a JSON file." alt="" coords="5,79,214,105"/>
+<area shape="poly" title=" " alt="" coords="112,46,112,79,107,79,107,46"/>
 </map>
 <center><span class="legend">[<a href="../../graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a41dbf770ef10c4c45e0320c3e3ec7830" id="r_a41dbf770ef10c4c45e0320c3e3ec7830"><td class="memItemLeft" align="right" valign="top"><a id="a41dbf770ef10c4c45e0320c3e3ec7830" name="a41dbf770ef10c4c45e0320c3e3ec7830"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>write</b> (std::filesystem::path const &amp;outputDir)</td></tr>
-<tr class="separator:a41dbf770ef10c4c45e0320c3e3ec7830"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0314f5dc21a8a2807d04ba3603c4dad" id="r_af0314f5dc21a8a2807d04ba3603c4dad"><td class="memTemplParams" colspan="2"><a id="af0314f5dc21a8a2807d04ba3603c4dad" name="af0314f5dc21a8a2807d04ba3603c4dad"></a>
-template&lt;typename data_t &gt; </td></tr>
-<tr class="memitem:af0314f5dc21a8a2807d04ba3603c4dad"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>sim_value</b> (std::string const &amp;key, data_t &amp;&amp;value)</td></tr>
-<tr class="separator:af0314f5dc21a8a2807d04ba3603c4dad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe4dff777dfd4629b21361d8ae379072" id="r_abe4dff777dfd4629b21361d8ae379072"><td class="memTemplParams" colspan="2"><a id="abe4dff777dfd4629b21361d8ae379072" name="abe4dff777dfd4629b21361d8ae379072"></a>
-template&lt;typename data_t &gt; </td></tr>
-<tr class="memitem:abe4dff777dfd4629b21361d8ae379072"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>timestep_value</b> (std::string const &amp;key, VIPRA::idx timestep, data_t &amp;&amp;value)</td></tr>
-<tr class="separator:abe4dff777dfd4629b21361d8ae379072"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15b913fac41c3a0af83564f8e549ce4c" id="r_a15b913fac41c3a0af83564f8e549ce4c"><td class="memTemplParams" colspan="2"><a id="a15b913fac41c3a0af83564f8e549ce4c" name="a15b913fac41c3a0af83564f8e549ce4c"></a>
-template&lt;typename data_t &gt; </td></tr>
-<tr class="memitem:a15b913fac41c3a0af83564f8e549ce4c"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>ped_value</b> (VIPRA::idx pedIdx, std::string const &amp;key, data_t &amp;&amp;value)</td></tr>
-<tr class="separator:a15b913fac41c3a0af83564f8e549ce4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5c7f604f09a3ac305c7e3b867bab5dcb" id="r_a5c7f604f09a3ac305c7e3b867bab5dcb"><td class="memTemplParams" colspan="2"><a id="a5c7f604f09a3ac305c7e3b867bab5dcb" name="a5c7f604f09a3ac305c7e3b867bab5dcb"></a>
-template&lt;typename data_t &gt; </td></tr>
-<tr class="memitem:a5c7f604f09a3ac305c7e3b867bab5dcb"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>ped_timestep_value</b> (VIPRA::idx pedIdx, VIPRA::idx timestep, std::string const &amp;key, data_t &amp;&amp;value)</td></tr>
-<tr class="separator:a5c7f604f09a3ac305c7e3b867bab5dcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a70d4cccc6ba2baa67bff1155bec5855d" id="r_a70d4cccc6ba2baa67bff1155bec5855d"><td class="memItemLeft" align="right" valign="top"><a id="a70d4cccc6ba2baa67bff1155bec5855d" name="a70d4cccc6ba2baa67bff1155bec5855d"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>FORWARD_REGISTER_PARAMS</b></td></tr>
-<tr class="separator:a70d4cccc6ba2baa67bff1155bec5855d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7a5df97e1c91de80abb939a10426715" id="r_ab7a5df97e1c91de80abb939a10426715"><td class="memItemLeft" align="right" valign="top"><a id="ab7a5df97e1c91de80abb939a10426715" name="ab7a5df97e1c91de80abb939a10426715"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>write</b> (std::filesystem::path const &amp;outputDir)=0</td></tr>
+<tr class="separator:ab7a5df97e1c91de80abb939a10426715"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63ee952e0c7914ea52f15cb1827fb8ac" id="r_a63ee952e0c7914ea52f15cb1827fb8ac"><td class="memItemLeft" align="right" valign="top"><a id="a63ee952e0c7914ea52f15cb1827fb8ac" name="a63ee952e0c7914ea52f15cb1827fb8ac"></a>
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>timestep_update</b> (VIPRA::timestep, VIPRA::delta_t, <a class="el" href="../../d4/da2/structVIPRA_1_1State.html">VIPRA::State</a> const &amp;)=0</td></tr>
+<tr class="separator:a63ee952e0c7914ea52f15cb1827fb8ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a385af227e1b018acd2c925aab8339339" id="r_a385af227e1b018acd2c925aab8339339"><td class="memItemLeft" align="right" valign="top"><a id="a385af227e1b018acd2c925aab8339339" name="a385af227e1b018acd2c925aab8339339"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Output</b> (const <a class="el" href="../../d4/de8/classVIPRA_1_1Modules_1_1Output.html">Output</a> &amp;)=default</td></tr>
+<tr class="separator:a385af227e1b018acd2c925aab8339339"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecceda13cd9f71fb5d03c81548a4e73e" id="r_aecceda13cd9f71fb5d03c81548a4e73e"><td class="memItemLeft" align="right" valign="top"><a id="aecceda13cd9f71fb5d03c81548a4e73e" name="aecceda13cd9f71fb5d03c81548a4e73e"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Output</b> (<a class="el" href="../../d4/de8/classVIPRA_1_1Modules_1_1Output.html">Output</a> &amp;&amp;)=delete</td></tr>
+<tr class="separator:aecceda13cd9f71fb5d03c81548a4e73e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ff42f0076f0d3aa6415de2785553a12" id="r_a3ff42f0076f0d3aa6415de2785553a12"><td class="memItemLeft" align="right" valign="top"><a id="a3ff42f0076f0d3aa6415de2785553a12" name="a3ff42f0076f0d3aa6415de2785553a12"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="../../d4/de8/classVIPRA_1_1Modules_1_1Output.html">Output</a> &amp;) -&gt; <a class="el" href="../../d4/de8/classVIPRA_1_1Modules_1_1Output.html">Output</a> &amp;=default</td></tr>
+<tr class="separator:a3ff42f0076f0d3aa6415de2785553a12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af87fd2c361d5a6d82cf1865942f3e89f" id="r_af87fd2c361d5a6d82cf1865942f3e89f"><td class="memItemLeft" align="right" valign="top"><a id="af87fd2c361d5a6d82cf1865942f3e89f" name="af87fd2c361d5a6d82cf1865942f3e89f"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="../../d4/de8/classVIPRA_1_1Modules_1_1Output.html">Output</a> &amp;&amp;) -&gt; <a class="el" href="../../d4/de8/classVIPRA_1_1Modules_1_1Output.html">Output</a> &amp;=delete</td></tr>
+<tr class="separator:af87fd2c361d5a6d82cf1865942f3e89f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename module_t&gt;<br />
-class VIPRA::Modules::Output&lt; module_t &gt;</div><p>Base Output module. </p>
+<div class="textblock"><p>Base Output module. </p>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/vipra/modules/<a class="el" href="../../dd/df7/modules_2output_8hpp_source.html">output.hpp</a></li>
 </ul>

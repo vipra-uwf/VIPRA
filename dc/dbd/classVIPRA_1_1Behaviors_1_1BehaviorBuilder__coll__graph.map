@@ -1,5 +1,5 @@
-<map id="VIPRA::Behaviors::BehaviorBuilder&lt; pedset_t, map_t, goals_t &gt;" name="VIPRA::Behaviors::BehaviorBuilder&lt; pedset_t, map_t, goals_t &gt;">
-<area shape="rect" id="Node000001" title="Parses Behavior Files and Creates the Runtime Functionality they describe." alt="" coords="5,79,188,135"/>
+<map id="VIPRA::Behaviors::BehaviorBuilder" name="VIPRA::Behaviors::BehaviorBuilder">
+<area shape="rect" id="Node000001" title="Parses Behavior Files and Creates the Runtime Functionality they describe." alt="" coords="5,79,188,120"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="27,5,166,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="99,47,99,78,94,78,94,47"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="99,46,99,79,94,79,94,46"/>
 </map>

@@ -1,5 +1,5 @@
-<map id="VIPRA::Modules::Model&lt; class_t &gt;" name="VIPRA::Modules::Model&lt; class_t &gt;">
-<area shape="rect" id="Node000001" title="Base Model module." alt="" coords="5,94,163,135"/>
-<area shape="rect" id="Node000002" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="16,5,152,46"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,62,87,94,81,94,81,62"/>
+<map id="VIPRA::Modules::Model" name="VIPRA::Modules::Model">
+<area shape="rect" id="Node000001" title="Base Model module." alt="" coords="5,5,163,31"/>
+<area shape="rect" id="Node000002" href="$d8/d42/classModel_1_1Calm.html" title=" " alt="" coords="38,79,130,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,46,87,79,81,79,81,46"/>
 </map>

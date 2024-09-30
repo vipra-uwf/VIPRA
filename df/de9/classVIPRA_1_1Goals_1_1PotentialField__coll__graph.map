@@ -1,0 +1,9 @@
+<map id="VIPRA::Goals::PotentialField" name="VIPRA::Goals::PotentialField">
+<area shape="rect" id="Node000001" title=" " alt="" coords="93,183,280,208"/>
+<area shape="rect" id="Node000002" href="$dc/dab/classVIPRA_1_1Modules_1_1Module.html" title=" " alt="" coords="12,94,177,135"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="131,143,174,180,171,184,127,147"/>
+<area shape="rect" id="Node000003" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="5,5,184,46"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="97,62,97,94,92,94,92,62"/>
+<area shape="rect" id="Node000004" href="$d7/dd4/classVIPRA_1_1Modules_1_1Goals.html" title="Goals module mixin." alt="" coords="200,102,357,127"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="255,139,202,184,199,180,251,135"/>
+</map>

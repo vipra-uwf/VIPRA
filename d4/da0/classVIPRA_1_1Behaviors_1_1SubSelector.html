@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>VIPRA Documentation: VIPRA::Behaviors::SubSelector&lt; selector_t, cond_t &gt; Class Template Reference</title>
+<title>VIPRA Documentation: VIPRA::Behaviors::SubSelector Class Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -92,7 +92,7 @@ $(function(){ initResizable(false); });
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="../../db/d80/classVIPRA_1_1Behaviors_1_1SubSelector-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">VIPRA::Behaviors::SubSelector&lt; selector_t, cond_t &gt; Class Template Reference</div></div>
+  <div class="headertitle"><div class="title">VIPRA::Behaviors::SubSelector Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -101,40 +101,39 @@ $(function(){ initResizable(false); });
 
 <p><code>#include &lt;<a class="el" href="../../d4/d3c/subselector_8hpp_source.html">subselector.hpp</a>&gt;</code></p>
 <div class="dynheader">
-Collaboration diagram for VIPRA::Behaviors::SubSelector&lt; selector_t, cond_t &gt;:</div>
+Collaboration diagram for VIPRA::Behaviors::SubSelector:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d8/daa/classVIPRA_1_1Behaviors_1_1SubSelector__coll__graph.png" border="0" usemap="#aVIPRA_1_1Behaviors_1_1SubSelector_3_01selector__t_00_01cond__t_01_4_coll__map" alt="Collaboration graph"/></div>
-<map name="aVIPRA_1_1Behaviors_1_1SubSelector_3_01selector__t_00_01cond__t_01_4_coll__map" id="aVIPRA_1_1Behaviors_1_1SubSelector_3_01selector__t_00_01cond__t_01_4_coll__map">
-<area shape="rect" title="Selects pedestrians for one type, gets combined with other SubSelectors in Selector." alt="" coords="5,94,208,135"/>
+<div class="center"><img src="../../d8/daa/classVIPRA_1_1Behaviors_1_1SubSelector__coll__graph.png" border="0" usemap="#aVIPRA_1_1Behaviors_1_1SubSelector_coll__map" alt="Collaboration graph"/></div>
+<map name="aVIPRA_1_1Behaviors_1_1SubSelector_coll__map" id="aVIPRA_1_1Behaviors_1_1SubSelector_coll__map">
+<area shape="rect" title="Selects pedestrians for one type, gets combined with other SubSelectors in Selector." alt="" coords="5,94,208,120"/>
 <area shape="rect" href="../../db/dbc/classVIPRA_1_1Behaviors_1_1Ptype.html" title="Pedestrian Type, used as a composite of typeUIDs." alt="" coords="24,5,189,31"/>
-<area shape="poly" title=" " alt="" coords="109,46,109,93,104,93,104,46"/>
+<area shape="poly" title=" " alt="" coords="109,47,109,94,104,94,104,47"/>
 </map>
 <center><span class="legend">[<a href="../../graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a81915c06c8acd11d0c8f0ed2b777583a" id="r_a81915c06c8acd11d0c8f0ed2b777583a"><td class="memItemLeft" align="right" valign="top"><a id="a81915c06c8acd11d0c8f0ed2b777583a" name="a81915c06c8acd11d0c8f0ed2b777583a"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>SubSelector</b> (typeUID grp, <a class="el" href="../../db/dbc/classVIPRA_1_1Behaviors_1_1Ptype.html">Ptype</a> typ, bool req, selector_t sel)</td></tr>
-<tr class="separator:a81915c06c8acd11d0c8f0ed2b777583a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fa228e3d7d37e5f4ebe285d95a750b2" id="r_a6fa228e3d7d37e5f4ebe285d95a750b2"><td class="memItemLeft" align="right" valign="top"><a id="a6fa228e3d7d37e5f4ebe285d95a750b2" name="a6fa228e3d7d37e5f4ebe285d95a750b2"></a>
+<tr class="memitem:a513af512b5c53a92e5660711756ae690" id="r_a513af512b5c53a92e5660711756ae690"><td class="memItemLeft" align="right" valign="top"><a id="a513af512b5c53a92e5660711756ae690" name="a513af512b5c53a92e5660711756ae690"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>SubSelector</b> (typeUID grp, <a class="el" href="../../db/dbc/classVIPRA_1_1Behaviors_1_1Ptype.html">Ptype</a> typ, bool req, SelectorFunc sel)</td></tr>
+<tr class="separator:a513af512b5c53a92e5660711756ae690"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8cd891f4fa14ac561569e6fdcd4be74" id="r_af8cd891f4fa14ac561569e6fdcd4be74"><td class="memItemLeft" align="right" valign="top"><a id="af8cd891f4fa14ac561569e6fdcd4be74" name="af8cd891f4fa14ac561569e6fdcd4be74"></a>
 auto&#160;</td><td class="memItemRight" valign="bottom"><b>select_peds</b> (const VIPRA::idxVec &amp;totalGroup, const VIPRA::idxVec &amp;usableGroup, auto pack) -&gt; <a class="el" href="../../d9/de0/structVIPRA_1_1Behaviors_1_1SelectorResult.html">SelectorResult</a></td></tr>
-<tr class="separator:a6fa228e3d7d37e5f4ebe285d95a750b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:af8cd891f4fa14ac561569e6fdcd4be74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a3f9fd4396365a55b41080dd0ae42e6d0" id="r_a3f9fd4396365a55b41080dd0ae42e6d0"><td class="memItemLeft" align="right" valign="top"><a id="a3f9fd4396365a55b41080dd0ae42e6d0" name="a3f9fd4396365a55b41080dd0ae42e6d0"></a>
+<tr class="memitem:a8b6b9b0c80b3e05ae3d164257fcfab41" id="r_a8b6b9b0c80b3e05ae3d164257fcfab41"><td class="memItemLeft" align="right" valign="top"><a id="a8b6b9b0c80b3e05ae3d164257fcfab41" name="a8b6b9b0c80b3e05ae3d164257fcfab41"></a>
 typeUID&#160;</td><td class="memItemRight" valign="bottom"><b>group</b></td></tr>
-<tr class="separator:a3f9fd4396365a55b41080dd0ae42e6d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52e18317cfc83d1c4a8ba4ffa198772c" id="r_a52e18317cfc83d1c4a8ba4ffa198772c"><td class="memItemLeft" align="right" valign="top"><a id="a52e18317cfc83d1c4a8ba4ffa198772c" name="a52e18317cfc83d1c4a8ba4ffa198772c"></a>
+<tr class="separator:a8b6b9b0c80b3e05ae3d164257fcfab41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1fa6185a84b9a132a194e13aa8af1d6" id="r_af1fa6185a84b9a132a194e13aa8af1d6"><td class="memItemLeft" align="right" valign="top"><a id="af1fa6185a84b9a132a194e13aa8af1d6" name="af1fa6185a84b9a132a194e13aa8af1d6"></a>
 <a class="el" href="../../db/dbc/classVIPRA_1_1Behaviors_1_1Ptype.html">Ptype</a>&#160;</td><td class="memItemRight" valign="bottom"><b>type</b></td></tr>
-<tr class="separator:a52e18317cfc83d1c4a8ba4ffa198772c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94974944dbe2d9cad3d40b56f74d6ac5" id="r_a94974944dbe2d9cad3d40b56f74d6ac5"><td class="memItemLeft" align="right" valign="top"><a id="a94974944dbe2d9cad3d40b56f74d6ac5" name="a94974944dbe2d9cad3d40b56f74d6ac5"></a>
+<tr class="separator:af1fa6185a84b9a132a194e13aa8af1d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d559df1ac1a4a0f5860bbb6aae8f3a9" id="r_a6d559df1ac1a4a0f5860bbb6aae8f3a9"><td class="memItemLeft" align="right" valign="top"><a id="a6d559df1ac1a4a0f5860bbb6aae8f3a9" name="a6d559df1ac1a4a0f5860bbb6aae8f3a9"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>required</b></td></tr>
-<tr class="separator:a94974944dbe2d9cad3d40b56f74d6ac5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a6d559df1ac1a4a0f5860bbb6aae8f3a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename selector_t, typename cond_t&gt;<br />
-class VIPRA::Behaviors::SubSelector&lt; selector_t, cond_t &gt;</div><p>Selects pedestrians for one type, gets combined with other SubSelectors in Selector. </p>
+<div class="textblock"><p>Selects pedestrians for one type, gets combined with other SubSelectors in Selector. </p>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/vipra/vipra_behaviors/selectors/<a class="el" href="../../d4/d3c/subselector_8hpp_source.html">subselector.hpp</a></li>
 </ul>

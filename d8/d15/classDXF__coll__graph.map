@@ -1,0 +1,11 @@
+<map id="DXF" name="DXF">
+<area shape="rect" id="Node000001" title="Parameter and Polygon qualified dxf input module." alt="" coords="426,70,473,96"/>
+<area shape="rect" id="Node000002" href="$dc/dab/classVIPRA_1_1Modules_1_1Module.html" title=" " alt="" coords="202,5,366,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="361,49,379,55,426,72,425,77,377,60,359,54"/>
+<area shape="rect" id="Node000003" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="5,5,142,46"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="158,23,201,23,201,28,158,28"/>
+<area shape="rect" id="Node000004" href="$d5/d4f/classVIPRA_1_1Modules_1_1Serializable.html" title=" " alt="" coords="190,70,378,96"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="394,80,426,80,426,86,394,86"/>
+<area shape="rect" id="Node000005" href="$d4/d1e/classVIPRA_1_1Modules_1_1MapInput.html" title="Base MapInput Module." alt="" coords="196,120,372,145"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="354,112,377,106,425,89,427,94,379,111,356,118"/>
+</map>

@@ -1,3 +1,9 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$db/d30/classVIPRA_1_1Util_1_1CRTP_3_01class__t_3_01derived__t_01_4_01_4.html" title=" " alt="" coords="5,5,158,46"/>
+<area shape="rect" id="Node000000" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="5,5,169,46"/>
+<area shape="rect" id="Node000001" href="$dc/dab/classVIPRA_1_1Modules_1_1Module.html" title=" " alt="" coords="230,5,394,46"/>
+<area shape="poly" id="edge152_Node000000_Node000001" title=" " alt="" coords="184,23,230,23,230,28,184,28"/>
+<area shape="rect" id="Node000002" href="$d4/dc0/classVIPRA_1_1Pedestrians_1_1SpatialGrid.html" title="Pedestrian module that uses a grid to store pedestrians." alt="" coords="456,35,592,75"/>
+<area shape="poly" id="edge153_Node000001_Node000002" title=" " alt="" coords="411,37,456,43,455,48,410,42"/>
+<area shape="rect" id="Node000003" href="$d0/d2d/classVIPRA_1_1Modules_1_1Pedestrians.html" title="Base Pedestrians module." alt="" coords="217,70,408,96"/>
+<area shape="poly" id="edge154_Node000003_Node000002" title=" " alt="" coords="423,66,456,61,456,67,424,71"/>
 </map>

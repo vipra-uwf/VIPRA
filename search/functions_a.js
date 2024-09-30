@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['latch_0',['latch',['../d5/d12/classVIPRA_1_1Behaviors_1_1TimedLatchCollection.html#a5b22b1e0b1bc68a8ddce4d8479c02d63',1,'VIPRA::Behaviors::TimedLatchCollection']]],
-  ['linkimage_1',['linkImage',['../da/dea/classVIPRA_1_1DrwReader.html#a0d99d3c591d1d9a9af1321eeacd3cbff',1,'VIPRA::DrwReader']]],
-  ['load_5fimpl_2',['load_impl',['../d1/da4/classVIPRA_1_1Input_1_1DXF.html#adeab34950cbc30ad56cef4813c4201a0',1,'VIPRA::Input::DXF::load_impl()'],['../d1/d4b/classVIPRA_1_1Input_1_1JSON.html#a5782025a01f6efbcf9742f43cd546a1d',1,'VIPRA::Input::JSON::load_impl()']]]
+  ['mag_0',['mag',['../d8/d28/structVIPRA_1_1f3d.html#a5d073b75c4fccfa9be2245fc4967c71a',1,'VIPRA::f3d']]],
+  ['mag_5fsqrd_1',['mag_sqrd',['../d8/d28/structVIPRA_1_1f3d.html#a80310828f9e79e17c8828c4cf0ff65c2',1,'VIPRA::f3d']]],
+  ['master_5fdo_2',['master_do',['../d3/da4/classVIPRA_1_1ParameterSweep.html#aab5b92dc3debbd6755e42d0cbde28cef',1,'VIPRA::ParameterSweep']]],
+  ['max_3',['max',['../df/d63/classVIPRA_1_1Random_1_1Engine.html#a709ce38c547084a3a17861b8772c002e',1,'VIPRA::Random::Engine']]],
+  ['min_4',['min',['../df/d63/classVIPRA_1_1Random_1_1Engine.html#a3caead5675755726b36dfc14dad6c0ba',1,'VIPRA::Random::Engine']]]
 ];

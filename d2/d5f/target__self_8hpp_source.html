@@ -104,13 +104,16 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>  COPYABLE(<a class="code hl_struct" href="../../d5/d2e/structVIPRA_1_1Behaviors_1_1TargetSelf.html">TargetSelf</a>)</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>  MOVEABLE(<a class="code hl_struct" href="../../d5/d2e/structVIPRA_1_1Behaviors_1_1TargetSelf.html">TargetSelf</a>)</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>  <span class="keyword">inline</span> <span class="keyword">auto</span> operator()(<span class="keyword">auto</span> <span class="comment">/*unused*/</span>, <a class="code hl_struct" href="../../df/d75/structVIPRA_1_1Behaviors_1_1Self.html">Self</a> self) -&gt; <a class="code hl_struct" href="../../da/d27/structVIPRA_1_1Behaviors_1_1Target.html">Target</a> { <span class="keywordflow">return</span> self.target; }</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>};</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>  <span class="keyword">inline</span> <span class="keyword">auto</span> operator()(<span class="keyword">auto</span> <span class="comment">/*unused*/</span>, <a class="code hl_struct" href="../../df/d75/structVIPRA_1_1Behaviors_1_1Self.html">Self</a> self) -&gt; <a class="code hl_struct" href="../../da/d27/structVIPRA_1_1Behaviors_1_1Target.html">Target</a></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  {</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keywordflow">return</span> self.target;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>  }</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>};</div>
 </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>}  <span class="comment">// namespace VIPRA::Behaviors</span></div>
-<div class="ttc" id="astructVIPRA_1_1Behaviors_1_1Self_html"><div class="ttname"><a href="../../df/d75/structVIPRA_1_1Behaviors_1_1Self.html">VIPRA::Behaviors::Self</a></div><div class="ttdoc">Struct for explicitly targeting the self.</div><div class="ttdef"><b>Definition</b> target.hpp:29</div></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>}  <span class="comment">// namespace VIPRA::Behaviors</span></div>
+<div class="ttc" id="astructVIPRA_1_1Behaviors_1_1Self_html"><div class="ttname"><a href="../../df/d75/structVIPRA_1_1Behaviors_1_1Self.html">VIPRA::Behaviors::Self</a></div><div class="ttdoc">Struct for explicitly targeting the self.</div><div class="ttdef"><b>Definition</b> target.hpp:27</div></div>
 <div class="ttc" id="astructVIPRA_1_1Behaviors_1_1TargetSelf_html"><div class="ttname"><a href="../../d5/d2e/structVIPRA_1_1Behaviors_1_1TargetSelf.html">VIPRA::Behaviors::TargetSelf</a></div><div class="ttdoc">Returns the target that calls this.</div><div class="ttdef"><b>Definition</b> target_self.hpp:12</div></div>
-<div class="ttc" id="astructVIPRA_1_1Behaviors_1_1Target_html"><div class="ttname"><a href="../../da/d27/structVIPRA_1_1Behaviors_1_1Target.html">VIPRA::Behaviors::Target</a></div><div class="ttdoc">Holds information about what to target.</div><div class="ttdef"><b>Definition</b> target.hpp:20</div></div>
+<div class="ttc" id="astructVIPRA_1_1Behaviors_1_1Target_html"><div class="ttname"><a href="../../da/d27/structVIPRA_1_1Behaviors_1_1Target.html">VIPRA::Behaviors::Target</a></div><div class="ttdoc">Holds information about what to target.</div><div class="ttdef"><b>Definition</b> target.hpp:18</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

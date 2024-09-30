@@ -144,8 +144,8 @@ $(function(){ initResizable(false); });
 <div class="line">  <span class="comment">// Create the simulation object, modules can be placed in any order so long as they are all there</span></div>
 <div class="line">  <span class="keyword">auto</span> sim = VIPRA::simulation(</div>
 <div class="line">      Example::Model{},                       <span class="comment">// Here, we use our new model</span></div>
-<div class="line">      VIPRA::Goals::AStar{},                  <span class="comment">// Goals Module</span></div>
-<div class="line">      <a class="code hl_class" href="../../d8/df7/classVIPRA_1_1Pedestrians_1_1Grid.html">VIPRA::Pedestrians::Grid</a>{},             <span class="comment">// Pedestrian Set Module</span></div>
+<div class="line">      <a class="code hl_class" href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html">VIPRA::Goals::AStar</a>{},                  <span class="comment">// Goals Module</span></div>
+<div class="line">      VIPRA::Pedestrians::Grid{},             <span class="comment">// Pedestrian Set Module</span></div>
 <div class="line">      <a class="code hl_class" href="../../d3/d13/classVIPRA_1_1Map_1_1QuadTree.html">VIPRA::Map::QuadTree</a>{}                  <span class="comment">// Map Module</span></div>
 <div class="line">      VIPRA::Module::Output{                  <span class="comment">// Output Coordinator</span></div>
 <div class="line">        VIPRA::Output::Trajectories::Json{}   <span class="comment">// Output Module</span></div>
@@ -161,9 +161,9 @@ $(function(){ initResizable(false); });
 <div class="line">    }</div>
 <div class="line">  );</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassVIPRA_1_1Map_1_1QuadTree_html"><div class="ttname"><a href="../../d3/d13/classVIPRA_1_1Map_1_1QuadTree.html">VIPRA::Map::QuadTree</a></div><div class="ttdoc">Map module that uses a quadtree to store obstacles.</div><div class="ttdef"><b>Definition</b> QuadTree.hpp:17</div></div>
-<div class="ttc" id="aclassVIPRA_1_1Parameters_html"><div class="ttname"><a href="../../dd/d44/classVIPRA_1_1Parameters.html">VIPRA::Parameters</a></div><div class="ttdef"><b>Definition</b> parameters.hpp:20</div></div>
-<div class="ttc" id="aclassVIPRA_1_1Pedestrians_1_1Grid_html"><div class="ttname"><a href="../../d8/df7/classVIPRA_1_1Pedestrians_1_1Grid.html">VIPRA::Pedestrians::Grid</a></div><div class="ttdoc">Pedestrian module that uses a grid to store pedestrians.</div><div class="ttdef"><b>Definition</b> Grid.hpp:28</div></div>
+<div class="ttc" id="aclassVIPRA_1_1Goals_1_1AStar_html"><div class="ttname"><a href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html">VIPRA::Goals::AStar</a></div><div class="ttdoc">Goals module that uses the A* algorithm to find the path to the goal.</div><div class="ttdef"><b>Definition</b> astar.hpp:26</div></div>
+<div class="ttc" id="aclassVIPRA_1_1Map_1_1QuadTree_html"><div class="ttname"><a href="../../d3/d13/classVIPRA_1_1Map_1_1QuadTree.html">VIPRA::Map::QuadTree</a></div><div class="ttdoc">Map module that uses a quadtree to store obstacles.</div><div class="ttdef"><b>Definition</b> quad_tree.hpp:18</div></div>
+<div class="ttc" id="aclassVIPRA_1_1Parameters_html"><div class="ttname"><a href="../../dd/d44/classVIPRA_1_1Parameters.html">VIPRA::Parameters</a></div><div class="ttdef"><b>Definition</b> parameters.hpp:19</div></div>
 </div><!-- fragment --><ol type="1">
 <li>Update the <code>module_params.json</code></li>
 </ol>

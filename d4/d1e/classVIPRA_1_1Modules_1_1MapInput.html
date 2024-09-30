@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>VIPRA Documentation: VIPRA::Modules::MapInput&lt; module_t &gt; Class Template Reference</title>
+<title>VIPRA Documentation: VIPRA::Modules::MapInput Class Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -90,9 +90,8 @@ $(function(){ initResizable(false); });
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="../../da/db8/classVIPRA_1_1Modules_1_1MapInput-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">VIPRA::Modules::MapInput&lt; module_t &gt; Class Template Reference</div></div>
+  <div class="headertitle"><div class="title">VIPRA::Modules::MapInput Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -101,73 +100,69 @@ $(function(){ initResizable(false); });
 
 <p><code>#include &lt;<a class="el" href="../../d6/dae/map__input_8hpp_source.html">map_input.hpp</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for VIPRA::Modules::MapInput&lt; module_t &gt;:</div>
+Inheritance diagram for VIPRA::Modules::MapInput:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../d7/d6a/classVIPRA_1_1Modules_1_1MapInput__inherit__graph.png" border="0" usemap="#aVIPRA_1_1Modules_1_1MapInput_3_01module__t_01_4_inherit__map" alt="Inheritance graph"/></div>
-<map name="aVIPRA_1_1Modules_1_1MapInput_3_01module__t_01_4_inherit__map" id="aVIPRA_1_1Modules_1_1MapInput_3_01module__t_01_4_inherit__map">
-<area shape="rect" title="Base MapInput Module." alt="" coords="5,94,182,135"/>
-<area shape="rect" href="../../da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="11,5,176,46"/>
-<area shape="poly" title=" " alt="" coords="96,62,96,94,91,94,91,62"/>
-</map>
-<center><span class="legend">[<a href="../../graph_legend.html">legend</a>]</span></center></div>
-<div class="dynheader">
-Collaboration diagram for VIPRA::Modules::MapInput&lt; module_t &gt;:</div>
-<div class="dyncontent">
-<div class="center"><img src="../../dd/d0a/classVIPRA_1_1Modules_1_1MapInput__coll__graph.png" border="0" usemap="#aVIPRA_1_1Modules_1_1MapInput_3_01module__t_01_4_coll__map" alt="Collaboration graph"/></div>
-<map name="aVIPRA_1_1Modules_1_1MapInput_3_01module__t_01_4_coll__map" id="aVIPRA_1_1Modules_1_1MapInput_3_01module__t_01_4_coll__map">
-<area shape="rect" title="Base MapInput Module." alt="" coords="5,94,182,135"/>
-<area shape="rect" href="../../da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="11,5,176,46"/>
-<area shape="poly" title=" " alt="" coords="96,62,96,94,91,94,91,62"/>
+<div class="center"><img src="../../d7/d6a/classVIPRA_1_1Modules_1_1MapInput__inherit__graph.png" border="0" usemap="#aVIPRA_1_1Modules_1_1MapInput_inherit__map" alt="Inheritance graph"/></div>
+<map name="aVIPRA_1_1Modules_1_1MapInput_inherit__map" id="aVIPRA_1_1Modules_1_1MapInput_inherit__map">
+<area shape="rect" title="Base MapInput Module." alt="" coords="5,5,182,31"/>
+<area shape="rect" href="../../da/d14/classDXF.html" title="Parameter and Polygon qualified dxf input module." alt="" coords="11,79,58,105"/>
+<area shape="poly" title=" " alt="" coords="76,45,47,80,43,77,72,41"/>
+<area shape="rect" href="../../d1/d4b/classVIPRA_1_1Input_1_1JSON.html" title="Parameter and Polygon qualified JSON input module." alt="" coords="83,79,221,105"/>
+<area shape="poly" title=" " alt="" coords="115,41,144,77,140,80,111,45"/>
 </map>
 <center><span class="legend">[<a href="../../graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:adfc2788160afcdbdc9fcd691a7b020a3" id="r_adfc2788160afcdbdc9fcd691a7b020a3"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adfc2788160afcdbdc9fcd691a7b020a3">get_obstacles</a> () const -&gt; std::optional&lt; std::vector&lt; <a class="el" href="../../d0/d36/classVIPRA_1_1Geometry_1_1PolygonBase.html">VIPRA::Geometry::Polygon</a> &gt; &gt;</td></tr>
-<tr class="memdesc:adfc2788160afcdbdc9fcd691a7b020a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns polygons as loaded from the input module, std::nullopt if incorrect type / doesn't exist.  <br /></td></tr>
-<tr class="separator:adfc2788160afcdbdc9fcd691a7b020a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a528c02ea0f32d6f5f28ea5d5070d43df" id="r_a528c02ea0f32d6f5f28ea5d5070d43df"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a528c02ea0f32d6f5f28ea5d5070d43df">get_spawns</a> () const -&gt; std::optional&lt; std::vector&lt; <a class="el" href="../../d0/d36/classVIPRA_1_1Geometry_1_1PolygonBase.html">VIPRA::Geometry::Polygon</a> &gt; &gt;</td></tr>
-<tr class="memdesc:a528c02ea0f32d6f5f28ea5d5070d43df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns polygons as loaded from the input module, std::nullopt if incorrect type / doesn't exist.  <br /></td></tr>
-<tr class="separator:a528c02ea0f32d6f5f28ea5d5070d43df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23264e44c0572dc451905670e47c7d34" id="r_a23264e44c0572dc451905670e47c7d34"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a23264e44c0572dc451905670e47c7d34">get_objectives</a> () const -&gt; std::optional&lt; std::map&lt; std::string, std::vector&lt; <a class="el" href="../../d0/d36/classVIPRA_1_1Geometry_1_1PolygonBase.html">VIPRA::Geometry::Polygon</a> &gt; &gt; &gt;</td></tr>
-<tr class="memdesc:a23264e44c0572dc451905670e47c7d34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns polygons as loaded from the input module, std::nullopt if incorrect type / doesn't exist.  <br /></td></tr>
-<tr class="separator:a23264e44c0572dc451905670e47c7d34"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade6c17cbaef5b78a7d1ed8064063f191" id="r_ade6c17cbaef5b78a7d1ed8064063f191"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ade6c17cbaef5b78a7d1ed8064063f191">get_areas</a> () const -&gt; std::optional&lt; std::map&lt; std::string, <a class="el" href="../../d0/d36/classVIPRA_1_1Geometry_1_1PolygonBase.html">VIPRA::Geometry::Polygon</a> &gt; &gt;</td></tr>
-<tr class="memdesc:ade6c17cbaef5b78a7d1ed8064063f191"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns polygons as loaded from the input module, std::nullopt if incorrect type / doesn't exist.  <br /></td></tr>
-<tr class="separator:ade6c17cbaef5b78a7d1ed8064063f191"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a0c69bf61488ccab5363acb7e5eb1ee6a" id="r_a0c69bf61488ccab5363acb7e5eb1ee6a"><td class="memItemLeft" align="right" valign="top"><a id="a0c69bf61488ccab5363acb7e5eb1ee6a" name="a0c69bf61488ccab5363acb7e5eb1ee6a"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>FORWARD_REGISTER_PARAMS</b></td></tr>
-<tr class="separator:a0c69bf61488ccab5363acb7e5eb1ee6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0bd81f66b1749f81324969ab27d43b5b" id="r_a0bd81f66b1749f81324969ab27d43b5b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0bd81f66b1749f81324969ab27d43b5b">load</a> (std::string const &amp;)=0</td></tr>
+<tr class="separator:a0bd81f66b1749f81324969ab27d43b5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4bf78da6620faa35a9cd968837d8cfc" id="r_ad4bf78da6620faa35a9cd968837d8cfc"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad4bf78da6620faa35a9cd968837d8cfc">get_obstacles</a> () const -&gt; std::optional&lt; std::vector&lt; <a class="el" href="../../d0/d36/classVIPRA_1_1Geometry_1_1PolygonBase.html">VIPRA::Geometry::Polygon</a> &gt; &gt;=0</td></tr>
+<tr class="memdesc:ad4bf78da6620faa35a9cd968837d8cfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns polygons as loaded from the input module, std::nullopt if incorrect type / doesn't exist.  <br /></td></tr>
+<tr class="separator:ad4bf78da6620faa35a9cd968837d8cfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a957a017321e760ea554a199ed31aac" id="r_a0a957a017321e760ea554a199ed31aac"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0a957a017321e760ea554a199ed31aac">get_spawns</a> () const -&gt; std::optional&lt; std::vector&lt; <a class="el" href="../../d0/d36/classVIPRA_1_1Geometry_1_1PolygonBase.html">VIPRA::Geometry::Polygon</a> &gt; &gt;=0</td></tr>
+<tr class="memdesc:a0a957a017321e760ea554a199ed31aac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns polygons as loaded from the input module, std::nullopt if incorrect type / doesn't exist.  <br /></td></tr>
+<tr class="separator:a0a957a017321e760ea554a199ed31aac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9430c3c35bb09a9e9a86b25f96e0b72" id="r_af9430c3c35bb09a9e9a86b25f96e0b72"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af9430c3c35bb09a9e9a86b25f96e0b72">get_objectives</a> () const -&gt; std::optional&lt; std::map&lt; std::string, std::vector&lt; <a class="el" href="../../d0/d36/classVIPRA_1_1Geometry_1_1PolygonBase.html">VIPRA::Geometry::Polygon</a> &gt; &gt; &gt;=0</td></tr>
+<tr class="memdesc:af9430c3c35bb09a9e9a86b25f96e0b72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns polygons as loaded from the input module, std::nullopt if incorrect type / doesn't exist.  <br /></td></tr>
+<tr class="separator:af9430c3c35bb09a9e9a86b25f96e0b72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6a88b1a40574eabc433bbca792307fb" id="r_aa6a88b1a40574eabc433bbca792307fb"><td class="memItemLeft" align="right" valign="top">virtual auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa6a88b1a40574eabc433bbca792307fb">get_areas</a> () const -&gt; std::optional&lt; std::map&lt; std::string, <a class="el" href="../../d0/d36/classVIPRA_1_1Geometry_1_1PolygonBase.html">VIPRA::Geometry::Polygon</a> &gt; &gt;=0</td></tr>
+<tr class="memdesc:aa6a88b1a40574eabc433bbca792307fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns polygons as loaded from the input module, std::nullopt if incorrect type / doesn't exist.  <br /></td></tr>
+<tr class="separator:aa6a88b1a40574eabc433bbca792307fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b3a273df5fd5c949eb4add87a945331" id="r_a3b3a273df5fd5c949eb4add87a945331"><td class="memItemLeft" align="right" valign="top"><a id="a3b3a273df5fd5c949eb4add87a945331" name="a3b3a273df5fd5c949eb4add87a945331"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>MapInput</b> (const <a class="el" href="../../d4/d1e/classVIPRA_1_1Modules_1_1MapInput.html">MapInput</a> &amp;)=default</td></tr>
+<tr class="separator:a3b3a273df5fd5c949eb4add87a945331"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada5b21e1b0ddd3ed05b9e96491b3f1a3" id="r_ada5b21e1b0ddd3ed05b9e96491b3f1a3"><td class="memItemLeft" align="right" valign="top"><a id="ada5b21e1b0ddd3ed05b9e96491b3f1a3" name="ada5b21e1b0ddd3ed05b9e96491b3f1a3"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>MapInput</b> (<a class="el" href="../../d4/d1e/classVIPRA_1_1Modules_1_1MapInput.html">MapInput</a> &amp;&amp;)=default</td></tr>
+<tr class="separator:ada5b21e1b0ddd3ed05b9e96491b3f1a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a6642e6f14acec4c568bf2f5d04aa0c" id="r_a8a6642e6f14acec4c568bf2f5d04aa0c"><td class="memItemLeft" align="right" valign="top"><a id="a8a6642e6f14acec4c568bf2f5d04aa0c" name="a8a6642e6f14acec4c568bf2f5d04aa0c"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="../../d4/d1e/classVIPRA_1_1Modules_1_1MapInput.html">MapInput</a> &amp;) -&gt; <a class="el" href="../../d4/d1e/classVIPRA_1_1Modules_1_1MapInput.html">MapInput</a> &amp;=default</td></tr>
+<tr class="separator:a8a6642e6f14acec4c568bf2f5d04aa0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ae080e96c12e7ba884c786eff686525" id="r_a2ae080e96c12e7ba884c786eff686525"><td class="memItemLeft" align="right" valign="top"><a id="a2ae080e96c12e7ba884c786eff686525" name="a2ae080e96c12e7ba884c786eff686525"></a>
+auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="../../d4/d1e/classVIPRA_1_1Modules_1_1MapInput.html">MapInput</a> &amp;&amp;) -&gt; <a class="el" href="../../d4/d1e/classVIPRA_1_1Modules_1_1MapInput.html">MapInput</a> &amp;=default</td></tr>
+<tr class="separator:a2ae080e96c12e7ba884c786eff686525"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename module_t&gt;<br />
-class VIPRA::Modules::MapInput&lt; module_t &gt;</div><p>Base MapInput Module. </p>
+<div class="textblock"><p>Base MapInput Module. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="ade6c17cbaef5b78a7d1ed8064063f191" name="ade6c17cbaef5b78a7d1ed8064063f191"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ade6c17cbaef5b78a7d1ed8064063f191">&#9670;&#160;</a></span>get_areas()</h2>
+<a id="aa6a88b1a40574eabc433bbca792307fb" name="aa6a88b1a40574eabc433bbca792307fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6a88b1a40574eabc433bbca792307fb">&#9670;&#160;</a></span>get_areas()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename module_t &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../d4/d1e/classVIPRA_1_1Modules_1_1MapInput.html">VIPRA::Modules::MapInput</a>&lt; module_t &gt;::get_areas </td>
+          <td class="memname">virtual auto VIPRA::Modules::MapInput::get_areas </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const -&gt; std::optional&lt;std::map&lt;std::string, <a class="el" href="../../d0/d36/classVIPRA_1_1Geometry_1_1PolygonBase.html">VIPRA::Geometry::Polygon</a>&gt;&gt;
-  </td>
+          <td> const -&gt;  std::optional&lt; std::map&lt; std::string, <a class="el" href="../../d0/d36/classVIPRA_1_1Geometry_1_1PolygonBase.html">VIPRA::Geometry::Polygon</a> &gt; &gt;</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">nodiscard</span></span>  </td>
+<span class="mlabels"><span class="mlabel">nodiscard</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -188,30 +183,29 @@ template&lt;typename module_t &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>std::vector&lt;Geometry::Polygon&gt; </dd></dl>
 
+<p>Implemented in <a class="el" href="../../da/d14/classDXF.html#aa0ec3d51780ba8687b9a0fe5062fea17">DXF</a>, and <a class="el" href="../../d1/d4b/classVIPRA_1_1Input_1_1JSON.html#ac290a8f66ed8aeee533acf0f949948ec">VIPRA::Input::JSON</a>.</p>
+
 </div>
 </div>
-<a id="a23264e44c0572dc451905670e47c7d34" name="a23264e44c0572dc451905670e47c7d34"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a23264e44c0572dc451905670e47c7d34">&#9670;&#160;</a></span>get_objectives()</h2>
+<a id="af9430c3c35bb09a9e9a86b25f96e0b72" name="af9430c3c35bb09a9e9a86b25f96e0b72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9430c3c35bb09a9e9a86b25f96e0b72">&#9670;&#160;</a></span>get_objectives()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename module_t &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../d4/d1e/classVIPRA_1_1Modules_1_1MapInput.html">VIPRA::Modules::MapInput</a>&lt; module_t &gt;::get_objectives </td>
+          <td class="memname">virtual auto VIPRA::Modules::MapInput::get_objectives </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const -&gt; std::optional&lt;std::map&lt;std::string, std::vector&lt;<a class="el" href="../../d0/d36/classVIPRA_1_1Geometry_1_1PolygonBase.html">VIPRA::Geometry::Polygon</a>&gt;&gt;&gt;
-  </td>
+          <td> const -&gt;  std::optional&lt; std::map&lt; std::string, std::vector&lt; <a class="el" href="../../d0/d36/classVIPRA_1_1Geometry_1_1PolygonBase.html">VIPRA::Geometry::Polygon</a> &gt; &gt; &gt;</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">nodiscard</span></span>  </td>
+<span class="mlabels"><span class="mlabel">nodiscard</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -232,30 +226,29 @@ template&lt;typename module_t &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>std::vector&lt;Geometry::Polygon&gt; </dd></dl>
 
+<p>Implemented in <a class="el" href="../../da/d14/classDXF.html#a87725300457a1f5b30f06555c33bab83">DXF</a>, and <a class="el" href="../../d1/d4b/classVIPRA_1_1Input_1_1JSON.html#a1e28940a861d5adb665979bff89617bf">VIPRA::Input::JSON</a>.</p>
+
 </div>
 </div>
-<a id="adfc2788160afcdbdc9fcd691a7b020a3" name="adfc2788160afcdbdc9fcd691a7b020a3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adfc2788160afcdbdc9fcd691a7b020a3">&#9670;&#160;</a></span>get_obstacles()</h2>
+<a id="ad4bf78da6620faa35a9cd968837d8cfc" name="ad4bf78da6620faa35a9cd968837d8cfc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4bf78da6620faa35a9cd968837d8cfc">&#9670;&#160;</a></span>get_obstacles()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename module_t &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../d4/d1e/classVIPRA_1_1Modules_1_1MapInput.html">VIPRA::Modules::MapInput</a>&lt; module_t &gt;::get_obstacles </td>
+          <td class="memname">virtual auto VIPRA::Modules::MapInput::get_obstacles </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const -&gt; std::optional&lt;std::vector&lt;<a class="el" href="../../d0/d36/classVIPRA_1_1Geometry_1_1PolygonBase.html">VIPRA::Geometry::Polygon</a>&gt;&gt;
-  </td>
+          <td> const -&gt;  std::optional&lt; std::vector&lt; <a class="el" href="../../d0/d36/classVIPRA_1_1Geometry_1_1PolygonBase.html">VIPRA::Geometry::Polygon</a> &gt; &gt;</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">nodiscard</span></span>  </td>
+<span class="mlabels"><span class="mlabel">nodiscard</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -276,30 +269,29 @@ template&lt;typename module_t &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>std::vector&lt;Geometry::Polygon&gt; </dd></dl>
 
+<p>Implemented in <a class="el" href="../../da/d14/classDXF.html#a515c90b78bee2e61bff9228695d22a01">DXF</a>, and <a class="el" href="../../d1/d4b/classVIPRA_1_1Input_1_1JSON.html#aeec78b200266398e3aca6f2322825a6e">VIPRA::Input::JSON</a>.</p>
+
 </div>
 </div>
-<a id="a528c02ea0f32d6f5f28ea5d5070d43df" name="a528c02ea0f32d6f5f28ea5d5070d43df"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a528c02ea0f32d6f5f28ea5d5070d43df">&#9670;&#160;</a></span>get_spawns()</h2>
+<a id="a0a957a017321e760ea554a199ed31aac" name="a0a957a017321e760ea554a199ed31aac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a957a017321e760ea554a199ed31aac">&#9670;&#160;</a></span>get_spawns()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename module_t &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../d4/d1e/classVIPRA_1_1Modules_1_1MapInput.html">VIPRA::Modules::MapInput</a>&lt; module_t &gt;::get_spawns </td>
+          <td class="memname">virtual auto VIPRA::Modules::MapInput::get_spawns </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const -&gt; std::optional&lt;std::vector&lt;<a class="el" href="../../d0/d36/classVIPRA_1_1Geometry_1_1PolygonBase.html">VIPRA::Geometry::Polygon</a>&gt;&gt;
-  </td>
+          <td> const -&gt;  std::optional&lt; std::vector&lt; <a class="el" href="../../d0/d36/classVIPRA_1_1Geometry_1_1PolygonBase.html">VIPRA::Geometry::Polygon</a> &gt; &gt;</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">nodiscard</span></span>  </td>
+<span class="mlabels"><span class="mlabel">nodiscard</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -319,6 +311,35 @@ template&lt;typename module_t &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>std::vector&lt;Geometry::Polygon&gt; </dd></dl>
+
+<p>Implemented in <a class="el" href="../../da/d14/classDXF.html#aa372d3f3936e00717fff47f64905226b">DXF</a>, and <a class="el" href="../../d1/d4b/classVIPRA_1_1Input_1_1JSON.html#a996c9ac74f613b1a34ef50aaec9ceaf3">VIPRA::Input::JSON</a>.</p>
+
+</div>
+</div>
+<a id="a0bd81f66b1749f81324969ab27d43b5b" name="a0bd81f66b1749f81324969ab27d43b5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0bd81f66b1749f81324969ab27d43b5b">&#9670;&#160;</a></span>load()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void VIPRA::Modules::MapInput::load </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implemented in <a class="el" href="../../da/d14/classDXF.html#a063cbb92af10469c384fb5dc57b2f5f9">DXF</a>, and <a class="el" href="../../d1/d4b/classVIPRA_1_1Input_1_1JSON.html#a782cd7d5017352e16f90586cd10a5535">VIPRA::Input::JSON</a>.</p>
 
 </div>
 </div>

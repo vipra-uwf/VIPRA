@@ -1,5 +1,5 @@
-<map id="VIPRA::Modules::Output&lt; module_t &gt;" name="VIPRA::Modules::Output&lt; module_t &gt;">
-<area shape="rect" id="Node000001" title="Base Output module." alt="" coords="5,94,167,135"/>
-<area shape="rect" id="Node000002" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="11,5,161,46"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="89,62,89,94,83,94,83,62"/>
+<map id="VIPRA::Modules::Output" name="VIPRA::Modules::Output">
+<area shape="rect" id="Node000001" title="Base Output module." alt="" coords="29,5,190,31"/>
+<area shape="rect" id="Node000002" href="$d0/deb/classVIPRA_1_1Output_1_1TrajectoriesJson.html" title="JSON output module for writing trajectories to a JSON file." alt="" coords="5,79,214,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="112,46,112,79,107,79,107,46"/>
 </map>

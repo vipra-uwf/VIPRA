@@ -1,0 +1,5 @@
+<map id="VIPRA::Modules::PedestrianInput" name="VIPRA::Modules::PedestrianInput">
+<area shape="rect" id="Node000001" title="Base PedestrianInput Module." alt="" coords="5,5,190,46"/>
+<area shape="rect" id="Node000002" href="$d1/d4b/classVIPRA_1_1Input_1_1JSON.html" title="Parameter and Polygon qualified JSON input module." alt="" coords="28,94,167,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="100,62,100,93,95,93,95,62"/>
+</map>

@@ -122,14 +122,12 @@ Collaboration diagram for VIPRA::Modules::Module&lt; class_t &gt;:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad2dbdec906253aef0a11969173a7660a" id="r_ad2dbdec906253aef0a11969173a7660a"><td class="memTemplParams" colspan="2">template&lt;typename paramreader_t &gt; </td></tr>
-<tr class="memitem:ad2dbdec906253aef0a11969173a7660a"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ad2dbdec906253aef0a11969173a7660a">register_params</a> (paramreader_t &amp;&amp;paramIn)</td></tr>
-<tr class="memdesc:ad2dbdec906253aef0a11969173a7660a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers the modules parameters with the parameter reader.  <br /></td></tr>
-<tr class="separator:ad2dbdec906253aef0a11969173a7660a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a137d050f9d40275edcc1a36b945a9485" id="r_a137d050f9d40275edcc1a36b945a9485"><td class="memTemplParams" colspan="2">template&lt;typename paramreader_t &gt; </td></tr>
-<tr class="memitem:a137d050f9d40275edcc1a36b945a9485"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a137d050f9d40275edcc1a36b945a9485">config</a> (paramreader_t &amp;paramIn, <a class="el" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a> &amp;engine)</td></tr>
-<tr class="memdesc:a137d050f9d40275edcc1a36b945a9485"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads in all parameters for the module.  <br /></td></tr>
-<tr class="separator:a137d050f9d40275edcc1a36b945a9485"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa28bac85c148150730692baec841f12b" id="r_aa28bac85c148150730692baec841f12b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa28bac85c148150730692baec841f12b">register_params</a> (<a class="el" href="../../dd/d44/classVIPRA_1_1Parameters.html">Parameters</a> &amp;paramIn)</td></tr>
+<tr class="memdesc:aa28bac85c148150730692baec841f12b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers the modules parameters with the parameter reader.  <br /></td></tr>
+<tr class="separator:aa28bac85c148150730692baec841f12b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ab1df599c35b129dcbb0d899c2b66ec" id="r_a9ab1df599c35b129dcbb0d899c2b66ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ab1df599c35b129dcbb0d899c2b66ec">config</a> (<a class="el" href="../../dd/d44/classVIPRA_1_1Parameters.html">Parameters</a> &amp;paramIn, <a class="el" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a> &amp;engine)</td></tr>
+<tr class="memdesc:a9ab1df599c35b129dcbb0d899c2b66ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads in all parameters for the module.  <br /></td></tr>
+<tr class="separator:a9ab1df599c35b129dcbb0d899c2b66ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename class_t&gt;<br />
@@ -141,20 +139,18 @@ class VIPRA::Modules::Module&lt; class_t &gt;</div><p>VIPRA Module Base CRTP Cla
   </dd>
 </dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a137d050f9d40275edcc1a36b945a9485" name="a137d050f9d40275edcc1a36b945a9485"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a137d050f9d40275edcc1a36b945a9485">&#9670;&#160;</a></span>config()</h2>
+<a id="a9ab1df599c35b129dcbb0d899c2b66ec" name="a9ab1df599c35b129dcbb0d899c2b66ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ab1df599c35b129dcbb0d899c2b66ec">&#9670;&#160;</a></span>config()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename class_t &gt; </div>
-<div class="memtemplate">
-template&lt;typename paramreader_t &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">void <a class="el" href="../../dc/dab/classVIPRA_1_1Modules_1_1Module.html">VIPRA::Modules::Module</a>&lt; class_t &gt;::config </td>
           <td>(</td>
-          <td class="paramtype">paramreader_t &amp;</td>          <td class="paramname"><span class="paramname"><em>paramIn</em></span>, </td>
+          <td class="paramtype"><a class="el" href="../../dd/d44/classVIPRA_1_1Parameters.html">Parameters</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>paramIn</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -167,7 +163,7 @@ template&lt;typename paramreader_t &gt; </div>
 <p>Loads in all parameters for the module. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">paramreader_t</td><td></td></tr>
+    <tr><td class="paramname">Parameters</td><td></td></tr>
   </table>
   </dd>
 </dl>
@@ -181,20 +177,18 @@ template&lt;typename paramreader_t &gt; </div>
 
 </div>
 </div>
-<a id="ad2dbdec906253aef0a11969173a7660a" name="ad2dbdec906253aef0a11969173a7660a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad2dbdec906253aef0a11969173a7660a">&#9670;&#160;</a></span>register_params()</h2>
+<a id="aa28bac85c148150730692baec841f12b" name="aa28bac85c148150730692baec841f12b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa28bac85c148150730692baec841f12b">&#9670;&#160;</a></span>register_params()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename class_t &gt; </div>
-<div class="memtemplate">
-template&lt;typename paramreader_t &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">void <a class="el" href="../../dc/dab/classVIPRA_1_1Modules_1_1Module.html">VIPRA::Modules::Module</a>&lt; class_t &gt;::register_params </td>
           <td>(</td>
-          <td class="paramtype">paramreader_t &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>paramIn</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="../../dd/d44/classVIPRA_1_1Parameters.html">Parameters</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>paramIn</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -203,7 +197,7 @@ template&lt;typename paramreader_t &gt; </div>
 <p>Registers the modules parameters with the parameter reader. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">paramreader_t</td><td></td></tr>
+    <tr><td class="paramname">Parameters</td><td></td></tr>
   </table>
   </dd>
 </dl>

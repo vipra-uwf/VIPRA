@@ -1,3 +1,9 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$d5/d6c/classVIPRA_1_1Util_1_1Clock.html" title="Clock to time execution time." alt="" coords="5,5,134,46"/>
+<area shape="rect" id="Node000000" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="5,5,162,46"/>
+<area shape="rect" id="Node000001" href="$dc/dab/classVIPRA_1_1Modules_1_1Module.html" title=" " alt="" coords="210,5,374,46"/>
+<area shape="poly" id="edge147_Node000000_Node000001" title=" " alt="" coords="177,23,209,23,209,28,177,28"/>
+<area shape="rect" id="Node000002" href="$d3/d13/classVIPRA_1_1Map_1_1QuadTree.html" title="Map module that uses a quadtree to store obstacles." alt="" coords="422,42,577,68"/>
+<area shape="poly" id="edge148_Node000001_Node000002" title=" " alt="" coords="389,37,422,41,421,47,389,42"/>
+<area shape="rect" id="Node000003" href="$d5/df3/classVIPRA_1_1Modules_1_1Map.html" title="Base Map Module Class." alt="" coords="218,70,366,96"/>
+<area shape="poly" id="edge149_Node000003_Node000002" title=" " alt="" coords="381,68,421,63,422,68,381,74"/>
 </map>

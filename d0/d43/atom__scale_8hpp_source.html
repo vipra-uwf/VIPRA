@@ -94,28 +94,24 @@ $(function(){ initResizable(false); });
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;vipra/vipra_behaviors/attributes/attributes.hpp&quot;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;vipra/vipra_behaviors/targets/target.hpp&quot;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">namespace </span>VIPRA::Behaviors {</div>
-<div class="foldopen" id="foldopen00011" data-start="{" data-end="};">
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="../../db/df8/structVIPRA_1_1Behaviors_1_1AtomScale.html">   11</a></span><span class="keyword">struct </span><a class="code hl_struct" href="../../db/df8/structVIPRA_1_1Behaviors_1_1AtomScale.html">AtomScale</a> {</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>  Attribute       attribute;</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>  <a class="code hl_struct" href="../../db/df7/structVIPRA_1_1Behaviors_1_1CAttributeValue.html">CAttributeValue</a> value;</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>  <span class="keyword">inline</span> <span class="keywordtype">void</span> operator()(<span class="keyword">auto</span> pack, <span class="keyword">const</span> VIPRA::idxVec&amp; peds, std::vector&lt;bool&gt; <span class="keyword">const</span>&amp; conditionMet,</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>                         std::vector&lt;Target&gt; <span class="keyword">const</span>&amp; targets)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">  </span>{</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keywordflow">for</span> ( VIPRA::idx idx = 0; idx &lt; peds.size(); ++idx ) {</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>      <span class="keywordflow">if</span> ( conditionMet[idx] )</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        <a class="code hl_function" href="../../d7/d93/classVIPRA_1_1Behaviors_1_1AttributeHandling.html#a9c97e29640cead7f37e9bf8ea18d2b0b">AttributeHandling::scale_value</a>(targets[idx], attribute, pack, pack.state, value);</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    }</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>  }</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>};</div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;vipra/vipra_behaviors/definitions/sim_pack.hpp&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;vipra/vipra_behaviors/targets/target.hpp&quot;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">namespace </span>VIPRA::Behaviors {</div>
+<div class="foldopen" id="foldopen00012" data-start="{" data-end="};">
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="../../db/df8/structVIPRA_1_1Behaviors_1_1AtomScale.html">   12</a></span><span class="keyword">struct </span><a class="code hl_struct" href="../../db/df8/structVIPRA_1_1Behaviors_1_1AtomScale.html">AtomScale</a> {</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>  Attribute       attribute;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>  <a class="code hl_struct" href="../../db/df7/structVIPRA_1_1Behaviors_1_1CAttributeValue.html">CAttributeValue</a> value;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>  <span class="keywordtype">void</span> operator()(<a class="code hl_struct" href="../../df/d0a/structVIPRA_1_1Behaviors_1_1Simpack.html">Simpack</a> pack, <span class="keyword">const</span> VIPRA::idxVec&amp; peds,</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>                  std::vector&lt;bool&gt; <span class="keyword">const</span>&amp;   conditionMet,</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>                  std::vector&lt;Target&gt; <span class="keyword">const</span>&amp; targets) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>};</div>
 </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>}  <span class="comment">// namespace VIPRA::Behaviors</span></div>
-<div class="ttc" id="aclassVIPRA_1_1Behaviors_1_1AttributeHandling_html_a9c97e29640cead7f37e9bf8ea18d2b0b"><div class="ttname"><a href="../../d7/d93/classVIPRA_1_1Behaviors_1_1AttributeHandling.html#a9c97e29640cead7f37e9bf8ea18d2b0b">VIPRA::Behaviors::AttributeHandling::scale_value</a></div><div class="ttdeci">static void scale_value(Target target, Attribute attr, auto pack, VIPRA::State &amp;state, CAttributeValue value)</div><div class="ttdoc">Scales a targets attribute value.</div><div class="ttdef"><b>Definition</b> attributes.hpp:197</div></div>
-<div class="ttc" id="astructVIPRA_1_1Behaviors_1_1AtomScale_html"><div class="ttname"><a href="../../db/df8/structVIPRA_1_1Behaviors_1_1AtomScale.html">VIPRA::Behaviors::AtomScale</a></div><div class="ttdoc">Behavior atom that scales an attribute by a provided value.</div><div class="ttdef"><b>Definition</b> atom_scale.hpp:11</div></div>
-<div class="ttc" id="astructVIPRA_1_1Behaviors_1_1CAttributeValue_html"><div class="ttname"><a href="../../db/df7/structVIPRA_1_1Behaviors_1_1CAttributeValue.html">VIPRA::Behaviors::CAttributeValue</a></div><div class="ttdoc">Holds an immutable attribute value and its type.</div><div class="ttdef"><b>Definition</b> attributes.hpp:52</div></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>}  <span class="comment">// namespace VIPRA::Behaviors</span></div>
+<div class="ttc" id="astructVIPRA_1_1Behaviors_1_1AtomScale_html"><div class="ttname"><a href="../../db/df8/structVIPRA_1_1Behaviors_1_1AtomScale.html">VIPRA::Behaviors::AtomScale</a></div><div class="ttdoc">Behavior atom that scales an attribute by a provided value.</div><div class="ttdef"><b>Definition</b> atom_scale.hpp:12</div></div>
+<div class="ttc" id="astructVIPRA_1_1Behaviors_1_1CAttributeValue_html"><div class="ttname"><a href="../../db/df7/structVIPRA_1_1Behaviors_1_1CAttributeValue.html">VIPRA::Behaviors::CAttributeValue</a></div><div class="ttdoc">Holds an immutable attribute value and its type.</div><div class="ttdef"><b>Definition</b> attributes.hpp:53</div></div>
+<div class="ttc" id="astructVIPRA_1_1Behaviors_1_1Simpack_html"><div class="ttname"><a href="../../df/d0a/structVIPRA_1_1Behaviors_1_1Simpack.html">VIPRA::Behaviors::Simpack</a></div><div class="ttdoc">Holds references to commonly used parameters for simpler passing.</div><div class="ttdef"><b>Definition</b> sim_pack.hpp:23</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

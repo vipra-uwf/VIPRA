@@ -100,10 +100,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:aefb763543b0408299bc932ddefd43871" id="r_aefb763543b0408299bc932ddefd43871"><td class="memItemLeft" align="right" valign="top"><a id="aefb763543b0408299bc932ddefd43871" name="aefb763543b0408299bc932ddefd43871"></a>
 static void&#160;</td><td class="memItemRight" valign="bottom"><b>initialize</b> (int argc, char **argv)</td></tr>
 <tr class="separator:aefb763543b0408299bc932ddefd43871"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2d8c4265585eaa73452962318c83f17" id="r_ab2d8c4265585eaa73452962318c83f17"><td class="memTemplParams" colspan="2">template&lt;typename sim_t , typename pedinput_t , typename obsinput_t , typename params_t , typename callback_t  = VIPRA::VOID&gt; </td></tr>
-<tr class="memitem:ab2d8c4265585eaa73452962318c83f17"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ab2d8c4265585eaa73452962318c83f17">run</a> (sim_t &amp;&amp;sim, pedinput_t &amp;&amp;pedInput, obsinput_t &amp;&amp;obsInput, params_t &amp;&amp;params, size_t count, callback_t &amp;&amp;callback=<a class="el" href="../../de/d34/structVIPRA_1_1VOID.html">VOID</a>{})</td></tr>
-<tr class="memdesc:ab2d8c4265585eaa73452962318c83f17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs a parameter sweep over the worker nodes.  <br /></td></tr>
-<tr class="separator:ab2d8c4265585eaa73452962318c83f17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac141cb5e1f1ce2860c3a840ba8554c5a" id="r_ac141cb5e1f1ce2860c3a840ba8554c5a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac141cb5e1f1ce2860c3a840ba8554c5a">run</a> (<a class="el" href="../../d2/dd7/classVIPRA_1_1Simulation.html">Simulation</a> &amp;sim, std::string const &amp;pedPath, std::string const &amp;mapPath, std::string const &amp;paramsPath, size_t count, auto &amp;&amp;callback=<a class="el" href="../../de/d34/structVIPRA_1_1VOID.html">VOID</a>{})</td></tr>
+<tr class="memdesc:ac141cb5e1f1ce2860c3a840ba8554c5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs a parameter sweep over the worker nodes.  <br /></td></tr>
+<tr class="separator:ac141cb5e1f1ce2860c3a840ba8554c5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af88f632cf408f8ca9df7292cd11edbe3" id="r_af88f632cf408f8ca9df7292cd11edbe3"><td class="memItemLeft" align="right" valign="top"><a id="af88f632cf408f8ca9df7292cd11edbe3" name="af88f632cf408f8ca9df7292cd11edbe3"></a>
 static auto&#160;</td><td class="memItemRight" valign="bottom"><b>get_rank</b> () -&gt; int</td></tr>
 <tr class="separator:af88f632cf408f8ca9df7292cd11edbe3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -154,13 +153,11 @@ static auto&#160;</td><td class="memItemRight" valign="bottom"><b>is_root</b> ()
 
 </div>
 </div>
-<a id="ab2d8c4265585eaa73452962318c83f17" name="ab2d8c4265585eaa73452962318c83f17"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab2d8c4265585eaa73452962318c83f17">&#9670;&#160;</a></span>run()</h2>
+<a id="ac141cb5e1f1ce2860c3a840ba8554c5a" name="ac141cb5e1f1ce2860c3a840ba8554c5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac141cb5e1f1ce2860c3a840ba8554c5a">&#9670;&#160;</a></span>run()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename sim_t , typename pedinput_t , typename obsinput_t , typename params_t , typename callback_t  = VIPRA::VOID&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -168,22 +165,22 @@ template&lt;typename sim_t , typename pedinput_t , typename obsinput_t , typenam
         <tr>
           <td class="memname">static void VIPRA::ParameterSweep::run </td>
           <td>(</td>
-          <td class="paramtype">sim_t &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>sim</em></span>, </td>
+          <td class="paramtype"><a class="el" href="../../d2/dd7/classVIPRA_1_1Simulation.html">Simulation</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>sim</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">pedinput_t &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>pedInput</em></span>, </td>
+          <td class="paramtype">std::string const &amp;</td>          <td class="paramname"><span class="paramname"><em>pedPath</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">obsinput_t &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>obsInput</em></span>, </td>
+          <td class="paramtype">std::string const &amp;</td>          <td class="paramname"><span class="paramname"><em>mapPath</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">params_t &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>params</em></span>, </td>
+          <td class="paramtype">std::string const &amp;</td>          <td class="paramname"><span class="paramname"><em>paramsPath</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -193,7 +190,7 @@ template&lt;typename sim_t , typename pedinput_t , typename obsinput_t , typenam
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">callback_t &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="../../de/d34/structVIPRA_1_1VOID.html">VOID</a>{}</span>&#160;)</td>
+          <td class="paramtype">auto &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="../../de/d34/structVIPRA_1_1VOID.html">VOID</a>{}</span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -226,7 +223,7 @@ template&lt;typename sim_t , typename pedinput_t , typename obsinput_t , typenam
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/vipra/parameter_sweep/<a class="el" href="../../d9/d99/parameter__sweep_8hpp_source.html">parameter_sweep.hpp</a></li>
-<li>include/vipra/parameter_sweep/<b>parameter_sweep.cpp</b></li>
+<li>src/<b>parameter_sweep.cpp</b></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

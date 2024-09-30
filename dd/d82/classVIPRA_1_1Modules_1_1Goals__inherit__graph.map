@@ -1,5 +1,7 @@
-<map id="VIPRA::Modules::Goals&lt; module_t &gt;" name="VIPRA::Modules::Goals&lt; module_t &gt;">
-<area shape="rect" id="Node000001" title="Goals module mixin." alt="" coords="5,94,162,135"/>
-<area shape="rect" id="Node000002" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="11,5,156,46"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="86,62,86,94,81,94,81,62"/>
+<map id="VIPRA::Modules::Goals" name="VIPRA::Modules::Goals">
+<area shape="rect" id="Node000001" title="Goals module mixin." alt="" coords="91,5,247,31"/>
+<area shape="rect" id="Node000002" href="$d8/d10/classVIPRA_1_1Goals_1_1AStar.html" title="Goals module that uses the A* algorithm to find the path to the goal." alt="" coords="5,79,146,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="143,43,93,81,89,77,139,39"/>
+<area shape="rect" id="Node000003" href="$dd/de4/classVIPRA_1_1Goals_1_1PotentialField.html" title=" " alt="" coords="170,79,357,105"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="199,39,249,77,246,81,196,43"/>
 </map>

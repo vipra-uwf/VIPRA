@@ -1,5 +1,7 @@
-<map id="VIPRA::Modules::Serializable&lt; module_t &gt;" name="VIPRA::Modules::Serializable&lt; module_t &gt;">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,94,194,135"/>
-<area shape="rect" id="Node000002" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="11,5,188,46"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="102,62,102,94,97,94,97,62"/>
+<map id="VIPRA::Modules::Serializable" name="VIPRA::Modules::Serializable">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,194,31"/>
+<area shape="rect" id="Node000002" href="$da/d14/classDXF.html" title="Parameter and Polygon qualified dxf input module." alt="" coords="17,79,64,105"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="82,45,53,80,49,77,78,41"/>
+<area shape="rect" id="Node000003" href="$d1/d4b/classVIPRA_1_1Input_1_1JSON.html" title="Parameter and Polygon qualified JSON input module." alt="" coords="89,79,227,105"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="121,41,150,77,146,80,117,45"/>
 </map>

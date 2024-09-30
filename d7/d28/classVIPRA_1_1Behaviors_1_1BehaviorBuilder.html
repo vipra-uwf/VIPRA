@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>VIPRA Documentation: VIPRA::Behaviors::BehaviorBuilder&lt; pedset_t, map_t, goals_t &gt; Class Template Reference</title>
+<title>VIPRA Documentation: VIPRA::Behaviors::BehaviorBuilder Class Reference</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -89,10 +89,9 @@ $(function(){ initResizable(false); });
 <div id="doc-content">
 <div class="header">
   <div class="summary">
-<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="../../de/d7c/classVIPRA_1_1Behaviors_1_1BehaviorBuilder-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">VIPRA::Behaviors::BehaviorBuilder&lt; pedset_t, map_t, goals_t &gt; Class Template Reference</div></div>
+  <div class="headertitle"><div class="title">VIPRA::Behaviors::BehaviorBuilder Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -101,82 +100,46 @@ $(function(){ initResizable(false); });
 
 <p><code>#include &lt;<a class="el" href="../../d9/d3c/behavior__builder_8hpp_source.html">behavior_builder.hpp</a>&gt;</code></p>
 <div class="dynheader">
-Inheritance diagram for VIPRA::Behaviors::BehaviorBuilder&lt; pedset_t, map_t, goals_t &gt;:</div>
+Inheritance diagram for VIPRA::Behaviors::BehaviorBuilder:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../dd/da7/classVIPRA_1_1Behaviors_1_1BehaviorBuilder__inherit__graph.png" border="0" usemap="#aVIPRA_1_1Behaviors_1_1BehaviorBuilder_3_01pedset__t_00_01map__t_00_01goals__t_01_4_inherit__map" alt="Inheritance graph"/></div>
-<map name="aVIPRA_1_1Behaviors_1_1BehaviorBuilder_3_01pedset__t_00_01map__t_00_01goals__t_01_4_inherit__map" id="aVIPRA_1_1Behaviors_1_1BehaviorBuilder_3_01pedset__t_00_01map__t_00_01goals__t_01_4_inherit__map">
-<area shape="rect" title="Parses Behavior Files and Creates the Runtime Functionality they describe." alt="" coords="5,79,188,135"/>
+<div class="center"><img src="../../dd/da7/classVIPRA_1_1Behaviors_1_1BehaviorBuilder__inherit__graph.png" border="0" usemap="#aVIPRA_1_1Behaviors_1_1BehaviorBuilder_inherit__map" alt="Inheritance graph"/></div>
+<map name="aVIPRA_1_1Behaviors_1_1BehaviorBuilder_inherit__map" id="aVIPRA_1_1Behaviors_1_1BehaviorBuilder_inherit__map">
+<area shape="rect" title="Parses Behavior Files and Creates the Runtime Functionality they describe." alt="" coords="5,79,188,120"/>
 <area shape="rect" title=" " alt="" coords="27,5,166,31"/>
-<area shape="poly" title=" " alt="" coords="99,47,99,78,94,78,94,47"/>
+<area shape="poly" title=" " alt="" coords="99,46,99,79,94,79,94,46"/>
 </map>
 <center><span class="legend">[<a href="../../graph_legend.html">legend</a>]</span></center></div>
 <div class="dynheader">
-Collaboration diagram for VIPRA::Behaviors::BehaviorBuilder&lt; pedset_t, map_t, goals_t &gt;:</div>
+Collaboration diagram for VIPRA::Behaviors::BehaviorBuilder:</div>
 <div class="dyncontent">
-<div class="center"><img src="../../dc/dbd/classVIPRA_1_1Behaviors_1_1BehaviorBuilder__coll__graph.png" border="0" usemap="#aVIPRA_1_1Behaviors_1_1BehaviorBuilder_3_01pedset__t_00_01map__t_00_01goals__t_01_4_coll__map" alt="Collaboration graph"/></div>
-<map name="aVIPRA_1_1Behaviors_1_1BehaviorBuilder_3_01pedset__t_00_01map__t_00_01goals__t_01_4_coll__map" id="aVIPRA_1_1Behaviors_1_1BehaviorBuilder_3_01pedset__t_00_01map__t_00_01goals__t_01_4_coll__map">
-<area shape="rect" title="Parses Behavior Files and Creates the Runtime Functionality they describe." alt="" coords="5,79,188,135"/>
+<div class="center"><img src="../../dc/dbd/classVIPRA_1_1Behaviors_1_1BehaviorBuilder__coll__graph.png" border="0" usemap="#aVIPRA_1_1Behaviors_1_1BehaviorBuilder_coll__map" alt="Collaboration graph"/></div>
+<map name="aVIPRA_1_1Behaviors_1_1BehaviorBuilder_coll__map" id="aVIPRA_1_1Behaviors_1_1BehaviorBuilder_coll__map">
+<area shape="rect" title="Parses Behavior Files and Creates the Runtime Functionality they describe." alt="" coords="5,79,188,120"/>
 <area shape="rect" title=" " alt="" coords="27,5,166,31"/>
-<area shape="poly" title=" " alt="" coords="99,47,99,78,94,78,94,47"/>
+<area shape="poly" title=" " alt="" coords="99,46,99,79,94,79,94,46"/>
 </map>
 <center><span class="legend">[<a href="../../graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:a7039897e73a2ebcd23e0d1ca1174e34d" id="r_a7039897e73a2ebcd23e0d1ca1174e34d"><td class="memItemLeft" align="right" valign="top"><a id="a7039897e73a2ebcd23e0d1ca1174e34d" name="a7039897e73a2ebcd23e0d1ca1174e34d"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>HumanBehavior</b> = <a class="el" href="../../de/dfa/classVIPRA_1_1Behaviors_1_1HumanBehavior.html">VIPRA::Behaviors::HumanBehavior</a>&lt;pedset_t, map_t, goals_t&gt;</td></tr>
-<tr class="separator:a7039897e73a2ebcd23e0d1ca1174e34d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8938ffc3a1b3395d6b2f06bc530644fe" id="r_a8938ffc3a1b3395d6b2f06bc530644fe"><td class="memItemLeft" align="right" valign="top"><a id="a8938ffc3a1b3395d6b2f06bc530644fe" name="a8938ffc3a1b3395d6b2f06bc530644fe"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>BehaviorContext</b> = <a class="el" href="../../d0/d96/structVIPRA_1_1Behaviors_1_1BehaviorContext.html">HumanBehavior::context_t</a></td></tr>
-<tr class="separator:a8938ffc3a1b3395d6b2f06bc530644fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a260d7d087cdc822fa483f12bbc6d9093" id="r_a260d7d087cdc822fa483f12bbc6d9093"><td class="memItemLeft" align="right" valign="top"><a id="a260d7d087cdc822fa483f12bbc6d9093" name="a260d7d087cdc822fa483f12bbc6d9093"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>Event</b> = <a class="el" href="../../d0/d62/classVIPRA_1_1Behaviors_1_1Event.html">HumanBehavior::event_t</a></td></tr>
-<tr class="separator:a260d7d087cdc822fa483f12bbc6d9093"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a736a4684c5ccb1b1f3de01a2165c04f3" id="r_a736a4684c5ccb1b1f3de01a2165c04f3"><td class="memItemLeft" align="right" valign="top"><a id="a736a4684c5ccb1b1f3de01a2165c04f3" name="a736a4684c5ccb1b1f3de01a2165c04f3"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>SimPack</b> = <a class="el" href="../../df/d0a/structVIPRA_1_1Behaviors_1_1Simpack.html">HumanBehavior::pack_t</a></td></tr>
-<tr class="separator:a736a4684c5ccb1b1f3de01a2165c04f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad54381c2b813d1b4ba4fbd0ba70a8082" id="r_ad54381c2b813d1b4ba4fbd0ba70a8082"><td class="memItemLeft" align="right" valign="top"><a id="ad54381c2b813d1b4ba4fbd0ba70a8082" name="ad54381c2b813d1b4ba4fbd0ba70a8082"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>Condition</b> = <a class="el" href="../../d9/da8/classVIPRA_1_1Behaviors_1_1Condition.html">HumanBehavior::cond_t</a></td></tr>
-<tr class="separator:ad54381c2b813d1b4ba4fbd0ba70a8082"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c523ce3c40d634f781f458dfae92651" id="r_a7c523ce3c40d634f781f458dfae92651"><td class="memItemLeft" align="right" valign="top"><a id="a7c523ce3c40d634f781f458dfae92651" name="a7c523ce3c40d634f781f458dfae92651"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>SubSelector</b> = <a class="el" href="../../d4/da0/classVIPRA_1_1Behaviors_1_1SubSelector.html">HumanBehavior::subselector_t</a></td></tr>
-<tr class="separator:a7c523ce3c40d634f781f458dfae92651"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a311fec4e0560b87638ceb41e287373b6" id="r_a311fec4e0560b87638ceb41e287373b6"><td class="memItemLeft" align="right" valign="top"><a id="a311fec4e0560b87638ceb41e287373b6" name="a311fec4e0560b87638ceb41e287373b6"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>Selector</b> = <a class="el" href="../../dc/d8e/classVIPRA_1_1Behaviors_1_1Selector.html">HumanBehavior::selector_t</a></td></tr>
-<tr class="separator:a311fec4e0560b87638ceb41e287373b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7dd2f44d887e806fd40236af602c002" id="r_ad7dd2f44d887e806fd40236af602c002"><td class="memItemLeft" align="right" valign="top"><a id="ad7dd2f44d887e806fd40236af602c002" name="ad7dd2f44d887e806fd40236af602c002"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>TargetFunc</b> = HumanBehavior::targetfunc_t</td></tr>
-<tr class="separator:ad7dd2f44d887e806fd40236af602c002"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5aad1e966b0410e658bc5abe6129626d" id="r_a5aad1e966b0410e658bc5abe6129626d"><td class="memItemLeft" align="right" valign="top"><a id="a5aad1e966b0410e658bc5abe6129626d" name="a5aad1e966b0410e658bc5abe6129626d"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>TargetModifier</b> = <a class="el" href="../../d7/d00/classVIPRA_1_1Behaviors_1_1TargetModifier.html">HumanBehavior::targetmodifier_t</a></td></tr>
-<tr class="separator:a5aad1e966b0410e658bc5abe6129626d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a64eabd6b1543f97f9230b29ff85cb654" id="r_a64eabd6b1543f97f9230b29ff85cb654"><td class="memItemLeft" align="right" valign="top"><a id="a64eabd6b1543f97f9230b29ff85cb654" name="a64eabd6b1543f97f9230b29ff85cb654"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>Action</b> = <a class="el" href="../../dd/da8/classVIPRA_1_1Behaviors_1_1Action.html">HumanBehavior::action_t</a></td></tr>
-<tr class="separator:a64eabd6b1543f97f9230b29ff85cb654"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab03b3bc5f3cd33d58b30d66608425ba3" id="r_ab03b3bc5f3cd33d58b30d66608425ba3"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab03b3bc5f3cd33d58b30d66608425ba3">build</a> (std::string name, std::filesystem::path const &amp;filepath, VIPRA::seed seed) -&gt; <a class="el" href="../../de/dfa/classVIPRA_1_1Behaviors_1_1HumanBehavior.html">HumanBehavior</a></td></tr>
-<tr class="memdesc:ab03b3bc5f3cd33d58b30d66608425ba3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses the behavior file at filepath, returns the behavior it describes.  <br /></td></tr>
-<tr class="separator:ab03b3bc5f3cd33d58b30d66608425ba3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5e2143955c260e100be70d4cb779daa" id="r_af5e2143955c260e100be70d4cb779daa"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af5e2143955c260e100be70d4cb779daa">build</a> (std::string name, std::filesystem::path const &amp;filepath, VIPRA::seed seed) -&gt; <a class="el" href="../../de/dfa/classVIPRA_1_1Behaviors_1_1HumanBehavior.html">HumanBehavior</a></td></tr>
+<tr class="memdesc:af5e2143955c260e100be70d4cb779daa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses the behavior file at filepath, returns the behavior it describes.  <br /></td></tr>
+<tr class="separator:af5e2143955c260e100be70d4cb779daa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename pedset_t, typename map_t, typename goals_t&gt;<br />
-class VIPRA::Behaviors::BehaviorBuilder&lt; pedset_t, map_t, goals_t &gt;</div><p>Parses Behavior Files and Creates the Runtime Functionality they describe. </p>
+<div class="textblock"><p>Parses Behavior Files and Creates the Runtime Functionality they describe. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="ab03b3bc5f3cd33d58b30d66608425ba3" name="ab03b3bc5f3cd33d58b30d66608425ba3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab03b3bc5f3cd33d58b30d66608425ba3">&#9670;&#160;</a></span>build()</h2>
+<a id="af5e2143955c260e100be70d4cb779daa" name="af5e2143955c260e100be70d4cb779daa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5e2143955c260e100be70d4cb779daa">&#9670;&#160;</a></span>build()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename pedset_t , typename map_t , typename goals_t &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="../../d7/d28/classVIPRA_1_1Behaviors_1_1BehaviorBuilder.html">VIPRA::Behaviors::BehaviorBuilder</a>&lt; pedset_t, map_t, goals_t &gt;::build </td>
+          <td class="memname">auto VIPRA::Behaviors::BehaviorBuilder::build </td>
           <td>(</td>
           <td class="paramtype">std::string</td>          <td class="paramname"><span class="paramname"><em>behaviorName</em></span>, </td>
         </tr>
@@ -211,8 +174,9 @@ template&lt;typename pedset_t , typename map_t , typename goals_t &gt; </div>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/vipra/vipra_behaviors/builder/<a class="el" href="../../d9/d3c/behavior__builder_8hpp_source.html">behavior_builder.hpp</a></li>
+<li>src/vipra_behaviors/builder/<b>behavior_builder.cpp</b></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
