@@ -18,7 +18,8 @@ class Location {
   MOVEABLE(Location)
 
  public:
-  constexpr explicit Location(VIPRA::f3d center, VIPRA::f3d dims) : _center(center), _dims(dims), _area(0)
+  constexpr explicit Location(VIPRA::f3d center, VIPRA::f3d dims)
+      : _center(center), _dims(dims), _area(0)
   {
     _p1.x = center.x + (dims.x / 2);
     _p1.y = center.y + (dims.y / 2);
@@ -32,17 +33,26 @@ class Location {
     _area = area() + AREA_ERROR;
   }
 
-  constexpr explicit Location(VIPRA::f3d center, VIPRA::f3d dims, VIPRA::f_pnt rot)
+  constexpr explicit Location(VIPRA::f3d center, VIPRA::f3d dims,
+                              VIPRA::f_pnt rot)
       : _center(center), _dims(dims), _rot(rot), _area(0)
   {
-    _p1.x = center.x + ((dims.x / 2) * std::cos(rot)) - ((dims.y / 2) * std::sin(rot));
-    _p1.y = center.y + ((dims.x / 2) * std::sin(rot)) + ((dims.y / 2) * std::cos(rot));
-    _p2.x = center.x - ((dims.x / 2) * std::cos(rot)) - ((dims.y / 2) * std::sin(rot));
-    _p2.y = center.y - ((dims.x / 2) * std::sin(rot)) + ((dims.y / 2) * std::cos(rot));
-    _p3.x = center.x - ((dims.x / 2) * std::cos(rot)) + ((dims.y / 2) * std::sin(rot));
-    _p3.y = center.y - ((dims.x / 2) * std::sin(rot)) - ((dims.y / 2) * std::cos(rot));
-    _p4.x = center.x + ((dims.x / 2) * std::cos(rot)) + ((dims.y / 2) * std::sin(rot));
-    _p4.y = center.y + ((dims.x / 2) * std::sin(rot)) - ((dims.y / 2) * std::cos(rot));
+    _p1.x = center.x + ((dims.x / 2) * std::cos(rot)) -
+            ((dims.y / 2) * std::sin(rot));
+    _p1.y = center.y + ((dims.x / 2) * std::sin(rot)) +
+            ((dims.y / 2) * std::cos(rot));
+    _p2.x = center.x - ((dims.x / 2) * std::cos(rot)) -
+            ((dims.y / 2) * std::sin(rot));
+    _p2.y = center.y - ((dims.x / 2) * std::sin(rot)) +
+            ((dims.y / 2) * std::cos(rot));
+    _p3.x = center.x - ((dims.x / 2) * std::cos(rot)) +
+            ((dims.y / 2) * std::sin(rot));
+    _p3.y = center.y - ((dims.x / 2) * std::sin(rot)) -
+            ((dims.y / 2) * std::cos(rot));
+    _p4.x = center.x + ((dims.x / 2) * std::cos(rot)) +
+            ((dims.y / 2) * std::sin(rot));
+    _p4.y = center.y + ((dims.x / 2) * std::sin(rot)) -
+            ((dims.y / 2) * std::cos(rot));
     // NOLINTNEXTLINE incorrect error
     _area = area() + AREA_ERROR;
   }
@@ -69,7 +79,8 @@ class Location {
   [[nodiscard]] constexpr auto rotation() -> VIPRA::f_pnt& { return _rot; }
   [[nodiscard]] constexpr auto rotation() const -> VIPRA::f_pnt { return _rot; }
 
-  [[nodiscard]] constexpr auto random_point(VIPRA::Random::Engine& eng) const -> VIPRA::f3d
+  [[nodiscard]] constexpr auto random_point(VIPRA::Random::Engine& eng) const
+      -> VIPRA::f3d
   {
     VIPRA::Random::uniform_distribution<> wDistr{0, _dims.x};
     VIPRA::Random::uniform_distribution<> hDistr{0, _dims.y};
@@ -149,8 +160,8 @@ class Location {
    * @param point3 : tri point 
    * @return constexpr VIPRA::f_pnt : triangle area
    */
-  [[nodiscard]] static constexpr auto triangle_area(VIPRA::f3d point1, VIPRA::f3d point2, VIPRA::f3d point3)
-      -> VIPRA::f_pnt
+  [[nodiscard]] static constexpr auto triangle_area(
+      VIPRA::f3d point1, VIPRA::f3d point2, VIPRA::f3d point3) -> VIPRA::f_pnt
   {
     return std::abs((point2.x * point1.y - point1.x * point2.y) +
                     (point3.x * point2.y - point2.x * point3.y) +

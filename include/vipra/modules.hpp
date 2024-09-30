@@ -8,7 +8,8 @@ namespace VIPRA::Modules {
 enum class Type {
   Model,
   Goals,
-  Input,
+  MapInput,
+  PedInput,
   Output,
   Pedestrians,
   Parameters,
@@ -25,8 +26,6 @@ inline auto to_string(Type type) -> std::string
       return "model";
     case Type::Goals:
       return "goals";
-    case Type::Input:
-      return "input";
     case Type::Output:
       return "output";
     case Type::Pedestrians:
@@ -39,8 +38,14 @@ inline auto to_string(Type type) -> std::string
       return "simulation";
     case Type::Behavior_model:
       return "behavior_model";
+    case Type::MapInput:
+      return "map_input";
+    case Type::PedInput:
+      return "ped_input";
   }
 
   return "unknown";
 }
+
+static constexpr size_t MODULE_COUNT = 7;
 }  // namespace VIPRA::Modules

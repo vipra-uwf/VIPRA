@@ -13,7 +13,8 @@ Checks: >
   -misc-no-recursion,
   -google-readability-braces-around-statements,
   -cppcoreguidelines-avoid-do-while,
-  -bugprone-easily-swappable-parameters
+  -bugprone-easily-swappable-parameters,
+  -concurrency-mt-unsafe
 
 WarningsAsErrors: "*"
 

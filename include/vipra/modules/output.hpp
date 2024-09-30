@@ -1,60 +1,27 @@
 #pragma once
 
 #include <filesystem>
-#include <fstream>
 
-#include "vipra/modules/util.hpp"
-#include "vipra/types/idx.hpp"
-#include "vipra/util/crtp.hpp"
+#include "vipra/types/state.hpp"
+#include "vipra/types/time.hpp"
 
 namespace VIPRA::Modules {
 /**
  * @brief Base Output module
  * 
  */
-template <typename module_t>
-class Output : public Util::CRTP<Output<module_t>> {
-  using Util::CRTP<Output<module_t>>::self;
-
+class Output {
  public:
-  FORWARD_REGISTER_PARAMS;
+  virtual void write(std::filesystem::path const& outputDir) = 0;
+  virtual void timestep_update(VIPRA::timestep, VIPRA::delta_t,
+                               VIPRA::State const&) = 0;
 
-  void write(std::filesystem::path const& outputDir)
-  {
-    std::filesystem::path filepath = outputDir / self().filename();
-    std::ofstream         file(filepath);
-    if ( ! file.is_open() ) {
-      throw std::runtime_error("Could not open file for writing: " + filepath.string());
-    }
-
-    file << self().to_string();
-
-    file.close();
-  }
-
-  template <typename data_t>
-  void sim_value(std::string const& key, data_t&& value)
-  {
-    self().set_sim_value(key, std::forward<data_t>(value));
-  }
-
-  template <typename data_t>
-  void timestep_value(std::string const& key, VIPRA::idx timestep, data_t&& value)
-  {
-    self().set_timestep_value(key, timestep, std::forward<data_t>(value));
-  }
-
-  template <typename data_t>
-  void ped_value(VIPRA::idx pedIdx, std::string const& key, data_t&& value)
-  {
-    self().set_ped_value(pedIdx, key, std::forward<data_t>(value));
-  }
-
-  template <typename data_t>
-  void ped_timestep_value(VIPRA::idx pedIdx, VIPRA::idx timestep, std::string const& key, data_t&& value)
-  {
-    self().set_ped_timestep_value(pedIdx, timestep, key, std::forward<data_t>(value));
-  }
+  virtual ~Output() = default;
+  Output() = default;
+  Output(const Output&) = default;
+  Output(Output&&) = delete;
+  auto operator=(const Output&) -> Output& = default;
+  auto operator=(Output&&) -> Output& = delete;
 };
 
 }  // namespace VIPRA::Modules

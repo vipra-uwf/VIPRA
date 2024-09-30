@@ -30,10 +30,13 @@ class Log {
  * @param ps - Any additional parameters for the logger
  */
   template <typename... param_ts>
-  VIPRA_INLINE static void warn(fmt::format_string<param_ts...> message, param_ts&&... params)
+  VIPRA_INLINE static void warn(fmt::format_string<param_ts...> message,
+                                param_ts&&... params)
   {
     if ( level <= Level::WARN ) {
-      std::cout << "[WARN] " << fmt::format(message, std::forward<param_ts>(params)...) << '\n';
+      std::cout << "[WARN] "
+                << fmt::format(message, std::forward<param_ts>(params)...)
+                << '\n';
     }
   }
 
@@ -45,10 +48,13 @@ class Log {
  * @param ps - Any additional parameters for the logger
  */
   template <typename... param_ts>
-  VIPRA_INLINE static void info(fmt::format_string<param_ts...> message, param_ts&&... params)
+  VIPRA_INLINE static void info(fmt::format_string<param_ts...> message,
+                                param_ts&&... params)
   {
     if ( level <= Level::INFO ) {
-      std::cout << "[INFO] " << fmt::format(message, std::forward<param_ts>(params)...) << '\n';
+      std::cout << "[INFO] "
+                << fmt::format(message, std::forward<param_ts>(params)...)
+                << '\n';
     }
   }
 
@@ -60,10 +66,13 @@ class Log {
  * @param ps - Any additional parameters for the logger
  */
   template <typename... param_ts>
-  VIPRA_INLINE static void debug(fmt::format_string<param_ts...> message, param_ts&&... params)
+  VIPRA_INLINE static void debug(fmt::format_string<param_ts...> message,
+                                 param_ts&&... params)
   {
     if ( level <= Level::DEBUG ) {
-      std::cout << "[DEBUG] " << fmt::format(message, std::forward<param_ts>(params)...) << '\n';
+      std::cout << "[DEBUG] "
+                << fmt::format(message, std::forward<param_ts>(params)...)
+                << '\n';
     }
   }
 
@@ -75,9 +84,12 @@ class Log {
  * @param ps - Any additional parameters for the logger
  */
   template <typename... param_ts>
-  VIPRA_INLINE static void error(fmt::format_string<param_ts...> message, param_ts&&... params)
+  VIPRA_INLINE static void error(fmt::format_string<param_ts...> message,
+                                 param_ts&&... params)
   {
-    std::cout << "[ERROR] " << fmt::format(message, std::forward<param_ts>(params)...) << '\n';
+    std::cout << "[ERROR] "
+              << fmt::format(message, std::forward<param_ts>(params)...)
+              << '\n';
   }
 
  private:

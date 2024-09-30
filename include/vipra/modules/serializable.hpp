@@ -2,19 +2,19 @@
 
 #include <string>
 
-#include "vipra/modules/module.hpp"
-#include "vipra/util/crtp.hpp"
-
 namespace VIPRA::Modules {
 
-template <typename module_t>
-class Serializable : public Util::CRTP<Serializable<module_t>> {
-  using Util::CRTP<Serializable<module_t>>::self;
-
+class Serializable {
  public:
-  [[nodiscard]] auto serialize() -> std::string { return self().to_string(); }
+  [[nodiscard]] virtual auto serialize() -> std::string = 0;
+  virtual void               parse(std::string const& data) = 0;
 
-  void parse(std::string const& data) { self().parse_impl(data); }
+  Serializable() = default;
+  Serializable(const Serializable&) = default;
+  Serializable(Serializable&&) = default;
+  auto operator=(const Serializable&) -> Serializable& = default;
+  auto operator=(Serializable&&) -> Serializable& = default;
+  virtual ~Serializable() = default;
 };
 
 }  // namespace VIPRA::Modules

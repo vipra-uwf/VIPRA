@@ -9,7 +9,7 @@
     }
   },
   "model": {
-    "calm": {
+    "Calm": {
       "meanMass": 1.0,
       "massStdDev": [
         0.1,
@@ -28,18 +28,22 @@
     }
   },
   "goals": {
+    "PotentialField": {
+      "endGoalType": "exit",
+      "cellSize": 0.1
+    },
     "AStar": {
       "endGoalType": "exit",
       "gridSize": 0.05,
-      "closestObstacle": 0.05,
-      "goalRange": 0.05
+      "goalRange": 0.15,
+      "closestObstacle": 0.1
     }
   },
   "pedestrians": {
-    "Grid": {
-      "use_file": false,
-      "spawn_random": true,
-      "random_count": 100,
+    "SpatialGrid": {
+      "use_file": true,
+      "spawn_random": false,
+      "random_count": 0,
       "gridSize": 0.5
     }
   },

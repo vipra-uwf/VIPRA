@@ -3,7 +3,6 @@
 
 #include "vipra/logging/logging.hpp"
 
-#include "vipra/vipra_behaviors/selectors/selector.hpp"
 #include "vipra/vipra_behaviors/selectors/subselector.hpp"
 #include "vipra/vipra_behaviors/values/numeric_value.hpp"
 
@@ -17,11 +16,13 @@ struct SelectorExactlyN {
   COPYABLE(SelectorExactlyN)
   MOVEABLE(SelectorExactlyN)
 
-  explicit SelectorExactlyN(NumericValue count) : selectCount(std::move(count)) {}
+  explicit SelectorExactlyN(NumericValue count) : selectCount(std::move(count))
+  {
+  }
 
   NumericValue selectCount;
-  auto         operator()(const VIPRA::idxVec& /*unused*/, const VIPRA::idxVec& group, auto pack) const
-      -> SelectorResult
+  auto operator()(const VIPRA::idxVec& /*unused*/, const VIPRA::idxVec& group,
+                  auto pack) const -> SelectorResult
   {
     auto groupPeds = group;
 

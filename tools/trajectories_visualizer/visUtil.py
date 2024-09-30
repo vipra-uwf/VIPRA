@@ -149,14 +149,14 @@ def getPeds(peds):
 def getPoints(timestep):
   pointsX = []
   pointsY = []
-  for ped in timestep["pedestrians"]:
-    pointsX.append(ped["position"][0])
-    pointsY.append(ped["position"][1])
+  for ped in timestep:
+    pointsX.append(ped[0])
+    pointsY.append(ped[1])
 
   return (pointsX, pointsY)
 
 def makeColors(peds, args):
-  count = len(peds["timesteps"][0]["pedestrians"])
+  count = len(peds["timesteps"][0])
   if args['pedColor']:
     return np.random.rand(count, 3)
   else:

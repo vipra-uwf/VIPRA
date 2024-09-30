@@ -1,7 +1,5 @@
 #pragma once
 
-#include "vipra/geometry/f3d.hpp"
-
 #include "vipra/vipra_behaviors/util/class_types.hpp"
 
 namespace VIPRA::Behaviors {

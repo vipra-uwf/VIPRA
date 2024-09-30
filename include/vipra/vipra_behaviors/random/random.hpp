@@ -1,12 +1,11 @@
 #pragma once
 
 #include <cstdint>
-#include <limits>
 
-#include "vipra/geometry/f3d.hpp"
 #include "vipra/random/distributions.hpp"
 #include "vipra/random/random.hpp"
 #include "vipra/types/idx.hpp"
+#include "vipra/types/seed.hpp"
 
 #include "vipra/vipra_behaviors/definitions/dsl_types.hpp"
 
@@ -25,8 +24,9 @@ class DRNG {
   * @brief Gets the random VIPRA::f_pnt between min and max that is assigned to the pedestrian at pedIdx
   * 
   */
-  [[nodiscard]] static inline auto ped_random_float(VIPRA::seed seed, VIPRA::idx pedIdx, Min min, Max max)
-      -> VIPRA::f_pnt
+  [[nodiscard]] static inline auto ped_random_float(VIPRA::seed seed,
+                                                    VIPRA::idx pedIdx, Min min,
+                                                    Max max) -> VIPRA::f_pnt
   {
     VIPRA::Random::uniform_distribution<VIPRA::f_pnt> distr{min.val, max.val};
     return distr(get_engine(VIPRA::seed{seed + (pedIdx * PED_MULT_VAL)}));

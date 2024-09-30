@@ -28,10 +28,11 @@ class ModifierDistance {
    * @return true : if within distance
    * @return false : if NOT within distance
    */
-  auto operator()(auto pack, VIPRA::idx targetIdx, VIPRA::idx selfIdx) const -> bool
+  auto operator()(Simpack pack, VIPRA::idx targetIdx,
+                  VIPRA::idx selfIdx) const -> bool
   {
-    return pack.pedset.ped_coords(selfIdx).distance_to(pack.pedset.ped_coords(targetIdx)) <=
-           _dist.value(selfIdx);
+    return pack.pedset.ped_coords(selfIdx).distance_to(
+               pack.pedset.ped_coords(targetIdx)) <= _dist.value(selfIdx);
   }
 
  private:

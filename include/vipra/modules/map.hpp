@@ -9,38 +9,150 @@
 #include "vipra/geometry/polygon.hpp"
 
 #include "vipra/logging/logging.hpp"
-#include "vipra/modules/util.hpp"
+#include "vipra/modules/map_input.hpp"
 #include "vipra/types/float.hpp"
-#include "vipra/util/crtp.hpp"
+
+#include "vipra/macros/map.hpp"
 
 namespace VIPRA::Modules {
 /**
  * @brief Base Map Module Class
  * 
  */
-template <typename module_t>
-class Map : public Util::CRTP<Map<module_t>> {
-  using Util::CRTP<Map<module_t>>::self;
-
-  // NOLINTBEGIN
+class Map {
  public:
-  FORWARD_REGISTER_PARAMS;
+  // FORWARD_REGISTER_PARAMS;
 
-  void initialize(auto&& input)
+  virtual VIPRA_MAP_INIT = 0;
+
+  virtual void obstacle_added(VIPRA::Geometry::Polygon const& obstacle) {}
+  virtual void objective_added(std::string const&              type,
+                               VIPRA::Geometry::Polygon const& objective)
+  {
+  }
+  virtual void area_added(std::string const&              name,
+                          VIPRA::Geometry::Polygon const& polygon)
+  {
+  }
+
+  [[nodiscard]] virtual auto collision(VIPRA::f3d point) const -> bool
+  {
+    return std::any_of(
+        _obstacles.begin(), _obstacles.end(),
+        [&](auto const& obstacle) { return obstacle.is_point_inside(point); });
+  }
+  [[nodiscard]] virtual auto collision(VIPRA::Geometry::Circle radius) const
+      -> bool
+  {
+    if ( collision(radius.center()) ) return true;
+
+    return std::any_of(
+        _obstacles.begin(), _obstacles.end(),
+        [&](auto const& obstacle) { return obstacle.does_intersect(radius); });
+  }
+
+  [[nodiscard]] virtual auto ray_hit(VIPRA::f3d start,
+                                     VIPRA::f3d end) const -> VIPRA::f_pnt
+  {
+    VIPRA::f_pnt hit = std::numeric_limits<VIPRA::f_pnt>::max();
+    for ( auto const& obstacle : _obstacles ) {
+      for ( auto const& edge : obstacle.sides() ) {
+        if ( ! edge.does_intersect({start, end}) ) continue;
+        auto intersection = edge.intersection_point({start, end});
+        hit = std::min(hit, start.distance_to(intersection));
+      }
+    }
+    return hit;
+  }
+
+  void add_obstacle(VIPRA::Geometry::Polygon const& obstacle)
+  {
+    _obstacles.push_back(obstacle);
+
+    if ( _initialized ) obstacle_added(obstacle);
+  }
+  void add_objective(std::string const&              type,
+                     VIPRA::Geometry::Polygon const& objective)
+  {
+    if ( ! _objectives.contains(type) ) _objectives[type] = {};
+
+    _objectives[type].push_back(objective);
+
+    if ( _initialized ) objective_added(type, objective);
+  }
+  void add_spawn(VIPRA::Geometry::Polygon const& spawn)
+  {
+    _spawns.push_back(spawn);
+  }
+  void add_area(std::string const&              name,
+                VIPRA::Geometry::Polygon const& polygon)
+  {
+    _areas[name] = polygon;
+
+    if ( _initialized ) area_added(name, polygon);
+  }
+
+  [[nodiscard]] auto get_objectives() const
+      -> std::map<std::string, std::vector<VIPRA::Geometry::Polygon>> const&
+  {
+    return _objectives;
+  }
+  [[nodiscard]] auto get_objectives(std::string const& type) const
+      -> std::vector<VIPRA::Geometry::Polygon> const&
+  {
+    auto iter = _objectives.find(type);
+    if ( iter == _objectives.end() ) {
+      throw std::runtime_error("Map does NOT have objectives of type " + type);
+    }
+
+    return iter->second;
+  }
+
+  [[nodiscard]] auto get_dimensions() const -> VIPRA::f3d
+  {
+    return _dimensions;
+  }
+  [[nodiscard]] auto get_objective_types() const
+      -> std::vector<std::string> const&
+  {
+    return _objectiveTypes;
+  }
+  [[nodiscard]] auto get_obstacles() const
+      -> std::vector<VIPRA::Geometry::Polygon> const&
+  {
+    return _obstacles;
+  }
+  [[nodiscard]] auto get_spawns() const
+      -> std::vector<VIPRA::Geometry::Polygon> const&
+  {
+    return _spawns;
+  }
+  [[nodiscard]] auto get_areas() const
+      -> std::map<std::string, VIPRA::Geometry::Polygon>
+  {
+    return _areas;
+  }
+
+  void initialize(VIPRA::Modules::MapInput& input)
   {
     VIPRA::Log::debug("Initializing Map");
 
-    auto const obstacles = input.template get_obstacles();
-    if ( ! obstacles ) throw std::runtime_error("Input Module failed to load map obstacles");
+    auto obstacles = input.get_obstacles();
+    if ( ! obstacles )
+      throw std::runtime_error("Input Module failed to load map obstacles");
 
-    auto const objectives = input.template get_objectives();
-    if ( ! objectives ) throw std::runtime_error("Input Module failed to load map objectives");
+    auto objectives = input.get_objectives();
+    if ( ! objectives )
+      throw std::runtime_error("Input Module failed to load map objectives");
 
-    auto const spawns = input.template get_spawns();
-    if ( ! spawns ) throw std::runtime_error("Input Module failed to load map pedestrians spawn areas");
+    auto spawns = input.get_spawns();
+    if ( ! spawns )
+      throw std::runtime_error(
+          "Input Module failed to load map pedestrians spawn areas");
 
-    auto const areas = input.template get_areas();
-    if ( ! areas ) throw std::runtime_error("Input Module failed to load map areas");
+    auto areas = input.get_areas();
+    if ( ! areas )
+      throw std::runtime_error("Input Module failed to load map areas");
 
     _obstacles = std::move(obstacles.value());
     _objectives = std::move(objectives.value());
@@ -54,70 +166,10 @@ class Map : public Util::CRTP<Map<module_t>> {
     find_dimensions(_obstacles, _objectives, _spawns, _areas);
 
     // initialize derived obstacles module
-    return self().init_step(_obstacles, _objectives, _spawns, _areas);
+    init_step(_obstacles, _objectives, _spawns, _areas);
 
     VIPRA::Log::debug("Map Initialized");
   }
-
-  [[nodiscard]] auto get_dimensions() const -> VIPRA::f3d { return _dimensions; }
-
-  [[nodiscard]] auto collision(VIPRA::f3d point) const -> bool
-  {
-    return std::any_of(_obstacles.begin(), _obstacles.end(),
-                       [&](auto const& obstacle) { return obstacle.is_point_inside(point); });
-  }
-
-  [[nodiscard]] auto collision(VIPRA::Geometry::Circle radius) const -> bool
-  {
-    if ( collision(radius.center()) ) return true;
-
-    return std::any_of(_obstacles.begin(), _obstacles.end(),
-                       [&](auto const& obstacle) { return obstacle.does_intersect(radius); });
-  }
-
-  [[nodiscard]] auto ray_hit(VIPRA::f3d start, VIPRA::f3d end) const -> VIPRA::f_pnt
-  {
-    VIPRA::f_pnt hit = std::numeric_limits<VIPRA::f_pnt>::max();
-    for ( auto const& obstacle : _obstacles ) {
-      for ( auto const& edge : obstacle.sides() ) {
-        if ( ! edge.does_intersect({start, end}) ) continue;
-        auto intersection = edge.intersection_point({start, end});
-        hit = std::min(hit, start.distance_to(intersection));
-      }
-    }
-    return hit;
-  }
-
-  [[nodiscard]] auto get_objective_types() const -> std::vector<std::string> const&
-  {
-    return _objectiveTypes;
-  }
-
-  [[nodiscard]] auto get_objectives(std::string const& type) const
-      -> std::vector<VIPRA::Geometry::Polygon> const&
-  {
-    auto iter = _objectives.find(type);
-    if ( iter == _objectives.end() ) {
-      throw std::runtime_error("Map does NOT have objectives of type " + type);
-    }
-
-    return iter->second;
-  }
-
-  [[nodiscard]] auto get_obstacles() const -> std::vector<VIPRA::Geometry::Polygon> const&
-  {
-    return _obstacles;
-  }
-
-  [[nodiscard]] auto get_spawns() const -> std::vector<VIPRA::Geometry::Polygon> const& { return _spawns; }
-
-  [[nodiscard]] auto get_objectives() const
-      -> std::map<std::string, std::vector<VIPRA::Geometry::Polygon>> const&
-  {
-    return _objectives;
-  }
-
-  [[nodiscard]] auto get_areas() const -> std::map<std::string, VIPRA::Geometry::Polygon> { return _areas; }
 
  private:
   std::vector<VIPRA::Geometry::Polygon>                        _obstacles;
@@ -127,12 +179,15 @@ class Map : public Util::CRTP<Map<module_t>> {
 
   std::vector<std::string> _objectiveTypes;
 
+  bool       _initialized{false};
   VIPRA::f3d _dimensions;
 
-  void find_dimensions(std::vector<VIPRA::Geometry::Polygon> const&                        obstacles,
-                       std::map<std::string, std::vector<VIPRA::Geometry::Polygon>> const& objectives,
-                       std::vector<VIPRA::Geometry::Polygon> const&                        spawns,
-                       std::map<std::string, VIPRA::Geometry::Polygon> const&              areas)
+  void find_dimensions(
+      std::vector<VIPRA::Geometry::Polygon> const& obstacles,
+      std::map<std::string, std::vector<VIPRA::Geometry::Polygon>> const&
+                                                             objectives,
+      std::vector<VIPRA::Geometry::Polygon> const&           spawns,
+      std::map<std::string, VIPRA::Geometry::Polygon> const& areas)
   {
     auto setToMax = [&](auto const& polygon) {
       for ( auto const& edge : polygon.sides() ) {
@@ -159,7 +214,16 @@ class Map : public Util::CRTP<Map<module_t>> {
       setToMax(polygon);
     };
 
-    VIPRA::Log::debug("Map Dimensions: {}, {}, {}", _dimensions.x, _dimensions.y, _dimensions.z);
+    VIPRA::Log::debug("Map Dimensions: {}, {}, {}", _dimensions.x,
+                      _dimensions.y, _dimensions.z);
   }
+
+ public:
+  virtual ~Map() = default;
+  Map() = default;
+  Map(const Map&) = default;
+  Map(Map&&) noexcept = default;
+  auto operator=(const Map&) -> Map& = default;
+  auto operator=(Map&&) noexcept -> Map& = default;
 };
 }  // namespace VIPRA::Modules

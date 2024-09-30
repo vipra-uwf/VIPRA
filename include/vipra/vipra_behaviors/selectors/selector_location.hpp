@@ -3,9 +3,7 @@
 #include "vipra/logging/logging.hpp"
 #include "vipra/types/idx.hpp"
 
-#include "vipra/vipra_behaviors/selectors/selector.hpp"
 #include "vipra/vipra_behaviors/selectors/subselector.hpp"
-#include "vipra/vipra_behaviors/values/numeric_value.hpp"
 
 namespace VIPRA::Behaviors {
 /**
@@ -20,8 +18,8 @@ struct SelectorLocation {
   explicit SelectorLocation(VIPRA::idx loc) : location(loc) {}
 
   VIPRA::idx location;
-  auto       operator()(const VIPRA::idxVec& /*unused*/, const VIPRA::idxVec& group, auto pack) const
-      -> SelectorResult
+  auto operator()(const VIPRA::idxVec& /*unused*/, const VIPRA::idxVec& group,
+                  auto pack) const -> SelectorResult
   {
     auto const&   loc = pack.context.locations[location];
     size_t        pedCnt = 0;

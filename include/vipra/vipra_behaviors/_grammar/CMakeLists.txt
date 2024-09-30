@@ -1,6 +1,6 @@
 
 target_sources(
-  ${VIPRA_PROJECT_NAME}
+  ${VIPRA_LIBRARY_NAME}
   PRIVATE
   ./generated/BehaviorVisitor.cpp
   ./generated/BehaviorLexer.cpp
