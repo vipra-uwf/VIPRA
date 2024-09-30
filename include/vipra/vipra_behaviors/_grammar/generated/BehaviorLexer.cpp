@@ -582,9 +582,9 @@ const atn::ATN& BehaviorLexer::getATN() const {
 
 
 void BehaviorLexer::initialize() {
-#if ANTLR4_USE_THREAD_LOCAL_CACHE
+// #if ANTLR4_USE_THREAD_LOCAL_CACHE
   behaviorlexerLexerInitialize();
-#else
-  ::antlr4::internal::call_once(behaviorlexerLexerOnceFlag, behaviorlexerLexerInitialize);
-#endif
+// #else
+//   ::antlr4::internal::call_once(behaviorlexerLexerOnceFlag, behaviorlexerLexerInitialize);
+// #endif
 }
