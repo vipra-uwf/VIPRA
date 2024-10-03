@@ -6,7 +6,7 @@ endif()
 
 include(ExternalProject)
 
-add_compile_definitions(-DANTLR4_USE_THREAD_LOCAL_CACHE=1)
+add_compile_definitions(ANTLR4_USE_THREAD_LOCAL_CACHE=1)
 
 set(ANTLR4_ROOT ${CMAKE_CURRENT_BINARY_DIR}/antlr4_runtime/src/antlr4_runtime)
 set(ANTLR4_INCLUDE_DIRS ${ANTLR4_ROOT}/runtime/Cpp/runtime/src)
