@@ -3,8 +3,10 @@
 #include <functional>
 #include <vector>
 
+#include "vipra/geometry/rectangle.hpp"
 #include "vipra/logging/logging.hpp"
 
+#include "vipra/macros/module.hpp"
 #include "vipra/modules/map.hpp"
 
 #include "vipra/geometry/circle.hpp"
@@ -21,6 +23,7 @@
 #include "vipra/types/size.hpp"
 #include "vipra/types/state.hpp"
 
+#include "vipra/macros/parameters.hpp"
 #include "vipra/macros/pedestrians.hpp"
 
 namespace VIPRA::Modules {
@@ -29,7 +32,7 @@ namespace VIPRA::Modules {
  * @brief Base Pedestrians module
  * 
  */
-class Pedestrians {
+class Pedestrians : public BaseModule<Pedestrians> {
  public:
   virtual VIPRA_PEDS_INIT_STEP = 0;
   virtual VIPRA_PEDS_UPDATE_STEP = 0;
@@ -44,8 +47,11 @@ class Pedestrians {
       VIPRA::idx                             pedIdx,
       std::function<bool(VIPRA::idx)> const& condition) const -> VIPRA::idx = 0;
 
-  // REGISTER_BASE_PARAMS(VIPRA_PARAM("random_count", _randomPedCnt), VIPRA_PARAM("spawn_random", _randomSpawn),
-  //                      VIPRA_PARAM("use_file", _useFile))
+  VIPRA_MODULE_TYPE(Pedestrians);
+
+  VIPRA_REGISTER_BASE_PARAMS(VIPRA_PARAM("random_count", _randomPedCnt),
+                             VIPRA_PARAM("spawn_random", _randomSpawn),
+                             VIPRA_PARAM("use_file", _useFile))
 
   void initialize(VIPRA::Modules::PedestrianInput& input,
                   VIPRA::Modules::Map const& map, VIPRA::Random::Engine& engine)
@@ -181,6 +187,8 @@ class Pedestrians {
     for ( size_t i = startSize; i < _coords.size(); ++i ) {
       // TODO(rolland, issue #50): effectively infinite loop if the spawn is covered by an obstacle
       VIPRA::idx spawnIdx = polyDist(engine);
+
+      // if area 0
 
       do {
         _coords[i] = spawnAreas[spawnIdx].random_point(engine);

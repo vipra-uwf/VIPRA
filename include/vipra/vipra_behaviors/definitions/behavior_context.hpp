@@ -23,12 +23,13 @@ class Event;
 
 struct BehaviorContext {
   using pack_t = Simpack;
-  VIPRA::delta_t                   elapsedTime = 0;
-  VIPRA::Random::Engine            engine;
-  std::vector<Behaviors::stateUID> pedStates;
-  std::vector<Behaviors::typeUID>  types;
-  std::vector<Event>               events;
-  std::vector<Behaviors::Location> locations;
+  VIPRA::delta_t                                          elapsedTime = 0;
+  VIPRA::Random::Engine                                   engine;
+  std::vector<Behaviors::stateUID>                        pedStates;
+  std::vector<Behaviors::typeUID>                         types;
+  std::vector<Event>                                      events;
+  std::vector<Behaviors::Location>                        locations;
+  std::map<std::string, std::vector<Behaviors::Location>> objectives;
 };
 }  // namespace VIPRA::Behaviors
 

@@ -17,18 +17,28 @@ class SubConditionEventOccurred {
   COPYABLE(SubConditionEventOccurred)
   MOVEABLE(SubConditionEventOccurred)
  public:
-  explicit SubConditionEventOccurred(VIPRA::idx event) : _event(event) {}
+  explicit SubConditionEventOccurred(VIPRA::idx event, bool negate)
+      : _event(event), _negate(negate)
+  {
+  }
 
   void operator()(Simpack pack, const VIPRA::idxVec& /*unused*/,
                   std::vector<Target> const& /*unused*/, std::vector<bool>& met,
                   std::vector<bool> const& /*unused*/, BoolOp /*unused*/) const
   {
-    std::fill(met.begin(), met.end(),
-              pack.context.events[_event].has_occurred());
+    if ( _negate ) {
+      std::fill(met.begin(), met.end(),
+                ! pack.context.events[_event].has_occurred());
+    }
+    else {
+      std::fill(met.begin(), met.end(),
+                pack.context.events[_event].has_occurred());
+    }
   }
 
  private:
   VIPRA::idx _event;
+  bool       _negate{false};
 };
 
 }  // namespace VIPRA::Behaviors

@@ -22,8 +22,9 @@ void SubConditionLeave::operator()(Simpack pack, const VIPRA::idxVec& peds,
     }
 
     Location& loc = pack.context.locations[_location];
-    bool leave = ! loc.contains(pack.state.positions[targets[idx].targetIdx]) &&
-                 loc.contains(pack.pedset.ped_coords(targets[idx].targetIdx));
+    bool      leave =
+        ! loc.is_point_inside(pack.state.positions[targets[idx].targetIdx]) &&
+        loc.is_point_inside(pack.pedset.ped_coords(targets[idx].targetIdx));
 
     if ( leave ) {
       _left[targets[idx].targetIdx] = true;

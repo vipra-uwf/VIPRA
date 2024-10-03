@@ -173,6 +173,8 @@ public:
 
     virtual std::any visitScale_atom(BehaviorParser::Scale_atomContext *context) = 0;
 
+    virtual std::any visitSet_objective_atom(BehaviorParser::Set_objective_atomContext *context) = 0;
+
     virtual std::any visitDeclaration(BehaviorParser::DeclarationContext *context) = 0;
 
     virtual std::any visitDecl_Ped_State(BehaviorParser::Decl_Ped_StateContext *context) = 0;

@@ -1,7 +1,11 @@
 
 #include "vipra/vipra_behaviors/builder/behavior_builder.hpp"
+#include "vipra/geometry/rectangle.hpp"
+#include "vipra/logging/logging.hpp"
 #include "vipra/vipra_behaviors/actions/atoms/atom_scale.hpp"
 #include "vipra/vipra_behaviors/actions/atoms/atom_set.hpp"
+#include "vipra/vipra_behaviors/actions/atoms/atom_set_obj.hpp"
+#include "vipra/vipra_behaviors/conditions/subconditions/subcondition_enter_objective.hpp"
 #include "vipra/vipra_behaviors/conditions/subconditions/subcondition_start.hpp"
 #include "vipra/vipra_behaviors/selectors/selector_everyone.hpp"
 #include "vipra/vipra_behaviors/selectors/selector_exactly_N.hpp"
@@ -26,6 +30,7 @@ namespace VIPRA::Behaviors {
 
 auto BehaviorBuilder::build(std::string                  behaviorName,
                             std::filesystem::path const& filepath,
+                            Modules::Map const&          map,
                             seed seedNum) -> HumanBehavior
 {
   if ( ! std::filesystem::exists(filepath) ) {
@@ -36,7 +41,7 @@ auto BehaviorBuilder::build(std::string                  behaviorName,
 
   VIPRA::Log::debug("Loading Behavior: {} at {}", behaviorName,
                     std::filesystem::canonical(filepath).c_str());
-  initial_behavior_setup(behaviorName, seedNum);
+  initial_behavior_setup(behaviorName, map, seedNum);
 
   std::ifstream dslFile(filepath);
 
@@ -66,8 +71,9 @@ auto BehaviorBuilder::build(std::string                  behaviorName,
  * @param seedNum : randomization seed for behavior
  */
 
-void BehaviorBuilder::initial_behavior_setup(std::string const& behaviorName,
-                                             VIPRA::seed        seedNum)
+void BehaviorBuilder::initial_behavior_setup(std::string const&  behaviorName,
+                                             Modules::Map const& map,
+                                             VIPRA::seed         seedNum)
 {
   _currentBehavior = HumanBehavior(behaviorName);
   _currentBehavior.set_seed(seedNum);
@@ -75,7 +81,7 @@ void BehaviorBuilder::initial_behavior_setup(std::string const& behaviorName,
   initialize_states();
   initialize_events();
   initialize_types();
-  initialize_locations();
+  initialize_locations(map);
 }
 
 /**
@@ -125,7 +131,19 @@ void BehaviorBuilder::initialize_types()
  * 
  */
 
-void BehaviorBuilder::initialize_locations() { _locations.clear(); }
+void BehaviorBuilder::initialize_locations(Modules::Map const& map)
+{
+  _locations.clear();
+
+  for ( auto const& loc : map.get_areas() ) {
+    _locations[loc.first] = _currentBehavior.add_location(
+        Geometry::Rectangle{loc.second.bounding_box()});
+  }
+
+  for ( auto const& objtype : map.get_objective_types() ) {
+    _currentBehavior.add_objectives(objtype, map.get_objectives(objtype));
+  }
+}
 
 // ------------------------------------ END INITIALIZATION --------------------------------------------------------------------------------------
 
@@ -173,8 +191,15 @@ void BehaviorBuilder::add_sub_condition(
   }
 
   if ( subcond->condition_Enter_Location() ) {
-    condTree.add_subcondition(
-        build_enter_subcond(subcond->condition_Enter_Location()));
+    if ( ! get_location(
+             subcond->condition_Enter_Location()->LOC_NAME()->toString()) ) {
+      condTree.add_subcondition(
+          build_enter_obj_subcond(subcond->condition_Enter_Location()));
+    }
+    else {
+      condTree.add_subcondition(
+          build_enter_subcond(subcond->condition_Enter_Location()));
+    }
     return;
   }
 
@@ -356,6 +381,11 @@ void BehaviorBuilder::add_atom_to_action(
 
   if ( atom->scale_atom() ) {
     add_scale_atom(action, atom->scale_atom());
+    return;
+  }
+
+  if ( atom->set_objective_atom() ) {
+    add_set_obj_atom(action, atom->set_objective_atom());
     return;
   }
 
@@ -652,8 +682,12 @@ auto BehaviorBuilder::make_attribute_value(
   }
 
   if ( ctx->LOC_NAME() ) {
-    auto location = get_check_location(ctx->LOC_NAME()->toString());
-    return AttributeHandling::store_value(Type::LOCATION, location);
+    auto location = get_location(ctx->LOC_NAME()->toString());
+    if ( location )
+      return AttributeHandling::store_value(Type::LOCATION, location);
+
+    std::string obj = ctx->LOC_NAME()->toString().substr(1);
+    return AttributeHandling::store_value(Type::OBJECTIVE, std::move(obj));
   }
 
   if ( ctx->towards() ) {
@@ -796,8 +830,9 @@ auto BehaviorBuilder::visitLocation(BehaviorParser::LocationContext* ctx)
 
   auto [center, dimensions, rotation] = make_dimensions(dims.value());
 
-  _locations[locName] =
-      _currentBehavior.add_location(Location{center, dimensions, rotation});
+  _locations[locName] = _currentBehavior.add_location(
+      Geometry::Rectangle{center, dimensions, rotation});
+
   VIPRA::Log::debug(R"(Behavior "{}": Adding Location "{}")",
                     _currentBehavior.get_name(), locName);
 
@@ -968,6 +1003,7 @@ void BehaviorBuilder::add_set_atom(Action&                          action,
   auto attrStr = make_attribute_str(ctx->attribute());
   auto attr = get_attribute(attrStr);
   auto attrValue = make_attribute_value(ctx->attr_value());
+
   action.add_atom(AtomSet{attr, attrValue});
 }
 
@@ -987,6 +1023,13 @@ void BehaviorBuilder::add_scale_atom(Action&                            action,
   action.add_atom(AtomScale{attr, attrValue});
 }
 
+void BehaviorBuilder::add_set_obj_atom(
+    Action& action, BehaviorParser::Set_objective_atomContext* ctx)
+{
+  std::string name = ctx->LOC_NAME()->toString().substr(1);
+  action.add_atom(AtomSetObjective{name});
+}
+
 // ------------------------------- END ATOMS -----------------------------------------------------------------------------------------
 
 // ------------------------------- SUBCONDITIONS -----------------------------------------------------------------------------------------
@@ -997,7 +1040,23 @@ void BehaviorBuilder::add_scale_atom(Action&                            action,
  * @param condition 
  * @param ctx 
  */
+auto BehaviorBuilder::build_enter_obj_subcond(
+    BehaviorParser::Condition_Enter_LocationContext* ctx)
+    -> SubConditionEnterObj
+{
+  std::string name = ctx->LOC_NAME()->toString().substr(1);
 
+  VIPRA::Log::debug("Enter Obj: {}", name);
+
+  return SubConditionEnterObj{name};
+}
+
+/**
+ * @brief Adds an enter location subcondition to the condition
+ * 
+ * @param condition 
+ * @param ctx 
+ */
 auto BehaviorBuilder::build_enter_subcond(
     BehaviorParser::Condition_Enter_LocationContext* ctx) -> SubConditionEnter
 {
@@ -1057,7 +1116,7 @@ auto BehaviorBuilder::build_event_occurred_subcond(
       R"(Behavior "{}": Adding SubCondition: Event "{}" Occurred)",
       _currentBehavior.get_name(), evName);
   auto event = get_check_event(evName);
-  return SubConditionEventOccurred(event);
+  return SubConditionEventOccurred(event, ctx->NOT() != nullptr);
 }
 
 /**
@@ -1076,7 +1135,7 @@ auto BehaviorBuilder::build_event_occurring_subcond(
       R"(Behavior "{}": Adding SubCondition: Event "{}" Occurring)",
       _currentBehavior.get_name(), evName);
   auto event = get_check_event(evName);
-  return SubConditionEventOccurring(event);
+  return SubConditionEventOccurring(event, ctx->NOT() != nullptr);
 }
 
 /**
@@ -1092,7 +1151,7 @@ auto BehaviorBuilder::build_event_starting_subcond(
 {
   std::string evName = ctx->EVNT()->toString();
   VIPRA::Log::debug(
-      R"(Behavior "{}": Adding SubCondition: Event "{}" Occurring)",
+      R"(Behavior "{}": Adding SubCondition: Event "{}" Starting)",
       _currentBehavior.get_name(), evName);
   auto event = get_check_event(evName);
 
@@ -1111,9 +1170,8 @@ auto BehaviorBuilder::build_event_ending_subcond(
     -> SubConditionEventEnding
 {
   std::string evName = ctx->EVNT()->toString();
-  VIPRA::Log::debug(
-      R"(Behavior "{}": Adding SubCondition: Event "{}" Occurring)",
-      _currentBehavior.get_name(), evName);
+  VIPRA::Log::debug(R"(Behavior "{}": Adding SubCondition: Event "{}" Ending)",
+                    _currentBehavior.get_name(), evName);
   auto event = get_check_event(evName);
   return SubConditionEventEnding(event);
 }

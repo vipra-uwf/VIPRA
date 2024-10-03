@@ -1,5 +1,6 @@
 #pragma once
 
+#include "vipra/geometry/f3d.hpp"
 #include "vipra/geometry/polygon.hpp"
 #include "vipra/geometry/triangle.hpp"
 #include "vipra/types/float.hpp"
@@ -9,19 +10,74 @@ class Rectangle : public PolygonBase<4> {
   static constexpr VIPRA::f_pnt AREA_ERROR = 0.0001;
 
   constexpr Rectangle() = default;
+
+  // NOLINTNEXTLINE(google-explicit-constructor)
+  Rectangle(PolygonBase<4> const& polygon)
+      : PolygonBase<4>(polygon.sides()),
+        _area(calc_area()),
+        _center((_sides[0].start + _sides[0].end + _sides[1].start +
+                 _sides[1].end) /
+                4)
+  {
+  }
+
+  constexpr Rectangle(VIPRA::f3d const& center, VIPRA::f3d const& dimensions,
+                      VIPRA::f_pnt rotation)
+      : _center(center)
+  {
+    const VIPRA::f3d point1 =
+        VIPRA::f3d{center.x + ((dimensions.x / 2) * cos(rotation)) -
+                       ((dimensions.y / 2) * sin(rotation)),
+                   center.y + ((dimensions.x / 2) * sin(rotation)) +
+                       ((dimensions.y / 2) * cos(rotation))};
+    const VIPRA::f3d point2 =
+        VIPRA::f3d{center.x - ((dimensions.x / 2) * cos(rotation)) -
+                       ((dimensions.y / 2) * sin(rotation)),
+                   center.y - ((dimensions.x / 2) * sin(rotation)) +
+                       ((dimensions.y / 2) * cos(rotation))};
+    const VIPRA::f3d point3 =
+        VIPRA::f3d{center.x - ((dimensions.x / 2) * cos(rotation)) +
+                       ((dimensions.y / 2) * sin(rotation)),
+                   center.y - ((dimensions.x / 2) * sin(rotation)) -
+                       ((dimensions.y / 2) * cos(rotation))};
+    const VIPRA::f3d point4 =
+        VIPRA::f3d{center.x + ((dimensions.x / 2) * cos(rotation)) +
+                       ((dimensions.y / 2) * sin(rotation)),
+                   center.y + ((dimensions.x / 2) * sin(rotation)) -
+                       ((dimensions.y / 2) * cos(rotation))};
+
+    _sides[0] = Line{point1, point2};
+    _sides[1] = Line{point2, point3};
+    _sides[2] = Line{point3, point4};
+    _sides[3] = Line{point4, point1};
+
+    _area = calc_area();
+  }
+
   constexpr Rectangle(VIPRA::f3d const& point1, VIPRA::f3d const& point2,
                       VIPRA::f3d const& point3, VIPRA::f3d const& point4)
-      : _area(calc_area()),
-        PolygonBase<4>(std::array{Line{point1, point2}, Line{point2, point3},
-                                  Line{point3, point4}, Line{point4, point1}})
+      : PolygonBase<4>(std::array{Line{point1, point2}, Line{point2, point3},
+                                  Line{point3, point4}, Line{point4, point1}}),
+        _area(calc_area()),
+        _center((_sides[0].start + _sides[0].end + _sides[1].start +
+                 _sides[1].end) /
+                4)
   {
   }
   explicit Rectangle(std::vector<VIPRA::f3d> const& points)
-      : PolygonBase<4>(points)
+      : PolygonBase<4>(points),
+        _area(calc_area()),
+        _center((_sides[0].start + _sides[0].end + _sides[1].start +
+                 _sides[1].end) /
+                4)
   {
   }
   explicit Rectangle(std::vector<VIPRA::Geometry::Line> const& sides)
-      : PolygonBase<4>(sides)
+      : PolygonBase<4>(sides),
+        _area(calc_area()),
+        _center((_sides[0].start + _sides[0].end + _sides[1].start +
+                 _sides[1].end) /
+                4)
   {
   }
 
@@ -45,20 +101,6 @@ class Rectangle : public PolygonBase<4> {
                  _sides[0].end.x - _sides[0].start.x);
   }
 
-  [[nodiscard]] auto triangularize() const noexcept
-      -> std::vector<PolygonBase<3>>
-  {
-    return {
-        PolygonBase<3>{std::array{_sides[0], Line{_sides[0].start, center()},
-                                  Line{_sides[0].end, center()}}},
-        PolygonBase<3>{std::array{_sides[1], Line{_sides[1].start, center()},
-                                  Line{_sides[1].end, center()}}},
-        PolygonBase<3>{std::array{_sides[2], Line{_sides[2].start, center()},
-                                  Line{_sides[2].end, center()}}},
-        PolygonBase<3>{std::array{_sides[3], Line{_sides[3].start, center()},
-                                  Line{_sides[3].end, center()}}}};
-  }
-
   POLY_FUNC auto width() const noexcept -> VIPRA::f_pnt
   {
     return _sides[0].length();
@@ -69,8 +111,14 @@ class Rectangle : public PolygonBase<4> {
   }
   POLY_FUNC auto area() const noexcept -> VIPRA::f_pnt { return _area; }
 
+  POLY_FUNC auto center() const noexcept -> VIPRA::f3d const&
+  {
+    return _center;
+  }
+
  private:
-  VIPRA::f_pnt _area;
+  VIPRA::f_pnt _area{};
+  VIPRA::f3d   _center;
 
   [[nodiscard]] inline constexpr auto calc_area() const noexcept -> VIPRA::f_pnt
   {

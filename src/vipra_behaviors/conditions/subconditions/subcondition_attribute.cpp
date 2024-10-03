@@ -21,8 +21,9 @@ void SubConditionAttribute::operator()(Simpack pack, const VIPRA::idxVec& peds,
     if ( _not ) {
       met[ped] = AttributeHandling::is_not_equal(attr, _value, pack);
     }
-
-    met[ped] = AttributeHandling::is_equal(attr, _value, pack);
+    else {
+      met[ped] = AttributeHandling::is_equal(attr, _value, pack);
+    }
   }
 }
 
@@ -76,7 +77,7 @@ auto SubConditionAttribute::towards_location_compare(
     case Attribute::END_GOAL:
       [[fallthrough]];
     case Attribute::CURR_GOAL:
-      if ( loc.contains(attr.as<VIPRA::f3d>()) ) return true;
+      if ( loc.is_point_inside(attr.as<VIPRA::f3d>()) ) return true;
       checkDiff = attr.as<VIPRA::f3d>() - selfPos;
       endDiff = loc.center() - selfPos;
     case Attribute::VELOCITY:

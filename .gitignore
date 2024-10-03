@@ -64,3 +64,6 @@ __pycache__
 dwg2dxf
 *~
 \#*
+
+# performance
+*.data

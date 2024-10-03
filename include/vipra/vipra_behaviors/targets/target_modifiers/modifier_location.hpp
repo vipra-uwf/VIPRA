@@ -30,7 +30,7 @@ class ModifierLocation {
                   VIPRA::idx /*selfIdx*/) const -> bool
   {
     auto const targetPos = pack.pedset.ped_coords(targetIdx);
-    return pack.context.locations[_location].contains(targetPos);
+    return pack.context.locations[_location].is_point_inside(targetPos);
   }
 
  private:

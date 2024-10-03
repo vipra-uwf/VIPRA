@@ -23,7 +23,7 @@ class SubConditionInLocation {
   {
     for ( auto idx : peds ) {
       auto const& coords = pack.pedset.ped_coords(targets[idx].targetIdx);
-      met[idx] = pack.context.locations[_location].contains(coords);
+      met[idx] = pack.context.locations[_location].is_point_inside(coords);
     }
   }
 

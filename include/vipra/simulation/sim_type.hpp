@@ -243,6 +243,9 @@ inline void Simulation::initialize(Parameters& params)
   _configs[Modules::Type::PedInput](_pedInput.get(), params, _engine);
   _configs[Modules::Type::MapInput](_mapInput.get(), params, _engine);
 
+  _pedset->register_base_params(params);
+  _pedset->config_base(params, _engine);
+
   _behaviorModel.register_params(params);
   _behaviorModel.config(params, _engine);
 

@@ -60,8 +60,8 @@ public:
     RuleSelector_Location = 65, RuleGroup = 66, RuleAction = 67, RuleAction_attribute = 68, 
     RuleAction_stimulus = 69, RuleAction_response = 70, RuleAction_duration = 71, 
     RuleAction_target = 72, RuleSub_action = 73, RuleAction_atom = 74, RuleSet_atom = 75, 
-    RuleScale_atom = 76, RuleDeclaration = 77, RuleDecl_Ped_State = 78, 
-    RuleDecl_Ped = 79
+    RuleScale_atom = 76, RuleSet_objective_atom = 77, RuleDeclaration = 78, 
+    RuleDecl_Ped_State = 79, RuleDecl_Ped = 80
   };
 
   explicit BehaviorParser(antlr4::TokenStream *input);
@@ -158,6 +158,7 @@ public:
   class Action_atomContext;
   class Set_atomContext;
   class Scale_atomContext;
+  class Set_objective_atomContext;
   class DeclarationContext;
   class Decl_Ped_StateContext;
   class Decl_PedContext; 
@@ -610,6 +611,7 @@ public:
     antlr4::tree::TerminalNode *EVNT();
     antlr4::tree::TerminalNode *HAS();
     antlr4::tree::TerminalNode *OCCURRED();
+    antlr4::tree::TerminalNode *NOT();
 
 
     virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -624,6 +626,7 @@ public:
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *EVNT();
     antlr4::tree::TerminalNode *OCCURRING();
+    antlr4::tree::TerminalNode *NOT();
 
 
     virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -1286,6 +1289,7 @@ public:
     Action_atomContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     Set_atomContext *set_atom();
+    Set_objective_atomContext *set_objective_atom();
     Scale_atomContext *scale_atom();
 
 
@@ -1327,6 +1331,23 @@ public:
   };
 
   Scale_atomContext* scale_atom();
+
+  class  Set_objective_atomContext : public antlr4::ParserRuleContext {
+  public:
+    Set_objective_atomContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *SET();
+    antlr4::tree::TerminalNode *GOAL();
+    antlr4::tree::TerminalNode *TO();
+    antlr4::tree::TerminalNode *RANDOM();
+    antlr4::tree::TerminalNode *LOC_NAME();
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Set_objective_atomContext* set_objective_atom();
 
   class  DeclarationContext : public antlr4::ParserRuleContext {
   public:

@@ -36,14 +36,16 @@
       "endGoalType": "exit",
       "gridSize": 0.05,
       "goalRange": 0.15,
-      "closestObstacle": 0.1
+      "closestObstacle": 0.01
     }
   },
   "pedestrians": {
+    "Base": {
+      "use_file": false,
+      "spawn_random": true,
+      "random_count": 50
+    },
     "SpatialGrid": {
-      "use_file": true,
-      "spawn_random": false,
-      "random_count": 0,
       "gridSize": 0.5
     }
   },
@@ -63,9 +65,7 @@
   "behavior_model": {
     "main": {
       "behaviors_dir": "behaviors",
-      "behaviors": [
-        "luggage"
-      ]
+      "behaviors": []
     }
   }
 }

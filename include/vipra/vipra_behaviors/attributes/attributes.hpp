@@ -1,10 +1,12 @@
 #pragma once
 
+#include <algorithm>
 #include <stdexcept>
 #include <type_traits>
 
 #include "vipra/geometry/f3d.hpp"
 
+#include "vipra/logging/logging.hpp"
 #include "vipra/vipra_behaviors/behavior/exceptions.hpp"
 #include "vipra/vipra_behaviors/definitions/behavior_context.hpp"
 #include "vipra/vipra_behaviors/definitions/dsl_types.hpp"
@@ -44,6 +46,7 @@ enum class Type {
   LOCATION,
   TOWARDS_LOC,
   TOWARDS_ATTR,
+  OBJECTIVE
 };
 
 /**
@@ -243,12 +246,12 @@ class AttributeHandling {
                                                      auto pack) -> bool
   {
     if ( value1.type == Type::COORD && value2.type == Type::LOCATION ) {
-      return pack.context.locations[value2.as<VIPRA::idx>()].contains(
+      return pack.context.locations[value2.as<VIPRA::idx>()].is_point_inside(
           value1.as<VIPRA::f3d>());
     }
 
     if ( value2.type == Type::COORD && value1.type == Type::LOCATION ) {
-      return pack.context.locations[value1.as<VIPRA::idx>()].contains(
+      return pack.context.locations[value1.as<VIPRA::idx>()].is_point_inside(
           value2.as<VIPRA::f3d>());
     }
 
@@ -452,7 +455,6 @@ class AttributeHandling {
         return {Type::COORD,
                 &pack.context.locations[target.targetIdx].center()};
       case Attribute::DIMENSIONS:
-        return {Type::COORD, &pack.context.locations[target.targetIdx].dims()};
       default:
         DSLException::error("Invalid Location Attribute");
     }
@@ -499,14 +501,13 @@ class AttributeHandling {
    * @param pack : simulation pack
    * @param value : value to set attribute to
    */
-  inline static void set_location_value(Target target, Attribute attr,
-                                        Simpack pack, CAttributeValue value)
+  inline static void set_location_value(Target /*target*/, Attribute attr,
+                                        Simpack /*pack*/,
+                                        CAttributeValue /*value*/)
   {
     switch ( attr ) {
       case Attribute::POSITION:
-        set_location_position(target, pack, value);
       case Attribute::DIMENSIONS:
-        set_location_dims(target, pack, value);
       default:
         DSLException::error("Invalid Location Attribute");
     }
@@ -623,6 +624,23 @@ class AttributeHandling {
                             pedset.ped_coords(target.targetIdx),
                             value.as<VIPRA::f3d>(), context.engine);
     }
+    else if ( value.type == Type::OBJECTIVE ) {
+      VIPRA::Log::warn("OBJECTIVE NAME: {}", value.as<std::string>());
+
+      auto const& objectives = context.objectives[value.as<std::string>()];
+      VIPRA::f3d  pos = pack.pedset.ped_coords(target.targetIdx);
+
+      auto const& closest =
+          std::min_element(objectives.begin(), objectives.end(),
+                           [&pos](auto const& lhs, auto const& rhs) {
+                             return lhs.center().distance_to_sqrd(pos) <
+                                    rhs.center().distance_to_sqrd(pos);
+                           });
+
+      goals.change_end_goal(
+          target.targetIdx, pedset.ped_coords(target.targetIdx),
+          closest->random_point(context.engine), context.engine);
+    }
     else if ( value.type == Type::LOCATION ) {
       // TODO(rolland): this doesn't take into account two pedestrains going to the same location
       goals.change_end_goal(
@@ -631,8 +649,6 @@ class AttributeHandling {
               context.engine),
           context.engine);
     }
-
-    value.type_check(Type::COORD);
   }
 
   /**
@@ -653,34 +669,6 @@ class AttributeHandling {
     VIPRA::f3d originalPos = pack.pedset.ped_coords(target.targetIdx);
     state.positions[target.targetIdx] =
         originalPos + (state.velocities[target.targetIdx] * pack.dT);
-  }
-
-  /**
-     * @brief Set the location position object
-     * 
-     * @param target 
-     * @param pack 
-     * @param value 
-     */
-  static inline void set_location_position(Target target, Simpack pack,
-                                           CAttributeValue value)
-  {
-    value.type_check(Type::COORD);
-    pack.context.locations[target.targetIdx].set_center(value.as<VIPRA::f3d>());
-  }
-
-  /**
-     * @brief Set the location dims object
-     * 
-     * @param target 
-     * @param pack 
-     * @param value 
-     */
-  static inline void set_location_dims(Target target, Simpack pack,
-                                       CAttributeValue value)
-  {
-    value.type_check(Type::COORD);
-    pack.context.locations[target.targetIdx].set_dims(value.as<VIPRA::f3d>());
   }
 
   // ------------------------------------------- END SETTERS ------------------------------------------------------------------------

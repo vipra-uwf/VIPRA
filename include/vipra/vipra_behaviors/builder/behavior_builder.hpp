@@ -3,11 +3,11 @@
 #include <filesystem>
 
 #include "vipra/vipra_behaviors/attributes/attributes.hpp"
+#include "vipra/vipra_behaviors/conditions/subconditions/subcondition_enter_objective.hpp"
 #include "vipra/vipra_behaviors/conditions/subconditions/subcondition_event_occurring.hpp"
 #include "vipra/vipra_behaviors/conditions/subconditions/subcondition_event_starting.hpp"
 #include "vipra/vipra_behaviors/conditions/subconditions/subcondition_exists.hpp"
 #include "vipra/vipra_behaviors/conditions/subconditions/subcondition_in_location.hpp"
-
 
 #include "vipra/vipra_behaviors/behavior/human_behavior.hpp"
 #include "vipra/vipra_behaviors/builder/behavior_error_listener.hpp"
@@ -50,6 +50,7 @@ class BehaviorBuilder : public BehaviorBaseVisitor {
  public:
   [[nodiscard]] auto build(std::string                  name,
                            std::filesystem::path const& filepath,
+                           Modules::Map const&          map,
                            VIPRA::seed                  seed) -> HumanBehavior;
 
  private:
@@ -68,12 +69,12 @@ class BehaviorBuilder : public BehaviorBaseVisitor {
   Behaviors::typeUID  _currType{};
   VIPRA::seed         _currSeed{};
 
-  void initial_behavior_setup(std::string const& /*behaviorName*/,
-                              VIPRA::seed /*seedNum*/);
+  void initial_behavior_setup(std::string const&  behaviorName,
+                              Modules::Map const& map, VIPRA::seed seedNum);
   void initialize_types();
   void initialize_events();
   void initialize_states();
-  void initialize_locations();
+  void initialize_locations(Modules::Map const& map);
   void end_behavior_check();
 
   // ------------------------------- UTIL -----------------------------------------------------------------------------------------
@@ -174,10 +175,12 @@ class BehaviorBuilder : public BehaviorBaseVisitor {
 
   // --------------------------------- ATOMS ------------------------------------------------------------------------------------------------
 
-  void add_set_atom(Action& /*action*/,
-                    BehaviorParser::Set_atomContext* /*ctx*/);
-  void add_scale_atom(Action& /*action*/,
-                      BehaviorParser::Scale_atomContext* /*ctx*/);
+  void        add_set_atom(Action& /*action*/,
+                           BehaviorParser::Set_atomContext* /*ctx*/);
+  void        add_scale_atom(Action& /*action*/,
+                             BehaviorParser::Scale_atomContext* /*ctx*/);
+  static void add_set_obj_atom(
+      Action& /*action*/, BehaviorParser::Set_objective_atomContext* /*ctx*/);
 
   // --------------------------------- TARGET SELECTORS ------------------------------------------------------------------------------------------------
 
@@ -200,6 +203,9 @@ class BehaviorBuilder : public BehaviorBaseVisitor {
 
   // --------------------------------- SUBCONDITIONS ------------------------------------------------------------------------------------------------
 
+  [[nodiscard]] auto build_enter_obj_subcond(
+      BehaviorParser::Condition_Enter_LocationContext* /*ctx*/)
+      -> SubConditionEnterObj;
   [[nodiscard]] auto build_enter_subcond(
       BehaviorParser::Condition_Enter_LocationContext* /*ctx*/)
       -> SubConditionEnter;

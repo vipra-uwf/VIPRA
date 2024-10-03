@@ -34,7 +34,7 @@ class BehaviorModel : public VIPRA::Modules::Module<BehaviorModel> {
     _behaviors.clear();
     Behaviors::AttributeHandling::cleanup();
 
-    load_behaviors(seed);
+    build_behaviors(map, seed);
     for ( auto& behavior : _behaviors ) {
       behavior.initialize(pedset, map, goals);
     }
@@ -54,14 +54,14 @@ class BehaviorModel : public VIPRA::Modules::Module<BehaviorModel> {
   std::vector<std::string>              _behaviorNames;
   std::vector<Behaviors::HumanBehavior> _behaviors;
 
-  void load_behaviors(VIPRA::seed seed)
+  void build_behaviors(Modules::Map const& map, VIPRA::seed seed)
   {
     Behaviors::BehaviorBuilder builder;
     std::transform(_behaviorNames.begin(), _behaviorNames.end(),
                    std::back_inserter(_behaviors), [&](auto const& name) {
                      auto const filePath =
                          _behaviorsDir + '/' + (name + ".bhvr");
-                     return builder.build(name, filePath, seed);
+                     return builder.build(name, filePath, map, seed);
                    });
   }
 

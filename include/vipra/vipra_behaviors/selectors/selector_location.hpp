@@ -26,7 +26,7 @@ struct SelectorLocation {
     VIPRA::idxVec groupPeds;
 
     for ( auto idx : group ) {
-      if ( loc.contains(pack.pedset.ped_coords(idx)) ) {
+      if ( loc.is_point_inside(pack.pedset.ped_coords(idx)) ) {
         groupPeds.push_back(idx);
       }
     }

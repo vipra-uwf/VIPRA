@@ -323,6 +323,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual std::any visitSet_objective_atom(BehaviorParser::Set_objective_atomContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual std::any visitDeclaration(BehaviorParser::DeclarationContext *ctx) override {
     return visitChildren(ctx);
   }

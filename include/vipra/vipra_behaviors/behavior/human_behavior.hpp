@@ -1,5 +1,9 @@
 #pragma once
 
+#include <algorithm>
+#include <vector>
+#include "vipra/geometry/polygon.hpp"
+#include "vipra/geometry/rectangle.hpp"
 #include "vipra/modules/goals.hpp"
 #include "vipra/modules/map.hpp"
 #include "vipra/modules/pedestrians.hpp"
@@ -54,6 +58,19 @@ class HumanBehavior {
   {
     _context.locations.emplace_back(loc);
     return _context.locations.size() - 1;
+  }
+
+  void add_objectives(std::string const&                    name,
+                      std::vector<Geometry::Polygon> const& locations)
+  {
+    std::vector<Geometry::Rectangle> locs(locations.size());
+
+    std::transform(locations.begin(), locations.end(), locs.begin(),
+                   [](auto const& poly) {
+                     return Geometry::Rectangle{poly.bounding_box()};
+                   });
+
+    _context.objectives[name] = std::move(locs);
   }
 
   [[nodiscard]] auto get_name() const noexcept -> std::string const&

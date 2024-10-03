@@ -22,8 +22,9 @@ void SubConditionEnter::operator()(Simpack pack, const VIPRA::idxVec& peds,
     }
 
     Location& loc = pack.context.locations[_location];
-    bool enter = loc.contains(pack.state.positions[targets[ped].targetIdx]) &&
-                 ! loc.contains(pack.pedset.ped_coords(targets[ped].targetIdx));
+    bool      enter =
+        loc.is_point_inside(pack.state.positions[targets[ped].targetIdx]) &&
+        ! loc.is_point_inside(pack.pedset.ped_coords(targets[ped].targetIdx));
 
     if ( enter ) {
       _entered[targets[ped].targetIdx] = true;
