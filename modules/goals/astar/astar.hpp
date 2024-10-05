@@ -73,11 +73,12 @@ class AStar : public VIPRA::Modules::Module<AStar>,
      * @param pedIdx
      * @param newGoal
      */
+  // NOLINTNEXTLINE(misc-unused-parameters)
   VIPRA_GOALS_CHANGE_GOAL
   {
     // uses A* to find the path to the new end goal
-    set_end_goal(pedIdx, newGoal);
     find_path(pedIdx, pos, engine);
+    set_current_goal(pedIdx, _paths[pedIdx].back());
   }
 
  private:

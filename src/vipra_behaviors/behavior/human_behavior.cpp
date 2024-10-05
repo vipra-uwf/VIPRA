@@ -83,12 +83,6 @@ void HumanBehavior::apply_actions(Modules::Pedestrians& pedset,
   for ( VIPRA::idx i = 0; i < groupCnt; ++i ) {
     auto& pedestrians = groups[i];
 
-    // remove any pedestrians from the group if they have left the simulation
-    pedestrians.erase(
-        std::remove_if(pedestrians.begin(), pedestrians.end(),
-                       [&](VIPRA::idx ped) { return goals.is_goal_met(ped); }),
-        pedestrians.end());
-
     // for each of the group's actions, check if it should apply and apply it
     std::for_each(_actions[i].begin(), _actions[i].end(), [&](auto& action) {
       if ( action.has_target() ) {
@@ -107,6 +101,12 @@ void HumanBehavior::apply_actions(Modules::Pedestrians& pedset,
         action.perform_action(pack, pedestrians, _targets);
       }
     });
+
+    // remove any pedestrians from the group if they have left the simulation
+    pedestrians.erase(
+        std::remove_if(pedestrians.begin(), pedestrians.end(),
+                       [&](VIPRA::idx ped) { return goals.is_goal_met(ped); }),
+        pedestrians.end());
   }
 }
 }  // namespace VIPRA::Behaviors

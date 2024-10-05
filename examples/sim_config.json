@@ -1,6 +1,6 @@
 {
   "model": "Calm",
-  "goals": "PotentialField",
+  "goals": "AStar",
   "map": "QuadTree",
   "pedestrians": "SpatialGrid",
   "output": "Trajectories",
