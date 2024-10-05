@@ -18,8 +18,7 @@ attr_value:
   value_coord   |
   STATE_VAL |
   LOC_NAME |
-  towards | 
-  attribute
+  towards
   ;
 
 end_goal:

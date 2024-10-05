@@ -35,15 +35,15 @@
     "AStar": {
       "endGoalType": "exit",
       "gridSize": 0.05,
-      "goalRange": 0.05,
-      "closestObstacle": 0.15
+      "goalRange": 0.15,
+      "closestObstacle": 0.01
     }
   },
   "pedestrians": {
     "Base": {
       "use_file": false,
       "spawn_random": true,
-      "random_count": 5
+      "random_count": 50
     },
     "SpatialGrid": {
       "gridSize": 0.5
@@ -65,9 +65,7 @@
   "behavior_model": {
     "main": {
       "behaviors_dir": "behaviors",
-      "behaviors": [
-        "museum"
-      ]
+      "behaviors": []
     }
   }
 }

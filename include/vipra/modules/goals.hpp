@@ -84,8 +84,6 @@ class Goals {
                        VIPRA::f3d goalPos, VIPRA::Random::Engine& engine)
   {
     assert(pedIdx < _endGoals.size());
-    set_end_goal(pedIdx, goalPos);
-    set_goal_met(pedIdx, false);
     return change_end_goal_impl(pedIdx, currPos, goalPos, engine);
   }
 
@@ -135,7 +133,7 @@ class Goals {
 
   std::vector<bool> _met;
 
-  static constexpr VIPRA::f_pnt MIN_GOAL_DIST = 0.05;
+  static constexpr VIPRA::f_pnt MIN_GOAL_DIST = 0.15;
 
  protected:
   VIPRA_INLINE void set_goal_met(VIPRA::idx pedIdx, bool met)

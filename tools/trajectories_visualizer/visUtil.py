@@ -252,8 +252,6 @@ def updateColors(output):
 def draw_dxf(msp, ax, args):
   # Iterate through entities in the model space
   for entity in msp:
-      if entity.dxf.layer != 'obstacles':
-        continue
       if entity.dxftype() == 'LINE':
           draw_line(ax, entity.dxf.start, entity.dxf.end)
       elif entity.dxftype() == 'CIRCLE':

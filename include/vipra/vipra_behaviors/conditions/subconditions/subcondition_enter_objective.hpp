@@ -27,6 +27,6 @@ class SubConditionEnterObj {
   std::string _objective;
 
   // TODO(rolland): temporary fix for not having pedestrian memory
-  std::vector<std::set<VIPRA::idx>> _visited;
+  std::vector<delta_t> _entered;
 };
 }  // namespace VIPRA::Behaviors

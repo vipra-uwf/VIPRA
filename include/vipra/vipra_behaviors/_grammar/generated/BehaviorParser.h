@@ -804,7 +804,6 @@ public:
     antlr4::tree::TerminalNode *STATE_VAL();
     antlr4::tree::TerminalNode *LOC_NAME();
     TowardsContext *towards();
-    AttributeContext *attribute();
 
 
     virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;

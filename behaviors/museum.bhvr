@@ -1,4 +1,5 @@
 
+
 Types:
   Museum_Goer
 .
@@ -8,18 +9,28 @@ Selector:
   Select: Everyone
 .
 
+Event:
+  Name: closing_announcement
+  Start: 60 seconds after !Start
+.
+
 Action (Museum_Goer):
   Condition: !start starting
   Response: set goal to random @exhibit
 .
 
 Action (Museum_Goer):
-  Condition: position is end goal
+  Condition: !closing_announcement starting
+  Response: set end goal to @exit
+.
+
+Action (Museum_Goer):
+  Condition: enter @exhibit and !closing_announcement has not occurred
   Response: set velocity to {0}
   Duration: random 5 to 20 seconds
 .
 
 Action (Museum_Goer):
-  Condition: position is end goal
+  Condition: enter @exhibit and !closing_announcement has not occurred
   Response: set goal to random @exhibit
 .

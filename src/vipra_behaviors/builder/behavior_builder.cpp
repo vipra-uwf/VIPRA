@@ -705,10 +705,6 @@ auto BehaviorBuilder::make_attribute_value(
     }
   }
 
-  if ( ctx->attribute() ) {
-    return AttributeHandling::store_value<int>(Type::POSITION, 0);
-  }
-
   error("Unable To Create Attribute Value");
 }
 

@@ -55,12 +55,7 @@ class TimedLatchCollection {
     if ( _startTimes[pedIdx] == -1 ) return false;
 
     VIPRA::f_pnt val = _duration.value(pedIdx);
-    if ( currTime - _startTimes.at(pedIdx) >= val ) {
-      _startTimes.at(pedIdx) = -1;
-      return false;
-    }
-
-    return true;
+    return ! (currTime - _startTimes[pedIdx] >= val);
   }
 
   /**
