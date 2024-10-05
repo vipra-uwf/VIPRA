@@ -1,6 +1,8 @@
 
 
 #include "vipra/vipra_behaviors/conditions/subconditions/subcondition_attribute.hpp"
+#include "vipra/logging/logging.hpp"
+#include "vipra/vipra_behaviors/attributes/attributes.hpp"
 
 namespace VIPRA::Behaviors {
 
@@ -11,6 +13,14 @@ void SubConditionAttribute::operator()(Simpack pack, const VIPRA::idxVec& peds,
                                        BoolOp /*unused*/) const
 {
   for ( auto ped : peds ) {
+    if ( _value.type == Type::POSITION ) {
+      met[ped] = pack.pedset.ped_coords(targets[ped].targetIdx)
+                     .distance_to_sqrd(
+                         pack.goals.end_goal(targets[ped].targetIdx)) <= 0.04;
+      if ( _not ) met[ped] = ! met[ped];
+      continue;
+    }
+
     auto attr = AttributeHandling::get_value(targets[ped], _type, pack);
 
     if ( _value.type == Type::TOWARDS_LOC ||

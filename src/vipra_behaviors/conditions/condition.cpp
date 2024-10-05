@@ -1,6 +1,8 @@
 
 
 #include "vipra/vipra_behaviors/conditions/condition.hpp"
+#include "vipra/logging/logging.hpp"
+#include "vipra/vipra_behaviors/definitions/behavior_context.hpp"
 
 namespace VIPRA::Behaviors {
 
@@ -54,10 +56,10 @@ void Condition::handle_latches(Simpack                              pack,
   if ( latches.has_value() ) {
     for ( VIPRA::idx i = 0; i < met.size(); ++i ) {
       if ( met[i] ) {
-        latches->latch(pack.dT, i);
+        latches->latch(pack.context.elapsedTime, i);
       }
 
-      met[i] = latches->check(pack.dT, i);
+      met[i] = latches->check(pack.context.elapsedTime, i) || met[i];
     }
   }
 }

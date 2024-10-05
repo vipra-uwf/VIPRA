@@ -46,7 +46,8 @@ enum class Type {
   LOCATION,
   TOWARDS_LOC,
   TOWARDS_ATTR,
-  OBJECTIVE
+  OBJECTIVE,
+  POSITION
 };
 
 /**
@@ -283,7 +284,8 @@ class AttributeHandling {
       case Type::NUMBER:
         return value1.as<VIPRA::f_pnt>() == value2.as<VIPRA::f_pnt>();
       case Type::COORD:
-        return value1.as<VIPRA::f3d>() == value2.as<VIPRA::f3d>();
+        return value1.as<VIPRA::f3d>().distance_to_sqrd(
+                   value2.as<VIPRA::f3d>()) <= 0.04;
       case Type::STATE:
         return value1.as<stateUID>() == value2.as<stateUID>();
       case Type::STATUS:
@@ -623,23 +625,6 @@ class AttributeHandling {
       goals.change_end_goal(target.targetIdx,
                             pedset.ped_coords(target.targetIdx),
                             value.as<VIPRA::f3d>(), context.engine);
-    }
-    else if ( value.type == Type::OBJECTIVE ) {
-      VIPRA::Log::warn("OBJECTIVE NAME: {}", value.as<std::string>());
-
-      auto const& objectives = context.objectives[value.as<std::string>()];
-      VIPRA::f3d  pos = pack.pedset.ped_coords(target.targetIdx);
-
-      auto const& closest =
-          std::min_element(objectives.begin(), objectives.end(),
-                           [&pos](auto const& lhs, auto const& rhs) {
-                             return lhs.center().distance_to_sqrd(pos) <
-                                    rhs.center().distance_to_sqrd(pos);
-                           });
-
-      goals.change_end_goal(
-          target.targetIdx, pedset.ped_coords(target.targetIdx),
-          closest->random_point(context.engine), context.engine);
     }
     else if ( value.type == Type::LOCATION ) {
       // TODO(rolland): this doesn't take into account two pedestrains going to the same location
