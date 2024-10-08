@@ -4,6 +4,7 @@ vipra_module(
     AStar
   SOURCES
     astar.cpp
+    pathing_graph.cpp
   TYPE
     Goals
 )

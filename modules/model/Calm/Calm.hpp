@@ -75,29 +75,25 @@ class Calm : public VIPRA::Modules::Module<Calm>, public VIPRA::Modules::Model {
   static constexpr VIPRA::f_pnt   EQUILIBRIUM_DISTANCE = 0.382;
   static constexpr VIPRA::f_pnt   EQUILIBRIUM_RESOLUTION = 0.01F;
 
-  VIPRA_PERF_FUNC void calc_neighbors(auto const& pedset, auto const& /*map*/,
-                                      auto const& goals);
-  VIPRA_PERF_FUNC void update_state(auto const& pedset, auto const& goals,
-                                    VIPRA::State& state, VIPRA::delta_t deltaT);
-  VIPRA_PERF_FUNC auto is_path_blocked(VIPRA::idx pedIdx, VIPRA::f3d veloc,
-                                       VIPRA::f_pnt maxDist,
-                                       auto const&  map) -> VIPRA::f_pnt;
+  void calc_neighbors(auto const& pedset, auto const& /*map*/,
+                      auto const& goals);
+  void update_state(auto const& pedset, auto const& goals, VIPRA::State& state,
+                    VIPRA::delta_t deltaT);
+  auto is_path_blocked(VIPRA::idx pedIdx, VIPRA::f3d veloc,
+                       VIPRA::f_pnt maxDist, auto const& map) -> VIPRA::f_pnt;
 
-  VIPRA_PERF_FUNC void        calc_shoulders(VIPRA::f3dVec const&,
-                                             VIPRA::f3dVec const&);
-  VIPRA_PERF_FUNC static auto obj_spatial_test(
-      const VIPRA::Geometry::Rectangle&, VIPRA::f3d, VIPRA::f3d) -> bool;
-  VIPRA_PERF_FUNC static auto obj_direction_test(VIPRA::f3d, VIPRA::f3d,
-                                                 VIPRA::f3d) -> bool;
-  VIPRA_PERF_FUNC static auto is_ped_toward_goal(VIPRA::f3d, VIPRA::f3d,
-                                                 VIPRA::f3d) -> bool;
+  void        calc_shoulders(VIPRA::f3dVec const&, VIPRA::f3dVec const&);
+  static auto obj_spatial_test(const VIPRA::Geometry::Rectangle&, VIPRA::f3d,
+                               VIPRA::f3d) -> bool;
+  static auto obj_direction_test(VIPRA::f3d, VIPRA::f3d, VIPRA::f3d) -> bool;
+  static auto is_ped_toward_goal(VIPRA::f3d, VIPRA::f3d, VIPRA::f3d) -> bool;
 
-  VIPRA_PERF_FUNC auto rect_from_shoulders(VIPRA::idx, VIPRA::f3d, VIPRA::f3d)
-      -> VIPRA::Geometry::Rectangle;
+  auto rect_from_shoulders(VIPRA::idx, VIPRA::f3d,
+                           VIPRA::f3d) -> VIPRA::Geometry::Rectangle;
 
-  VIPRA_PERF_FUNC void                               calc_betas();
-  VIPRA_PERF_FUNC VIPRA_INLINE static constexpr auto calc_beta(
-      VIPRA::f_pnt distance) -> VIPRA::f_pnt
+  void                               calc_betas();
+  VIPRA_INLINE static constexpr auto calc_beta(VIPRA::f_pnt distance)
+      -> VIPRA::f_pnt
   {
     constexpr VIPRA::f_pnt VAL_A = -2.11;
     constexpr VIPRA::f_pnt VAL_B = 0.366;

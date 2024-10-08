@@ -18,8 +18,8 @@
 #include "vipra/util/template_specialization.hpp"
 namespace VIPRA::Geometry {
 
-#define POLY_FUNC [[nodiscard]] VIPRA_PERF_FUNC constexpr
-#define POLY_FUNC_W_DISCARD VIPRA_PERF_FUNC constexpr
+#define POLY_FUNC [[nodiscard]] constexpr
+#define POLY_FUNC_W_DISCARD constexpr
 
 template <size_t side_s,
           typename container_t = std::array<VIPRA::Geometry::Line, side_s>>

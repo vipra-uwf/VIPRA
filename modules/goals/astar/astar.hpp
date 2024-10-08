@@ -1,6 +1,8 @@
 #pragma once
 
+#include "astar_algo.hpp"
 #include "pathing_graph.hpp"
+#include "vipra/algorithms/astar.hpp"
 
 #include "vipra/geometry/f3d.hpp"
 
@@ -191,21 +193,11 @@ class AStar : public VIPRA::Modules::Module<AStar>,
     VIPRA::idx startIdx = _graph.get_closest_grid_idx(startPos);
     VIPRA::idx endIdx = _graph.get_closest_grid_idx(end_goal(pedIdx));
 
-    if ( _graph.nodes().size() <= startIdx ||
-         _graph.nodes().size() <= endIdx ) {
+    if ( _graph.node_count() <= startIdx || _graph.node_count() <= endIdx ) {
       throw std::runtime_error("Start or end index is out of bounds");
     }
 
-    // use A* to find the path
-    auto const path = VIPRA::Algo::astar(
-        startIdx, endIdx, _graph,
-        [&](VIPRA::idx left, VIPRA::idx right) -> VIPRA::f_pnt {
-          // distance comparison function
-          return _graph.data(left).pos.distance_to(_graph.data(right).pos);
-        },
-        [&](VIPRA::idx nodeIdx) -> VIPRA::f3d {
-          return _graph.data(nodeIdx).pos;
-        });
+    auto const path = VIPRA::astar(startIdx, endIdx, _graph);
 
     if ( ! path ) {
       // No path found

@@ -17,19 +17,21 @@ class Collision {
   void initialize(auto const& pedset, auto const& goals, ModelData const& data)
   {
     raceStatuses = std::vector<RaceStatus>(pedset.num_pedestrians(), NO_RACE);
-    inRace = std::vector<std::vector<bool>>(pedset.num_pedestrians(),
-                                            std::vector<bool>(pedset.num_pedestrians(), false));
+    inRace = std::vector<std::vector<bool>>(
+        pedset.num_pedestrians(),
+        std::vector<bool>(pedset.num_pedestrians(), false));
 
-    intersectionMidpoints =
-        std::vector<VIPRA::f3dVec>(pedset.num_pedestrians(), VIPRA::f3dVec(pedset.num_pedestrians()));
+    intersectionMidpoints = std::vector<VIPRA::f3dVec>(
+        pedset.num_pedestrians(), VIPRA::f3dVec(pedset.num_pedestrians()));
 
     velocityDirections = VIPRA::f3dVec(pedset.num_pedestrians());
 
     initialize_rectangles(pedset, goals, data);
   }
 
-  VIPRA_PERF_FUNC void race_detection(auto const& pedset, ModelData const& data, auto const& goals,
-                                      VIPRA::timestep timestep, auto const& /*map*/)
+  void race_detection(auto const& pedset, ModelData const& data,
+                      auto const& goals, VIPRA::timestep timestep,
+                      auto const& /*map*/)
   {
     calc_collision_rectangles(pedset, goals, data);
     const VIPRA::size pedCnt = pedset.num_pedestrians();
@@ -47,7 +49,8 @@ class Collision {
     }
   }
 
-  void initialize_rectangles(auto const& pedset, auto const& goals, ModelData const& data)
+  void initialize_rectangles(auto const& pedset, auto const& goals,
+                             ModelData const& data)
   {
     collisionRectangles = std::vector<Rectangle>(pedset.num_pedestrians());
     auto const& shldrs = data.shoulderLens;
@@ -56,15 +59,23 @@ class Collision {
       auto goalCoords = goals.current_goal(i);
       auto goalDirection = goalCoords - coords;
 
-      auto shldr1 = (VIPRA::f3d{-goalDirection.y, goalDirection.x}.unit() * shldrs[i]) + coords;
-      auto shldr2 = (VIPRA::f3d{goalDirection.y, -goalDirection.x}.unit() * shldrs[i]) + coords;
+      auto shldr1 =
+          (VIPRA::f3d{-goalDirection.y, goalDirection.x}.unit() * shldrs[i]) +
+          coords;
+      auto shldr2 =
+          (VIPRA::f3d{goalDirection.y, -goalDirection.x}.unit() * shldrs[i]) +
+          coords;
 
       const VIPRA::f3d range = (goalDirection.unit() * RECTANGLE_RANGE);
-      collisionRectangles[i] = Rectangle{shldr1, shldr1 + range, shldr2 + range, shldr2};
+      collisionRectangles[i] =
+          Rectangle{shldr1, shldr1 + range, shldr2 + range, shldr2};
     }
   }
 
-  [[nodiscard]] auto status(VIPRA::idx pedIdx) const -> RaceStatus { return raceStatuses[pedIdx]; }
+  [[nodiscard]] auto status(VIPRA::idx pedIdx) const -> RaceStatus
+  {
+    return raceStatuses[pedIdx];
+  }
 
   std::vector<RaceStatus>              raceStatuses;
   std::vector<Rectangle>               collisionRectangles;
@@ -76,7 +87,8 @@ class Collision {
   static constexpr VIPRA::f_pnt MINSPEED = 0.00000001F;
   static constexpr VIPRA::f_pnt RECTANGLE_RANGE = 0.4;
 
-  VIPRA_PERF_FUNC void calc_collision_rectangles(auto const& pedset, auto const& goals, ModelData const& data)
+  void calc_collision_rectangles(auto const& pedset, auto const& goals,
+                                 ModelData const& data)
   {
     auto const&       coords = pedset.all_coords();
     auto const&       velocities = pedset.all_velocities();
@@ -90,23 +102,30 @@ class Collision {
         auto goalCoords = goals.current_goal(i);
         auto goalDirection = goalCoords - coords[i];
 
-        auto shldr1 = (VIPRA::f3d{-goalDirection.y, goalDirection.x}.unit() * shldrs[i]) + coords[i];
-        auto shldr2 = (VIPRA::f3d{goalDirection.y, -goalDirection.x}.unit() * shldrs[i]) + coords[i];
+        auto shldr1 =
+            (VIPRA::f3d{-goalDirection.y, goalDirection.x}.unit() * shldrs[i]) +
+            coords[i];
+        auto shldr2 =
+            (VIPRA::f3d{goalDirection.y, -goalDirection.x}.unit() * shldrs[i]) +
+            coords[i];
 
         const VIPRA::f3d range = (goalDirection.unit() * RECTANGLE_RANGE);
-        collisionRectangles[i] = Rectangle{shldr1, shldr1 + range, shldr2 + range, shldr2};
+        collisionRectangles[i] =
+            Rectangle{shldr1, shldr1 + range, shldr2 + range, shldr2};
         continue;
       }
 
-      const Line       shoulders = get_shoulder_points(coords[i], pedVel, shldrs[i]);
+      const Line shoulders = get_shoulder_points(coords[i], pedVel, shldrs[i]);
       const VIPRA::f3d range = (pedVel.unit() * RECTANGLE_RANGE);
       collisionRectangles[i] =
-          Rectangle{shoulders.start, shoulders.start + range, shoulders.end + range, shoulders.end};
+          Rectangle{shoulders.start, shoulders.start + range,
+                    shoulders.end + range, shoulders.end};
     }
   }
 
-  VIPRA_PERF_FUNC static void add_intersection_points(VIPRA::f3d start1, VIPRA::f3d end1, VIPRA::f3d start2,
-                                                      VIPRA::f3d end2, VIPRA::f3dVec& intersectionPoints)
+  static void add_intersection_points(VIPRA::f3d start1, VIPRA::f3d end1,
+                                      VIPRA::f3d start2, VIPRA::f3d end2,
+                                      VIPRA::f3dVec& intersectionPoints)
   {
     // NOLINTBEGIN(readability-identifier-length)
     VIPRA::f_pnt a1 = end1.y - start1.y;
@@ -120,10 +139,14 @@ class Collision {
     VIPRA::f_pnt det = a1 * b2 - a2 * b1;
 
     if ( det == 0 ) {
-      if ( Line{start1, end1}.is_point_on(start2) ) intersectionPoints.push_back(start2);
-      if ( Line{start1, end1}.is_point_on(end2) ) intersectionPoints.push_back(end2);
-      if ( Line{start2, end2}.is_point_on(start1) ) intersectionPoints.push_back(start1);
-      if ( Line{start2, end2}.is_point_on(end1) ) intersectionPoints.push_back(start1);
+      if ( Line{start1, end1}.is_point_on(start2) )
+        intersectionPoints.push_back(start2);
+      if ( Line{start1, end1}.is_point_on(end2) )
+        intersectionPoints.push_back(end2);
+      if ( Line{start2, end2}.is_point_on(start1) )
+        intersectionPoints.push_back(start1);
+      if ( Line{start2, end2}.is_point_on(end1) )
+        intersectionPoints.push_back(start1);
     }
     else {
       VIPRA::f_pnt pointX{};
@@ -134,8 +157,8 @@ class Collision {
     }
   }
 
-  [[nodiscard]] VIPRA_PERF_FUNC auto get_collision_area_midpoint(VIPRA::idx index1,
-                                                                 VIPRA::idx index2) -> VIPRA::f3d
+  [[nodiscard]] auto get_collision_area_midpoint(
+      VIPRA::idx index1, VIPRA::idx index2) -> VIPRA::f3d
   {
     Rectangle const& rec1 = collisionRectangles[index1];
     Rectangle const& rec2 = collisionRectangles[index2];
@@ -147,7 +170,8 @@ class Collision {
     for ( size_t i = 0; i < 4; i++ ) {
       for ( size_t j = 0; j < 4; j++ ) {
         if ( sides1[i].does_intersect(sides2[j]) ) {
-          add_intersection_points(sides1[i].start, sides1[i].end, sides2[j].start, sides2[j].end,
+          add_intersection_points(sides1[i].start, sides1[i].end,
+                                  sides2[j].start, sides2[j].end,
                                   intersectionPoints);
         }
       }
@@ -162,9 +186,9 @@ class Collision {
     return midpoint;
   }
 
-  [[nodiscard]] VIPRA_PERF_FUNC auto check_if_highest_priority(auto const& pedset, auto const& goals,
-                                                               VIPRA::idx pedIdx,
-                                                               VIPRA::timestep /*timestep*/) -> bool
+  [[nodiscard]] auto check_if_highest_priority(
+      auto const& pedset, auto const& goals, VIPRA::idx pedIdx,
+      VIPRA::timestep /*timestep*/) -> bool
   {
     auto neighbors = pedset.all_neighbors_within(pedIdx, 1);
 
@@ -214,7 +238,8 @@ class Collision {
 
       // If goals match, use distance comparision
       if ( goal1 == goal2 ) {
-        if ( coords1.distance_to_sqrd(goal1) > coords2.distance_to_sqrd(goal2) ) {
+        if ( coords1.distance_to_sqrd(goal1) >
+             coords2.distance_to_sqrd(goal2) ) {
           inRace[otherIdx][pedIdx] = true;
           inRace[pedIdx][otherIdx] = true;
           flag = false;
@@ -244,9 +269,11 @@ class Collision {
       else {
         collisionMidpoint = intersectionMidpoints[pedIdx][otherIdx];
       }
-      if ( coords1.distance_to_sqrd(collisionMidpoint) > coords2.distance_to_sqrd(collisionMidpoint) )
+      if ( coords1.distance_to_sqrd(collisionMidpoint) >
+           coords2.distance_to_sqrd(collisionMidpoint) )
         flag = false;
-      else if ( coords1.distance_to_sqrd(collisionMidpoint) == coords2.distance_to_sqrd(collisionMidpoint) ) {
+      else if ( coords1.distance_to_sqrd(collisionMidpoint) ==
+                coords2.distance_to_sqrd(collisionMidpoint) ) {
         if ( pedIdx < otherIdx ) flag = false;
       }
     }
@@ -261,7 +288,7 @@ class Collision {
    * @return true
    * @return false
    */
-  VIPRA_PERF_FUNC auto check_if_collide(VIPRA::idx index1, VIPRA::idx index2) -> bool
+  auto check_if_collide(VIPRA::idx index1, VIPRA::idx index2) -> bool
   {
     Rectangle const& rect1 = collisionRectangles[index1];
     Rectangle const& rect2 = collisionRectangles[index2];
@@ -276,15 +303,17 @@ class Collision {
    * @param shoulderWidth : Width of the pedestrian
    * @return Line : Line containing the shoulder points
    */
-  [[nodiscard]] VIPRA_PERF_FUNC VIPRA_INLINE static auto get_shoulder_points(
-      const VIPRA::f3d& coords, const VIPRA::f3d& velocity, VIPRA::f_pnt shoulderWidth) noexcept -> Line
+  [[nodiscard]] VIPRA_INLINE static auto get_shoulder_points(
+      const VIPRA::f3d& coords, const VIPRA::f3d& velocity,
+      VIPRA::f_pnt shoulderWidth) noexcept -> Line
   {
     if ( velocity == VIPRA::f3d{} ) {
       return {(VIPRA::f3d{0, shoulderWidth}), (VIPRA::f3d{0, -shoulderWidth})};
     }
 
-    return {(VIPRA::f3d{-velocity.y, velocity.x}.unit() * shoulderWidth) + coords,
-            (VIPRA::f3d{velocity.y, -velocity.x}.unit() * shoulderWidth) + coords};
+    return {
+        (VIPRA::f3d{-velocity.y, velocity.x}.unit() * shoulderWidth) + coords,
+        (VIPRA::f3d{velocity.y, -velocity.x}.unit() * shoulderWidth) + coords};
   }
 };
 }  // namespace CALM

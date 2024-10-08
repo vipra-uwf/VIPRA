@@ -7,13 +7,13 @@
                  VIPRA::Modules::Map const&         map,    \
                  VIPRA::Random::Engine&             engine)
 
-#define VIPRA_GOALS_UPDATE_STEP                  \
-  VIPRA_PERF_FUNC VIPRA_INLINE void update_step( \
-      VIPRA::Modules::Pedestrians const& pedset, \
-      VIPRA::Modules::Map const& map, VIPRA::delta_t deltaT)
+#define VIPRA_GOALS_UPDATE_STEP                                            \
+  VIPRA_INLINE void update_step(VIPRA::Modules::Pedestrians const& pedset, \
+                                VIPRA::Modules::Map const&         map,    \
+                                VIPRA::delta_t                     deltaT)
 
 #define VIPRA_GOALS_NEXT_GOAL                                       \
-  VIPRA_PERF_FUNC VIPRA_INLINE auto next_goal(                      \
+  VIPRA_INLINE auto next_goal(                                      \
       VIPRA::idx pedIdx, VIPRA::Modules::Pedestrians const& pedset, \
       VIPRA::Modules::Map const& map, VIPRA::delta_t deltaT) -> bool
 

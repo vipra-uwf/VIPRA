@@ -67,3 +67,4 @@ dwg2dxf
 
 # performance
 *.data
+*.data.old
