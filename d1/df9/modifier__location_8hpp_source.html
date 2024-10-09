@@ -112,7 +112,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>                  VIPRA::idx <span class="comment">/*selfIdx*/</span>) <span class="keyword">const</span> -&gt; <span class="keywordtype">bool</span></div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>  {</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keyword">auto</span> <span class="keyword">const</span> targetPos = pack.pedset.ped_coords(targetIdx);</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keywordflow">return</span> pack.context.locations[_location].contains(targetPos);</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keywordflow">return</span> pack.context.locations[_location].is_point_inside(targetPos);</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  }</div>
 </div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>

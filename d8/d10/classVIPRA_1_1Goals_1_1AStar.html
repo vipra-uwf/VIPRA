@@ -445,16 +445,17 @@ VIPRA_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><b>set_curr
 <div class="line">  }</div>
 <div class="line"> </div>
 <div class="line">  </div>
+<div class="line">  </div>
 <div class="line">  VIPRA_GOALS_CHANGE_GOAL</div>
 <div class="line">  {</div>
 <div class="line">    </div>
-<div class="line">    set_end_goal(pedIdx, newGoal);</div>
 <div class="line">    <a class="code hl_function" href="#aec16c33e79ebbca2f9ec02eb87fb713b">find_path</a>(pedIdx, pos, engine);</div>
+<div class="line">    set_current_goal(pedIdx, _paths[pedIdx].back());</div>
 <div class="line">  }</div>
 <div class="line"> </div>
 <div class="line"> <span class="keyword">private</span>:</div>
 <div class="line">  std::string  _endGoalType</div>
-<div class="ttc" id="aclassVIPRA_1_1Goals_1_1AStar_html_aec16c33e79ebbca2f9ec02eb87fb713b"><div class="ttname"><a href="#aec16c33e79ebbca2f9ec02eb87fb713b">VIPRA::Goals::AStar::find_path</a></div><div class="ttdeci">void find_path(VIPRA::idx pedIdx, VIPRA::f3d startPos, VIPRA::Random::Engine &amp;engine)</div><div class="ttdoc">Sets the pedestrians path to pos.</div><div class="ttdef"><b>Definition</b> astar.hpp:186</div></div>
+<div class="ttc" id="aclassVIPRA_1_1Goals_1_1AStar_html_aec16c33e79ebbca2f9ec02eb87fb713b"><div class="ttname"><a href="#aec16c33e79ebbca2f9ec02eb87fb713b">VIPRA::Goals::AStar::find_path</a></div><div class="ttdeci">void find_path(VIPRA::idx pedIdx, VIPRA::f3d startPos, VIPRA::Random::Engine &amp;engine)</div><div class="ttdoc">Sets the pedestrians path to pos.</div><div class="ttdef"><b>Definition</b> astar.hpp:187</div></div>
 </div><!-- fragment -->
 </div>
 </div>

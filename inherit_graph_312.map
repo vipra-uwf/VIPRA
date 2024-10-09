@@ -1,5 +1,15 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="5,5,147,46"/>
-<area shape="rect" id="Node000001" href="$dc/dab/classVIPRA_1_1Modules_1_1Module.html" title="VIPRA Module Base CRTP Class." alt="" coords="195,5,359,46"/>
-<area shape="poly" id="edge135_Node000000_Node000001" title=" " alt="" coords="162,23,194,23,194,28,162,28"/>
+<area shape="rect" id="Node000000" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="26,5,163,46"/>
+<area shape="rect" id="Node000001" href="$dc/dab/classVIPRA_1_1Modules_1_1Module.html" title=" " alt="" coords="232,5,396,46"/>
+<area shape="poly" id="edge130_Node000000_Node000001" title=" " alt="" coords="178,23,231,23,231,28,178,28"/>
+<area shape="rect" id="Node000002" href="$d8/d10/classVIPRA_1_1Goals_1_1AStar.html" title="Goals module that uses the A* algorithm to find the path to the goal." alt="" coords="467,44,607,69"/>
+<area shape="poly" id="edge131_Node000001_Node000002" title=" " alt="" coords="411,36,467,44,466,49,411,42"/>
+<area shape="rect" id="Node000006" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="5,120,184,161"/>
+<area shape="rect" id="Node000005" href="$dc/dab/classVIPRA_1_1Modules_1_1Module.html" title=" " alt="" coords="232,120,396,161"/>
+<area shape="poly" id="edge132_Node000006_Node000005" title=" " alt="" coords="199,138,231,138,231,143,199,143"/>
+<area shape="rect" id="Node000004" href="$dd/de4/classVIPRA_1_1Goals_1_1PotentialField.html" title=" " alt="" coords="444,97,630,122"/>
+<area shape="poly" id="edge133_Node000005_Node000004" title=" " alt="" coords="411,124,443,120,444,125,411,130"/>
+<area shape="rect" id="Node000003" href="$d7/dd4/classVIPRA_1_1Modules_1_1Goals.html" title="Goals module mixin." alt="" coords="236,70,392,96"/>
+<area shape="poly" id="edge134_Node000003_Node000002" title=" " alt="" coords="407,69,466,62,467,67,408,75"/>
+<area shape="poly" id="edge135_Node000003_Node000004" title=" " alt="" coords="408,91,444,96,443,101,407,97"/>
 </map>

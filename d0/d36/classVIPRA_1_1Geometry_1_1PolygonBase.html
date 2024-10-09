@@ -122,9 +122,6 @@ POLY_FUNC auto&#160;</td><td class="memItemRight" valign="bottom"><b>random_poin
 <tr class="memitem:aed1f061f4a81ab936adeb9fc19b193c3" id="r_aed1f061f4a81ab936adeb9fc19b193c3"><td class="memItemLeft" align="right" valign="top"><a id="aed1f061f4a81ab936adeb9fc19b193c3" name="aed1f061f4a81ab936adeb9fc19b193c3"></a>
 POLY_FUNC auto&#160;</td><td class="memItemRight" valign="bottom"><b>bounding_box</b> () const noexcept -&gt; <a class="el" href="../../d0/d36/classVIPRA_1_1Geometry_1_1PolygonBase.html">PolygonBase</a>&lt; 4 &gt;</td></tr>
 <tr class="separator:aed1f061f4a81ab936adeb9fc19b193c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a190cf2aa2bb01ba901165167bf85295e" id="r_a190cf2aa2bb01ba901165167bf85295e"><td class="memItemLeft" align="right" valign="top"><a id="a190cf2aa2bb01ba901165167bf85295e" name="a190cf2aa2bb01ba901165167bf85295e"></a>
-auto&#160;</td><td class="memItemRight" valign="bottom"><b>triangularize</b> () -&gt; std::vector&lt; <a class="el" href="../../d0/d36/classVIPRA_1_1Geometry_1_1PolygonBase.html">PolygonBase</a>&lt; 3 &gt; &gt;</td></tr>
-<tr class="separator:a190cf2aa2bb01ba901165167bf85295e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae033ed56de40b532e597479f9d8135cb" id="r_ae033ed56de40b532e597479f9d8135cb"><td class="memTemplParams" colspan="2"><a id="ae033ed56de40b532e597479f9d8135cb" name="ae033ed56de40b532e597479f9d8135cb"></a>
 template&lt;size_t point_s&gt; </td></tr>
 <tr class="memitem:ae033ed56de40b532e597479f9d8135cb"><td class="memTemplItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memTemplItemRight" valign="bottom"><b>PolygonBase</b> (std::array&lt; <a class="el" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a>, point_s &gt; const &amp;points)</td></tr>
@@ -133,11 +130,11 @@ template&lt;size_t point_s&gt; </td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>PolygonBase</b> (std::vector&lt; <a class="el" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> &gt; const &amp;points)</td></tr>
 <tr class="separator:a1f9f7322b9a87008881cb90086d11f9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a371636b73a053549005cad856babc8d3" id="r_a371636b73a053549005cad856babc8d3"><td class="memTemplParams" colspan="2"><a id="a371636b73a053549005cad856babc8d3" name="a371636b73a053549005cad856babc8d3"></a>
-template&lt;typename  = typename std::enable_if&lt;                std::is_same_v&lt;container_t, std::array&lt;VIPRA::Geometry::Line, side_s&gt;&gt;&gt;&gt; </td></tr>
+template&lt;typename  = typename std::enable_if&lt;std::is_same_v&lt;                container_t, std::array&lt;VIPRA::Geometry::Line, side_s&gt;&gt;&gt;&gt; </td></tr>
 <tr class="memitem:a371636b73a053549005cad856babc8d3"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>PolygonBase</b> (std::vector&lt; <a class="el" href="../../da/d49/structVIPRA_1_1Geometry_1_1Line.html">VIPRA::Geometry::Line</a> &gt; const &amp;sides)</td></tr>
 <tr class="separator:a371636b73a053549005cad856babc8d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a189295099e56102cac1267e77ac1e574" id="r_a189295099e56102cac1267e77ac1e574"><td class="memTemplParams" colspan="2"><a id="a189295099e56102cac1267e77ac1e574" name="a189295099e56102cac1267e77ac1e574"></a>
-template&lt;typename  = typename std::enable_if&lt;                std::is_same_v&lt;container_t, std::array&lt;VIPRA::Geometry::Line, side_s&gt;&gt;&gt;&gt; </td></tr>
+template&lt;typename  = typename std::enable_if&lt;std::is_same_v&lt;                container_t, std::array&lt;VIPRA::Geometry::Line, side_s&gt;&gt;&gt;&gt; </td></tr>
 <tr class="memitem:a189295099e56102cac1267e77ac1e574"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><b>PolygonBase</b> (std::vector&lt; <a class="el" href="../../da/d49/structVIPRA_1_1Geometry_1_1Line.html">VIPRA::Geometry::Line</a> &gt; &amp;&amp;sides) noexcept</td></tr>
 <tr class="separator:a189295099e56102cac1267e77ac1e574"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:affd65bbc35ffa710c82ef6905fcb461b" id="r_affd65bbc35ffa710c82ef6905fcb461b"><td class="memItemLeft" align="right" valign="top"><a id="affd65bbc35ffa710c82ef6905fcb461b" name="affd65bbc35ffa710c82ef6905fcb461b"></a>

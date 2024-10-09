@@ -1,15 +1,13 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="26,5,163,46"/>
-<area shape="rect" id="Node000001" href="$dc/dab/classVIPRA_1_1Modules_1_1Module.html" title=" " alt="" coords="232,5,396,46"/>
-<area shape="poly" id="edge124_Node000000_Node000001" title=" " alt="" coords="178,23,231,23,231,28,178,28"/>
-<area shape="rect" id="Node000002" href="$d8/d10/classVIPRA_1_1Goals_1_1AStar.html" title="Goals module that uses the A* algorithm to find the path to the goal." alt="" coords="467,44,607,69"/>
-<area shape="poly" id="edge125_Node000001_Node000002" title=" " alt="" coords="411,36,467,44,466,49,411,42"/>
-<area shape="rect" id="Node000006" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="5,120,184,161"/>
-<area shape="rect" id="Node000005" href="$dc/dab/classVIPRA_1_1Modules_1_1Module.html" title=" " alt="" coords="232,120,396,161"/>
-<area shape="poly" id="edge126_Node000006_Node000005" title=" " alt="" coords="199,138,231,138,231,143,199,143"/>
-<area shape="rect" id="Node000004" href="$dd/de4/classVIPRA_1_1Goals_1_1PotentialField.html" title=" " alt="" coords="444,97,630,122"/>
-<area shape="poly" id="edge127_Node000005_Node000004" title=" " alt="" coords="411,124,443,120,444,125,411,130"/>
-<area shape="rect" id="Node000003" href="$d7/dd4/classVIPRA_1_1Modules_1_1Goals.html" title="Goals module mixin." alt="" coords="236,70,392,96"/>
-<area shape="poly" id="edge128_Node000003_Node000002" title=" " alt="" coords="407,69,466,62,467,67,408,75"/>
-<area shape="poly" id="edge129_Node000003_Node000004" title=" " alt="" coords="408,91,444,96,443,101,407,97"/>
+<area shape="rect" id="Node000000" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="5,5,204,46"/>
+<area shape="rect" id="Node000001" href="$de/d33/classVIPRA_1_1Modules_1_1BaseModule.html" title=" " alt="" coords="252,5,446,46"/>
+<area shape="poly" id="edge125_Node000000_Node000001" title=" " alt="" coords="219,23,251,23,251,28,219,28"/>
+<area shape="rect" id="Node000002" href="$d0/d2d/classVIPRA_1_1Modules_1_1Pedestrians.html" title="Base Pedestrians module." alt="" coords="494,16,685,41"/>
+<area shape="poly" id="edge126_Node000001_Node000002" title=" " alt="" coords="461,24,493,25,493,30,461,30"/>
+<area shape="rect" id="Node000003" href="$d4/dc0/classVIPRA_1_1Pedestrians_1_1SpatialGrid.html" title="Pedestrian module that uses a grid to store pedestrians." alt="" coords="733,39,870,79"/>
+<area shape="poly" id="edge127_Node000002_Node000003" title=" " alt="" coords="698,41,733,47,733,52,697,47"/>
+<area shape="rect" id="Node000005" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="267,71,430,111"/>
+<area shape="rect" id="Node000004" href="$dc/dab/classVIPRA_1_1Modules_1_1Module.html" title=" " alt="" coords="508,67,672,107"/>
+<area shape="poly" id="edge128_Node000005_Node000004" title=" " alt="" coords="446,87,507,86,507,91,446,92"/>
+<area shape="poly" id="edge129_Node000004_Node000003" title=" " alt="" coords="687,71,732,65,733,71,688,77"/>
 </map>

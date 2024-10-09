@@ -1,17 +1,21 @@
 <map id="VIPRA::Behaviors::Simpack" name="VIPRA::Behaviors::Simpack">
-<area shape="rect" id="Node000001" title="Holds references to commonly used parameters for simpler passing." alt="" coords="539,133,721,159"/>
-<area shape="rect" id="Node000002" href="$d0/d2d/classVIPRA_1_1Modules_1_1Pedestrians.html" title="Base Pedestrians module." alt="" coords="255,5,446,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="428,33,447,40,495,61,541,86,612,131,609,135,539,90,493,66,445,45,426,38"/>
-<area shape="rect" id="Node000003" href="$d5/df3/classVIPRA_1_1Modules_1_1Map.html" title="Base Map Module Class." alt="" coords="277,55,424,80"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="425,82,516,106,591,130,589,135,514,111,423,87"/>
-<area shape="rect" id="Node000004" href="$d7/dd4/classVIPRA_1_1Modules_1_1Goals.html" title="Goals module mixin." alt="" coords="272,104,428,130"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="444,124,539,134,539,139,444,129"/>
-<area shape="rect" id="Node000005" href="$d7/d24/classVIPRA_1_1Behaviors_1_1GroupsContainer.html" title="Holds the indexes for pedestrians in each type group." alt="" coords="264,154,437,194"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="452,164,515,159,538,156,539,161,515,164,453,170"/>
-<area shape="rect" id="Node000006" href="$d0/d96/structVIPRA_1_1Behaviors_1_1BehaviorContext.html" title="The context in which a simulation is run. This includes the elapsed time, the random number generator..." alt="" coords="259,219,442,260"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="428,211,514,183,589,157,591,162,516,188,430,216"/>
-<area shape="rect" id="Node000007" href="$df/d63/classVIPRA_1_1Random_1_1Engine.html" title="Psuedo Random number engine." alt="" coords="5,227,166,252"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="181,237,259,237,259,242,181,242"/>
-<area shape="rect" id="Node000008" href="$d4/da2/structVIPRA_1_1State.html" title="Struct that holds the updated positions and velocities of all pedestrians." alt="" coords="301,284,400,310"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="413,281,445,269,495,242,542,211,612,157,615,162,545,216,498,247,447,274,415,286"/>
+<area shape="rect" id="Node000001" title="Holds references to commonly used parameters for simpler passing." alt="" coords="821,141,1003,166"/>
+<area shape="rect" id="Node000002" href="$d0/d2d/classVIPRA_1_1Modules_1_1Pedestrians.html" title="Base Pedestrians module." alt="" coords="536,13,728,38"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="709,41,729,47,777,68,823,93,893,138,890,143,820,98,775,73,727,52,708,46"/>
+<area shape="rect" id="Node000003" href="$de/d33/classVIPRA_1_1Modules_1_1BaseModule.html" title=" " alt="" coords="253,5,447,46"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="463,23,536,23,536,28,463,28"/>
+<area shape="rect" id="Node000004" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="5,5,204,46"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="219,23,253,23,253,28,219,28"/>
+<area shape="rect" id="Node000005" href="$d5/df3/classVIPRA_1_1Modules_1_1Map.html" title="Base Map Module Class." alt="" coords="558,62,706,88"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="706,90,797,114,873,138,871,143,796,119,705,95"/>
+<area shape="rect" id="Node000006" href="$d7/dd4/classVIPRA_1_1Modules_1_1Goals.html" title="Goals module mixin." alt="" coords="554,112,710,137"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="726,131,821,141,820,147,725,137"/>
+<area shape="rect" id="Node000007" href="$d7/d24/classVIPRA_1_1Behaviors_1_1GroupsContainer.html" title="Holds the indexes for pedestrians in each type group." alt="" coords="545,161,719,202"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="734,172,796,166,820,163,821,169,797,171,734,177"/>
+<area shape="rect" id="Node000008" href="$d0/d96/structVIPRA_1_1Behaviors_1_1BehaviorContext.html" title="The context in which a simulation is run. This includes the elapsed time, the random number generator..." alt="" coords="541,227,723,267"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="710,219,796,190,871,165,872,170,798,195,712,224"/>
+<area shape="rect" id="Node000009" href="$df/d63/classVIPRA_1_1Random_1_1Engine.html" title="Psuedo Random number engine." alt="" coords="270,234,430,260"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="446,244,540,244,540,250,446,250"/>
+<area shape="rect" id="Node000010" href="$d4/da2/structVIPRA_1_1State.html" title="Struct that holds the updated positions and velocities of all pedestrians." alt="" coords="583,292,681,317"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="695,288,727,277,777,250,824,219,893,165,897,169,827,223,779,254,729,281,697,293"/>
 </map>

@@ -10,7 +10,7 @@ var searchData=
   ['click_7',['click',['../d5/d6c/classVIPRA_1_1Util_1_1Clock.html#a43fd4f08d0be575cc17fab20f44f10b0',1,'VIPRA::Util::Clock']]],
   ['closest_5fpoint_8',['closest_point',['../da/d49/structVIPRA_1_1Geometry_1_1Line.html#a1c7ba1f2512c250976781aa2f6e95a9f',1,'VIPRA::Geometry::Line']]],
   ['config_9',['config',['../dc/dab/classVIPRA_1_1Modules_1_1Module.html#a9ab1df599c35b129dcbb0d899c2b66ec',1,'VIPRA::Modules::Module']]],
-  ['contains_10',['contains',['../d0/d27/classVIPRA_1_1Behaviors_1_1Location.html#a68b53f7f4f5a4c017313d31298ca0d3e',1,'VIPRA::Behaviors::Location']]],
+  ['config_5fbase_10',['config_base',['../de/d33/classVIPRA_1_1Modules_1_1BaseModule.html#a068ab6fd03b07540360ac0b39f9c6c74',1,'VIPRA::Modules::BaseModule']]],
   ['context_11',['context',['../da/d04/classcontext.html#adad83dfd237fee0e8ea86937ef1802c6',1,'context']]],
   ['coord_5floc_5fcompare_12',['coord_loc_compare',['../d7/d93/classVIPRA_1_1Behaviors_1_1AttributeHandling.html#ae3dd5ead8aa2096a39ed94a8a6daf3ac',1,'VIPRA::Behaviors::AttributeHandling']]],
   ['count_13',['count',['../de/d93/classVIPRA_1_1Args.html#a23f0c1dfa9da9c6ffb75d370f4a46142',1,'VIPRA::Args']]],
