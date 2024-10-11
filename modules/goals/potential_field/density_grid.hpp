@@ -12,24 +12,31 @@
 #include "vipra/types/size.hpp"
 
 #include "vipra/logging/logging.hpp"
-#include "density_grid.hpp"
 
 // TODO: Generalize Grid and inherit Grid for this class.
 
 namespace VIPRA::Goals {
 
-class Grid {
+class DensityGrid {
  public:
   struct GridPoint {
     VIPRA::f3d   direction;
     VIPRA::f3d   end{VIPRA::_emptyf3d_};
     VIPRA::f_pnt distance{std::numeric_limits<VIPRA::f_pnt>::max()};
+    int pedCount{0};
   };
 
   void intialize(auto const& map, VIPRA::f_pnt gridSize)
   {
     _gridSize = gridSize;
     construct_grid(map);
+  }
+
+  void clearGrid() 
+  {
+    for (GridPoint &gp : _grid) {
+      gp.pedCount = 0;
+    }
   }
 
   [[nodiscard]] auto get_grid(VIPRA::f3d pos) -> GridPoint&
@@ -44,6 +51,10 @@ class Grid {
   [[nodiscard]] auto get_x_count() const -> size_t { return _xCount; }
   [[nodiscard]] auto get_y_count() const -> size_t { return _xCount; }
 
+  [[nodiscard]] auto get_ped_count_at_idx(VIPRA::idx idx) const -> int {
+    return _grid[idx].pedCount;
+  }
+
   [[nodiscard]] auto begin() -> std::vector<GridPoint>::iterator
   {
     return _grid.begin();
@@ -53,49 +64,17 @@ class Grid {
     return _grid.end();
   }
 
-  void flood_fill(VIPRA::f3d start, auto const& map)
+  /**
+   * @brief Increments the pedestrian count at the grid index that contains the point. 
+   *
+   * @param pos
+   * @return VIPRA::idx
+   */
+  void incr_gridpoint(VIPRA::f3d const& pos)
   {
-    const VIPRA::f3d       dimensions = map.get_dimensions();
-    std::queue<VIPRA::f3d> next;
-    VIPRA::f_pnt           dist = 0;
-
-    get_grid(start).distance = 0;
-    next.push(grid_center(start));
-
-    while ( ! next.empty() ) {
-      VIPRA::f3d currPos = next.front();
-      next.pop();
-
-      if ( map.collision(Geometry::Circle{grid_center(currPos), _gridSize}) )
-        continue;
-
-      // TODO: Pass in density field here. 
-      add_neighbors(currPos, start, next, 0);
-    }
-  }
-
-  void flood_fill(VIPRA::f3d start, auto const& map, DensityGrid const& densityGrid)
-  {
-    const VIPRA::f3d       dimensions = map.get_dimensions();
-    std::queue<VIPRA::f3d> next;
-    VIPRA::f_pnt           dist = 0;
-
-    get_grid(start).distance = 0;
-    next.push(grid_center(start));
-
-    while ( ! next.empty() ) {
-      VIPRA::f3d currPos = next.front();
-      next.pop();
-
-      if ( map.collision(Geometry::Circle{grid_center(currPos), _gridSize}) )
-        continue;
-
-      // TODO: Pass in density field here.
-      VIPRA::idx densityGrid_index = densityGrid.get_closest_grid_idx(currPos);
-      int pedCount = densityGrid.get_ped_count_at_idx(densityGrid_index);
-      VIPRA::Log::debug("Adding Weight: {}", pedCount);
-      add_neighbors(currPos, start, next, pedCount);
-    }
+    const auto current_pedcount = _grid[get_closest_grid_idx(pos)].pedCount;
+    VIPRA::Log::debug("Updating ({}, {}) from {} to {}.", pos.x, pos.y, current_pedcount, current_pedcount+1);
+    _grid[get_closest_grid_idx(pos)].pedCount++;
   }
 
   /**
@@ -194,43 +173,12 @@ class Grid {
     return gridX < 0 || gridX >= _xCount || gridY < 0 || gridY >= _yCount;
   }
 
-  void add_neighbors(VIPRA::f3d curr, VIPRA::f3d end,
-                     std::queue<VIPRA::f3d>& queue, VIPRA::f_pnt weight)
-  {
-    std::array<std::pair<int, int>, 8> const directions{
-        {{-1, 1}, {0, 1}, {1, 1}, {-1, 0}, {1, 0}, {-1, -1}, {0, -1}, {1, -1}}};
-
-    auto& currGrid = get_grid(curr);
-
-    for ( auto [i, j] : directions ) {
-      if ( i == 0 && i == j ) continue;
-
-      VIPRA::f3d nextPos =
-          VIPRA::f3d{curr.x + i * _gridSize, curr.y + j * _gridSize};
-
-      if ( out_of_bounds(nextPos.x, nextPos.y) ) continue;
-
-      auto& grid = get_grid(nextPos);
-
-      VIPRA::Log::debug("distance: {} | distance_to_sqrd: {} | additional weight: {}", currGrid.distance, curr.distance_to_sqrd(nextPos), weight);
-      VIPRA::f_pnt dist = currGrid.distance + curr.distance_to_sqrd(nextPos) * weight; //Add Density Field
-
-      if ( grid.distance <= dist ) continue;
-
-      grid.direction = (curr - nextPos).unit();
-      grid.end = end;
-      grid.distance = dist;
-
-      queue.emplace(nextPos);
-    }
-  }
-
  public:
-  Grid() = default;
-  Grid(const Grid&) = default;
-  Grid(Grid&&) noexcept = default;
-  auto operator=(const Grid&) -> Grid& = default;
-  auto operator=(Grid&&) noexcept -> Grid& = default;
-  ~Grid() = default;
+  DensityGrid() = default;
+  DensityGrid(const DensityGrid&) = default;
+  DensityGrid(DensityGrid&&) noexcept = default;
+  auto operator=(const DensityGrid&) -> DensityGrid& = default;
+  auto operator=(DensityGrid&&) noexcept -> DensityGrid& = default;
+  ~DensityGrid() = default;
 };
 }  // namespace VIPRA::Goals

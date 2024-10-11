@@ -30,6 +30,7 @@
 *.exe
 *.out
 *.app
+*.sh
 
 # Build
 build
@@ -38,6 +39,7 @@ build
 .vscode
 .cache
 .clangd
+*.code-workspace
 
 # Temporary
 temp
@@ -59,6 +61,7 @@ __pycache__
 *.gif
 *.jpeg
 *.png
+*.mp4
 
 # dxf
 dwg2dxf
