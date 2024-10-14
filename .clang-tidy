@@ -14,7 +14,8 @@ Checks: >
   -google-readability-braces-around-statements,
   -cppcoreguidelines-avoid-do-while,
   -bugprone-easily-swappable-parameters,
-  -concurrency-mt-unsafe
+  -concurrency-mt-unsafe,
+  -cppcoreguidelines-pro-bounds-constant-array-index
 
 WarningsAsErrors: "*"
 

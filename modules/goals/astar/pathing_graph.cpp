@@ -62,9 +62,8 @@ void PathingGraph::construct_graph(VIPRA::Modules::Map const& map)
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 void PathingGraph::set_adjacents(VIPRA::idx currIdx)
 {
-  assert(currIdx < nodes().size());
-  assert(currX < _xCount && currY < _yCount);
-  assert(data(currIdx).traversable == true);
+  assert(currIdx < _grids.size());
+  assert(_grids[currIdx].traversable == true);
 
   const int xCount = static_cast<int>(_xCount);
 

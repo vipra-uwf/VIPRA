@@ -5,9 +5,9 @@
 #include <string>
 #include <vector>
 
-#include "vipra/geometry/f3d.hpp"
-#include "vipra/geometry/polygon.hpp"
+#include "vipra/geometry/geometry.hpp"
 
+#include "vipra/geometry/polygon.hpp"
 #include "vipra/logging/logging.hpp"
 #include "vipra/modules/map_input.hpp"
 #include "vipra/types/float.hpp"
@@ -41,14 +41,15 @@ class Map {
         _obstacles.begin(), _obstacles.end(),
         [&](auto const& obstacle) { return obstacle.is_point_inside(point); });
   }
-  [[nodiscard]] virtual auto collision(VIPRA::Geometry::Circle radius) const
-      -> bool
+  [[nodiscard]] virtual auto collision(
+      VIPRA::Geometry::Circle const& radius) const -> bool
   {
     if ( collision(radius.center()) ) return true;
 
-    return std::any_of(
-        _obstacles.begin(), _obstacles.end(),
-        [&](auto const& obstacle) { return obstacle.does_intersect(radius); });
+    return std::any_of(_obstacles.begin(), _obstacles.end(),
+                       [&](Geometry::Polygon const& obstacle) {
+                         return Geometry::do_intersect(obstacle, radius);
+                       });
   }
 
   [[nodiscard]] virtual auto ray_hit(VIPRA::f3d start,

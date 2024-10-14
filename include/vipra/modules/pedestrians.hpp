@@ -161,7 +161,8 @@ class Pedestrians : public BaseModule<Pedestrians> {
     return _coords;
   }
 
-  void init_random_peds(auto const& map, VIPRA::Random::Engine& engine)
+  void init_random_peds(VIPRA::Modules::Map const& map,
+                        VIPRA::Random::Engine&     engine)
   {
     // TODO(rolland, issue #50): this is terrible
 

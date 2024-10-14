@@ -1,5 +1,6 @@
 
 #include "Calm.hpp"
+#include "vipra/geometry/rectangle.hpp"
 
 VIPRA_REGISTER_MODULE(Model::Calm, Model)
 
@@ -65,8 +66,8 @@ auto Model::Calm::rect_from_shoulders(VIPRA::idx pedIdx, VIPRA::f3d pedCoords,
   const VIPRA::Geometry::Line pedShldr = _peds.shoulders[pedIdx];
   const VIPRA::f3d            range = (goal - pedCoords).unit();
 
-  return {pedShldr.start, pedShldr.start + range, pedShldr.end + range,
-          pedShldr.end};
+  return VIPRA::Geometry::Rectangle{pedShldr.start, pedShldr.start + range,
+                                    pedShldr.end + range, pedShldr.end};
 }
 
 void Model::Calm::calc_betas()

@@ -61,8 +61,6 @@ class PathingGraph {
   [[nodiscard]] auto get_closest_grid_idx(VIPRA::f3d position) const noexcept
       -> VIPRA::idx
   {
-    assert(position <= pos(get_index(gridX, gridY, _xCount)));
-
     auto const gridX =
         static_cast<VIPRA::idx>(std::floor(position.x / _gridSize));
     auto const gridY =
@@ -107,6 +105,7 @@ class PathingGraph {
   [[nodiscard]] VIPRA_INLINE auto get_index(
       VIPRA::size gridX, VIPRA::size gridY) const noexcept -> VIPRA::idx
   {
+    assert(gridX + (gridY * _xCount) < _grids.size());
     return gridX + (gridY * _xCount);
   }
 

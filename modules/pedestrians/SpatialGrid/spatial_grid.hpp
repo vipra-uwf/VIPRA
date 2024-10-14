@@ -27,7 +27,7 @@ class SpatialGrid : public VIPRA::Modules::Module<SpatialGrid>,
                     public VIPRA::Modules::Pedestrians {
  public:
   VIPRA_MODULE_NAME("SpatialGrid");
-  // VIPRA_MODULE_TYPE(Pedestrians);
+  VIPRA_MODULE_TYPE(Pedestrians);
 
   VIPRA_REGISTER_PARAMS(VIPRA_PARAM("gridSize", _cellSize))
 

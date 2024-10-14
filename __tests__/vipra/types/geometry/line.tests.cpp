@@ -4,7 +4,8 @@
 
 // TODO(rolland): add more tests
 
-TEST(LineTests, DoIntersect) {
+TEST(LineTests, DoIntersect)
+{
   // Test case 1: Lines intersect
   VIPRA::Geometry::Line line1(VIPRA::f3d{0, 0}, VIPRA::f3d{2, 2});
   VIPRA::Geometry::Line line2(VIPRA::f3d{1, 0}, VIPRA::f3d{1, 2});
@@ -21,7 +22,8 @@ TEST(LineTests, DoIntersect) {
   ASSERT_FALSE(line5.does_intersect(line6));
 }
 
-TEST(LineTests, IntersectionPoint) {
+TEST(LineTests, IntersectionPoint)
+{
   // Test case 1: Lines intersect
   VIPRA::Geometry::Line line1(VIPRA::f3d{0, 0}, VIPRA::f3d{2, 2});
   VIPRA::Geometry::Line line2(VIPRA::f3d{1, 0}, VIPRA::f3d{1, 2});

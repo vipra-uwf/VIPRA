@@ -1,8 +1,10 @@
 #pragma once
 
 #include "calm_model_types.hpp"
-#include "vipra/geometry/rectangle.hpp"
+
 #include "vipra/macros/performance.hpp"
+
+#include "vipra/geometry/geometry.hpp"
 
 #include "vipra/types/idx.hpp"
 #include "vipra/types/time.hpp"
@@ -292,7 +294,7 @@ class Collision {
   {
     Rectangle const& rect1 = collisionRectangles[index1];
     Rectangle const& rect2 = collisionRectangles[index2];
-    return rect1.does_intersect(rect2);
+    return VIPRA::Geometry::do_intersect(rect1, rect2);
   }
 
   /**
