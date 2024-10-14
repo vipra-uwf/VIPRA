@@ -30,7 +30,10 @@
   "goals": {
     "PotentialField": {
       "endGoalType": "exit",
-      "cellSize": 0.1
+      "cellSize": 0.1,
+      "densityCellSize": 0.5,
+      "densityWeight": 1,
+      "densityUpdateFrequency": 10
     },
     "AStar": {
       "endGoalType": "exit",
@@ -43,7 +46,7 @@
     "Base": {
       "use_file": false,
       "spawn_random": true,
-      "random_count": 50
+      "random_count": 200
     },
     "SpatialGrid": {
       "gridSize": 0.5
