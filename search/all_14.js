@@ -18,7 +18,7 @@ var searchData=
   ['nested_5fview_15',['nested_view',['../da/d0f/structnested__view.html',1,'']]],
   ['new_5frun_16',['new_run',['../d6/d36/classVIPRA_1_1CoordModules_1_1OutputCoordinator.html#abc00e7954399379365a42ffd244d1a02',1,'VIPRA::CoordModules::OutputCoordinator']]],
   ['next_5farg_5fid_17',['next_arg_id',['../d9/d9f/classbasic__format__parse__context.html#a152d3961cfbc244624a877d827fc1172',1,'basic_format_parse_context']]],
-  ['node_18',['Node',['../d3/ddb/structVIPRA_1_1DataStructures_1_1GraphMixin_1_1Node.html',1,'VIPRA::DataStructures::GraphMixin']]],
+  ['node_18',['Node',['../d3/ddb/structVIPRA_1_1DataStructures_1_1GraphMixin_1_1Node.html',1,'VIPRA::DataStructures::GraphMixin&lt; class_t, data_t &gt;::Node'],['../d7/de6/structVIPRA_1_1Node.html',1,'VIPRA::Node']]],
   ['node_19',['node',['../d2/d42/structdetail_1_1node.html',1,'detail']]],
   ['non_20random_20values_20',['Non-Random Values',['../d8/dc5/md_docs_2pages_2researchers_2parameters.html#autotoc_md396',1,'']]],
   ['normal_5fdistribution_21',['normal_distribution',['../da/dd5/classVIPRA_1_1Random_1_1normal__distribution.html',1,'VIPRA::Random']]],

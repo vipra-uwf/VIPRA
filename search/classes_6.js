@@ -11,10 +11,9 @@ var searchData=
   ['goals_8',['Goals',['../d7/dd4/classVIPRA_1_1Modules_1_1Goals.html',1,'VIPRA::Modules']]],
   ['graph_9',['Graph',['../dd/d40/classVIPRA_1_1DataStructures_1_1Graph.html',1,'VIPRA::DataStructures']]],
   ['graphmixin_10',['GraphMixin',['../d8/de6/classVIPRA_1_1DataStructures_1_1GraphMixin.html',1,'VIPRA::DataStructures']]],
-  ['graphmixin_3c_20pathinggraph_2c_20gridpoint_20_3e_11',['GraphMixin&lt; PathingGraph, GridPoint &gt;',['../d8/de6/classVIPRA_1_1DataStructures_1_1GraphMixin.html',1,'VIPRA::DataStructures']]],
-  ['graphmixin_3c_20void_2c_20data_5ft_20_3e_12',['GraphMixin&lt; void, data_t &gt;',['../d8/de6/classVIPRA_1_1DataStructures_1_1GraphMixin.html',1,'VIPRA::DataStructures']]],
-  ['grid_13',['Grid',['../d2/dc4/classVIPRA_1_1Goals_1_1Grid.html',1,'VIPRA::Goals']]],
-  ['gridpoint_14',['GridPoint',['../db/d56/structVIPRA_1_1Goals_1_1Grid_1_1GridPoint.html',1,'VIPRA::Goals::Grid::GridPoint'],['../d1/d59/structVIPRA_1_1Goals_1_1GridPoint.html',1,'VIPRA::Goals::GridPoint']]],
-  ['group_5fdigits_5fview_15',['group_digits_view',['../db/d2b/structgroup__digits__view.html',1,'']]],
-  ['groupscontainer_16',['GroupsContainer',['../d7/d24/classVIPRA_1_1Behaviors_1_1GroupsContainer.html',1,'VIPRA::Behaviors']]]
+  ['graphmixin_3c_20void_2c_20data_5ft_20_3e_11',['GraphMixin&lt; void, data_t &gt;',['../d8/de6/classVIPRA_1_1DataStructures_1_1GraphMixin.html',1,'VIPRA::DataStructures']]],
+  ['grid_12',['Grid',['../d2/dc4/classVIPRA_1_1Goals_1_1Grid.html',1,'VIPRA::Goals']]],
+  ['gridpoint_13',['GridPoint',['../d5/dab/structVIPRA_1_1Goals_1_1DensityGrid_1_1GridPoint.html',1,'VIPRA::Goals::DensityGrid::GridPoint'],['../db/d56/structVIPRA_1_1Goals_1_1Grid_1_1GridPoint.html',1,'VIPRA::Goals::Grid::GridPoint'],['../d1/d59/structVIPRA_1_1Goals_1_1GridPoint.html',1,'VIPRA::Goals::GridPoint']]],
+  ['group_5fdigits_5fview_14',['group_digits_view',['../db/d2b/structgroup__digits__view.html',1,'']]],
+  ['groupscontainer_15',['GroupsContainer',['../d7/d24/classVIPRA_1_1Behaviors_1_1GroupsContainer.html',1,'VIPRA::Behaviors']]]
 ];

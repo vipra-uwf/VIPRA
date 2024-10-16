@@ -90,7 +90,6 @@ $(function(){ initResizable(false); });
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="../../db/d47/classVIPRA_1_1Goals_1_1AStar-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">VIPRA::Goals::AStar Class Reference</div></div>
@@ -120,17 +119,13 @@ Collaboration diagram for VIPRA::Goals::AStar:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d6/d4b/classVIPRA_1_1Goals_1_1AStar__coll__graph.png" border="0" usemap="#aVIPRA_1_1Goals_1_1AStar_coll__map" alt="Collaboration graph"/></div>
 <map name="aVIPRA_1_1Goals_1_1AStar_coll__map" id="aVIPRA_1_1Goals_1_1AStar_coll__map">
-<area shape="rect" title="Goals module that uses the A* algorithm to find the path to the goal." alt="" coords="517,70,658,96"/>
-<area shape="rect" href="../../dc/dab/classVIPRA_1_1Modules_1_1Module.html" title=" " alt="" coords="252,5,416,46"/>
-<area shape="poly" title=" " alt="" coords="432,45,528,67,527,72,431,50"/>
-<area shape="rect" href="../../da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="30,5,167,46"/>
-<area shape="poly" title=" " alt="" coords="182,23,252,23,252,28,182,28"/>
-<area shape="rect" href="../../d7/dd4/classVIPRA_1_1Modules_1_1Goals.html" title="Goals module mixin." alt="" coords="256,70,412,96"/>
-<area shape="poly" title=" " alt="" coords="428,80,517,80,517,86,428,86"/>
-<area shape="rect" href="../../d6/d44/classVIPRA_1_1Goals_1_1PathingGraph.html" title=" " alt="" coords="241,120,427,145"/>
-<area shape="poly" title=" " alt="" coords="426,113,493,101,526,94,527,99,494,106,427,119"/>
-<area shape="rect" href="../../d8/de6/classVIPRA_1_1DataStructures_1_1GraphMixin.html" title=" " alt="" coords="5,104,192,160"/>
-<area shape="poly" title=" " alt="" coords="207,130,241,130,241,135,207,135"/>
+<area shape="rect" title="Goals module that uses the A* algorithm to find the path to the goal." alt="" coords="109,183,250,208"/>
+<area shape="rect" href="../../dc/dab/classVIPRA_1_1Modules_1_1Module.html" title=" " alt="" coords="5,94,170,135"/>
+<area shape="poly" title=" " alt="" coords="124,143,167,180,164,184,120,147"/>
+<area shape="rect" href="../../da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="19,5,156,46"/>
+<area shape="poly" title=" " alt="" coords="90,62,90,94,85,94,85,62"/>
+<area shape="rect" href="../../d7/dd4/classVIPRA_1_1Modules_1_1Goals.html" title="Goals module mixin." alt="" coords="193,102,350,127"/>
+<area shape="poly" title=" " alt="" coords="248,139,195,184,192,180,244,135"/>
 </map>
 <center><span class="legend">[<a href="../../graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -139,12 +134,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a16ced07ab53338c695d29731e2f3db7e" id="r_a16ced07ab53338c695d29731e2f3db7e"><td class="memItemLeft" align="right" valign="top"><a id="a16ced07ab53338c695d29731e2f3db7e" name="a16ced07ab53338c695d29731e2f3db7e"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>VIPRA_REGISTER_PARAMS</b> (VIPRA_PARAM(&quot;endGoalType&quot;, _endGoalType), VIPRA_PARAM(&quot;goalRange&quot;, _goalRange), VIPRA_PARAM(&quot;gridSize&quot;, _gridSize), VIPRA_PARAM(&quot;closestObstacle&quot;, _closestObstacle)) VIPRA_GOALS_INIT_STEP</td></tr>
 <tr class="separator:a16ced07ab53338c695d29731e2f3db7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a75992062b93b145a7f8da84a0c7f7f0d" id="r_a75992062b93b145a7f8da84a0c7f7f0d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a75992062b93b145a7f8da84a0c7f7f0d">set_end_goals</a> (auto const &amp;pedset, auto const &amp;map, <a class="el" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a> &amp;engine)</td></tr>
-<tr class="memdesc:a75992062b93b145a7f8da84a0c7f7f0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the end goals for each pedestrian.  <br /></td></tr>
-<tr class="separator:a75992062b93b145a7f8da84a0c7f7f0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec16c33e79ebbca2f9ec02eb87fb713b" id="r_aec16c33e79ebbca2f9ec02eb87fb713b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aec16c33e79ebbca2f9ec02eb87fb713b">find_path</a> (VIPRA::idx pedIdx, <a class="el" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> startPos, <a class="el" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a> &amp;engine)</td></tr>
-<tr class="memdesc:aec16c33e79ebbca2f9ec02eb87fb713b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the pedestrians path to pos.  <br /></td></tr>
-<tr class="separator:aec16c33e79ebbca2f9ec02eb87fb713b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classVIPRA_1_1Modules_1_1Module"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classVIPRA_1_1Modules_1_1Module')"><img src="../../closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="../../dc/dab/classVIPRA_1_1Modules_1_1Module.html">VIPRA::Modules::Module&lt; AStar &gt;</a></td></tr>
 <tr class="memitem:aa28bac85c148150730692baec841f12b inherit pub_methods_classVIPRA_1_1Modules_1_1Module" id="r_aa28bac85c148150730692baec841f12b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/dab/classVIPRA_1_1Modules_1_1Module.html#aa28bac85c148150730692baec841f12b">register_params</a> (<a class="el" href="../../dd/d44/classVIPRA_1_1Parameters.html">Parameters</a> &amp;paramIn)</td></tr>
 <tr class="memdesc:aa28bac85c148150730692baec841f12b inherit pub_methods_classVIPRA_1_1Modules_1_1Module"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers the modules parameters with the parameter reader.  <br /></td></tr>
@@ -156,9 +145,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4bcba4f42dd9abbc24d57cda45c00014 inherit pub_methods_classVIPRA_1_1Modules_1_1Goals" id="r_a4bcba4f42dd9abbc24d57cda45c00014"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>initialize</b> (<a class="el" href="../../d0/d2d/classVIPRA_1_1Modules_1_1Pedestrians.html">VIPRA::Modules::Pedestrians</a> const &amp;pedset, <a class="el" href="../../d5/df3/classVIPRA_1_1Modules_1_1Map.html">VIPRA::Modules::Map</a> const &amp;map, <a class="el" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a> &amp;engine)</td></tr>
 <tr class="separator:a4bcba4f42dd9abbc24d57cda45c00014 inherit pub_methods_classVIPRA_1_1Modules_1_1Goals"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad1a7af302558f1198cdcc9e1801075e inherit pub_methods_classVIPRA_1_1Modules_1_1Goals" id="r_aad1a7af302558f1198cdcc9e1801075e"><td class="memItemLeft" align="right" valign="top">
-VIPRA_PERF_FUNC void&#160;</td><td class="memItemRight" valign="bottom"><b>update</b> (<a class="el" href="../../d0/d2d/classVIPRA_1_1Modules_1_1Pedestrians.html">Modules::Pedestrians</a> const &amp;pedset, <a class="el" href="../../d5/df3/classVIPRA_1_1Modules_1_1Map.html">Modules::Map</a> const &amp;map, VIPRA::delta_t deltaT)</td></tr>
-<tr class="separator:aad1a7af302558f1198cdcc9e1801075e inherit pub_methods_classVIPRA_1_1Modules_1_1Goals"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a295d67e4261dca9def7cd345c44aebfa inherit pub_methods_classVIPRA_1_1Modules_1_1Goals" id="r_a295d67e4261dca9def7cd345c44aebfa"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>update</b> (<a class="el" href="../../d0/d2d/classVIPRA_1_1Modules_1_1Pedestrians.html">Modules::Pedestrians</a> const &amp;pedset, <a class="el" href="../../d5/df3/classVIPRA_1_1Modules_1_1Map.html">Modules::Map</a> const &amp;map, VIPRA::delta_t deltaT)</td></tr>
+<tr class="separator:a295d67e4261dca9def7cd345c44aebfa inherit pub_methods_classVIPRA_1_1Modules_1_1Goals"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a187ea8d3af6cb0c90f6abcd4f0c70568 inherit pub_methods_classVIPRA_1_1Modules_1_1Goals" id="r_a187ea8d3af6cb0c90f6abcd4f0c70568"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>change_end_goal</b> (VIPRA::idx pedIdx, <a class="el" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> currPos, <a class="el" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> goalPos, <a class="el" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a> &amp;engine)</td></tr>
 <tr class="separator:a187ea8d3af6cb0c90f6abcd4f0c70568 inherit pub_methods_classVIPRA_1_1Modules_1_1Goals"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -196,34 +185,17 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const 
 auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="../../d7/dd4/classVIPRA_1_1Modules_1_1Goals.html">Goals</a> &amp;&amp;) noexcept -&gt; <a class="el" href="../../d7/dd4/classVIPRA_1_1Modules_1_1Goals.html">Goals</a> &amp;=default</td></tr>
 <tr class="separator:a970c1b6783a035f9a2907818862474f8 inherit pub_methods_classVIPRA_1_1Modules_1_1Goals"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ae4a2ef162f7937d492919dd03a63a9a8" id="r_ae4a2ef162f7937d492919dd03a63a9a8"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae4a2ef162f7937d492919dd03a63a9a8">squash_path</a> (std::vector&lt; <a class="el" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> &gt; const &amp;path, <a class="el" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a> &amp;) -&gt; std::vector&lt; <a class="el" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> &gt;</td></tr>
-<tr class="memdesc:ae4a2ef162f7937d492919dd03a63a9a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Squashes the path to remove unnecessary points.  <br /></td></tr>
-<tr class="separator:ae4a2ef162f7937d492919dd03a63a9a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae9edec5c1bb56c83bfd0940193e4f0d4" id="r_ae9edec5c1bb56c83bfd0940193e4f0d4"><td class="memItemLeft" align="right" valign="top">static auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae9edec5c1bb56c83bfd0940193e4f0d4">get_nearest_goal</a> (<a class="el" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> pos, std::vector&lt; <a class="el" href="../../d0/d36/classVIPRA_1_1Geometry_1_1PolygonBase.html">VIPRA::Geometry::Polygon</a> &gt; const &amp;goals) -&gt; std::vector&lt; <a class="el" href="../../d0/d36/classVIPRA_1_1Geometry_1_1PolygonBase.html">VIPRA::Geometry::Polygon</a> &gt;::const_iterator</td></tr>
-<tr class="memdesc:ae9edec5c1bb56c83bfd0940193e4f0d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the nearest goal to the pedestrian.  <br /></td></tr>
-<tr class="separator:ae9edec5c1bb56c83bfd0940193e4f0d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a4ae6c76cb3ecb49062f3abe213b07aa2" id="r_a4ae6c76cb3ecb49062f3abe213b07aa2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4ae6c76cb3ecb49062f3abe213b07aa2">VIPRA_GOALS_UPDATE_STEP</a></td></tr>
+<tr class="memitem:a4ae6c76cb3ecb49062f3abe213b07aa2" id="r_a4ae6c76cb3ecb49062f3abe213b07aa2"><td class="memItemLeft" align="right" valign="top"><a id="a4ae6c76cb3ecb49062f3abe213b07aa2" name="a4ae6c76cb3ecb49062f3abe213b07aa2"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>VIPRA_GOALS_UPDATE_STEP</b></td></tr>
 <tr class="separator:a4ae6c76cb3ecb49062f3abe213b07aa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa93e5bab9650b3cfbc697c4ea671d43a" id="r_aa93e5bab9650b3cfbc697c4ea671d43a"><td class="memItemLeft" align="right" valign="top"><a id="aa93e5bab9650b3cfbc697c4ea671d43a" name="aa93e5bab9650b3cfbc697c4ea671d43a"></a>
-VIPRA::f_pnt&#160;</td><td class="memItemRight" valign="bottom"><b>_goalRange</b></td></tr>
-<tr class="separator:aa93e5bab9650b3cfbc697c4ea671d43a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6e3a5e31cd7e5adf8f7806a97f153df" id="r_ae6e3a5e31cd7e5adf8f7806a97f153df"><td class="memItemLeft" align="right" valign="top"><a id="ae6e3a5e31cd7e5adf8f7806a97f153df" name="ae6e3a5e31cd7e5adf8f7806a97f153df"></a>
-VIPRA::f_pnt&#160;</td><td class="memItemRight" valign="bottom"><b>_gridSize</b></td></tr>
-<tr class="separator:ae6e3a5e31cd7e5adf8f7806a97f153df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a579e752b13165c2f9345238334f1edc3" id="r_a579e752b13165c2f9345238334f1edc3"><td class="memItemLeft" align="right" valign="top"><a id="a579e752b13165c2f9345238334f1edc3" name="a579e752b13165c2f9345238334f1edc3"></a>
-VIPRA::f_pnt&#160;</td><td class="memItemRight" valign="bottom"><b>_closestObstacle</b></td></tr>
-<tr class="separator:a579e752b13165c2f9345238334f1edc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf86473c89b6b293588207a2fb169ee8" id="r_adf86473c89b6b293588207a2fb169ee8"><td class="memItemLeft" align="right" valign="top"><a id="adf86473c89b6b293588207a2fb169ee8" name="adf86473c89b6b293588207a2fb169ee8"></a>
-std::vector&lt; std::vector&lt; <a class="el" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>_paths</b></td></tr>
-<tr class="separator:adf86473c89b6b293588207a2fb169ee8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0d35345967a614fdb8dfc0177a9e650" id="r_ae0d35345967a614fdb8dfc0177a9e650"><td class="memItemLeft" align="right" valign="top"><a id="ae0d35345967a614fdb8dfc0177a9e650" name="ae0d35345967a614fdb8dfc0177a9e650"></a>
-<a class="el" href="../../d6/d44/classVIPRA_1_1Goals_1_1PathingGraph.html">PathingGraph</a>&#160;</td><td class="memItemRight" valign="bottom"><b>_graph</b></td></tr>
-<tr class="separator:ae0d35345967a614fdb8dfc0177a9e650"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4764157ed68498661649425d047e01bc" id="r_a4764157ed68498661649425d047e01bc"><td class="memItemLeft" align="right" valign="top"><a id="a4764157ed68498661649425d047e01bc" name="a4764157ed68498661649425d047e01bc"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>VIPRA_GOALS_NEXT_GOAL</b></td></tr>
+<tr class="separator:a4764157ed68498661649425d047e01bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3ad9a29d66ae68230d4285041f171d0" id="r_aa3ad9a29d66ae68230d4285041f171d0"><td class="memItemLeft" align="right" valign="top"><a id="aa3ad9a29d66ae68230d4285041f171d0" name="aa3ad9a29d66ae68230d4285041f171d0"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>VIPRA_GOALS_CHANGE_GOAL</b></td></tr>
+<tr class="separator:aa3ad9a29d66ae68230d4285041f171d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_attribs_classVIPRA_1_1Modules_1_1Goals"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_attribs_classVIPRA_1_1Modules_1_1Goals')"><img src="../../closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="../../d7/dd4/classVIPRA_1_1Modules_1_1Goals.html">VIPRA::Modules::Goals</a></td></tr>
 <tr class="memitem:aa244efe717e66738f35ef308d41ea295 inherit pub_attribs_classVIPRA_1_1Modules_1_1Goals" id="r_aa244efe717e66738f35ef308d41ea295"><td class="memItemLeft" align="right" valign="top">
 virtual&#160;</td><td class="memItemRight" valign="bottom"><b>VIPRA_GOALS_INIT_STEP</b> = 0</td></tr>
@@ -253,214 +225,9 @@ VIPRA_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><b>set_curr
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Goals module that uses the A* algorithm to find the path to the goal. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="aec16c33e79ebbca2f9ec02eb87fb713b" name="aec16c33e79ebbca2f9ec02eb87fb713b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aec16c33e79ebbca2f9ec02eb87fb713b">&#9670;&#160;</a></span>find_path()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void VIPRA::Goals::AStar::find_path </td>
-          <td>(</td>
-          <td class="paramtype">VIPRA::idx</td>          <td class="paramname"><span class="paramname"><em>pedIdx</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a></td>          <td class="paramname"><span class="paramname"><em>startPos</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>engine</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Sets the pedestrians path to pos. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">pedIdx</td><td></td></tr>
-    <tr><td class="paramname">pos</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ae9edec5c1bb56c83bfd0940193e4f0d4" name="ae9edec5c1bb56c83bfd0940193e4f0d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae9edec5c1bb56c83bfd0940193e4f0d4">&#9670;&#160;</a></span>get_nearest_goal()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static auto VIPRA::Goals::AStar::get_nearest_goal </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a></td>          <td class="paramname"><span class="paramname"><em>pos</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::vector&lt; <a class="el" href="../../d0/d36/classVIPRA_1_1Geometry_1_1PolygonBase.html">VIPRA::Geometry::Polygon</a> &gt; const &amp;</td>          <td class="paramname"><span class="paramname"><em>goals</em></span>&#160;) -&gt; std::vector&lt;<a class="el" href="../../d0/d36/classVIPRA_1_1Geometry_1_1PolygonBase.html">VIPRA::Geometry::Polygon</a>&gt;::const_iterator
-  </td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">nodiscard</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets the nearest goal to the pedestrian. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">pos</td><td></td></tr>
-    <tr><td class="paramname">goals</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>VIPRA::f3dVec::const_iterator </dd></dl>
-
-</div>
-</div>
-<a id="a75992062b93b145a7f8da84a0c7f7f0d" name="a75992062b93b145a7f8da84a0c7f7f0d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a75992062b93b145a7f8da84a0c7f7f0d">&#9670;&#160;</a></span>set_end_goals()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void VIPRA::Goals::AStar::set_end_goals </td>
-          <td>(</td>
-          <td class="paramtype">auto const &amp;</td>          <td class="paramname"><span class="paramname"><em>pedset</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">auto const &amp;</td>          <td class="paramname"><span class="paramname"><em>map</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>engine</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Sets the end goals for each pedestrian. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">pedset</td><td></td></tr>
-    <tr><td class="paramname">map</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ae4a2ef162f7937d492919dd03a63a9a8" name="ae4a2ef162f7937d492919dd03a63a9a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae4a2ef162f7937d492919dd03a63a9a8">&#9670;&#160;</a></span>squash_path()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static auto VIPRA::Goals::AStar::squash_path </td>
-          <td>(</td>
-          <td class="paramtype">std::vector&lt; <a class="el" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> &gt; const &amp;</td>          <td class="paramname"><span class="paramname"><em>path</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a> &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span>&#160;) -&gt; std::vector&lt;<a class="el" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a>&gt;
-  </td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">nodiscard</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Squashes the path to remove unnecessary points. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">path</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>std::vector&lt;VIPRA::f3d&gt; </dd></dl>
-
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="a4ae6c76cb3ecb49062f3abe213b07aa2" name="a4ae6c76cb3ecb49062f3abe213b07aa2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4ae6c76cb3ecb49062f3abe213b07aa2">&#9670;&#160;</a></span>VIPRA_GOALS_UPDATE_STEP</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">VIPRA::Goals::AStar::VIPRA_GOALS_UPDATE_STEP</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">{}</div>
-<div class="line"> </div>
-<div class="line">  </div>
-<div class="line">  VIPRA_GOALS_NEXT_GOAL</div>
-<div class="line">  {</div>
-<div class="line">    <span class="keywordflow">if</span> ( _paths[pedIdx].empty() ) <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"> </div>
-<div class="line">    set_current_goal(pedIdx, _paths[pedIdx].back());</div>
-<div class="line">    _paths[pedIdx].pop_back();</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line">  }</div>
-<div class="line"> </div>
-<div class="line">  </div>
-<div class="line">  </div>
-<div class="line">  VIPRA_GOALS_CHANGE_GOAL</div>
-<div class="line">  {</div>
-<div class="line">    </div>
-<div class="line">    <a class="code hl_function" href="#aec16c33e79ebbca2f9ec02eb87fb713b">find_path</a>(pedIdx, pos, engine);</div>
-<div class="line">    set_current_goal(pedIdx, _paths[pedIdx].back());</div>
-<div class="line">  }</div>
-<div class="line"> </div>
-<div class="line"> <span class="keyword">private</span>:</div>
-<div class="line">  std::string  _endGoalType</div>
-<div class="ttc" id="aclassVIPRA_1_1Goals_1_1AStar_html_aec16c33e79ebbca2f9ec02eb87fb713b"><div class="ttname"><a href="#aec16c33e79ebbca2f9ec02eb87fb713b">VIPRA::Goals::AStar::find_path</a></div><div class="ttdeci">void find_path(VIPRA::idx pedIdx, VIPRA::f3d startPos, VIPRA::Random::Engine &amp;engine)</div><div class="ttdoc">Sets the pedestrians path to pos.</div><div class="ttdef"><b>Definition</b> astar.hpp:187</div></div>
-</div><!-- fragment -->
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+</div><hr/>The documentation for this class was generated from the following files:<ul>
 <li>modules/goals/astar/<a class="el" href="../../d0/d44/modules_2goals_2astar_2astar_8hpp_source.html">astar.hpp</a></li>
+<li>modules/goals/astar/<b>astar.cpp</b></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

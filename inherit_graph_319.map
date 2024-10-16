@@ -1,7 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="5,5,166,46"/>
-<area shape="rect" id="Node000001" href="$dc/dab/classVIPRA_1_1Modules_1_1Module.html" title=" " alt="" coords="214,5,378,46"/>
-<area shape="poly" id="edge156_Node000000_Node000001" title=" " alt="" coords="181,23,213,23,213,28,181,28"/>
-<area shape="rect" id="Node000002" href="$d2/dd7/classVIPRA_1_1Simulation.html" title=" " alt="" coords="426,13,554,38"/>
-<area shape="poly" id="edge157_Node000001_Node000002" title=" " alt="" coords="394,23,425,23,425,28,394,28"/>
+<area shape="rect" id="Node000000" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="5,5,210,46"/>
+<area shape="rect" id="Node000001" href="$dc/dab/classVIPRA_1_1Modules_1_1Module.html" title=" " alt="" coords="258,5,422,46"/>
+<area shape="poly" id="edge145_Node000000_Node000001" title=" " alt="" coords="225,23,257,23,257,28,225,28"/>
+<area shape="rect" id="Node000002" href="$d6/d36/classVIPRA_1_1CoordModules_1_1OutputCoordinator.html" title=" " alt="" coords="470,5,620,46"/>
+<area shape="poly" id="edge146_Node000001_Node000002" title=" " alt="" coords="438,23,470,23,470,28,438,28"/>
 </map>

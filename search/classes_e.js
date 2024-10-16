@@ -9,14 +9,12 @@ var searchData=
   ['pathinggraph_6',['PathingGraph',['../d6/d44/classVIPRA_1_1Goals_1_1PathingGraph.html',1,'VIPRA::Goals']]],
   ['pedestrianinput_7',['PedestrianInput',['../dd/dbf/classVIPRA_1_1Modules_1_1PedestrianInput.html',1,'VIPRA::Modules']]],
   ['pedestrians_8',['Pedestrians',['../d0/d2d/classVIPRA_1_1Modules_1_1Pedestrians.html',1,'VIPRA::Modules']]],
-  ['polygonbase_9',['PolygonBase',['../d0/d36/classVIPRA_1_1Geometry_1_1PolygonBase.html',1,'VIPRA::Geometry']]],
-  ['polygonbase_3c_203_20_3e_10',['PolygonBase&lt; 3 &gt;',['../d0/d36/classVIPRA_1_1Geometry_1_1PolygonBase.html',1,'VIPRA::Geometry']]],
-  ['polygonbase_3c_204_20_3e_11',['PolygonBase&lt; 4 &gt;',['../d0/d36/classVIPRA_1_1Geometry_1_1PolygonBase.html',1,'VIPRA::Geometry']]],
-  ['potentialfield_12',['PotentialField',['../dd/de4/classVIPRA_1_1Goals_1_1PotentialField.html',1,'VIPRA::Goals']]],
-  ['precision_5fchecker_13',['precision_checker',['../d7/df8/structdetail_1_1precision__checker.html',1,'detail']]],
-  ['printf_5farg_5fformatter_14',['printf_arg_formatter',['../d6/d57/classdetail_1_1printf__arg__formatter.html',1,'detail']]],
-  ['printf_5fformatter_15',['printf_formatter',['../d3/d8f/structprintf__formatter.html',1,'']]],
-  ['printf_5fprecision_5fhandler_16',['printf_precision_handler',['../d2/d4e/structdetail_1_1printf__precision__handler.html',1,'detail']]],
-  ['printf_5fwidth_5fhandler_17',['printf_width_handler',['../d8/db8/classdetail_1_1printf__width__handler.html',1,'detail']]],
-  ['ptype_18',['Ptype',['../db/dbc/classVIPRA_1_1Behaviors_1_1Ptype.html',1,'VIPRA::Behaviors']]]
+  ['polygon_9',['Polygon',['../d3/d5e/classVIPRA_1_1Geometry_1_1Polygon.html',1,'VIPRA::Geometry']]],
+  ['potentialfield_10',['PotentialField',['../dd/de4/classVIPRA_1_1Goals_1_1PotentialField.html',1,'VIPRA::Goals']]],
+  ['precision_5fchecker_11',['precision_checker',['../d7/df8/structdetail_1_1precision__checker.html',1,'detail']]],
+  ['printf_5farg_5fformatter_12',['printf_arg_formatter',['../d6/d57/classdetail_1_1printf__arg__formatter.html',1,'detail']]],
+  ['printf_5fformatter_13',['printf_formatter',['../d3/d8f/structprintf__formatter.html',1,'']]],
+  ['printf_5fprecision_5fhandler_14',['printf_precision_handler',['../d2/d4e/structdetail_1_1printf__precision__handler.html',1,'detail']]],
+  ['printf_5fwidth_5fhandler_15',['printf_width_handler',['../d8/db8/classdetail_1_1printf__width__handler.html',1,'detail']]],
+  ['ptype_16',['Ptype',['../db/dbc/classVIPRA_1_1Behaviors_1_1Ptype.html',1,'VIPRA::Behaviors']]]
 ];

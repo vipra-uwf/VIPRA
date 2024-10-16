@@ -12,7 +12,7 @@ var searchData=
   ['nested_5fformatter_9',['nested_formatter',['../d8/d30/structnested__formatter.html',1,'']]],
   ['nested_5fformatter_3c_20string_5fview_20_3e_10',['nested_formatter&lt; string_view &gt;',['../d8/d30/structnested__formatter.html',1,'']]],
   ['nested_5fview_11',['nested_view',['../da/d0f/structnested__view.html',1,'']]],
-  ['node_12',['Node',['../d3/ddb/structVIPRA_1_1DataStructures_1_1GraphMixin_1_1Node.html',1,'VIPRA::DataStructures::GraphMixin']]],
+  ['node_12',['Node',['../d3/ddb/structVIPRA_1_1DataStructures_1_1GraphMixin_1_1Node.html',1,'VIPRA::DataStructures::GraphMixin&lt; class_t, data_t &gt;::Node'],['../d7/de6/structVIPRA_1_1Node.html',1,'VIPRA::Node']]],
   ['node_13',['node',['../d2/d42/structdetail_1_1node.html',1,'detail']]],
   ['normal_5fdistribution_14',['normal_distribution',['../da/dd5/classVIPRA_1_1Random_1_1normal__distribution.html',1,'VIPRA::Random']]],
   ['null_15',['null',['../d6/db9/structdetail_1_1null.html',1,'detail']]],

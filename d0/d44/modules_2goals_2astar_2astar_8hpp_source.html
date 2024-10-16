@@ -99,201 +99,59 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;vipra/geometry/polygon.hpp&quot;</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;vipra/logging/logging.hpp&quot;</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;vipra/macros/goals.hpp&quot;</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;vipra/macros/module.hpp&quot;</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;vipra/macros/parameters.hpp&quot;</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;vipra/modules/goals.hpp&quot;</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;vipra/random/random.hpp&quot;</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;vipra/types/size.hpp&quot;</span></div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">namespace </span>VIPRA::Goals {</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="foldopen" id="foldopen00025" data-start="{" data-end="};">
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html">   25</a></span><span class="keyword">class </span><a class="code hl_class" href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html">AStar</a> : <span class="keyword">public</span> <a class="code hl_class" href="../../dc/dab/classVIPRA_1_1Modules_1_1Module.html">VIPRA::Modules::Module</a>&lt;AStar&gt;,</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>              <span class="keyword">public</span> <a class="code hl_class" href="../../d7/dd4/classVIPRA_1_1Modules_1_1Goals.html">VIPRA::Modules::Goals</a> {</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  VIPRA_MODULE_NAME(<span class="stringliteral">&quot;AStar&quot;</span>)</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>  VIPRA_MODULE_TYPE(Goals)</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>  VIPRA_REGISTER_PARAMS(VIPRA_PARAM(<span class="stringliteral">&quot;endGoalType&quot;</span>, _endGoalType),</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>                        VIPRA_PARAM(<span class="stringliteral">&quot;goalRange&quot;</span>, _goalRange),</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>                        VIPRA_PARAM(<span class="stringliteral">&quot;gridSize&quot;</span>, _gridSize),</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>                        VIPRA_PARAM(<span class="stringliteral">&quot;closestObstacle&quot;</span>, _closestObstacle))</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>  VIPRA_GOALS_INIT_STEP</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>  {</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    VIPRA::size <span class="keyword">const</span> pedCnt = pedset.num_pedestrians();</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="comment">// Create map graph</span></div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    _graph = <a class="code hl_class" href="../../d6/d44/classVIPRA_1_1Goals_1_1PathingGraph.html">PathingGraph</a>(map, _gridSize, _closestObstacle);</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <a class="code hl_function" href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html#a75992062b93b145a7f8da84a0c7f7f0d">set_end_goals</a>(pedset, map, engine);</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;vipra/macros/goals.hpp&quot;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;vipra/macros/module.hpp&quot;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;vipra/macros/parameters.hpp&quot;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;vipra/modules/goals.hpp&quot;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;vipra/random/random.hpp&quot;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">namespace </span>VIPRA::Goals {</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="foldopen" id="foldopen00022" data-start="{" data-end="};">
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html">   22</a></span><span class="keyword">class </span><a class="code hl_class" href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html">AStar</a> : <span class="keyword">public</span> <a class="code hl_class" href="../../dc/dab/classVIPRA_1_1Modules_1_1Module.html">VIPRA::Modules::Module</a>&lt;AStar&gt;,</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>              <span class="keyword">public</span> <a class="code hl_class" href="../../d7/dd4/classVIPRA_1_1Modules_1_1Goals.html">VIPRA::Modules::Goals</a> {</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>  VIPRA_MODULE_NAME(<span class="stringliteral">&quot;AStar&quot;</span>)</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  VIPRA_MODULE_TYPE(Goals)</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  VIPRA_REGISTER_PARAMS(VIPRA_PARAM(<span class="stringliteral">&quot;endGoalType&quot;</span>, _endGoalType),</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>                        VIPRA_PARAM(<span class="stringliteral">&quot;goalRange&quot;</span>, _goalRange),</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>                        VIPRA_PARAM(<span class="stringliteral">&quot;gridSize&quot;</span>, _gridSize),</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>                        VIPRA_PARAM(<span class="stringliteral">&quot;closestObstacle&quot;</span>, _closestObstacle))</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>  VIPRA_GOALS_INIT_STEP;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  VIPRA_GOALS_UPDATE_STEP;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>  VIPRA_GOALS_NEXT_GOAL;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>  VIPRA_GOALS_CHANGE_GOAL;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  std::string  _endGoalType;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>  VIPRA::f_pnt _goalRange;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  VIPRA::f_pnt _gridSize;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  VIPRA::f_pnt _closestObstacle;</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    _paths.clear();</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    _paths.resize(pedCnt);</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>  std::vector&lt;std::vector&lt;VIPRA::f3d&gt;&gt; _paths;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  <a class="code hl_class" href="../../d6/d44/classVIPRA_1_1Goals_1_1PathingGraph.html">PathingGraph</a>                         _graph;</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="comment">// for each pedestrian, find their path to their end goal</span></div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keywordflow">for</span> ( VIPRA::idx pedIdx = 0; pedIdx &lt; pedCnt; ++pedIdx ) {</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>      <a class="code hl_function" href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html#aec16c33e79ebbca2f9ec02eb87fb713b">find_path</a>(pedIdx, pedset.ped_coords(pedIdx), engine);</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>      <a class="code hl_function" href="../../d6/d85/classVIPRA_1_1Log.html#ac4846ea952b42497cdc4feef5c25a064">VIPRA::Log::debug</a>(<span class="stringliteral">&quot;Found Path for Ped {}&quot;</span>, pedIdx);</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>      set_current_goal(pedIdx, _paths[pedIdx].back());</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    }</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  <span class="keywordtype">void</span> set_end_goals(<span class="keyword">auto</span> <span class="keyword">const</span>&amp; pedset, <span class="keyword">auto</span> <span class="keyword">const</span>&amp; map,</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                     <a class="code hl_class" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a>&amp; engine);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>  [[nodiscard]] <span class="keyword">static</span> <span class="keyword">auto</span> squash_path(std::vector&lt;VIPRA::f3d&gt; <span class="keyword">const</span>&amp; path,</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>                                        <a class="code hl_class" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a>&amp; <span class="comment">/*engine*/</span>)</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>      -&gt; std::vector&lt;f3d&gt;;</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    assert(_paths.size() == pedCnt);</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  }</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  VIPRA_GOALS_UPDATE_STEP {}</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>  <span class="comment">// NOLINTNEXTLINE(misc-unused-parameters)</span></div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>  VIPRA_GOALS_NEXT_GOAL</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  {</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keywordflow">if</span> ( _paths[pedIdx].empty() ) <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    set_current_goal(pedIdx, _paths[pedIdx].back());</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    _paths[pedIdx].pop_back();</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>  }</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>  <span class="comment">// NOLINTNEXTLINE(misc-unused-parameters)</span></div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>  VIPRA_GOALS_CHANGE_GOAL</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>  {</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <span class="comment">// uses A* to find the path to the new end goal</span></div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    <a class="code hl_function" href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html#aec16c33e79ebbca2f9ec02eb87fb713b">find_path</a>(pedIdx, pos, engine);</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    set_current_goal(pedIdx, _paths[pedIdx].back());</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>  }</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>  std::string  _endGoalType;</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>  VIPRA::f_pnt _goalRange;</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>  VIPRA::f_pnt _gridSize;</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>  VIPRA::f_pnt _closestObstacle;</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>  std::vector&lt;std::vector&lt;VIPRA::f3d&gt;&gt; _paths;</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>  <a class="code hl_class" href="../../d6/d44/classVIPRA_1_1Goals_1_1PathingGraph.html">PathingGraph</a>                         _graph;</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
-<div class="foldopen" id="foldopen00099" data-start="{" data-end="}">
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno"><a class="line" href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html#a75992062b93b145a7f8da84a0c7f7f0d">   99</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html#a75992062b93b145a7f8da84a0c7f7f0d">set_end_goals</a>(<span class="keyword">auto</span> <span class="keyword">const</span>&amp; pedset, <span class="keyword">auto</span> <span class="keyword">const</span>&amp; map,</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>                     <a class="code hl_class" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a>&amp; engine)</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>  {</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    assert(pedset.num_pedestrians() &gt; 0);</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    <span class="keyword">const</span> VIPRA::size pedCnt = pedset.num_pedestrians();</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    <span class="comment">// find the end goals, provided as a module parameter</span></div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    <span class="keyword">auto</span> <span class="keyword">const</span>&amp; objects = map.get_objectives(_endGoalType);</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    <span class="keywordflow">if</span> ( objects.empty() ) {</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>      <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;No objects of type &quot;</span> + _endGoalType +</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>                               <span class="stringliteral">&quot; found in map&quot;</span>);</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    }</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    <span class="comment">// set each pedestrians end goal as the nearest of that type</span></div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    <span class="keywordflow">for</span> ( VIPRA::idx pedIdx = 0; pedIdx &lt; pedCnt; ++pedIdx ) {</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>      <span class="keyword">auto</span> <span class="keyword">const</span> pos = pedset.ped_coords(pedIdx);</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>      <span class="keyword">auto</span> <span class="keyword">const</span> nearestGoalIter = <a class="code hl_function" href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html#ae9edec5c1bb56c83bfd0940193e4f0d4">get_nearest_goal</a>(pos, objects);</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>      <a class="code hl_function" href="../../d6/d85/classVIPRA_1_1Log.html#ac4846ea952b42497cdc4feef5c25a064">VIPRA::Log::debug</a>(<span class="stringliteral">&quot;Ped {} Nearest End Goal: ({}, {})&quot;</span>, pedIdx,</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>                        (*nearestGoalIter).center().x,</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>                        (*nearestGoalIter).center().y);</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>      <span class="keywordflow">if</span> ( nearestGoalIter != objects.end() ) {</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        <span class="keyword">const</span> <span class="keyword">auto</span> point = (*nearestGoalIter).random_point(engine);</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        <a class="code hl_function" href="../../d6/d85/classVIPRA_1_1Log.html#ac4846ea952b42497cdc4feef5c25a064">VIPRA::Log::debug</a>(<span class="stringliteral">&quot;Ped {} Final End Goal: ({}, {})&quot;</span>, pedIdx, point.x,</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>                          point.y);</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>        set_end_goal(pedIdx, point);</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>      }</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>      <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>        <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;No goal found for pedestrian&quot;</span>);</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>      }</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    }</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>  }</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  [[nodiscard]] <span class="keyword">static</span> <span class="keyword">auto</span> get_nearest_goal(</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>      <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> pos, std::vector&lt;VIPRA::Geometry::Polygon&gt; <span class="keyword">const</span>&amp; goals)</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>      -&gt; std::vector&lt;VIPRA::Geometry::Polygon&gt;::const_iterator;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>  <span class="keywordtype">void</span> find_path(VIPRA::idx pedIdx, <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> startPos,</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>                 <a class="code hl_class" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a>&amp; engine);</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>};</div>
 </div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
-<div class="foldopen" id="foldopen00140" data-start="{" data-end="}">
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno"><a class="line" href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html#ae4a2ef162f7937d492919dd03a63a9a8">  140</a></span>  [[nodiscard]] <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code hl_function" href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html#ae4a2ef162f7937d492919dd03a63a9a8">squash_path</a>(std::vector&lt;VIPRA::f3d&gt; <span class="keyword">const</span>&amp; path,</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>                                        <a class="code hl_class" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a>&amp; <span class="comment">/*engine*/</span>)</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>      -&gt; std::vector&lt;VIPRA::f3d&gt;</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>  {</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    assert(path.empty() == <span class="keyword">false</span>);</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    std::vector&lt;VIPRA::f3d&gt; squashedPath;</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span> </div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> dif;</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> </div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    <span class="keywordflow">for</span> ( VIPRA::idx i = 1; i &lt; path.size(); ++i ) {</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>      <span class="keyword">auto</span> currDif = path[i] - path[i - 1];</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>      <span class="keywordflow">if</span> ( currDif != dif ) {</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>        squashedPath.push_back(path[i - 1]);</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        dif = currDif;</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>      }</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>    }</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> </div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    <span class="keywordflow">return</span> squashedPath;</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>  }</div>
-</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> </div>
-<div class="foldopen" id="foldopen00168" data-start="{" data-end="}">
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno"><a class="line" href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html#ae9edec5c1bb56c83bfd0940193e4f0d4">  168</a></span>  [[nodiscard]] <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code hl_function" href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html#ae9edec5c1bb56c83bfd0940193e4f0d4">get_nearest_goal</a>(</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>      <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> pos, std::vector&lt;VIPRA::Geometry::Polygon&gt; <span class="keyword">const</span>&amp; goals)</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>      -&gt; std::vector&lt;VIPRA::Geometry::Polygon&gt;::const_iterator</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>  {</div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    assert(goals.empty() == <span class="keyword">false</span>);</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span> </div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>    <span class="keywordflow">return</span> std::min_element(goals.begin(), goals.end(),</div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>                            [&amp;](<span class="keyword">auto</span> <span class="keyword">const</span>&amp; left, <span class="keyword">auto</span> <span class="keyword">const</span>&amp; right) {</div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>                              return pos.distance_to(left.center()) &lt;</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>                                     pos.distance_to(right.center());</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>                            });</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>  }</div>
-</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span> </div>
-<div class="foldopen" id="foldopen00187" data-start="{" data-end="}">
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno"><a class="line" href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html#aec16c33e79ebbca2f9ec02eb87fb713b">  187</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html#aec16c33e79ebbca2f9ec02eb87fb713b">find_path</a>(VIPRA::idx pedIdx, <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> startPos,</div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>                 <a class="code hl_class" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a>&amp; engine)</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>  {</div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>    <span class="comment">// Get the pedestrian start and end grid location</span></div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    VIPRA::idx startIdx = _graph.<a class="code hl_function" href="../../d6/d44/classVIPRA_1_1Goals_1_1PathingGraph.html#aa3dfcc7b091455c50ca3d109ac7957de">get_closest_grid_idx</a>(startPos);</div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>    VIPRA::idx endIdx = _graph.<a class="code hl_function" href="../../d6/d44/classVIPRA_1_1Goals_1_1PathingGraph.html#aa3dfcc7b091455c50ca3d109ac7957de">get_closest_grid_idx</a>(end_goal(pedIdx));</div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span> </div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>    <span class="keywordflow">if</span> ( _graph.nodes().size() &lt;= startIdx ||</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>         _graph.nodes().size() &lt;= endIdx ) {</div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>      <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Start or end index is out of bounds&quot;</span>);</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    }</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span> </div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    <span class="comment">// use A* to find the path</span></div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    <span class="keyword">auto</span> <span class="keyword">const</span> path = VIPRA::Algo::astar(</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>        startIdx, endIdx, _graph,</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>        [&amp;](VIPRA::idx left, VIPRA::idx right) -&gt; VIPRA::f_pnt {</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>          <span class="comment">// distance comparison function</span></div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>          <span class="keywordflow">return</span> _graph.data(left).pos.distance_to(_graph.data(right).pos);</div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>        },</div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>        [&amp;](VIPRA::idx nodeIdx) -&gt; <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> {</div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>          <span class="keywordflow">return</span> _graph.data(nodeIdx).pos;</div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>        });</div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span> </div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>    <span class="keywordflow">if</span> ( ! path ) {</div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>      <span class="comment">// No path found</span></div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>      <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;No path found for pedestrian &quot;</span> +</div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>                               std::to_string(pedIdx));</div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>    }</div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span> </div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>    <span class="comment">// set their path, squash nodes that all go in the same direction into one node</span></div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>    _paths[pedIdx] = <a class="code hl_function" href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html#ae4a2ef162f7937d492919dd03a63a9a8">squash_path</a>(*path, engine);</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>  }</div>
-</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>};</div>
-</div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>}  <span class="comment">// namespace VIPRA::Goals</span></div>
-<div class="ttc" id="aclassVIPRA_1_1Goals_1_1AStar_html"><div class="ttname"><a href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html">VIPRA::Goals::AStar</a></div><div class="ttdoc">Goals module that uses the A* algorithm to find the path to the goal.</div><div class="ttdef"><b>Definition</b> astar.hpp:26</div></div>
-<div class="ttc" id="aclassVIPRA_1_1Goals_1_1AStar_html_a75992062b93b145a7f8da84a0c7f7f0d"><div class="ttname"><a href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html#a75992062b93b145a7f8da84a0c7f7f0d">VIPRA::Goals::AStar::set_end_goals</a></div><div class="ttdeci">void set_end_goals(auto const &amp;pedset, auto const &amp;map, VIPRA::Random::Engine &amp;engine)</div><div class="ttdoc">Sets the end goals for each pedestrian.</div><div class="ttdef"><b>Definition</b> astar.hpp:99</div></div>
-<div class="ttc" id="aclassVIPRA_1_1Goals_1_1AStar_html_ae4a2ef162f7937d492919dd03a63a9a8"><div class="ttname"><a href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html#ae4a2ef162f7937d492919dd03a63a9a8">VIPRA::Goals::AStar::squash_path</a></div><div class="ttdeci">static auto squash_path(std::vector&lt; VIPRA::f3d &gt; const &amp;path, VIPRA::Random::Engine &amp;) -&gt; std::vector&lt; VIPRA::f3d &gt;</div><div class="ttdoc">Squashes the path to remove unnecessary points.</div><div class="ttdef"><b>Definition</b> astar.hpp:140</div></div>
-<div class="ttc" id="aclassVIPRA_1_1Goals_1_1AStar_html_ae9edec5c1bb56c83bfd0940193e4f0d4"><div class="ttname"><a href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html#ae9edec5c1bb56c83bfd0940193e4f0d4">VIPRA::Goals::AStar::get_nearest_goal</a></div><div class="ttdeci">static auto get_nearest_goal(VIPRA::f3d pos, std::vector&lt; VIPRA::Geometry::Polygon &gt; const &amp;goals) -&gt; std::vector&lt; VIPRA::Geometry::Polygon &gt;::const_iterator</div><div class="ttdoc">Gets the nearest goal to the pedestrian.</div><div class="ttdef"><b>Definition</b> astar.hpp:168</div></div>
-<div class="ttc" id="aclassVIPRA_1_1Goals_1_1AStar_html_aec16c33e79ebbca2f9ec02eb87fb713b"><div class="ttname"><a href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html#aec16c33e79ebbca2f9ec02eb87fb713b">VIPRA::Goals::AStar::find_path</a></div><div class="ttdeci">void find_path(VIPRA::idx pedIdx, VIPRA::f3d startPos, VIPRA::Random::Engine &amp;engine)</div><div class="ttdoc">Sets the pedestrians path to pos.</div><div class="ttdef"><b>Definition</b> astar.hpp:187</div></div>
-<div class="ttc" id="aclassVIPRA_1_1Goals_1_1PathingGraph_html"><div class="ttname"><a href="../../d6/d44/classVIPRA_1_1Goals_1_1PathingGraph.html">VIPRA::Goals::PathingGraph</a></div><div class="ttdef"><b>Definition</b> pathing_graph.hpp:18</div></div>
-<div class="ttc" id="aclassVIPRA_1_1Goals_1_1PathingGraph_html_aa3dfcc7b091455c50ca3d109ac7957de"><div class="ttname"><a href="../../d6/d44/classVIPRA_1_1Goals_1_1PathingGraph.html#aa3dfcc7b091455c50ca3d109ac7957de">VIPRA::Goals::PathingGraph::get_closest_grid_idx</a></div><div class="ttdeci">auto get_closest_grid_idx(VIPRA::f3d pos) const -&gt; VIPRA::idx</div><div class="ttdoc">Gets the closest grid index to the coordinate.</div><div class="ttdef"><b>Definition</b> pathing_graph.hpp:33</div></div>
-<div class="ttc" id="aclassVIPRA_1_1Log_html_ac4846ea952b42497cdc4feef5c25a064"><div class="ttname"><a href="../../d6/d85/classVIPRA_1_1Log.html#ac4846ea952b42497cdc4feef5c25a064">VIPRA::Log::debug</a></div><div class="ttdeci">static VIPRA_INLINE void debug(fmt::format_string&lt; param_ts... &gt; message, param_ts &amp;&amp;... params)</div><div class="ttdoc">Calls the provided Logger with Level DEBUG.</div><div class="ttdef"><b>Definition</b> logging.hpp:69</div></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>}  <span class="comment">// namespace VIPRA::Goals</span></div>
+<div class="ttc" id="aclassVIPRA_1_1Goals_1_1AStar_html"><div class="ttname"><a href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html">VIPRA::Goals::AStar</a></div><div class="ttdoc">Goals module that uses the A* algorithm to find the path to the goal.</div><div class="ttdef"><b>Definition</b> astar.hpp:23</div></div>
+<div class="ttc" id="aclassVIPRA_1_1Goals_1_1PathingGraph_html"><div class="ttname"><a href="../../d6/d44/classVIPRA_1_1Goals_1_1PathingGraph.html">VIPRA::Goals::PathingGraph</a></div><div class="ttdef"><b>Definition</b> pathing_graph.hpp:19</div></div>
 <div class="ttc" id="aclassVIPRA_1_1Modules_1_1Goals_html"><div class="ttname"><a href="../../d7/dd4/classVIPRA_1_1Modules_1_1Goals.html">VIPRA::Modules::Goals</a></div><div class="ttdoc">Goals module mixin.</div><div class="ttdef"><b>Definition</b> goals.hpp:26</div></div>
 <div class="ttc" id="aclassVIPRA_1_1Modules_1_1Module_html"><div class="ttname"><a href="../../dc/dab/classVIPRA_1_1Modules_1_1Module.html">VIPRA::Modules::Module</a></div><div class="ttdoc">VIPRA Module Base CRTP Class.</div><div class="ttdef"><b>Definition</b> module.hpp:36</div></div>
 <div class="ttc" id="aclassVIPRA_1_1Random_1_1Engine_html"><div class="ttname"><a href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a></div><div class="ttdoc">Psuedo Random number engine.</div><div class="ttdef"><b>Definition</b> random.hpp:15</div></div>

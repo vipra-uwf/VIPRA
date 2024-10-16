@@ -24,8 +24,7 @@ var searchData=
   ['module_3c_20potentialfield_20_3e_21',['Module&lt; PotentialField &gt;',['../dc/dab/classVIPRA_1_1Modules_1_1Module.html',1,'VIPRA::Modules']]],
   ['module_3c_20quadtree_20_3e_22',['Module&lt; QuadTree &gt;',['../dc/dab/classVIPRA_1_1Modules_1_1Module.html',1,'VIPRA::Modules']]],
   ['module_3c_20simulation_20_3e_23',['Module&lt; Simulation &gt;',['../dc/dab/classVIPRA_1_1Modules_1_1Module.html',1,'VIPRA::Modules']]],
-  ['module_3c_20spatialgrid_20_3e_24',['Module&lt; SpatialGrid &gt;',['../dc/dab/classVIPRA_1_1Modules_1_1Module.html',1,'VIPRA::Modules']]],
-  ['module_3c_20trajectoriesjson_20_3e_25',['Module&lt; TrajectoriesJson &gt;',['../dc/dab/classVIPRA_1_1Modules_1_1Module.html',1,'VIPRA::Modules']]],
-  ['monostate_26',['monostate',['../da/d79/structmonostate.html',1,'']]],
-  ['month_27',['month',['../d5/d47/classmonth.html',1,'']]]
+  ['module_3c_20trajectoriesjson_20_3e_24',['Module&lt; TrajectoriesJson &gt;',['../dc/dab/classVIPRA_1_1Modules_1_1Module.html',1,'VIPRA::Modules']]],
+  ['monostate_25',['monostate',['../da/d79/structmonostate.html',1,'']]],
+  ['month_26',['month',['../d5/d47/classmonth.html',1,'']]]
 ];

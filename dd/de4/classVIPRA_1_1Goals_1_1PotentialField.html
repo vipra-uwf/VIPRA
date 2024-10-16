@@ -126,12 +126,15 @@ Collaboration diagram for VIPRA::Goals::PotentialField:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a17e74b728f0e2c7b764e6a743aa5fd8c" id="r_a17e74b728f0e2c7b764e6a743aa5fd8c"><td class="memItemLeft" align="right" valign="top"><a id="a17e74b728f0e2c7b764e6a743aa5fd8c" name="a17e74b728f0e2c7b764e6a743aa5fd8c"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>VIPRA_REGISTER_PARAMS</b> (VIPRA_PARAM(&quot;endGoalType&quot;, _endGoalType), VIPRA_PARAM(&quot;cellSize&quot;, _cellSize)) VIPRA_GOALS_INIT_STEP</td></tr>
-<tr class="separator:a17e74b728f0e2c7b764e6a743aa5fd8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a871be46b21021a5a69ec193115a5f6c0" id="r_a871be46b21021a5a69ec193115a5f6c0"><td class="memItemLeft" align="right" valign="top"><a id="a871be46b21021a5a69ec193115a5f6c0" name="a871be46b21021a5a69ec193115a5f6c0"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>fill_grid</b> (auto const &amp;map)</td></tr>
-<tr class="separator:a871be46b21021a5a69ec193115a5f6c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a131eae9638cf400a4aea4db9b4f114d2" id="r_a131eae9638cf400a4aea4db9b4f114d2"><td class="memItemLeft" align="right" valign="top"><a id="a131eae9638cf400a4aea4db9b4f114d2" name="a131eae9638cf400a4aea4db9b4f114d2"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>VIPRA_REGISTER_PARAMS</b> (VIPRA_PARAM(&quot;endGoalType&quot;, _endGoalType), VIPRA_PARAM(&quot;cellSize&quot;, _cellSize), VIPRA_PARAM(&quot;densityUpdateFrequency&quot;, _densityUpdateFrequency), VIPRA_PARAM(&quot;densityCellSize&quot;, _densityCellSize), VIPRA_PARAM(&quot;densityWeight&quot;, _densityWeight)) VIPRA_GOALS_INIT_STEP</td></tr>
+<tr class="separator:a131eae9638cf400a4aea4db9b4f114d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e959bf66803861b3647c117b9afd9c2" id="r_a4e959bf66803861b3647c117b9afd9c2"><td class="memItemLeft" align="right" valign="top"><a id="a4e959bf66803861b3647c117b9afd9c2" name="a4e959bf66803861b3647c117b9afd9c2"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>if</b> (_densityCheckCounter &gt;=_densityUpdateFrequency)</td></tr>
+<tr class="separator:a4e959bf66803861b3647c117b9afd9c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa89808aba2cdab8c1bea2df61753f2a2" id="r_aa89808aba2cdab8c1bea2df61753f2a2"><td class="memItemLeft" align="right" valign="top"><a id="aa89808aba2cdab8c1bea2df61753f2a2" name="aa89808aba2cdab8c1bea2df61753f2a2"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>for</b> (VIPRA::idx pedIdx=0;pedIdx&lt; pedset.num_pedestrians();++pedIdx)</td></tr>
+<tr class="separator:aa89808aba2cdab8c1bea2df61753f2a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classVIPRA_1_1Modules_1_1Module"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classVIPRA_1_1Modules_1_1Module')"><img src="../../closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="../../dc/dab/classVIPRA_1_1Modules_1_1Module.html">VIPRA::Modules::Module&lt; PotentialField &gt;</a></td></tr>
 <tr class="memitem:aa28bac85c148150730692baec841f12b inherit pub_methods_classVIPRA_1_1Modules_1_1Module" id="r_aa28bac85c148150730692baec841f12b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/dab/classVIPRA_1_1Modules_1_1Module.html#aa28bac85c148150730692baec841f12b">register_params</a> (<a class="el" href="../../dd/d44/classVIPRA_1_1Parameters.html">Parameters</a> &amp;paramIn)</td></tr>
 <tr class="memdesc:aa28bac85c148150730692baec841f12b inherit pub_methods_classVIPRA_1_1Modules_1_1Module"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers the modules parameters with the parameter reader.  <br /></td></tr>
@@ -143,9 +146,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>fill_grid</b> (auto c
 <tr class="memitem:a4bcba4f42dd9abbc24d57cda45c00014 inherit pub_methods_classVIPRA_1_1Modules_1_1Goals" id="r_a4bcba4f42dd9abbc24d57cda45c00014"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>initialize</b> (<a class="el" href="../../d0/d2d/classVIPRA_1_1Modules_1_1Pedestrians.html">VIPRA::Modules::Pedestrians</a> const &amp;pedset, <a class="el" href="../../d5/df3/classVIPRA_1_1Modules_1_1Map.html">VIPRA::Modules::Map</a> const &amp;map, <a class="el" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a> &amp;engine)</td></tr>
 <tr class="separator:a4bcba4f42dd9abbc24d57cda45c00014 inherit pub_methods_classVIPRA_1_1Modules_1_1Goals"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad1a7af302558f1198cdcc9e1801075e inherit pub_methods_classVIPRA_1_1Modules_1_1Goals" id="r_aad1a7af302558f1198cdcc9e1801075e"><td class="memItemLeft" align="right" valign="top">
-VIPRA_PERF_FUNC void&#160;</td><td class="memItemRight" valign="bottom"><b>update</b> (<a class="el" href="../../d0/d2d/classVIPRA_1_1Modules_1_1Pedestrians.html">Modules::Pedestrians</a> const &amp;pedset, <a class="el" href="../../d5/df3/classVIPRA_1_1Modules_1_1Map.html">Modules::Map</a> const &amp;map, VIPRA::delta_t deltaT)</td></tr>
-<tr class="separator:aad1a7af302558f1198cdcc9e1801075e inherit pub_methods_classVIPRA_1_1Modules_1_1Goals"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a295d67e4261dca9def7cd345c44aebfa inherit pub_methods_classVIPRA_1_1Modules_1_1Goals" id="r_a295d67e4261dca9def7cd345c44aebfa"><td class="memItemLeft" align="right" valign="top">
+void&#160;</td><td class="memItemRight" valign="bottom"><b>update</b> (<a class="el" href="../../d0/d2d/classVIPRA_1_1Modules_1_1Pedestrians.html">Modules::Pedestrians</a> const &amp;pedset, <a class="el" href="../../d5/df3/classVIPRA_1_1Modules_1_1Map.html">Modules::Map</a> const &amp;map, VIPRA::delta_t deltaT)</td></tr>
+<tr class="separator:a295d67e4261dca9def7cd345c44aebfa inherit pub_methods_classVIPRA_1_1Modules_1_1Goals"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a187ea8d3af6cb0c90f6abcd4f0c70568 inherit pub_methods_classVIPRA_1_1Modules_1_1Goals" id="r_a187ea8d3af6cb0c90f6abcd4f0c70568"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><b>change_end_goal</b> (VIPRA::idx pedIdx, <a class="el" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> currPos, <a class="el" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> goalPos, <a class="el" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a> &amp;engine)</td></tr>
 <tr class="separator:a187ea8d3af6cb0c90f6abcd4f0c70568 inherit pub_methods_classVIPRA_1_1Modules_1_1Goals"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -187,12 +190,11 @@ auto&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a cla
 Public Attributes</h2></td></tr>
 <tr class="memitem:a682ae4d779aae154e8c480b8a98a6cb4" id="r_a682ae4d779aae154e8c480b8a98a6cb4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a682ae4d779aae154e8c480b8a98a6cb4">VIPRA_GOALS_UPDATE_STEP</a></td></tr>
 <tr class="separator:a682ae4d779aae154e8c480b8a98a6cb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb520d5337323f896d088304135efd2e" id="r_afb520d5337323f896d088304135efd2e"><td class="memItemLeft" align="right" valign="top"><a id="afb520d5337323f896d088304135efd2e" name="afb520d5337323f896d088304135efd2e"></a>
-VIPRA::f_pnt&#160;</td><td class="memItemRight" valign="bottom"><b>_cellSize</b> {}</td></tr>
-<tr class="separator:afb520d5337323f896d088304135efd2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aebe5dae00bee838ecbf57380762fa93c" id="r_aebe5dae00bee838ecbf57380762fa93c"><td class="memItemLeft" align="right" valign="top"><a id="aebe5dae00bee838ecbf57380762fa93c" name="aebe5dae00bee838ecbf57380762fa93c"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>_endGoalType</b></td></tr>
-<tr class="separator:aebe5dae00bee838ecbf57380762fa93c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a943c7b91a3be737df53a23224c791813" id="r_a943c7b91a3be737df53a23224c791813"><td class="memItemLeft" align="right" valign="top"><a id="a943c7b91a3be737df53a23224c791813" name="a943c7b91a3be737df53a23224c791813"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>VIPRA_GOALS_NEXT_GOAL</b> { return false</td></tr>
+<tr class="separator:a943c7b91a3be737df53a23224c791813"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a2bdf6ef101a1f7312f6be5e448c960" id="r_a6a2bdf6ef101a1f7312f6be5e448c960"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6a2bdf6ef101a1f7312f6be5e448c960">VIPRA_GOALS_CHANGE_GOAL</a></td></tr>
+<tr class="separator:a6a2bdf6ef101a1f7312f6be5e448c960"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_attribs_classVIPRA_1_1Modules_1_1Goals"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_attribs_classVIPRA_1_1Modules_1_1Goals')"><img src="../../closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="../../d7/dd4/classVIPRA_1_1Modules_1_1Goals.html">VIPRA::Modules::Goals</a></td></tr>
 <tr class="memitem:aa244efe717e66738f35ef308d41ea295 inherit pub_attribs_classVIPRA_1_1Modules_1_1Goals" id="r_aa244efe717e66738f35ef308d41ea295"><td class="memItemLeft" align="right" valign="top">
 virtual&#160;</td><td class="memItemRight" valign="bottom"><b>VIPRA_GOALS_INIT_STEP</b> = 0</td></tr>
@@ -221,6 +223,22 @@ VIPRA_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><b>set_curr
 <tr class="separator:acf493797b85d8ffa51094ec7ee932f88 inherit pro_methods_classVIPRA_1_1Modules_1_1Goals"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="a6a2bdf6ef101a1f7312f6be5e448c960" name="a6a2bdf6ef101a1f7312f6be5e448c960"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a2bdf6ef101a1f7312f6be5e448c960">&#9670;&#160;</a></span>VIPRA_GOALS_CHANGE_GOAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">VIPRA::Goals::PotentialField::VIPRA_GOALS_CHANGE_GOAL</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">{</div>
+<div class="line">    <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Potential Field Goals is unable to change goals&quot;</span>)</div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="a682ae4d779aae154e8c480b8a98a6cb4" name="a682ae4d779aae154e8c480b8a98a6cb4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a682ae4d779aae154e8c480b8a98a6cb4">&#9670;&#160;</a></span>VIPRA_GOALS_UPDATE_STEP</h2>
 
@@ -233,27 +251,7 @@ VIPRA_INLINE void&#160;</td><td class="memItemRight" valign="bottom"><b>set_curr
       </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">{</div>
-<div class="line">    <span class="keywordflow">for</span> ( VIPRA::idx pedIdx = 0; pedIdx &lt; pedset.num_pedestrians(); ++pedIdx ) {</div>
-<div class="line">      <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> pos = pedset.ped_coords(pedIdx);</div>
-<div class="line">      <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> direction = _field.get_grid(pos).direction;</div>
-<div class="line"> </div>
-<div class="line">      set_current_goal(pedIdx, pos + direction);</div>
-<div class="line">    }</div>
-<div class="line">  }</div>
-<div class="line"> </div>
-<div class="line">  </div>
-<div class="line">  VIPRA_GOALS_NEXT_GOAL { <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
-<div class="line"> </div>
-<div class="line">  </div>
-<div class="line">  VIPRA_GOALS_CHANGE_GOAL</div>
-<div class="line">  {</div>
-<div class="line">    <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Potential Field Goals is unable to change goals&quot;</span>);</div>
-<div class="line">  }</div>
-<div class="line"> </div>
-<div class="line"> <span class="keyword">private</span>:</div>
-<div class="line">  </div>
-<div class="line">  Grid _field</div>
-<div class="ttc" id="astructVIPRA_1_1f3d_html"><div class="ttname"><a href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a></div><div class="ttdef"><b>Definition</b> f3d.hpp:24</div></div>
+<div class="line">    _densityCheckCounter++</div>
 </div><!-- fragment -->
 </div>
 </div>

@@ -45,12 +45,11 @@ var searchData=
   ['crtp_3c_20module_3c_20potentialfield_20_3e_20_3e_42',['CRTP&lt; Module&lt; PotentialField &gt; &gt;',['../da/d35/classVIPRA_1_1Util_1_1CRTP.html',1,'VIPRA::Util']]],
   ['crtp_3c_20module_3c_20quadtree_20_3e_20_3e_43',['CRTP&lt; Module&lt; QuadTree &gt; &gt;',['../da/d35/classVIPRA_1_1Util_1_1CRTP.html',1,'VIPRA::Util']]],
   ['crtp_3c_20module_3c_20simulation_20_3e_20_3e_44',['CRTP&lt; Module&lt; Simulation &gt; &gt;',['../da/d35/classVIPRA_1_1Util_1_1CRTP.html',1,'VIPRA::Util']]],
-  ['crtp_3c_20module_3c_20spatialgrid_20_3e_20_3e_45',['CRTP&lt; Module&lt; SpatialGrid &gt; &gt;',['../da/d35/classVIPRA_1_1Util_1_1CRTP.html',1,'VIPRA::Util']]],
-  ['crtp_3c_20module_3c_20trajectoriesjson_20_3e_20_3e_46',['CRTP&lt; Module&lt; TrajectoriesJson &gt; &gt;',['../da/d35/classVIPRA_1_1Util_1_1CRTP.html',1,'VIPRA::Util']]],
-  ['crtp_3c_20paramreader_3c_20json_20_3e_20_3e_47',['CRTP&lt; ParamReader&lt; JSON &gt; &gt;',['../da/d35/classVIPRA_1_1Util_1_1CRTP.html',1,'VIPRA::Util']]],
-  ['crtp_3c_20paramreader_3c_20module_5ft_20_3e_20_3e_48',['CRTP&lt; ParamReader&lt; module_t &gt; &gt;',['../da/d35/classVIPRA_1_1Util_1_1CRTP.html',1,'VIPRA::Util']]],
-  ['custom_5fvalue_49',['custom_value',['../d0/d91/structdetail_1_1custom__value.html',1,'detail']]],
-  ['custom_5fvalue_3c_20basic_5fprintf_5fcontext_20_3e_50',['custom_value&lt; basic_printf_context &gt;',['../d0/d91/structdetail_1_1custom__value.html',1,'detail']]],
-  ['custom_5fvalue_3c_20context_20_3e_51',['custom_value&lt; context &gt;',['../d0/d91/structdetail_1_1custom__value.html',1,'detail']]],
-  ['custom_5fvalue_3c_20generic_5fcontext_20_3e_52',['custom_value&lt; generic_context &gt;',['../d0/d91/structdetail_1_1custom__value.html',1,'detail']]]
+  ['crtp_3c_20module_3c_20trajectoriesjson_20_3e_20_3e_45',['CRTP&lt; Module&lt; TrajectoriesJson &gt; &gt;',['../da/d35/classVIPRA_1_1Util_1_1CRTP.html',1,'VIPRA::Util']]],
+  ['crtp_3c_20paramreader_3c_20json_20_3e_20_3e_46',['CRTP&lt; ParamReader&lt; JSON &gt; &gt;',['../da/d35/classVIPRA_1_1Util_1_1CRTP.html',1,'VIPRA::Util']]],
+  ['crtp_3c_20paramreader_3c_20module_5ft_20_3e_20_3e_47',['CRTP&lt; ParamReader&lt; module_t &gt; &gt;',['../da/d35/classVIPRA_1_1Util_1_1CRTP.html',1,'VIPRA::Util']]],
+  ['custom_5fvalue_48',['custom_value',['../d0/d91/structdetail_1_1custom__value.html',1,'detail']]],
+  ['custom_5fvalue_3c_20basic_5fprintf_5fcontext_20_3e_49',['custom_value&lt; basic_printf_context &gt;',['../d0/d91/structdetail_1_1custom__value.html',1,'detail']]],
+  ['custom_5fvalue_3c_20context_20_3e_50',['custom_value&lt; context &gt;',['../d0/d91/structdetail_1_1custom__value.html',1,'detail']]],
+  ['custom_5fvalue_3c_20generic_5fcontext_20_3e_51',['custom_value&lt; generic_context &gt;',['../d0/d91/structdetail_1_1custom__value.html',1,'detail']]]
 ];
