@@ -1,7 +1,11 @@
 
 #pragma once
 
+#include <algorithm>
+#include <cctype>
 #include <iostream>
+#include <string>
+#include <unordered_map>
 
 #define FMT_HEADER_ONLY
 #include <fmt/format.h>
@@ -21,6 +25,20 @@ class Log {
   };
 
   static void set_level(Level lvl) { level = lvl; }
+  static void set_level(std::string lvl)
+  {
+    static const std::unordered_map<std::string, Level> LEVELS = {
+        {"debug", Level::DEBUG},
+        {"info", Level::INFO},
+        {"warn", Level::WARN},
+        {"error", Level::ERROR},
+    };
+
+    std::transform(lvl.begin(), lvl.end(), lvl.begin(),
+                   [](char letter) { return tolower(letter); });
+
+    level = LEVELS.at(lvl);
+  }
 
   /**
  * @brief Calls the provided Logger with Level WARN

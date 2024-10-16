@@ -8,9 +8,6 @@
 
 auto main(int argc, char** argv) -> int
 {
-  // Set the logging level to info, default is ERROR
-  VIPRA::Log::set_level(VIPRA::Log::Level::INFO);
-
   // Initialize MPI engine
   VIPRA::ParameterSweep::initialize(argc, argv);
 
@@ -21,7 +18,11 @@ auto main(int argc, char** argv) -> int
   VIPRA::Args::register_arg("params", "module_params.json", VIPRA::ArgType::REQUIRED | VIPRA::ArgType::VALUE_REQUIRED);
   VIPRA::Args::register_arg("modules", "sim_config.json", VIPRA::ArgType::REQUIRED | VIPRA::ArgType::VALUE_REQUIRED);
   VIPRA::Args::register_arg("install", "install", VIPRA::ArgType::REQUIRED | VIPRA::ArgType::VALUE_REQUIRED);
+  VIPRA::Args::register_arg("log", "info", VIPRA::ArgType::REQUIRED | VIPRA::ArgType::VALUE_REQUIRED);
   VIPRA::Args::parse(argc, argv);
+
+  // Set the logging level to info, default is INFO
+  VIPRA::Log::set_level(VIPRA::Args::get("log"));
 
   // Create the simulation and load the modules
   VIPRA::Simulation sim;
