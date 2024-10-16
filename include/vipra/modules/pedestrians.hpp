@@ -190,13 +190,11 @@ class Pedestrians : public BaseModule<Pedestrians> {
       // TODO(rolland, issue #50): effectively infinite loop if the spawn is covered by an obstacle
       VIPRA::idx spawnIdx = polyDist(engine);
 
-      // if area 0
-
       do {
         _coords[i] = spawnAreas[spawnIdx].random_point(engine);
         VIPRA::Log::debug("Random Point: ({}, {}) Collides: {}", _coords[i].x,
                           _coords[i].y, map.collision(_coords[i]));
-      } while ( ! map.collision(Geometry::Circle{_coords[i], 0.4}) );
+      } while ( map.collision(Geometry::Circle{_coords[i], 0.3}) );
     }
 
     VIPRA::Log::debug("{} pedestrians added randomly to {} spawn areas",

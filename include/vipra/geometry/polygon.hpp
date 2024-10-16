@@ -167,7 +167,7 @@ VIPRA_POLY_FUNC auto Polygon::sides() const noexcept -> std::vector<Line>
   for ( size_t i = 0; i < _points.size() - 1; ++i ) {
     lines[i] = Line{_points[i], _points[i + 1]};
   }
-  lines.back() = Line{_points[_points.size() - 2], _points[_points.size() - 2]};
+  lines.back() = Line{_points.back(), _points.front()};
 
   return lines;
 }
