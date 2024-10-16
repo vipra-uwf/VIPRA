@@ -64,20 +64,22 @@ auto DXF::get_areas() const
    */
 void DXF::load(std::string const& filepath)
 {
-  VIPRA::Log::debug("Loading {}", filepath);
+  VIPRA::Log::debug("DXF Loading {}", filepath);
   // Check Exists
   if ( ! std::filesystem::exists(filepath) )
-    throw std::runtime_error("File does not exist at: " + filepath);
+    VIPRA_MODULE_ERROR("File does not exist at: {}", filepath);
 
   // Check if valid file
   if ( ! std::filesystem::is_regular_file(filepath) )
-    throw std::runtime_error("File is not a regular file at: " + filepath);
+    VIPRA_MODULE_ERROR("{} is not a file", filepath)
 
-  const char* fileCharArr = filepath.c_str();
+  dxfRW dxfReader = dxfRW(filepath.c_str());
 
-  dxfRW dxfReader = dxfRW(fileCharArr);
-  VIPRA::Log::debug("Reading {}", filepath);
-  dxfReader.read(&_drwReader, true);
+  VIPRA::Log::debug("DXF Reading {}", filepath);
+
+  if ( ! dxfReader.read(&_drwReader, true) ) {
+    VIPRA_MODULE_ERROR("Unable to parse DXF file at: {}", filepath);
+  }
 
   // Get the items stored in reader and add to private variables.
   _objectives = _drwReader.get_objectives();

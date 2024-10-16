@@ -9,6 +9,7 @@
 
 #include "vipra/geometry/polygon.hpp"
 #include "vipra/logging/logging.hpp"
+#include "vipra/macros/module.hpp"
 #include "vipra/modules/map_input.hpp"
 #include "vipra/types/float.hpp"
 
@@ -103,7 +104,8 @@ class Map {
   {
     auto iter = _objectives.find(type);
     if ( iter == _objectives.end() ) {
-      throw std::runtime_error("Map does NOT have objectives of type " + type);
+      VIPRA_BASE_MODULE_ERROR("Map", "Map does NOT have objectives of type: {}",
+                              type);
     }
 
     return iter->second;
@@ -140,20 +142,22 @@ class Map {
 
     auto obstacles = input.get_obstacles();
     if ( ! obstacles )
-      throw std::runtime_error("Input Module failed to load map obstacles");
+      VIPRA_BASE_MODULE_ERROR("Map",
+                              "Input Module failed to load map obstacles");
 
     auto objectives = input.get_objectives();
     if ( ! objectives )
-      throw std::runtime_error("Input Module failed to load map objectives");
+      VIPRA_BASE_MODULE_ERROR("Map",
+                              "Input Module failed to load map objectives");
 
     auto spawns = input.get_spawns();
     if ( ! spawns )
-      throw std::runtime_error(
-          "Input Module failed to load map pedestrians spawn areas");
+      VIPRA_BASE_MODULE_ERROR(
+          "Map", "Input Module failed to load map pedestrians spawn areas");
 
     auto areas = input.get_areas();
     if ( ! areas )
-      throw std::runtime_error("Input Module failed to load map areas");
+      VIPRA_BASE_MODULE_ERROR("Map", "Input Module failed to load map areas");
 
     _obstacles = std::move(obstacles.value());
     _objectives = std::move(objectives.value());

@@ -3,13 +3,13 @@
 #include <functional>
 #include <vector>
 
-#include "vipra/geometry/rectangle.hpp"
+#include "vipra/geometry/circle.hpp"
 #include "vipra/logging/logging.hpp"
 
+#include "vipra/macros/errors.hpp"
 #include "vipra/macros/module.hpp"
 #include "vipra/modules/map.hpp"
 
-#include "vipra/geometry/circle.hpp"
 #include "vipra/geometry/f3d.hpp"
 
 #include "vipra/modules/module.hpp"
@@ -58,7 +58,8 @@ class Pedestrians : public BaseModule<Pedestrians> {
   {
     VIPRA::Log::debug("Initializing Pedestrians");
     if ( ! (_randomSpawn || _useFile) )
-      throw std::runtime_error(
+      VIPRA_BASE_MODULE_ERROR(
+          "Pedestrians",
           "Random spawning AND Using the pedestrian file input is turned off "
           "in parameters (Cannot Add any "
           "Pedestrians, "
@@ -70,9 +71,9 @@ class Pedestrians : public BaseModule<Pedestrians> {
       init_random_peds(map, engine);
     }
 
-    for ( size_t i = 0; i < _coords.size(); ++i ) {
-      VIPRA::Log::debug("Ped {} At: {}, {}", i, _coords[i].x, _coords[i].y);
-    }
+    if ( _coords.size() == 0 )
+      VIPRA_BASE_MODULE_ERROR("Pedestrians",
+                              "No Pedestrians added to simulation");
 
     assert(_coords.size() > 0);
     assert(_coords.size() == _velocities.size());
@@ -195,7 +196,7 @@ class Pedestrians : public BaseModule<Pedestrians> {
         _coords[i] = spawnAreas[spawnIdx].random_point(engine);
         VIPRA::Log::debug("Random Point: ({}, {}) Collides: {}", _coords[i].x,
                           _coords[i].y, map.collision(_coords[i]));
-      } while ( map.collision(Geometry::Circle{_coords[i], 0.4}) );
+      } while ( ! map.collision(Geometry::Circle{_coords[i], 0.4}) );
     }
 
     VIPRA::Log::debug("{} pedestrians added randomly to {} spawn areas",
@@ -208,10 +209,16 @@ class Pedestrians : public BaseModule<Pedestrians> {
 
     auto coords = input.get_pedestrians();
     if ( ! (coords || _randomSpawn) )
-      throw std::runtime_error(
+      VIPRA_BASE_MODULE_ERROR(
+          "Pedestrians",
           "Could not find pedestrian coordinates in input file and random "
           "spawning is turned off (No "
           "Pedestrians Added)");
+
+    if ( ! coords )
+      VIPRA::Log::warn(
+          "Pedestrians were set to be loaded from a file, but no coordinates "
+          "could be loaded");
 
     VIPRA::Log::debug("{} pedestrians added at {} specific spots",
                       (*coords).size(), (*coords).size());

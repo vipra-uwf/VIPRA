@@ -8,6 +8,7 @@ namespace VIPRA::Input {
 
 auto JSON::get_pedestrians() const -> std::optional<VIPRA::f3dVec>
 {
+  if ( ! _json.contains("pedestrians") ) return std::nullopt;
   return get_f3d_vec(_json["pedestrians"]);
 }
 
@@ -41,12 +42,14 @@ auto JSON::get_polygons(json_cref const& value)
 auto JSON::get_obstacles() const
     -> std::optional<std::vector<VIPRA::Geometry::Polygon>>
 {
+  if ( ! _json.contains("obstacles") ) return std::nullopt;
   return get_polygons(_json["obstacles"]);
 }
 
 auto JSON::get_spawns() const
     -> std::optional<std::vector<VIPRA::Geometry::Polygon>>
 {
+  if ( ! _json.contains("spawns") ) return std::nullopt;
   return get_polygons(_json["spawns"]);
 }
 

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "vipra/input/json.hpp"
 #include "vipra/modules/serializable.hpp"
 #include "vipra/simulation/sim_type.hpp"
 #include "vipra/special_modules/parameters.hpp"
@@ -54,8 +53,10 @@ class ParameterSweep {
     Parameters params;
 
     load_inputs(params.get_input(), paramsPath);
-    load_inputs(sim.get_ped_input(), pedPath);
+    disseminate_input(params.get_input());
+
     load_inputs(sim.get_map_input(), mapPath);
+    if ( ! pedPath.empty() ) load_inputs(sim.get_ped_input(), pedPath);
 
     size_t localCount = sim_count(rank, size, count);
 
@@ -140,8 +141,7 @@ class ParameterSweep {
     }
   }
 
-  template <typename input_t>
-  static void diseminate_input(Modules::Serializable& input)
+  static void disseminate_input(Modules::Serializable& input)
   {
     std::string serialized{};
     int         length{};

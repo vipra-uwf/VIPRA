@@ -1,6 +1,8 @@
 #pragma once
 
 // NOLINTBEGIN(unused-includes)
+#include "vipra/logging/logging.hpp"
+#include "vipra/macros/errors.hpp"
 #include "vipra/modules.hpp"
 #include "vipra/modules/module.hpp"
 #include "vipra/special_modules/parameters.hpp"
@@ -16,7 +18,6 @@
   constexpr auto module_name() const -> const char* { return name; }
 
 #define NEW_VIPRA_MODULE(Name, Type) \
-  namespace Type {                   \
   class Name : public VIPRA::Modules::Module<Name>, public VIPRA::Modules::Type
 
 #define VIPRA_REGISTER_MODULE(Name, Type)                             \

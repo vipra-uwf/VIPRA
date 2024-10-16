@@ -1,5 +1,6 @@
 #pragma once
 
+#include <filesystem>
 #include <functional>
 #include <memory>
 #include <stdexcept>
@@ -34,6 +35,11 @@ inline auto load_module(std::string const& name, std::string const& installDir,
   else
     path = installDir + '/' + Modules::to_string(type) + "/lib" + name + ".so";
 
+  if ( ! std::filesystem::exists(path) ) {
+    VIPRA::Log::error("No Module {} at {}", name, path);
+    throw std::runtime_error("Module Not Found");
+  }
+
   VIPRA::Log::debug("Loading Module: {} at {}", name, path);
 
   void* module = dlopen(path.c_str(), RTLD_LAZY);
@@ -53,13 +59,13 @@ inline auto load_module(std::string const& name, std::string const& installDir,
   if ( func == nullptr ) {
     std::cerr << "create_module not found in: " << path << '\n';
     VIPRA::Log::error("dlopen failed: {}\n", dlerror());
-    throw std::runtime_error("Module Not Found");
+    throw std::runtime_error("Module Missing VIPRA_REGISTER_MODULE");
   }
 
   if ( configFunc == nullptr ) {
     std::cerr << "setup_module not found in: " << path << '\n';
     VIPRA::Log::error("dlopen failed: {}\n", dlerror());
-    throw std::runtime_error("Module Not Found");
+    throw std::runtime_error("Module Missing VIPRA_REGISTER_MODULE");
   }
 
   VIPRA::Log::debug("Creating Module");
@@ -68,7 +74,7 @@ inline auto load_module(std::string const& name, std::string const& installDir,
 
   if ( mod.get() == nullptr ) {
     std::cerr << "Module not created\n";
-    throw std::runtime_error("Module Not Found");
+    throw std::runtime_error("Unable to reate Module");
   }
 
   VIPRA::Log::debug("Returning Module");

@@ -16,10 +16,11 @@
 #include "vipra/modules/map_input.hpp"
 #include "vipra/modules/param_reader.hpp"
 #include "vipra/modules/pedestrian_input.hpp"
+#include "vipra/modules/serializable.hpp"
 
 #include "vipra/geometry/polygon.hpp"
 
-#include "vipra/modules/serializable.hpp"
+#include "vipra/macros/errors.hpp"
 #include "vipra/util/is_map.hpp"
 #include "vipra/util/template_specialization.hpp"
 
@@ -36,6 +37,8 @@ class JSON : public VIPRA::Modules::ParamReader<JSON>,
   using json_cref = std::reference_wrapper<const nlohmann::json>;
 
  public:
+  static constexpr auto module_name() -> const char* { return "JSON"; }
+
   void load(std::string const& filepath) override;
 
   template <typename data_t>
@@ -114,7 +117,7 @@ class JSON : public VIPRA::Modules::ParamReader<JSON>,
       _json = nlohmann::json::parse(data);
     }
     catch ( nlohmann::json::parse_error const& e ) {
-      throw std::runtime_error("Could not parse JSON data\n");
+      VIPRA_MODULE_ERROR("Could not parse JSON data\n");
     }
   }
 };
@@ -215,21 +218,22 @@ template <typename data_t>
 inline void VIPRA::Input::JSON::load(std::string const& filepath)
 {
   if ( ! std::filesystem::exists(filepath) )
-    throw std::runtime_error("File does not exist at: " + filepath);
+    VIPRA_MODULE_ERROR("File does not exist at: {}", filepath);
 
   if ( ! std::filesystem::is_regular_file(filepath) )
-    throw std::runtime_error("File is not a regular file at: " + filepath);
+    VIPRA_MODULE_ERROR("{} is not a file", filepath);
 
   std::ifstream file(filepath, std::ios::in);
   if ( ! file.is_open() )
-    throw std::runtime_error("Could not open file at: " + filepath);
+    VIPRA_MODULE_ERROR("Could not open file at: ", filepath);
 
   try {
     _json = nlohmann::json::parse(file);
   }
   catch ( nlohmann::json::parse_error const& e ) {
-    throw std::runtime_error("Could not parse JSON file at: " + filepath +
-                             "\n" + e.what());
+    VIPRA_MODULE_ERROR(
+        "Could not parse JSON file at: {}\nnlohmann json error: {}", filepath,
+        e.what());
   }
 
   file.close();
