@@ -1,9 +1,9 @@
 {
   "model": "Calm",
-  "goals": "PotentialField",
+  "goals": "AStar",
   "map": "QuadTree",
   "pedestrians": "SpatialGrid",
   "output": "Trajectories",
-  "map_input": "DXF",
+  "map_input": "JSON",
   "ped_input": "JSON"
 }

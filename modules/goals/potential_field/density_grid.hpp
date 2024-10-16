@@ -23,7 +23,7 @@ class DensityGrid {
     VIPRA::f3d   direction;
     VIPRA::f3d   end{VIPRA::_emptyf3d_};
     VIPRA::f_pnt distance{std::numeric_limits<VIPRA::f_pnt>::max()};
-    int pedCount{0};
+    int          pedCount{0};
   };
 
   void intialize(auto const& map, VIPRA::f_pnt gridSize)
@@ -32,10 +32,10 @@ class DensityGrid {
     construct_grid(map);
   }
 
-  void clearGrid() 
+  void clear_grid()
   {
-    for (GridPoint &gp : _grid) {
-      gp.pedCount = 0;
+    for ( GridPoint& gridPoint : _grid ) {
+      gridPoint.pedCount = 0;
     }
   }
 
@@ -51,7 +51,8 @@ class DensityGrid {
   [[nodiscard]] auto get_x_count() const -> size_t { return _xCount; }
   [[nodiscard]] auto get_y_count() const -> size_t { return _xCount; }
 
-  [[nodiscard]] auto get_ped_count_at_idx(VIPRA::idx idx) const -> int {
+  [[nodiscard]] auto get_ped_count_at_idx(VIPRA::idx idx) const -> int
+  {
     return _grid[idx].pedCount;
   }
 
@@ -72,8 +73,9 @@ class DensityGrid {
    */
   void incr_gridpoint(VIPRA::f3d const& pos)
   {
-    const auto current_pedcount = _grid[get_closest_grid_idx(pos)].pedCount;
-    VIPRA::Log::debug("Updating ({}, {}) from {} to {}.", pos.x, pos.y, current_pedcount, current_pedcount+1);
+    const auto currentPedcount = _grid[get_closest_grid_idx(pos)].pedCount;
+    VIPRA::Log::debug("Updating ({}, {}) from {} to {}.", pos.x, pos.y,
+                      currentPedcount, currentPedcount + 1);
     _grid[get_closest_grid_idx(pos)].pedCount++;
   }
 

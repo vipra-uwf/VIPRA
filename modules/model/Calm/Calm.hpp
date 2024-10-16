@@ -174,6 +174,13 @@ void Model::Calm::update_state(auto const& pedset, auto const& goals,
         reactionTime;
 
     state.velocities[i] = ((propulsion / mass) * deltaT) + velocity;
+
+    if ( goals.time_since_last_goal(i) > 0 &&
+         goals.time_since_last_goal(i) <= SLIDING_GOAL_TIME ) {
+      state.velocities[i].x = 0;
+      state.velocities[i].y = 0;
+    }
+
     state.positions[i] = coord + (state.velocities[i] * deltaT);
   }
 }

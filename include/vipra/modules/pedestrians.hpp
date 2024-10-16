@@ -192,8 +192,6 @@ class Pedestrians : public BaseModule<Pedestrians> {
 
       do {
         _coords[i] = spawnAreas[spawnIdx].random_point(engine);
-        VIPRA::Log::debug("Random Point: ({}, {}) Collides: {}", _coords[i].x,
-                          _coords[i].y, map.collision(_coords[i]));
       } while ( map.collision(Geometry::Circle{_coords[i], 0.3}) );
     }
 

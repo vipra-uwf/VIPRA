@@ -1,12 +1,13 @@
-#include <vipra.hpp>
+
+#include "vipra.hpp"
 
 // Create a new module, with it's C++ name and Module type (see Modules page for other types)
 NEW_VIPRA_MODULE(ExampleModel, Model)
 {
  public:
   // Give the module a name and set its type
-  VIPRA_MODULE_NAME("example_model")
-  VIPRA_MODULE_TYPE(MODEL)
+  VIPRA_MODULE_NAME("Example")
+  VIPRA_MODULE_TYPE(Model)
 
   // Add in the parameter registration step, this is where we tell VIPRA what parameters the module needs
   VIPRA_REGISTER_PARAMS(VIPRA_PARAM("radius", _radius))
@@ -19,8 +20,9 @@ NEW_VIPRA_MODULE(ExampleModel, Model)
   {
     for ( size_t i = 0; i < pedset.num_pedestrians(); ++i ) {
       // Update the pedestrian's position, to make them move in a circle
-      state.positions[i] = VIPRA::f3d{_initialPoints[i][0] + _radius * std::cos(deltaT * timestep),
-                                      _initialPoints[i][1] + _radius * std::sin(deltaT * timestep)};
+      state.positions[i] = VIPRA::f3d{
+          _initialPoints[i][0] + _radius * std::cos(deltaT * timestep),
+          _initialPoints[i][1] + _radius * std::sin(deltaT * timestep)};
     }
   }
 

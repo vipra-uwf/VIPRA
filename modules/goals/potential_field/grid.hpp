@@ -11,8 +11,8 @@
 #include "vipra/types/idx.hpp"
 #include "vipra/types/size.hpp"
 
-#include "vipra/logging/logging.hpp"
 #include "density_grid.hpp"
+#include "vipra/logging/logging.hpp"
 
 // TODO: Generalize Grid and inherit Grid for this class.
 
@@ -69,12 +69,12 @@ class Grid {
       if ( map.collision(Geometry::Circle{grid_center(currPos), _gridSize}) )
         continue;
 
-      // TODO: Pass in density field here. 
       add_neighbors(currPos, start, next, 0);
     }
   }
 
-  void flood_fill(VIPRA::f3d start, auto const& map, DensityGrid const& densityGrid)
+  void flood_fill(VIPRA::f3d start, auto const& map,
+                  DensityGrid const& densityGrid)
   {
     const VIPRA::f3d       dimensions = map.get_dimensions();
     std::queue<VIPRA::f3d> next;
@@ -90,9 +90,8 @@ class Grid {
       if ( map.collision(Geometry::Circle{grid_center(currPos), _gridSize}) )
         continue;
 
-      // TODO: Pass in density field here.
-      VIPRA::idx densityGrid_index = densityGrid.get_closest_grid_idx(currPos);
-      int pedCount = densityGrid.get_ped_count_at_idx(densityGrid_index);
+      VIPRA::idx densityGridIndex = densityGrid.get_closest_grid_idx(currPos);
+      int        pedCount = densityGrid.get_ped_count_at_idx(densityGridIndex);
       VIPRA::Log::debug("Adding Weight: {}", pedCount);
       add_neighbors(currPos, start, next, pedCount);
     }
@@ -213,7 +212,8 @@ class Grid {
       auto& grid = get_grid(nextPos);
 
       // VIPRA::Log::debug("distance: {} | distance_to_sqrd: {} | additional weight: {}", currGrid.distance, curr.distance_to_sqrd(nextPos), (weight * 0.01));
-      VIPRA::f_pnt dist = currGrid.distance + curr.distance_to_sqrd(nextPos) + weight;
+      VIPRA::f_pnt dist =
+          currGrid.distance + curr.distance_to_sqrd(nextPos) + weight;
 
       if ( grid.distance <= dist ) continue;
 

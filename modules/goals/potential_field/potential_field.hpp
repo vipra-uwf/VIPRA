@@ -11,8 +11,8 @@
 #include "vipra/modules/module.hpp"
 #include "vipra/types/float.hpp"
 
-#include "grid.hpp"
 #include "density_grid.hpp"
+#include "grid.hpp"
 
 namespace VIPRA::Goals {
 class PotentialField : public VIPRA::Modules::Module<PotentialField>,
@@ -23,7 +23,8 @@ class PotentialField : public VIPRA::Modules::Module<PotentialField>,
 
   VIPRA_REGISTER_PARAMS(VIPRA_PARAM("endGoalType", _endGoalType),
                         VIPRA_PARAM("cellSize", _cellSize),
-                        VIPRA_PARAM("densityUpdateFrequency", _densityUpdateFrequency),
+                        VIPRA_PARAM("densityUpdateFrequency",
+                                    _densityUpdateFrequency),
                         VIPRA_PARAM("densityCellSize", _densityCellSize),
                         VIPRA_PARAM("densityWeight", _densityWeight))
 
@@ -52,12 +53,13 @@ class PotentialField : public VIPRA::Modules::Module<PotentialField>,
   {
     _densityCheckCounter++;
 
-    // Probably a better way to do this that doesn't reuse code, but this avoids repeating the same check every single loop. 
-    // Who knows, maybe compiler would have already optimized this. 
-    if (_densityCheckCounter >= _densityUpdateFrequency) {
-      _densityMap.clearGrid();
+    // Probably a better way to do this that doesn't reuse code, but this avoids repeating the same check every single loop.
+    // Who knows, maybe compiler would have already optimized this.
+    if ( _densityCheckCounter >= _densityUpdateFrequency ) {
+      fill_grid(map);
 
-      for ( VIPRA::idx pedIdx = 0; pedIdx < pedset.num_pedestrians(); ++pedIdx ) {
+      for ( VIPRA::idx pedIdx = 0; pedIdx < pedset.num_pedestrians();
+            ++pedIdx ) {
         VIPRA::f3d pos = pedset.ped_coords(pedIdx);
         VIPRA::f3d direction = _field.get_grid(pos).direction;
 
@@ -65,7 +67,7 @@ class PotentialField : public VIPRA::Modules::Module<PotentialField>,
         update_ped_density(pos);
       }
 
-      fill_grid(map);
+      _densityMap.clear_grid();
 
       _densityCheckCounter = 0;
       return;
@@ -77,7 +79,6 @@ class PotentialField : public VIPRA::Modules::Module<PotentialField>,
 
       set_current_goal(pedIdx, pos + direction);
     }
-
   }
 
   // NOLINTNEXTLINE(misc-unused-parameters)
@@ -91,7 +92,7 @@ class PotentialField : public VIPRA::Modules::Module<PotentialField>,
 
  private:
   // TODO(rolland): update SpatialMap to handle this use case
-  Grid _field;
+  Grid        _field;
   DensityGrid _densityMap;
 
   int _densityCheckCounter;
@@ -100,8 +101,8 @@ class PotentialField : public VIPRA::Modules::Module<PotentialField>,
   VIPRA::f_pnt _densityCellSize{};
   VIPRA::f_pnt _densityWeight{};
 
-  std::string  _endGoalType;
-  int _densityUpdateFrequency;
+  std::string _endGoalType;
+  int         _densityUpdateFrequency;
 
   void fill_grid(VIPRA::Modules::Map const& map)
   {  // find the end goals, provided as a module parameter
