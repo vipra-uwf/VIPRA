@@ -212,8 +212,8 @@ class Grid {
 
       auto& grid = get_grid(nextPos);
 
-      VIPRA::Log::debug("distance: {} | distance_to_sqrd: {} | additional weight: {}", currGrid.distance, curr.distance_to_sqrd(nextPos), weight);
-      VIPRA::f_pnt dist = currGrid.distance + curr.distance_to_sqrd(nextPos) * weight; //Add Density Field
+      // VIPRA::Log::debug("distance: {} | distance_to_sqrd: {} | additional weight: {}", currGrid.distance, curr.distance_to_sqrd(nextPos), (weight * 0.01));
+      VIPRA::f_pnt dist = currGrid.distance + curr.distance_to_sqrd(nextPos) + weight;
 
       if ( grid.distance <= dist ) continue;
 

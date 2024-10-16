@@ -56,7 +56,6 @@ class PotentialField : public VIPRA::Modules::Module<PotentialField>,
     // Who knows, maybe compiler would have already optimized this. 
     if (_densityCheckCounter >= _densityUpdateFrequency) {
       _densityMap.clearGrid();
-      fill_grid(map);
 
       for ( VIPRA::idx pedIdx = 0; pedIdx < pedset.num_pedestrians(); ++pedIdx ) {
         VIPRA::f3d pos = pedset.ped_coords(pedIdx);
@@ -66,6 +65,9 @@ class PotentialField : public VIPRA::Modules::Module<PotentialField>,
         update_ped_density(pos);
       }
 
+      fill_grid(map);
+
+      _densityCheckCounter = 0;
       return;
     }
 
