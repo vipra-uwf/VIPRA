@@ -215,7 +215,7 @@ Location:
   Name: Aisle
   Dimensions:
     Center: {15, 1.7}     // Center of rectangle is at (15, 1.7)
-    Lenghts: {30, 0.3}    // Height of 30m, Width of 30cm
+    Lenghts: {30, 0.3}    // Width of 30m, Height of 30cm
     Rotation: 0           // Rotated 0 degrees (aligned with X axis)
 .
 ```

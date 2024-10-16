@@ -194,4 +194,3 @@ macro(vipra_module)
     LIBRARY_OUTPUT_DIRECTORY ${VIPRA_BASE_DIR}/install/${VIPRA_MODULE_TYPE}
   )
 endmacro(vipra_module)
-

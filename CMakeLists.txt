@@ -23,8 +23,8 @@ project(
 
 # BUILD VIPRA Library
 
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake.utils)
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake.options)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/vipraUtils.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/vipraOptions.cmake)
 
 add_library(
   ${VIPRA_LIBRARY_NAME}
