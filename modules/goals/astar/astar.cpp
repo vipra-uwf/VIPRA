@@ -170,13 +170,18 @@ void AStar::find_path(VIPRA::idx pedIdx, VIPRA::f3d startPos,
     VIPRA_MODULE_ERROR("Start or end index is out of bounds");
   }
 
-  auto const path = VIPRA::astar(startIdx, endIdx, _graph);
+  auto path = VIPRA::astar(startIdx, endIdx, _graph);
 
   if ( ! path ) {
-    VIPRA_MODULE_ERROR("No path found for pedestrian {}", pedIdx);
+    VIPRA_MODULE_ERROR(
+        "No path found for pedestrian {}, Start: ({}, {}), End: ({}, {})",
+        pedIdx, startPos.x, startPos.y, end_goal(pedIdx).x, end_goal(pedIdx).y);
   }
 
   // set their path, squash nodes that all go in the same direction into one node
-  _paths[pedIdx] = squash_path(*path, engine);
+  if ( _paths[pedIdx].size() > 2 )
+    _paths[pedIdx] = squash_path(*path, engine);
+  else
+    _paths[pedIdx] = std::move(*path);
 }
 }  // namespace VIPRA::Goals
