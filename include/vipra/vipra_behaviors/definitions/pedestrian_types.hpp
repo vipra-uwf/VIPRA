@@ -69,7 +69,8 @@ class Ptype {
    * 
    * @param type : type to check for
    */
-  [[nodiscard]] inline constexpr auto is_type(typeUID type) const noexcept -> bool
+  [[nodiscard]] inline constexpr auto is_type(typeUID type) const noexcept
+      -> bool
   {
     return ((type & fullType) != 0U) && ((~type & fullType) == 0);
   }
@@ -79,7 +80,8 @@ class Ptype {
    * 
    * @param type : type to check for
    */
-  [[nodiscard]] inline constexpr auto has_type(typeUID type) const noexcept -> bool
+  [[nodiscard]] inline constexpr auto has_type(typeUID type) const noexcept
+      -> bool
   {
     return (type & fullType) != 0U;
   }
@@ -90,7 +92,10 @@ class Ptype {
    * @param type : type to union with
    * @return constexpr Ptype 
    */
-  inline constexpr auto operator+(typeUID type) const noexcept -> Ptype { return Ptype{fullType | type}; }
+  inline constexpr auto operator+(typeUID type) const noexcept -> Ptype
+  {
+    return Ptype{fullType | type};
+  }
 
   /**
    * @brief Adds a type to the ptype
@@ -133,7 +138,10 @@ class Ptype {
    * @param type : type to remove
    * @return constexpr Ptype 
    */
-  inline constexpr auto operator-(typeUID type) const noexcept -> Ptype { return Ptype{fullType & ~type}; }
+  inline constexpr auto operator-(typeUID type) const noexcept -> Ptype
+  {
+    return Ptype{fullType & ~type};
+  }
 
   /**
    * @brief Removes the type from the ptype
@@ -177,7 +185,10 @@ class Ptype {
    * @return true 
    * @return false 
    */
-  inline constexpr auto operator==(Ptype type) const noexcept -> bool { return fullType == type.fullType; }
+  inline constexpr auto operator==(Ptype type) const noexcept -> bool
+  {
+    return fullType == type.fullType;
+  }
 
   /**
    * @brief Checks if two ptypes are different
@@ -186,6 +197,9 @@ class Ptype {
    * @return true 
    * @return false 
    */
-  inline constexpr auto operator!=(Ptype type) const noexcept -> bool { return fullType != type.fullType; }
+  inline constexpr auto operator!=(Ptype type) const noexcept -> bool
+  {
+    return fullType != type.fullType;
+  }
 };
 }  // namespace VIPRA::Behaviors

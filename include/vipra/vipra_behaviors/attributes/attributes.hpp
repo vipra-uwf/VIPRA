@@ -1,11 +1,14 @@
 #pragma once
 
+#include <algorithm>
 #include <stdexcept>
 #include <type_traits>
 
 #include "vipra/geometry/f3d.hpp"
 
+#include "vipra/logging/logging.hpp"
 #include "vipra/vipra_behaviors/behavior/exceptions.hpp"
+#include "vipra/vipra_behaviors/definitions/behavior_context.hpp"
 #include "vipra/vipra_behaviors/definitions/dsl_types.hpp"
 #include "vipra/vipra_behaviors/definitions/sim_pack.hpp"
 #include "vipra/vipra_behaviors/events/event.hpp"
@@ -43,6 +46,8 @@ enum class Type {
   LOCATION,
   TOWARDS_LOC,
   TOWARDS_ATTR,
+  OBJECTIVE,
+  POSITION
 };
 
 /**
@@ -142,7 +147,8 @@ class AttributeHandling {
    * @param pack : simulation pack
    * @return CAttributeValue 
    */
-  [[nodiscard]] inline static auto get_value(Target target, Attribute attr, auto pack) -> CAttributeValue
+  [[nodiscard]] inline static auto get_value(Target target, Attribute attr,
+                                             auto pack) -> CAttributeValue
   {
     switch ( target.type ) {
       case TargetType::PEDESTRIAN:
@@ -167,8 +173,8 @@ class AttributeHandling {
    * @param state : timestep state
    * @param value : value to set attribute to
    */
-  inline static void set_value(Target target, Attribute attr, auto pack, VIPRA::State& state,
-                               CAttributeValue value)
+  inline static void set_value(Target target, Attribute attr, Simpack pack,
+                               VIPRA::State& state, CAttributeValue value)
   {
     switch ( target.type ) {
       case TargetType::PEDESTRIAN:
@@ -194,8 +200,8 @@ class AttributeHandling {
    * @param state : timestep state
    * @param value : value to scale attribute by
    */
-  inline static void scale_value(Target target, Attribute attr, auto pack, VIPRA::State& state,
-                                 CAttributeValue value)
+  inline static void scale_value(Target target, Attribute attr, Simpack pack,
+                                 VIPRA::State& state, CAttributeValue value)
   {
     switch ( target.type ) {
       case TargetType::PEDESTRIAN:
@@ -220,8 +226,8 @@ class AttributeHandling {
    * @return true : if one is a coordinate and the other is a location
    * @return false : if not
    */
-  [[nodiscard]] inline static auto is_coord_loc_compare(CAttributeValue value1, CAttributeValue value2)
-      -> bool
+  [[nodiscard]] inline static auto is_coord_loc_compare(
+      CAttributeValue value1, CAttributeValue value2) -> bool
   {
     return (value1.type == Type::COORD && value2.type == Type::LOCATION) ||
            (value1.type == Type::LOCATION && value2.type == Type::COORD);
@@ -236,15 +242,18 @@ class AttributeHandling {
    * @return true : if coordinate is in location
    * @return false : if not
    */
-  [[nodiscard]] inline static auto coord_loc_compare(CAttributeValue value1, CAttributeValue value2,
+  [[nodiscard]] inline static auto coord_loc_compare(CAttributeValue value1,
+                                                     CAttributeValue value2,
                                                      auto pack) -> bool
   {
     if ( value1.type == Type::COORD && value2.type == Type::LOCATION ) {
-      return pack.context.locations[value2.as<VIPRA::idx>()].contains(value1.as<VIPRA::f3d>());
+      return pack.context.locations[value2.as<VIPRA::idx>()].is_point_inside(
+          value1.as<VIPRA::f3d>());
     }
 
     if ( value2.type == Type::COORD && value1.type == Type::LOCATION ) {
-      return pack.context.locations[value1.as<VIPRA::idx>()].contains(value2.as<VIPRA::f3d>());
+      return pack.context.locations[value1.as<VIPRA::idx>()].is_point_inside(
+          value2.as<VIPRA::f3d>());
     }
 
     return false;
@@ -258,7 +267,9 @@ class AttributeHandling {
    * @return true : if equal
    * @return false : if not equal or not same type
    */
-  [[nodiscard]] inline static auto is_equal(CAttributeValue value1, CAttributeValue value2, auto pack) -> bool
+  [[nodiscard]] inline static auto is_equal(CAttributeValue value1,
+                                            CAttributeValue value2,
+                                            auto            pack) -> bool
   {
     if ( is_coord_loc_compare(value1, value2) ) {
       return coord_loc_compare(value1, value2, pack);
@@ -268,12 +279,13 @@ class AttributeHandling {
 
     switch ( value1.type ) {
       case Type::INVALID:
-        throw std::runtime_error("Invalid Type");
+        throw std::runtime_error("Invalid Attribute Type");
         return false;
       case Type::NUMBER:
         return value1.as<VIPRA::f_pnt>() == value2.as<VIPRA::f_pnt>();
       case Type::COORD:
-        return value1.as<VIPRA::f3d>() == value2.as<VIPRA::f3d>();
+        return value1.as<VIPRA::f3d>().distance_to_sqrd(
+                   value2.as<VIPRA::f3d>()) <= 0.04;
       case Type::STATE:
         return value1.as<stateUID>() == value2.as<stateUID>();
       case Type::STATUS:
@@ -296,8 +308,9 @@ class AttributeHandling {
    * @return true : if not equal
    * @return false : if equal or not same type
    */
-  [[nodiscard]] inline static auto is_not_equal(CAttributeValue value1, CAttributeValue value2, auto pack)
-      -> bool
+  [[nodiscard]] inline static auto is_not_equal(CAttributeValue value1,
+                                                CAttributeValue value2,
+                                                auto            pack) -> bool
   {
     return ! is_equal(value1, value2, pack);
   }
@@ -311,10 +324,12 @@ class AttributeHandling {
    * @return CAttributeValue
    */
   template <typename value_t>
-  [[nodiscard]] inline static auto store_value(Type type, value_t&& value) -> CAttributeValue
+  [[nodiscard]] inline static auto store_value(Type type, value_t&& value)
+      -> CAttributeValue
   {
     auto& valueStore = get_value_store();
-    valueStore.emplace_back(type, new std::remove_cvref_t<value_t>(std::forward<value_t>(value)));
+    valueStore.emplace_back(
+        type, new std::remove_cvref_t<value_t>(std::forward<value_t>(value)));
     return valueStore.back();
   }
 
@@ -383,7 +398,8 @@ class AttributeHandling {
    * @param pack : simulation pack
    * @return CAttributeValue 
    */
-  [[nodiscard]] inline static auto get_ped_value(Target target, Attribute attr, auto pack) -> CAttributeValue
+  [[nodiscard]] inline static auto get_ped_value(Target target, Attribute attr,
+                                                 auto pack) -> CAttributeValue
   {
     switch ( attr ) {
       case Attribute::POSITION:
@@ -409,15 +425,17 @@ class AttributeHandling {
    * @param pack : simulation pack
    * @return CAttributeValue 
    */
-  [[nodiscard]] inline static auto get_event_value(Target target, Attribute attr, auto pack)
-      -> CAttributeValue
+  [[nodiscard]] inline static auto get_event_value(Target    target,
+                                                   Attribute attr,
+                                                   auto pack) -> CAttributeValue
   {
     switch ( attr ) {
       case Attribute::LOCATION:
         // TODO (rolland) : get this added in when event locations are done
         DSLException::error("Event Locations Not Implmented");
       case Attribute::STATUS:
-        return {Type::STATUS, &pack.context.events[target.targetIdx].get_status()};
+        return {Type::STATUS,
+                &pack.context.events[target.targetIdx].get_status()};
       default:
         DSLException::error("Invalid Event Attribute");
     }
@@ -431,14 +449,14 @@ class AttributeHandling {
    * @param pack : simulation pack
    * @return CAttributeValue 
    */
-  [[nodiscard]] inline static auto get_location_value(Target target, Attribute attr, auto pack)
-      -> CAttributeValue
+  [[nodiscard]] inline static auto get_location_value(
+      Target target, Attribute attr, auto pack) -> CAttributeValue
   {
     switch ( attr ) {
       case Attribute::POSITION:
-        return {Type::COORD, &pack.context.locations[target.targetIdx].center()};
+        return {Type::COORD,
+                &pack.context.locations[target.targetIdx].center()};
       case Attribute::DIMENSIONS:
-        return {Type::COORD, &pack.context.locations[target.targetIdx].dims()};
       default:
         DSLException::error("Invalid Location Attribute");
     }
@@ -453,8 +471,8 @@ class AttributeHandling {
    * @param state : next timestep state
    * @param value : value to set attribute to
    */
-  inline static void set_ped_value(Target target, Attribute attr, auto pack, VIPRA::State& state,
-                                   CAttributeValue value)
+  inline static void set_ped_value(Target target, Attribute attr, Simpack pack,
+                                   VIPRA::State& state, CAttributeValue value)
   {
     switch ( attr ) {
       case Attribute::POSITION:
@@ -485,13 +503,13 @@ class AttributeHandling {
    * @param pack : simulation pack
    * @param value : value to set attribute to
    */
-  inline static void set_location_value(Target target, Attribute attr, auto pack, CAttributeValue value)
+  inline static void set_location_value(Target /*target*/, Attribute attr,
+                                        Simpack /*pack*/,
+                                        CAttributeValue /*value*/)
   {
     switch ( attr ) {
       case Attribute::POSITION:
-        set_location_position(target, pack, value);
       case Attribute::DIMENSIONS:
-        set_location_dims(target, pack, value);
       default:
         DSLException::error("Invalid Location Attribute");
     }
@@ -506,7 +524,8 @@ class AttributeHandling {
    * @param state : next timestep state
    * @param value : value to set attribute to
    */
-  inline static void scale_ped_value(Target target, Attribute attr, auto pack, VIPRA::State& state,
+  inline static void scale_ped_value(Target target, Attribute attr,
+                                     Simpack pack, VIPRA::State& state,
                                      CAttributeValue value)
   {
     switch ( attr ) {
@@ -542,14 +561,16 @@ class AttributeHandling {
    * @param pack : simulation pack
    * @param value : value to set attribute to
    */
-  inline static void set_event_value(Target target, Attribute attr, auto pack, CAttributeValue value)
+  inline static void set_event_value(Target target, Attribute attr,
+                                     Simpack pack, CAttributeValue value)
   {
     switch ( attr ) {
       case Attribute::LOCATION:
         // TODO (rolland) : get this added in when event locations are done
         DSLException::error("Event Locations Not Implmented");
       case Attribute::STATUS:
-        pack.context.events[target.targetIdx].set_status(value.as<Behaviors::EventStatus>());
+        pack.context.events[target.targetIdx].set_status(
+            value.as<Behaviors::EventStatus>());
         return;
       default:
         DSLException::error("Invalid Event Attribute");
@@ -565,7 +586,8 @@ class AttributeHandling {
    * @param state : next time step state
    * @param value : value to set position to
    */
-  static inline void set_position(Target target, VIPRA::State& state, CAttributeValue value)
+  static inline void set_position(Target target, VIPRA::State& state,
+                                  CAttributeValue value)
   {
     value.type_check(Type::COORD);
     state.positions[target.targetIdx] = value.as<VIPRA::f3d>();
@@ -578,7 +600,8 @@ class AttributeHandling {
    * @param pack : simulation pack
    * @param value : value to set attribute to
    */
-  static inline void set_state(Target target, auto pack, CAttributeValue value)
+  static inline void set_state(Target target, Simpack pack,
+                               CAttributeValue value)
   {
     value.type_check(Type::STATE);
     pack.context.pedStates[target.targetIdx] = value.as<stateUID>();
@@ -591,22 +614,26 @@ class AttributeHandling {
    * @param pack : simulation pack
    * @param value : value to set velocity to
    */
-  static inline void set_goal(Target target, auto pack, CAttributeValue value)
+  static inline void set_goal(Target target, Simpack pack,
+                              CAttributeValue value)
   {
     auto&       goals = pack.goals;
     auto&       context = pack.context;
     auto const& pedset = pack.pedset;
 
     if ( value.type == Type::COORD ) {
-      goals.change_end_goal(target.targetIdx, pedset.ped_coords(target.targetIdx), value.as<VIPRA::f3d>());
+      goals.change_end_goal(target.targetIdx,
+                            pedset.ped_coords(target.targetIdx),
+                            value.as<VIPRA::f3d>(), context.engine);
     }
     else if ( value.type == Type::LOCATION ) {
       // TODO(rolland): this doesn't take into account two pedestrains going to the same location
-      goals.change_end_goal(target.targetIdx, pedset.ped_coords(target.targetIdx),
-                            context.locations[value.as<VIPRA::idx>()].random_point(context.engine));
+      goals.change_end_goal(
+          target.targetIdx, pedset.ped_coords(target.targetIdx),
+          context.locations[value.as<VIPRA::idx>()].random_point(
+              context.engine),
+          context.engine);
     }
-
-    value.type_check(Type::COORD);
   }
 
   /**
@@ -617,40 +644,16 @@ class AttributeHandling {
    * @param state : next timestep state
    * @param value : value to set velocity to
    */
-  static inline void set_velocity(Target target, auto pack, VIPRA::State& state, CAttributeValue value)
+  static inline void set_velocity(Target target, Simpack pack,
+                                  VIPRA::State& state, CAttributeValue value)
   {
     value.type_check(Type::COORD);
 
     state.velocities[target.targetIdx] = value.as<VIPRA::f3d>();
 
     VIPRA::f3d originalPos = pack.pedset.ped_coords(target.targetIdx);
-    state.positions[target.targetIdx] = originalPos + (state.velocities[target.targetIdx] * pack.dT);
-  }
-
-  /**
-     * @brief Set the location position object
-     * 
-     * @param target 
-     * @param pack 
-     * @param value 
-     */
-  static inline void set_location_position(Target target, auto pack, CAttributeValue value)
-  {
-    value.type_check(Type::COORD);
-    pack.context.locations[target.targetIdx].set_center(value.as<VIPRA::f3d>());
-  }
-
-  /**
-     * @brief Set the location dims object
-     * 
-     * @param target 
-     * @param pack 
-     * @param value 
-     */
-  static inline void set_location_dims(Target target, auto pack, CAttributeValue value)
-  {
-    value.type_check(Type::COORD);
-    pack.context.locations[target.targetIdx].set_dims(value.as<VIPRA::f3d>());
+    state.positions[target.targetIdx] =
+        originalPos + (state.velocities[target.targetIdx] * pack.dT);
   }
 
   // ------------------------------------------- END SETTERS ------------------------------------------------------------------------
@@ -665,7 +668,8 @@ class AttributeHandling {
    * @param state : next timestep state
    * @param value : value to set velocity to
    */
-  static inline void scale_velocity(Target target, auto pack, VIPRA::State& state, CAttributeValue value)
+  static inline void scale_velocity(Target target, Simpack pack,
+                                    VIPRA::State& state, CAttributeValue value)
   {
     value.type_check(Type::NUMBER);
 
@@ -674,7 +678,8 @@ class AttributeHandling {
     VIPRA::f_pnt scaleVal = scale.value(target.targetIdx);
     auto         tempvel = state.velocities[target.targetIdx];
     tempvel *= scaleVal;
-    state.positions[target.targetIdx] = pack.pedset.ped_coords(target.targetIdx) + (tempvel * pack.dT);
+    state.positions[target.targetIdx] =
+        pack.pedset.ped_coords(target.targetIdx) + (tempvel * pack.dT);
   }
 
   // --------------------------------------------- END SCALING ------------------------------------------------------------------------

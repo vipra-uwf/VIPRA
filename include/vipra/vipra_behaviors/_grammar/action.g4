@@ -36,6 +36,7 @@ sub_action:
 
 action_atom:
   set_atom | 
+  set_objective_atom |
   scale_atom
 ;
 
@@ -45,4 +46,8 @@ set_atom:
 
 scale_atom:
   SCALE TARGET? attribute attr_value
+;
+
+set_objective_atom:
+  SET GOAL TO RANDOM LOC_NAME
 ;

@@ -178,6 +178,6 @@ WITHIN: W I T H I N;
 
 // ---------- Keep The Following At The End Of The File ------------
 
-ID: [a-zA-Z_\-]+;
-NUMBER : '-'?[0-9]+;
+ID: [a-zA-Z_]+[a-zA-Z_\-]*;
 FLOAT: '-'?[0-9]+'.'[0-9]+;
+NUMBER : '-'?[0-9]+;

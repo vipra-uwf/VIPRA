@@ -17,7 +17,7 @@ if (args['overrides']):
 
 peds = helpers.getPeds(args['peds'])
 difCoords = helpers.getPeds(args['dif'])
-obstacles = helpers.getObs(args['obs']);
+map = helpers.getObs(args['obs'], args['dxf']);
 pedColors = helpers.makeColors(peds, args)
 timestepCnt = len(peds["timesteps"])
 
@@ -31,7 +31,11 @@ def animate(i):
   [compX, compY] = helpers.getPoints(difCoords[i]) if args['dif'] else [[], []]
 
   helpers.prepPlot(ax, i, args)
-  helpers.plotObs(obstacles, ax, args)
+  if args['dxf']:
+    helpers.draw_dxf(map, ax, args)
+  else:
+    helpers.plotObs(map, ax, args)
+
   helpers.plotShoulders(pointsX, pointsY, pedColors, ax, args)
   points = helpers.plotPeds(pointsX, pointsY, pedColors, ax, args) if not args['dif'] else helpers.plotDif(pointsX, pointsY, compX, compY, pedColors, ax, args)
   helpers.plotIndexes(pointsX, pointsY, pedColors, ax, args)
@@ -43,7 +47,6 @@ def animate(i):
     pedColors = temp
 
   return ax
-
 
 ani = FuncAnimation(fig, animate, frames=timestepCnt, blit=False)
 ani.save(args['outpath'], writer=FFMpegFileWriter(fps=args['fps']), progress_callback=helpers.printProgressBar)

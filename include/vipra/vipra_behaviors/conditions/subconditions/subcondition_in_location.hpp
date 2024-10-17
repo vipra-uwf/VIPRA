@@ -17,12 +17,13 @@ class SubConditionInLocation {
  public:
   explicit SubConditionInLocation(VIPRA::idx location) : _location(location) {}
 
-  void operator()(auto pack, const VIPRA::idxVec& peds, std::vector<Target> const& targets,
-                  std::vector<bool>& met, std::vector<bool> const& /*unused*/, BoolOp /*unused*/) const
+  void operator()(Simpack pack, const VIPRA::idxVec& peds,
+                  std::vector<Target> const& targets, std::vector<bool>& met,
+                  std::vector<bool> const& /*unused*/, BoolOp /*unused*/) const
   {
     for ( auto idx : peds ) {
       auto const& coords = pack.pedset.ped_coords(targets[idx].targetIdx);
-      met[idx] = pack.context.locations[_location].contains(coords);
+      met[idx] = pack.context.locations[_location].is_point_inside(coords);
     }
   }
 

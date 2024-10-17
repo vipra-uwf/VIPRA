@@ -1,10 +1,6 @@
 #pragma once
 
 #include <cstdint>
-#include <utility>
-
-#include "vipra/geometry/f3d.hpp"
-#include "vipra/types/seed.hpp"
 
 namespace VIPRA::Behaviors {
 /**

@@ -1,8 +1,6 @@
----
-title: ABOUT PAGE
-layout: template
-filename: docs.md
---- 
+
+| [How To Use](pages/researchers/usage.md) | [Developing Modules](pages/developers/overview.md) | [Using as a Library](pages/developers/library.md) |
+| --- | --- | --- |
 
 # Introduction
 
@@ -14,12 +12,31 @@ Pedestrian dynamics enables such analysis by simulating the trajectories of indi
 
 This project includes a modular pedestrian dynamics code to which input from different domains could be easily included. In addition, it includes tools to democratize use by users with limited computing background by including a domain specific language to specify human behavior and policy. We also separately provide a recommender system, as a complementary project, to suggested suitable models to use.
 
-# Getting Started
+VIPRA can either be used:
+ - as a [Library](pages/developers/library.md) for use in other projects
+ - as a [Standalone Simulation](pages/researchers/usage.md)
 
-1. See the [Setup Page](pages/getting_started/setup.md) for getting started
+# Researchers
 
-2. See the [Usage Page](pages/getting_started/usage.md) for how to use VIPRA
+For those that intend to:
+- use premade models / modules for running simulations
 
-3. See the [Examples Page](pages/examples/list.md) for examples
+1. [How to use VIPRA](pages/researchers/usage.md)
 
-\tableofcontents
+---
+
+# Developers
+
+For those that intend to:
+- develop new models / module implementations
+- Use VIPRA in their projects
+
+1. [Developer Setup](pages/developers/setup.md)
+
+---
+
+# VIPRA Oct 2024 Workshop
+
+[Check out our Oct 2024 Workshop](https://vipra-uwf.github.io/VIPRA/workshop.html)
+
+---

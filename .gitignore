@@ -30,6 +30,7 @@
 *.exe
 *.out
 *.app
+*.sh
 
 # Build
 build
@@ -38,6 +39,7 @@ build
 .vscode
 .cache
 .clangd
+*.code-workspace
 
 # Temporary
 temp
@@ -47,14 +49,25 @@ temp
 
 # Doxygen
 latex
-html
 
 # Simulation
-VIPRA
+/VIPRA
+/install
 sim_output
+simcache
 
 # Python
 __pycache__
 *.gif
 *.jpeg
 *.png
+*.mp4
+
+# dxf
+dwg2dxf
+*~
+\#*
+
+# performance
+*.data
+*.data.old

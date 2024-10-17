@@ -1,0 +1,9 @@
+{
+  "model": "Calm",
+  "goals": "AStar",
+  "map": "QuadTree",
+  "pedestrians": "SpatialGrid",
+  "output": "Trajectories",
+  "map_input": "JSON",
+  "ped_input": "JSON"
+}

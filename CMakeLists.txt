@@ -1,90 +1,101 @@
-cmake_minimum_required(VERSION 3.14)
-set(VIPRA_PROJECT_NAME VIPRA)
-
-OPTION(VIPRA_BUILD_LIBRARY ON "Build the library")
-OPTION(VIPRA_BUILD_EXECUTABLE OFF "Build the executable")
-OPTION(VIPRA_DEBUG_MODE OFF "Build in debug mode")
-OPTION(VIPRA_PERF_TESTING OFF "Enable performance testing")
-
-if (VIPRA_BUILD_LIBRARY AND VIPRA_BUILD_EXECUTABLE)
-  message(FATAL_ERROR "Cannot build both library and executable")
-endif()
-
-if (NOT VIPRA_BUILD_LIBRARY AND NOT VIPRA_BUILD_EXECUTABLE)
-  set(VIPRA_BUILD_LIBRARY ON)
-endif()
-
-if (VIPRA_BUILD_LIBRARY)
-  message("Building VIPRA as library")
-elseif (VIPRA_BUILD_EXECUTABLE)
-  message("Building VIPRA as executable")
-
-  if (VIPRA_DEBUG_MODE)
-    message("Building in debug mode")
-    set(CMAKE_BUILD_TYPE Debug)
-  else()
-    message("Building in release mode")
-    set(CMAKE_BUILD_TYPE Release)
-  endif()
-endif()
-
-project(
-  ${VIPRA_PROJECT_NAME} 
-  VERSION 0.0.1
-  DESCRIPTION "VIPRA pedestrian dynamics simulation library"
-  LANGUAGES CXX
-)
+cmake_minimum_required(VERSION 3.19)
+set(VIPRA_LIBRARY_NAME vipra)
+set(VIPRA_EXECUTABLE_NAME VIPRA)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
 
-if (VIPRA_BUILD_LIBRARY)
-  add_library(
-    ${VIPRA_PROJECT_NAME}
-    STATIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/vipra/vipra.cpp
-  )
-elseif (VIPRA_BUILD_EXECUTABLE)
-  add_executable(
-    ${VIPRA_PROJECT_NAME}
-    ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
-  )
-  set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR})
-endif()
+set(VIPRA_BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+set(
+  VIPRA_INCLUDE_DIRS
+  ${CMAKE_CURRENT_SOURCE_DIR}/include
+  ${CMAKE_CURRENT_SOURCE_DIR}/modules
+  ${CMAKE_CURRENT_SOURCE_DIR}/deps
+)
 
-if (VIPRA_PERF_TESTING)
-  add_definitions(-DVIPRA_PERF_TESTING)
-endif()
+project(
+  ${VIPRA_LIBRARY_NAME}
+  VERSION 0.0.1
+  DESCRIPTION "VIPRA pedestrian dynamics simulation library"
+  LANGUAGES CXX
+)
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/include/vipra)
-add_subdirectory(modules)
+# BUILD VIPRA Library
 
-include(FetchContent)
-message(STATUS "Getting nlohmann_json")
-FetchContent_Declare(nlohmann_json URL https://github.com/nlohmann/json/releases/download/v3.11.2/json.tar.xz)
-FetchContent_MakeAvailable(nlohmann_json)
-message(STATUS "Done Getting nlohmann_json")
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/vipraUtils.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/vipraOptions.cmake)
+
+add_library(
+  ${VIPRA_LIBRARY_NAME}
+  SHARED
+)
+
+add_subdirectory(src)
+add_subdirectory(include/vipra/vipra_behaviors/_grammar)
+vipra_add_base_modules()
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 include(ExternalAntlr4Cpp)
 include_directories(${ANTLR4_INCLUDE_DIRS})
 
-find_package(MPI REQUIRED)
+vipra_add_library(
+  PROJECT ${VIPRA_LIBRARY_NAME}
+  LIBNAME nlohmann_json
+  GIT_URL https://github.com/nlohmann/json.git
+  GIT_TAG v3.11.3
+)
 
 target_link_libraries(
-  ${VIPRA_PROJECT_NAME}
+  ${VIPRA_LIBRARY_NAME}
   PUBLIC
-  nlohmann_json::nlohmann_json
-  antlr4_static
-  MPI::MPI_CXX
+  antlr4_shared
 )
 
 target_include_directories(
-  ${VIPRA_PROJECT_NAME}
+  ${VIPRA_LIBRARY_NAME}
   PUBLIC
-  ${CMAKE_CURRENT_SOURCE_DIR}/include
-  ${CMAKE_CURRENT_SOURCE_DIR}/include/vipra/vipra_behaviors
-  ${CMAKE_CURRENT_SOURCE_DIR}/modules
+  ${VIPRA_INCLUDE_DIRS}
   ${ANTLR4CPP_INCLUDE_DIRS}
 )
+
+if (VIPRA_BUILD_EXECUTABLE)
+  project(
+    ${VIPRA_EXECUTABLE_NAME}
+    VERSION 0.0.1
+    DESCRIPTION "VIPRA pedestrian dynamics simulation executable"
+    LANGUAGES CXX
+  )
+
+  add_executable(
+    ${VIPRA_EXECUTABLE_NAME}
+    ${VIPRA_MAIN_FILE}
+  )
+
+  target_link_libraries(
+    ${VIPRA_EXECUTABLE_NAME}
+    PUBLIC
+    ${VIPRA_LIBRARY_NAME}
+  )
+
+  target_include_directories(
+    ${VIPRA_EXECUTABLE_NAME}
+    PUBLIC
+    ${VIPRA_INCLUDE_DIRS}
+  )
+
+  if ( NOT DEFINED VIPRA_EXECUTABLE_PATH )
+    set( VIPRA_EXECUTABLE_PATH ${CMAKE_CURRENT_SOURCE_DIR} )
+  endif()
+
+  set(EXECUTABLE_OUTPUT_PATH ${VIPRA_EXECUTABLE_PATH})
+endif()
+
+vipra_find_all_modules()
+foreach(SUBDIR ${VIPRA_MODULE_DIRECTORIES})
+  add_subdirectory(${SUBDIR})
+endforeach()
+
+if ( VIPRA_TESTING )
+  add_subdirectory(__tests__)
+endif()

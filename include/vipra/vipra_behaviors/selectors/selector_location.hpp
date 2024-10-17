@@ -1,9 +1,9 @@
 #pragma once
 
+#include "vipra/logging/logging.hpp"
 #include "vipra/types/idx.hpp"
-#include "vipra/vipra_behaviors/selectors/selector.hpp"
+
 #include "vipra/vipra_behaviors/selectors/subselector.hpp"
-#include "vipra/vipra_behaviors/values/numeric_value.hpp"
 
 namespace VIPRA::Behaviors {
 /**
@@ -18,20 +18,20 @@ struct SelectorLocation {
   explicit SelectorLocation(VIPRA::idx loc) : location(loc) {}
 
   VIPRA::idx location;
-  auto       operator()(const VIPRA::idxVec& /*unused*/, const VIPRA::idxVec& group, auto pack) const
-      -> SelectorResult
+  auto operator()(const VIPRA::idxVec& /*unused*/, const VIPRA::idxVec& group,
+                  auto pack) const -> SelectorResult
   {
     auto const&   loc = pack.context.locations[location];
     size_t        pedCnt = 0;
     VIPRA::idxVec groupPeds;
 
     for ( auto idx : group ) {
-      if ( loc.contains(pack.pedset.ped_coords(idx)) ) {
+      if ( loc.is_point_inside(pack.pedset.ped_coords(idx)) ) {
         groupPeds.push_back(idx);
       }
     }
 
-    // spdlog::debug("Selector Exaclty N: Selecting {} Pedestrians", pedCnt);
+    VIPRA::Log::debug("Selector Exaclty N: Selecting {} Pedestrians", pedCnt);
 
     return {false, groupPeds};
   }

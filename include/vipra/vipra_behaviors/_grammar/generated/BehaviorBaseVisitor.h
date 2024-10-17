@@ -1,5 +1,5 @@
 
-// Generated from Behavior.g4 by ANTLR 4.13.1
+// Generated from Behavior.g4 by ANTLR 4.13.2
 
 #pragma once
 
@@ -320,6 +320,10 @@ public:
   }
 
   virtual std::any visitScale_atom(BehaviorParser::Scale_atomContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual std::any visitSet_objective_atom(BehaviorParser::Set_objective_atomContext *ctx) override {
     return visitChildren(ctx);
   }
 

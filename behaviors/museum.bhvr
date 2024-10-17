@@ -1,0 +1,25 @@
+
+Types:
+  Museum_Goer
+.
+
+Selector:
+  Type: Museum_Goer
+  Select: Everyone
+.
+
+Action (Museum_Goer):
+  Condition: !start starting
+  Response: set goal to random @exhibit
+.
+
+Action (Museum_Goer):
+  Condition: position is end goal
+  Response: set velocity to {0}
+  Duration: random 5 to 20 seconds
+.
+
+Action (Museum_Goer):
+  Condition: position is end goal
+  Response: set goal to random @exhibit
+.

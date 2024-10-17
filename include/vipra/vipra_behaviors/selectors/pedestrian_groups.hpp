@@ -60,7 +60,7 @@ class GroupsContainer {
   [[nodiscard]] auto is_used(VIPRA::idx, typeUID) const -> bool;
 
  private:
-  std::vector<VIPRA::idxVec>     _groups{};
+  std::vector<VIPRA::idxVec>     _groups;
   std::vector<std::vector<bool>> _used;
 };
 }  // namespace VIPRA::Behaviors

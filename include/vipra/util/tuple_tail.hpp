@@ -15,6 +15,6 @@ namespace VIPRA::Util {
 template <typename head, typename... tail>
 constexpr auto tuple_tail(const std::tuple<head, tail...>& tuple) -> std::tuple<tail...>
 {
-  return std::apply([](auto&&, const auto&... args) { return std::tie(args...); }, tuple);
+  return std::apply([](auto&&, auto const&... args) { return std::tie(args...); }, tuple);
 }
 }  // namespace VIPRA::Util

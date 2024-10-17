@@ -1,5 +1,5 @@
 
-// Generated from Behavior.g4 by ANTLR 4.13.1
+// Generated from Behavior.g4 by ANTLR 4.13.2
 
 #pragma once
 
@@ -13,29 +13,28 @@ class  BehaviorParser : public antlr4::Parser {
 public:
   enum {
     T__0 = 1, T__1 = 2, T__2 = 3, T__3 = 4, T__4 = 5, T__5 = 6, T__6 = 7, 
-    T__7 = 8, T__8 = 9, COMMENT = 10, LINE_COMMENT = 11, WS = 12, COMMA = 13, 
-    COLON = 14, STATE_VAL = 15, EVNT = 16, LOC_NAME = 17, AN = 18, AT = 19, 
-    ADD = 20, AND = 21, ARE = 22, AFTER = 23, ALWAYS = 24, AROUND = 25, 
-    ACTION = 26, BEHIND = 27, BOTTOM = 28, CONSIDER = 29, CIRCLE = 30, CENTER = 31, 
-    CONDITION = 32, DECIMAL = 33, DIRECTION = 34, DURATION = 35, END = 36, 
-    ENDS = 37, ENVIRONMENT = 38, ENTER = 39, EXIT = 40, EXISTS = 41, EVENT = 42, 
-    EXACTLY = 43, EVERY = 44, EVERYONE = 45, ENDING = 46, FOR = 47, FROM = 48, 
-    FRONT = 49, FASTER = 50, GIVEN = 51, GOAL = 52, GROUP = 53, HAS = 54, 
-    IN = 55, INTEGER = 56, INITIAL = 57, IS = 58, IF = 59, LENGTH = 60, 
-    LENGTHS = 61, LEFT = 62, LEAVE = 63, DIMENSIONS = 64, LOCATION = 65, 
-    MAX = 66, METERS = 67, NAME = 68, NEAREST = 69, NORMAL = 70, NONE = 71, 
-    NOT = 72, OBSTACLE = 73, OCCUR = 74, OCCURRED = 75, OCCURRING = 76, 
-    OF = 77, ON = 78, OR = 79, PEDESTRIAN = 80, PEDESTRIANS = 81, POINTS = 82, 
-    POSSIBLE = 83, POSITION = 84, RADIUS = 85, RANDOM = 86, REQUIRED = 87, 
-    RECTANGLE = 88, RIGHT = 89, RESPONSE = 90, ROTATION = 91, SCALE = 92, 
-    SELF = 93, SELECT = 94, SELECTOR = 95, SET = 96, SECOND = 97, SECONDS = 98, 
-    STATUS = 99, STARTING = 100, SLOWER = 101, SHAPE = 102, STATES = 103, 
-    START = 104, STATE = 105, STARTS = 106, SPEED = 107, SUBTRACT = 108, 
-    STIMULUS = 109, TARGET = 110, TO = 111, TOWARDS = 112, TOP = 113, THE = 114, 
-    THAT = 115, THEN = 116, THEIR = 117, THERES = 118, TYPES = 119, TYPE = 120, 
-    UNCONDITIONALLY = 121, VALUE = 122, VELOCITY = 123, WHEN = 124, WHILE = 125, 
-    WHOSE = 126, WIDTH = 127, WILL = 128, WITH = 129, WITHIN = 130, ID = 131, 
-    NUMBER = 132, FLOAT = 133
+    T__7 = 8, COMMENT = 9, LINE_COMMENT = 10, WS = 11, COMMA = 12, COLON = 13, 
+    STATE_VAL = 14, EVNT = 15, LOC_NAME = 16, AN = 17, AT = 18, ADD = 19, 
+    AND = 20, ARE = 21, AFTER = 22, ALWAYS = 23, AROUND = 24, ACTION = 25, 
+    BEHIND = 26, BOTTOM = 27, CONSIDER = 28, CIRCLE = 29, CENTER = 30, CONDITION = 31, 
+    DECIMAL = 32, DIRECTION = 33, DURATION = 34, END = 35, ENDS = 36, ENVIRONMENT = 37, 
+    ENTER = 38, EXIT = 39, EXISTS = 40, EVENT = 41, EXACTLY = 42, EVERY = 43, 
+    EVERYONE = 44, ENDING = 45, FOR = 46, FROM = 47, FRONT = 48, FASTER = 49, 
+    GIVEN = 50, GOAL = 51, GROUP = 52, HAS = 53, IN = 54, INTEGER = 55, 
+    INITIAL = 56, IS = 57, IF = 58, LENGTH = 59, LENGTHS = 60, LEFT = 61, 
+    LEAVE = 62, DIMENSIONS = 63, LOCATION = 64, MAX = 65, METERS = 66, NAME = 67, 
+    NEAREST = 68, NORMAL = 69, NONE = 70, NOT = 71, OBSTACLE = 72, OCCUR = 73, 
+    OCCURRED = 74, OCCURRING = 75, OF = 76, ON = 77, OR = 78, PEDESTRIAN = 79, 
+    PEDESTRIANS = 80, POINTS = 81, POSSIBLE = 82, POSITION = 83, RADIUS = 84, 
+    RANDOM = 85, REQUIRED = 86, RECTANGLE = 87, RIGHT = 88, RESPONSE = 89, 
+    ROTATION = 90, SCALE = 91, SELF = 92, SELECT = 93, SELECTOR = 94, SET = 95, 
+    SECOND = 96, SECONDS = 97, STATUS = 98, STARTING = 99, SLOWER = 100, 
+    SHAPE = 101, STATES = 102, START = 103, STATE = 104, STARTS = 105, SPEED = 106, 
+    SUBTRACT = 107, STIMULUS = 108, TARGET = 109, TO = 110, TOWARDS = 111, 
+    TOP = 112, THE = 113, THAT = 114, THEN = 115, THEIR = 116, THERES = 117, 
+    TYPES = 118, TYPE = 119, UNCONDITIONALLY = 120, VALUE = 121, VELOCITY = 122, 
+    WHEN = 123, WHILE = 124, WHOSE = 125, WIDTH = 126, WILL = 127, WITH = 128, 
+    WITHIN = 129, ID = 130, FLOAT = 131, NUMBER = 132
   };
 
   enum {
@@ -61,8 +60,8 @@ public:
     RuleSelector_Location = 65, RuleGroup = 66, RuleAction = 67, RuleAction_attribute = 68, 
     RuleAction_stimulus = 69, RuleAction_response = 70, RuleAction_duration = 71, 
     RuleAction_target = 72, RuleSub_action = 73, RuleAction_atom = 74, RuleSet_atom = 75, 
-    RuleScale_atom = 76, RuleDeclaration = 77, RuleDecl_Ped_State = 78, 
-    RuleDecl_Ped = 79
+    RuleScale_atom = 76, RuleSet_objective_atom = 77, RuleDeclaration = 78, 
+    RuleDecl_Ped_State = 79, RuleDecl_Ped = 80
   };
 
   explicit BehaviorParser(antlr4::TokenStream *input);
@@ -159,6 +158,7 @@ public:
   class Action_atomContext;
   class Set_atomContext;
   class Scale_atomContext;
+  class Set_objective_atomContext;
   class DeclarationContext;
   class Decl_Ped_StateContext;
   class Decl_PedContext; 
@@ -611,6 +611,7 @@ public:
     antlr4::tree::TerminalNode *EVNT();
     antlr4::tree::TerminalNode *HAS();
     antlr4::tree::TerminalNode *OCCURRED();
+    antlr4::tree::TerminalNode *NOT();
 
 
     virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -625,6 +626,7 @@ public:
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *EVNT();
     antlr4::tree::TerminalNode *OCCURRING();
+    antlr4::tree::TerminalNode *NOT();
 
 
     virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -802,6 +804,7 @@ public:
     antlr4::tree::TerminalNode *STATE_VAL();
     antlr4::tree::TerminalNode *LOC_NAME();
     TowardsContext *towards();
+    AttributeContext *attribute();
 
 
     virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
@@ -1287,6 +1290,7 @@ public:
     Action_atomContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     Set_atomContext *set_atom();
+    Set_objective_atomContext *set_objective_atom();
     Scale_atomContext *scale_atom();
 
 
@@ -1328,6 +1332,23 @@ public:
   };
 
   Scale_atomContext* scale_atom();
+
+  class  Set_objective_atomContext : public antlr4::ParserRuleContext {
+  public:
+    Set_objective_atomContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *SET();
+    antlr4::tree::TerminalNode *GOAL();
+    antlr4::tree::TerminalNode *TO();
+    antlr4::tree::TerminalNode *RANDOM();
+    antlr4::tree::TerminalNode *LOC_NAME();
+
+
+    virtual std::any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  Set_objective_atomContext* set_objective_atom();
 
   class  DeclarationContext : public antlr4::ParserRuleContext {
   public:

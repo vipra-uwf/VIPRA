@@ -36,11 +36,11 @@ condition_Time_Elapsed_From_Event:
   ;
 
 condition_Event_Occurred:
-  EVNT HAS OCCURRED
+  EVNT HAS NOT? OCCURRED
   ;
 
 condition_Event_Occurring:
-  EVNT OCCURRING
+  EVNT NOT? OCCURRING
   ;
 
 condition_Event_Starting:

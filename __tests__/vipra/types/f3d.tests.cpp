@@ -4,7 +4,8 @@
 
 const float ERROR = 0.001;
 
-TEST(Dimensions, Default_Constructor_Tests) {
+TEST(Dimensions, Default_Constructor_Tests)
+{
   VIPRA::f3d sutf3d;
 
   EXPECT_EQ(sutf3d.x, 0);
@@ -12,7 +13,8 @@ TEST(Dimensions, Default_Constructor_Tests) {
   EXPECT_EQ(sutf3d.z, 0);
 }
 
-TEST(Dimensions, Parameterized_Constructor_Tests) {
+TEST(Dimensions, Parameterized_Constructor_Tests)
+{
   VIPRA::f3d sutf3d1{1};
 
   EXPECT_EQ(sutf3d1.x, 1);
@@ -30,7 +32,8 @@ TEST(Dimensions, Parameterized_Constructor_Tests) {
   EXPECT_EQ(sutf3d3.z, 3);
 }
 
-TEST(Dimensions, CopyMove_Constructor_Tests) {
+TEST(Dimensions, CopyMove_Constructor_Tests)
+{
   VIPRA::f3d sutf3d1{1, 2, 3};
   VIPRA::f3d sutf3d2{sutf3d1};
 
@@ -46,7 +49,8 @@ TEST(Dimensions, CopyMove_Constructor_Tests) {
   EXPECT_EQ(sutf3d4.z, 3);
 }
 
-TEST(Dimensions, CopyMove_Operators_Tests) {
+TEST(Dimensions, CopyMove_Operators_Tests)
+{
   VIPRA::f3d sutf3d1{1, 2, 3};
   VIPRA::f3d sutf3d2;
 
@@ -66,7 +70,8 @@ TEST(Dimensions, CopyMove_Operators_Tests) {
   EXPECT_EQ(sutf3d4.z, 3);
 }
 
-TEST(Dimensions, Bracket_Operator_Tests) {
+TEST(Dimensions, Bracket_Operator_Tests)
+{
   VIPRA::f3d sutf3d1{1, 2, 3};
   EXPECT_EQ(sutf3d1[0], 1);
   EXPECT_EQ(sutf3d1['x'], 1);
@@ -74,11 +79,12 @@ TEST(Dimensions, Bracket_Operator_Tests) {
   EXPECT_EQ(sutf3d1['y'], 2);
   EXPECT_EQ(sutf3d1[2], 3);
   EXPECT_EQ(sutf3d1['z'], 3);
-  EXPECT_THROW(sutf3d1[3], std::out_of_range);
-  EXPECT_THROW(sutf3d1['a'], std::out_of_range);
+  EXPECT_THROW(auto _ = sutf3d1[3], std::out_of_range);
+  EXPECT_THROW(auto __ = sutf3d1['a'], std::out_of_range);
 }
 
-TEST(Dimensions, Unit_Vector) {
+TEST(Dimensions, Unit_Vector)
+{
   VIPRA::f3d sut1{0, 0, 0};
   VIPRA::f3d sut2{1, 0, 0};
   VIPRA::f3d sut3{0, 1, 0};
@@ -92,7 +98,8 @@ TEST(Dimensions, Unit_Vector) {
   EXPECT_NEAR(sut4.y, 1 / std::sqrt(2), 0.001);
 }
 
-TEST(Dimensions, Unary_Operators) {
+TEST(Dimensions, Unary_Operators)
+{
   VIPRA::f3d sut1{0, 0, 0};
   VIPRA::f3d sut2{1, 2, 3};
 
@@ -100,7 +107,8 @@ TEST(Dimensions, Unary_Operators) {
   EXPECT_EQ(-sut2, VIPRA::f3d(-1, -2, -3));
 }
 
-TEST(Dimensions, Magnitude) {
+TEST(Dimensions, Magnitude)
+{
   VIPRA::f3d sut1{0, 0, 0};
   VIPRA::f3d sut2{1, 0, 0};
   VIPRA::f3d sut3{0, 1, 0};
@@ -111,7 +119,8 @@ TEST(Dimensions, Magnitude) {
   EXPECT_NEAR(sut4.mag(), std::sqrt(2), 0.01);
 }
 
-TEST(Dimensions, Binary_Operators_Tests) {
+TEST(Dimensions, Binary_Operators_Tests)
+{
   // operator+
   VIPRA::f3d sut1{1, 2, 3};
   VIPRA::f3d addtest;
@@ -173,7 +182,8 @@ TEST(Dimensions, Binary_Operators_Tests) {
   EXPECT_EQ(sut8.z, 3);
 }
 
-TEST(Dimensions, Boolean_Operators_Tests) {
+TEST(Dimensions, Boolean_Operators_Tests)
+{
   VIPRA::f3d sut1{1, 2, 3};
   VIPRA::f3d sut2{2, 3, 4};
   VIPRA::f3d sut3{1, 2, 3};
@@ -184,7 +194,8 @@ TEST(Dimensions, Boolean_Operators_Tests) {
   EXPECT_TRUE(sut1 != sut2);
 }
 
-TEST(Dimensions, Distance_To_Tests) {
+TEST(Dimensions, Distance_To_Tests)
+{
   VIPRA::f3d sut1{1, 2, 3};
   VIPRA::f3d sut2{2, 3, 4};
 

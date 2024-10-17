@@ -1,9 +1,11 @@
 #pragma once
 
-#include <functional>
 #include <optional>
 
+#include "vipra/logging/logging.hpp"
 #include "vipra/types/idx.hpp"
+
+#include "vipra/vipra_behaviors/conditions/condition.hpp"
 #include "vipra/vipra_behaviors/events/event_status.hpp"
 #include "vipra/vipra_behaviors/util/bool_latch.hpp"
 #include "vipra/vipra_behaviors/util/timed_latch.hpp"
@@ -14,7 +16,6 @@ namespace VIPRA::Behaviors {
    * @brief An Event is something that occurs during a simulation, when an event starts it notifies it's subscribing functions and same when it ends
    *
    */
-template <typename cond_t>
 class Event {
   DEFAULT_CONSTRUCTIBLE(Event)
   COPYABLE(Event)
@@ -25,19 +26,35 @@ class Event {
 
   void evaluate(auto pack);
 
-  void set_start_condition(cond_t const& condition) { _startCondition = condition; }
-  void set_end_condition(cond_t const& condition) { _endCondition = condition; }
+  void set_start_condition(Condition const& condition)
+  {
+    _startCondition = condition;
+  }
+  void set_end_condition(Condition const& condition)
+  {
+    _endCondition = condition;
+  }
 
   [[nodiscard]] auto is_occurring() const -> bool
   {
-    return _status == EventStatus::OCCURRING || _status == EventStatus::STARTING;
+    return _status == EventStatus::OCCURRING ||
+           _status == EventStatus::STARTING;
   }
   [[nodiscard]] auto has_occurred() const -> bool { return _occurred; }
-  [[nodiscard]] auto is_starting() const -> bool { return _status == EventStatus::STARTING; }
-  [[nodiscard]] auto is_ending() const -> bool { return _status == EventStatus::ENDING; }
+  [[nodiscard]] auto is_starting() const -> bool
+  {
+    return _status == EventStatus::STARTING;
+  }
+  [[nodiscard]] auto is_ending() const -> bool
+  {
+    return _status == EventStatus::ENDING;
+  }
 
   void               set_status(EventStatus status) { _status = status; }
-  [[nodiscard]] auto get_status() const -> EventStatus const& { return _status; }
+  [[nodiscard]] auto get_status() const -> EventStatus const&
+  {
+    return _status;
+  }
 
   [[nodiscard]] auto get_name() const -> std::string const& { return _name; }
 
@@ -46,13 +63,12 @@ class Event {
   EventStatus _status{EventStatus::NOT_OCCURRING};
   bool        _occurred = false;
 
-  Latch                 _latch;
-  cond_t                _startCondition;
-  std::optional<cond_t> _endCondition;
+  Latch                    _latch;
+  Condition                _startCondition;
+  std::optional<Condition> _endCondition;
 };
 
-template <typename cond_t>
-void Event<cond_t>::evaluate(auto pack)
+void Event::evaluate(auto pack)
 {
   if ( _status == EventStatus::ENDING ) {
     _status = EventStatus::NOT_OCCURRING;
@@ -70,7 +86,7 @@ void Event<cond_t>::evaluate(auto pack)
     if ( _endCondition ) {
       _endCondition.value().evaluate(pack, peds, met, {}, temp);
       if ( met[0] ) {
-        // spdlog::info("Event {} is Ending", _name);
+        VIPRA::Log::debug("Event {} is Ending", _name);
         _status = EventStatus::ENDING;
       }
     }
@@ -80,7 +96,7 @@ void Event<cond_t>::evaluate(auto pack)
 
   _startCondition.evaluate(pack, peds, met, {}, temp);
   if ( met[0] ) {
-    // spdlog::info("Event {} is Starting", _name);
+    VIPRA::Log::debug("Event {} is Starting", _name);
     _occurred = true;
     _status = EventStatus::STARTING;
   }

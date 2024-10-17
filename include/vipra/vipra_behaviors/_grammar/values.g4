@@ -36,11 +36,11 @@ random_float:
   ;
 
 float_range:
-  FLOAT (TO | '-') FLOAT
+  FLOAT TO FLOAT
   ;
 
 number_range:
-  NUMBER (TO | '-') NUMBER
+  NUMBER TO NUMBER
   ;
 
 value_coord:

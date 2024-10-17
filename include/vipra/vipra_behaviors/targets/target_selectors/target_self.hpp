@@ -14,6 +14,9 @@ struct TargetSelf {
   COPYABLE(TargetSelf)
   MOVEABLE(TargetSelf)
 
-  inline auto operator()(auto /*unused*/, Self self) -> Target { return self.target; }
+  inline auto operator()(auto /*unused*/, Self self) -> Target
+  {
+    return self.target;
+  }
 };
 }  // namespace VIPRA::Behaviors

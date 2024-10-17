@@ -1,62 +1,176 @@
 #pragma once
 
-#include <algorithm>
+#include <array>
+#include <cassert>
+#include <cstddef>
+#include <limits>
 #include <vector>
 
-#include "vipra/geometry/circle.hpp"
+#include "vipra/geometry/f3d.hpp"
 #include "vipra/geometry/line.hpp"
 
-// TODO(rolland): issue #19 add in iterators
+#include "vipra/geometry/rectangle.hpp"
+#include "vipra/geometry/triangle.hpp"
+#include "vipra/random/random.hpp"
 namespace VIPRA::Geometry {
-struct Polygon {
-  std::vector<VIPRA::Geometry::Line> edges;
 
-  explicit Polygon(const std::vector<VIPRA::f3d>& points)
+class Polygon {
+ public:
+  auto random_point(VIPRA::Random::Engine& engine) const noexcept -> f3d;
+
+  [[nodiscard]] auto is_point_inside(f3d point) const noexcept -> bool;
+  [[nodiscard]] auto bounding_box() const noexcept -> Rectangle;
+  [[nodiscard]] auto center() const noexcept -> f3d;
+  [[nodiscard]] auto points() const noexcept -> std::vector<f3d> const&
   {
-    assert(points.size() > 2);
+    return _points;
+  }
+  [[nodiscard]] auto sides() const noexcept -> std::vector<Line>;
 
-    for ( size_t i = 0; i < points.size() - 1; ++i ) {
-      edges.emplace_back(points.at(i), points.at(i + 1));
+ private:
+  std::vector<f3d> _points;
+
+ public:
+  explicit Polygon(std::vector<f3d> const& points) : _points(points) {}
+
+  explicit Polygon(std::vector<f3d>&& points) : _points(std::move(points)) {}
+
+  template <size_t point_s>
+  explicit Polygon(std::array<f3d, point_s> const& points)
+  {
+    _points.resize(point_s);
+    std::copy(points.begin(), points.end(), _points.begin());
+  }
+
+  template <size_t point_s>
+  explicit Polygon(std::array<f3d, point_s>&& points)
+  {
+    _points.resize(point_s);
+    std::copy(points.begin(), points.end(), _points.begin());
+  }
+
+  explicit Polygon(std::vector<Line> const& lines)
+  {
+    _points.resize(lines.size());
+    for ( size_t i = 0; i < lines.size(); ++i ) {
+      _points[i] = lines[i].start;
     }
-    edges.emplace_back(points.back(), points.front());
   }
 
-  explicit Polygon(std::vector<VIPRA::f3d>&& points)
+  explicit Polygon(std::vector<Line>&& lines)
   {
-    assert(points.size() > 2);
-
-    for ( size_t i = 0; i < points.size() - 1; ++i ) {
-      edges.emplace_back(points.at(i), points.at(i + 1));
+    _points.resize(lines.size());
+    for ( size_t i = 0; i < lines.size(); ++i ) {
+      _points[i] = lines[i].start;
     }
-    edges.emplace_back(points.back(), points.front());
   }
 
-  /**
-   * @brief Checks if a point is inside the polygon.
-   * 
-   * @param point 
-   * @return true 
-   * @return false 
-   */
-  [[nodiscard]] inline auto is_point_inside(VIPRA::f3d point) const noexcept -> bool
+  template <size_t point_s>
+  explicit Polygon(std::array<Line, point_s> const& lines)
   {
-    // TODO(rolland): verify this
-    bool isInside = false;
-    for ( const auto& edge : edges ) {
-      if ( edge.is_point_on(point) ) return true;
-      if ( edge.start.y > point.y != edge.end.y > point.y &&
-           point.x < (edge.end.x - edge.start.x) * (point.y - edge.start.y) / (edge.end.y - edge.start.y) +
-                         edge.start.x ) {
-        isInside = ! isInside;
-      }
+    _points.resize(point_s);
+    for ( size_t i = 0; i < point_s; ++i ) {
+      _points[i] = lines[i].start;
     }
-    return isInside;
   }
 
-  [[nodiscard]] inline auto does_intersect(VIPRA::Geometry::Circle const& circle) const noexcept -> bool
+  template <size_t point_s>
+  explicit Polygon(std::array<Line, point_s>&& lines)
   {
-    return std::any_of(edges.begin(), edges.end(),
-                       [&](auto const& edge) { return circle.does_intersect(edge); });
+    _points.resize(point_s);
+    for ( size_t i = 0; i < point_s; ++i ) {
+      _points[i] = lines[i].start;
+    }
   }
+
+  ~Polygon() = default;
+  Polygon() = default;
+  Polygon(Polygon const&) = default;
+  auto operator=(Polygon const&) -> Polygon& = default;
+  Polygon(Polygon&&) noexcept = default;
+  auto operator=(Polygon&&) noexcept -> Polygon& = default;
 };
+
+// ---------------------------------- IMPLEMENTATION ------------------------------------------------
+
+inline auto Polygon::is_point_inside(f3d point) const noexcept -> bool
+{
+  // TODO(rolland): verify this
+  bool isInside = false;
+  for ( auto const& side : sides() ) {
+    if ( side.is_point_on(point) ) return true;
+    if ( side.start.y > point.y != side.end.y > point.y &&
+         point.x < (side.end.x - side.start.x) * (point.y - side.start.y) /
+                           (side.end.y - side.start.y) +
+                       side.start.x ) {
+      isInside = ! isInside;
+    }
+  }
+  return isInside;
+}
+
+inline auto Polygon::center() const noexcept -> f3d
+{
+  const auto sideList = sides();
+  f3d        center;
+
+  std::for_each(sideList.begin(), sideList.end(),
+                [&](Line const& edge) { center += edge.start; });
+
+  return center /= sideList.size();
+}
+
+inline auto Polygon::random_point(VIPRA::Random::Engine& engine) const noexcept
+    -> f3d
+{
+  // TODO(rolland): this is disgusting
+
+  auto box = bounding_box();
+
+  Random::uniform_distribution<VIPRA::f_pnt> xDist{box.sides()[3].end.x,
+                                                   box.sides()[3].start.x};
+  Random::uniform_distribution<VIPRA::f_pnt> yDist{box.sides()[2].end.y,
+                                                   box.sides()[2].start.y};
+
+  f3d point;
+
+  do {
+    point.x = xDist(engine);
+    point.y = yDist(engine);
+  } while ( ! box.is_point_inside(point) );
+  return point;
+}
+
+inline auto Polygon::bounding_box() const noexcept -> Rectangle
+{
+  f3d botLeft{std::numeric_limits<VIPRA::f_pnt>::max(),
+              std::numeric_limits<VIPRA::f_pnt>::max()};
+  f3d topRight{std::numeric_limits<VIPRA::f_pnt>::min(),
+               std::numeric_limits<VIPRA::f_pnt>::min()};
+  for ( auto const& point : _points ) {
+    topRight.x = std::max({topRight.x, point.x});
+    topRight.y = std::max({topRight.y, point.y});
+    botLeft.x = std::min({botLeft.x, point.x});
+    botLeft.y = std::min({botLeft.y, point.y});
+  }
+
+  f3d topLeft = f3d{botLeft.x, topRight.y};
+  f3d botRight = f3d{topRight.x, botLeft.y};
+
+  return Rectangle{botLeft, topLeft, topRight, botRight};
+}
+
+inline auto Polygon::sides() const noexcept -> std::vector<Line>
+{
+  std::vector<Line> lines;
+  lines.resize(_points.size());
+
+  for ( size_t i = 0; i < _points.size() - 1; ++i ) {
+    lines[i] = Line{_points[i], _points[i + 1]};
+  }
+  lines.back() = Line{_points.back(), _points.front()};
+
+  return lines;
+}
+
 }  // namespace VIPRA::Geometry

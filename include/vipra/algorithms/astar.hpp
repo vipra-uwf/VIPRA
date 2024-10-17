@@ -2,23 +2,18 @@
 
 #include <algorithm>
 #include <concepts>
-#include <functional>
-#include <numeric>
 #include <optional>
 #include <queue>
 #include <type_traits>
-
-#include <iostream>
 #include <unordered_set>
 
-#include "vipra/geometry/f3d.hpp"
-
+#include "vipra/logging/logging.hpp"
 #include "vipra/types/float.hpp"
 #include "vipra/types/idx.hpp"
-
 #include "vipra/types/util/result_or_void.hpp"
 
-#include "vipra/debug/debug_do.hpp"
+#include "vipra/macros/performance.hpp"
+
 #include "vipra/util/invoke_result_or.hpp"
 
 namespace VIPRA::Algo {
@@ -43,12 +38,10 @@ concept Graph = requires(const graph_t graph, VIPRA::idx idx)
  * @tparam func_t 
  */
 template <typename func_t>
-concept distance_func = requires(func_t func, VIPRA::idx idx1, VIPRA::idx idx2)
-{
-  {
-    func(idx1, idx2)
-    } -> std::same_as<VIPRA::f_pnt>;
-};
+concept distance_func =
+    requires(func_t func, VIPRA::idx idx1, VIPRA::idx idx2) {
+      { func(idx1, idx2) } -> std::same_as<VIPRA::f_pnt>;
+    };
 
 /**
  * @brief Concept for a function that converts a node index to a desired type
@@ -56,10 +49,10 @@ concept distance_func = requires(func_t func, VIPRA::idx idx1, VIPRA::idx idx2)
  * @tparam func_t 
  */
 template <typename func_t>
-concept conversion_func = std::is_same_v<func_t, VOID> || requires(func_t func, VIPRA::idx idx1)
-{
-  {func(idx1)};
-};
+concept conversion_func =
+    std::is_same_v<func_t, VOID> || requires(func_t func, VIPRA::idx idx1) {
+      { func(idx1) };
+    };
 }  // namespace AStar
 
 /**
@@ -76,15 +69,15 @@ concept conversion_func = std::is_same_v<func_t, VOID> || requires(func_t func, 
  */
 template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
           AStar::conversion_func conversion_f_t = VOID>
-[[nodiscard]] constexpr auto astar(VIPRA::idx start, VIPRA::idx end, graph_t const& graph,
-                                   distance_f_t&&   distance_func,
-                                   conversion_f_t&& conversion_func = VOID{}) noexcept
-    -> std::optional<std::vector<
-        std::remove_reference_t<Util::invoke_result_or_t<VIPRA::idx, conversion_f_t, VIPRA::idx>>>>
+[[nodiscard]] auto astar(VIPRA::idx start, VIPRA::idx end, graph_t const& graph,
+                         distance_f_t&&   distance_func,
+                         conversion_f_t&& conversion_func = VOID{}) noexcept
+    -> std::optional<std::vector<std::remove_reference_t<
+        Util::invoke_result_or_t<VIPRA::idx, conversion_f_t, VIPRA::idx>>>>
 {
   // proper return type for the function
-  using ret_t =
-      std::vector<std::remove_reference_t<Util::invoke_result_or_t<VIPRA::idx, conversion_f_t, VIPRA::idx>>>;
+  using ret_t = std::vector<std::remove_reference_t<
+      Util::invoke_result_or_t<VIPRA::idx, conversion_f_t, VIPRA::idx>>>;
 
   // holds the nodes visited throughout the algorithm
   struct Node {
@@ -93,7 +86,10 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
     VIPRA::f_pnt distanceFromStart;
     VIPRA::f_pnt distanceWithHeuristic;
 
-    auto operator==(Node const& other) const -> bool { return self == other.self; }
+    auto operator==(Node const& other) const -> bool
+    {
+      return self == other.self;
+    }
 
     struct Compare {
       auto operator()(Node* left, Node* right) const -> bool
@@ -104,59 +100,79 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
   };
 
   // TODO(rolland): look at replacing this with a better data structure
-  struct PQueue : public std::priority_queue<Node*, std::vector<Node*>, typename Node::Compare> {
+  struct PQueue : public std::priority_queue<Node*, std::vector<Node*>,
+                                             typename Node::Compare> {
     auto search(VIPRA::idx nodeIdx) -> Node*
     {
       auto container = this->c;
       auto gridPoint =
-          std::find_if(container.begin(), container.end(), [&](Node* node) { return node->self == nodeIdx; });
+          std::find_if(container.begin(), container.end(),
+                       [&](Node* node) { return node->self == nodeIdx; });
       if ( gridPoint == container.end() ) {
         return nullptr;
       }
 
       return *gridPoint;
     }
+
+    void refresh()
+    {
+      std::make_heap(
+          this->c.begin(), this->c.end(), [](Node* left, Node* right) {
+            return left->distanceWithHeuristic > right->distanceWithHeuristic;
+          });
+    }
+
     auto begin() -> decltype(this->c.begin()) { return this->c.begin(); }
     auto end() -> decltype(this->c.end()) { return this->c.end(); }
   };
 
   std::vector<Node>         nodes{graph.nodes().size()};
-  PQueue                    openset;
+  PQueue                    openQueue;
+  std::unordered_set<Node*> openSet;
   std::unordered_set<Node*> closedset;
 
   nodes[start] = Node{start, start, 0, distance_func(start, end)};
 
   Node* current = nullptr;
-  openset.push(&nodes[start]);
+  openSet.insert(&nodes[start]);
+  openQueue.push(&nodes[start]);
 
-  while ( ! openset.empty() ) {
-    current = openset.top();
+  while ( ! openQueue.empty() ) {
+    current = openQueue.top();
 
     if ( current->self == end ) {
       break;
     }
 
-    openset.pop();
+    openQueue.pop();
+    openSet.erase(current);
     closedset.insert(current);
-    for ( VIPRA::idx neighborIdx : graph.neighbors(current->self) ) {
-      if ( ! closedset.contains(&nodes[neighborIdx]) ) {
-        Node neighbor;
-        neighbor.self = neighborIdx;
-        neighbor.parent = current->self;
-        neighbor.distanceFromStart = current->distanceFromStart + distance_func(current->self, neighborIdx);
-        neighbor.distanceWithHeuristic = neighbor.distanceFromStart + distance_func(neighborIdx, end);
 
-        auto found = std::find(openset.begin(), openset.end(), &nodes[neighborIdx]);
-        if ( found == openset.end() ) {
-          nodes[neighborIdx] = neighbor;
-          openset.push(&nodes[neighborIdx]);
-        }
-        else {
-          if ( neighbor.distanceFromStart < (*found)->distanceFromStart ) {
-            (*found)->distanceFromStart = neighbor.distanceFromStart;
-            (*found)->distanceWithHeuristic = neighbor.distanceWithHeuristic;
-            (*found)->parent = neighbor.parent;
-          }
+    for ( VIPRA::idx neighborIdx : graph.neighbors(current->self) ) {
+      if ( closedset.contains(&nodes[neighborIdx]) ) continue;
+
+      Node neighbor;
+      neighbor.self = neighborIdx;
+      neighbor.parent = current->self;
+      neighbor.distanceFromStart = current->distanceFromStart +
+                                   distance_func(current->self, neighborIdx);
+      neighbor.distanceWithHeuristic =
+          neighbor.distanceFromStart + distance_func(neighborIdx, end);
+
+      if ( ! openSet.contains(&nodes[neighborIdx]) ) {
+        nodes[neighborIdx] = neighbor;
+        openQueue.push(&nodes[neighborIdx]);
+        openSet.insert(&nodes[neighborIdx]);
+      }
+      else {
+        auto found =
+            std::find(openQueue.begin(), openQueue.end(), &nodes[neighborIdx]);
+
+        if ( neighbor.distanceFromStart < (*found)->distanceFromStart ) {
+          (*found)->distanceFromStart = neighbor.distanceFromStart;
+          (*found)->distanceWithHeuristic = neighbor.distanceWithHeuristic;
+          (*found)->parent = neighbor.parent;
         }
       }
     }
