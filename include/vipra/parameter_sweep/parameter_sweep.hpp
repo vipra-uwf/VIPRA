@@ -18,6 +18,8 @@
 
 #include "vipra/logging/logging.hpp"
 
+#include "vipra/parameter_sweep/ps_util.hpp"
+
 namespace VIPRA {
 class ParameterSweep {
  public:

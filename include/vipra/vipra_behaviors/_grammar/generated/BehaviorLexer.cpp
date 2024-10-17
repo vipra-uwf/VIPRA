@@ -1,44 +1,42 @@
 
 // Generated from Behavior.g4 by ANTLR 4.13.2
 
-
 #include "BehaviorLexer.h"
 
-
 using namespace antlr4;
-
-
 
 using namespace antlr4;
 
 namespace {
 
 struct BehaviorLexerStaticData final {
-  BehaviorLexerStaticData(std::vector<std::string> ruleNames,
-                          std::vector<std::string> channelNames,
-                          std::vector<std::string> modeNames,
-                          std::vector<std::string> literalNames,
+  BehaviorLexerStaticData(std::vector<std::string> ruleNames, std::vector<std::string> channelNames,
+                          std::vector<std::string> modeNames, std::vector<std::string> literalNames,
                           std::vector<std::string> symbolicNames)
-      : ruleNames(std::move(ruleNames)), channelNames(std::move(channelNames)),
-        modeNames(std::move(modeNames)), literalNames(std::move(literalNames)),
+      : ruleNames(std::move(ruleNames)),
+        channelNames(std::move(channelNames)),
+        modeNames(std::move(modeNames)),
+        literalNames(std::move(literalNames)),
         symbolicNames(std::move(symbolicNames)),
-        vocabulary(this->literalNames, this->symbolicNames) {}
+        vocabulary(this->literalNames, this->symbolicNames)
+  {
+  }
 
   BehaviorLexerStaticData(const BehaviorLexerStaticData&) = delete;
   BehaviorLexerStaticData(BehaviorLexerStaticData&&) = delete;
   BehaviorLexerStaticData& operator=(const BehaviorLexerStaticData&) = delete;
   BehaviorLexerStaticData& operator=(BehaviorLexerStaticData&&) = delete;
 
-  std::vector<antlr4::dfa::DFA> decisionToDFA;
+  std::vector<antlr4::dfa::DFA>       decisionToDFA;
   antlr4::atn::PredictionContextCache sharedContextCache;
-  const std::vector<std::string> ruleNames;
-  const std::vector<std::string> channelNames;
-  const std::vector<std::string> modeNames;
-  const std::vector<std::string> literalNames;
-  const std::vector<std::string> symbolicNames;
-  const antlr4::dfa::Vocabulary vocabulary;
-  antlr4::atn::SerializedATNView serializedATN;
-  std::unique_ptr<antlr4::atn::ATN> atn;
+  const std::vector<std::string>      ruleNames;
+  const std::vector<std::string>      channelNames;
+  const std::vector<std::string>      modeNames;
+  const std::vector<std::string>      literalNames;
+  const std::vector<std::string>      symbolicNames;
+  const antlr4::dfa::Vocabulary       vocabulary;
+  antlr4::atn::SerializedATNView      serializedATN;
+  std::unique_ptr<antlr4::atn::ATN>   atn;
 };
 
 ::antlr4::internal::OnceFlag behaviorlexerLexerOnceFlag;
@@ -47,9 +45,10 @@ static thread_local
 #endif
 std::unique_ptr<BehaviorLexerStaticData> behaviorlexerLexerStaticData = nullptr;
 
-void behaviorlexerLexerInitialize() {
+void behaviorlexerLexerInitialize()
+{
 #if ANTLR4_USE_THREAD_LOCAL_CACHE
-  if (behaviorlexerLexerStaticData != nullptr) {
+  if ( behaviorlexerLexerStaticData != nullptr ) {
     return;
   }
 #else
@@ -533,55 +532,55 @@ void behaviorlexerLexerInitialize() {
 
   const size_t count = staticData->atn->getNumberOfDecisions();
   staticData->decisionToDFA.reserve(count);
-  for (size_t i = 0; i < count; i++) { 
+  for ( size_t i = 0; i < count; i++ ) {
     staticData->decisionToDFA.emplace_back(staticData->atn->getDecisionState(i), i);
   }
   behaviorlexerLexerStaticData = std::move(staticData);
 }
 
-}
+}  // namespace
 
-BehaviorLexer::BehaviorLexer(CharStream *input) : Lexer(input) {
+BehaviorLexer::BehaviorLexer(CharStream* input) : Lexer(input)
+{
   BehaviorLexer::initialize();
-  _interpreter = new atn::LexerATNSimulator(this, *behaviorlexerLexerStaticData->atn, behaviorlexerLexerStaticData->decisionToDFA, behaviorlexerLexerStaticData->sharedContextCache);
+  _interpreter = new atn::LexerATNSimulator(this, *behaviorlexerLexerStaticData->atn,
+                                            behaviorlexerLexerStaticData->decisionToDFA,
+                                            behaviorlexerLexerStaticData->sharedContextCache);
 }
 
-BehaviorLexer::~BehaviorLexer() {
-  delete _interpreter;
-}
+BehaviorLexer::~BehaviorLexer() { delete _interpreter; }
 
-std::string BehaviorLexer::getGrammarFileName() const {
-  return "Behavior.g4";
-}
+std::string BehaviorLexer::getGrammarFileName() const { return "Behavior.g4"; }
 
-const std::vector<std::string>& BehaviorLexer::getRuleNames() const {
+const std::vector<std::string>& BehaviorLexer::getRuleNames() const
+{
   return behaviorlexerLexerStaticData->ruleNames;
 }
 
-const std::vector<std::string>& BehaviorLexer::getChannelNames() const {
+const std::vector<std::string>& BehaviorLexer::getChannelNames() const
+{
   return behaviorlexerLexerStaticData->channelNames;
 }
 
-const std::vector<std::string>& BehaviorLexer::getModeNames() const {
+const std::vector<std::string>& BehaviorLexer::getModeNames() const
+{
   return behaviorlexerLexerStaticData->modeNames;
 }
 
-const dfa::Vocabulary& BehaviorLexer::getVocabulary() const {
+const dfa::Vocabulary& BehaviorLexer::getVocabulary() const
+{
   return behaviorlexerLexerStaticData->vocabulary;
 }
 
-antlr4::atn::SerializedATNView BehaviorLexer::getSerializedATN() const {
+antlr4::atn::SerializedATNView BehaviorLexer::getSerializedATN() const
+{
   return behaviorlexerLexerStaticData->serializedATN;
 }
 
-const atn::ATN& BehaviorLexer::getATN() const {
-  return *behaviorlexerLexerStaticData->atn;
-}
+const atn::ATN& BehaviorLexer::getATN() const { return *behaviorlexerLexerStaticData->atn; }
 
-
-
-
-void BehaviorLexer::initialize() {
+void BehaviorLexer::initialize()
+{
 #if ANTLR4_USE_THREAD_LOCAL_CACHE
   behaviorlexerLexerInitialize();
 #else

@@ -25,8 +25,11 @@ namespace AStar {
  * @tparam graph_t 
  */
 template <typename graph_t>
-concept Graph = requires(const graph_t graph, VIPRA::idx idx) {
-  { graph.neighbors(idx) } -> std::same_as<std::vector<VIPRA::idx> const&>;
+concept Graph = requires(const graph_t graph, VIPRA::idx idx)
+{
+  {
+    graph.neighbors(idx)
+    } -> std::same_as<std::vector<VIPRA::idx> const&>;
 };
 
 /**
