@@ -74,8 +74,6 @@ class DensityGrid {
   void incr_gridpoint(VIPRA::f3d const& pos)
   {
     const auto currentPedcount = _grid[get_closest_grid_idx(pos)].pedCount;
-    VIPRA::Log::debug("Updating ({}, {}) from {} to {}.", pos.x, pos.y,
-                      currentPedcount, currentPedcount + 1);
     _grid[get_closest_grid_idx(pos)].pedCount++;
   }
 

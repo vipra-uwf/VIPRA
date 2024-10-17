@@ -4,7 +4,8 @@ target_sources(
   ${PROJECT_NAME}
   PRIVATE
   f3d.tests.cpp
-  line.tests.cpp
-  rectangle.tests.cpp
-  circle.tests.cpp
+  geometry/line.tests.cpp
+  geometry/rectangle.tests.cpp
+  geometry/circle.tests.cpp
+  geometry/polygon.tests.cpp
 )

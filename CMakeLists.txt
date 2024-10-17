@@ -93,5 +93,9 @@ endif()
 
 vipra_find_all_modules()
 foreach(SUBDIR ${VIPRA_MODULE_DIRECTORIES})
-    add_subdirectory(${SUBDIR})
+  add_subdirectory(${SUBDIR})
 endforeach()
+
+if ( VIPRA_TESTING )
+  add_subdirectory(__tests__)
+endif()

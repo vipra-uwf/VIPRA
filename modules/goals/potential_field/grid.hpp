@@ -92,7 +92,6 @@ class Grid {
 
       VIPRA::idx densityGridIndex = densityGrid.get_closest_grid_idx(currPos);
       int        pedCount = densityGrid.get_ped_count_at_idx(densityGridIndex);
-      VIPRA::Log::debug("Adding Weight: {}", pedCount);
       add_neighbors(currPos, start, next, pedCount);
     }
   }
@@ -211,7 +210,6 @@ class Grid {
 
       auto& grid = get_grid(nextPos);
 
-      // VIPRA::Log::debug("distance: {} | distance_to_sqrd: {} | additional weight: {}", currGrid.distance, curr.distance_to_sqrd(nextPos), (weight * 0.01));
       VIPRA::f_pnt dist =
           currGrid.distance + curr.distance_to_sqrd(nextPos) + weight;
 

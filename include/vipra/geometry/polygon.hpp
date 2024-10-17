@@ -38,14 +38,17 @@ class Polygon {
   explicit Polygon(std::vector<f3d>&& points) : _points(std::move(points)) {}
 
   template <size_t point_s>
-  explicit Polygon(std::array<f3d, point_s> const& points) : _points(points)
+  explicit Polygon(std::array<f3d, point_s> const& points)
   {
+    _points.resize(point_s);
+    std::copy(points.begin(), points.end(), _points.begin());
   }
 
   template <size_t point_s>
   explicit Polygon(std::array<f3d, point_s>&& points)
-      : _points(std::move(points))
   {
+    _points.resize(point_s);
+    std::copy(points.begin(), points.end(), _points.begin());
   }
 
   explicit Polygon(std::vector<Line> const& lines)

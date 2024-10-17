@@ -1,7 +1,7 @@
 {
   "simulation": {
     "main": {
-      "max_timestep": 300,
+      "max_timestep": 100,
       "timestep_size": 0.005,
       "output_frequency": 100,
       "random_seed": 12346345,
@@ -9,37 +9,39 @@
     }
   },
   "model": {
-    "calm": {
+    "Calm": {
       "meanMass": 1.0,
-      "massStdDev": [
-        0.1,
-        0.2,
-        0.15
-      ],
-      "meanReactionTime": {
-        "min": 0.4,
-        "max": 0.6
-      },
-      "reactionTimeStdDev": 0.05,
+      "massStdDev": 0.2,
+      "meanReactionTime": 0.5,
+      "reactionTimeStdDev": 0.03,
       "meanMaxSpeed": 1.0,
-      "meanShoulderLen": 0.2,
       "maxSpeedStdDev": 0.1,
+      "meanShoulderLen": 0.2,
       "shoulderLenStdDev": 0.05
     }
   },
   "goals": {
+    "PotentialField": {
+      "endGoalType": "exit",
+      "cellSize": 0.1,
+      "densityCellSize": 0.5,
+      "densityWeight": 1,
+      "densityUpdateFrequency": 200
+    },
     "AStar": {
       "endGoalType": "exit",
-      "gridSize": 0.07,
-      "closestObstacle": 0.25,
-      "goalRange": 0.05
+      "gridSize": 0.04,
+      "goalRange": 0.15,
+      "closestObstacle": 0.2
     }
   },
   "pedestrians": {
-    "Grid": {
+    "Base": {
       "use_file": true,
       "spawn_random": false,
-      "random_count": 0,
+      "random_count": 0
+    },
+    "SpatialGrid": {
       "gridSize": 0.5
     }
   },
@@ -58,10 +60,8 @@
   },
   "behavior_model": {
     "main": {
-      "behaviors_dir": "../behaviors",
-      "behaviors": [
-        "luggage"
-      ]
+      "behaviors_dir": "behaviors",
+      "behaviors": []
     }
   }
 }

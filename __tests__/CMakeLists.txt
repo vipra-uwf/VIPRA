@@ -27,14 +27,12 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-add_subdirectory(../ VIPRA)
-
 target_link_libraries(
   ${PROJECT_NAME}
   PUBLIC
   GTest::gtest_main
   GTest::gmock_main
-  VIPRA
+  vipra
 )
 
 add_subdirectory(vipra)

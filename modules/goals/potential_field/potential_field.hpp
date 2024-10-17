@@ -119,7 +119,6 @@ class PotentialField : public VIPRA::Modules::Module<PotentialField>,
 
   void update_ped_density(VIPRA::f3d const& ped)
   {
-    // VIPRA::Log::debug("Updating Pedestrian at ({}, {})", ped.x, ped.y);
     _densityMap.incr_gridpoint(ped);
   }
 };
