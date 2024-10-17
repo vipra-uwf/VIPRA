@@ -3520,6 +3520,9 @@ BehaviorParser::AttributeContext* BehaviorParser::Attr_valueContext::attribute()
   return getRuleContext<BehaviorParser::AttributeContext>(0);
 }
 
+size_t BehaviorParser::Attr_valueContext::getRuleIndex() const {
+  return BehaviorParser::RuleAttr_value;
+}
 
 std::any BehaviorParser::Attr_valueContext::accept(tree::ParseTreeVisitor* visitor)
 {
