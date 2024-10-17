@@ -87,8 +87,8 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">Usage</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md193"></a></p>
-<h1><a class="anchor" id="autotoc_md194"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md357"></a></p>
+<h1><a class="anchor" id="autotoc_md358"></a>
 Choosing Module Implementations</h1>
 <p>In <code>main.cpp</code> you will find this line: </p><div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="keyword">auto</span> sim = VIPRA::simulation(CALM::Model{}, </div>
@@ -101,7 +101,7 @@ Choosing Module Implementations</h1>
 <div class="ttc" id="aclassVIPRA_1_1Goals_1_1AStar_html"><div class="ttname"><a href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html">VIPRA::Goals::AStar</a></div><div class="ttdoc">Goals module that uses the A* algorithm to find the path to the goal.</div><div class="ttdef"><b>Definition</b> astar.hpp:23</div></div>
 <div class="ttc" id="aclassVIPRA_1_1Map_1_1QuadTree_html"><div class="ttname"><a href="../../d3/d13/classVIPRA_1_1Map_1_1QuadTree.html">VIPRA::Map::QuadTree</a></div><div class="ttdoc">Map module that uses a quadtree to store obstacles.</div><div class="ttdef"><b>Definition</b> quad_tree.hpp:18</div></div>
 </div><!-- fragment --><p><code>VIPRA::simulation</code> is the method used to create a simulation</p>
-<p>Each simulation requires one of each of the Module Types:</p><ol type="1">
+<p>Each simulation requires one of each of the <a class="el" href="../../d6/dad/md_docs_2pages_2modules.html">Module Types</a>:</p><ol type="1">
 <li>Pedestrian Dynamics Model</li>
 <li>Goals</li>
 <li>Pedestrian Set</li>
@@ -109,9 +109,9 @@ Choosing Module Implementations</h1>
 <li>Output Coordinator (with any number of Input modules)</li>
 </ol>
 <p><b>To change what modules to use</b> simply switch out the module type here and re-run <code>make</code></p>
-<h3><a class="anchor" id="autotoc_md195"></a>
+<h3><a class="anchor" id="autotoc_md359"></a>
 Example</h3>
-<p>Assume we have the pedestrian dynamics model we created in the Model Implementation Example</p>
+<p>Assume we have the pedestrian dynamics model we created in the <a class="el" href="../../d9/dad/md_docs_2pages_2examples_2model__example.html">Model Implementation Example</a></p>
 <p>To use this model, rather than the CALM model we would switch the above line to: </p><div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="keyword">auto</span> sim = VIPRA::simulation(ExampleModel{}, </div>
 <div class="line">                             <a class="code hl_class" href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html">VIPRA::Goals::AStar</a>{}, </div>

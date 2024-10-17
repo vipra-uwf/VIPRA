@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>VIPRA Documentation: Simulation</title>
+<title>VIPRA Documentation: sim_overview</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -84,48 +84,54 @@ $(function(){ initResizable(false); });
 </div><!-- top -->
 <div id="doc-content">
 <div><div class="header">
-  <div class="headertitle"><div class="title">Simulation</div></div>
+  <div class="headertitle"><div class="title">sim_overview</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md366"></a></p>
-<h2><a class="anchor" id="autotoc_md367"></a>
-Simulation Steps</h2>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md651"></a>
+autotoc_md651</h2>
+<p>title: Simulation Overview layout: template </p>
+<h2><a class="anchor" id="autotoc_md652"></a>
+filename: sim_overview.md</h2>
+<h2><a class="anchor" id="autotoc_md653"></a>
+Simulation</h2>
+<h3><a class="anchor" id="autotoc_md654"></a>
+Simulation Steps</h3>
 <p>These are the general steps taken when a simulation is run.</p>
-<h3><a class="anchor" id="autotoc_md368"></a>
-1. VIPRA::simulation</h3>
+<h4><a class="anchor" id="autotoc_md655"></a>
+1. VIPRA::simulation</h4>
 <p>First a Simulation is constructed using the <code>VIPRA::simulation</code> utility method.</p>
-<h3><a class="anchor" id="autotoc_md369"></a>
-2. Run Sim</h3>
+<h4><a class="anchor" id="autotoc_md656"></a>
+2. Run Sim</h4>
 <p>The simulation is started using either <code>operator()</code> or <code>run_sim()</code>.</p>
 <p>These both take</p><ol type="1">
 <li><a class="el" href="../../da/df5/md_docs_2pages_2modules_2input.html"><code>Input Module</code></a> - Loads Pedestrians</li>
-<li><a class="el" href="../../da/df5/md_docs_2pages_2modules_2input.html"><code>Map Input Module</code></a> - Loads Map geometry</li>
+<li><a class="el" href="../../da/df5/md_docs_2pages_2modules_2input.html"><code>Polygon Input Module</code></a> - Loads Obstacles</li>
 <li><code>Parameter Module</code> - Loads Parameters</li>
 </ol>
 <p>as their arguments.</p>
-<h3><a class="anchor" id="autotoc_md370"></a>
-3. Parameters Loaded</h3>
+<h4><a class="anchor" id="autotoc_md657"></a>
+3. Parameters Loaded</h4>
 <p>The <a class="el" href="../../db/de7/md_docs_2pages_2modules_2special__modules.html"><code>Parameter Module</code></a> calls <code>load()</code> on it's <a class="el" href="../../da/df5/md_docs_2pages_2modules_2input.html"><code>Parameter Input</code></a> module.</p>
-<h3><a class="anchor" id="autotoc_md371"></a>
-4. Parameters Registered</h3>
+<h4><a class="anchor" id="autotoc_md658"></a>
+4. Parameters Registered</h4>
 <p>Each Module has its <a class="el" href="../../d6/dad/md_docs_2pages_2modules.html">REGISTER_MODULE_PARAMS</a> method called.</p>
 <p>This is used to tell the simulation which parameters are required by each module and where to place them.</p>
-<h3><a class="anchor" id="autotoc_md372"></a>
-5. Modules Configured</h3>
+<h4><a class="anchor" id="autotoc_md659"></a>
+5. Modules Configured</h4>
 <p>The loaded parameters are passed in to each module.</p>
-<h3><a class="anchor" id="autotoc_md373"></a>
-6. Modules Initialized</h3>
-<p>The <code>Map</code>, <a class="el" href="../../dc/d2a/md_docs_2pages_2modules_2goals.html"><code>Goals</code></a>, <a class="el" href="../../d1/d1a/md_docs_2pages_2modules_2model.html"><code>Model</code></a>, and <code>Behavior Model</code> have their <code>INIT_STEP</code> methods called.</p>
+<h4><a class="anchor" id="autotoc_md660"></a>
+6. Modules Initialized</h4>
+<p>The <a class="el" href="../../d6/d2a/md_docs_2pages_2modules_2obstacles.html"><code>Obstacles</code></a>, <a class="el" href="../../dc/d2a/md_docs_2pages_2modules_2goals.html"><code>Goals</code></a>, <a class="el" href="../../d1/d1a/md_docs_2pages_2modules_2model.html"><code>Model</code></a>, and <code>Behavior Model</code> have their <code>INIT_STEP</code> methods called.</p>
 <p>This allows each module to setup any necessary pre-simulation work.</p>
-<h3><a class="anchor" id="autotoc_md374"></a>
-7. Simulation Run</h3>
+<h4><a class="anchor" id="autotoc_md661"></a>
+7. Simulation Run</h4>
 <p>The following is run until the <a class="el" href="../../dc/d2a/md_docs_2pages_2modules_2goals.html"><code>Goals</code></a> module simulation goal is met, or until the simulation <code>max_timestep</code> is reached.</p>
 <div class="fragment"><div class="line">model.timestep();</div>
 <div class="line">behaviors.timestep();</div>
 <div class="line">pedestrian_set.update();</div>
 <div class="line">goals.update();</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md375"></a>
-8. Output</h3>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md662"></a>
+8. Output</h4>
 <p>Finally, each of the <a class="el" href="../../d6/df4/md_docs_2pages_2modules_2output.html"><code>Output</code></a> modules <code>write</code> method is called. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

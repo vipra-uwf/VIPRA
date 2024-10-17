@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>VIPRA Documentation: Example Parameter Sweep</title>
+<title>VIPRA Documentation: parameter_sweep</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -84,10 +84,16 @@ $(function(){ initResizable(false); });
 </div><!-- top -->
 <div id="doc-content">
 <div><div class="header">
-  <div class="headertitle"><div class="title">Example Parameter Sweep</div></div>
+  <div class="headertitle"><div class="title">parameter_sweep</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md176"></a></p>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md382"></a>
+autotoc_md382</h2>
+<p>title: Parameter Sweep Example layout: template </p>
+<h2><a class="anchor" id="autotoc_md383"></a>
+filename: parameter_sweep.md</h2>
+<h2><a class="anchor" id="autotoc_md384"></a>
+Example Parameter Sweep</h2>
 <p>This example uses the parameter sweep engine.</p>
 <p>It takes in the total number of simulations to run as a command line argument.</p>
 <div class="fragment"><div class="line"> ++</div>
@@ -109,31 +115,29 @@ $(function(){ initResizable(false); });
 <div class="line">  <span class="comment">// Create Simulation</span></div>
 <div class="line">  <span class="keyword">auto</span> sim = VIPRA::simulation(</div>
 <div class="line">    CALM::Model{},                        <span class="comment">// Pedestrian Model</span></div>
-<div class="line">    VIPRA::Goals::AStar{},                <span class="comment">// Goals Module</span></div>
-<div class="line">    <a class="code hl_class" href="../../d8/df7/classVIPRA_1_1Pedestrians_1_1Grid.html">VIPRA::Pedestrians::Grid</a>{},           <span class="comment">// Pedestrian Set</span></div>
-<div class="line">    <a class="code hl_class" href="../../d1/d0b/classVIPRA_1_1CoordModules_1_1Output.html">VIPRA::CoordModules::Output</a> {         <span class="comment">// Output Coordinator</span></div>
+<div class="line">    <a class="code hl_class" href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html">VIPRA::Goals::AStar</a>{},                <span class="comment">// Goals Module</span></div>
+<div class="line">    VIPRA::Pedestrians::Grid{},           <span class="comment">// Pedestrian Set</span></div>
+<div class="line">    VIPRA::CoordModules::Output {         <span class="comment">// Output Coordinator</span></div>
 <div class="line">      VIPRA::Output::Trajectories::JSON{} <span class="comment">// Output Module</span></div>
 <div class="line">    },</div>
-<div class="line">    <a class="code hl_class" href="../../d3/d13/classVIPRA_1_1Map_1_1QuadTree.html">VIPRA::Map::QuadTree</a>{}          <span class="comment">// Map Module</span></div>
+<div class="line">    VIPRA::Obstacles::QuadTree{}          <span class="comment">// Obstacle Set</span></div>
 <div class="line">  );</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Run the parameter sweep</span></div>
-<div class="line">  <a class="code hl_function" href="../../d3/da4/classVIPRA_1_1ParameterSweep.html#ab2d8c4265585eaa73452962318c83f17">VIPRA::ParameterSweep::run</a>(</div>
+<div class="line">  <a class="code hl_function" href="../../d3/da4/classVIPRA_1_1ParameterSweep.html#ac141cb5e1f1ce2860c3a840ba8554c5a">VIPRA::ParameterSweep::run</a>(</div>
 <div class="line">    sim,                                                                      <span class="comment">// Simulation Object</span></div>
 <div class="line">    <a class="code hl_class" href="../../d1/d4b/classVIPRA_1_1Input_1_1JSON.html">VIPRA::Input::JSON</a>{<span class="stringliteral">&quot;maps/pedestrians/a320/a320_144_pedestrians.json&quot;</span>},    <span class="comment">// Pedestrian Input</span></div>
-<div class="line">    <a class="code hl_class" href="../../d1/d4b/classVIPRA_1_1Input_1_1JSON.html">VIPRA::Input::JSON</a>{<span class="stringliteral">&quot;maps/obstacles/a320/a320_polygons.json&quot;</span>},             <span class="comment">// Map Input</span></div>
+<div class="line">    <a class="code hl_class" href="../../d1/d4b/classVIPRA_1_1Input_1_1JSON.html">VIPRA::Input::JSON</a>{<span class="stringliteral">&quot;maps/obstacles/a320/a320_polygons.json&quot;</span>},             <span class="comment">// Obstacle Input</span></div>
 <div class="line">    <a class="code hl_class" href="../../dd/d44/classVIPRA_1_1Parameters.html">VIPRA::Parameters</a>{<a class="code hl_class" href="../../d1/d4b/classVIPRA_1_1Input_1_1JSON.html">VIPRA::Input::JSON</a>{<span class="stringliteral">&quot;examples/module_params.json&quot;</span>}}, simCount, <span class="comment">// Parameter Input</span></div>
 <div class="line">    [](VIPRA::idx simId) { <span class="comment">// Optional callback function when each simulation run completes</span></div>
 <div class="line">      std::cout &lt;&lt; <span class="stringliteral">&quot;Simulation id: &quot;</span> &lt;&lt; simId </div>
 <div class="line">                &lt;&lt; <span class="stringliteral">&quot; complete on: &quot;</span>  &lt;&lt; VIPRA::ParameterSweep::get_rank() &lt;&lt; std::endl;</div>
 <div class="line">    });</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassVIPRA_1_1CoordModules_1_1Output_html"><div class="ttname"><a href="../../d1/d0b/classVIPRA_1_1CoordModules_1_1Output.html">VIPRA::CoordModules::Output</a></div><div class="ttdef"><b>Definition</b> output.hpp:23</div></div>
-<div class="ttc" id="aclassVIPRA_1_1Input_1_1JSON_html"><div class="ttname"><a href="../../d1/d4b/classVIPRA_1_1Input_1_1JSON.html">VIPRA::Input::JSON</a></div><div class="ttdoc">Parameter and Polygon qualified JSON input module.</div><div class="ttdef"><b>Definition</b> JSON.hpp:39</div></div>
-<div class="ttc" id="aclassVIPRA_1_1Map_1_1QuadTree_html"><div class="ttname"><a href="../../d3/d13/classVIPRA_1_1Map_1_1QuadTree.html">VIPRA::Map::QuadTree</a></div><div class="ttdoc">Map module that uses a quadtree to store obstacles.</div><div class="ttdef"><b>Definition</b> QuadTree.hpp:17</div></div>
-<div class="ttc" id="aclassVIPRA_1_1ParameterSweep_html_ab2d8c4265585eaa73452962318c83f17"><div class="ttname"><a href="../../d3/da4/classVIPRA_1_1ParameterSweep.html#ab2d8c4265585eaa73452962318c83f17">VIPRA::ParameterSweep::run</a></div><div class="ttdeci">static void run(sim_t &amp;&amp;sim, pedinput_t &amp;&amp;pedInput, obsinput_t &amp;&amp;obsInput, params_t &amp;&amp;params, size_t count, callback_t &amp;&amp;callback=VOID{})</div><div class="ttdoc">Runs a parameter sweep over the worker nodes.</div><div class="ttdef"><b>Definition</b> parameter_sweep.hpp:48</div></div>
-<div class="ttc" id="aclassVIPRA_1_1Parameters_html"><div class="ttname"><a href="../../dd/d44/classVIPRA_1_1Parameters.html">VIPRA::Parameters</a></div><div class="ttdef"><b>Definition</b> parameters.hpp:20</div></div>
-<div class="ttc" id="aclassVIPRA_1_1Pedestrians_1_1Grid_html"><div class="ttname"><a href="../../d8/df7/classVIPRA_1_1Pedestrians_1_1Grid.html">VIPRA::Pedestrians::Grid</a></div><div class="ttdoc">Pedestrian module that uses a grid to store pedestrians.</div><div class="ttdef"><b>Definition</b> Grid.hpp:31</div></div>
+<div class="ttc" id="aclassVIPRA_1_1Goals_1_1AStar_html"><div class="ttname"><a href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html">VIPRA::Goals::AStar</a></div><div class="ttdoc">Goals module that uses the A* algorithm to find the path to the goal.</div><div class="ttdef"><b>Definition</b> astar.hpp:23</div></div>
+<div class="ttc" id="aclassVIPRA_1_1Input_1_1JSON_html"><div class="ttname"><a href="../../d1/d4b/classVIPRA_1_1Input_1_1JSON.html">VIPRA::Input::JSON</a></div><div class="ttdoc">Parameter and Polygon qualified JSON input module.</div><div class="ttdef"><b>Definition</b> json.hpp:36</div></div>
+<div class="ttc" id="aclassVIPRA_1_1ParameterSweep_html_ac141cb5e1f1ce2860c3a840ba8554c5a"><div class="ttname"><a href="../../d3/da4/classVIPRA_1_1ParameterSweep.html#ac141cb5e1f1ce2860c3a840ba8554c5a">VIPRA::ParameterSweep::run</a></div><div class="ttdeci">static void run(Simulation &amp;sim, std::string const &amp;pedPath, std::string const &amp;mapPath, std::string const &amp;paramsPath, size_t count, auto &amp;&amp;callback=VOID{})</div><div class="ttdoc">Runs a parameter sweep over the worker nodes.</div><div class="ttdef"><b>Definition</b> parameter_sweep.hpp:51</div></div>
+<div class="ttc" id="aclassVIPRA_1_1Parameters_html"><div class="ttname"><a href="../../dd/d44/classVIPRA_1_1Parameters.html">VIPRA::Parameters</a></div><div class="ttdef"><b>Definition</b> parameters.hpp:21</div></div>
 </div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->

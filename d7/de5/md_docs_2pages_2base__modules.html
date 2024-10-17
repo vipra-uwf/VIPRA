@@ -87,35 +87,39 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">base_modules</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><b>File Path:</b> <a class="el" href="../../index.html#md_docs_2docs">Home</a> / <a class="el" href="../../d9/db0/md_docs_2pages_2researchers.html">Researchers</a> / <a class="el" href="../../d7/de5/md_docs_2pages_2base__modules.html">Included Modules</a> </p>
-<h1><a class="anchor" id="autotoc_md8"></a>
-Included Modules</h1>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md7"></a>
+autotoc_md7</h2>
+<p>title: Included Modules layout: template </p>
+<h2><a class="anchor" id="autotoc_md8"></a>
+filename: base_modules.md</h2>
+<h2><a class="anchor" id="autotoc_md9"></a>
+Included Modules</h2>
 <p>There are several modules included with VIPRA.</p>
 <p><b>Model</b>:</p><ul>
-<li>Calm Model</li>
+<li>`Calm Model`</li>
 </ul>
 <p><b>Goals</b>:</p><ul>
-<li>AStar</li>
+<li>`AStar`</li>
 </ul>
-<p><b>Map</b>:</p><ul>
-<li>QuadTree</li>
+<p><b>Obstacle Set</b>:</p><ul>
+<li>`QuadTree`</li>
 </ul>
 <p><b>Pedestrian Set</b>:</p><ul>
-<li>Grid</li>
+<li>`Grid`</li>
 </ul>
 <p><b>Input</b>:</p><ul>
-<li>JSON</li>
+<li>`JSON`</li>
 </ul>
 <p><b>Output</b>:</p><ul>
-<li>JSON</li>
+<li>`JSON`</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md10"></a>
-Calm Model</h1>
+<h3><a class="anchor" id="autotoc_md11"></a>
+Calm Model</h3>
 <p>This <code>Model</code> module implements the <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0229690">Calm Model</a></p>
-<h2><a class="anchor" id="autotoc_md11"></a>
-Use:</h2>
-<p>In <b>main.cpp</b>: </p><div class="fragment"><div class="line"> ++</div>
+<h4><a class="anchor" id="autotoc_md12"></a>
+Use:</h4>
+<div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="preprocessor">#include &quot;modules/model/calm_model/calm_model.hpp&quot;</span></div>
 <div class="line"> </div>
 <div class="line">VIPRA::simulation(</div>
@@ -123,8 +127,8 @@ Use:</h2>
 <div class="line">  CALM::Model{},</div>
 <div class="line">  ...</div>
 <div class="line">);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md12"></a>
-Parameters:</h2>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md13"></a>
+Parameters:</h4>
 <ul>
 <li><code>meanMass</code> : Mean mass for population</li>
 <li><code>massStdDev</code> : Standard Deviation for mass</li>
@@ -133,100 +137,72 @@ Parameters:</h2>
 <li><code>meanMaxSpeed</code> : Mean max speed for population</li>
 <li><code>maxSpeedStdDev</code> : Standard deviation for max speed</li>
 <li><code>meanShoulderLen</code> : Mean shoulder length for population</li>
-<li><code>shoulderLenStdDev</code> : Standard deviation for shoulder length <br  />
-</li>
+<li><code>shoulderLenStdDev</code> : Standard deviation for shoulder length</li>
 </ul>
-<p>In <b>module_params.json</b>: </p><div class="fragment"><div class="line">&quot;model&quot;: {</div>
-<div class="line">  &quot;calm_model&quot;: {</div>
-<div class="line">    &quot;meanMass&quot;: 1.0,</div>
-<div class="line">    &quot;massStdDev&quot;: 0.1,</div>
-<div class="line">    &quot;meanReactionTime&quot;: 0.5,</div>
-<div class="line">    &quot;reactionTimeStdDev&quot;: 0.05,</div>
-<div class="line">    &quot;meanMaxSpeed&quot;: 1.0,</div>
-<div class="line">    &quot;meanShoulderLen&quot;: 0.2,</div>
-<div class="line">    &quot;maxSpeedStdDev&quot;: 0.1,</div>
-<div class="line">    &quot;shoulderLenStdDev&quot;: 0.05</div>
-<div class="line">  }</div>
-<div class="line">},</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md13"></a>
-AStar Goals</h1>
+<h3><a class="anchor" id="autotoc_md14"></a>
+AStar Goals</h3>
 <p>This <code>Goals</code> module uses the <a class="el" href="../../d6/dc8/md_docs_2pages_2usage_2algorithms.html">A* algorithm</a> to find paths for each pedestrian.</p>
-<h2><a class="anchor" id="autotoc_md14"></a>
-Use:</h2>
+<h4><a class="anchor" id="autotoc_md15"></a>
+Use:</h4>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="preprocessor">#include &quot;vipra.hpp&quot;</span></div>
 <div class="line"> </div>
 <div class="line">VIPRA::simulation(</div>
 <div class="line">  ...</div>
-<div class="line">  VIPRA::Goals::AStar{},</div>
+<div class="line">  <a class="code hl_class" href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html">VIPRA::Goals::AStar</a>{},</div>
 <div class="line">  ...</div>
 <div class="line">);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md15"></a>
-Parameters:</h2>
+<div class="ttc" id="aclassVIPRA_1_1Goals_1_1AStar_html"><div class="ttname"><a href="../../d8/d10/classVIPRA_1_1Goals_1_1AStar.html">VIPRA::Goals::AStar</a></div><div class="ttdoc">Goals module that uses the A* algorithm to find the path to the goal.</div><div class="ttdef"><b>Definition</b> astar.hpp:23</div></div>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md16"></a>
+Parameters:</h4>
 <ul>
 <li><code>endGoalType</code> : Name of object in map each pedestrian tries to reach (e.g. "exit")</li>
 <li><code>goalRange</code> : Range, in meters, before a goal is counted as "reached" (e.g. 0.05)</li>
 <li><code>gridSize</code> : Length of each side, in meters, of each grid in the pathing graph (e.g. 0.1)</li>
 <li><code>closestObstacle</code> : Closest a grid center can be to an obstacle before being considered non-traversable</li>
 </ul>
-<p>In <b>module_params.json</b>: </p><div class="fragment"><div class="line">&quot;goals&quot;: {</div>
-<div class="line">  &quot;astar&quot;: {</div>
-<div class="line">    endGoalType: &quot;exit&quot;,</div>
-<div class="line">    goalRange: 0.1,</div>
-<div class="line">    gridSize: 0.1,</div>
-<div class="line">    closestObstacle: 0.35</div>
-<div class="line">  }</div>
-<div class="line">},</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md16"></a>
-QuadTree Map</h1>
-<p>This <code>Map</code> module uses the <a class="el" href="../../d7/df8/md_docs_2pages_2usage_2data__structures.html">Quad Tree</a> to hold the map geometry.</p>
-<h2><a class="anchor" id="autotoc_md17"></a>
-Use:</h2>
+<h3><a class="anchor" id="autotoc_md17"></a>
+QuadTree Obstacle Set</h3>
+<p>This <code>Obstacle Set</code> module uses the <a class="el" href="../../d7/df8/md_docs_2pages_2usage_2data__structures.html">Quad Tree</a> to hold the map geometry.</p>
+<h4><a class="anchor" id="autotoc_md18"></a>
+Use:</h4>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="preprocessor">#include &quot;vipra.hpp&quot;</span></div>
 <div class="line"> </div>
 <div class="line">VIPRA::simulation(</div>
 <div class="line">  ...</div>
-<div class="line">    <a class="code hl_class" href="../../d3/d13/classVIPRA_1_1Map_1_1QuadTree.html">VIPRA::Map::QuadTree</a>{} <span class="comment">// Map sets go inside the Map module</span></div>
+<div class="line">  VIPRA::Module::Map{</div>
+<div class="line">    <a class="code hl_class" href="../../d1/d4b/classVIPRA_1_1Input_1_1JSON.html">VIPRA::Input::JSON</a>{<span class="stringliteral">&quot;filepath&quot;</span>} <span class="comment">// Map requires an Input module</span></div>
+<div class="line">    VIPRA::Obstacles::QuadTree{} <span class="comment">// Obstacle sets go inside the Map module</span></div>
+<div class="line">  }</div>
 <div class="line">  ...</div>
 <div class="line">)</div>
-<div class="ttc" id="aclassVIPRA_1_1Map_1_1QuadTree_html"><div class="ttname"><a href="../../d3/d13/classVIPRA_1_1Map_1_1QuadTree.html">VIPRA::Map::QuadTree</a></div><div class="ttdoc">Map module that uses a quadtree to store obstacles.</div><div class="ttdef"><b>Definition</b> QuadTree.hpp:17</div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md18"></a>
-Parameters:</h2>
+<div class="ttc" id="aclassVIPRA_1_1Input_1_1JSON_html"><div class="ttname"><a href="../../d1/d4b/classVIPRA_1_1Input_1_1JSON.html">VIPRA::Input::JSON</a></div><div class="ttdoc">Parameter and Polygon qualified JSON input module.</div><div class="ttdef"><b>Definition</b> json.hpp:36</div></div>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md19"></a>
+Parameters:</h4>
 <ul>
 <li><code>minQuadSize</code> : Size at which quads stop being subdivided</li>
 </ul>
-<p>In <b>module_params.json</b>: </p><div class="fragment"><div class="line">&quot;obstacles&quot;: {</div>
-<div class="line">  &quot;quad_tree&quot;: {</div>
-<div class="line">    &quot;minQuadSize&quot;: 0.05</div>
-<div class="line">  }</div>
-<div class="line">},</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md19"></a>
-Grid Pedestrian Set</h1>
+<h3><a class="anchor" id="autotoc_md20"></a>
+Grid Pedestrian Set</h3>
 <p>This <code>Pedestrian Set</code> module holds pedestrians in a grid of cells, allowing for more efficient lookup of nearest neighbors</p>
-<h2><a class="anchor" id="autotoc_md20"></a>
-Use:</h2>
+<h4><a class="anchor" id="autotoc_md21"></a>
+Use:</h4>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="preprocessor">#include &quot;vipra.hpp&quot;</span></div>
 <div class="line"> </div>
 <div class="line">VIPRA::simulation(</div>
 <div class="line">  ...</div>
-<div class="line">  <a class="code hl_class" href="../../d8/df7/classVIPRA_1_1Pedestrians_1_1Grid.html">VIPRA::Pedestrians::Grid</a>{},</div>
+<div class="line">  VIPRA::Pedestrians::Grid{},</div>
 <div class="line">  ...</div>
 <div class="line">);</div>
-<div class="ttc" id="aclassVIPRA_1_1Pedestrians_1_1Grid_html"><div class="ttname"><a href="../../d8/df7/classVIPRA_1_1Pedestrians_1_1Grid.html">VIPRA::Pedestrians::Grid</a></div><div class="ttdoc">Pedestrian module that uses a grid to store pedestrians.</div><div class="ttdef"><b>Definition</b> Grid.hpp:31</div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md21"></a>
-Parameters:</h2>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md22"></a>
+Parameters:</h4>
 <ul>
 <li><code>gridSize</code>: Size of each grid cell</li>
 </ul>
-<p>In <b>module_params.json</b>: </p><div class="fragment"><div class="line">&quot;pedestrians&quot;: {</div>
-<div class="line">  &quot;grid&quot;: {</div>
-<div class="line">    &quot;gridSize&quot;: 0.5</div>
-<div class="line">  }</div>
-<div class="line">},</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md22"></a>
-JSON Input</h1>
+<h3><a class="anchor" id="autotoc_md23"></a>
+JSON Input</h3>
 <p>This <code>Input</code> module loads JSON data, using <a href="https://github.com/nlohmann/json">nlohmann JSON</a>.</p><ul>
 <li>Qualifies as a:<ul>
 <li>Polygon Input</li>
@@ -234,28 +210,33 @@ JSON Input</h1>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md23"></a>
-Use:</h2>
+<h4><a class="anchor" id="autotoc_md24"></a>
+Use:</h4>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="preprocessor">#include &quot;vipra.hpp&quot;</span></div>
 <div class="line"> </div>
-<div class="line">sim(</div>
-<div class="line">  <a class="code hl_class" href="../../d1/d4b/classVIPRA_1_1Input_1_1JSON.html">VIPRA::Input::JSON</a>{<span class="stringliteral">&quot;pedestrians.json&quot;</span>}, <span class="comment">// Pedestrian Input</span></div>
-<div class="line">  <a class="code hl_class" href="../../d1/d4b/classVIPRA_1_1Input_1_1JSON.html">VIPRA::Input::JSON</a>{<span class="stringliteral">&quot;obstacles.json&quot;</span>},   <span class="comment">// Obstacle Input</span></div>
-<div class="line">  <a class="code hl_class" href="../../dd/d44/classVIPRA_1_1Parameters.html">VIPRA::Parameters</a>{<a class="code hl_class" href="../../d1/d4b/classVIPRA_1_1Input_1_1JSON.html">VIPRA::Input::JSON</a>{<span class="stringliteral">&quot;module_params.json&quot;</span>}} <span class="comment">// Parameter Input</span></div>
+<div class="line">VIPRA::simulation(</div>
+<div class="line">  ...</div>
+<div class="line">  VIPRA::Module::Map {</div>
+<div class="line">    <a class="code hl_class" href="../../d1/d4b/classVIPRA_1_1Input_1_1JSON.html">VIPRA::Input::JSON</a>{<span class="stringliteral">&quot;filepath&quot;</span>} <span class="comment">// Input modules are usually used in other modules</span></div>
+<div class="line">    ...</div>
+<div class="line">  }</div>
 <div class="line">);</div>
-<div class="ttc" id="aclassVIPRA_1_1Input_1_1JSON_html"><div class="ttname"><a href="../../d1/d4b/classVIPRA_1_1Input_1_1JSON.html">VIPRA::Input::JSON</a></div><div class="ttdoc">Parameter and Polygon qualified JSON input module.</div><div class="ttdef"><b>Definition</b> JSON.hpp:39</div></div>
-<div class="ttc" id="aclassVIPRA_1_1Parameters_html"><div class="ttname"><a href="../../dd/d44/classVIPRA_1_1Parameters.html">VIPRA::Parameters</a></div><div class="ttdef"><b>Definition</b> parameters.hpp:20</div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md24"></a>
-Parameters:</h2>
+<div class="line"> </div>
+<div class="line">sim(<a class="code hl_class" href="../../dd/d44/classVIPRA_1_1Parameters.html">VIPRA::Parameters</a>{</div>
+<div class="line">  <a class="code hl_class" href="../../d1/d4b/classVIPRA_1_1Input_1_1JSON.html">VIPRA::Input::JSON</a>{<span class="stringliteral">&quot;filepath&quot;</span>} <span class="comment">// Or for loading parameters</span></div>
+<div class="line">});</div>
+<div class="ttc" id="aclassVIPRA_1_1Parameters_html"><div class="ttname"><a href="../../dd/d44/classVIPRA_1_1Parameters.html">VIPRA::Parameters</a></div><div class="ttdef"><b>Definition</b> parameters.hpp:21</div></div>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md25"></a>
+Parameters:</h4>
 <ul>
 <li>NONE</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md25"></a>
-JSON Output</h1>
+<h3><a class="anchor" id="autotoc_md26"></a>
+JSON Output</h3>
 <p>This <code>Output</code> module creates a JSON file containing the positions of each pedestrian for each timestep that matches the output frequency in the simulation module parameters.</p>
-<h2><a class="anchor" id="autotoc_md26"></a>
-Use:</h2>
+<h4><a class="anchor" id="autotoc_md27"></a>
+Use:</h4>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line">VIPRA::simulation(</div>
 <div class="line">  ...</div>
@@ -264,20 +245,12 @@ Use:</h2>
 <div class="line">  },</div>
 <div class="line">  ...</div>
 <div class="line">)</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md27"></a>
-Parameters:</h2>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md28"></a>
+Parameters:</h4>
 <ul>
 <li><code>filename</code>: Name of the output file</li>
 </ul>
-<p>In <b>module_params.json</b>: </p><div class="fragment"><div class="line">&quot;output&quot;: {</div>
-<div class="line">  &quot;coordinator&quot;: {  // Output is special in that it has a coordinator for when there are multiple output modules</div>
-<div class="line">    &quot;output_dir&quot;: &quot;./sim_output&quot;</div>
-<div class="line">  },</div>
-<div class="line">  &quot;trajectories_json&quot;: {</div>
-<div class="line">    &quot;filename&quot;: &quot;trajectories.json&quot;</div>
-<div class="line">  }</div>
-<div class="line">},</div>
-</div><!-- fragment --><hr  />
+<hr  />
  </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->

@@ -87,9 +87,9 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">Map Implementation</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md91"></a></p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md255"></a></p>
 <p>Map modules hold the geometry of the environment and handle map/pedestrian collision detection.</p>
-<h1><a class="anchor" id="autotoc_md92"></a>
+<h1><a class="anchor" id="autotoc_md256"></a>
 Required Methods</h1>
 <p>In addition to the <a class="el" href="../../d7/d90/md_docs_2pages_2developers_2implementation_2module.html">Base Module</a> requirements <code>Goals</code> require the following:</p>
 <div class="fragment"><div class="line"> ++</div>
@@ -105,108 +105,108 @@ Required Methods</h1>
 <div class="line"><a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> get_dimensions_impl() <span class="keyword">const</span>;</div>
 <div class="ttc" id="aclassVIPRA_1_1Geometry_1_1Circle_html"><div class="ttname"><a href="../../de/df6/classVIPRA_1_1Geometry_1_1Circle.html">VIPRA::Geometry::Circle</a></div><div class="ttdef"><b>Definition</b> circle.hpp:9</div></div>
 <div class="ttc" id="astructVIPRA_1_1f3d_html"><div class="ttname"><a href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a></div><div class="ttdef"><b>Definition</b> f3d.hpp:24</div></div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md93"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md257"></a>
 Details</h1>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line">VIPRA_MAP_INIT</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md94"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md258"></a>
 Parameters</h2>
 <ul>
 <li><code>obstacles</code> : std::vector&lt;<a class="el" href="../../d7/dc6/md_docs_2pages_2developers_2usage_2types.html">VIPRA::Polygon</a>&gt; - vector containing the VIPRA::Polygons for each obstacle</li>
 <li><code>types</code> : std::vector&lt;std::string&gt; - vector containing a list of the types of objects in the map</li>
 <li><code>objects</code> : std::map&lt;std::string, VIPRA::f3dVec&gt; - map containing each object type and the positions of each of the objects of those types</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md95"></a>
+<h2><a class="anchor" id="autotoc_md259"></a>
 Expected Effects</h2>
 <p>The Map is ready for the first timestep of the simulation</p>
 <hr  />
 <div class="fragment"><div class="line"> ++</div>
 <div class="line">std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp; get_object_types_impl();</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md97"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md261"></a>
 Parameters</h2>
 <p><code>NONE</code></p>
-<h2><a class="anchor" id="autotoc_md98"></a>
+<h2><a class="anchor" id="autotoc_md262"></a>
 Returns</h2>
 <p>The list of object types in the map</p>
-<h2><a class="anchor" id="autotoc_md99"></a>
+<h2><a class="anchor" id="autotoc_md263"></a>
 Expected Effects</h2>
 <p><code>NONE</code></p>
 <hr  />
 <div class="fragment"><div class="line"> ++</div>
 <div class="line">std::vector&lt;VIPRA::f3d&gt; <span class="keyword">const</span>&amp; get_objects_impl(std::string <span class="keyword">const</span>&amp; type);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md101"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md265"></a>
 Parameters</h2>
 <ul>
 <li><code>type</code> - the type of object to get the positions of</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md102"></a>
+<h2><a class="anchor" id="autotoc_md266"></a>
 Returns</h2>
 <p>vector containing the positions of the objects of the provided type</p>
-<h2><a class="anchor" id="autotoc_md103"></a>
+<h2><a class="anchor" id="autotoc_md267"></a>
 Expected Effects</h2>
 <p><code>NONE</code></p>
 <hr  />
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="keywordtype">bool</span> collision_impl(VIPRA:f3d point);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md105"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md269"></a>
 Parameters</h2>
 <ul>
 <li><code>point</code> - the point to check for collision with an obstacle</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md106"></a>
+<h2><a class="anchor" id="autotoc_md270"></a>
 Returns</h2>
 <ul>
 <li><code>true</code> if the point is within an obstacle</li>
 <li><code>false</code> if not</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md107"></a>
+<h2><a class="anchor" id="autotoc_md271"></a>
 Expected Effects</h2>
 <p><code>NONE</code></p>
 <hr  />
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="keywordtype">bool</span> collision_impl(<a class="code hl_class" href="../../de/df6/classVIPRA_1_1Geometry_1_1Circle.html">VIPRA::Geometry::Circle</a> area);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md109"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md273"></a>
 Parameters</h2>
 <ul>
 <li><code>area</code> - the circle to check for collision with an obstacle</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md110"></a>
+<h2><a class="anchor" id="autotoc_md274"></a>
 Returns</h2>
 <ul>
 <li><code>true</code> if any point inside the circle is also within an obstacle</li>
 <li><code>false</code> if not</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md111"></a>
+<h2><a class="anchor" id="autotoc_md275"></a>
 Expected Effects</h2>
 <p><code>NONE</code></p>
 <hr  />
 <div class="fragment"><div class="line"> ++</div>
 <div class="line">VIPRA::f_pnt ray_hit_impl(<a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> start, <a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> end);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md113"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md277"></a>
 Parameters</h2>
 <ul>
 <li><code>start</code> - the start of the line segment</li>
 <li><code>end</code> - the end of the line segment</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md114"></a>
+<h2><a class="anchor" id="autotoc_md278"></a>
 Returns</h2>
 <ul>
 <li>The distance from <code>start</code> to the collision point, if the ray collides with an obstacle</li>
 <li>-1 if not</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md115"></a>
+<h2><a class="anchor" id="autotoc_md279"></a>
 Expected Effects</h2>
 <p><code>NONE</code></p>
 <hr  />
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><a class="code hl_struct" href="../../d8/d28/structVIPRA_1_1f3d.html">VIPRA::f3d</a> get_dimensions_impl() <span class="keyword">const</span>;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md117"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md281"></a>
 Parameters</h2>
 <p><code>NONE</code></p>
-<h2><a class="anchor" id="autotoc_md118"></a>
+<h2><a class="anchor" id="autotoc_md282"></a>
 Returns</h2>
 <p>The X, Y, and Z dimensions of the map</p>
-<h2><a class="anchor" id="autotoc_md119"></a>
+<h2><a class="anchor" id="autotoc_md283"></a>
 Expected Effects</h2>
 <p><code>NONE</code></p>
 <hr  />

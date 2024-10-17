@@ -78,5 +78,6 @@ var searchData=
   ['formatter_3c_20tuple_5fjoin_5fview_3c_20char_2c_20t_2e_2e_2e_20_3e_2c_20char_20_3e_75',['formatter&lt; tuple_join_view&lt; Char, T... &gt;, Char &gt;',['../d2/d05/structformatter_3_01tuple__join__view_3_01Char_00_01T_8_8_8_01_4_00_01Char_01_4.html',1,'']]],
   ['formatter_3c_20weekday_2c_20char_20_3e_76',['formatter&lt; weekday, Char &gt;',['../dc/df0/structformatter_3_01weekday_00_01Char_01_4.html',1,'']]],
   ['formatter_3c_20year_2c_20char_20_3e_77',['formatter&lt; year, Char &gt;',['../d2/d6b/structformatter_3_01year_00_01Char_01_4.html',1,'']]],
-  ['formatter_3c_20year_5fmonth_5fday_2c_20char_20_3e_78',['formatter&lt; year_month_day, Char &gt;',['../d2/dac/structformatter_3_01year__month__day_00_01Char_01_4.html',1,'']]]
+  ['formatter_3c_20year_5fmonth_5fday_2c_20char_20_3e_78',['formatter&lt; year_month_day, Char &gt;',['../d2/dac/structformatter_3_01year__month__day_00_01Char_01_4.html',1,'']]],
+  ['functiontimer_79',['FunctionTimer',['../d8/dbb/classVIPRA_1_1Perf_1_1FunctionTimer.html',1,'VIPRA::Perf']]]
 ];

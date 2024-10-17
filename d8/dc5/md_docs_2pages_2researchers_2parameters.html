@@ -88,7 +88,7 @@ $(function(){ initResizable(false); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>| <a class="el" href="../../index.html#md_docs_2docs">Main Page</a> | <a class="el" href="../../dc/d8d/md_docs_2pages_2researchers_2usage.html">How To Use</a> | <a class="el" href="../../d8/dbc/md_docs_2pages_2researchers_2base__modules.html">Provided Modules</a> | <a class="el" href="../../d1/d94/md_docs_2pages_2researchers_2behaviors_2behaviors.html">VIPRA Behaviors</a> | <a class="el" href="../../d8/dc5/md_docs_2pages_2researchers_2parameters.html">Module Parameters</a> | <a class="el" href="../../dc/db3/md_docs_2pages_2developers_2overview.html">Developing Modules</a> | | &mdash; | &mdash; | &mdash; | &mdash; | &mdash; | &mdash; |</p>
-<h1><a class="anchor" id="autotoc_md393"></a>
+<h1><a class="anchor" id="autotoc_md628"></a>
 Module Parameters</h1>
 <p>Parameters are loaded into each module before they are initizalized. The exact steps of a simulation run are shown in <a href="../../../developers/overview.md#simulation-steps"><code>Simluation Steps</code></a>.</p>
 <p>Parameters can use any <code>ParaReader</code> module, the <a class="el" href="../../d8/dbc/md_docs_2pages_2researchers_2base__modules.html"><code>JSON</code></a> input module provided works for this.</p>
@@ -112,21 +112,21 @@ Module Parameters</h1>
 <div class="line">  },</div>
 <div class="line">  ...</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md394"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md629"></a>
 Parameter Sweeps</h1>
 <p>Parameter sweeps run many simulations with randomized parameters to get a better idea of the possible outcomes.</p>
-<h1><a class="anchor" id="autotoc_md395"></a>
+<h1><a class="anchor" id="autotoc_md630"></a>
 Parameters</h1>
 <p>Parameters are provided as they are with a normal run, with some extra rules.</p>
 <p><code>NOTE:</code> parameters are randomized in a non-parameter sweep run if provided in this format</p>
-<h2><a class="anchor" id="autotoc_md396"></a>
+<h2><a class="anchor" id="autotoc_md631"></a>
 Non-Random Values</h2>
 <p>Any parameter that should not be randomized is provided as it is normally.</p>
 <div class="fragment"><div class="line">single_string: &quot;example1&quot;</div>
 <div class="line">single_float: 1.0</div>
 </div><!-- fragment --><p>Array's can still be used as they normally would be.</p>
 <div class="fragment"><div class="line">array_param: [1.0, 2.0, 3.0]</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md397"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md632"></a>
 Discrete Random Values</h2>
 <p>Parameters can be randomized between a set of discrete values.</p>
 <p>For each simulation run, the actual value for the parameter is randomly chosen from the list given with a uniform distribution.</p>
@@ -135,7 +135,7 @@ Discrete Random Values</h2>
 </div><!-- fragment --><p><code>NOTE:</code> Array parameters can NOT be randomized</p>
 <div class="fragment"><div class="line">// will NOT work</div>
 <div class="line">random_array_param: [ [1,2], [3,4] ]</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md398"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md633"></a>
 Continuous Random Values</h2>
 <p>Numerical parameters can also be randomized within a continuous range.</p>
 <p>For each simulation run, the actual value for the parameter is randomly chosen with a uniform distribution from <code>min</code> to <code>max</code> inclusively.</p>

@@ -98,8 +98,11 @@ $(function(){ initResizable(false); });
 <p><code>#include &lt;<a class="el" href="../../db/d18/include_2vipra_2algorithms_2astar_8hpp_source.html">astar.hpp</a>&gt;</code></p>
 <h2 class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> graph_t&gt;</div>
-<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="../../d6/db6/conceptVIPRA_1_1Algo_1_1AStar_1_1Graph.html">VIPRA::Algo::AStar::Graph</a> =  <span class="keyword">requires</span>(<span class="keyword">const</span> graph_t graph, VIPRA::idx idx) {</div>
-<div class="line">  { graph.neighbors(idx) } -&gt; std::same_as&lt;std::vector&lt;VIPRA::idx&gt; <span class="keyword">const</span>&amp;&gt;;</div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="../../d6/db6/conceptVIPRA_1_1Algo_1_1AStar_1_1Graph.html">VIPRA::Algo::AStar::Graph</a> =  <span class="keyword">requires</span>(<span class="keyword">const</span> graph_t graph, VIPRA::idx idx)</div>
+<div class="line">{</div>
+<div class="line">  {</div>
+<div class="line">    graph.neighbors(idx)</div>
+<div class="line">    } -&gt; std::same_as&lt;std::vector&lt;VIPRA::idx&gt; <span class="keyword">const</span>&amp;&gt;;</div>
 <div class="line">}</div>
 <div class="ttc" id="aconceptVIPRA_1_1Algo_1_1AStar_1_1Graph_html"><div class="ttname"><a href="../../d6/db6/conceptVIPRA_1_1Algo_1_1AStar_1_1Graph.html">VIPRA::Algo::AStar::Graph</a></div><div class="ttdoc">Concept for type that can be used as a graph for the A* algorithm.</div><div class="ttdef"><b>Definition</b> astar.hpp:28</div></div>
 </div><!-- fragment --><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
