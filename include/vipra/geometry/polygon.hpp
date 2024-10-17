@@ -16,18 +16,16 @@ namespace VIPRA::Geometry {
 
 class Polygon {
  public:
-  VIPRA_POLY_FUNC auto random_point(
-      VIPRA::Random::Engine& engine) const noexcept -> f3d;
+  auto random_point(VIPRA::Random::Engine& engine) const noexcept -> f3d;
 
-  VIPRA_POLY_FUNC auto is_point_inside(f3d point) const noexcept -> bool;
-  VIPRA_POLY_FUNC auto bounding_box() const noexcept -> Rectangle;
-  VIPRA_POLY_FUNC auto center() const noexcept -> f3d;
-  VIPRA_POLY_FUNC auto points() const noexcept -> std::vector<f3d> const&
+  [[nodiscard]] auto is_point_inside(f3d point) const noexcept -> bool;
+  [[nodiscard]] auto bounding_box() const noexcept -> Rectangle;
+  [[nodiscard]] auto center() const noexcept -> f3d;
+  [[nodiscard]] auto points() const noexcept -> std::vector<f3d> const&
   {
     return _points;
   }
-
-  VIPRA_POLY_FUNC auto sides() const noexcept -> std::vector<Line>;
+  [[nodiscard]] auto sides() const noexcept -> std::vector<Line>;
 
  private:
   std::vector<f3d> _points;
@@ -95,7 +93,7 @@ class Polygon {
 
 // ---------------------------------- IMPLEMENTATION ------------------------------------------------
 
-constexpr auto Polygon::is_point_inside(f3d point) const noexcept -> bool
+inline auto Polygon::is_point_inside(f3d point) const noexcept -> bool
 {
   // TODO(rolland): verify this
   bool isInside = false;
@@ -111,7 +109,7 @@ constexpr auto Polygon::is_point_inside(f3d point) const noexcept -> bool
   return isInside;
 }
 
-VIPRA_POLY_FUNC auto Polygon::center() const noexcept -> f3d
+inline auto Polygon::center() const noexcept -> f3d
 {
   const auto sideList = sides();
   f3d        center;
@@ -122,8 +120,8 @@ VIPRA_POLY_FUNC auto Polygon::center() const noexcept -> f3d
   return center /= sideList.size();
 }
 
-VIPRA_POLY_FUNC auto Polygon::random_point(
-    VIPRA::Random::Engine& engine) const noexcept -> f3d
+inline auto Polygon::random_point(VIPRA::Random::Engine& engine) const noexcept
+    -> f3d
 {
   // TODO(rolland): this is disgusting
 
@@ -143,7 +141,7 @@ VIPRA_POLY_FUNC auto Polygon::random_point(
   return point;
 }
 
-VIPRA_POLY_FUNC auto Polygon::bounding_box() const noexcept -> Rectangle
+inline auto Polygon::bounding_box() const noexcept -> Rectangle
 {
   f3d botLeft{std::numeric_limits<VIPRA::f_pnt>::max(),
               std::numeric_limits<VIPRA::f_pnt>::max()};
@@ -162,7 +160,7 @@ VIPRA_POLY_FUNC auto Polygon::bounding_box() const noexcept -> Rectangle
   return Rectangle{botLeft, topLeft, topRight, botRight};
 }
 
-VIPRA_POLY_FUNC auto Polygon::sides() const noexcept -> std::vector<Line>
+inline auto Polygon::sides() const noexcept -> std::vector<Line>
 {
   std::vector<Line> lines;
   lines.resize(_points.size());
