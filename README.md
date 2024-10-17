@@ -11,4 +11,4 @@ This project includes a modular pedestrian dynamics code to which input from dif
 
 # Documentation
 
-See our [Documentation](https://goodenoughr.github.io/VIPRA/) to learn about using VIPRA
+See our [Documentation](https://vipra-uwf.github.io/VIPRA/) to learn about using VIPRA
