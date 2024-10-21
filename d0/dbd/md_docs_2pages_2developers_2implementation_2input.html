@@ -87,7 +87,7 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">Input Implementation</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md220"></a></p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md29"></a></p>
 <blockquote class="doxtable">
 <p>&zwj;!!! Important Note: Inputs should hold off on loading their input until their <code>load_impl</code> method is called. This reduces the amount of I/O during parallel runs. </p>
 </blockquote>
@@ -95,70 +95,70 @@ $(function(){ initResizable(false); });
 <li>Serializable Input</li>
 <li>Map Input</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md221"></a>
+<h1><a class="anchor" id="autotoc_md30"></a>
 Required Methods</h1>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="keywordtype">void</span> load_impl();</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> data_t&gt;</div>
 <div class="line">std::optional&lt;data_t&gt; get(std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp;);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md222"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md31"></a>
 Details</h2>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="keywordtype">void</span> load_impl();</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md223"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md32"></a>
 Parameters</h3>
 <p><code>NONE</code></p>
-<h3><a class="anchor" id="autotoc_md224"></a>
+<h3><a class="anchor" id="autotoc_md33"></a>
 Returns</h3>
 <p><code>NONE</code></p>
-<h3><a class="anchor" id="autotoc_md225"></a>
+<h3><a class="anchor" id="autotoc_md34"></a>
 Expected Effects</h3>
 <p>The input is ready to return its loaded data</p>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> data_t&gt;</div>
 <div class="line">std::optional&lt;data_t&gt; get(std::vector&lt;std::string&gt; <span class="keyword">const</span>&amp;);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md226"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md35"></a>
 Parameters</h3>
 <p><code>keys</code> - a list of keys that should uniquely identify a requested value</p>
-<h3><a class="anchor" id="autotoc_md227"></a>
+<h3><a class="anchor" id="autotoc_md36"></a>
 Returns</h3>
 <p><code>std::optional&lt;data_t&gt;</code> - an optional with the value, <code>std::nullopt</code> if the value was unable to be returned</p>
-<h3><a class="anchor" id="autotoc_md228"></a>
+<h3><a class="anchor" id="autotoc_md37"></a>
 Expected Effects</h3>
 <p><code>NONE</code></p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md230"></a>
+<h1><a class="anchor" id="autotoc_md39"></a>
 Serializable Input Implementation</h1>
 <p>Serializable Input modules additionally require:</p>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line">std::string to_string();</div>
 <div class="line"><span class="keywordtype">void</span> parse_impl(std::string <span class="keyword">const</span>&amp;);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md231"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md40"></a>
 Details</h2>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line">std::string to_string()</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md232"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md41"></a>
 Parameters</h3>
 <p><code>NONE</code></p>
-<h3><a class="anchor" id="autotoc_md233"></a>
+<h3><a class="anchor" id="autotoc_md42"></a>
 Returns</h3>
 <p><code>std::string</code> - the string represenation of the input data, to be used in <code>deserialize</code></p>
-<h3><a class="anchor" id="autotoc_md234"></a>
+<h3><a class="anchor" id="autotoc_md43"></a>
 Expected Effects</h3>
 <p><code>NONE</code></p>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line"><span class="keywordtype">void</span> parse_impl(std::string <span class="keyword">const</span>&amp;);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md235"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md44"></a>
 Parameters</h3>
 <p><code>data</code> - the serialized data to be deserialized</p>
-<h3><a class="anchor" id="autotoc_md236"></a>
+<h3><a class="anchor" id="autotoc_md45"></a>
 Returns</h3>
 <p><code>NONE</code></p>
-<h3><a class="anchor" id="autotoc_md237"></a>
+<h3><a class="anchor" id="autotoc_md46"></a>
 Expected Effects</h3>
 <p>The serialized data is deserialized and loaded into the input module</p>
-<h1><a class="anchor" id="autotoc_md238"></a>
+<h1><a class="anchor" id="autotoc_md47"></a>
 Map Input Implementation</h1>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line">std::optional&lt;std::vector&lt;VIPRA::Geometry::Polygon&gt;&gt; get_obstacles_impl() <span class="keyword">const</span>;</div>
@@ -167,65 +167,65 @@ Map Input Implementation</h1>
 <div class="line">std::optional&lt;std::map&lt;std::string, VIPRA::Geometry::Polygon&gt;&gt; get_areas_impl() <span class="keyword">const</span>;</div>
 </div><!-- fragment --><div class="fragment"><div class="line"> ++</div>
 <div class="line">std::optional&lt;std::vector&lt;VIPRA::Geometry::Polygon&gt;&gt; get_obstacles_impl() <span class="keyword">const</span>;</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md239"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md48"></a>
 Parameters</h3>
 <p><code>NONE</code></p>
-<h3><a class="anchor" id="autotoc_md240"></a>
+<h3><a class="anchor" id="autotoc_md49"></a>
 Returns</h3>
 <p>The map obstacles</p>
 <ul>
 <li>an empty std::vector, if there are no map obstacles</li>
 <li><code>std::nullopt</code>, if there was an issue loading the map obstacles</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md241"></a>
+<h3><a class="anchor" id="autotoc_md50"></a>
 Expected Effects</h3>
 <p><code>NONE</code></p>
 <hr  />
 <div class="fragment"><div class="line"> ++</div>
 <div class="line">std::optional&lt;std::vector&lt;VIPRA::Geometry::Polygon&gt;&gt; get_spawns_impl() <span class="keyword">const</span>;</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md243"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md52"></a>
 Parameters</h3>
 <p><code>NONE</code></p>
-<h3><a class="anchor" id="autotoc_md244"></a>
+<h3><a class="anchor" id="autotoc_md53"></a>
 Returns</h3>
 <p>The map spawns</p>
 <ul>
 <li>an empty std::vector, if there are no map spawns</li>
 <li><code>std::nullopt</code>, if there was an issue loading the map spawns</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md245"></a>
+<h3><a class="anchor" id="autotoc_md54"></a>
 Expected Effects</h3>
 <p><code>NONE</code></p>
 <hr  />
 <div class="fragment"><div class="line"> ++</div>
 <div class="line">std::optional&lt;std::map&lt;std::string, std::vector&lt;VIPRA::Geometry::Polygon&gt;&gt;&gt; get_objectives_impl() <span class="keyword">const</span>;</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md247"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md56"></a>
 Parameters</h3>
 <p><code>NONE</code></p>
-<h3><a class="anchor" id="autotoc_md248"></a>
+<h3><a class="anchor" id="autotoc_md57"></a>
 Returns</h3>
 <p>The map objectives</p>
 <ul>
 <li>an empty std::map, if there are no map objectives</li>
 <li><code>std::nullopt</code>, if there was an issue loading the map objectives</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md249"></a>
+<h3><a class="anchor" id="autotoc_md58"></a>
 Expected Effects</h3>
 <p><code>NONE</code></p>
 <hr  />
 <div class="fragment"><div class="line"> ++</div>
 <div class="line">std::optional&lt;std::map&lt;std::string, VIPRA::Geometry::Polygon&gt;&gt; get_areas_impl() <span class="keyword">const</span>;</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md251"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md60"></a>
 Parameters</h3>
 <p><code>NONE</code></p>
-<h3><a class="anchor" id="autotoc_md252"></a>
+<h3><a class="anchor" id="autotoc_md61"></a>
 Returns</h3>
 <p>The map areas</p>
 <ul>
 <li>an empty std::map, if there are no map areas</li>
 <li><code>std::nullopt</code>, if there was an issue loading the map areas</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md253"></a>
+<h3><a class="anchor" id="autotoc_md62"></a>
 Expected Effects</h3>
 <p><code>NONE</code></p>
 <hr  />

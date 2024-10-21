@@ -87,18 +87,15 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">Output Implementation</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md309"></a></p>
-<h1><a class="anchor" id="autotoc_md310"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md118"></a></p>
+<h1><a class="anchor" id="autotoc_md119"></a>
 Required Methods</h1>
 <div class="fragment"><div class="line"> ++</div>
-<div class="line"><span class="keyword">auto</span> write();</div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> value_t&gt;</div>
-<div class="line"><span class="keywordtype">void</span> timestep_value(std::string <span class="keyword">const</span>&amp;, VIPRA::timestep, value_t);</div>
-<div class="line"> </div>
-<div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> value_t&gt;</div>
-<div class="line"><span class="keywordtype">void</span> ped_timestep_value(VIPRA::idx, VIPRA::timestep, std::string <span class="keyword">const</span>&amp;, value_t);</div>
-</div><!-- fragment --> <hr  />
+<div class="line"><span class="keyword">virtual</span> <span class="keywordtype">void</span> write(std::filesystem::path <span class="keyword">const</span>&amp; outputDir) = 0;</div>
+<div class="line"><span class="keyword">virtual</span> <span class="keywordtype">void</span> timestep_update(VIPRA::timestep, VIPRA::delta_t,</div>
+<div class="line">                              <a class="code hl_struct" href="../../d4/da2/structVIPRA_1_1State.html">VIPRA::State</a> <span class="keyword">const</span>&amp;) = 0;</div>
+<div class="ttc" id="astructVIPRA_1_1State_html"><div class="ttname"><a href="../../d4/da2/structVIPRA_1_1State.html">VIPRA::State</a></div><div class="ttdoc">Struct that holds the updated positions and velocities of all pedestrians.</div><div class="ttdef"><b>Definition</b> state.hpp:12</div></div>
+</div><!-- fragment --><hr  />
  </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->

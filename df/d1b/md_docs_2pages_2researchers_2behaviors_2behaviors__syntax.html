@@ -87,11 +87,11 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">behaviors_syntax</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>| <a class="el" href="../../index.html#md_docs_2docs">Main Page</a> | <a class="el" href="../../dc/d8d/md_docs_2pages_2researchers_2usage.html">How To Use</a> | <a class="el" href="../../d8/dbc/md_docs_2pages_2researchers_2base__modules.html">Provided Modules</a> | <a class="el" href="../../d1/d94/md_docs_2pages_2researchers_2behaviors_2behaviors.html">VIPRA Behaviors</a> | Module Parameters | <a class="el" href="../../dc/db3/md_docs_2pages_2developers_2overview.html">Developing Modules</a> | | &mdash; | &mdash; | &mdash; | &mdash; | &mdash; | &mdash; |</p>
-<h1><a class="anchor" id="autotoc_md482"></a>
+<div class="textblock"><p>| <a class="el" href="../../index.html#md_docs_2docs">Main Page</a> | <a class="el" href="../../dc/d8d/md_docs_2pages_2researchers_2usage.html">How To Use</a> | <a class="el" href="../../d8/dbc/md_docs_2pages_2researchers_2base__modules.html">Provided Modules</a> | <a class="el" href="../../d1/d94/md_docs_2pages_2researchers_2behaviors_2behaviors.html">VIPRA Behaviors</a> | Module Parameters | <a class="el" href="../../dc/db3/md_docs_2pages_2developers_2overview.html">Developing Modules</a> |</p>
+<h1><a class="anchor" id="autotoc_md214"></a>
 VIPRA Behaviors Syntax Reference</h1>
 <p>&gt;<b>Document Note:</b> Text wrapped with <code>&lt;</code> and <code>&gt;</code>, denote a placeholder value. You should not include <code>&lt;</code> and <code>&gt;</code> when writing Behaviors.*</p>
-<h1><a class="anchor" id="autotoc_md483"></a>
+<h1><a class="anchor" id="autotoc_md215"></a>
 Behavior Layout</h1>
 <p>The general layout of a <code>Behavior</code> is as follows: </p><div class="fragment"><div class="line">Types Declaration.</div>
 <div class="line"> </div>
@@ -116,7 +116,7 @@ Behavior Layout</h1>
 <div class="line">.</div>
 </div><!-- fragment --><p> <code>Type</code> and <code>Select</code> are both components of the `Selector` declaration</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md485"></a>
+<h1><a class="anchor" id="autotoc_md217"></a>
 Behavior General Syntax Rules</h1>
 <p>This section has some simple <code>Syntax</code> rules that must be followed for a <code>Behavior</code> to be considered correct.</p>
 <p>The other sections will have the specific <code>Syntax</code> rules for their respective parts, in a <code>Section - General Syntax Rules</code> section</p>
@@ -164,12 +164,12 @@ Behavior General Syntax Rules</h1>
 </div><!-- fragment --></li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md487"></a>
+<h1><a class="anchor" id="autotoc_md219"></a>
 Types</h1>
 <p><code>Types</code> are how pedestrians are organized in <code>Behaviors</code></p>
 <p>Each pedestrian is assigned a user-defined <code>Type</code>. These <code>Types</code> are used to categorize the Actions pedestrians will take during the simulation.</p>
 <hr  />
-<h2><a class="anchor" id="autotoc_md489"></a>
+<h2><a class="anchor" id="autotoc_md221"></a>
 Types Declaration</h2>
 <p><code>Types</code> are declared in the <code>Types Declaration</code> of a <code>Behavior</code>.</p>
 <p>A <code>Types Declaration</code> is what says which types are being used in the <code>Behavior</code>.</p>
@@ -183,7 +183,7 @@ Types Declaration</h2>
 <div class="line"> helper</div>
 <div class="line">.</div>
 </div><!-- fragment --><hr  />
-<h3><a class="anchor" id="autotoc_md491"></a>
+<h3><a class="anchor" id="autotoc_md223"></a>
 Types Declaration General Syntax Rules</h3>
 <ol type="1">
 <li><code>Types Declarations</code> can be any length up to 64 <code>Types</code> <div class="fragment"><div class="line">Types:</div>
@@ -196,26 +196,26 @@ Types Declaration General Syntax Rules</h3>
 <li><code>Types Declarations</code> must be the first declaration in a <code>Behavior</code></li>
 </ol>
 <hr  />
-<h2><a class="anchor" id="autotoc_md493"></a>
+<h2><a class="anchor" id="autotoc_md225"></a>
 Composite Types</h2>
 <p>A Pedestrians <code>Type</code> can be composed of several other types.</p>
 <p>A Pedestrian with a <code>Composite Type</code> will have the attributes of each individual <code>Type</code>.</p>
 <p>How to assign <code>Composite Types</code> is explained in the Selectors section.</p>
 <hr  />
-<h2><a class="anchor" id="autotoc_md495"></a>
+<h2><a class="anchor" id="autotoc_md227"></a>
 Groups</h2>
 <p>For most users, <code>Groups</code> and <code>Types</code> refer to the same thing.</p>
 <p>The main difference between a <code>Type</code> and a <code>Group</code> is that there is a base <code>Group</code> for each <code>Behavior</code>, being 'Pedestrian' (or 'Pedestrians').</p>
 <p>Each pedestrian with a <code>Type</code> is considered in that <code>Type</code>'s <code>Group</code>.</p>
 <p>Pedestrians with <code>Composite Types</code> are in a <code>Group</code> for each <code>Type</code>.</p>
 <hr  />
-<h2><a class="anchor" id="autotoc_md497"></a>
+<h2><a class="anchor" id="autotoc_md229"></a>
 Type General Syntax Rules</h2>
 <ol type="1">
 <li><code>Type</code> names can only contain Letters, Underscores, and Hyphens &lsquo;(a-z), (A-Z), &rsquo;_', '-'`</li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md499"></a>
+<h1><a class="anchor" id="autotoc_md231"></a>
 Locations</h1>
 <p><code>Locations</code> are rectangular regions that can be used in <code>Selectors</code>, <code>Conditions</code>, and <code>Actions</code>.</p>
 <p>After being declared, <code>Location</code> names are always preceded by a <code>@</code></p>
@@ -243,13 +243,13 @@ Locations</h1>
 <div class="line">    Rotation: 0           // Rotated 0 degrees (aligned with X axis)</div>
 <div class="line">.</div>
 </div><!-- fragment --> <hr  />
-<h2><a class="anchor" id="autotoc_md501"></a>
+<h2><a class="anchor" id="autotoc_md233"></a>
 Locations General Syntax Rules</h2>
 <ol type="1">
 <li><code>Location</code> names are always preceded by a <code>@</code> after the declaration</li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md503"></a>
+<h1><a class="anchor" id="autotoc_md235"></a>
 Selectors</h1>
 <p><code>Selectors</code> are how pedestrians are selected for a certain Type.</p>
 <p>Selecting pedestrians is done through a <code>Selector</code> declaration. The basic syntax is as follows: </p><div class="fragment"><div class="line">Selector:</div>
@@ -273,7 +273,7 @@ Selectors</h1>
 <div class="line">  Select 50%</div>
 <div class="line">.</div>
 </div><!-- fragment --><hr  />
-<h2><a class="anchor" id="autotoc_md505"></a>
+<h2><a class="anchor" id="autotoc_md237"></a>
 Selecting From Groups</h2>
 <p><code>Selectors</code> can select from specific Groups</p>
 <p>This has the effect of selecting the pedestrians for a Composite Type but allows for more dynamic proportions. This allows for refined selections within selections.</p>
@@ -305,7 +305,7 @@ Selecting From Groups</h2>
 <li>3 pedestrians are typeA and typeC.</li>
 </ul>
 <hr  />
-<h2><a class="anchor" id="autotoc_md507"></a>
+<h2><a class="anchor" id="autotoc_md239"></a>
 Selector Exclusivity</h2>
 <p>When a pedestrian is selected from a <code>Group</code>, it is marked as used and can not be selected by another <code>Selector</code>.</p>
 <div class="fragment"><div class="line">Select:</div>
@@ -330,7 +330,7 @@ Selector Exclusivity</h2>
 </div><!-- fragment --><p>This may result in some pedestrians being of types typeA, typeB, and typeC.</p>
 <p>TODO(tyler): What happens if we want some overlap?</p>
 <hr  />
-<h2><a class="anchor" id="autotoc_md509"></a>
+<h2><a class="anchor" id="autotoc_md241"></a>
 Required Selectors</h2>
 <p><code>Selectors</code> can be marked as <code>Required</code> with a 'Required' <code>Component</code>.</p>
 <p>This means, if the <code>Selector</code> is unable to be filled an error will be thrown, and the simulation will stop.</p>
@@ -351,7 +351,7 @@ Required Selectors</h2>
 <div class="line">.</div>
 </div><!-- fragment --><p> Output: </p><div class="fragment"><div class="line">Behavior: Example, Required Selector Starved For Type: 2 From Group: 0&quot;</div>
 </div><!-- fragment --><hr  />
-<h2><a class="anchor" id="autotoc_md511"></a>
+<h2><a class="anchor" id="autotoc_md243"></a>
 Available Select Criteria</h2>
 <ol type="1">
 <li>Everyone</li>
@@ -359,41 +359,41 @@ Available Select Criteria</h2>
 <li>Exactly N</li>
 </ol>
 <hr  />
-<h3><a class="anchor" id="autotoc_md513"></a>
+<h3><a class="anchor" id="autotoc_md245"></a>
 Everyone</h3>
 <div class="fragment"><div class="line">Select: Everyone</div>
 </div><!-- fragment --><p>This select criteria will select every pedestrian to have the selected Type</p>
 <hr  />
-<h3><a class="anchor" id="autotoc_md515"></a>
+<h3><a class="anchor" id="autotoc_md247"></a>
 Percent</h3>
 <p>Selects a percentage of a <code>Group</code> for the provided <code>Type</code></p>
 <div class="fragment"><div class="line">&lt;value&gt;%</div>
 </div><!-- fragment --><p> &lt;value&gt; - Number Value (1 - 100)</p>
 <p>Example: </p><div class="fragment"><div class="line">Select: 15%</div>
 </div><!-- fragment --><hr  />
-<h3><a class="anchor" id="autotoc_md517"></a>
+<h3><a class="anchor" id="autotoc_md249"></a>
 Exactly N</h3>
 <p>Selects an exact number of pedestrians from a <code>Group</code>.</p>
 <div class="fragment"><div class="line">Exaclty &lt;value&gt;</div>
 </div><!-- fragment --><p> &lt;value&gt; - Number Value</p>
 <p>Example: </p><div class="fragment"><div class="line">Select: 10</div>
 </div><!-- fragment --><hr  />
-<h3><a class="anchor" id="autotoc_md519"></a>
+<h3><a class="anchor" id="autotoc_md251"></a>
 Location</h3>
 <p>Selects all pedestrians inside a given location.</p>
 <div class="fragment"><div class="line">Select: In &lt;location&gt;</div>
 </div><!-- fragment --><p> &lt;location&gt; - Name of Location</p>
 <p>Example: </p><div class="fragment"><div class="line">Select: In @Elevator</div>
 </div><!-- fragment --><hr  />
-<h2><a class="anchor" id="autotoc_md521"></a>
+<h2><a class="anchor" id="autotoc_md253"></a>
 Selectors General Syntax Rules</h2>
 <hr  />
-<h1><a class="anchor" id="autotoc_md523"></a>
+<h1><a class="anchor" id="autotoc_md255"></a>
 Actions</h1>
 <p><code>Actions</code> are what affect a Pedestrian's position, velocity, state, etc.</p>
 <p><code>Actions</code> work by applying attribute modifiers known as Atoms each time step their <code>Condition</code> is satisfied.</p>
 <hr  />
-<h2><a class="anchor" id="autotoc_md525"></a>
+<h2><a class="anchor" id="autotoc_md257"></a>
 Unconditional Actions</h2>
 <p>An <code>Unconditional Action</code> will ALWAYS take effect, applying its <code>Atoms</code> each timestep.</p>
 <div class="fragment"><div class="line">Action (&lt;type&gt;):</div>
@@ -408,7 +408,7 @@ Unconditional Actions</h2>
 <div class="line">.</div>
 </div><!-- fragment --><p> With this Behavior, an injured person will always walk at 75% speed.</p>
 <hr  />
-<h2><a class="anchor" id="autotoc_md527"></a>
+<h2><a class="anchor" id="autotoc_md259"></a>
 A.2. Conditional Actions</h2>
 <p>A <code>Conditional Action</code> will only take effect if its <code>Condition</code> is satisfied.</p>
 <p><code>Conditional Actions</code> are written as follows: </p><div class="fragment"><div class="line">Action (&lt;type&gt;):</div>
@@ -427,7 +427,7 @@ A.2. Conditional Actions</h2>
 <div class="line">.</div>
 </div><!-- fragment --><p> Pedestrians of listener will stop moving while the announcement event is occurring.</p>
 <hr  />
-<h2><a class="anchor" id="autotoc_md530"></a>
+<h2><a class="anchor" id="autotoc_md262"></a>
 Action Durations</h2>
 <p>Normally <code>Actions</code> only apply to the time step their <code>Condition</code> is true in.</p>
 <p>If a longer response is needed, a <code>Duration</code> can be added to the <code>Action</code>.</p>
@@ -451,13 +451,13 @@ Action Durations</h2>
 </div><!-- fragment --><p>Pedestrians of type <code>tripper</code> will trip after 10 seconds from the simulation starting, and remain still for 15 seconds.</p>
 <p>This will cause all <code>trippers</code> to trip at exactly the same time. Normally, randomness should be added to a scenario such as this. For more information on how to add randomness to <code>Duration</code> and <code>Conditions</code>, see <em>Random Values</em>.</p>
 <hr  />
-<h2><a class="anchor" id="autotoc_md533"></a>
+<h2><a class="anchor" id="autotoc_md265"></a>
 Atoms</h2>
 <p><code>Atoms</code> are the part of an <code>Action</code> that actually affects a pedestrian.</p>
 <p>The do this by changing pedestrian Attributes.</p>
 <p>See <em>Available Atoms</em> for the list of available <code>Atoms</code>.</p>
 <hr  />
-<h3><a class="anchor" id="autotoc_md535"></a>
+<h3><a class="anchor" id="autotoc_md267"></a>
 Atom Lists</h3>
 <p>An <code>Atom List</code> is the collection of <code>Atoms</code> that make up an <code>Action</code>.</p>
 <p><code>Atom Lists</code> are written as follows: <code>&lt;atom&gt; , &lt;atom&gt;</code></p>
@@ -468,14 +468,14 @@ Atom Lists</h3>
 </div><!-- fragment --><p> This <code>Atom List</code> will result in the pedestrian stopping and their state being set to "listening"</p>
 <p>(Pedestrian state is useful in Conditions)</p>
 <hr  />
-<h2><a class="anchor" id="autotoc_md538"></a>
+<h2><a class="anchor" id="autotoc_md270"></a>
 Available Atoms</h2>
 <p>There are two types of available <code>Atoms</code>:</p><ol type="1">
 <li>Set </li>
 </ol>
-<h2><a class="anchor" id="autotoc_md539"></a>
+<h2><a class="anchor" id="autotoc_md271"></a>
 2. Scale</h2>
-<h3><a class="anchor" id="autotoc_md540"></a>
+<h3><a class="anchor" id="autotoc_md272"></a>
 Set</h3>
 <p>The <code>Set Atom</code> sets a pedestrian's attribute to a specific value.</p>
 <div class="fragment"><div class="line">set &lt;attribute&gt; to &lt;attribute_value&gt;</div>
@@ -483,7 +483,7 @@ Set</h3>
 <li>&lt;attributes&gt; are described in Attributes.</li>
 <li>&lt;attribute_values&gt; are described in Attribute Values.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md541"></a>
+<h3><a class="anchor" id="autotoc_md273"></a>
 Scale</h3>
 <p>The <code>Scale Atom</code> multiplies a pedestrian attribute by a given value</p>
 <div class="fragment"><div class="line">scale &lt;attribute&gt; &lt;attribute_value&gt;</div>
@@ -493,7 +493,7 @@ Scale</h3>
 <li>&lt;attribute_values&gt; are described in Attribute Values.</li>
 </ul>
 <hr  />
-<h2><a class="anchor" id="autotoc_md543"></a>
+<h2><a class="anchor" id="autotoc_md275"></a>
 Action Targets</h2>
 <p>Sometimes Pedestrians will want to affect other pedestrians around them.</p>
 <p>This is done through the use of <code>Targets</code>.</p>
@@ -508,11 +508,11 @@ Action Targets</h2>
 <div class="line">  Target: nearest pedestrian</div>
 </div><!-- fragment --><p> This results in the pedestrian stopping the nearest pedestrian around them.</p>
 <hr  />
-<h3><a class="anchor" id="autotoc_md546"></a>
+<h3><a class="anchor" id="autotoc_md278"></a>
 Available Targets</h3>
 <p>There is currently only one type of action <code>Target</code>, the "nearest" <code>Target</code>. This <code>Target</code> describes proximity to a pedestrian as part of an <code>Action</code>.</p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md548"></a>
+<h4><a class="anchor" id="autotoc_md280"></a>
 Nearest</h4>
 <p>Selects the nearest of a given type to be the target</p>
 <div class="fragment"><div class="line">nearest &lt;type_list&gt;   // selects the nearest pedestrian with any of the listed types</div>
@@ -521,31 +521,31 @@ Nearest</h4>
 <div class="line"> </div>
 <div class="line">nearest pedestrian    // selects any pedestrian</div>
 </div><!-- fragment --><hr  />
-<h3><a class="anchor" id="autotoc_md550"></a>
+<h3><a class="anchor" id="autotoc_md282"></a>
 Target Modifiers</h3>
 <p><code>Target Modifiers</code> change how pedestrians are selected to be the Target of an action.</p>
 <p><code>Target Modifiers</code> are simply appended to the end of the <code>Action Target</code>.</p>
 <p>Example: </p><div class="fragment"><div class="line">Target: nearest pedestrain in front within 1.0</div>
 </div><!-- fragment --><p> This selects the nearest pedestrian in the direction of motion that is within 1 meter.</p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md552"></a>
+<h4><a class="anchor" id="autotoc_md284"></a>
 Distance Target Modifier</h4>
 <p>Targets can be filtered by their distance to the pedestrian.</p>
 <div class="fragment"><div class="line">within &lt;numeric_value&gt;</div>
 </div><!-- fragment --><hr  />
-<h4><a class="anchor" id="autotoc_md554"></a>
+<h4><a class="anchor" id="autotoc_md286"></a>
 Direction Target Modifier</h4>
 <p>Targets can be filtered by their direction from the pedestrian.</p>
 <p>Currently, there are only two directions. </p><div class="fragment"><div class="line">in front   // used to select pedestrians in the direction the pedestrian is headed</div>
 <div class="line"> </div>
 <div class="line">behind     // used to select pedestrians in the opposite direction the pedestrian is headed</div>
 </div><!-- fragment --><hr  />
-<h4><a class="anchor" id="autotoc_md556"></a>
+<h4><a class="anchor" id="autotoc_md288"></a>
 Location Target Modifier</h4>
 <p>Targets can be filtered by whether they are inside a <code>Location</code> or not.</p>
 <div class="fragment"><div class="line">in &lt;location_name&gt;</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md558"></a>
+<h1><a class="anchor" id="autotoc_md290"></a>
 Conditions</h1>
 <p>A <code>Condition</code> is what decides if a <code>Conditional Action</code> or <code>Event</code> occurs.</p>
 <p><code>Conditions</code> are comprised of one or more <code>Sub Conditions</code> and the boolean operations between them (and/or).</p>
@@ -559,12 +559,12 @@ Conditions</h1>
 <div class="line">.</div>
 </div><!-- fragment --><p> This results in typeA pedestrians stopping for 10 seconds after the example event has occurred but not before 5 seconds have passed in the simulation.</p>
 <hr  />
-<h2><a class="anchor" id="autotoc_md561"></a>
+<h2><a class="anchor" id="autotoc_md293"></a>
 Sub Conditions</h2>
 <p>A <code>Sub Condition</code> defines a single condition of the state of the simulation in which it returns true.</p>
 <p><em>See Available Sub Conditions</em></p>
 <hr  />
-<h2><a class="anchor" id="autotoc_md563"></a>
+<h2><a class="anchor" id="autotoc_md295"></a>
 Available Sub Conditions</h2>
 <p>There are currently 6 total available sub conditions:</p><ol type="1">
 <li>Elapsed Time</li>
@@ -575,7 +575,7 @@ Available Sub Conditions</h2>
 <li>Pedestrian Attributes</li>
 </ol>
 <hr  />
-<h3><a class="anchor" id="autotoc_md565"></a>
+<h3><a class="anchor" id="autotoc_md297"></a>
 Elapsed Time</h3>
 <p>This <code>Condition</code> will be true when a provided amount of time has passed from the <b>start</b> of an Event</p>
 <p><b>Note:</b> This is true only for <b>one time step</b> when the time has elapsed, until the <code>Event</code> starts again.</p>
@@ -588,7 +588,7 @@ Elapsed Time</h3>
 <div class="line">.</div>
 </div><!-- fragment --><p> <b>Note:</b> without the <code>Duration</code> the pedestrian would stop moving for only one time step. <em>See Duration</em>.</p>
 <hr  />
-<h3><a class="anchor" id="autotoc_md568"></a>
+<h3><a class="anchor" id="autotoc_md300"></a>
 Spatial</h3>
 <p>This <code>Condition</code> will be true when the condition Target is within a certain distance</p>
 <div class="fragment"><div class="line">target within &lt;numeric_value&gt;.</div>
@@ -600,11 +600,11 @@ Spatial</h3>
 <div class="line">.</div>
 </div><!-- fragment --><p> <b>Note:</b> without the <code>Duration</code> the pedestrian would stop moving for only one time step. <em>See Duration</em>.</p>
 <hr  />
-<h3><a class="anchor" id="autotoc_md571"></a>
+<h3><a class="anchor" id="autotoc_md303"></a>
 Event Status</h3>
 <p>This <code>Condition</code> checks for the status of an Event.</p>
 <div class="fragment"><div class="line">&lt;event&gt; is &lt;status&gt;</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md572"></a>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md304"></a>
 Available Statuses:</h4>
 <div class="fragment"><div class="line">Starting  // True for the timestep the event starts</div>
 <div class="line">Ending    // True for the timestep the event ends</div>
@@ -616,7 +616,7 @@ Available Statuses:</h4>
 <div class="line">  Response: set velocity to {0}</div>
 <div class="line">.</div>
 </div><!-- fragment --><hr  />
-<h2><a class="anchor" id="autotoc_md575"></a>
+<h2><a class="anchor" id="autotoc_md307"></a>
 Location Enter/Leave</h2>
 <p>This <code>Condition</code> checks if a pedestrian has entered or left a Location.</p>
 <div class="fragment"><div class="line">Enter &lt;location_name&gt;</div>
@@ -630,7 +630,7 @@ Location Enter/Leave</h2>
 <div class="line">  Duration: 10-30 seconds</div>
 <div class="line">.</div>
 </div><!-- fragment --><hr  />
-<h2><a class="anchor" id="autotoc_md577"></a>
+<h2><a class="anchor" id="autotoc_md309"></a>
 Inside Location</h2>
 <p>This <code>Condition</code> checks if a pedestrian is inside a Location.</p>
 <div class="fragment"><div class="line">In &lt;location_name&gt;</div>
@@ -640,7 +640,7 @@ Inside Location</h2>
 <div class="line">  Response: set velocity to {0}</div>
 <div class="line">.</div>
 </div><!-- fragment --><hr  />
-<h2><a class="anchor" id="autotoc_md579"></a>
+<h2><a class="anchor" id="autotoc_md311"></a>
 Pedestrian Attributes</h2>
 <p>This <code>Condition</code> checks if a pedestrian's Attribute is a given Attribute Value.</p>
 <div class="fragment"><div class="line">&lt;attribute&gt; is &lt;attribute_value&gt;</div>
@@ -649,7 +649,7 @@ Pedestrian Attributes</h2>
 <div class="line">  Response: scale velocity 2.0</div>
 <div class="line">.</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md581"></a>
+<h1><a class="anchor" id="autotoc_md313"></a>
 Attributes</h1>
 <p>Each pedestrian has what are called <code>Attributes</code>.</p>
 <p>These attributes include: </p><div class="fragment"><div class="line">Position    // Coordiante pedestrian is currently at</div>
@@ -658,14 +658,14 @@ Attributes</h1>
 <div class="line">State       // Pedestrians internal state</div>
 </div><!-- fragment --><p>These <code>Attributes</code> are important for <code>Actions</code> and <code>Conditions</code>.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md583"></a>
+<h1><a class="anchor" id="autotoc_md315"></a>
 Ex. Example</h1>
 <div class="fragment"><div class="line">Action (typeA):</div>
 <div class="line">  Condition: state is #scared  // Condition for the pedestrian&#39;s &#39;State&#39; attribute</div>
 <div class="line">  Response: scale velocity 2.0 // Atom affecting the pedestrian&#39;s &#39;Velocity&#39; attribute</div>
 <div class="line">.</div>
 </div><!-- fragment --><hr  />
-<h2><a class="anchor" id="autotoc_md585"></a>
+<h2><a class="anchor" id="autotoc_md317"></a>
 Attribute Values</h2>
 <p>Attributes each have a different value type.</p>
 <div class="fragment"><div class="line">Position: Coordinate</div>
@@ -680,7 +680,7 @@ Attribute Values</h2>
 <div class="line"> </div>
 <div class="line">Condition: goal is @aisle</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md587"></a>
+<h1><a class="anchor" id="autotoc_md319"></a>
 Events</h1>
 <p>An <code>Event</code> is something that occurs during a simulation, that effects the whole simulation. For example, an announcement or fire could be an <code>Event</code>.</p>
 <p><code>Events</code> have a start <code>Condition</code> and, optionally, an end Condition</p>
@@ -688,7 +688,7 @@ Events</h1>
 <p><code>Event</code> names are always preceded by a <code>!</code></p>
 <p>Example: </p><div class="fragment"><div class="line">!announcement</div>
 </div><!-- fragment --><hr  />
-<h2><a class="anchor" id="autotoc_md589"></a>
+<h2><a class="anchor" id="autotoc_md321"></a>
 Creating Events</h2>
 <p><code>Events</code> a defined as follows: </p><div class="fragment"><div class="line">Event:</div>
 <div class="line">  Name: &lt;name&gt;</div>
@@ -702,16 +702,16 @@ Creating Events</h2>
 <div class="line">  End: 10 seconds after !example</div>
 <div class="line">.</div>
 </div><!-- fragment --><hr  />
-<h2><a class="anchor" id="autotoc_md591"></a>
+<h2><a class="anchor" id="autotoc_md323"></a>
 Special Events</h2>
 <p>Currently, there is only one special event that is predefined for each <code>Behavior</code>: <code>!Start</code>.</p>
 <p>The <code>!Start</code> event fires at the start of a simulation run and is always <code>Occurring</code>.</p>
 <hr  />
-<h2><a class="anchor" id="autotoc_md593"></a>
+<h2><a class="anchor" id="autotoc_md325"></a>
 Events General Syntax Rules</h2>
 <p><code>Event</code> names are always preceded by a <code>!</code> when used.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md595"></a>
+<h1><a class="anchor" id="autotoc_md327"></a>
 Values</h1>
 <p><code>Behaviors</code> support 3 types of values:</p>
 <ol type="1">
@@ -720,7 +720,7 @@ Values</h1>
 <li>State</li>
 </ol>
 <hr  />
-<h2><a class="anchor" id="autotoc_md597"></a>
+<h2><a class="anchor" id="autotoc_md329"></a>
 Numerical Values</h2>
 <p>Anywhere there is a numerical value required the following can be used (with some exceptions):</p><ol type="1">
 <li>Exact Values</li>
@@ -728,7 +728,7 @@ Numerical Values</h2>
 <li>Random Values</li>
 </ol>
 <hr  />
-<h3><a class="anchor" id="autotoc_md599"></a>
+<h3><a class="anchor" id="autotoc_md331"></a>
 Exact Values</h3>
 <p><code>Exact Values</code> are used when the value should be a specific value</p>
 <p>There are two kinds of <code>Exact Values</code>:</p><ol type="1">
@@ -740,12 +740,12 @@ Exact Values</h3>
 <p>Example: </p><div class="fragment"><div class="line">50    // Number Value, has no decimal places</div>
 <div class="line">50.15 // Float Value, has a decimal value</div>
 </div><!-- fragment --><hr  />
-<h3><a class="anchor" id="autotoc_md601"></a>
+<h3><a class="anchor" id="autotoc_md333"></a>
 Range Values</h3>
 <p><code>Range Values</code> are singular random values within a given range.</p>
 <p>When the <code>Behavior</code> is run, the value is the <b>same for every individual using that <code>Value</code></b>.</p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md603"></a>
+<h4><a class="anchor" id="autotoc_md335"></a>
 Float Value Ranges vs. Number Value Ranges</h4>
 <p><code>Range Values</code> are either <code>Float Value Ranges</code> or <code>Number Value Ranges</code></p>
 <p>With the difference being that: <code>Float Value Ranges</code> are any real value between the range and <code>Number Value Ranges</code> are any integer value between the range.</p>
@@ -761,12 +761,12 @@ Float Value Ranges vs. Number Value Ranges</h4>
 <div class="line">.</div>
 </div><!-- fragment --><p>The exact percentage will be a random integer value between 10 and 20.</p>
 <hr  />
-<h3><a class="anchor" id="autotoc_md606"></a>
+<h3><a class="anchor" id="autotoc_md338"></a>
 Random Values</h3>
 <p><code>Random Values</code> are very similar to <code>Range Values</code>, with a random value in a given range.</p>
 <p>The big difference is that: <code>Range Values</code> only have one random value, <code>Random Values</code> have a random value that is <b>different for each pedestrian</b>.</p>
 <hr  />
-<h4><a class="anchor" id="autotoc_md608"></a>
+<h4><a class="anchor" id="autotoc_md340"></a>
 Float Random Values vs. Number Random Values</h4>
 <p><code>Random Values</code> are either <code>Float Random Values</code> or <code>Number Random Values</code></p>
 <p>With the difference being that: <code>Float Random Value</code> are any real value between the range and <code>Number Random Values</code> are any integer value between the range.</p>
@@ -783,7 +783,7 @@ Float Random Values vs. Number Random Values</h4>
 <div class="line">.</div>
 </div><!-- fragment --><p> Each typeA pedestrian will stop randomly between 5 and 10 seconds after the start, then stay still for a random amount of time between 10 and 20 seconds.</p>
 <hr  />
-<h2><a class="anchor" id="autotoc_md611"></a>
+<h2><a class="anchor" id="autotoc_md343"></a>
 Coordinates</h2>
 <p>Coordinate Values are X, Y, Z coordinates.</p>
 <p>They are written: </p><div class="fragment"><div class="line">{ &lt;numeric_value&gt;, &lt;numeric_value&gt;, &lt;numeric_value&gt; }</div>
@@ -798,7 +798,7 @@ Coordinates</h2>
 <div class="line"> </div>
 <div class="line">{0, 0, 0}</div>
 </div><!-- fragment --><hr  />
-<h2><a class="anchor" id="autotoc_md613"></a>
+<h2><a class="anchor" id="autotoc_md345"></a>
 State</h2>
 <p>Each pedestrian can have a single <code>State</code> associated with it. When a new state is set, it overrides the previous state.</p>
 <p><code>States</code> are user defined, and used for <code>Conditions</code></p>

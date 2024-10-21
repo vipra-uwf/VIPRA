@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>VIPRA Documentation: Developer Setup</title>
+<title>VIPRA Documentation: setup</title>
 <link href="../../tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="../../jquery.js"></script>
 <script type="text/javascript" src="../../dynsections.js"></script>
@@ -84,16 +84,18 @@ $(function(){ initResizable(false); });
 </div><!-- top -->
 <div id="doc-content">
 <div><div class="header">
-  <div class="headertitle"><div class="title">Developer Setup</div></div>
+  <div class="headertitle"><div class="title">setup</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md346"></a></p>
+<div class="textblock"><p>| | <a class="el" href="../../index.html#md_docs_2docs">Main Page</a> | <a class="el" href="../../dd/d3e/md_docs_2pages_2developers_2setup.html">Developer Setup</a> | <a class="el" href="../../dc/db3/md_docs_2pages_2developers_2overview.html">Module Implementations</a> | <a class="el" href="../../de/d24/md_docs_2pages_2developers_2examples_2list.html">Examples</a> |</p>
+<h1><a class="anchor" id="autotoc_md155"></a>
+Developer Setup</h1>
 <p>VIPRA can either be used:</p><ul>
 <li>as a Library for use in other projects</li>
 <li>as a Standalone Simulation</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md347"></a>
-Requirements</h1>
+<h2><a class="anchor" id="autotoc_md156"></a>
+Requirements</h2>
 <p>The following are requirement for running the VIPRA simulation.</p>
 <ol type="1">
 <li><a href="https://cmake.org/download/">CMake</a> version 3.14 or newer.</li>
@@ -107,19 +109,19 @@ Requirements</h1>
 <li>ANTLR4 - version 4.13.1 or newer.</li>
 </ol>
 <hr  />
-<h1><a class="anchor" id="autotoc_md349"></a>
+<h1><a class="anchor" id="autotoc_md158"></a>
 Library</h1>
 <p><code>VIPRA</code> can be included in a project using <a href="https://cmake.org/">CMake</a></p>
 <div class="fragment"><div class="line">target_link_libraries(</div>
 <div class="line">  **project**</div>
 <div class="line">  PUBLIC</div>
-<div class="line">  VIPRA</div>
+<div class="line">  vipra</div>
 <div class="line">)</div>
 </div><!-- fragment --><ul>
 <li>Replace <code>**project**</code> with the name of your CMake project</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md351"></a>
+<h1><a class="anchor" id="autotoc_md160"></a>
 Standalone Simulation</h1>
 <p>A MakeFile is provided with the proper command to build a standalone simulation from the provided <code>main.cpp</code> in the top level directory.</p>
 <p>To build the simulation, in the parent directory run: </p><div class="fragment"><div class="line">make</div>
@@ -129,20 +131,20 @@ Standalone Simulation</h1>
 <li><code>make debug</code> for compiling in debug mode.</li>
 <li><code>make perf</code> for compiling the performance testing version.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md352"></a>
+<h2><a class="anchor" id="autotoc_md161"></a>
 Using MPI</h2>
 <p><code>MPI</code> is enabled with the addition of <code>mpi=on</code> to the make command</p>
 <p>Example: </p><div class="fragment"><div class="line">make release mpi=on</div>
 </div><!-- fragment --><blockquote class="doxtable">
 <p>&zwj;!!! IMPORTANT NOTE: make sure that the version of MPI you are compiling with matches the version you run the simulation with. </p>
 </blockquote>
-<h2><a class="anchor" id="autotoc_md353"></a>
+<h2><a class="anchor" id="autotoc_md162"></a>
 Using Gperftools</h2>
 <p><a href="https://github.com/gperftools/gperftools">Gperftools</a> can be used with <code>make perf gperf=on</code></p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md355"></a>
+<h1><a class="anchor" id="autotoc_md164"></a>
 Running the Provided Simulation</h1>
-<p>The VIPRA repo comes with a <code>main.cpp</code> that follows the <a class="el" href="../../d9/d97/md_docs_2pages_2examples_2parameter__sweep.html">Parameter Sweep Example Simulation</a></p>
+<p>The VIPRA repo comes with a <code>main.cpp</code> that follows the Parameter Sweep Example Simulation</p>
 <div class="fragment"><div class="line">./VIPRA -count=&lt;sim count&gt; -map=&lt;map file path&gt; -peds=&lt;pedestrian file path&gt; -params=&lt;parameters file path&gt;</div>
 </div><!-- fragment --><p>Example: </p><div class="fragment"><div class="line">./VIPRA -count=1 -map=maps/obstacles/a320/a320_polygons.json -peds=maps/pedestrians/a320/a320_144_pedestrians.json -params=examples/module_params.json</div>
 </div><!-- fragment --><hr  />

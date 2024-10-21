@@ -87,8 +87,8 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">Pedestrian Set Implementation</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md312"></a></p>
-<h1><a class="anchor" id="autotoc_md313"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md121"></a></p>
+<h1><a class="anchor" id="autotoc_md122"></a>
 Required Methods</h1>
 <p>In addition to the <a class="el" href="../../d7/d90/md_docs_2pages_2developers_2implementation_2module.html">Base Module</a> requirements <code>Goals</code> require the following:</p>
 <div class="fragment"><div class="line"> ++</div>
@@ -97,64 +97,64 @@ Required Methods</h1>
 <div class="line"> </div>
 <div class="line">VIPRA::idx closest_ped(VIPRA::idx pedIdx) <span class="keyword">const</span>;</div>
 <div class="line">VIPRA::idx conditional_closest_ped(VIPRA::idx pedIdx, <span class="keyword">auto</span>&amp;&amp; condition) <span class="keyword">const</span>;</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md314"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md123"></a>
 Details</h1>
 <div class="fragment"><div class="line"> ++</div>
 <div class="line">VIPRA_PEDS_INIT_STEP {}</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md315"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md124"></a>
 Parameters</h3>
 <ul>
 <li><code>input</code> - Input module implementation</li>
 <li><code>map</code> - Map module implementation</li>
 <li><code>engine</code> - <a class="el" href="../../d4/dfe/md_docs_2pages_2developers_2usage_2randomization.html">VIPRA Random Engine</a></li>
 </ul>
-<h3><a class="anchor" id="autotoc_md316"></a>
+<h3><a class="anchor" id="autotoc_md125"></a>
 Returns</h3>
 <p><code>NONE</code></p>
-<h3><a class="anchor" id="autotoc_md317"></a>
+<h3><a class="anchor" id="autotoc_md126"></a>
 Expected Results</h3>
 <p>The module is ready for use</p>
 <hr  />
 <div class="fragment"><div class="line"> ++</div>
 <div class="line">VIPRA_PEDS_UPDATE_STEP {}</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md319"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md128"></a>
 Parameters</h3>
 <ul>
-<li><code>state</code> : VIPRA::State - updated positions/velocities of pedestrians</li>
+<li><code>state</code> : VIPRA::State&amp; - out parameter, updated positions/velocities of pedestrians</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md320"></a>
+<h3><a class="anchor" id="autotoc_md129"></a>
 Returns</h3>
 <p><code>NONE</code></p>
-<h3><a class="anchor" id="autotoc_md321"></a>
+<h3><a class="anchor" id="autotoc_md130"></a>
 Expected Results</h3>
 <p>The module is ready to correctly return results for its required methods</p>
 <hr  />
 <div class="fragment"><div class="line"> ++</div>
 <div class="line">VIPRA::idx closest_ped_impl(VIPRA::idx pedIdx) <span class="keyword">const</span>;</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md323"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md132"></a>
 Parameters</h3>
 <ul>
 <li><code>pedIdx</code> : VIPRA::idx - index of pedestrian to find the nearest neighbor of</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md324"></a>
+<h3><a class="anchor" id="autotoc_md133"></a>
 Returns</h3>
 <p><code>VIPRA::idx</code> - index of pedestrian nearest pedestrian pedIdx</p>
-<h3><a class="anchor" id="autotoc_md325"></a>
+<h3><a class="anchor" id="autotoc_md134"></a>
 Expected Results</h3>
 <p><code>NONE</code></p>
 <hr  />
 <div class="fragment"><div class="line"> ++</div>
 <div class="line">VIPRA::idx conditional_closest_ped_impl(VIPRA::idx pedIdx, <span class="keyword">auto</span>&amp;&amp; condition) <span class="keyword">const</span>;</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md327"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md136"></a>
 Parameters</h3>
 <ul>
 <li><code>pedIdx</code> : VIPRA::idx - index of pedestrian to find the nearest neighbor of</li>
 <li><code>condition</code> : bool(VIPRA::idx) - callable that returns true if the condition matches a given pedestrian</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md328"></a>
+<h3><a class="anchor" id="autotoc_md137"></a>
 Returns</h3>
 <p><code>VIPRA::idx</code> - index of pedestrian nearest pedestrian pedIdx that matches the condition</p>
-<h3><a class="anchor" id="autotoc_md329"></a>
+<h3><a class="anchor" id="autotoc_md138"></a>
 Expected Results</h3>
 <p><code>NONE</code></p>
 <hr  />
