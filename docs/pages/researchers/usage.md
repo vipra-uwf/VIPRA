@@ -1,6 +1,5 @@
 
 | [Main Page](../../docs.md) | [How To Use](usage.md) | [Provided Modules](base_modules.md) | [VIPRA Behaviors](behaviors/behaviors.md) | [Module Parameters](parameters.md) | [Developing Modules](../developers/overview.md) |
-| --- | --- | --- | --- | --- | --- |
 
 # VIPRA Usage
 
@@ -9,7 +8,6 @@
 The following are requirement for running the VIPRA simulation.
 
 1. [CMake](https://cmake.org/download/) version 3.14 or newer
-4. [Python](https://www.python.org/) 3.10 or newer
 2. A compiler that supports C++20
 3. Linux
 
@@ -19,46 +17,46 @@ Additionally, for distributed simulations:
 
 # Creating A Simulation
 
-A [Python](https://www.python.org/) script is provided for easily setting up a simulation.
-
-Run the following in the main directory:
+The simulation and any modules are compiled by running:
 ```
-python3 vipra.py -n <name>
+make
 ```
 
-This will start a setup process in which the user chooses which modules to use for the simulation.
-The options for each are provided at each step.
-
-A description of each module type can be found in the [Modules Page](modules.md)
-
-After the configuration step is done run:
+To allow for MPI:
 ```
-python3 vipra.py -c -n <name>
+make mpi=on
 ```
 
-## Running The Simulation
+# Running The Simulation
 
-After the simulation has been created it can be run with:
-
+The simulation is run with
 ```
-python3 vipra.py -r -n <name>
-```
-
-## Recreating The Simulation
-
-If something has changed with one of the modules the simulation can be updated with:
-
-```
-python3 vipra.py -c -n <name>
+./VIPRA <flags>
 ```
 
-# Simulation Parameters
+## Flags
 
-Parameters are loaded into the simulation from a JSON file; the path to which is asked for when running with the `-r` flag.
+- `-map=<path>`: path to the map file (required)
+- `-peds=<path>`: path to the pedestrian initial positions
+- `-params=<path>`: path to the parameter file, default = ./module_params.json
+- `-modules=<path>`: path to the sim config file, default = ./sim_config.json
+- `-count=<number>`: number of simulations to run, default = 1 (more on this in [Parameter Sweeps](parameter_sweeps.md))
+- `-install=<path>`: path to module install directory, default = ./install
+- `-log=<debug|info|warn|error>`: minimum level to log, default = info
 
-Each module implementation has its own set of parameters.
+## Simulation Parameters
+
+Parameters are loaded into the simulation from a JSON file, each module implementation has its own set of parameters.
 
 An example set of parameters is provided in the `examples/module_params.json` file.
+
+## Simulation Config
+
+A simulation config file is a JSON file that tells VIPRA which modules to use.
+
+The types of modules are discussed in: [Modules](modules.md)
+
+An example simulation config is provided in the `examples/sim_config.json` file.
 
 ## Parameter Sweeps
 

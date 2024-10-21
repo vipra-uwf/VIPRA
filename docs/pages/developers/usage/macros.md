@@ -51,30 +51,6 @@ class ExampleModel {
 }
 ```
 
-#### VIPRA_CONFIG_STEP
-#### VIPRA_GET_PARAM
-#### VIPRA_GET_ARRAY_PARAM
-
-`VIPRA_CONFIG_STEP` provides the proper function signature for the module configuration step.
-
-`VIPRA_GET_PARAM` loads the parameter into a variable.
-
-`VIPRA_GET_ARRAY_PARAM` loads an array parameter into a vector.
-
-```C++
-class ExampleModel {
-  public:
-    VIPRA_CONFIG_STEP {
-      VIPRA_GET_PARAM("meanMass", _meanMass);
-      VIPRA_GET_ARRAY_PARAM("array", _arrayExample);
-    }
-
-  private:
-    VIPRA::f_pnt _meanMass;
-    std::vector<std::string> _arrayExample;
-}
-```
-
 ## Model Macros
 
 #### VIPRA_MODEL_INIT_STEP

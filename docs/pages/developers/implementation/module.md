@@ -3,17 +3,16 @@
 
 Each module type has its own requirements, these are the requirements common to all.
 
-# File / Naming Requirements
+# File Requirements
 
-For the module to be correctly identified by [vipra.py](../../researchers/usage.md)
+Every module requires 4 files in a seperate directory
 
-1. The module files must be placed under `modules/*type*/*module name*`
-2. The module .hpp file must be named *module name*.hpp
-3. The module class name and VIPRA_MODULE_NAME() must match the .hpp *module name*
-4. The module class must be under the *type* namespace
-5. A `CMakeLists.txt` must be placed in the module directory
+1. module.hpp*
+2. module.cpp*
+3. CMakeLists.txt
+4. vipra.module
 
-- Note: 3 & 4 are covered when using the `NEW_VIPRA_MODULE(*name*, *type*)` macro
+*Note: for 1 & 2 the file name can be anything
 
 [The CMakeLists.txt requirements are at the bottom](#CMakeLists)
 
@@ -88,10 +87,18 @@ A CMakeLists.txt file tells the build system how to include the module using [CM
 
 Most modules simply require the following:
 ```CMake
-vipra_add_all()
+vipra_module(
+  NAME
+    *name*
+  SOURCES
+    *list of .cpp files used in module*
+  TYPE
+    *type*
+)
 ```
 
-This will add all source and header files to the VIPRA project.
+- name: being how the module is refered to when selecting which modules to use in the [simulation config](../../researchers/usage.md)
+- type: being one of the [module types](../overview.md)
 
 ### Adding External Libraries
 
@@ -131,13 +138,13 @@ vipra_add_library(
 
 ### Example
 
-This example is from the [JSON Input Module](../../researchers/base_modules.md)
-
 ```CMake
-vipra_add_all()
-
-vipra_add_library(
-  LIBNAME nlohmann_json
-  URL https://github.com/nlohmann/json.git
+vipra_module(
+  NAME
+    Calm
+  SOURCES
+    calm_model.cpp
+  TYPE
+    Model
 )
 ```

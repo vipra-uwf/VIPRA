@@ -1,5 +1,4 @@
 | [Main Page](../../docs.md) | [How To Use](usage.md) | [Provided Modules](base_modules.md) | [VIPRA Behaviors](behaviors/behaviors.md) | [Module Parameters](parameters.md) | [Developing Modules](../developers/overview.md) |
-| --- | --- | --- | --- | --- | --- |
 
 
 # Module Parameters
