@@ -40,8 +40,9 @@ class PotentialField : public VIPRA::Modules::Module<PotentialField>,
       auto const& grid = _field.get_grid(pos);
 
       if ( grid.end == _emptyf3d_ )
-        throw std::runtime_error("No Path Found for Pedestrian: " +
-                                 std::to_string(pedIdx));
+        VIPRA_MODULE_ERROR(
+          "No path found for pedestrian {}, Start: ({}, {}), End: ({}, {})",
+          pedIdx, pos.x, pos.y, end_goal(pedIdx).x, end_goal(pedIdx).y);
 
       set_current_goal(pedIdx, pos + grid.direction);
       set_end_goal(pedIdx, grid.end);
