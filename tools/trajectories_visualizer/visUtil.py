@@ -267,7 +267,7 @@ def draw_dxf(msp, ax, args):
 
 # Function to draw a circle
 def draw_circle(ax, center, radius):
-    circle = Circle(center, radius, fill=False, color='black')
+    circle = matplotlib.pyplot.Circle(center, radius, fill=False, color='black')
     ax.add_patch(circle)
 
 # Function to draw a lightweight polyline (LWPolyline)
