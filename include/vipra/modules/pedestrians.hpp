@@ -190,9 +190,7 @@ class Pedestrians : public BaseModule<Pedestrians> {
       // TODO(rolland, issue #50): effectively infinite loop if the spawn is covered by an obstacle
       VIPRA::idx spawnIdx = polyDist(engine);
 
-      do {
-        _coords[i] = spawnAreas[spawnIdx].random_point(engine);
-      } while ( map.collision(Geometry::Circle{_coords[i], 0.3}) );
+      _coords[i] = find_random_point(spawnAreas[spawnIdx], map, engine);
     }
 
     VIPRA::Log::debug("{} pedestrians added randomly to {} spawn areas",
@@ -220,6 +218,29 @@ class Pedestrians : public BaseModule<Pedestrians> {
                       (*coords).size(), (*coords).size());
     set_coordinates(std::move(*coords));
     set_velocities(std::vector<VIPRA::f3d>(_coords.size()));
+  }
+
+  static auto find_random_point(VIPRA::Geometry::Polygon const& polygon,
+                                VIPRA::Modules::Map const&      map,
+                                VIPRA::Random::Engine&          engine) -> f3d
+  {
+    constexpr size_t MAX_RETRIES = 20;
+    size_t           retries = 0;
+
+    f3d point = polygon.random_point(engine);
+    while ( map.collision(Geometry::Circle{point, 0.3}) ) {
+      point = polygon.random_point(engine);
+      ++retries;
+      if ( retries > MAX_RETRIES ) {
+        VIPRA_BASE_MODULE_ERROR(
+            "Pedestrians",
+            "Unable to obtain a point in the spawn area centered at ({}, {}). "
+            "Make sure all spawn areas are outside of obstacles.",
+            polygon.center().x, polygon.center().y);
+      }
+    }
+
+    return point;
   }
 
  public:
