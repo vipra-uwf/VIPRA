@@ -185,15 +185,19 @@ def plotObs(obstacles, ax, args):
     ax.add_patch(poly)
 
 def prepPlot(ax, i, args):
-  xDim = args['xDim']
-  yDim = args['yDim']
+  ax.autoscale(True)
+  ax.axis('equal')
+  # if (args['xDim'] and args['yDim']):
+  #   xDim = args['xDim']
+  #   yDim = args['yDim']
 
-  ax.clear()
-  ax.set_xlim(xDim[0], xDim[1])
-  ax.set_ylim(yDim[0], yDim[1])
-  ax.autoscale(False)
-  ax.set_facecolor(args['bckColor'])
-  ax.text(xDim[1] / 2 , yDim[1], f'{datetime.timedelta(seconds=(i * 100 * 0.005))}')
+  # ax.clear()
+  # ax.set_xlim(xDim[0], xDim[1])
+  # ax.set_ylim(yDim[0], yDim[1])
+  # ax.autoscale(True)
+  # plt.axis('equal')
+  # ax.set_facecolor(args['bckColor'])
+  # ax.text(xDim[1] / 2 , yDim[1], f'{datetime.timedelta(seconds=(i * 100 * 0.005))}')
 
 percent = 0
 def printProgressBar (iteration, total, prefix="Outputing", animating=False):
@@ -252,7 +256,7 @@ def updateColors(output):
 def draw_dxf(msp, ax, args):
   # Iterate through entities in the model space
   for entity in msp:
-      if entity.dxf.layer != 'obstacles':
+      if entity.dxf.layer.lower() != 'obstacles':
         continue
       if entity.dxftype() == 'LINE':
           draw_line(ax, entity.dxf.start, entity.dxf.end)

@@ -15,16 +15,16 @@ Selector:
 Location:
   Name: aisle
   Dimensions:
-    Center: {12, 1.7}
-    Lengths: {30, 0.2}
+    Center: {21, 5.45}
+    Lengths: {19.5, 0.5}
     Rotation: 0
 .
 
 Location:
   Name: planefront
   Dimensions:
-    Center: {24, 1.7}
-    Lengths: {3, 10}
+    Center: {9.25, 5.5}
+    Lengths: {3.5, 3}
     Rotation: 0
 .
 

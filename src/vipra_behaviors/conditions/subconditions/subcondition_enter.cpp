@@ -19,6 +19,7 @@ void SubConditionEnter::operator()(Simpack pack, const VIPRA::idxVec& peds,
   for ( auto ped : peds ) {
     if ( _entered[targets[ped].targetIdx] ) {
       met[ped] = false;
+      continue;
     }
 
     Location& loc = pack.context.locations[_location];
