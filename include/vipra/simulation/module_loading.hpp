@@ -47,7 +47,7 @@ inline auto load_module(std::string const& name, std::string const& installDir,
   if ( module == nullptr ) {
     std::cerr << "module not found at: " << path << '\n';
     VIPRA::Log::error("dlopen failed: {}\n", dlerror());
-    throw std::runtime_error("Module Not Found");
+    throw std::runtime_error("Unable to load module");
   }
 
   // NOLINTBEGIN(cppcoreguidelines-pro-type-reinterpret-cast)
@@ -58,13 +58,11 @@ inline auto load_module(std::string const& name, std::string const& installDir,
 
   if ( func == nullptr ) {
     std::cerr << "create_module not found in: " << path << '\n';
-    VIPRA::Log::error("dlopen failed: {}\n", dlerror());
     throw std::runtime_error("Module Missing VIPRA_REGISTER_MODULE");
   }
 
   if ( configFunc == nullptr ) {
     std::cerr << "setup_module not found in: " << path << '\n';
-    VIPRA::Log::error("dlopen failed: {}\n", dlerror());
     throw std::runtime_error("Module Missing VIPRA_REGISTER_MODULE");
   }
 
@@ -74,7 +72,7 @@ inline auto load_module(std::string const& name, std::string const& installDir,
 
   if ( mod.get() == nullptr ) {
     std::cerr << "Module not created\n";
-    throw std::runtime_error("Unable to reate Module");
+    throw std::runtime_error("Unable to create Module");
   }
 
   VIPRA::Log::debug("Returning Module");

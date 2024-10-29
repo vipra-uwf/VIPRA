@@ -102,7 +102,10 @@ void AStar::set_end_goals(auto const& pedset, auto const& map,
       set_end_goal(pedIdx, point);
     }
     else {
-      VIPRA_MODULE_ERROR("No goal found for pedestrian {}", pedIdx);
+      VIPRA_MODULE_ERROR(
+          "No goal of type {} found for pedestrian {}. Check spelling and that "
+          "the provided map contains {}",
+          _endGoalType, pedIdx, _endGoalType);
     }
   }
 }
@@ -167,14 +170,16 @@ void AStar::find_path(VIPRA::idx pedIdx, VIPRA::f3d startPos,
   VIPRA::idx endIdx = _graph.get_closest_grid_idx(end_goal(pedIdx));
 
   if ( _graph.node_count() <= startIdx || _graph.node_count() <= endIdx ) {
-    VIPRA_MODULE_ERROR("Start or end index is out of bounds");
+    VIPRA_MODULE_ERROR(
+        "Pedestrian or goal is outside the bounds of the map provided");
   }
 
   auto path = VIPRA::astar(startIdx, endIdx, _graph);
 
   if ( ! path ) {
     VIPRA_MODULE_ERROR(
-        "No path found for pedestrian {}, Start: ({}, {}), End: ({}, {})",
+        "No path found for pedestrian {}, Start: ({}, {}), End: ({}, {})\nTry "
+        "reducing gridSize in parameters",
         pedIdx, startPos.x, startPos.y, end_goal(pedIdx).x, end_goal(pedIdx).y);
   }
 
