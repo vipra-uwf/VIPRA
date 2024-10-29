@@ -1,9 +1,12 @@
 
 
+#include "vipra/macros/errors.hpp"
 #include "vipra/macros/module.hpp"
 
 #include "astar.hpp"
 #include "astar_algo.hpp"
+#include "vipra/modules/pedestrians.hpp"
+#include "vipra/random/random.hpp"
 
 VIPRA_REGISTER_MODULE(VIPRA::Goals::AStar, Goals)
 
@@ -67,14 +70,37 @@ void AStar::change_end_goal_impl(VIPRA::idx pedIdx, VIPRA::f3d pos,
   set_current_goal(pedIdx, _paths[pedIdx].back());
 }
 
+auto AStar::find_random_point(VIPRA::Geometry::Polygon const& polygon,
+                              VIPRA::Modules::Map const&      map,
+                              VIPRA::Random::Engine& engine) const -> f3d
+{
+  constexpr size_t MAX_RETRIES = 20;
+  size_t           retries = 0;
+
+  f3d point = polygon.random_point(engine);
+  while ( map.collision(Geometry::Circle{point, _closestObstacle}) ) {
+    point = polygon.random_point(engine);
+    ++retries;
+    if ( retries > MAX_RETRIES ) {
+      VIPRA_MODULE_ERROR(
+          "Unable to obtain a point in the objective centered at ({}, {}). "
+          "Make sure all objectives are outside of obstacles.",
+          polygon.center().x, polygon.center().y);
+    }
+  }
+
+  return point;
+}
+
 /**
    * @brief Sets the end goals for each pedestrian
    *
    * @param pedset
    * @param map
    */
-void AStar::set_end_goals(auto const& pedset, auto const& map,
-                          VIPRA::Random::Engine& engine)
+void AStar::set_end_goals(VIPRA::Modules::Pedestrians const& pedset,
+                          VIPRA::Modules::Map const&         map,
+                          VIPRA::Random::Engine&             engine)
 {
   assert(pedset.num_pedestrians() > 0);
 
@@ -96,7 +122,8 @@ void AStar::set_end_goals(auto const& pedset, auto const& map,
                       (*nearestGoalIter).center().y);
 
     if ( nearestGoalIter != objects.end() ) {
-      const auto point = (*nearestGoalIter).random_point(engine);
+      f3d point = find_random_point(*nearestGoalIter, map, engine);
+
       VIPRA::Log::debug("Ped {} Final End Goal: ({}, {})", pedIdx, point.x,
                         point.y);
       set_end_goal(pedIdx, point);
