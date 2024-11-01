@@ -60,8 +60,10 @@ simcache
 __pycache__
 *.gif
 *.jpeg
-*.png
 *.mp4
+*.png
+# Exception for document images
+!docs/pages/researchers/maps/images/*
 
 # dxf
 dwg2dxf
