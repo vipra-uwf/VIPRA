@@ -1,7 +1,7 @@
 var searchData=
 [
   ['macros_0',['Macros',['../d6/d36/md_docs_2pages_2developers_2usage_2macros.html#autotoc_md169',1,'Base Module Macros'],['../d6/d36/md_docs_2pages_2developers_2usage_2macros.html#autotoc_md177',1,'Goals Macros'],['../d6/d36/md_docs_2pages_2developers_2usage_2macros.html',1,'Macros'],['../d6/d36/md_docs_2pages_2developers_2usage_2macros.html#autotoc_md174',1,'Model Macros']]],
-  ['mag_1',['mag',['../d8/d28/structVIPRA_1_1f3d.html#a5d073b75c4fccfa9be2245fc4967c71a',1,'VIPRA::f3d']]],
+  ['mag_1',['mag',['../d8/d28/structVIPRA_1_1f3d.html#a2d6198fd743da203ebd3c9ff6804252d',1,'VIPRA::f3d']]],
   ['mag_5fsqrd_2',['mag_sqrd',['../d8/d28/structVIPRA_1_1f3d.html#a80310828f9e79e17c8828c4cf0ff65c2',1,'VIPRA::f3d']]],
   ['make_5finteger_5fsequence_3',['make_integer_sequence',['../da/d58/structdetail_1_1make__integer__sequence.html',1,'detail']]],
   ['make_5finteger_5fsequence_3c_20t_2c_200_2c_20ns_2e_2e_2e_20_3e_4',['make_integer_sequence&lt; T, 0, Ns... &gt;',['../d3/df4/structdetail_1_1make__integer__sequence_3_01T_00_010_00_01Ns_8_8_8_01_4.html',1,'detail']]],

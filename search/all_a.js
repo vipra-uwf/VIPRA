@@ -78,13 +78,12 @@ var searchData=
   ['crtp_3c_20module_3c_20quadtree_20_3e_20_3e_75',['CRTP&lt; Module&lt; QuadTree &gt; &gt;',['../da/d35/classVIPRA_1_1Util_1_1CRTP.html',1,'VIPRA::Util']]],
   ['crtp_3c_20module_3c_20simulation_20_3e_20_3e_76',['CRTP&lt; Module&lt; Simulation &gt; &gt;',['../da/d35/classVIPRA_1_1Util_1_1CRTP.html',1,'VIPRA::Util']]],
   ['crtp_3c_20module_3c_20trajectoriesjson_20_3e_20_3e_77',['CRTP&lt; Module&lt; TrajectoriesJson &gt; &gt;',['../da/d35/classVIPRA_1_1Util_1_1CRTP.html',1,'VIPRA::Util']]],
-  ['crtp_3c_20obstacles_3c_20module_5ft_20_3e_20_3e_78',['CRTP&lt; Obstacles&lt; module_t &gt; &gt;',['../da/d35/classVIPRA_1_1Util_1_1CRTP.html',1,'VIPRA::Util']]],
-  ['crtp_3c_20paramreader_3c_20json_20_3e_20_3e_79',['CRTP&lt; ParamReader&lt; JSON &gt; &gt;',['../da/d35/classVIPRA_1_1Util_1_1CRTP.html',1,'VIPRA::Util']]],
-  ['crtp_3c_20paramreader_3c_20module_5ft_20_3e_20_3e_80',['CRTP&lt; ParamReader&lt; module_t &gt; &gt;',['../da/d35/classVIPRA_1_1Util_1_1CRTP.html',1,'VIPRA::Util']]],
-  ['crtp_3c_20polygoninput_3c_20module_5ft_20_3e_20_3e_81',['CRTP&lt; PolygonInput&lt; module_t &gt; &gt;',['../da/d35/classVIPRA_1_1Util_1_1CRTP.html',1,'VIPRA::Util']]],
-  ['custom_20information_82',['Plotting Custom Information',['../df/d5b/md_docs_2pages_2researchers_2tools_2visualizer.html#autotoc_md372',1,'']]],
-  ['custom_5fvalue_83',['custom_value',['../d0/d91/structdetail_1_1custom__value.html',1,'detail']]],
-  ['custom_5fvalue_3c_20basic_5fprintf_5fcontext_20_3e_84',['custom_value&lt; basic_printf_context &gt;',['../d0/d91/structdetail_1_1custom__value.html',1,'detail']]],
-  ['custom_5fvalue_3c_20context_20_3e_85',['custom_value&lt; context &gt;',['../d0/d91/structdetail_1_1custom__value.html',1,'detail']]],
-  ['custom_5fvalue_3c_20generic_5fcontext_20_3e_86',['custom_value&lt; generic_context &gt;',['../d0/d91/structdetail_1_1custom__value.html',1,'detail']]]
+  ['crtp_3c_20paramreader_3c_20json_20_3e_20_3e_78',['CRTP&lt; ParamReader&lt; JSON &gt; &gt;',['../da/d35/classVIPRA_1_1Util_1_1CRTP.html',1,'VIPRA::Util']]],
+  ['crtp_3c_20paramreader_3c_20module_5ft_20_3e_20_3e_79',['CRTP&lt; ParamReader&lt; module_t &gt; &gt;',['../da/d35/classVIPRA_1_1Util_1_1CRTP.html',1,'VIPRA::Util']]],
+  ['crtp_3c_20polygoninput_3c_20module_5ft_20_3e_20_3e_80',['CRTP&lt; PolygonInput&lt; module_t &gt; &gt;',['../da/d35/classVIPRA_1_1Util_1_1CRTP.html',1,'VIPRA::Util']]],
+  ['custom_20information_81',['Plotting Custom Information',['../df/d5b/md_docs_2pages_2researchers_2tools_2visualizer.html#autotoc_md372',1,'']]],
+  ['custom_5fvalue_82',['custom_value',['../d0/d91/structdetail_1_1custom__value.html',1,'detail']]],
+  ['custom_5fvalue_3c_20basic_5fprintf_5fcontext_20_3e_83',['custom_value&lt; basic_printf_context &gt;',['../d0/d91/structdetail_1_1custom__value.html',1,'detail']]],
+  ['custom_5fvalue_3c_20context_20_3e_84',['custom_value&lt; context &gt;',['../d0/d91/structdetail_1_1custom__value.html',1,'detail']]],
+  ['custom_5fvalue_3c_20generic_5fcontext_20_3e_85',['custom_value&lt; generic_context &gt;',['../d0/d91/structdetail_1_1custom__value.html',1,'detail']]]
 ];
