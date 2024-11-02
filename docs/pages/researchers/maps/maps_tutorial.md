@@ -1,4 +1,4 @@
-| [Main Page](../../../docs.md) | [How To Use](../usage.md) | [Provided Modules](../base_modules.md) | [Maps](../maps/maps_tutorial.md) | [Preparing a Map](maps_tutorial.md)
+| [Main Page](../../../docs.md) | [How To Use](../usage.md) | [Provided Modules](../base_modules.md) | [Input](../base_modules.md#inputs) | [Preparing a Map](maps_tutorial.md)
 
 # VIPRA Map Tutorial
 How to prepare a .dxf file for implementation with VIPRA
@@ -12,6 +12,7 @@ How to prepare a .dxf file for implementation with VIPRA
 \- [Removing Excess Layers](#removing-excess-layers)   
 \- [Moving Obstacles to One Layer](#moving-obstacles-to-one-layer)   
 [Creating Spawns](#creating-spawns)   
+[Troubleshooting Guide](#troubleshooting-guide)
 
 
 # Background
@@ -136,8 +137,25 @@ Now, using any geometry tool (I will use the rectangle tool in this example), ad
 
 ![You can use any of the above drawing tools in the left-hand column.](images/Drawing_Tools.png?raw=true "Drawing Tools")
 
-In this example, I have created a single box in yellow for agents to spawn in. (Floor plan provided by [Free CAD Floorplans](https://freecadfloorplans.com/call-center-offices-412202/)).
+In this example, I have created a single box in yellow for agents to spawn in. 
 
 ![Adding spawns is as simple as adding geometry.](images/Spawns.png?raw=true "Spawns")
+(Floor plan provided by [Free CAD Floorplans](https://freecadfloorplans.com/call-center-offices-412202/))
 
-For more information on how to use LibreCAD Drawing Tools, follow the link [here](https://docs.librecad.org/en/2.2.0_a/ref/fundamentals.html).
+For more information on how to use LibreCAD Drawing Tools, follow the link [here](https://docs.librecad.org/en/2.2.0_a/ref/fundamentals.html). 
+
+For a simple box, click on the line tool (Top icon in the left-hand sidebar), and then select the rectangle tool. With the spawns layer selected, click in the workspace where you would like to place one corner of the rectangle. Then, click another place to place the other corner of the rectangle.
+
+If your cursor is snapping to the wrong points, turn off [snapping tools](https://docs.librecad.org/en/latest/ref/snaps.html) to give yourself room to place your geometry.
+
+# Objectives
+Agents will need objectives to have an idea of where to move to. Objectives, like spawns, have no collisions with other pieces of geometry. 
+
+There can be multiple objectives in a map. Each objective type should be on its own layer and named something different. These layers can practically be named anything with standard alphanumeric characters, so long as it does not share its name with spawns or objectives, and does not start with "areas_".
+
+(TODO: decide on case sensitivity)
+
+**Note:** When drawing objectives, **be sure** that they do not intersect with other geometry. 
+
+# Troubleshooting Guide
+(TODO:)
