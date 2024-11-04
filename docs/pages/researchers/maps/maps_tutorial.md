@@ -12,6 +12,8 @@ How to prepare a .dxf file for implementation with VIPRA
 \- [Removing Excess Layers](#removing-excess-layers)   
 \- [Moving Obstacles to One Layer](#moving-obstacles-to-one-layer)   
 [Creating Spawns](#creating-spawns)   
+[Objectives](#objectives)   
+[Areas](#areas)   
 [Troubleshooting Guide](#troubleshooting-guide)
 
 
@@ -153,9 +155,31 @@ Agents will need objectives to have an idea of where to move to. Objectives, lik
 
 There can be multiple objectives in a map. Each objective type should be on its own layer and named something different. These layers can practically be named anything with standard alphanumeric characters, so long as it does not share its name with spawns or objectives, and does not start with "areas_".
 
-(TODO: decide on case sensitivity)
+To avoid issues with naming, be sure naming multiple layers don't have the same name. Layer names are **case-insensitive**, meaning if you have one layer named "Bathrooms" and another named "bathrooms" this could cause an issue in the system, as both layers would be named the same thing. 
 
 **Note:** When drawing objectives, **be sure** that they do not intersect with other geometry. 
 
+![Adding objectives requires adding a new layer and placing down new geometry.](images/Objectives.png?raw=true "Objectives labelled as \"exit\"")
+
+In the above  example, the exit is an objective layer. These layers do not touch other parts of geometry.
+
+# Areas
+Some situations may require an agent to change directions, or slow down, or even stop in an area. These areas cannot be so easily defined by any of the other layer types mentioned above. To define the geometry of these types of areas, simply add new geometry on a new layer, and begin the layer's name with "areas_". Again, this name is **case-insensitive** so Areas_ and AREAS_ is also valid. 
+
+For example, say we wanted a new area that represented a museum display. Entering the area may have agents slow down as they pass by. To represent this, you may draw a box to define the area and call it "AREAS_Museum_Display." The actual behavior will be defined within [Behaviors](../behaviors/behaviors_syntax.md#location-target-modifier).
+
+
 # Troubleshooting Guide
-(TODO:)
+## "No path found for pedestrian..."
+When you receieve this error, it means that a path from an agent to an objective could not be made. This is likely caused by either incorrect geometry or objective points being placed too close to obstacles.
+
+To fix this try these steps:  
+1. **Make sure that objectives are not close to any walls.** When randomly spawning points within objective areas, it is possible for them to be placed too close to the collision check of obstacles. This simply means that your objective geometry may be too close to other geometry. Resize and move your geometry to make sure there is space between your obstacles and objectives. 
+2. **Be sure that the closest obstacle value is not too high.** Higher values may treat walls like they're larger than they should be. You can fix this by changing the `closestObstacle` value under "AStar" in your module_params.json file to a smaller decimal value. If you are not using AStar, see the troubleshooting guide for the respective module. 
+3. **Close geometry.** A geometric figure consists of as many points as there are lines connecting these points. If your geometry is not closed and instead ends at a point, VIPRA may try to close this gap, resulting in unexpected geometry (See below). Make sure your geometry is closed before using a map. One way to fix a polyline is to select it, and any other geometry you would like to fix, clock on the Modify icon in the left-hand toolbar, and select "Explode". This takes complex shapes and reduces them into single lines. VIPRA cannot accidentally create an extra line when the line is only 2 points. 
+
+![VIPRA will automatically close ends.](images/Unexpected_Line_Full.png?raw=true "VIPRA closing ends of geometry.")
+
+4. **Simplify Curves.** If an open curve or arc is added to the geometry, then it will have the same issue as mentioned above. One way to fix this is to replace these curves with the best-approximation series of lines. Unfortunately, this will require changing the geometry by hand. [This is a known issue that we do hope to work out in the future](https://github.com/vipra-uwf/VIPRA/issues/57).
+
+![A curve simplified using 3 lines to get a close approximation.](images/Simplifying_Curves.png?raw=true "A curve and it's 3-line approximation.")

@@ -131,6 +131,8 @@ In **module_params.json**:
 
 This `Input` module loads JSON data, using [nlohmann JSON](https://github.com/nlohmann/json).
 
+For importing maps, it is recommended to use the DXF module. More information on how to use .dxf files in your project can be found [here](maps/maps_tutorial.md).
+
 ### Parameters:
 
 - NONE
