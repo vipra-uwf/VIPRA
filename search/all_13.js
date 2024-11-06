@@ -13,7 +13,7 @@ var searchData=
   ['map_20implementation_10',['Map Implementation',['../d8/d5e/md_docs_2pages_2developers_2implementation_2map.html',1,'']]],
   ['map_20input_20implementation_11',['Map Input Implementation',['../d0/dbd/md_docs_2pages_2developers_2implementation_2input.html#autotoc_md47',1,'']]],
   ['mapinput_12',['MapInput',['../d4/d1e/classVIPRA_1_1Modules_1_1MapInput.html',1,'VIPRA::Modules']]],
-  ['maps_13',['Maps',['../d8/dbc/md_docs_2pages_2researchers_2base__modules.html#autotoc_md191',1,'']]],
+  ['maps_13',['Maps',['../d8/dbc/md_docs_2pages_2researchers_2base__modules.html#autotoc_md191',1,'Maps'],['../dc/d8d/md_docs_2pages_2researchers_2usage.html#autotoc_md383',1,'Maps']]],
   ['master_5fdo_14',['master_do',['../d3/da4/classVIPRA_1_1ParameterSweep.html#aab5b92dc3debbd6755e42d0cbde28cef',1,'VIPRA::ParameterSweep']]],
   ['max_15',['Max',['../d9/dad/structVIPRA_1_1Behaviors_1_1Max.html',1,'VIPRA::Behaviors']]],
   ['max_16',['max',['../df/d63/classVIPRA_1_1Random_1_1Engine.html#a709ce38c547084a3a17861b8772c002e',1,'VIPRA::Random::Engine']]],

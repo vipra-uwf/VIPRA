@@ -90,7 +90,22 @@ $(function(){ initResizable(false); });
 <div class="textblock"><p>| <a class="el" href="../../index.html#md_docs_2docs">Main Page</a> | <a class="el" href="../../dc/d8d/md_docs_2pages_2researchers_2usage.html">How To Use</a> | <a class="el" href="../../d8/dbc/md_docs_2pages_2researchers_2base__modules.html">Provided Modules</a> | <a class="el" href="../../d1/d94/md_docs_2pages_2researchers_2behaviors_2behaviors.html">VIPRA Behaviors</a> | <a class="el" href="../../d8/dc5/md_docs_2pages_2researchers_2parameters.html">Module Parameters</a> | <a class="el" href="../../dc/db3/md_docs_2pages_2developers_2overview.html">Developing Modules</a> |</p>
 <h1><a class="anchor" id="autotoc_md374"></a>
 VIPRA Usage</h1>
-<h1><a class="anchor" id="autotoc_md375"></a>
+<h3><a class="anchor" id="autotoc_md375"></a>
+Table of Contents</h3>
+<blockquote class="doxtable">
+<p>&zwj;Requirements <br  />
+ Creating a Simulation <br  />
+ Running the Simulation <br  />
+ - Flags <br  />
+ - Simulation Parameters <br  />
+ - Simulation Config <br  />
+ - Parameter Sweeps <br  />
+ - Maps <br  />
+ VIPRA Behaviors <br  />
+ Visualization <br  />
+ </p>
+</blockquote>
+<h1><a class="anchor" id="autotoc_md376"></a>
 Requirements</h1>
 <p>The following are requirement for running the VIPRA simulation.</p>
 <ol type="1">
@@ -102,14 +117,14 @@ Requirements</h1>
 <ol type="1">
 <li>MPI, currently <a href="https://www.open-mpi.org/software/ompi/v5.0/">openMPI</a> is known to work</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md376"></a>
+<h1><a class="anchor" id="autotoc_md377"></a>
 Creating A Simulation</h1>
 <p>The simulation and any modules are compiled by running: </p><div class="fragment"><div class="line">make</div>
 </div><!-- fragment --><p>To allow for MPI: </p><div class="fragment"><div class="line">make mpi=on</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md377"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md378"></a>
 Running The Simulation</h1>
 <p>The simulation is run with </p><div class="fragment"><div class="line">./VIPRA &lt;flags&gt;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md378"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md379"></a>
 Flags</h2>
 <ul>
 <li><code>-map=&lt;path&gt;</code>: path to the map file (required)</li>
@@ -120,20 +135,24 @@ Flags</h2>
 <li><code>-install=&lt;path&gt;</code>: path to module install directory, default = ./install</li>
 <li><code>-log=&lt;debug|info|warn|error&gt;</code>: minimum level to log, default = info</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md379"></a>
+<h2><a class="anchor" id="autotoc_md380"></a>
 Simulation Parameters</h2>
 <p>Parameters are loaded into the simulation from a JSON file, each module implementation has its own set of parameters.</p>
 <p>An example set of parameters is provided in the <code>examples/module_params.json</code> file.</p>
-<h2><a class="anchor" id="autotoc_md380"></a>
+<h2><a class="anchor" id="autotoc_md381"></a>
 Simulation Config</h2>
 <p>A simulation config file is a JSON file that tells VIPRA which modules to use.</p>
 <p>The types of modules are discussed in: <a class="el" href="../../d4/d5a/md_docs_2pages_2researchers_2modules.html">Modules</a></p>
 <p>An example simulation config is provided in the <code>examples/sim_config.json</code> file.</p>
-<h2><a class="anchor" id="autotoc_md381"></a>
+<h2><a class="anchor" id="autotoc_md382"></a>
 Parameter Sweeps</h2>
 <p>Parameters can be randomized, in parallel or serial, to get a wide range of possible outcomes.</p>
 <p>See more on the Parameter Sweeps Page</p>
-<h1><a class="anchor" id="autotoc_md382"></a>
+<h2><a class="anchor" id="autotoc_md383"></a>
+Maps</h2>
+<p>A map defineds the geometry and special areas used by the simulator. These maps include obstacles, spawn positions, objectives for agents to use as goals, and special areas that change agent behavior.</p>
+<p>See more on the Maps Tutorial page</p>
+<h1><a class="anchor" id="autotoc_md384"></a>
 VIPRA Behaviors</h1>
 <p>A detailed explanation of behaviors can be found in the <a class="el" href="../../d1/d94/md_docs_2pages_2researchers_2behaviors_2behaviors.html">Behaviors Page</a></p>
 <p>The list of behaviors to use in a simulation run are provided in the simulation parameters JSON file.</p>
@@ -145,7 +164,7 @@ VIPRA Behaviors</h1>
 <div class="line">    ]</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md383"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md385"></a>
 Visualization</h1>
 <p>A <a class="el" href="../../df/d5b/md_docs_2pages_2researchers_2tools_2visualizer.html">very simple visualizer</a> is provided for <code>TrajectoriesJson</code> output. </p>
 </div></div><!-- contents -->
