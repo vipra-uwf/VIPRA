@@ -3,6 +3,18 @@
 
 # VIPRA Usage
 
+### Table of Contents
+> [Requirements](#requirements)  
+[Creating a Simulation](#creating-a-simulation)  
+[Running the Simulation](#running-the-simulation)    
+\- [Flags](#flags)   
+\- [Simulation Parameters](#simulation-parameters)   
+\- [Simulation Config](#simulation-config)   
+\- [Parameter Sweeps](#parameter-sweeps)   
+\- [Maps](#maps)   
+[VIPRA Behaviors](#vipra-behaviors)   
+[Visualization](#visualization)   
+
 # Requirements
 
 The following are requirement for running the VIPRA simulation.
@@ -63,6 +75,12 @@ An example simulation config is provided in the `examples/sim_config.json` file.
 Parameters can be randomized, in parallel or serial, to get a wide range of possible outcomes.
 
 See more on the [Parameter Sweeps Page](parameter_sweeps.md)
+
+## Maps
+
+A map defineds the geometry and special areas used by the simulator. These maps include obstacles, spawn positions, objectives for agents to use as goals, and special areas that change agent behavior. 
+
+See more on the [Maps Tutorial](maps/maps_tutorial.md) page
 
 # VIPRA Behaviors
 

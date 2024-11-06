@@ -1,4 +1,4 @@
-| [Main Page](../../../docs.md) | [How To Use](../usage.md) | [Provided Modules](../base_modules.md) | [Input](../base_modules.md#inputs) | [Preparing a Map](maps_tutorial.md)
+| [Main Page](../../../docs.md) | [How To Use](../usage.md) | [Preparing a Map](maps_tutorial.md)
 
 # VIPRA Map Tutorial
 How to prepare a .dxf file for implementation with VIPRA
@@ -25,7 +25,7 @@ The VIPRA simulator uses a coordinate system to define entities within its simul
 - **Objectives:** Points of interest. Goals for agents to move towards. 
 - **Areas:** Geometry that defines spaces that have the potential to change agent behavior.
 
-When importing a map, there typically is not a way for VIPRA to immediately discern what geometry is of which type. A rectangle in a doorway could be an obstacle, as it may represent a closed door. Alternatively, it could represent an exit, and therefore an objective. It may also be an area, changing the way an agent may behave as it moves through a doorway. Without any way for the program to know just be looking at a set of points, a user must define these spaces for VIPRA. 
+When importing a map, there typically is not a way for VIPRA to immediately discern what geometry is of which type. A rectangle in a doorway could be an obstacle, as it may represent a closed door. Alternatively, it could represent an exit, and therefore an objective. It may also be an area, changing the way an agent may behave as it moves through a doorway. Since there is no way for the program to know what a polygon should be just by looking at a set of points, a user must define these spaces for VIPRA. 
 
 VIPRA includes a **.dxf input module** to parse geometry from. A .dxf file is a neutral-format 3D Computer-Aided Design (CAD) file type. Many CAD programs that output blueprints can export vector drawings in the form of .dxf files. 
 
@@ -37,11 +37,11 @@ This document provides detailed instruction on how to prepare your .dxf file in 
 
 ![A sample map with each layer color-coordinated](images/Layers_Explained.png?raw=true "Layers Explained")
 
-In the above example, you can see the obstacles layer in cyan, the spawns layer in yellow, the exit objective layer shown on the map in red, and an area called "slippery" in magenta. This is roughly the end goal of a .dxf file. 
+In the above example, you can see the obstacles layer in cyan, the spawns layer in yellow, the exit objective layer shown on the map in red, and an area called "slippery" in magenta. This is a simple example, but all input .dxf files should have similar organization.
 
 # File Type
 
-While .dxf is a common file type, .dwg is even more common. LibreCAD can technically import .dwg files, but it does not have full support. It is recommended that .dwg files go through an online converter to change the type to .dxf. While there is not one in particular that we endorse, there are many options out there. One such option is available at [CloudConvert](https://cloudconvert.com/cad-converter).
+While .dxf is a common file type, .dwg is even more common. LibreCAD can technically import .dwg files, but it does not have full support. It is recommended that .dwg files go through an online converter to change the type to .dxf. While there is not one in particular that we endorse, there are many options out there such as [CloudConvert](https://cloudconvert.com/cad-converter).
 
 # Size
 VIPRA uses meters as its standard unit. The coordinate of (1,3) means the point is 1 meter to the right and 3 meters up from the origin. When exporting as a .dxf, VIPRA receives no context regarding the size. Therefore, in order to make sure that the file is up to scale, it is important to use the measure and scale tools to fit the map to the right size.
@@ -70,7 +70,7 @@ To actually scale up a map, first make sure that all layers are visible. In Libr
 
 ![The layers sections with all layers visible](images/Layers_Visible.png?raw=true "Layer visibilility")
 
-Use `Ctrl` + `A` to select all or go to Select -> Select All using the lefthand sidebar. This will make sure that all geometry is highlighted for scaling and moving. 
+Use `Ctrl` + `a` to select all or go to Select -> Select All using the lefthand sidebar. This will make sure that all geometry is highlighted for scaling and moving. 
 
 Next, select Modify in the left-hand sidebar and select the Scale tool. Select a point in which to scale from. This point will remain in the same position before and after the scaling. Usually, it is recommended to select the origin as the point of scaling.
 
@@ -80,12 +80,14 @@ When prompted, select "Delete Original", "Isotropic Scaling", and use a factor i
 
 Scale by a factor that converts the current scale to meters. For example, if the map is currently in inches, then to scale this to meters, you would scale by a factor of 0.0254.
 
-Once complete, hit `Ctrl` + `K` to deselect everything.
+Once complete, hit `Ctrl` + `k` to deselect everything.
 
 # Origin
 All coordinates in the file should be above (0,0). VIPRA only uses positive real number coordinates during simulation. 
 
-In LibreCAD, the origin is represented by a red `+` in the center of the workspace. If your geometry falls below or to the left of that red `+` at any point, it may cause issues for the simulation. To fix this, go to Modify and select Move/Copy. Utilize the different snap options to best place your map within the upper-right quadrant. Be sure to select "Delete Original" and deselect "Use Current Layer" if you are moving the entire map.
+![The origin is denoted by a red plus sign.](images/Red_Plus.png "The origin.")   
+
+In LibreCAD, the origin is represented by a red  `+` in the center of the workspace. If your geometry falls below or to the left of that red `+` at any point, it may cause issues for the simulation. To fix this, go to Modify and select Move/Copy. Utilize the different snap options to best place your map within the upper-right quadrant. Be sure to select "Delete Original" and deselect "Use Current Layer" if you are moving the entire map.
 
 ![The move/copy tool can be used to change the location of your map on the grid. Using the snap tools can help make sure you are snapping the left-most point to 0 and the bottom-most point to 0.](images/Moving.png?raw=true "Moving")
 
@@ -102,7 +104,7 @@ Hit `Ctrl` + `k` to first deselect all and then select the geometry you wish to 
 
 If all excess information is on one layer, you can also delete the layer by selecting the layer in Layer panel and pressing the `-` button above to delete it, or right-clicking it and pressing "remove layer".
 
-**BE CAREFUL**
+⚠️**BE CAREFUL**⚠️
 
 This action ***CANNOT*** be undone once you remove the layer. 
 
@@ -112,7 +114,7 @@ This action ***CANNOT*** be undone once you remove the layer.
 
 
 ## Moving Obstacles to One Layer
-Everything that an agent can collide with should be moved to one layer and renamed "obstacles". This can be walls, locked doors, furniture, really anything solid that would get in the way of an agent's path. 
+Everything that an agent can collide with should be moved to one layer and renamed "obstacles". This can include walls, locked doors, furniture, anything solid that would get in the way of an agent's path. 
 
 First, we need to create an obstacles layer. To do this, you can either press the `+` button in the Layer List and make the name "obstacles" when prompted. Alternatively, if there is already a layer with most or all of the obstacles in it (that isn't layer 0), you can rename this layer to "obstacles" by right-clicking the layer and selecting "Edit Layer Attributes" or select the layer and select the pen button at the top of the Layer List.
 
@@ -153,18 +155,18 @@ If your cursor is snapping to the wrong points, turn off [snapping tools](https:
 # Objectives
 Agents will need objectives to have an idea of where to move to. Objectives, like spawns, have no collisions with other pieces of geometry. 
 
-There can be multiple objectives in a map. Each objective type should be on its own layer and named something different. These layers can practically be named anything with standard alphanumeric characters, so long as it does not share its name with spawns or objectives, and does not start with "areas_".
+There can be multiple objectives in a map. Each objective type should be on its own layer and named something different. These layers can be named anything with standard alphanumeric characters, so long as it does not share its name with spawns or objectives, and does not start with "areas_".
 
-To avoid issues with naming, be sure naming multiple layers don't have the same name. Layer names are **case-insensitive**, meaning if you have one layer named "Bathrooms" and another named "bathrooms" this could cause an issue in the system, as both layers would be named the same thing. 
+To avoid issues with naming, be sure multiple layers do not have the same name. Layer names are **case-insensitive**, meaning if you have one layer named "Bathrooms" and another named "bathrooms" this could cause an issue in the system, as both layers would be named the same thing. 
 
 **Note:** When drawing objectives, **be sure** that they do not intersect with other geometry. 
 
 ![Adding objectives requires adding a new layer and placing down new geometry.](images/Objectives.png?raw=true "Objectives labelled as \"exit\"")
 
-In the above  example, the exit is an objective layer. These layers do not touch other parts of geometry.
+In the above  example, the green exit layer is an objective layer. These layers do not touch other parts of geometry.
 
 # Areas
-Some situations may require an agent to change directions, or slow down, or even stop in an area. These areas cannot be so easily defined by any of the other layer types mentioned above. To define the geometry of these types of areas, simply add new geometry on a new layer, and begin the layer's name with "areas_". Again, this name is **case-insensitive** so Areas_ and AREAS_ is also valid. 
+Some situations may require an agent to change directions, slow down, or even stop for a few seconds in an area. These areas cannot be so easily defined by any of the other layer types mentioned above. To define the geometry of these types of areas, simply add new geometry on a new layer, and begin the layer's name with "areas_". Again, this name is **case-insensitive** so both Areas_ and AREAS_ are also valid. 
 
 For example, say we wanted a new area that represented a museum display. Entering the area may have agents slow down as they pass by. To represent this, you may draw a box to define the area and call it "AREAS_Museum_Display." The actual behavior will be defined within [Behaviors](../behaviors/behaviors_syntax.md#location-target-modifier).
 
@@ -175,8 +177,8 @@ When you receieve this error, it means that a path from an agent to an objective
 
 To fix this try these steps:  
 1. **Make sure that objectives are not close to any walls.** When randomly spawning points within objective areas, it is possible for them to be placed too close to the collision check of obstacles. This simply means that your objective geometry may be too close to other geometry. Resize and move your geometry to make sure there is space between your obstacles and objectives. 
-2. **Be sure that the closest obstacle value is not too high.** Higher values may treat walls like they're larger than they should be. You can fix this by changing the `closestObstacle` value under "AStar" in your module_params.json file to a smaller decimal value. If you are not using AStar, see the troubleshooting guide for the respective module. 
-3. **Close geometry.** A geometric figure consists of as many points as there are lines connecting these points. If your geometry is not closed and instead ends at a point, VIPRA may try to close this gap, resulting in unexpected geometry (See below). Make sure your geometry is closed before using a map. One way to fix a polyline is to select it, and any other geometry you would like to fix, clock on the Modify icon in the left-hand toolbar, and select "Explode". This takes complex shapes and reduces them into single lines. VIPRA cannot accidentally create an extra line when the line is only 2 points. 
+2. **Be sure that the closestObstacle value is not too high.** Higher values may treat walls like they're larger than they should be. You can fix this by changing the `closestObstacle` value under "AStar" in your module_params.json file to a smaller decimal value. If you are not using AStar, see the troubleshooting guide for the respective module. 
+3. **Close geometry.** A polygon consists of as many points as there are lines connecting these points. If your geometry is not closed and instead ends at a point, VIPRA may try to close this gap, resulting in unexpected geometry (See below). Make sure your geometry is closed before using a map. One way to fix a polyline is to select it, and any other geometry you would like to fix, click on the Modify icon in the left-hand toolbar, and select "Explode". This takes complex shapes and reduces them into single lines. VIPRA cannot accidentally create an extra line when the line is only 2 points. 
 
 ![VIPRA will automatically close ends.](images/Unexpected_Line_Full.png?raw=true "VIPRA closing ends of geometry.")
 

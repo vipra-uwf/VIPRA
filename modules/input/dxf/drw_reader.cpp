@@ -193,13 +193,19 @@ void DrwReader::addArc(const DRW_Arc& data)
   double    radius = dataCpy.radius();
   DRW_Coord center = dataCpy.basePoint;
 
-  auto vipraPolyline = DrwReader::get_arc_as_polygon(
+  auto points = DrwReader::get_arc_as_polygon(
       center, radius, data.staangle, data.endangle);
 
-  _vipraPolygons.emplace_back(vipraPolyline);
-
   std::string layer = data.layer;
-  add_obstacle(vipraPolyline, layer);
+
+  // We add these as individidual lines to prevent the arc from closing at both ends. 
+  for (int i = 0; i < points.size()-1; i++) {
+    std::vector<VIPRA::f3d> line = {points[i], points[i+1]};
+
+    _vipraPolygons.emplace_back(line);
+
+    add_obstacle(line, layer);
+  }
 }
 
 /** Called for every circle */
@@ -242,12 +248,26 @@ void DrwReader::addLWPolyline(const DRW_LWPolyline& data)
 {
   // Extract points from polyline
   std::vector<std::shared_ptr<DRW_Vertex2D>> vertexList = data.vertlist;
-  auto vipraPolyline = DrwReader::get_2d_vector_polygon(vertexList);
-
-  _vipraPolygons.emplace_back(vipraPolyline);
+  auto points = DrwReader::get_2d_vector_polygon(vertexList);
 
   std::string layer = data.layer;
-  add_obstacle(vipraPolyline, layer);
+
+  // If the last point is the same as the first point, close it off. 
+  if (points[0].x == points[points.size()].x && points[0].y == points[points.size()].y) {
+    _vipraPolygons.emplace_back(points);
+
+    add_obstacle(points, layer);
+    return;
+  }
+
+  // We add these as individidual lines to prevent the arc from closing at both ends. 
+  for (int i = 0; i < points.size()-1; i++) {
+    std::vector<VIPRA::f3d> line = {points[i], points[i+1]};
+
+    _vipraPolygons.emplace_back(line);
+
+    add_obstacle(line, layer);
+  }
 }
 
 /** Called for every polyline start */
@@ -255,11 +275,25 @@ void DrwReader::addPolyline(const DRW_Polyline& data)
 {
   // Extract points from polyline
   std::vector<std::shared_ptr<DRW_Vertex>> vertexList = data.vertlist;
-  auto vipraPolyline = DrwReader::get_polygon(vertexList);
-
-  _vipraPolygons.emplace_back(vipraPolyline);
+  auto points = DrwReader::get_polygon(vertexList);
 
   std::string layer = data.layer;
-  add_obstacle(vipraPolyline, layer);
+
+  // If the last point is the same as the first point, close it off. 
+  if (points[0].x == points[points.size()].x && points[0].y == points[points.size()].y) {
+    _vipraPolygons.emplace_back(points);
+
+    add_obstacle(points, layer);
+    return;
+  }
+
+  // We add these as individidual lines to prevent the arc from closing at both ends. 
+  for (int i = 0; i < points.size()-1; i++) {
+    std::vector<VIPRA::f3d> line = {points[i], points[i+1]};
+
+    _vipraPolygons.emplace_back(line);
+
+    add_obstacle(line, layer);
+  }
 }
 }  // namespace VIPRA
