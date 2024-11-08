@@ -14,7 +14,8 @@ How to prepare a .dxf file for implementation with VIPRA
 [Creating Spawns](#creating-spawns)   
 [Objectives](#objectives)   
 [Areas](#areas)   
-[Troubleshooting Guide](#troubleshooting-guide)
+[Troubleshooting Guide](#troubleshooting-guide)  
+[More Information](#more-info)   
 
 
 # Background
@@ -185,3 +186,6 @@ To fix this try these steps:
 4. **Simplify Curves.** If an open curve or arc is added to the geometry, then it will have the same issue as mentioned above. One way to fix this is to replace these curves with the best-approximation series of lines. Unfortunately, this will require changing the geometry by hand. [This is a known issue that we do hope to work out in the future](https://github.com/vipra-uwf/VIPRA/issues/57).
 
 ![A curve simplified using 3 lines to get a close approximation.](images/Simplifying_Curves.png?raw=true "A curve and it's 3-line approximation.")
+
+# More Info
+For more tutorials on how to use LibreCAD, visit [here](https://wiki.librecad.org/index.php?title=Tutorials).
