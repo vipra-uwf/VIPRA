@@ -178,8 +178,6 @@ class DrwReader : public DRW_Interface {
   /**************************/
 
  private:
-  std::vector<VIPRA::Geometry::Polygon> _vipraPolygons;
-
   std::vector<VIPRA::Geometry::Polygon>                        _obstacles;
   std::map<std::string, std::vector<VIPRA::Geometry::Polygon>> _objectives;
   std::vector<VIPRA::Geometry::Polygon>                        _spawns;
