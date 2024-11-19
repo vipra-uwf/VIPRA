@@ -16,6 +16,7 @@ enum class Type {
   Map,
   Simulation,
   Behavior_model,
+  CollisionAvoidance,
 };
 // NOLINTEND(readability-identifier-naming)
 
@@ -42,10 +43,12 @@ inline auto to_string(Type type) -> std::string
       return "map_input";
     case Type::PedInput:
       return "ped_input";
+    case Type::CollisionAvoidance:
+      return "collision_avoidance";
   }
 
   return "unknown";
 }
 
-static constexpr size_t MODULE_COUNT = 7;
+static constexpr size_t MODULE_COUNT = 8;
 }  // namespace VIPRA::Modules

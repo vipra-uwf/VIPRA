@@ -165,8 +165,7 @@ class Pedestrians : public BaseModule<Pedestrians> {
   void init_random_peds(VIPRA::Modules::Map const& map,
                         VIPRA::Random::Engine&     engine)
   {
-    // TODO(rolland, issue #50): this is terrible
-
+    // TODO(rolland): issue #45 handle spawn points
     assert(_coords.size() == _velocities.size());
 
     auto spawnAreas = map.get_spawns();
@@ -187,7 +186,6 @@ class Pedestrians : public BaseModule<Pedestrians> {
 
     // go through each pedestrian and give them a random point inside one of the spawn points
     for ( size_t i = startSize; i < _coords.size(); ++i ) {
-      // TODO(rolland, issue #50): effectively infinite loop if the spawn is covered by an obstacle
       VIPRA::idx spawnIdx = polyDist(engine);
 
       _coords[i] = find_random_point(spawnAreas[spawnIdx], map, engine);
