@@ -21,6 +21,16 @@ struct Line {
   }
 
   /**
+   * @brief Returns unit vector in direction of line from start
+   * 
+   * @return VIPRA::f3d 
+   */
+  F3D_FUNC auto direction() const noexcept -> VIPRA::f3d
+  {
+    return (end - start).unit();
+  }
+
+  /**
    * @brief Calculates the orientation of a point relative to a line.
    * 
    * @param point1 
