@@ -74,7 +74,7 @@ void PathingGraph::set_adjacents(VIPRA::idx currIdx)
 
   VIPRA::idx adjIdx = 0;
   for ( const int dIdx : deltaIdx ) {
-    if ( currIdx + dIdx > _grids.size() || currIdx + dIdx < 0 ) {
+    if ( currIdx + dIdx >= _grids.size() || currIdx + dIdx < 0 ) {
       _grids[currIdx].neighbors[adjIdx] = false;
       continue;
     }

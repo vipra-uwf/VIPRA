@@ -31,7 +31,8 @@ class PolygonInput : public Util::CRTP<PolygonInput<module_t>> {
   [[nodiscard]] auto load_polygons(keys_t&&... keys) const
       -> std::optional<std::vector<VIPRA::Geometry::Polygon>>
   {
-    return self().template get<std::vector<VIPRA::Geometry::Polygon>>(std::forward<keys_t>(keys)...);
+    return self().template get<std::vector<VIPRA::Geometry::Polygon>>(
+        std::forward<keys_t>(keys)...);
   }
 };
 

@@ -37,6 +37,7 @@
 #include "orca.hpp"
 
 #include <cstddef>
+#include <stdexcept>
 
 #include "vipra/geometry/f3d.hpp"
 #include "vipra/macros/module.hpp"
@@ -528,15 +529,17 @@ void ORCA::obstacle_orca_lines(
 
 void ORCA::pedestrian_orca_lines(
     VIPRA::idx pedIdx, VIPRA::Modules::Pedestrians const& pedset,
-    VIPRA::Modules::Map const& map, VIPRA::delta_t timeStep,
+    VIPRA::Modules::Map const& /*map*/, VIPRA::delta_t    timeStep,
     std::vector<VIPRA::Geometry::Line>& orcaLines) const
 {
-  const auto        neighbors = pedset.all_neighbors_within(pedIdx, 1.0);
+  const auto        neighbors = pedset.all_neighbors_within(pedIdx, 3.0);
   const VIPRA::f3d& position = pedset.ped_coords(pedIdx);
   const VIPRA::f3d& velocity = pedset.ped_velocity(pedIdx);
 
   /* Create agent ORCA lines. */
   for ( VIPRA::idx neighborIdx : neighbors ) {
+    if ( neighborIdx == pedIdx ) continue;
+
     const VIPRA::f3d otherPos = pedset.ped_coords(neighborIdx);
     const VIPRA::f3d otherVel = pedset.ped_velocity(neighborIdx);
 
@@ -552,7 +555,7 @@ void ORCA::pedestrian_orca_lines(
     if ( distSq > combinedRadiusSq ) {
       /* No collision. */
       const VIPRA::f3d w =
-          relativeVelocity - _invTimeHorizon * relativePosition;
+          relativeVelocity - (_invTimeHorizon * relativePosition);
       /* Vector from cutoff center to relative velocity. */
       const VIPRA::f_pnt wLengthSq = w.mag_sqrd();
 
@@ -562,7 +565,7 @@ void ORCA::pedestrian_orca_lines(
            (dotProduct1 * dotProduct1) > combinedRadiusSq * wLengthSq ) {
         /* Project on cut-off circle. */
         const VIPRA::f_pnt wLength = std::sqrt(wLengthSq);
-        const VIPRA::f3d   unitW = w / wLength;
+        const VIPRA::f3d   unitW = w.unit();
 
         line.direction() = VIPRA::f3d(unitW.y, -unitW.x);
         u = (combinedRadius * _invTimeHorizon - wLength) * unitW;
@@ -602,7 +605,7 @@ void ORCA::pedestrian_orca_lines(
       const VIPRA::f3d w = relativeVelocity - invTimeStep * relativePosition;
 
       const VIPRA::f_pnt wLength = w.mag();
-      const VIPRA::f3d   unitW = w / wLength;
+      const VIPRA::f3d   unitW = w.unit();
 
       line.direction() = VIPRA::f3d(unitW.y, -unitW.x);
       u = (combinedRadius * invTimeStep - wLength) * unitW;
@@ -613,7 +616,7 @@ void ORCA::pedestrian_orca_lines(
   }
 }
 
-auto ORCA::compute_new_velocity(VIPRA::idx                         pedIdx,
+auto ORCA::compute_new_velocity(VIPRA::idx pedIdx, VIPRA::State& state,
                                 VIPRA::Modules::Pedestrians const& pedset,
                                 VIPRA::delta_t                     timestep,
                                 VIPRA::Modules::Map const& map) -> VIPRA::f3d
@@ -627,7 +630,7 @@ auto ORCA::compute_new_velocity(VIPRA::idx                         pedIdx,
   VIPRA::f3d newVelocity;
 
   size_t lineFail = linear_program2(
-      orcaLines, _maxSpeed, pedset.ped_velocity(pedIdx), false, newVelocity);
+      orcaLines, _maxSpeed, state.velocities[pedIdx], false, newVelocity);
 
   if ( lineFail < orcaLines.size() ) {
     linear_program3(orcaLines, numObstLines, lineFail, _maxSpeed, newVelocity);

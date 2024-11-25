@@ -37,14 +37,16 @@ class SpatialMap {
   {
     // TODO(rolland, issue #40) this only gets the surrounding 9 grids
 
+    const VIPRA::idx gridX = pos.x / _cellSize;
+    const VIPRA::idx gridY = pos.y / _cellSize;
+
     // Loop through the surrounding grids and call the provided function with each pedestrian in each grid
     for ( int i = -1; i <= 1; ++i ) {
       for ( int j = -1; j <= 1; ++j ) {
-        if ( out_of_bounds(pos.x + i * _cellSize, pos.y + j * _cellSize) )
-          continue;
+        if ( out_of_bounds(gridX + i, gridY + j) ) continue;
 
-        auto const& neighbor =
-            get_grid(VIPRA::f3d{pos.x + i * _cellSize, pos.y + j * _cellSize});
+        auto const& neighbor = _grid[std::floor(pos.x / _cellSize) +
+                                     std::floor(pos.y / _cellSize) * _cols];
 
         for ( auto value : neighbor ) {
           func(value);
@@ -108,12 +110,17 @@ class SpatialMap {
   [[nodiscard]] VIPRA_INLINE auto get_grid(VIPRA::f3d pos)
       -> std::vector<VIPRA::idx>&
   {
+    if ( out_of_bounds(std::floor(pos.x / _cellSize),
+                       std::floor(pos.y / _cellSize)) ) {
+      std::string posStr =
+          "{" + std::to_string(pos.x) + ", " + std::to_string(pos.y) + "}\n";
+      throw std::runtime_error(posStr.c_str());
+    }
+
     assert(! out_of_bounds(pos));
 
-    auto gridX = static_cast<size_t>(pos.x / _cellSize);
-    auto gridY = static_cast<size_t>(pos.y / _cellSize);
-
-    return _grid[gridX + gridY * _cols];
+    return _grid[std::floor(pos.x / _cellSize) +
+                 std::floor(pos.y / _cellSize) * _cols];
   }
 
   /**
@@ -125,10 +132,7 @@ class SpatialMap {
   [[nodiscard]] VIPRA_INLINE auto get_grid(VIPRA::f3d pos) const
       -> std::vector<VIPRA::idx> const&
   {
-    assert(! out_of_bounds(pos));
-
-    return _grid[static_cast<size_t>(pos.x / _cellSize) +
-                 static_cast<size_t>(pos.y / _cellSize) * _cols];
+    return get_grid(pos);
   }
 
   /**
@@ -139,11 +143,10 @@ class SpatialMap {
    * @return true 
    * @return false 
    */
-  [[nodiscard]] VIPRA_INLINE auto out_of_bounds(
-      VIPRA::f_pnt gridX, VIPRA::f_pnt gridY) const -> bool
+  [[nodiscard]] VIPRA_INLINE auto out_of_bounds(VIPRA::idx gridX,
+                                                VIPRA::idx gridY) const -> bool
   {
-    return gridX < 0 || gridX >= _cols * _cellSize || gridY < 0 ||
-           gridY >= _rows * _cellSize;
+    return gridX < 0 || gridX >= _cols || gridY < 0 || gridY >= _rows;
   }
 
   /**
@@ -156,7 +159,8 @@ class SpatialMap {
    */
   [[nodiscard]] VIPRA_INLINE auto out_of_bounds(VIPRA::f3d pos) const -> bool
   {
-    return out_of_bounds(pos.x, pos.y);
+    return out_of_bounds(std::floor(pos.x / _cellSize),
+                         std::floor(pos.y / _cellSize));
   }
 };
 }  // namespace VIPRA::DataStructures

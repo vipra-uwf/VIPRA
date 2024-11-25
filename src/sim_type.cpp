@@ -177,6 +177,10 @@ void Simulation::initialize(Parameters& params)
   _configs[Modules::Type::PedInput](_pedInput.get(), params, _engine);
   _configs[Modules::Type::MapInput](_mapInput.get(), params, _engine);
 
+  if ( _collision )
+    _configs[Modules::Type::CollisionAvoidance](_collision.get(), params,
+                                                _engine);
+
   _pedset->register_base_params(params);
   _pedset->config_base(params, _engine);
 
@@ -190,5 +194,6 @@ void Simulation::initialize(Parameters& params)
   _goals->initialize(*_pedset, *_map, _engine);
   _model->initialize(*_pedset, *_map, *_goals, _engine);
   _behaviorModel.initialize(*_pedset, *_map, *_goals, _seed);
+  if ( _collision ) _collision->initialize(*_pedset, *_map, *_goals, _engine);
 }
 }  // namespace VIPRA
