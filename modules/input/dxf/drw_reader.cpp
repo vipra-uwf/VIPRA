@@ -239,7 +239,7 @@ void DrwReader::addLWPolyline(const DRW_LWPolyline& data)
   std::string layer = data.layer;
 
   // If the last point is the same as the first point, close it off. 
-  if (points[0].x == points[points.size()].x && points[0].y == points[points.size()].y) {
+  if (points[0].x == points.back().x && points[0].y == points.back().y) {
     add_obstacle(points, layer);
     return;
   }
@@ -262,7 +262,7 @@ void DrwReader::addPolyline(const DRW_Polyline& data)
   std::string layer = data.layer;
 
   // If the last point is the same as the first point, close it off. 
-  if (points[0].x == points[points.size()].x && points[0].y == points[points.size()].y) {
+  if (points[0].x == points.back().x && points[0].y == points.back().y) {
     add_obstacle(points, layer);
     return;
   }
