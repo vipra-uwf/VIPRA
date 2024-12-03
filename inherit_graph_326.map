@@ -1,5 +1,9 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="5,5,195,46"/>
-<area shape="rect" id="Node000001" href="$d5/da1/classVIPRA_1_1Modules_1_1ParamReader.html" title="Base ParamReader Module." alt="" coords="243,5,444,46"/>
-<area shape="poly" id="edge157_Node000000_Node000001" title=" " alt="" coords="210,23,242,23,242,28,210,28"/>
+<area shape="rect" id="Node000000" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="5,5,201,46"/>
+<area shape="rect" id="Node000001" href="$dc/dab/classVIPRA_1_1Modules_1_1Module.html" title=" " alt="" coords="249,5,413,46"/>
+<area shape="poly" id="edge154_Node000000_Node000001" title=" " alt="" coords="216,23,248,23,248,28,216,28"/>
+<area shape="rect" id="Node000002" href="$d0/deb/classVIPRA_1_1Output_1_1TrajectoriesJson.html" title="JSON output module for writing trajectories to a JSON file." alt="" coords="461,42,669,68"/>
+<area shape="poly" id="edge155_Node000001_Node000002" title=" " alt="" coords="428,35,461,39,460,45,428,40"/>
+<area shape="rect" id="Node000003" href="$d4/de8/classVIPRA_1_1Modules_1_1Output.html" title="Base Output module." alt="" coords="250,70,412,96"/>
+<area shape="poly" id="edge156_Node000003_Node000002" title=" " alt="" coords="427,69,460,65,461,70,427,74"/>
 </map>
