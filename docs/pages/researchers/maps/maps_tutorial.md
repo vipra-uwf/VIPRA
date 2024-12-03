@@ -176,16 +176,13 @@ For example, say we wanted a new area that represented a museum display. Enterin
 ## "No path found for pedestrian..."
 When you receieve this error, it means that a path from an agent to an objective could not be made. This is likely caused by either incorrect geometry or objective points being placed too close to obstacles.
 
-To fix this try these steps:  
-1. **Make sure that objectives are not close to any walls.** When randomly spawning points within objective areas, it is possible for them to be placed too close to the collision check of obstacles. This simply means that your objective geometry may be too close to other geometry. Resize and move your geometry to make sure there is space between your obstacles and objectives. 
-2. **Be sure that the closestObstacle value is not too high.** Higher values may treat walls like they're larger than they should be. You can fix this by changing the `closestObstacle` value under "AStar" in your module_params.json file to a smaller decimal value. If you are not using AStar, see the troubleshooting guide for the respective module. 
-3. **Close geometry.** A polygon consists of as many points as there are lines connecting these points. If your geometry is not closed and instead ends at a point, VIPRA may try to close this gap, resulting in unexpected geometry (See below). Make sure your geometry is closed before using a map. One way to fix a polyline is to select it, and any other geometry you would like to fix, click on the Modify icon in the left-hand toolbar, and select "Explode". This takes complex shapes and reduces them into single lines. VIPRA cannot accidentally create an extra line when the line is only 2 points. 
+To fix this try the following:  
 
-![VIPRA will automatically close ends.](images/Unexpected_Line_Full.png?raw=true "VIPRA closing ends of geometry.")
+1. **Be sure that the endGoalType matches at least one of the objective layer names.** The module_parms.json file is where to specify the initial end goal for agents to move towards. This end goal can be updated throughout the simulation, but must be specified at the start or there will be no end goal. 
 
-4. **Simplify Curves.** If an open curve or arc is added to the geometry, then it will have the same issue as mentioned above. One way to fix this is to replace these curves with the best-approximation series of lines. Unfortunately, this will require changing the geometry by hand. [This is a known issue that we do hope to work out in the future](https://github.com/vipra-uwf/VIPRA/issues/57).
+2. **Check to make sure a clear path is possible.** Be sure that there are no obstructions blocking agents from the objective. Obstructions can come in the form of objectives being placed in impossible-to-navigate corridoors, objectives being placed past areas too narrow for agents, and agents or objectives being placed inside of obstacles. 
 
-![A curve simplified using 3 lines to get a close approximation.](images/Simplifying_Curves.png?raw=true "A curve and it's 3-line approximation.")
+3. **Be sure that the closestObstacle value is not too high.** Higher values may treat walls like they're larger than they should be. You can fix this by changing the `closestObstacle` value under "AStar" in your module_params.json file to a smaller decimal value. If you are not using AStar, see the troubleshooting guide for the respective module. 
 
 # More Info
 For more tutorials on how to use LibreCAD, visit [here](https://wiki.librecad.org/index.php?title=Tutorials).
