@@ -156,7 +156,6 @@ macro(vipra_module)
     output
     map
     pedestrians
-    collision_avoidance
   )
 
   string(TOLOWER ${VIPRA_MODULE_TYPE} VIPRA_MODULE_TYPE)

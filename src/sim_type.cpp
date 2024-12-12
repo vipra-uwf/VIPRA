@@ -52,9 +52,6 @@ void Simulation::set_module(Modules::Type type, std::string const& name)
       }
       set(_mapInput);
       break;
-    case Modules::Type::CollisionAvoidance:
-      if ( ! name.empty() ) set(_collision);
-      break;
     case Modules::Type::Output:
     case Modules::Type::Parameters:
     case Modules::Type::Simulation:
@@ -70,21 +67,15 @@ void Simulation::set_modules(std::string const& modulesPath)
   input.load(modulesPath);
 
   const std::array<Modules::Type, Modules::MODULE_COUNT> modules{
-      Modules::Type::Model,    Modules::Type::Goals,
-      Modules::Type::Map,      Modules::Type::Pedestrians,
-      Modules::Type::Output,   Modules::Type::PedInput,
-      Modules::Type::MapInput, Modules::Type::CollisionAvoidance};
+      Modules::Type::Model,   Modules::Type::Goals,
+      Modules::Type::Map,     Modules::Type::Pedestrians,
+      Modules::Type::Output,  Modules::Type::PedInput,
+      Modules::Type::MapInput};
 
   for ( auto type : modules ) {
     auto module = input.get<std::string>({to_string(type)});
 
     if ( ! module ) {
-      // collision avoidance is optional
-      if ( type == Modules::Type::CollisionAvoidance ) {
-        set_module(type, "");
-        continue;
-      }
-
       throw std::runtime_error("No " + to_string(type) + " Module Provided");
     }
 
@@ -135,12 +126,6 @@ void Simulation::run_sim(Parameters& params)
   while ( _currTimestep < _maxTimestep && ! _goals->is_sim_goal_met() ) {
     _model->timestep(*_pedset, *_map, *_goals, state, _timestepSize,
                      _currTimestep);
-
-    if ( _collision ) {
-      _collision->update(*_pedset, *_map, *_goals, state, _timestepSize,
-                         _currTimestep);
-    }
-
     _behaviorModel.timestep(*_pedset, *_map, *_goals, state, _timestepSize);
     _pedset->update(state);
     _goals->update(*_pedset, *_map, _timestepSize);

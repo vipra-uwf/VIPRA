@@ -6,7 +6,6 @@
 #include "vipra/macros/parameters.hpp"
 
 #include "vipra/modules.hpp"
-#include "vipra/modules/collision_avoidance.hpp"
 #include "vipra/modules/map_input.hpp"
 #include "vipra/modules/model.hpp"
 #include "vipra/modules/pedestrian_input.hpp"
@@ -53,15 +52,14 @@ class Simulation : public Modules::Module<Simulation> {
   auto get_map_input() -> Modules::MapInput& { return *_mapInput; }
 
  private:
-  CoordModules::OutputCoordinator              _output;
-  std::unique_ptr<Modules::Model>              _model;
-  std::unique_ptr<Modules::Pedestrians>        _pedset;
-  std::unique_ptr<Modules::Goals>              _goals;
-  std::unique_ptr<Modules::Map>                _map;
-  std::unique_ptr<Modules::CollisionAvoidance> _collision;
-  std::unique_ptr<Modules::PedestrianInput>    _pedInput;
-  std::unique_ptr<Modules::MapInput>           _mapInput;
-  BehaviorModel                                _behaviorModel;
+  CoordModules::OutputCoordinator           _output;
+  std::unique_ptr<Modules::Model>           _model;
+  std::unique_ptr<Modules::Pedestrians>     _pedset;
+  std::unique_ptr<Modules::Goals>           _goals;
+  std::unique_ptr<Modules::Map>             _map;
+  std::unique_ptr<Modules::PedestrianInput> _pedInput;
+  std::unique_ptr<Modules::MapInput>        _mapInput;
+  BehaviorModel                             _behaviorModel;
 
   std::map<Modules::Type,
            std::function<void(void*, Parameters&, VIPRA::Random::Engine&)>>
