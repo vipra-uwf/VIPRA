@@ -31,7 +31,7 @@ jobs:
         git clone https://github.com/vipra-uwf/VIPRA-Docs.git docs_repo
         cd docs_repo
         rm -rf ./*
-        cp -r ../docs-output/* ./
+        cp -r ../docs/html/* ./
         git add .
         git commit -m "Update documentation [skip ci]"
         git push
