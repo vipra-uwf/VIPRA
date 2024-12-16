@@ -12,8 +12,6 @@ on:
 jobs:
   run-lint:
     uses: ./.github/workflows/lint.yml
-    with:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   
   run-tests:
     runs-on: ubuntu-latest
