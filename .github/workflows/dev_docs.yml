@@ -22,16 +22,26 @@ jobs:
         doxyfile-path: ./doxyfile
         working-directory: .
 
-    - name: Push Documentation
+    - name: Clone Docs Repo
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git clone https://${{ secrets.GITHUB_TOKEN }}@github.com/vipra-uwf/VIPRA-Docs.git docs_repo
+        git clone https://user:$GITHUB_TOKEN@github.com/vipra-uwf/VIPRA-Docs.git docs_repo
+
+    - name: Copy Docs
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
         cd docs_repo
         rm -rf ./*
         cp -r ../docs/html/* ./
-        git add .
-        git commit -m "Update documentation [skip ci]"
-        git push
+
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        repository: vipra-uwf/VIPRA-Docs.git
+        branch: main
+        force: true
