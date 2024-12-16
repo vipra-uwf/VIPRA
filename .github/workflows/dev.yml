@@ -1,0 +1,16 @@
+name: dev
+
+permissions:
+  contents: write
+  pages: write
+
+on:
+  push:
+    branches: [ "dev" ]
+    paths-ignore: [ "docs/**" ]
+
+jobs:
+  run-lint:
+    uses: ./.github/workflows/jobs/lint.yml
+    with:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

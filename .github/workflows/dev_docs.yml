@@ -1,0 +1,37 @@
+name: Development Documentation
+
+permissions:
+  contents: write
+
+on:
+  push:
+    branches: [ "dev" ]
+    paths: [ "docs/**" ]
+
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Run Doxygen
+      uses: mattnotmitt/doxygen-action@v1.2.1
+      with:
+        doxyfile-path: ./doxyfile
+        working-directory: .
+
+    - name: Push Documentation
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git clone https://github.com/vipra-uwf/VIPRA-Docs.git docs_repo
+        cd docs_repo
+        rm -rf ./*
+        cp -r ../docs-output/* ./
+        git add .
+        git commit -m "Update documentation [skip ci]"
+        git push
