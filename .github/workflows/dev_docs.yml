@@ -42,6 +42,6 @@ jobs:
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        repository: vipra-uwf/VIPRA-Docs.git
+        repository: vipra-uwf/VIPRA-Docs
         branch: main
         force: true
