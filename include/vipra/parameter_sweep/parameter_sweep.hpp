@@ -55,7 +55,7 @@ class ParameterSweep {
     Parameters params;
 
     load_inputs(params.get_input(), paramsPath);
-    disseminate_input(params.get_input());
+    // disseminate_input(params.get_input());
 
     load_inputs(sim.get_map_input(), mapPath);
     if ( ! pedPath.empty() ) load_inputs(sim.get_ped_input(), pedPath);
@@ -138,9 +138,7 @@ class ParameterSweep {
   template <typename input_t>
   static void load_inputs(input_t& input, std::string const& filepath)
   {
-    if ( rank == 0 ) {
-      input.load(filepath);
-    }
+    input.load(filepath);
   }
 
   static void disseminate_input(Modules::Serializable& input)
