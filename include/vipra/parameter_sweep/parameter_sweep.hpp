@@ -1,9 +1,5 @@
 #pragma once
 
-#include "vipra/modules/serializable.hpp"
-#include "vipra/simulation/sim_type.hpp"
-#include "vipra/special_modules/parameters.hpp"
-
 #ifdef VIPRA_USE_MPI
 #include <mpi.h>
 #endif
@@ -12,13 +8,13 @@
 #include <string>
 #include <type_traits>
 
-#include "vipra/types/util/result_or_void.hpp"
-
-#include "vipra/parameter_sweep/ps_util.hpp"
-
 #include "vipra/logging/logging.hpp"
-
+#include "vipra/modules/serializable.hpp"
 #include "vipra/parameter_sweep/ps_util.hpp"
+#include "vipra/simulation/sim_type.hpp"
+#include "vipra/special_modules/parameters.hpp"
+#include "vipra/types/util/result_or_void.hpp"
+#include "vipra/util/timing.hpp"
 
 namespace VIPRA {
 class ParameterSweep {
@@ -50,7 +46,8 @@ class ParameterSweep {
    */
   static void run(Simulation& sim, std::string const& pedPath,
                   std::string const& mapPath, std::string const& paramsPath,
-                  size_t count, auto&& callback = VOID{})
+                  std::string const& timingsPath, size_t count,
+                  auto&& callback = VOID{})
   {
     Parameters params;
 
@@ -67,6 +64,7 @@ class ParameterSweep {
     sim.add_sim_id(start_sim_id(rank, size, count));
 
     for ( size_t i = 0; i < localCount; ++i ) {
+      _timings.start_new();
       // run the simulation
       // if a callback is provided, call that on completion
       if constexpr ( std::is_same_v<decltype(callback), VIPRA::VOID> ) {
@@ -76,10 +74,13 @@ class ParameterSweep {
         sim.run_sim(params);
         callback(sim.get_sim_id());
       }
+      _timings.stop();
     }
 
     // update each worker to the correct sim count
     sim.set_sim_id(count);
+
+    _timings.output_timings(timingsPath);
 
 #ifdef VIPRA_USE_MPI
     MPI_Barrier(MPI_COMM_WORLD);
@@ -124,6 +125,9 @@ class ParameterSweep {
 #ifdef VIPRA_USE_MPI
   static MPI_Comm comm;
 #endif
+
+  static Util::Timings _timings;
+
   static int             rank;
   static int             size;
   static DeferedFinalize _finalize;

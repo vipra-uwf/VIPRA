@@ -16,7 +16,8 @@ using seconds = std::chrono::seconds;
  * @tparam time_t : time scale
  * @tparam clock_t : type of clock to use
  */
-template <typename time_t = seconds, typename clock_t = std::chrono::steady_clock>
+template <typename time_t = seconds,
+          typename clock_t = std::chrono::steady_clock>
 class Clock {
  public:
   /**
@@ -24,26 +25,29 @@ class Clock {
    * 
    * @return time_t 
    */
-  [[nodiscard]] inline auto now() -> time_t { return clock_t::now(); }
+  [[nodiscard]] inline auto now() noexcept -> time_t { return clock_t::now(); }
 
   /**
    * @brief Starts the timer
    * 
    */
-  inline void start()
+  inline void start() noexcept
   {
     _running = true;
     _start = clock_t::now();
   }
 
-  [[nodiscard]] inline auto is_running() const -> bool { return _running; }
+  [[nodiscard]] inline auto is_running() const noexcept -> bool
+  {
+    return _running;
+  }
 
   /**
    * @brief Returns the time since it was started
    * 
    * @return time_t 
    */
-  [[nodiscard]] inline auto click() -> time_t
+  [[nodiscard]] inline auto click() noexcept -> time_t
   {
     if ( ! _running ) return ZERO;
     return std::chrono::duration_cast<time_t>(clock_t::now() - _start);
@@ -54,7 +58,7 @@ class Clock {
    * 
    * @return time_t 
    */
-  [[nodiscard]] inline auto stop() -> time_t
+  inline auto stop() noexcept -> time_t
   {
     if ( ! _running ) return ZERO;
     auto duration = std::chrono::duration_cast<time_t>(clock_t::now() - _start);

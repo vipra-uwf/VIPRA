@@ -15,6 +15,7 @@ auto main(int argc, char** argv) -> int
   VIPRA::Args::register_arg("count", "1", VIPRA::ArgType::REQUIRED | VIPRA::ArgType::VALUE_REQUIRED);
   VIPRA::Args::register_arg("map", VIPRA::ArgType::REQUIRED | VIPRA::ArgType::VALUE_REQUIRED);
   VIPRA::Args::register_arg("peds", "", VIPRA::ArgType::REQUIRED | VIPRA::ArgType::VALUE_REQUIRED);
+  VIPRA::Args::register_arg("timings", "", VIPRA::ArgType::REQUIRED | VIPRA::ArgType::VALUE_REQUIRED);
   VIPRA::Args::register_arg("params", "module_params.json", VIPRA::ArgType::REQUIRED | VIPRA::ArgType::VALUE_REQUIRED);
   VIPRA::Args::register_arg("modules", "sim_config.json", VIPRA::ArgType::REQUIRED | VIPRA::ArgType::VALUE_REQUIRED);
   VIPRA::Args::register_arg("install", "install", VIPRA::ArgType::REQUIRED | VIPRA::ArgType::VALUE_REQUIRED);
@@ -39,7 +40,8 @@ auto main(int argc, char** argv) -> int
       VIPRA::Args::get("peds"),
       VIPRA::Args::get("map"),
       VIPRA::Args::get("params"),
-      VIPRA::Args::get<size_t>("count"),  // Number of simulations to run in total
+      VIPRA::Args::get("timings"),
+      VIPRA::Args::get<size_t>("count"),
       [](VIPRA::idx simId) {  // Callback function called after each simulation run
         VIPRA::Log::info("Simulation id: {} complete on: {}", simId,
                          VIPRA::ParameterSweep::get_rank());
@@ -53,7 +55,7 @@ auto main(int argc, char** argv) -> int
     auto milliseconds =
         std::chrono::duration_cast<std::chrono::milliseconds>(time);
 
-    VIPRA::Log::info("Time taken: {}s {}ms", seconds.count(),
+    VIPRA::Log::info("Total Time taken: {}s {}ms", seconds.count(),
                      milliseconds.count());
   });
 }
