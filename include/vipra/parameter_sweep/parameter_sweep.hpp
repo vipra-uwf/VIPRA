@@ -92,18 +92,6 @@ class ParameterSweep {
   [[nodiscard]] static auto is_parallel() -> bool { return size > 1; }
   [[nodiscard]] static auto is_root() -> bool { return rank == 0; }
 
-  /**
-   * @brief Run a function only on the master node
-   * 
-   * @param func 
-   */
-  static void master_do(auto&& func)
-  {
-    if ( rank == 0 ) {
-      func();
-    }
-  }
-
  private:
   struct DeferedFinalize {
     DeferedFinalize(DeferedFinalize const&) = default;

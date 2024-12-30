@@ -1,6 +1,8 @@
 #pragma once
 
 #include <algorithm>
+#include <ios>
+
 #ifdef VIPRA_USE_MPI
 #include <mpi.h>
 #endif
@@ -12,6 +14,7 @@
 #include <vector>
 
 #include "vipra/util/clock.hpp"
+#include "vipra/util/mpi_util.hpp"
 
 namespace VIPRA::Util {
 
@@ -28,53 +31,25 @@ class Timings {
   {
     if ( filepath.empty() ) return;
 
-    int rank{};
-    int size{};
-    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-    MPI_Comm_size(MPI_COMM_WORLD, &size);
-
     std::vector<int64_t> timings(_times.size());
     std::transform(_times.begin(), _times.end(), timings.begin(),
                    [](Util::milli const& time) {
                      return static_cast<int64_t>(time.count());
                    });
 
-    std::vector<int> counts;
-    std::vector<int> displacements;
+    auto [allTimings, counts] = Util::mpi_gather_all_vectors<int64_t>(timings);
 
-    if ( rank == 0 ) {
-      counts.resize(size);
-      displacements.resize(size);
-    }
+    Util::master_do(
+        [&]() { output_timings_file(allTimings, counts, filepath); });
 
-    int localSize = static_cast<int>(timings.size());
-    MPI_Gather(&localSize, 1, MPI_INT, counts.data(), 1, MPI_INT, 0,
-               MPI_COMM_WORLD);
-
-    if ( rank == 0 ) {
-      int totalSize = 0;
-
-      for ( int i = 0; i < size; ++i ) {
-        displacements[i] = totalSize;
-        totalSize += counts[i];
-      }
-
-      timings.resize(totalSize);  // Allocate space for all data
-    }
-
-    // Gather all vectors into the root process
-    MPI_Gatherv(timings.data(), localSize, MPI_INT64_T, timings.data(),
-                counts.data(), displacements.data(), MPI_INT64_T, 0,
-                MPI_COMM_WORLD);
-
-    if ( rank == 0 ) output_timings_file(timings, counts, filepath);
+    MPI_Barrier(MPI_COMM_WORLD);
   }
 #else
   void output_timings(std::filesystem::path const& filepath)
   {
     if ( filepath.empty() ) return;
 
-    std::ofstream file(filepath);
+    std::ofstream file(filepath, std::ios_base::app);
 
     if ( ! file.is_open() )
       throw std::runtime_error("Unable to open timings output file: " +
@@ -102,7 +77,7 @@ class Timings {
                            std::vector<int> const&      counts,
                            std::filesystem::path const& filepath)
   {
-    std::ofstream file(filepath);
+    std::ofstream file(filepath, std::ios_base::app);
 
     if ( ! file.is_open() )
       throw std::runtime_error("Unable to open timings output file: " +
@@ -117,7 +92,7 @@ class Timings {
         file << timings[start + j] << ',';
       }
 
-      start = counts[i];
+      start += counts[i];
       file << '\n';
     }
 

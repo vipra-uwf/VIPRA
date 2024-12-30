@@ -20,7 +20,7 @@ perf:
 	@cmake --build build -j $(threads)
 
 timings:
-	@echo "Building Performance Testing version"
+	@echo "Building Timings version"
 	@mkdir -p build
 	@cmake -B build . -DVIPRA_MAIN_FILE=main.cpp -DVIPRA_EXECUTABLE_PATH=../ -DVIPRA_BUILD_EXECUTABLE=ON -DVIPRA_DEBUG_MODE=OFF -DVIPRA_PERF_TESTING=OFF -DVIPRA_USE_MPI=$(mpi) -DVIPRA_TIME_SIM=ON -Wno-dev
 	@cmake --build build -j $(threads)

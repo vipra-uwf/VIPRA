@@ -48,7 +48,7 @@ auto main(int argc, char** argv) -> int
       });
 
   // Only the master node prints the time taken
-  VIPRA::ParameterSweep::master_do([&]() {
+  VIPRA::Util::master_do([&]() {
     auto time = timer.stop();
     auto seconds = std::chrono::duration_cast<std::chrono::seconds>(time);
     time -= seconds;
@@ -57,5 +57,11 @@ auto main(int argc, char** argv) -> int
 
     VIPRA::Log::info("Total Time taken: {}s {}ms", seconds.count(),
                      milliseconds.count());
+    
+#ifdef VIPRA_TIME_SIM
+    VIPRA::Util::append_to_file(
+        VIPRA::Args::get("timings"),
+        fmt::format("total,{}s {}ms", seconds.count(), milliseconds.count()));
+#endif
   });
 }
