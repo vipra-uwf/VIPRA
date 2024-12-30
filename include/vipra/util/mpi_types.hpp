@@ -1,14 +1,11 @@
 #pragma once
 
+#ifdef VIPRA_USE_MPI
 #include <mpi.h>
 namespace VIPRA::Util {
 
 template <typename data_t>
-[[nodiscard]] inline constexpr auto get_mpi_type() -> MPI_Datatype
-{
-  static_assert(false, "Type not handled");
-  return nullptr;
-}
+[[nodiscard]] inline auto get_mpi_type() -> MPI_Datatype;
 
 template <>
 [[nodiscard]] inline auto get_mpi_type<double>() -> MPI_Datatype
@@ -47,3 +44,4 @@ template <>
 }
 
 }  // namespace VIPRA::Util
+#endif

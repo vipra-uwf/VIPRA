@@ -61,7 +61,7 @@ auto main(int argc, char** argv) -> int
 #ifdef VIPRA_TIME_SIM
     VIPRA::Util::append_to_file(
         VIPRA::Args::get("timings"),
-        fmt::format("total,{}s {}ms", seconds.count(), milliseconds.count()));
+        fmt::format("total,{}s {}ms\n", seconds.count(), milliseconds.count()));
 #endif
   });
 }
