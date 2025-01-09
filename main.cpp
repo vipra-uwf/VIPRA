@@ -34,13 +34,14 @@ auto main(int argc, char** argv) -> int
   VIPRA::Util::Clock<VIPRA::Util::milli> timer{};
   timer.start();
 
+  VIPRA::Util::Timings::set_output_file(VIPRA::Args::get("timings"));
+
   // Run the parameter sweep
   VIPRA::ParameterSweep::run(
       sim,
       VIPRA::Args::get("peds"),
       VIPRA::Args::get("map"),
       VIPRA::Args::get("params"),
-      VIPRA::Args::get("timings"),
       VIPRA::Args::get<size_t>("count"),
       [](VIPRA::idx simId) {  // Callback function called after each simulation run
         VIPRA::Log::info("Simulation id: {} complete on: {}", simId,
@@ -49,19 +50,12 @@ auto main(int argc, char** argv) -> int
 
   // Only the master node prints the time taken
   VIPRA::Util::master_do([&]() {
-    auto time = timer.stop();
-    auto seconds = std::chrono::duration_cast<std::chrono::seconds>(time);
-    time -= seconds;
-    auto milliseconds =
-        std::chrono::duration_cast<std::chrono::milliseconds>(time);
+    auto totalTime = VIPRA::Util::time_string(timer.stop());
+    VIPRA::Log::info("Total Time taken: {}", totalTime);
 
-    VIPRA::Log::info("Total Time taken: {}s {}ms", seconds.count(),
-                     milliseconds.count());
-    
 #ifdef VIPRA_TIME_SIM
-    VIPRA::Util::append_to_file(
-        VIPRA::Args::get("timings"),
-        fmt::format("total,{}s {}ms\n", seconds.count(), milliseconds.count()));
+    VIPRA::Util::append_to_file(VIPRA::Args::get("timings"),
+                                fmt::format("total,{}\n", totalTime));
 #endif
   });
 }

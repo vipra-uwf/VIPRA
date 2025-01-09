@@ -8,7 +8,31 @@ using micro = std::chrono::microseconds;
 using milli = std::chrono::milliseconds;
 using seconds = std::chrono::seconds;
 
-// TODO(rolland): add to documentation
+template <typename time_t>
+[[nodiscard]] inline auto time_string(time_t time) -> std::string
+{
+  auto minutes = std::chrono::duration_cast<std::chrono::minutes>(time);
+  time -= minutes;
+  auto seconds = std::chrono::duration_cast<std::chrono::seconds>(time);
+  time -= seconds;
+  auto milliseconds =
+      std::chrono::duration_cast<std::chrono::milliseconds>(time);
+  time -= milliseconds;
+  auto nanoseconds = std::chrono::duration_cast<std::chrono::nanoseconds>(time);
+
+  std::string timeStr;
+
+  if ( minutes.count() > 0 ) timeStr += std::to_string(minutes.count()) += 'm';
+  if ( seconds.count() > 0 ) timeStr += std::to_string(seconds.count()) += 's';
+  if ( milliseconds.count() > 0 )
+    timeStr += std::to_string(milliseconds.count()) += "ms";
+  if ( nanoseconds.count() > 0 )
+    timeStr += std::to_string(nanoseconds.count()) += "ns";
+
+  if ( timeStr.empty() ) timeStr = "00";
+
+  return timeStr;
+}
 
 /**
  * @brief Clock to time execution time
@@ -34,6 +58,7 @@ class Clock {
   inline void start() noexcept
   {
     _running = true;
+    _runningTime = time_t::zero();
     _start = clock_t::now();
   }
 
@@ -43,14 +68,40 @@ class Clock {
   }
 
   /**
-   * @brief Returns the time since it was started
+   * @brief Pauses the timer on the clock
+   * 
+   */
+  void pause() noexcept
+  {
+    if ( ! _running ) return;
+
+    _runningTime += std::chrono::duration_cast<time_t>(clock_t::now() - _start);
+    _running = false;
+  }
+
+  /**
+   * @brief Continues the timer after pausing
+   * 
+   */
+  void resume() noexcept
+  {
+    if ( _running ) return;
+
+    _running = true;
+    _start = clock_t::now();
+  }
+
+  /**
+   * @brief Returns the total accumulated time on the clock
    * 
    * @return time_t 
    */
-  [[nodiscard]] inline auto click() noexcept -> time_t
+  [[nodiscard]] inline auto running_time() noexcept -> time_t
   {
-    if ( ! _running ) return ZERO;
-    return std::chrono::duration_cast<time_t>(clock_t::now() - _start);
+    if ( ! _running ) return _runningTime;
+
+    return std::chrono::duration_cast<time_t>(clock_t::now() - _start) +
+           _runningTime;
   }
 
   /**
@@ -60,9 +111,18 @@ class Clock {
    */
   inline auto stop() noexcept -> time_t
   {
-    if ( ! _running ) return ZERO;
-    auto duration = std::chrono::duration_cast<time_t>(clock_t::now() - _start);
+    time_t duration;
+    if ( _running ) {
+      duration = std::chrono::duration_cast<time_t>(clock_t::now() - _start) +
+                 _runningTime;
+    }
+    else {
+      duration = _runningTime;
+    }
+
     _running = false;
+    _runningTime = time_t::zero();
+
     return duration;
   }
 
@@ -71,5 +131,6 @@ class Clock {
  private:
   bool                             _running = false;
   std::chrono::time_point<clock_t> _start;
+  time_t                           _runningTime;
 };
 }  // namespace VIPRA::Util

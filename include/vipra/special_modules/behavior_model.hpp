@@ -8,6 +8,8 @@
 #include "vipra/modules/pedestrians.hpp"
 
 #include "vipra/types/seed.hpp"
+#include "vipra/util/clock.hpp"
+#include "vipra/util/timing.hpp"
 #include "vipra/vipra_behaviors/attributes/attributes.hpp"
 #include "vipra/vipra_behaviors/behavior/human_behavior.hpp"
 #include "vipra/vipra_behaviors/builder/behavior_builder.hpp"
@@ -38,21 +40,28 @@ class BehaviorModel : public VIPRA::Modules::Module<BehaviorModel> {
     for ( auto& behavior : _behaviors ) {
       behavior.initialize(pedset, map, goals);
     }
+
+    behaviorTimings.start_new();
+    behaviorTimings.pause();
   }
 
   void timestep(Modules::Pedestrians& pedset, Modules::Map& map,
                 Modules::Goals& goals, VIPRA::State& state,
                 VIPRA::delta_t deltaT)
   {
+    behaviorTimings.resume();
     for ( auto& behavior : _behaviors ) {
       behavior.timestep(pedset, map, goals, state, deltaT);
     }
+    behaviorTimings.pause();
   }
 
  private:
   std::string                           _behaviorsDir;
   std::vector<std::string>              _behaviorNames;
   std::vector<Behaviors::HumanBehavior> _behaviors;
+
+  static Util::Timings behaviorTimings;
 
   void build_behaviors(Modules::Map const& map, VIPRA::seed seed)
   {
@@ -71,6 +80,11 @@ class BehaviorModel : public VIPRA::Modules::Module<BehaviorModel> {
   auto operator=(BehaviorModel const&) -> BehaviorModel& = default;
   BehaviorModel(BehaviorModel&&) noexcept = default;
   auto operator=(BehaviorModel&&) noexcept -> BehaviorModel& = default;
-  ~BehaviorModel() { Behaviors::AttributeHandling::cleanup(); };
+  ~BehaviorModel()
+  {
+    Behaviors::AttributeHandling::cleanup();
+    behaviorTimings.stop();
+    behaviorTimings.output_timings();
+  };
 };
 }  // namespace VIPRA

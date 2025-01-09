@@ -22,33 +22,39 @@ namespace VIPRA::Util {
 
 class Timings {
  public:
-  explicit Timings(char const* name) : _name(name) {}
+  using time_t = Util::nano;
+
   void start_new() { _clock.start(); }
+  void pause() { _clock.pause(); }
+  void resume() { _clock.resume(); }
   void stop() { _times.emplace_back(_clock.stop()); }
 
-#ifdef VIPRA_USE_MPI
-  void output_timings(std::filesystem::path const& filepath)
+  static void set_output_file(std::filesystem::path const& filepath)
   {
-    if ( filepath.empty() ) return;
+    timingPath = filepath;
+  }
+
+#ifdef VIPRA_USE_MPI
+  void output_timings()
+  {
+    stop();
 
     std::vector<int64_t> timings(_times.size());
     std::transform(_times.begin(), _times.end(), timings.begin(),
-                   [](Util::milli const& time) {
+                   [](Util::nano const& time) {
                      return static_cast<int64_t>(time.count());
                    });
 
     auto [allTimings, counts] = Util::mpi_gather_all_vectors<int64_t>(timings);
 
     Util::master_do(
-        [&]() { output_timings_file(allTimings, counts, filepath); });
+        [&]() { output_timings_file(allTimings, counts, timingPath); });
 
     MPI_Barrier(MPI_COMM_WORLD);
   }
 #else
-  void output_timings(std::filesystem::path const& filepath)
+  void output_timings()
   {
-    if ( filepath.empty() ) return;
-
     std::ofstream file(filepath, std::ios_base::app);
 
     if ( ! file.is_open() )
@@ -67,10 +73,20 @@ class Timings {
     file.close();
   }
 #endif
+  Timings() = default;
+  ~Timings() = default;
+  Timings(Timings&&) = default;
+  auto operator=(const Timings&) -> Timings& = default;
+  auto operator=(Timings&&) -> Timings& = default;
+  Timings(Timings const&) = default;
+  explicit Timings(char const* name) : _name(name) {}
+
  private:
-  std::string              _name;
-  Util::Clock<Util::milli> _clock;
-  std::vector<Util::milli> _times;
+  std::string         _name;
+  Util::Clock<time_t> _clock;
+  std::vector<time_t> _times;
+
+  static std::filesystem::path timingPath;
 
 #ifdef VIPRA_USE_MPI
   void output_timings_file(std::vector<int64_t> const&  timings,
@@ -89,7 +105,7 @@ class Timings {
       file << _name << i << ',';
 
       for ( int j = 0; j < counts[i]; ++j ) {
-        file << timings[start + j] << ',';
+        file << time_string(static_cast<time_t>(timings[start + j])) << ',';
       }
 
       start += counts[i];
@@ -105,11 +121,16 @@ class Timings {
 
 class Timings {
  public:
-  explicit Timings(char const*) {}
+  explicit Timings(char const*) noexcept {}
   void start_new() const noexcept {}
   void stop() const noexcept {}
+  void output_timings() const noexcept {}
   void output_timings(
       std::filesystem::path const& /*output file*/) const noexcept
+  {
+  }
+  static void set_output_file(
+      std::filesystem::path const& /*filepath*/) noexcept
   {
   }
 };

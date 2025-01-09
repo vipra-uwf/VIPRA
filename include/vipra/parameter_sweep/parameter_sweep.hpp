@@ -1,5 +1,6 @@
 #pragma once
 
+#include "vipra/util/clock.hpp"
 #ifdef VIPRA_USE_MPI
 #include <mpi.h>
 #endif
@@ -46,16 +47,19 @@ class ParameterSweep {
    */
   static void run(Simulation& sim, std::string const& pedPath,
                   std::string const& mapPath, std::string const& paramsPath,
-                  std::string const& timingsPath, size_t count,
-                  auto&& callback = VOID{})
+                  size_t count, auto&& callback = VOID{})
   {
     Parameters params;
 
+    _mpiTimings.start_new();
+    _mpiTimings.pause();
+
+    _inputTimings.start_new();
     load_inputs(params.get_input(), paramsPath);
     // disseminate_input(params.get_input());
-
     load_inputs(sim.get_map_input(), mapPath);
     if ( ! pedPath.empty() ) load_inputs(sim.get_ped_input(), pedPath);
+    _inputTimings.stop();
 
     size_t localCount = sim_count(rank, size, count);
 
@@ -80,10 +84,14 @@ class ParameterSweep {
     // update each worker to the correct sim count
     sim.set_sim_id(count);
 
-    _timings.output_timings(timingsPath);
+    _timings.output_timings();
 
 #ifdef VIPRA_USE_MPI
+    _mpiTimings.resume();
     MPI_Barrier(MPI_COMM_WORLD);
+    _mpiTimings.stop();
+
+    _mpiTimings.output_timings();
 #endif
   }
 
@@ -93,13 +101,13 @@ class ParameterSweep {
   [[nodiscard]] static auto is_root() -> bool { return rank == 0; }
 
  private:
-  struct DeferedFinalize {
-    DeferedFinalize(DeferedFinalize const&) = default;
-    DeferedFinalize(DeferedFinalize&&) = default;
-    auto operator=(DeferedFinalize const&) -> DeferedFinalize& = default;
-    auto operator=(DeferedFinalize&&) -> DeferedFinalize& = default;
-    DeferedFinalize() = default;
-    ~DeferedFinalize()
+  struct DeferredFinalize {
+    DeferredFinalize(DeferredFinalize const&) = default;
+    DeferredFinalize(DeferredFinalize&&) = default;
+    auto operator=(DeferredFinalize const&) -> DeferredFinalize& = default;
+    auto operator=(DeferredFinalize&&) -> DeferredFinalize& = default;
+    DeferredFinalize() = default;
+    ~DeferredFinalize()
     {
 #ifdef VIPRA_USE_MPI
       int flag = 0;
@@ -115,10 +123,12 @@ class ParameterSweep {
 #endif
 
   static Util::Timings _timings;
+  static Util::Timings _mpiTimings;
+  static Util::Timings _inputTimings;
 
-  static int             rank;
-  static int             size;
-  static DeferedFinalize _finalize;
+  static int              rank;
+  static int              size;
+  static DeferredFinalize _finalize;
   // NOLINTEND
 
   /**
@@ -142,6 +152,7 @@ class ParameterSweep {
       length = static_cast<int>(serialized.size());
     }
 #ifdef VIPRA_USE_MPI
+    _mpiTimings.resume();
     MPI_Bcast(&length, 1, MPI_INT, 0, comm);
 
     if ( rank != 0 ) {
@@ -149,6 +160,7 @@ class ParameterSweep {
     }
 
     MPI_Bcast(serialized.data(), length, MPI_CHAR, 0, comm);
+    _mpiTimings.pause();
 
     if ( rank != 0 ) {
       input.parse(serialized);
