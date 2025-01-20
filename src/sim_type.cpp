@@ -126,7 +126,7 @@ void Simulation::run_sim(Parameters& params)
   while ( _currTimestep < _maxTimestep && ! _goals->is_sim_goal_met() ) {
     _model->timestep(*_pedset, *_map, *_goals, state, _timestepSize,
                      _currTimestep);
-    _behaviorModel.timestep(*_pedset, *_map, *_goals, state, _timestepSize);
+    _behaviorModel.update(*_pedset, *_goals, *_map, state, _timestepSize);
     _pedset->update(state);
     _goals->update(*_pedset, *_map, _timestepSize);
 
@@ -174,6 +174,6 @@ void Simulation::initialize(Parameters& params)
   _pedset->initialize(*_pedInput, *_map, _engine);
   _goals->initialize(*_pedset, *_map, _engine);
   _model->initialize(*_pedset, *_map, *_goals, _engine);
-  _behaviorModel.initialize(*_pedset, *_map, *_goals, _seed);
+  _behaviorModel.initialize(*_pedset, *_goals, *_map, _seed);
 }
 }  // namespace VIPRA

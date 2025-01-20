@@ -59,7 +59,7 @@ class Simulation : public Modules::Module<Simulation> {
   std::unique_ptr<Modules::Map>             _map;
   std::unique_ptr<Modules::PedestrianInput> _pedInput;
   std::unique_ptr<Modules::MapInput>        _mapInput;
-  BehaviorModel                             _behaviorModel;
+  Behaviors::BehaviorModel                  _behaviorModel;
 
   std::map<Modules::Type,
            std::function<void(void*, Parameters&, VIPRA::Random::Engine&)>>

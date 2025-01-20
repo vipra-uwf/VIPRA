@@ -1,6 +1,5 @@
 #pragma once
 
-#include "vipra/util/clock.hpp"
 #ifdef VIPRA_USE_MPI
 #include <mpi.h>
 #endif

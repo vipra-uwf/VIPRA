@@ -10,6 +10,7 @@ set(VIPRA_BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(
   VIPRA_INCLUDE_DIRS
   ${CMAKE_CURRENT_SOURCE_DIR}/include
+  ${CMAKE_CURRENT_SOURCE_DIR}/include/vipra/vipra_behaviors
   ${CMAKE_CURRENT_SOURCE_DIR}/modules
   ${CMAKE_CURRENT_SOURCE_DIR}/deps
 )
@@ -32,7 +33,6 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/vipraUtils.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/vipraOptions.cmake)
 
 add_subdirectory(src)
-add_subdirectory(include/vipra/vipra_behaviors/_grammar)
 vipra_add_base_modules()
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)

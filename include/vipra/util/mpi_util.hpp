@@ -96,4 +96,5 @@ template <typename data_t>
    * @param func 
    */
 inline void master_do(auto&& func) { func(); }
+}  // namespace VIPRA::Util
 #endif

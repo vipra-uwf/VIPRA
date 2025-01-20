@@ -1,67 +1,35 @@
 
 
-#include "vipra/vipra_behaviors/conditions/condition.hpp"
-#include "vipra/logging/logging.hpp"
-#include "vipra/vipra_behaviors/definitions/behavior_context.hpp"
+#include "badl/cognition/behaviors/conditions/condition.hpp"
 
-namespace VIPRA::Behaviors {
-
-/**
-   * @brief Evaluates whether a condition is met for a group of pedestrians, writes to 'met' vector
-   * 
-   * @tparam Simpack 
-   * @param pack 
-   * @param peds 
-   * @param met - output vector
-   * @param targets
-   * @param latches 
-   */
-void Condition::evaluate(Simpack pack, VIPRA::idxVec const& peds,
-                         std::vector<bool>&                   met,
-                         std::vector<Target> const&           targets,
-                         std::optional<TimedLatchCollection>& latches)
+namespace BADL {
+auto Condition::evaluate(
+    BADL::Memory<VIPRA::Sight, VIPRA::Sound> const&        memory,
+    BADL::Beliefs<VIPRA::Identity, VIPRA::Position> const& beliefs,
+    BADL::Environment<VIPRA::Sound, VIPRA::Sight> const&   environment,
+    BADL::time                                             time) -> bool
 {
-  std::fill(_temp.begin(), _temp.end(), false);
-  _conditions[0](pack, peds, targets, met, _temp, BoolOp::OR);
+  bool met = _conditions[0](memory, beliefs);
 
-  for ( VIPRA::idx i = 1; i < _conditions.size(); ++i ) {
-    _conditions[i](pack, peds, targets, _temp, met, _steps[i - 1]);
+  for ( size_t i = 1; i < _conditions.size(); ++i ) {
+    if ( can_short_circuit(met, _steps[i]) ) return met;
+
     switch ( _steps[i - 1] ) {
       case BoolOp::AND:
-        std::transform(met.begin(), met.end(), _temp.begin(), met.begin(),
-                       std::logical_and<>());
+        met = met && _conditions[i](memory, beliefs);
         break;
       case BoolOp::OR:
-        std::transform(met.begin(), met.end(), _temp.begin(), met.begin(),
-                       std::logical_or<>());
+        met = met || _conditions[i](memory, beliefs);
         break;
     }
   }
 
-  handle_latches(pack, latches, met);
+  return met;
 }
 
-/**
-   * @brief Updates action duration latches
-   * 
-   * @tparam Simpack 
-   * @param pack 
-   * @param latches 
-   * @param met 
-   */
-void Condition::handle_latches(Simpack                              pack,
-                               std::optional<TimedLatchCollection>& latches,
-                               std::vector<bool>&                   met)
+void Condition::add_operation(BoolOp oper) { _steps.emplace_back(oper); }
+void Condition::add_subcondition(SubCondition&& condition)
 {
-  if ( latches.has_value() ) {
-    for ( VIPRA::idx i = 0; i < met.size(); ++i ) {
-      if ( met[i] ) {
-        latches->latch(pack.context.elapsedTime, i);
-      }
-
-      met[i] = latches->check(pack.context.elapsedTime, i) || met[i];
-    }
-  }
+  _conditions.emplace_back(condition);
 }
-
-}  // namespace VIPRA::Behaviors
+}  // namespace BADL

@@ -4,6 +4,7 @@ option(VIPRA_DEBUG_MODE OFF "Build in debug mode")
 option(VIPRA_PERF_TESTING OFF "Enable performance profiling")
 option(VIPRA_USE_GPERF OFF "Use Gperftools for profiling")
 option(VIPRA_USE_MPI OFF "Enable MPI for parameter sweeps")
+option(VIPRA_TIME_SIM OFF "Output Timings for simulation runs")
 option(VIPRA_TESTING OFF "Build VIPRA Tests")
 
 if ( VIPRA_DEBUG_MODE )

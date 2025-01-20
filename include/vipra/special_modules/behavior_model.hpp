@@ -1,24 +1,17 @@
+
 #pragma once
 
-#include "vipra/macros/module.hpp"
+#include "vipra/vipra_behaviors/senses/sight.hpp"
+#include "vipra/vipra_behaviors/senses/sound.hpp"
 
-#include "vipra/macros/parameters.hpp"
-#include "vipra/modules/goals.hpp"
-#include "vipra/modules/module.hpp"
+#include "vipra/modules/map.hpp"
 #include "vipra/modules/pedestrians.hpp"
+#include "vipra/types/time.hpp"
 
-#include "vipra/types/seed.hpp"
-#include "vipra/util/clock.hpp"
-#include "vipra/util/timing.hpp"
-#include "vipra/vipra_behaviors/attributes/attributes.hpp"
-#include "vipra/vipra_behaviors/behavior/human_behavior.hpp"
-#include "vipra/vipra_behaviors/builder/behavior_builder.hpp"
+#include "badl/agent.hpp"
+#include "badl/environment/environment.hpp"
 
-namespace VIPRA {
-/**
- * @brief BehaviorModel is a special module that is responsible for loading and managing all behaviors
- * 
- */
+namespace VIPRA::Behaviors {
 class BehaviorModel : public VIPRA::Modules::Module<BehaviorModel> {
  public:
   VIPRA_MODULE_NAME("main");
@@ -28,63 +21,40 @@ class BehaviorModel : public VIPRA::Modules::Module<BehaviorModel> {
   VIPRA_REGISTER_PARAMS(VIPRA_PARAM("behaviors_dir", _behaviorsDir),
                         VIPRA_PARAM("behaviors", _behaviorNames))
 
-  void initialize(Modules::Pedestrians& pedset, Modules::Map& map,
-                  Modules::Goals& goals, VIPRA::seed seed)
-  {
-    // TODO(rolland): figure out why it errors when duplicating behaviors
+  void initialize(VIPRA::Modules::Pedestrians const& pedset,
+                  VIPRA::Modules::Goals const&       goals,
+                  VIPRA::Modules::Map const& map, size_t seed);
 
-    _behaviors.clear();
-    Behaviors::AttributeHandling::cleanup();
-
-    build_behaviors(map, seed);
-    for ( auto& behavior : _behaviors ) {
-      behavior.initialize(pedset, map, goals);
-    }
-
-    behaviorTimings.start_new();
-    behaviorTimings.pause();
-  }
-
-  void timestep(Modules::Pedestrians& pedset, Modules::Map& map,
-                Modules::Goals& goals, VIPRA::State& state,
-                VIPRA::delta_t deltaT)
-  {
-    behaviorTimings.resume();
-    for ( auto& behavior : _behaviors ) {
-      behavior.timestep(pedset, map, goals, state, deltaT);
-    }
-    behaviorTimings.pause();
-  }
+  void update(VIPRA::Modules::Pedestrians const& pedset,
+              VIPRA::Modules::Goals const&       goals,
+              VIPRA::Modules::Map const& map, VIPRA::State& state,
+              VIPRA::delta_t deltaT);
 
  private:
-  std::string                           _behaviorsDir;
-  std::vector<std::string>              _behaviorNames;
-  std::vector<Behaviors::HumanBehavior> _behaviors;
+  static constexpr double SOUND_MAX_DIST_SQRD_M = 25.0;
 
-  static Util::Timings behaviorTimings;
+  std::string              _behaviorsDir;
+  std::vector<std::string> _behaviorNames;
+  size_t                   _pedCount{};
 
-  void build_behaviors(Modules::Map const& map, VIPRA::seed seed)
-  {
-    Behaviors::BehaviorBuilder builder;
-    std::transform(_behaviorNames.begin(), _behaviorNames.end(),
-                   std::back_inserter(_behaviors), [&](auto const& name) {
-                     auto const filePath =
-                         _behaviorsDir + '/' + (name + ".bhvr");
-                     return builder.build(name, filePath, map, seed);
-                   });
-  }
+  BADL::Environment<Sound, Sight> _environment;
+  std::vector<BADL::Agent>        _agents;
 
- public:
-  BehaviorModel() = default;
-  BehaviorModel(BehaviorModel const&) = default;
-  auto operator=(BehaviorModel const&) -> BehaviorModel& = default;
-  BehaviorModel(BehaviorModel&&) noexcept = default;
-  auto operator=(BehaviorModel&&) noexcept -> BehaviorModel& = default;
-  ~BehaviorModel()
-  {
-    Behaviors::AttributeHandling::cleanup();
-    behaviorTimings.stop();
-    behaviorTimings.output_timings();
-  };
+  template <typename stimulus_t>
+  void apply_stimuli(std::vector<stimulus_t> const& sources,
+                     VIPRA::Modules::Map const&     map);
+  template <typename stimulus_t>
+  void apply_stimulus(BADL::Agent& agent, stimulus_t const& stimulus,
+                      VIPRA::Modules::Map const& map);
+
+  template <typename stimulus_t>
+  static auto can_sense(stimulus_t const& stimulus) -> bool;
+
+  [[nodiscard]] static auto check_sound(
+      BADL::Agent const& agent, Sound const& sound,
+      VIPRA::Modules::Map const& map) noexcept -> bool;
+  [[nodiscard]] static auto check_sight(
+      BADL::Agent const& agent, Sight const& sight,
+      VIPRA::Modules::Map const& map) noexcept -> bool;
 };
-}  // namespace VIPRA
+}  // namespace VIPRA::Behaviors
