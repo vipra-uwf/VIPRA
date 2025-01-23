@@ -22,7 +22,7 @@ namespace BADL {
 class DSLBehavior {
  public:
   [[nodiscard]] auto decide_action(
-      BADL::Memory<VIPRA::Sight, VIPRA::Sound> const&        memory,
+      BADL::Memory const&                                    memory,
       BADL::Beliefs<VIPRA::Identity, VIPRA::Position> const& beliefs,
       BADL::Environment<VIPRA::Sound, VIPRA::Sight> const&   environment,
       BADL::time time) -> BADL::Action const&;

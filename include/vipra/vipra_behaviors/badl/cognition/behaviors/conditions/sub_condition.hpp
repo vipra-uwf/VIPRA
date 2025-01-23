@@ -3,7 +3,6 @@
 #include <functional>
 
 #include "badl/beliefs/beliefs.hpp"
-#include "badl/cognition/decision.hpp"
 #include "badl/cognition/memory.hpp"
 
 #include "vipra/vipra_behaviors/beliefs/identity.hpp"
@@ -35,6 +34,6 @@ inline constexpr auto can_short_circuit(bool met, BoolOp oper) -> bool
 }
 
 using SubCondition = std::function<bool(
-    BADL::Memory<VIPRA::Sight, VIPRA::Sound> const&        memory,
+    BADL::Memory const&                                    memory,
     BADL::Beliefs<VIPRA::Identity, VIPRA::Position> const& beliefs)>;
 }  // namespace BADL

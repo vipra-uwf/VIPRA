@@ -7,7 +7,7 @@
 namespace BADL {
 template <typename... thought_ts>
 void DecisionMaking<thought_ts...>::decide(
-    BADL::Memory<VIPRA::Sight, VIPRA::Sound> const&        memory,
+    BADL::Memory const&                                    memory,
     BADL::Beliefs<VIPRA::Identity, VIPRA::Position> const& beliefs,
     BADL::Environment<VIPRA::Sound, VIPRA::Sight> const&   environment,
     BADL::time                                             time)

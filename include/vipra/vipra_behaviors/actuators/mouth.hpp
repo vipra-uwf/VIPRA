@@ -1,13 +1,25 @@
 #pragma once
 
-#include "badl/actuators/actuator_call.hpp"
+#include "badl/components/component.hpp"
 #include "vipra/vipra_behaviors/interface/prog_interface.hpp"
 
 namespace VIPRA {
 
-class Mouth {
+class Mouth : public BADL::Component {
  public:
-  void stop(BADL::ProgramInterface& interface, BADL::ActuatorParams& params) {}
+  auto get_actuator_grammar()
+      -> std::vector<std::pair<std::string_view, BADL::ActuatorFunc>> override
+  {
+    return {
+        std::make_pair("say %str", &say),
+    };
+  }
+
+  static void say(BADL::ProgramInterface const&,
+                  BADL::Environment<VIPRA::Sound, VIPRA::Sight>&,
+                  BADL::ComponentParams const&)
+  {
+  }
 };
 
 }  // namespace VIPRA

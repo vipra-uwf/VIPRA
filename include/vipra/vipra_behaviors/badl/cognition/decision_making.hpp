@@ -16,7 +16,7 @@ namespace BADL {
 template <typename... thought_ts>
 class DecisionMaking {
  public:
-  void decide(BADL::Memory<VIPRA::Sight, VIPRA::Sound> const&        memory,
+  void decide(BADL::Memory const&                                    memory,
               BADL::Beliefs<VIPRA::Identity, VIPRA::Position> const& beliefs,
               BADL::Environment<VIPRA::Sound, VIPRA::Sight> const& environment,
               BADL::time                                           time);

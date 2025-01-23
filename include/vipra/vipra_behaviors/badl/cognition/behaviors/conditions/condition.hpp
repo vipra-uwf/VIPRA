@@ -13,9 +13,10 @@ namespace BADL {
 class Condition {
  public:
   [[nodiscard]] auto evaluate(
-      BADL::Memory<VIPRA::Sight, VIPRA::Sound> const&        memory,
+      BADL::Memory const&                                    memory,
       BADL::Beliefs<VIPRA::Identity, VIPRA::Position> const& beliefs,
-      BADL::Environment<VIPRA::Sound, VIPRA::Sight> const& environment) -> bool;
+      BADL::Environment<VIPRA::Sound, VIPRA::Sight> const&   environment,
+      BADL::time                                             time) -> bool;
 
   void add_operation(BoolOp oper);
   void add_subcondition(SubCondition&& condition);

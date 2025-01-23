@@ -1,18 +1,30 @@
 #pragma once
 
+#include <map>
 #include <optional>
-#include <tuple>
 #include <vector>
 
+#include "badl/components/component.hpp"
 #include "badl/definitions/time.hpp"
 
 namespace BADL {
-template <typename... memory_ts>
-class Memory {
+class Memory : public BADL::Component {
  public:
-  template <typename memory_t>
-  struct Instance {
-    memory_t   info;
+  auto get_condition_grammar()
+      -> std::vector<std::pair<std::string_view, ConditionFunc>> override
+  {
+    return {
+        {"has memory %str", &has_memory_condition},
+    };
+  };
+
+  [[nodiscard]] static auto has_memory_condition(
+      BADL::Agent const& agent, BADL::ProgramInterface const& /*unused*/,
+      BADL::Environment<VIPRA::Sound, VIPRA::Sight> const& /*unused*/,
+      BADL::ComponentParams const& params) noexcept -> bool;
+
+  struct MemoryInstance {
+    size_t     id;
     BADL::time timePercieved;
 
     constexpr auto operator<(BADL::time const& checkTime) const noexcept
@@ -21,45 +33,27 @@ class Memory {
     }
   };
 
-  template <typename memory_t>
-  using Container = std::vector<Instance<memory_t>>;
+  void clear() { _memories.clear(); }
 
-  template <typename memory_t>
-  void clear()
-  {
-    std::get<std::vector<Instance<memory_t>>>(_memories).clear();
-  }
+  void add_memory(size_t memory, BADL::time timePercieved);
 
-  template <typename memory_t>
-  void add_memory(memory_t&& memory, BADL::time timePercieved);
+  [[nodiscard]] auto has_memory(size_t memoryId) const noexcept -> bool;
+  [[nodiscard]] auto has_memory_since(size_t     memoryId,
+                                      BADL::time time) const noexcept -> bool;
 
-  template <typename memory_t>
-  [[nodiscard]] auto has_memory() const noexcept -> bool;
-  template <typename memory_t>
-  [[nodiscard]] auto has_memory_since(BADL::time time) const noexcept -> bool;
-
-  template <typename memory_t>
-  [[nodiscard]] auto last_memory() const -> Instance<memory_t> const&;
-  template <typename memory_t>
-  [[nodiscard]] auto first_memory() const -> Instance<memory_t> const&;
-  template <typename memory_t>
-  [[nodiscard]] auto next_memory_after(BADL::time time) const
-      -> std::optional<Instance<memory_t> const&>;
+  [[nodiscard]] auto last_memory(size_t memoryId) const
+      -> MemoryInstance const&;
+  [[nodiscard]] auto first_memory(size_t memoryId) const
+      -> MemoryInstance const&;
+  [[nodiscard]] auto next_memory_after(size_t memoryId, BADL::time time) const
+      -> std::optional<MemoryInstance>;
 
  private:
-  std::tuple<std::vector<Instance<memory_ts>>...> _memories;
+  std::map<size_t, std::vector<MemoryInstance>> _memories;
 
-  template <typename memory_t>
-  [[nodiscard]] constexpr auto get() noexcept
-      -> std::vector<Instance<std::remove_cvref_t<memory_t>>>&;
-  template <typename memory_t>
-  [[nodiscard]] constexpr auto get() const noexcept
-      -> std::vector<Instance<std::remove_cvref_t<memory_t>>> const&;
+  [[nodiscard]] auto get(size_t memoryId) noexcept
+      -> std::vector<MemoryInstance>&;
+  [[nodiscard]] auto get(size_t memoryId) const noexcept
+      -> std::vector<MemoryInstance> const&;
 };
 }  // namespace BADL
-
-#define BADL_MEMORY_MAIN_HPP
-
-#include "./_detail/memory_detail.hpp"
-
-#undef BADL_MEMORY_MAIN_HPP

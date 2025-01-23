@@ -2,6 +2,7 @@
 #pragma once
 
 #include <cstddef>
+
 #include "vipra/geometry/f3d.hpp"
 
 namespace VIPRA {
