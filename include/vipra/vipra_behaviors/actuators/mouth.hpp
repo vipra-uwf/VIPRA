@@ -15,9 +15,9 @@ class Mouth : public BADL::Component {
     };
   }
 
-  static void say(BADL::ProgramInterface const&,
+  static void say(BADL::Agent&, BADL::ProgramInterface const&,
                   BADL::Environment<VIPRA::Sound, VIPRA::Sight>&,
-                  BADL::ComponentParams const&)
+                  BADL::ComponentParams const&, BADL::time)
   {
   }
 };

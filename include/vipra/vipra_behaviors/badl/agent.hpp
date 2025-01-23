@@ -2,13 +2,14 @@
 #pragma once
 
 #include "badl/actuators/actuators.hpp"
-#include "badl/beliefs/beliefs.hpp"
-#include "badl/cognition/behaviors/dsl_behavior.hpp"
-#include "badl/cognition/decision_making.hpp"
-#include "badl/cognition/memory.hpp"
-#include "badl/definitions/time.hpp"
 
-#include "badl/filter/filter.hpp"
+#include "badl/components/behaviors/behaviors.hpp"
+#include "badl/components/beliefs/beliefs.hpp"
+#include "badl/components/cognition/decision_making.hpp"
+#include "badl/components/filter/filter.hpp"
+#include "badl/components/memory/memory.hpp"
+
+#include "badl/definitions/time.hpp"
 
 #include "vipra/vipra_behaviors/actuators/legs.hpp"
 #include "vipra/vipra_behaviors/actuators/mouth.hpp"
@@ -20,14 +21,14 @@
 namespace BADL {
 class Agent {
  public:
-  template <typename stimulus_t>
-  void apply_stimulus(stimulus_t&& stimulus, BADL::time time)
+  template <typename component_t>
+  [[nodiscard]] auto get_component() const -> component_t const&
   {
-    if ( ! _filter.gate<stimulus_t>(stimulus) ) return;
-    _memory.add_memory(stimulus, time);
+    return get_component<component_t>();
   }
 
-  void decide(BADL::Environment<VIPRA::Sound, VIPRA::Sight> const& environment,
+  void decide(BADL::ProgramInterface const&                        interface,
+              BADL::Environment<VIPRA::Sound, VIPRA::Sight> const& environment,
               BADL::time                                           time);
   void take_action(BADL::ProgramInterface const&                  interface,
                    BADL::Environment<VIPRA::Sound, VIPRA::Sight>& environment,
@@ -37,13 +38,34 @@ class Agent {
   BADL::AttentionFilter<VIPRA::Sight, VIPRA::Sound> _filter;
   BADL::Memory                                      _memory;
   BADL::Beliefs<VIPRA::Identity, VIPRA::Position>   _beliefs;
-  BADL::DecisionMaking<BADL::DSLBehavior>           _decisions;
+  BADL::DecisionMaking<BADL::Behaviors>             _decisions;
   BADL::Actuators<VIPRA::Legs, VIPRA::Mouth>        _actuators;
+
+ public:
+  template <typename stimulus_t>
+  void apply_stimulus(stimulus_t&& stimulus, BADL::time time)
+  {
+    if ( ! _filter.gate<stimulus_t>(stimulus) ) return;
+    _memory.add_memory(stimulus, time);
+  }
+
+  template <typename component_t>
+  [[nodiscard]] auto get_component() -> component_t&
+  {
+    if constexpr ( std::is_same_v<
+                       component_t,
+                       BADL::AttentionFilter<VIPRA::Sight, VIPRA::Sound>> )
+      return _filter;
+    if constexpr ( std::is_same_v<component_t, BADL::Memory> ) return _memory;
+    if constexpr ( std::is_same_v<component_t, BADL::Beliefs<VIPRA::Identity,
+                                                             VIPRA::Position>> )
+      return _beliefs;
+    if constexpr ( std::is_same_v<component_t,
+                                  BADL::DecisionMaking<BADL::Behaviors>> )
+      return _decisions;
+    if constexpr ( std::is_same_v<component_t,
+                                  BADL::Actuators<VIPRA::Legs, VIPRA::Mouth>> )
+      return _actuators;
+  }
 };
 }  // namespace BADL
-
-#define BADL_AGENT_MAIN_HPP
-
-#include "agent_detail.hpp"
-
-#undef BADL_AGENT_MAIN_HPP

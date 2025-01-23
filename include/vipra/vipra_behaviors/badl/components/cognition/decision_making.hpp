@@ -3,25 +3,24 @@
 #include <tuple>
 
 #include "badl/actions/action.hpp"
-#include "badl/beliefs/beliefs.hpp"
-#include "badl/cognition/memory.hpp"
-#include "badl/definitions/time.hpp"
+#include "badl/environment/environment.hpp"
 
-#include "vipra/vipra_behaviors/beliefs/identity.hpp"
-#include "vipra/vipra_behaviors/beliefs/position.hpp"
+#include "vipra/vipra_behaviors/interface/prog_interface.hpp"
 #include "vipra/vipra_behaviors/senses/sight.hpp"
 #include "vipra/vipra_behaviors/senses/sound.hpp"
 
 namespace BADL {
+class Agent;
+
 template <typename... thought_ts>
 class DecisionMaking {
  public:
-  void decide(BADL::Memory const&                                    memory,
-              BADL::Beliefs<VIPRA::Identity, VIPRA::Position> const& beliefs,
+  void decide(BADL::Agent const& agent, BADL::ProgramInterface const& interface,
               BADL::Environment<VIPRA::Sound, VIPRA::Sight> const& environment,
               BADL::time                                           time);
-  void act(BADL::ProgramInterface const&                  interface,
-           BADL::Environment<VIPRA::Sound, VIPRA::Sight>& environment);
+  void act(BADL::Agent& agent, BADL::ProgramInterface const& interface,
+           BADL::Environment<VIPRA::Sound, VIPRA::Sight>& environment,
+           BADL::time                                     time);
 
  private:
   BADL::Action const*       _nextAction;

@@ -1,0 +1,18 @@
+#pragma once
+
+#include <vector>
+
+#include "badl/components/behaviors/dsl_behavior.hpp"
+
+namespace BADL {
+class Behaviors {
+ public:
+  [[nodiscard]] auto decide_action(
+      BADL::Agent const&, BADL::ProgramInterface const&,
+      BADL::Environment<VIPRA::Sound, VIPRA::Sight> const&,
+      BADL::time) -> BADL::Action const&;
+
+ private:
+  std::vector<DSLBehavior> _behaviors;
+};
+}  // namespace BADL

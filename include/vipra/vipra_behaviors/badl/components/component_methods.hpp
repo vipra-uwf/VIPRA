@@ -48,11 +48,11 @@ struct ComponentParams {
 using ConditionFunc =
     bool (*)(BADL::Agent const&, BADL::ProgramInterface const&,
              BADL::Environment<VIPRA::Sound, VIPRA::Sight> const&,
-             BADL::ComponentParams const&);
+             BADL::ComponentParams const&, BADL::time);
 
-using ActuatorFunc = void (*)(BADL::ProgramInterface const&,
+using ActuatorFunc = void (*)(BADL::Agent&, BADL::ProgramInterface const&,
                               BADL::Environment<VIPRA::Sound, VIPRA::Sight>&,
-                              BADL::ComponentParams const&);
+                              BADL::ComponentParams const&, BADL::time);
 
 // TODO(rolland): figure this part out
 using InternalFunc = void (*)();

@@ -15,14 +15,15 @@ struct Legs : public BADL::Component {
     };
   }
 
-  static void move(BADL::ProgramInterface const&,
+  static void move(BADL::Agent&, BADL::ProgramInterface const&,
                    BADL::Environment<VIPRA::Sound, VIPRA::Sight>&,
-                   BADL::ComponentParams const&)
+                   BADL::ComponentParams const&, BADL::time)
   {
   }
-  static void stop(BADL::ProgramInterface const&,
+
+  static void stop(BADL::Agent&, BADL::ProgramInterface const&,
                    BADL::Environment<VIPRA::Sound, VIPRA::Sight>&,
-                   BADL::ComponentParams const&)
+                   BADL::ComponentParams const&, BADL::time)
   {
   }
 };

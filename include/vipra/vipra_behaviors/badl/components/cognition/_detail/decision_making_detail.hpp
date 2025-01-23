@@ -7,15 +7,15 @@
 namespace BADL {
 template <typename... thought_ts>
 void DecisionMaking<thought_ts...>::decide(
-    BADL::Memory const&                                    memory,
-    BADL::Beliefs<VIPRA::Identity, VIPRA::Position> const& beliefs,
-    BADL::Environment<VIPRA::Sound, VIPRA::Sight> const&   environment,
-    BADL::time                                             time)
+    BADL::Agent const& agent, BADL::ProgramInterface const& interface,
+    BADL::Environment<VIPRA::Sound, VIPRA::Sight> const& environment,
+    BADL::time                                           time)
 {
   // go through each process and find the action with the most utility
   std::apply(
       [&](auto& process) {
-        auto action = process.decide_action(memory, beliefs, environment, time);
+        auto action =
+            process.decide_action(agent, interface, environment, time);
         if ( action.utility() > _nextAction->utility() ) {
           _nextAction = &action;
         }
@@ -25,9 +25,9 @@ void DecisionMaking<thought_ts...>::decide(
 
 template <typename... thought_ts>
 void DecisionMaking<thought_ts...>::act(
-    BADL::ProgramInterface const&                  interface,
-    BADL::Environment<VIPRA::Sound, VIPRA::Sight>& environment)
+    BADL::Agent& agent, BADL::ProgramInterface const& interface,
+    BADL::Environment<VIPRA::Sound, VIPRA::Sight>& environment, BADL::time time)
 {
-  return (*_nextAction)(interface, environment);
+  return (*_nextAction)(agent, interface, environment, time);
 }
 }  // namespace BADL

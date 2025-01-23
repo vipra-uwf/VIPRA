@@ -18,10 +18,26 @@ class Memory : public BADL::Component {
     };
   };
 
+  auto get_actuator_grammar()
+      -> std::vector<std::pair<std::string_view, ActuatorFunc>> override
+  {
+    return {
+        {"add memory %str", &add_memory_actuator},
+    };
+  };
+
+  [[nodiscard]] static auto memory_map() -> std::map<std::string, size_t>&;
+  [[nodiscard]] static auto memory_id(std::string const&) -> size_t;
+
   [[nodiscard]] static auto has_memory_condition(
       BADL::Agent const& agent, BADL::ProgramInterface const& /*unused*/,
       BADL::Environment<VIPRA::Sound, VIPRA::Sight> const& /*unused*/,
-      BADL::ComponentParams const& params) noexcept -> bool;
+      BADL::ComponentParams const& params, BADL::time time) noexcept -> bool;
+
+  static void add_memory_actuator(
+      BADL::Agent& agent, BADL::ProgramInterface const&,
+      BADL::Environment<VIPRA::Sound, VIPRA::Sight>&,
+      BADL::ComponentParams const& params, BADL::time time);
 
   struct MemoryInstance {
     size_t     id;

@@ -11,12 +11,12 @@ struct ActuatorCall {
   ActuatorFunc    method = nullptr;
   ComponentParams parameters;
 
-  void operator()(
-      BADL::ProgramInterface const&                  interface,
-      BADL::Environment<VIPRA::Sound, VIPRA::Sight>& environment) const
+  void operator()(BADL::Agent& agent, BADL::ProgramInterface const& interface,
+                  BADL::Environment<VIPRA::Sound, VIPRA::Sight>& environment,
+                  BADL::time                                     time) const
   {
     assert(method != nullptr);
-    method(interface, environment, parameters);
+    method(agent, interface, environment, parameters, time);
   }
 };
 }  // namespace BADL

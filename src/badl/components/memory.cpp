@@ -1,16 +1,38 @@
 
 
-#include "badl/cognition/memory.hpp"
+#include <string>
+
 #include "badl/agent.hpp"
+#include "badl/cognition/memory.hpp"
 
 namespace BADL {
+auto Memory::memory_map() -> std::map<std::string, size_t>&
+{
+  static std::map<std::string, size_t> memoryMap{};
+  return memoryMap;
+}
+
+auto Memory::memory_id(std::string const& name) -> size_t
+{
+  return memory_map()[name];
+}
+
+void Memory::add_memory_actuator(
+    BADL::Agent& agent, BADL::ProgramInterface const& /*unused*/,
+    BADL::Environment<VIPRA::Sound, VIPRA::Sight>& /*unused*/,
+    BADL::ComponentParams const& params, BADL::time time)
+{
+  agent.get_component<Memory>().add_memory(
+      memory_id(params.get<std::string>(0)), time);
+}
+
 auto Memory::has_memory_condition(
     BADL::Agent const& agent, BADL::ProgramInterface const& /*unused*/,
     BADL::Environment<VIPRA::Sound, VIPRA::Sight> const& /*unused*/,
-    BADL::ComponentParams const& params) noexcept -> bool
+    BADL::ComponentParams const& params, BADL::time /*unused*/) noexcept -> bool
 {
-  auto test = params.get<float>(0);
-  return agent.get_memory(test);
+  size_t test = memory_id(params.get<std::string>(0));
+  return agent.get_component<Memory>().has_memory(test);
 }
 
 void Memory::add_memory(size_t memoryId, BADL::time timePercieved)
