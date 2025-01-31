@@ -37,7 +37,7 @@ struct ComponentParams {
   }
 
   template <typename value_t>
-  [[nodiscard]] auto get(size_t idx) const noexcept -> value_t&
+  [[nodiscard]] auto get(size_t idx) const noexcept -> value_t const&
   {
     assert(idx < parameters.size());
     return std::get<value_t>(parameters[idx]);
@@ -45,14 +45,13 @@ struct ComponentParams {
 };
 // NOLINTEND(cppcoreguidelines-avoid-const-or-ref-data-members)
 
-using ConditionFunc =
-    bool (*)(BADL::Agent const&, BADL::ProgramInterface const&,
-             BADL::Environment<VIPRA::Sound, VIPRA::Sight> const&,
-             BADL::ComponentParams const&, BADL::time);
+using QueryFunc = bool (*)(BADL::Agent const&, BADL::ProgramInterface const&,
+                           BADL::Environment<VIPRA::Sound, VIPRA::Sight> const&,
+                           BADL::ComponentParams const&, BADL::time);
 
-using ActuatorFunc = void (*)(BADL::Agent&, BADL::ProgramInterface const&,
-                              BADL::Environment<VIPRA::Sound, VIPRA::Sight>&,
-                              BADL::ComponentParams const&, BADL::time);
+using ActivationFunc = void (*)(BADL::Agent&, BADL::ProgramInterface const&,
+                                BADL::Environment<VIPRA::Sound, VIPRA::Sight>&,
+                                BADL::ComponentParams const&, BADL::time);
 
 // TODO(rolland): figure this part out
 using InternalFunc = void (*)();

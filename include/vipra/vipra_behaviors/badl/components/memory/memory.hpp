@@ -11,7 +11,7 @@ namespace BADL {
 class Memory : public BADL::Component {
  public:
   auto get_condition_grammar()
-      -> std::vector<std::pair<std::string_view, ConditionFunc>> override
+      -> std::vector<std::pair<std::string_view, QueryFunc>> override
   {
     return {
         {"has memory %str", &has_memory_condition},
@@ -19,7 +19,7 @@ class Memory : public BADL::Component {
   };
 
   auto get_actuator_grammar()
-      -> std::vector<std::pair<std::string_view, ActuatorFunc>> override
+      -> std::vector<std::pair<std::string_view, ActivationFunc>> override
   {
     return {
         {"add memory %str", &add_memory_actuator},

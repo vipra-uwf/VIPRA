@@ -17,6 +17,7 @@ void BehaviorModel::update(VIPRA::Modules::Pedestrians const& pedset,
 {
   // update time
   _environment.add_time(deltaT);
+  const BADL::ProgramInterface interface{pedset, goals, map, &state};
 
   // apply each of the stimuli to each pedestrian
   std::apply(
@@ -25,11 +26,10 @@ void BehaviorModel::update(VIPRA::Modules::Pedestrians const& pedset,
 
   // update the pedestrian's position then decide what to do, do it
   for ( auto& agent : _agents ) {
-    agent.update_belief<Position>(
-        pedset.ped_coords(agent.get_belief<VIPRA::Identity>()));
-    agent.decide(_environment, _environment.get_current_time());
-    agent.take_action(BADL::ProgramInterface{pedset, goals, map, &state},
-                      _environment, _environment.get_current_time());
+    // agent.update_belief<Position>(
+    //     pedset.ped_coords(agent.get_belief<VIPRA::Identity>()));
+    agent.decide(interface, _environment, _environment.get_current_time());
+    agent.take_action(interface, _environment, _environment.get_current_time());
   }
 }
 
@@ -66,20 +66,22 @@ auto BehaviorModel::check_sound(BADL::Agent const& agent, Sound const& sound,
                                 VIPRA::Modules::Map const& map) noexcept -> bool
 {
   // TODO(rolland): this only checks line of sight, may want to allow sound to go through walls, around corners, etc
-  auto const& pos = agent.get_belief<VIPRA::Position>();
-  return (sound.position.distance_to_sqrd(pos.position) <
-          SOUND_MAX_DIST_SQRD_M) &&
-         ! (map.ray_hit(agent.get_belief<Position>().position,
-                        sound.position) ==
-            std::numeric_limits<VIPRA::f_pnt>::max());
+  // auto const& pos = agent.get_belief<VIPRA::Position>();
+  // return (sound.position.distance_to_sqrd(pos.position) <
+  //         SOUND_MAX_DIST_SQRD_M) &&
+  //        ! (map.ray_hit(agent.get_belief<Position>().position,
+  //                       sound.position) ==
+  //           std::numeric_limits<VIPRA::f_pnt>::max());
+  return false;
 }
 
 auto BehaviorModel::check_sight(BADL::Agent const& agent, Sight const& sight,
                                 VIPRA::Modules::Map const& map) noexcept -> bool
 {
-  return ! (
-      map.ray_hit(agent.get_belief<Position>().position, sight.position) ==
-      std::numeric_limits<VIPRA::f_pnt>::max());
+  return false;
+  // return ! (
+  // map.ray_hit(agent.get_belief<Position>().position, sight.position) ==
+  // std::numeric_limits<VIPRA::f_pnt>::max());
 }
 
 }  // namespace VIPRA::Behaviors

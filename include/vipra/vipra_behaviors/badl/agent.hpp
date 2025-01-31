@@ -46,7 +46,6 @@ class Agent {
   void apply_stimulus(stimulus_t&& stimulus, BADL::time time)
   {
     if ( ! _filter.gate<stimulus_t>(stimulus) ) return;
-    _memory.add_memory(stimulus, time);
   }
 
   template <typename component_t>

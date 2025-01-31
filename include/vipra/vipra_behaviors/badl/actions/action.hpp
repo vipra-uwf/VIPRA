@@ -4,7 +4,7 @@
 #include <limits>
 #include <vector>
 
-#include "badl/actuators/actuator_call.hpp"
+#include "badl/actuators/func_call.hpp"
 
 namespace BADL {
 class Action {
@@ -20,9 +20,11 @@ class Action {
 
   [[nodiscard]] auto utility() const -> size_t { return _utility; }
 
+  void add_call(ActivationCall&& call);
+
  private:
-  std::vector<BADL::ActuatorCall> _calls;
-  size_t                          _utility{std::numeric_limits<size_t>::min()};
+  std::vector<BADL::ActivationCall> _calls;
+  size_t _utility{std::numeric_limits<size_t>::min()};
 };
 
 inline auto empty_action() -> Action const&

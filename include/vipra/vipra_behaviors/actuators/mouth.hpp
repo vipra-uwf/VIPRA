@@ -8,7 +8,7 @@ namespace VIPRA {
 class Mouth : public BADL::Component {
  public:
   auto get_actuator_grammar()
-      -> std::vector<std::pair<std::string_view, BADL::ActuatorFunc>> override
+      -> std::vector<std::pair<std::string_view, BADL::ActivationFunc>> override
   {
     return {
         std::make_pair("say %str", &say),

@@ -36,8 +36,6 @@ add_subdirectory(src)
 vipra_add_base_modules()
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
-include(ExternalAntlr4Cpp)
-include_directories(${ANTLR4_INCLUDE_DIRS})
 
 vipra_add_library(
   PROJECT ${VIPRA_LIBRARY_NAME}
@@ -46,17 +44,10 @@ vipra_add_library(
   GIT_TAG v3.11.3
 )
 
-target_link_libraries(
-  ${VIPRA_LIBRARY_NAME}
-  PUBLIC
-  antlr4_shared
-)
-
 target_include_directories(
   ${VIPRA_LIBRARY_NAME}
   PUBLIC
   ${VIPRA_INCLUDE_DIRS}
-  ${ANTLR4CPP_INCLUDE_DIRS}
 )
 
 if (VIPRA_BUILD_EXECUTABLE)

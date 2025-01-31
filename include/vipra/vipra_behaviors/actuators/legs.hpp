@@ -7,7 +7,7 @@
 namespace VIPRA {
 struct Legs : public BADL::Component {
   auto get_actuator_grammar()
-      -> std::vector<std::pair<std::string_view, BADL::ActuatorFunc>> override
+      -> std::vector<std::pair<std::string_view, BADL::ActivationFunc>> override
   {
     return {
         std::make_pair("move %flt, %flt, %flt", &move),

@@ -17,10 +17,6 @@ The following are requirement for running the VIPRA simulation.
 Additionally for Parameter Sweeps:
 3. MPI, either [openMPI](https://www.open-mpi.org/software/ompi/v5.0/) or [mpich](https://www.mpich.org/)
 
-The following are required for development of the Behaviors DSL.
-
-1. ANTLR4 - version 4.13.1 or newer.
-
 ---
 
 # Library

@@ -5,7 +5,7 @@
 
 namespace BADL {
 struct Condition {
-  ConditionFunc   method = nullptr;
+  QueryFunc       method = nullptr;
   ComponentParams parameters;
 
   auto operator()(

@@ -7,25 +7,20 @@
 #include "badl/components/component_methods.hpp"
 
 namespace BADL {
+
 class Component {
  public:
-  virtual auto get_condition_grammar()
-      -> std::vector<std::pair<std::string_view, ConditionFunc>>
+  virtual auto get_query_grammar()
+      -> std::vector<std::pair<std::string_view, QueryFunc>>
   {
     return {};
   };
 
-  virtual auto get_actuator_grammar()
-      -> std::vector<std::pair<std::string_view, ActuatorFunc>>
+  virtual auto get_activation_grammar()
+      -> std::vector<std::pair<std::string_view, ActivationFunc>>
   {
     return {};
-  };
-
-  virtual auto get_internal_state_grammar()
-      -> std::vector<std::pair<std::string_view, InternalFunc>>
-  {
-    return {};
-  };
+  }
 
   Component(const Component&) = default;
   Component(Component&&) = default;

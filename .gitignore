@@ -43,6 +43,7 @@ build
 
 # Temporary
 temp
+/*.txt
 
 # Behaviors
 .antlr

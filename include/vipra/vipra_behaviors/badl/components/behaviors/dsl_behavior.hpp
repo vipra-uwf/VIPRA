@@ -4,6 +4,7 @@
 
 #include "badl/actions/action.hpp"
 
+#include "badl/actuators/func_call.hpp"
 #include "badl/components/behaviors/conditions/compound_condition.hpp"
 #include "badl/environment/environment.hpp"
 
@@ -20,6 +21,8 @@ class DSLBehavior {
       BADL::Agent const&, BADL::ProgramInterface const&,
       BADL::Environment<VIPRA::Sound, VIPRA::Sight> const&,
       BADL::time) const -> BADL::Action const&;
+
+  void add_actuator_call(ActivationCall&& call);
 
  private:
   std::string             _name;

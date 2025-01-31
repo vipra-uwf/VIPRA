@@ -62,7 +62,6 @@ class MapInput {
       -> std::optional<std::map<std::string, VIPRA::Geometry::Polygon>> = 0;
 
   virtual ~MapInput() = default;
-
   MapInput() = default;
   MapInput(const MapInput&) = default;
   MapInput(MapInput&&) = default;

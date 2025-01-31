@@ -3,7 +3,7 @@
 #include <string>
 
 #include "badl/agent.hpp"
-#include "badl/cognition/memory.hpp"
+#include "badl/components/memory/memory.hpp"
 
 namespace BADL {
 auto Memory::memory_map() -> std::map<std::string, size_t>&
