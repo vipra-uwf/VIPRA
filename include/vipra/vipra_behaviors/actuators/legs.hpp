@@ -6,25 +6,22 @@
 
 namespace VIPRA {
 struct Legs : public BADL::Component {
-  auto get_actuator_grammar()
-      -> std::vector<std::pair<std::string_view, BADL::ActivationFunc>> override
+  [[nodiscard]] auto get_activation_grammar() const
+      -> std::vector<std::tuple<std::string, std::string_view,
+                                BADL::ActivationFunc>> override
   {
     return {
-        std::make_pair("move %flt, %flt, %flt", &move),
-        std::make_pair("stop", &stop),
+        std::make_tuple("test", "test %flt, %int, %str", &test),
+        std::make_tuple("stop", "stop", &stop),
     };
   }
 
-  static void move(BADL::Agent&, BADL::ProgramInterface const&,
+  static void test(BADL::Agent&, BADL::ProgramInterface const&,
                    BADL::Environment<VIPRA::Sound, VIPRA::Sight>&,
-                   BADL::ComponentParams const&, BADL::time)
-  {
-  }
+                   BADL::ComponentParams const&, BADL::time);
 
   static void stop(BADL::Agent&, BADL::ProgramInterface const&,
                    BADL::Environment<VIPRA::Sound, VIPRA::Sight>&,
-                   BADL::ComponentParams const&, BADL::time)
-  {
-  }
+                   BADL::ComponentParams const&, BADL::time);
 };
 }  // namespace VIPRA

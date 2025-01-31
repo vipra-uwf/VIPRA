@@ -2,6 +2,7 @@
 #pragma once
 
 #include <tuple>
+#include <type_traits>
 #include <vector>
 
 #include "badl/definitions/time.hpp"
@@ -11,16 +12,24 @@ namespace BADL {
 template <typename... stimuli_ts>
 class Environment {
  public:
+  // TODO(rolland): add in duration to stimuli sources
+
+  template <typename stimuli_t>
+  void add_source(stimuli_t const& stimulus)
+  {
+    get<stimuli_t>().emplace_back(stimulus);
+  }
   template <typename stimuli_t>
   void add_source(stimuli_t&& stimulus)
   {
     get<stimuli_t>().emplace_back(std::forward<stimuli_t>(stimulus));
   }
 
-  [[nodiscard]] auto all_sources() const
-      -> std::tuple<std::vector<stimuli_ts>...> const&
+  template <typename stimuli_t>
+  [[nodiscard]] auto all_sources() const -> std::vector<stimuli_t> const&
   {
-    return _stimuliSources;
+    return std::get<std::vector<std::remove_cvref_t<stimuli_t>>>(
+        _stimuliSources);
   }
 
   auto get_current_time() -> BADL::time { return _time; }

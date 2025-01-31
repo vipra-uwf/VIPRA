@@ -1,6 +1,7 @@
 #pragma once
 
 #include <tuple>
+#include <type_traits>
 
 #include "badl/actions/action.hpp"
 #include "badl/environment/environment.hpp"
@@ -21,6 +22,17 @@ class DecisionMaking {
   void act(BADL::Agent& agent, BADL::ProgramInterface const& interface,
            BADL::Environment<VIPRA::Sound, VIPRA::Sight>& environment,
            BADL::time                                     time);
+
+  template <typename process_t>
+  auto get() noexcept -> process_t&
+  {
+    return std::get<std::remove_cvref_t<process_t>>(_thoughtprocesses);
+  }
+  template <typename process_t>
+  auto get() const noexcept -> process_t const&
+  {
+    return std::get<std::remove_cvref_t<process_t>>(_thoughtprocesses);
+  }
 
  private:
   BADL::Action const*       _nextAction;

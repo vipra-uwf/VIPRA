@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include <string>
 
+#include "badl/agent.hpp"
 #include "badl/components/behaviors/behavior_builder/behavior_builder.hpp"
 #include "badl/components/behaviors/behavior_builder/parsing/base_grammar.hpp"
 #include "badl/components/behaviors/behavior_builder/parsing/peglib.h"
@@ -21,50 +22,58 @@ void replace(std::string& str, std::string_view fromStr, std::string_view toStr)
 }  // namespace
 
 namespace BADL {
-void BehaviorBuilder::add_query_grammar(std::string const& name,
-                                        std::string const& grammar,
-                                        QueryFunc const&   method)
+
+void BehaviorBuilder::initialize(BADL::Agent const& agent)
 {
-  //TODO(rolland): this
+  agent.for_component(
+      [this](BADL::Component const& comp) { add_component(comp); });
 }
 
-void BehaviorBuilder::add_activation_grammar(std::string const&    name,
-                                             std::string const&    grammar,
-                                             ActivationFunc const& method)
+void BehaviorBuilder::add_component(BADL::Component const& component)
 {
-  auto activationGrammar = parse_func_grammar(name, grammar);
+  const auto activations = component.get_activation_grammar();
+  const auto queries = component.get_query_grammar();
 
-  _grammar.append(activationGrammar);
-  _grammar.append("\n");
+  for ( auto const& [name, grammar, method] : activations ) {
+    auto activationGrammar = parse_func_grammar(name, grammar);
+    _grammar.append(activationGrammar);
+    _grammar.append("\n");
+    _activationMap[name] = method;
+  }
 
-  _activationMap[name] = method;
+  for ( auto const& [name, grammar, method] : queries ) {
+    auto queryGrammar = parse_func_grammar(name, grammar);
+    _grammar.append(queryGrammar);
+    _grammar.append("\n");
+    _queryMap[name] = method;
+  }
 }
 
 auto BehaviorBuilder::parse_func_grammar(
-    std::string const& name, std::string const& grammar) -> std::string
+    std::string name, std::string_view grammar) -> std::string
 {
   peg::parser parser{FUNC_CALL_GRAMMAR};
 
-  std::string output{name + " <-"};
+  name += " <-";
 
   parser["String"] = [&](const peg::SemanticValues& /*values*/) {
-    output.append(" ID");
+    name.append(" ID");
   };
   parser["Int"] = [&](const peg::SemanticValues& /*values*/) {
-    output.append(" Int");
+    name.append(" Int");
   };
   parser["Float"] = [&](const peg::SemanticValues& /*values*/) {
-    output.append(" Flt");
+    name.append(" Flt");
   };
   parser["word"] = [&](const peg::SemanticValues& values) {
-    output.append(" \'" + values.token_to_string(0) += "\'");
+    name.append(" \'" + values.token_to_string(0) += "\'");
   };
 
   // TODO(rolland): provide better error message
   if ( ! parser.parse(grammar) )
     throw std::runtime_error("Unable to parse action grammar");
 
-  return output;
+  return name;
 }
 
 void BehaviorBuilder::build_grammar()

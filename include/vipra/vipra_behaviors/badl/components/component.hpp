@@ -10,14 +10,14 @@ namespace BADL {
 
 class Component {
  public:
-  virtual auto get_query_grammar()
-      -> std::vector<std::pair<std::string_view, QueryFunc>>
+  [[nodiscard]] virtual auto get_query_grammar() const
+      -> std::vector<std::tuple<std::string, std::string_view, QueryFunc>>
   {
     return {};
   };
 
-  virtual auto get_activation_grammar()
-      -> std::vector<std::pair<std::string_view, ActivationFunc>>
+  [[nodiscard]] virtual auto get_activation_grammar() const
+      -> std::vector<std::tuple<std::string, std::string_view, ActivationFunc>>
   {
     return {};
   }

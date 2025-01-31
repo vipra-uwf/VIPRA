@@ -12,6 +12,11 @@ class Behaviors {
       BADL::Environment<VIPRA::Sound, VIPRA::Sight> const&,
       BADL::time) -> BADL::Action const&;
 
+  void add_behavior(DSLBehavior const& behavior)
+  {
+    _behaviors.emplace_back(behavior);
+  }
+
  private:
   std::vector<DSLBehavior> _behaviors;
 };

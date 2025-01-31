@@ -9,6 +9,7 @@
 #include "vipra/types/time.hpp"
 
 #include "badl/agent.hpp"
+#include "badl/components/behaviors/behavior_builder/behavior_builder.hpp"
 #include "badl/environment/environment.hpp"
 
 namespace VIPRA::Behaviors {
@@ -39,6 +40,7 @@ class BehaviorModel : public VIPRA::Modules::Module<BehaviorModel> {
 
   BADL::Environment<Sound, Sight> _environment;
   std::vector<BADL::Agent>        _agents;
+  BADL::BehaviorBuilder           _builder;
 
   template <typename stimulus_t>
   void apply_stimuli(std::vector<stimulus_t> const& sources,

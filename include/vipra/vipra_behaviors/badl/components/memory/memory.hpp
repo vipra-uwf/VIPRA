@@ -2,6 +2,7 @@
 
 #include <map>
 #include <optional>
+#include <string>
 #include <vector>
 
 #include "badl/components/component.hpp"
@@ -10,19 +11,21 @@
 namespace BADL {
 class Memory : public BADL::Component {
  public:
-  auto get_condition_grammar()
-      -> std::vector<std::pair<std::string_view, QueryFunc>> override
+  [[nodiscard]] auto get_query_grammar() const
+      -> std::vector<
+          std::tuple<std::string, std::string_view, QueryFunc>> override
   {
     return {
-        {"has memory %str", &has_memory_condition},
+        {"has_memory", "has memory %str", &has_memory_condition},
     };
   };
 
-  auto get_actuator_grammar()
-      -> std::vector<std::pair<std::string_view, ActivationFunc>> override
+  [[nodiscard]] auto get_activation_grammar() const
+      -> std::vector<
+          std::tuple<std::string, std::string_view, ActivationFunc>> override
   {
     return {
-        {"add memory %str", &add_memory_actuator},
+        {"add_memory", "add memory %str", &add_memory_actuator},
     };
   };
 

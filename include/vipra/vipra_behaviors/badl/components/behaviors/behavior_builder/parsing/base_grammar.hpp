@@ -1,5 +1,7 @@
 #pragma once
 
+// TODO(rolland): add in substitution for strings to ids. like %id
+
 const char* const FUNC_CALL_GRAMMAR = R"(
 start <- (Type / word)*
 Type <- (String / Int / Float)

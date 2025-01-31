@@ -8,4 +8,6 @@ target_sources(
   behaviors/behaviors.cpp
   behaviors/behavior_builder.cpp
   behavior_model.cpp
+  senses/ears.cpp
+  senses/eyes.cpp
 )

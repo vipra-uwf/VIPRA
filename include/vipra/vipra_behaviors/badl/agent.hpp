@@ -6,6 +6,7 @@
 #include "badl/components/behaviors/behaviors.hpp"
 #include "badl/components/beliefs/beliefs.hpp"
 #include "badl/components/cognition/decision_making.hpp"
+#include "badl/components/component.hpp"
 #include "badl/components/filter/filter.hpp"
 #include "badl/components/memory/memory.hpp"
 
@@ -34,7 +35,25 @@ class Agent {
                    BADL::Environment<VIPRA::Sound, VIPRA::Sight>& environment,
                    BADL::time                                     time);
 
+  [[nodiscard]] auto id() const noexcept -> size_t { return _id; }
+
+  void for_component(std::function<void(BADL::Component&)>&& func)
+  {
+    //TODO(rolland): agent build-time replace
+    func(_memory);
+    func(_beliefs);
+    func(_actuators);
+  }
+  void for_component(std::function<void(BADL::Component const&)>&& func) const
+  {
+    //TODO(rolland): agent build-time replace
+    func(_memory);
+    func(_beliefs);
+    func(_actuators);
+  }
+
  private:
+  size_t                                            _id{};
   BADL::AttentionFilter<VIPRA::Sight, VIPRA::Sound> _filter;
   BADL::Memory                                      _memory;
   BADL::Beliefs<VIPRA::Identity, VIPRA::Position>   _beliefs;
@@ -55,16 +74,23 @@ class Agent {
                        component_t,
                        BADL::AttentionFilter<VIPRA::Sight, VIPRA::Sound>> )
       return _filter;
-    if constexpr ( std::is_same_v<component_t, BADL::Memory> ) return _memory;
-    if constexpr ( std::is_same_v<component_t, BADL::Beliefs<VIPRA::Identity,
-                                                             VIPRA::Position>> )
+    else if constexpr ( std::is_same_v<component_t, BADL::Memory> )
+      return _memory;
+    else if constexpr ( std::is_same_v<
+                            component_t,
+                            BADL::Beliefs<VIPRA::Identity, VIPRA::Position>> )
       return _beliefs;
-    if constexpr ( std::is_same_v<component_t,
-                                  BADL::DecisionMaking<BADL::Behaviors>> )
+    else if constexpr ( std::is_same_v<component_t,
+                                       BADL::DecisionMaking<BADL::Behaviors>> )
       return _decisions;
-    if constexpr ( std::is_same_v<component_t,
-                                  BADL::Actuators<VIPRA::Legs, VIPRA::Mouth>> )
+    else if constexpr ( std::is_same_v<component_t, BADL::Behaviors> )
+      return _decisions.get<BADL::Behaviors>();
+    else if constexpr ( std::is_same_v<
+                            component_t,
+                            BADL::Actuators<VIPRA::Legs, VIPRA::Mouth>> )
       return _actuators;
+    else
+      static_assert(false, "Incorrect Component Type");
   }
 };
 }  // namespace BADL
