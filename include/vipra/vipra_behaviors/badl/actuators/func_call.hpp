@@ -24,13 +24,13 @@ struct QueryCall {
   QueryFunc       method = nullptr;
   ComponentParams parameters;
 
-  void operator()(BADL::Agent const&                             agent,
-                  BADL::ProgramInterface const&                  interface,
-                  BADL::Environment<VIPRA::Sound, VIPRA::Sight>& environment,
-                  BADL::time                                     time) const
+  [[nodiscard]] auto operator()(
+      BADL::Agent const& agent, BADL::ProgramInterface const& interface,
+      BADL::Environment<VIPRA::Sound, VIPRA::Sight> const& environment,
+      BADL::time                                           time) const -> bool
   {
     assert(method != nullptr);
-    method(agent, interface, environment, parameters, time);
+    return method(agent, interface, environment, parameters, time);
   }
 };
 }  // namespace BADL

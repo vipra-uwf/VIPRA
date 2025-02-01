@@ -13,8 +13,12 @@ auto DSLBehavior::decide_action(
   return BADL::empty_action();
 }
 
-void DSLBehavior::add_actuator_call(ActivationCall&& call)
+void DSLBehavior::add_activation_call(ActivationCall&& call)
 {
   _action.add_call(std::move(call));
+}
+
+void DSLBehavior::add_query_call(QueryCall&& call) {
+  _condition.add_query(call);
 }
 }  // namespace BADL

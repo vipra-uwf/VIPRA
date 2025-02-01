@@ -2,9 +2,10 @@
 
 #include <vector>
 
-#include "badl/components/behaviors/conditions/condition.hpp"
+#include "badl/actuators/func_call.hpp"
 #include "badl/environment/environment.hpp"
 
+#include "interface/prog_interface.hpp"
 #include "vipra/vipra_behaviors/senses/sight.hpp"
 #include "vipra/vipra_behaviors/senses/sound.hpp"
 
@@ -21,9 +22,10 @@ class CompoundCondition {
       BADL::time                                           time) const -> bool;
 
   void add_operation(BoolOp oper);
+  void add_query(QueryCall const& call);
 
  private:
-  std::vector<Condition> _conditions;
+  std::vector<QueryCall> _conditions;
   std::vector<BoolOp>    _steps;
 
   /**

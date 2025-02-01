@@ -26,4 +26,9 @@ auto CompoundCondition::evaluate(
   return met;
 }
 
+void CompoundCondition::add_query(QueryCall const& call)
+{
+  _conditions.emplace_back(call);
+}
+
 }  // namespace BADL

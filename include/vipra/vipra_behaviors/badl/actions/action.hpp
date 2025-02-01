@@ -18,6 +18,7 @@ class Action {
     }
   }
 
+  void               set_utility(size_t util) { _utility = util; }
   [[nodiscard]] auto utility() const -> size_t { return _utility; }
 
   void add_call(ActivationCall&& call);

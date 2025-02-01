@@ -16,12 +16,18 @@ void BehaviorModel::initialize(VIPRA::Modules::Pedestrians const& pedset,
 
   if ( ! _agents.empty() ) _builder.initialize(_agents[0]);
 
-  std::for_each(_behaviorNames.begin(), _behaviorNames.end(),
-                [&](auto const& name) {
-                  auto const filePath = _behaviorsDir + '/' + (name + ".bhvr");
-                  _agents[0].get_component<BADL::Behaviors>().add_behavior(
-                      _builder.build_behavior(std::filesystem::path(filePath)));
-                });
+  std::for_each(
+      _behaviorNames.begin(), _behaviorNames.end(), [&](auto const& name) {
+        auto const filePath = _behaviorsDir + '/' + (name + ".bhvr");
+
+        auto behavior =
+            _builder.build_behavior(std::filesystem::path(filePath));
+
+        _agents[0].get_component<BADL::Behaviors>().add_behavior(behavior);
+      });
+
+  _environment.add_source(
+      VIPRA::Sound{VIPRA::Sound::id("test"), pedset.ped_coords(0)});
 }
 
 void BehaviorModel::update(VIPRA::Modules::Pedestrians const& pedset,

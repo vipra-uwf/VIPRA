@@ -14,9 +14,23 @@ auto Ears::hears(
 
   for ( auto const& source : environment.all_sources<VIPRA::Sound>() ) {
     if ( source.stimulus_id == type ) {
-      return (source.position.distance_to_sqrd(pos) < SOUND_MAX_DIST_SQRD_M) &&
-             ! (interface.map.ray_hit(pos, source.position) ==
-                std::numeric_limits<VIPRA::f_pnt>::max());
+      bool inRange =
+          source.position.distance_to_sqrd(pos) < SOUND_MAX_DIST_SQRD_M;
+
+      bool lineOfSight = (interface.map.ray_hit(pos, source.position) ==
+                          std::numeric_limits<VIPRA::f_pnt>::max());
+
+      if ( inRange )
+        std::cout << "In Range\n";
+      else
+        std::cout << "NOT In Range\n";
+
+      if ( lineOfSight )
+        std::cout << "Line of Sight\n";
+      else
+        std::cout << "NOT Line of Sight\n";
+
+      return inRange && lineOfSight;
     }
   }
 

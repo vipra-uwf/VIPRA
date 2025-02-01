@@ -1,5 +1,6 @@
 #pragma once
 
+#include "badl/actions/action.hpp"
 #ifndef BADL_DECISION_MAKING_MAIN_HPP
 #include "../decision_making.hpp"
 #endif
@@ -11,13 +12,14 @@ void DecisionMaking<thought_ts...>::decide(
     BADL::Environment<VIPRA::Sound, VIPRA::Sight> const& environment,
     BADL::time                                           time)
 {
+  _nextAction = &BADL::empty_action();
   // go through each process and find the action with the most utility
   std::apply(
       [&](auto& process) {
-        auto action =
-            process.decide_action(agent, interface, environment, time);
-        if ( action.utility() > _nextAction->utility() ) {
-          _nextAction = &action;
+        auto const* action =
+            &process.decide_action(agent, interface, environment, time);
+        if ( action->utility() > _nextAction->utility() ) {
+          _nextAction = action;
         }
       },
       _thoughtprocesses);
@@ -28,6 +30,6 @@ void DecisionMaking<thought_ts...>::act(
     BADL::Agent& agent, BADL::ProgramInterface const& interface,
     BADL::Environment<VIPRA::Sound, VIPRA::Sight>& environment, BADL::time time)
 {
-  return (*_nextAction)(agent, interface, environment, time);
+  (*_nextAction)(agent, interface, environment, time);
 }
 }  // namespace BADL

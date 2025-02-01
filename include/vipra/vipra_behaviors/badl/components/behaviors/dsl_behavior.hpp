@@ -22,7 +22,14 @@ class DSLBehavior {
       BADL::Environment<VIPRA::Sound, VIPRA::Sight> const&,
       BADL::time) const -> BADL::Action const&;
 
-  void add_actuator_call(ActivationCall&& call);
+  void add_activation_call(ActivationCall&& call);
+  void add_query_call(QueryCall&& call);
+
+  [[nodiscard]] auto action() noexcept -> BADL::Action& { return _action; }
+  [[nodiscard]] auto action() const noexcept -> BADL::Action const&
+  {
+    return _action;
+  }
 
  private:
   std::string             _name;

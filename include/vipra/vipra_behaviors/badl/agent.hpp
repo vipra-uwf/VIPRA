@@ -9,6 +9,7 @@
 #include "badl/components/component.hpp"
 #include "badl/components/filter/filter.hpp"
 #include "badl/components/memory/memory.hpp"
+#include "badl/senses/senses.hpp"
 
 #include "badl/definitions/time.hpp"
 
@@ -16,6 +17,8 @@
 #include "vipra/vipra_behaviors/actuators/mouth.hpp"
 #include "vipra/vipra_behaviors/beliefs/identity.hpp"
 #include "vipra/vipra_behaviors/beliefs/position.hpp"
+#include "vipra/vipra_behaviors/senses/ears.hpp"
+#include "vipra/vipra_behaviors/senses/eyes.hpp"
 #include "vipra/vipra_behaviors/senses/sight.hpp"
 #include "vipra/vipra_behaviors/senses/sound.hpp"
 
@@ -43,6 +46,7 @@ class Agent {
     func(_memory);
     func(_beliefs);
     func(_actuators);
+    func(_senses);
   }
   void for_component(std::function<void(BADL::Component const&)>&& func) const
   {
@@ -50,6 +54,7 @@ class Agent {
     func(_memory);
     func(_beliefs);
     func(_actuators);
+    func(_senses);
   }
 
  private:
@@ -59,6 +64,7 @@ class Agent {
   BADL::Beliefs<VIPRA::Identity, VIPRA::Position>   _beliefs;
   BADL::DecisionMaking<BADL::Behaviors>             _decisions;
   BADL::Actuators<VIPRA::Legs, VIPRA::Mouth>        _actuators;
+  BADL::Senses<VIPRA::Ears, VIPRA::Eyes>            _senses;
 
  public:
   template <typename stimulus_t>
@@ -70,6 +76,7 @@ class Agent {
   template <typename component_t>
   [[nodiscard]] auto get_component() -> component_t&
   {
+    // TODO(rolland): agent build-time replace
     if constexpr ( std::is_same_v<
                        component_t,
                        BADL::AttentionFilter<VIPRA::Sight, VIPRA::Sound>> )
