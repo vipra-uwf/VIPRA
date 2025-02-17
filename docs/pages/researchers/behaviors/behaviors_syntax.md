@@ -803,7 +803,7 @@ Action (typeA):
 This `Condition` checks for the status of an [Event](#events).
 
 ```
-<event> is <status>
+<event> <status>
 ```
 
 #### Available Statuses:
@@ -819,7 +819,7 @@ Occurred  // True if the event has occurred at all during the simulation
 Example:
 ```
 Action (listener):
-  Condition: !announcement is occurring
+  Condition: !announcement occurring
   Response: set velocity to {0}
 .
 ```
