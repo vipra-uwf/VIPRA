@@ -23,10 +23,11 @@ class PotentialField : public VIPRA::Modules::Module<PotentialField>,
 
   VIPRA_REGISTER_PARAMS(VIPRA_PARAM("endGoalType", _endGoalType),
                         VIPRA_PARAM("cellSize", _cellSize),
-                        VIPRA_PARAM("densityUpdateFrequency",
-                                    _densityUpdateFrequency),
+                        VIPRA_PARAM("densityUpdateFrequency", _densityUpdateFrequency),
                         VIPRA_PARAM("densityCellSize", _densityCellSize),
                         VIPRA_PARAM("densityWeight", _densityWeight))
+
+  VIPRA_GOALS_RESET {}
 
   // NOLINTNEXTLINE(misc-unused-parameters)
   VIPRA_GOALS_INIT_STEP
@@ -41,8 +42,8 @@ class PotentialField : public VIPRA::Modules::Module<PotentialField>,
 
       if ( grid.end == _emptyf3d_ )
         VIPRA_MODULE_ERROR(
-          "No path found for pedestrian {}, Start: ({}, {}), End: ({}, {})",
-          pedIdx, pos.x, pos.y, end_goal(pedIdx).x, end_goal(pedIdx).y);
+            "No path found for pedestrian {}, Start: ({}, {}), End: ({}, {})", pedIdx,
+            pos.x, pos.y, end_goal(pedIdx).x, end_goal(pedIdx).y);
 
       set_current_goal(pedIdx, pos + grid.direction);
       set_end_goal(pedIdx, grid.end);
@@ -59,8 +60,7 @@ class PotentialField : public VIPRA::Modules::Module<PotentialField>,
     if ( _densityCheckCounter >= _densityUpdateFrequency ) {
       fill_grid(map);
 
-      for ( VIPRA::idx pedIdx = 0; pedIdx < pedset.num_pedestrians();
-            ++pedIdx ) {
+      for ( VIPRA::idx pedIdx = 0; pedIdx < pedset.num_pedestrians(); ++pedIdx ) {
         VIPRA::f3d pos = pedset.ped_coords(pedIdx);
         VIPRA::f3d direction = _field.get_grid(pos).direction;
 
@@ -109,8 +109,7 @@ class PotentialField : public VIPRA::Modules::Module<PotentialField>,
   {  // find the end goals, provided as a module parameter
     auto const& objectives = map.get_objectives(_endGoalType);
     if ( objectives.empty() ) {
-      throw std::runtime_error("No objectives of type " + _endGoalType +
-                               " found in map");
+      throw std::runtime_error("No objectives of type " + _endGoalType + " found in map");
     }
 
     for ( auto const& objective : objectives ) {
@@ -118,9 +117,6 @@ class PotentialField : public VIPRA::Modules::Module<PotentialField>,
     }
   }
 
-  void update_ped_density(VIPRA::f3d const& ped)
-  {
-    _densityMap.incr_gridpoint(ped);
-  }
+  void update_ped_density(VIPRA::f3d const& ped) { _densityMap.incr_gridpoint(ped); }
 };
 }  // namespace VIPRA::Goals

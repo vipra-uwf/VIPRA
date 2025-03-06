@@ -13,8 +13,7 @@ VIPRA_REGISTER_MODULE(VIPRA::Goals::AStar, Goals)
 namespace VIPRA::Goals {
 
 void AStar::init_step(VIPRA::Modules::Pedestrians const& pedset,
-                      VIPRA::Modules::Map const&         map,
-                      VIPRA::Random::Engine&             engine)
+                      VIPRA::Modules::Map const& map, VIPRA::Random::Engine& engine)
 {
   VIPRA::size const pedCnt = pedset.num_pedestrians();
 
@@ -35,14 +34,15 @@ void AStar::init_step(VIPRA::Modules::Pedestrians const& pedset,
   assert(_paths.size() == pedCnt);
 }
 
+void AStar::reset_module() {}
+
 void AStar::update_step(VIPRA::Modules::Pedestrians const& pedset,
                         VIPRA::Modules::Map const& map, VIPRA::delta_t deltaT)
 {
 }
 
 // NOLINTNEXTLINE(misc-unused-parameters)
-auto AStar::next_goal(VIPRA::idx pedIdx,
-                      VIPRA::Modules::Pedestrians const& /*pedset*/,
+auto AStar::next_goal(VIPRA::idx pedIdx, VIPRA::Modules::Pedestrians const& /*pedset*/,
                       VIPRA::Modules::Map const& /*map*/,
                       VIPRA::delta_t /*deltaT*/) -> bool
 {
@@ -61,9 +61,8 @@ auto AStar::next_goal(VIPRA::idx pedIdx,
      * @param newGoal
      */
 // NOLINTNEXTLINE(misc-unused-parameters)
-void AStar::change_end_goal_impl(VIPRA::idx pedIdx, VIPRA::f3d pos,
-                                 VIPRA::f3d /*newGoal*/,
-                                 VIPRA::Random::Engine& engine)
+void AStar::change_end_goal_impl(VIPRA::idx pedIdx, VIPRA::f3d                  pos,
+                                 VIPRA::f3d /*newGoal*/, VIPRA::Random::Engine& engine)
 {
   // uses A* to find the path to the new end goal
   find_path(pedIdx, pos, engine);
@@ -72,7 +71,7 @@ void AStar::change_end_goal_impl(VIPRA::idx pedIdx, VIPRA::f3d pos,
 
 auto AStar::find_random_point(VIPRA::Geometry::Polygon const& polygon,
                               VIPRA::Modules::Map const&      map,
-                              VIPRA::Random::Engine& engine) const -> f3d
+                              VIPRA::Random::Engine&          engine) const -> f3d
 {
   constexpr size_t MAX_RETRIES = 20;
   size_t           retries = 0;
@@ -99,8 +98,7 @@ auto AStar::find_random_point(VIPRA::Geometry::Polygon const& polygon,
    * @param map
    */
 void AStar::set_end_goals(VIPRA::Modules::Pedestrians const& pedset,
-                          VIPRA::Modules::Map const&         map,
-                          VIPRA::Random::Engine&             engine)
+                          VIPRA::Modules::Map const& map, VIPRA::Random::Engine& engine)
 {
   assert(pedset.num_pedestrians() > 0);
 
@@ -118,14 +116,12 @@ void AStar::set_end_goals(VIPRA::Modules::Pedestrians const& pedset,
 
     auto const nearestGoalIter = get_nearest_goal(pos, objects);
     VIPRA::Log::debug("Ped {} Nearest End Goal: ({}, {})", pedIdx,
-                      (*nearestGoalIter).center().x,
-                      (*nearestGoalIter).center().y);
+                      (*nearestGoalIter).center().x, (*nearestGoalIter).center().y);
 
     if ( nearestGoalIter != objects.end() ) {
       f3d point = find_random_point(*nearestGoalIter, map, engine);
 
-      VIPRA::Log::debug("Ped {} Final End Goal: ({}, {})", pedIdx, point.x,
-                        point.y);
+      VIPRA::Log::debug("Ped {} Final End Goal: ({}, {})", pedIdx, point.x, point.y);
       set_end_goal(pedIdx, point);
     }
     else {
@@ -144,8 +140,7 @@ void AStar::set_end_goals(VIPRA::Modules::Pedestrians const& pedset,
    * @return std::vector<VIPRA::f3d>
    */
 auto AStar::squash_path(std::vector<VIPRA::f3d> const& path,
-                        VIPRA::Random::Engine& /*engine*/)
-    -> std::vector<VIPRA::f3d>
+                        VIPRA::Random::Engine& /*engine*/) -> std::vector<VIPRA::f3d>
 {
   assert(path.empty() == false);
 
@@ -197,8 +192,7 @@ void AStar::find_path(VIPRA::idx pedIdx, VIPRA::f3d startPos,
   VIPRA::idx endIdx = _graph.get_closest_grid_idx(end_goal(pedIdx));
 
   if ( _graph.node_count() <= startIdx || _graph.node_count() <= endIdx ) {
-    VIPRA_MODULE_ERROR(
-        "Pedestrian or goal is outside the bounds of the map provided");
+    VIPRA_MODULE_ERROR("Pedestrian or goal is outside the bounds of the map provided");
   }
 
   auto path = VIPRA::astar(startIdx, endIdx, _graph);

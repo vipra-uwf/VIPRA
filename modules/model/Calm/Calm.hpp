@@ -18,17 +18,18 @@ class Calm : public VIPRA::Modules::Module<Calm>, public VIPRA::Modules::Model {
   VIPRA_MODULE_NAME("Calm")
   VIPRA_MODULE_TYPE(Model)
 
-  VIPRA_REGISTER_PARAMS(
-      VIPRA_PARAM("meanMass", _config.meanMass),
-      VIPRA_PARAM("massStdDev", _config.massStdDev),
-      VIPRA_PARAM("meanMass", _config.meanMass),
-      VIPRA_PARAM("massStdDev", _config.massStdDev),
-      VIPRA_PARAM("meanReactionTime", _config.meanReactionTime),
-      VIPRA_PARAM("reactionTimeStdDev", _config.reactionTimeStdDev),
-      VIPRA_PARAM("meanMaxSpeed", _config.meanMaxSpeed),
-      VIPRA_PARAM("maxSpeedStdDev", _config.maxSpeedStdDev),
-      VIPRA_PARAM("meanShoulderLen", _config.meanShoulderLen),
-      VIPRA_PARAM("shoulderLenStdDev", _config.shoulderLenStdDev))
+  VIPRA_REGISTER_PARAMS(VIPRA_PARAM("meanMass", _config.meanMass),
+                        VIPRA_PARAM("massStdDev", _config.massStdDev),
+                        VIPRA_PARAM("meanMass", _config.meanMass),
+                        VIPRA_PARAM("massStdDev", _config.massStdDev),
+                        VIPRA_PARAM("meanReactionTime", _config.meanReactionTime),
+                        VIPRA_PARAM("reactionTimeStdDev", _config.reactionTimeStdDev),
+                        VIPRA_PARAM("meanMaxSpeed", _config.meanMaxSpeed),
+                        VIPRA_PARAM("maxSpeedStdDev", _config.maxSpeedStdDev),
+                        VIPRA_PARAM("meanShoulderLen", _config.meanShoulderLen),
+                        VIPRA_PARAM("shoulderLenStdDev", _config.shoulderLenStdDev))
+
+  VIPRA_MODEL_RESET {}
 
   // NOLINTNEXTLINE(misc-unused-parameters)
   VIPRA_MODEL_INIT_STEP
@@ -36,21 +37,17 @@ class Calm : public VIPRA::Modules::Module<Calm>, public VIPRA::Modules::Model {
     _peds.resize(pedset.num_pedestrians());
     _collision.initialize(pedset, goals, _peds);
 
-    _peds.masses =
-        VIPRA::Random::make_distribution<VIPRA::Random::normal_distribution<>>(
-            {_config.meanMass, _config.massStdDev}, _peds.size(), engine);
+    _peds.masses = VIPRA::Random::make_distribution<VIPRA::Random::normal_distribution<>>(
+        {_config.meanMass, _config.massStdDev}, _peds.size(), engine);
     _peds.reactionTimes =
         VIPRA::Random::make_distribution<VIPRA::Random::normal_distribution<>>(
-            {_config.meanReactionTime, _config.reactionTimeStdDev},
-            _peds.size(), engine);
+            {_config.meanReactionTime, _config.reactionTimeStdDev}, _peds.size(), engine);
     _peds.maxSpeeds =
         VIPRA::Random::make_distribution<VIPRA::Random::normal_distribution<>>(
-            {_config.meanMaxSpeed, _config.maxSpeedStdDev}, _peds.size(),
-            engine);
+            {_config.meanMaxSpeed, _config.maxSpeedStdDev}, _peds.size(), engine);
     _peds.shoulderLens =
         VIPRA::Random::make_distribution<VIPRA::Random::normal_distribution<>>(
-            {_config.meanShoulderLen, _config.shoulderLenStdDev}, _peds.size(),
-            engine);
+            {_config.meanShoulderLen, _config.shoulderLenStdDev}, _peds.size(), engine);
   }
 
   // NOLINTNEXTLINE(bugprone-easily-swappable-parameters, misc-unused-parameters)
@@ -75,12 +72,11 @@ class Calm : public VIPRA::Modules::Module<Calm>, public VIPRA::Modules::Model {
   static constexpr VIPRA::f_pnt   EQUILIBRIUM_DISTANCE = 0.382;
   static constexpr VIPRA::f_pnt   EQUILIBRIUM_RESOLUTION = 0.01F;
 
-  void calc_neighbors(auto const& pedset, auto const& /*map*/,
-                      auto const& goals);
+  void calc_neighbors(auto const& pedset, auto const& /*map*/, auto const& goals);
   void update_state(auto const& pedset, auto const& goals, VIPRA::State& state,
                     VIPRA::delta_t deltaT);
-  auto is_path_blocked(VIPRA::idx pedIdx, VIPRA::f3d veloc,
-                       VIPRA::f_pnt maxDist, auto const& map) -> VIPRA::f_pnt;
+  auto is_path_blocked(VIPRA::idx pedIdx, VIPRA::f3d veloc, VIPRA::f_pnt maxDist,
+                       auto const& map) -> VIPRA::f_pnt;
 
   void        calc_shoulders(VIPRA::f3dVec const&, VIPRA::f3dVec const&);
   static auto obj_spatial_test(const VIPRA::Geometry::Rectangle&, VIPRA::f3d,
@@ -92,8 +88,7 @@ class Calm : public VIPRA::Modules::Module<Calm>, public VIPRA::Modules::Model {
                            VIPRA::f3d) -> VIPRA::Geometry::Rectangle;
 
   void                               calc_betas();
-  VIPRA_INLINE static constexpr auto calc_beta(VIPRA::f_pnt distance)
-      -> VIPRA::f_pnt
+  VIPRA_INLINE static constexpr auto calc_beta(VIPRA::f_pnt distance) -> VIPRA::f_pnt
   {
     constexpr VIPRA::f_pnt VAL_A = -2.11;
     constexpr VIPRA::f_pnt VAL_B = 0.366;

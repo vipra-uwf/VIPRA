@@ -17,8 +17,8 @@ void SpatialGrid::init_step(VIPRA ::Modules ::Map const& map,
 
   // initialize spatial map
   auto dimensions = map.get_dimensions();
-  _spatialGrid.initialize(_cellSize, dimensions.x, dimensions.y,
-                          get_coordinates(), tempIndexes);
+  _spatialGrid.initialize(_cellSize, dimensions.x, dimensions.y, get_coordinates(),
+                          tempIndexes);
 }
 
 void SpatialGrid::update_step(VIPRA ::State const& state)
@@ -28,8 +28,7 @@ void SpatialGrid::update_step(VIPRA ::State const& state)
 }
 
 auto SpatialGrid::conditional_closest_ped(
-    VIPRA::idx                             ped,
-    std::function<bool(VIPRA::idx)> const& condition) const -> VIPRA::idx
+    VIPRA::idx ped, std::function<bool(VIPRA::idx)> const& condition) const -> VIPRA::idx
 {
   const VIPRA::f3d pos = ped_coords(ped);
   VIPRA::f_pnt     minDist = std::numeric_limits<VIPRA::f_pnt>::max();
@@ -50,6 +49,8 @@ auto SpatialGrid::conditional_closest_ped(
   return minIdx;
 }
 
+void SpatialGrid::reset_module() { _spatialGrid.clear(); }
+
 auto SpatialGrid::closest_ped(VIPRA::idx ped) const -> VIPRA::idx
 {
   VIPRA::f_pnt minDist = std::numeric_limits<VIPRA::f_pnt>::max();
@@ -68,8 +69,8 @@ auto SpatialGrid::closest_ped(VIPRA::idx ped) const -> VIPRA::idx
   return minIdx;
 }
 
-auto SpatialGrid::all_neighbors_within(
-    VIPRA::idx pedIdx, VIPRA::f_pnt radius) const -> std::vector<VIPRA::idx>
+auto SpatialGrid::all_neighbors_within(VIPRA::idx pedIdx, VIPRA::f_pnt radius) const
+    -> std::vector<VIPRA::idx>
 {
   std::vector<VIPRA::idx> neighbors;
 

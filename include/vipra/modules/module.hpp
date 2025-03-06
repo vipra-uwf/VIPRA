@@ -38,7 +38,6 @@ class Module : public Util::CRTP<Module<class_t>> {
 
  public:
   void register_params(Parameters& paramIn);
-
   void config(Parameters& paramIn, VIPRA::Random::Engine& engine);
 };
 
@@ -63,8 +62,7 @@ void Module<class_t>::register_params(Parameters& paramIn)
   // get module parameters customization point
   auto params = self().module_params();
 
-  if constexpr ( ! std::is_same_v<std::tuple<>,
-                                  std::remove_cvref_t<decltype(params)>> ) {
+  if constexpr ( ! std::is_same_v<std::tuple<>, std::remove_cvref_t<decltype(params)>> ) {
     // register all of the parameters with the parameter loader
     std::apply(
         [&](auto const& first, auto const&... restArgs) {
@@ -101,8 +99,7 @@ void Module<class_t>::config(Parameters& paramIn, VIPRA::Random::Engine& engine)
   // get module parameters customization point
   auto const& params = self().module_params();
 
-  if constexpr ( ! std::is_same_v<std::tuple<>,
-                                  std::remove_cvref_t<decltype(params)>> ) {
+  if constexpr ( ! std::is_same_v<std::tuple<>, std::remove_cvref_t<decltype(params)>> ) {
     // load each parameter and apply it to the coresponding variable
     std::apply(
         [&](auto const& first, auto const&... restArgs) {
@@ -112,9 +109,8 @@ void Module<class_t>::config(Parameters& paramIn, VIPRA::Random::Engine& engine)
                               static_cast<void*>(&param.second));
 
             // set the parameter variable as loaded from input
-            param.second = paramIn.get_param<param_t>(self().module_type(),
-                                                      self().module_name(),
-                                                      param.first, engine);
+            param.second = paramIn.get_param<param_t>(
+                self().module_type(), self().module_name(), param.first, engine);
           };
 
           // recursively load the parameters
@@ -139,8 +135,7 @@ void BaseModule<class_t>::register_base_params(Parameters& paramIn)
   // get module parameters customization point
   auto params = self().base_module_params();
 
-  if constexpr ( ! std::is_same_v<std::tuple<>,
-                                  std::remove_cvref_t<decltype(params)>> ) {
+  if constexpr ( ! std::is_same_v<std::tuple<>, std::remove_cvref_t<decltype(params)>> ) {
     // register all of the parameters with the parameter loader
     std::apply(
         [&](auto const& first, auto const&... restArgs) {
@@ -164,14 +159,12 @@ void BaseModule<class_t>::register_base_params(Parameters& paramIn)
    * @param engine 
    */
 template <typename class_t>
-void BaseModule<class_t>::config_base(Parameters&            paramIn,
-                                      VIPRA::Random::Engine& engine)
+void BaseModule<class_t>::config_base(Parameters& paramIn, VIPRA::Random::Engine& engine)
 {
   // get module parameters customization point
   auto const& params = self().base_module_params();
 
-  if constexpr ( ! std::is_same_v<std::tuple<>,
-                                  std::remove_cvref_t<decltype(params)>> ) {
+  if constexpr ( ! std::is_same_v<std::tuple<>, std::remove_cvref_t<decltype(params)>> ) {
     // load each parameter and apply it to the coresponding variable
     std::apply(
         [&](auto const& first, auto const&... restArgs) {
@@ -181,8 +174,8 @@ void BaseModule<class_t>::config_base(Parameters&            paramIn,
                               static_cast<void*>(&param.second));
 
             // set the parameter variable as loaded from input
-            param.second = paramIn.get_param<param_t>(
-                self().module_type(), "Base", param.first, engine);
+            param.second = paramIn.get_param<param_t>(self().module_type(), "Base",
+                                                      param.first, engine);
           };
 
           // recursively load the parameters

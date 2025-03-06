@@ -17,6 +17,8 @@ namespace VIPRA::DataStructures {
 template <typename data_t>
 class SpatialMap {
  public:
+  void clear() { _grid.clear(); }
+
   void update_grids(std::vector<VIPRA::f3d> const& oldPositions,
                     std::vector<VIPRA::f3d> const& newPositions)
   {
@@ -27,8 +29,7 @@ class SpatialMap {
 
       if ( &oldGrid == &newGrid ) continue;
 
-      oldGrid.erase(std::remove(oldGrid.begin(), oldGrid.end(), currIdx),
-                    oldGrid.end());
+      oldGrid.erase(std::remove(oldGrid.begin(), oldGrid.end(), currIdx), oldGrid.end());
       newGrid.push_back(currIdx);
     }
   }
@@ -40,8 +41,7 @@ class SpatialMap {
     // Loop through the surrounding grids and call the provided function with each pedestrian in each grid
     for ( int i = -1; i <= 1; ++i ) {
       for ( int j = -1; j <= 1; ++j ) {
-        if ( out_of_bounds(pos.x + i * _cellSize, pos.y + j * _cellSize) )
-          continue;
+        if ( out_of_bounds(pos.x + i * _cellSize, pos.y + j * _cellSize) ) continue;
 
         auto const& neighbor =
             get_grid(VIPRA::f3d{pos.x + i * _cellSize, pos.y + j * _cellSize});
@@ -53,9 +53,9 @@ class SpatialMap {
     }
   }
 
-  void initialize(VIPRA::f_pnt cellSize, VIPRA::f_pnt width,
-                  VIPRA::f_pnt height, std::vector<VIPRA::f3d> const& positions,
-                  std::vector<data_t> const& data)
+  void initialize(VIPRA::f_pnt cellSize, VIPRA::f_pnt width, VIPRA::f_pnt height,
+                  std::vector<VIPRA::f3d> const& positions,
+                  std::vector<data_t> const&     data)
   {
     assert(cellSize != 0);
     assert(width != 0);
@@ -105,8 +105,7 @@ class SpatialMap {
    * @param pos
    * @return std::vector<VIPRA::idx>&
    */
-  [[nodiscard]] VIPRA_INLINE auto get_grid(VIPRA::f3d pos)
-      -> std::vector<VIPRA::idx>&
+  [[nodiscard]] VIPRA_INLINE auto get_grid(VIPRA::f3d pos) -> std::vector<VIPRA::idx>&
   {
     assert(! out_of_bounds(pos));
 
@@ -139,8 +138,8 @@ class SpatialMap {
    * @return true 
    * @return false 
    */
-  [[nodiscard]] VIPRA_INLINE auto out_of_bounds(
-      VIPRA::f_pnt gridX, VIPRA::f_pnt gridY) const -> bool
+  [[nodiscard]] VIPRA_INLINE auto out_of_bounds(VIPRA::f_pnt gridX,
+                                                VIPRA::f_pnt gridY) const -> bool
   {
     return gridX < 0 || gridX >= _cols * _cellSize || gridY < 0 ||
            gridY >= _rows * _cellSize;

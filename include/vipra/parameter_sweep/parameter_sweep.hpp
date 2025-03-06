@@ -44,9 +44,15 @@ class ParameterSweep {
    * @param count 
    * @param callback 
    */
-  static void run(Simulation& sim, std::string const& pedPath, std::string const& mapPath,
+  static void run(std::string const& installPath, std::string const& modulesPath,
+                  std::string const& pedPath, std::string const& mapPath,
                   std::string const& paramsPath, size_t count, auto&& callback = VOID{})
   {
+    // Create the simulation and load the modules
+    VIPRA::Simulation sim;
+    sim.set_install_dir(installPath);
+    sim.set_modules(modulesPath);
+
     Parameters params;
 
     _mpiTimings.start_new();
@@ -77,6 +83,8 @@ class ParameterSweep {
         callback(sim.get_sim_id());
       }
       _timings.stop();
+
+      sim.reset_modules();
     }
 
     // update each worker to the correct sim count

@@ -20,8 +20,7 @@ namespace VIPRA::Goals {
  * @brief Goals module that uses the A* algorithm to find the path to the goal
  * 
  */
-class AStar : public VIPRA::Modules::Module<AStar>,
-              public VIPRA::Modules::Goals {
+class AStar : public VIPRA::Modules::Module<AStar>, public VIPRA::Modules::Goals {
  public:
   VIPRA_MODULE_NAME("AStar")
   VIPRA_MODULE_TYPE(Goals)
@@ -35,6 +34,7 @@ class AStar : public VIPRA::Modules::Module<AStar>,
   VIPRA_GOALS_UPDATE_STEP;
   VIPRA_GOALS_NEXT_GOAL;
   VIPRA_GOALS_CHANGE_GOAL;
+  VIPRA_GOALS_RESET;
 
  private:
   std::string  _endGoalType;
@@ -46,8 +46,7 @@ class AStar : public VIPRA::Modules::Module<AStar>,
   PathingGraph                         _graph;
 
   void set_end_goals(VIPRA::Modules::Pedestrians const& pedset,
-                     VIPRA::Modules::Map const&         map,
-                     VIPRA::Random::Engine&             engine);
+                     VIPRA::Modules::Map const& map, VIPRA::Random::Engine& engine);
 
   [[nodiscard]] static auto squash_path(std::vector<VIPRA::f3d> const& path,
                                         VIPRA::Random::Engine& /*engine*/)
@@ -57,10 +56,9 @@ class AStar : public VIPRA::Modules::Module<AStar>,
       VIPRA::f3d pos, std::vector<VIPRA::Geometry::Polygon> const& goals)
       -> std::vector<VIPRA::Geometry::Polygon>::const_iterator;
 
-  void               find_path(VIPRA::idx pedIdx, VIPRA::f3d startPos,
-                               VIPRA::Random::Engine& engine);
-  [[nodiscard]] auto find_random_point(
-      VIPRA::Geometry::Polygon const&, VIPRA::Modules::Map const&,
-      VIPRA::Random::Engine&) const -> VIPRA::f3d;
+  void find_path(VIPRA::idx pedIdx, VIPRA::f3d startPos, VIPRA::Random::Engine& engine);
+  [[nodiscard]] auto find_random_point(VIPRA::Geometry::Polygon const&,
+                                       VIPRA::Modules::Map const&,
+                                       VIPRA::Random::Engine&) const -> VIPRA::f3d;
 };
 }  // namespace VIPRA::Goals
