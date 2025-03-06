@@ -1,6 +1,5 @@
 #pragma once
 
-#include "vipra/util/clock.hpp"
 #ifdef VIPRA_USE_MPI
 #include <mpi.h>
 #endif
@@ -15,6 +14,7 @@
 #include "vipra/simulation/sim_type.hpp"
 #include "vipra/special_modules/parameters.hpp"
 #include "vipra/types/util/result_or_void.hpp"
+#include "vipra/util/clock.hpp"
 #include "vipra/util/timing.hpp"
 
 namespace VIPRA {
