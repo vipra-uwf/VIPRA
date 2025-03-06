@@ -39,15 +39,13 @@ class Timings {
     stop();
 
     std::vector<int64_t> timings(_times.size());
-    std::transform(_times.begin(), _times.end(), timings.begin(),
-                   [](Util::nano const& time) {
-                     return static_cast<int64_t>(time.count());
-                   });
+    std::transform(
+        _times.begin(), _times.end(), timings.begin(),
+        [](Util::nano const& time) { return static_cast<int64_t>(time.count()); });
 
     auto [allTimings, counts] = Util::mpi_gather_all_vectors<int64_t>(timings);
 
-    Util::master_do(
-        [&]() { output_timings_file(allTimings, counts, timingPath); });
+    Util::master_do([&]() { output_timings_file(allTimings, counts, timingPath); });
 
     MPI_Barrier(MPI_COMM_WORLD);
   }
@@ -128,14 +126,8 @@ class Timings {
   void resume() const noexcept {}
   void stop() const noexcept {}
   void output_timings() const noexcept {}
-  void output_timings(
-      std::filesystem::path const& /*output file*/) const noexcept
-  {
-  }
-  static void set_output_file(
-      std::filesystem::path const& /*filepath*/) noexcept
-  {
-  }
+  void output_timings(std::filesystem::path const& /*output file*/) const noexcept {}
+  static void set_output_file(std::filesystem::path const& /*filepath*/) noexcept {}
 };
 }  // namespace VIPRA::Util
 #endif

@@ -16,8 +16,7 @@ namespace VIPRA::Util {
  * @return std::pair<std::vector<data_t>, std::vector<int>> combined vector, counts of elements for each (both empty if rank != 0)
  */
 template <typename data_t>
-[[nodiscard]] inline auto mpi_gather_all_vectors(
-    std::vector<data_t> const& localData)
+[[nodiscard]] inline auto mpi_gather_all_vectors(std::vector<data_t> const& localData)
     -> std::pair<std::vector<data_t>, std::vector<int>>
 {
   MPI_Barrier(MPI_COMM_WORLD);
@@ -36,8 +35,7 @@ template <typename data_t>
   }
 
   int localSize = static_cast<int>(localData.size());
-  MPI_Gather(&localSize, 1, MPI_INT, counts.data(), 1, MPI_INT, 0,
-             MPI_COMM_WORLD);
+  MPI_Gather(&localSize, 1, MPI_INT, counts.data(), 1, MPI_INT, 0, MPI_COMM_WORLD);
 
   std::vector<data_t> allData;
   if ( rank == 0 ) {
@@ -81,13 +79,11 @@ inline void master_do(auto&& func)
 #else
 namespace VIPRA::Util {
 template <typename data_t>
-[[nodiscard]] inline auto mpi_gather_all_vectors(
-    std::vector<data_t> const& localData)
+[[nodiscard]] inline auto mpi_gather_all_vectors(std::vector<data_t> const& localData)
     -> std::pair<std::vector<data_t>, std::vector<int>>
 {
-  static_assert(
-      false,
-      "Attempting to use mpi_gather_all_vectors when MPI is not enabled");
+  static_assert(false,
+                "Attempting to use mpi_gather_all_vectors when MPI is not enabled");
 }
 
 /**
@@ -96,4 +92,5 @@ template <typename data_t>
    * @param func 
    */
 inline void master_do(auto&& func) { func(); }
+}  // namespace VIPRA::Util
 #endif

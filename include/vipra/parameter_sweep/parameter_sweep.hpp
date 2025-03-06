@@ -14,7 +14,6 @@
 #include "vipra/simulation/sim_type.hpp"
 #include "vipra/special_modules/parameters.hpp"
 #include "vipra/types/util/result_or_void.hpp"
-#include "vipra/util/clock.hpp"
 #include "vipra/util/timing.hpp"
 
 namespace VIPRA {
@@ -45,9 +44,8 @@ class ParameterSweep {
    * @param count 
    * @param callback 
    */
-  static void run(Simulation& sim, std::string const& pedPath,
-                  std::string const& mapPath, std::string const& paramsPath,
-                  size_t count, auto&& callback = VOID{})
+  static void run(Simulation& sim, std::string const& pedPath, std::string const& mapPath,
+                  std::string const& paramsPath, size_t count, auto&& callback = VOID{})
   {
     Parameters params;
 
