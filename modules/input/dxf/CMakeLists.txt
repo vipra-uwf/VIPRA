@@ -4,7 +4,6 @@ vipra_module(
     DXF
   SOURCES
     dxf.cpp
-    drw_reader.cpp
   TYPE
     Input
 )

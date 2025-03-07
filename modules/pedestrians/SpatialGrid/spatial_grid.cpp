@@ -49,7 +49,7 @@ auto SpatialGrid::conditional_closest_ped(
   return minIdx;
 }
 
-void SpatialGrid::reset_module() { _spatialGrid.clear(); }
+void SpatialGrid::reset_peds_module() { _spatialGrid.clear(); }
 
 auto SpatialGrid::closest_ped(VIPRA::idx ped) const -> VIPRA::idx
 {

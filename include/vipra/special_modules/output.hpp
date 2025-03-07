@@ -46,12 +46,6 @@ class OutputCoordinator : public Modules::Module<OutputCoordinator> {
     _configs.emplace_back(std::move(config));
   }
 
-  void reset()
-  {
-    _outputs.clear();
-    _configs.clear();
-  }
-
   void config(Parameters& paramIn, VIPRA::Random::Engine& engine)
   {
     paramIn.register_param(module_type(), module_name(), "output_dir");

@@ -4,6 +4,7 @@
 #include <cassert>
 #include <cstddef>
 #include <limits>
+#include <random>
 #include <vector>
 
 #include "vipra/geometry/f3d.hpp"
@@ -95,18 +96,22 @@ class Polygon {
 
 inline auto Polygon::is_point_inside(f3d point) const noexcept -> bool
 {
-  // TODO(rolland): verify this
-  bool isInside = false;
-  for ( auto const& side : sides() ) {
-    if ( side.is_point_on(point) ) return true;
-    if ( side.start.y > point.y != side.end.y > point.y &&
-         point.x < (side.end.x - side.start.x) * (point.y - side.start.y) /
-                           (side.end.y - side.start.y) +
-                       side.start.x ) {
-      isInside = ! isInside;
+  if ( _points.size() < 3 ) return false;  // A polygon must have at least 3 vertices
+
+  bool inside = false;
+  for ( size_t i = 0, j = _points.size() - 1; i < _points.size(); j = i++ ) {
+    f_pnt xi = _points[i].x;
+    f_pnt yi = _points[i].y;
+    f_pnt xj = _points[j].x;
+    f_pnt yj = _points[j].y;
+
+    // Check if the point is on an edge
+    if ( (yi > point.y) != (yj > point.y) ) {
+      f_pnt intersectX = (xj - xi) * (point.y - yi) / (yj - yi) + xi;
+      if ( point.x < intersectX ) inside = ! inside;
     }
   }
-  return isInside;
+  return inside;
 }
 
 inline auto Polygon::center() const noexcept -> f3d
@@ -120,17 +125,16 @@ inline auto Polygon::center() const noexcept -> f3d
   return center /= sideList.size();
 }
 
-inline auto Polygon::random_point(VIPRA::Random::Engine& engine) const noexcept
-    -> f3d
+inline auto Polygon::random_point(VIPRA::Random::Engine& engine) const noexcept -> f3d
 {
   // TODO(rolland): this is disgusting
 
   auto box = bounding_box();
 
-  Random::uniform_distribution<VIPRA::f_pnt> xDist{box.sides()[3].end.x,
-                                                   box.sides()[3].start.x};
-  Random::uniform_distribution<VIPRA::f_pnt> yDist{box.sides()[2].end.y,
-                                                   box.sides()[2].start.y};
+  std::uniform_real_distribution<VIPRA::f_pnt> xDist{box.sides()[3].end.x,
+                                                     box.sides()[3].start.x};
+  std::uniform_real_distribution<VIPRA::f_pnt> yDist{box.sides()[2].end.y,
+                                                     box.sides()[2].start.y};
 
   f3d point;
 
@@ -148,14 +152,14 @@ inline auto Polygon::bounding_box() const noexcept -> Rectangle
   f3d topRight{std::numeric_limits<VIPRA::f_pnt>::min(),
                std::numeric_limits<VIPRA::f_pnt>::min()};
   for ( auto const& point : _points ) {
-    topRight.x = std::max({topRight.x, point.x});
-    topRight.y = std::max({topRight.y, point.y});
-    botLeft.x = std::min({botLeft.x, point.x});
-    botLeft.y = std::min({botLeft.y, point.y});
+    topRight.x = std::max(topRight.x, point.x);
+    topRight.y = std::max(topRight.y, point.y);
+    botLeft.x = std::min(botLeft.x, point.x);
+    botLeft.y = std::min(botLeft.y, point.y);
   }
 
-  f3d topLeft = f3d{botLeft.x, topRight.y};
-  f3d botRight = f3d{topRight.x, botLeft.y};
+  const f3d topLeft = f3d{botLeft.x, topRight.y};
+  const f3d botRight = f3d{topRight.x, botLeft.y};
 
   return Rectangle{botLeft, topLeft, topRight, botRight};
 }

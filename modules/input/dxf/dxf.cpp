@@ -13,10 +13,9 @@ VIPRA_REGISTER_MODULE(DXF, MapInput)
  *
  * @return std::optional<std::vector<VIPRA::Geometry::Polygon>>
  */
-auto DXF::get_obstacles() const
-    -> std::optional<std::vector<VIPRA::Geometry::Polygon>>
+auto DXF::get_obstacles() const -> std::optional<std::vector<VIPRA::Geometry::Polygon>>
 {
-  return {_obstacles};
+  return _obstacles;
 }
 
 /**
@@ -24,8 +23,7 @@ auto DXF::get_obstacles() const
  *
  * @return std::optional<std::vector<VIPRA::Geometry::Polygon>>
  */
-auto DXF::get_spawns() const
-    -> std::optional<std::vector<VIPRA::Geometry::Polygon>>
+auto DXF::get_spawns() const -> std::optional<std::vector<VIPRA::Geometry::Polygon>>
 {
   return _spawns;
 }
@@ -36,8 +34,7 @@ auto DXF::get_spawns() const
  * @return std::optional<std::vector<VIPRA::Geometry::Polygon>>
  */
 auto DXF::get_objectives() const
-    -> std::optional<
-        std::map<std::string, std::vector<VIPRA::Geometry::Polygon>>>
+    -> std::optional<std::map<std::string, std::vector<VIPRA::Geometry::Polygon>>>
 {
   return _objectives;
 }
@@ -82,10 +79,10 @@ void DXF::load(std::string const& filepath)
   }
 
   // Get the items stored in reader and add to private variables.
-  _objectives = _drwReader.get_objectives();
-  _obstacles = _drwReader.get_obstacles();
-  _spawns = _drwReader.get_pedestrians();
-  _areas = _drwReader.get_areas();
+  _objectives = std::move(_drwReader.objectives);
+  _obstacles = std::move(_drwReader.obstacles);
+  _spawns = std::move(_drwReader.spawns);
+  _areas = std::move(_drwReader.areas);
 
   VIPRA::Log::debug("DXF Loaded");
 }

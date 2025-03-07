@@ -7,4 +7,4 @@
 
 #define VIPRA_PEDS_UPDATE_STEP void update_step(VIPRA::State const& state)
 
-#define VIPRA_PEDS_RESET void reset_module()
+#define VIPRA_PEDS_RESET void reset_peds_module()

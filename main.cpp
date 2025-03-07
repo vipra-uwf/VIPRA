@@ -25,11 +25,6 @@ auto main(int argc, char** argv) -> int
   // Set the logging level to info, default is INFO
   VIPRA::Log::set_level(VIPRA::Args::get("log"));
 
-  // Create the simulation and load the modules
-  VIPRA::Simulation sim;
-  sim.set_install_dir(VIPRA::Args::get("install"));
-  sim.set_modules(VIPRA::Args::get("modules"));
-
   // Create a Timer and start it
   VIPRA::Util::Clock<VIPRA::Util::milli> timer{};
   timer.start();
@@ -38,7 +33,8 @@ auto main(int argc, char** argv) -> int
 
   // Run the parameter sweep
   VIPRA::ParameterSweep::run(
-      sim,
+      VIPRA::Args::get("install"),
+      VIPRA::Args::get("modules"),
       VIPRA::Args::get("peds"),
       VIPRA::Args::get("map"),
       VIPRA::Args::get("params"),

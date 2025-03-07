@@ -18,10 +18,10 @@ class Triangle {
  public:
   VIPRA_POLY_FUNC auto is_point_inside(f3d point) const noexcept -> bool;
   VIPRA_POLY_FUNC auto bounding_box() const noexcept -> Rectangle;
-  VIPRA_POLY_FUNC auto random_point(Random::Engine& engine) const noexcept
-      -> f3d;
   VIPRA_POLY_FUNC auto sides() const noexcept -> std::array<Line, 3>;
   VIPRA_POLY_FUNC auto center() const noexcept -> f3d;
+
+  [[nodiscard]] auto random_point(Random::Engine& engine) const noexcept -> f3d;
 
   VIPRA_POLY_FUNC auto area() const noexcept -> f_pnt { return _area; }
   VIPRA_POLY_FUNC auto points() const noexcept -> std::array<f3d, 3> const&
@@ -51,8 +51,7 @@ VIPRA_POLY_FUNC auto Triangle::is_point_inside(f3d point) const noexcept -> bool
          ((dir1 <= 0) && (dir2 <= 0) && (dir3 <= 0));
 }
 
-VIPRA_POLY_FUNC auto Triangle::random_point(
-    Random::Engine& engine) const noexcept -> f3d
+inline auto Triangle::random_point(Random::Engine& engine) const noexcept -> f3d
 {
   const Rectangle box = bounding_box();
   f3d             point = box.random_point(engine);
@@ -71,10 +70,10 @@ VIPRA_POLY_FUNC auto Triangle::bounding_box() const noexcept -> Rectangle
   f3d topRight{std::numeric_limits<VIPRA::f_pnt>::min(),
                std::numeric_limits<VIPRA::f_pnt>::min()};
   for ( auto const& point : _points ) {
-    topRight.x = std::max({topRight.x, point.x});
-    topRight.y = std::max({topRight.y, point.y});
-    botLeft.x = std::min({botLeft.x, point.x});
-    botLeft.y = std::min({botLeft.y, point.y});
+    topRight.x = std::max(topRight.x, point.x);
+    topRight.y = std::max(topRight.y, point.y);
+    botLeft.x = std::min(botLeft.x, point.x);
+    botLeft.y = std::min(botLeft.y, point.y);
   }
 
   f3d topLeft = f3d{botLeft.x, topRight.y};

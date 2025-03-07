@@ -3,12 +3,12 @@
 #include <cassert>
 #include <cmath>
 #include <limits>
+#include <random>
 #include <stdexcept>
 #include <vector>
 
 #include "vipra/concepts/numeric.hpp"
 #include "vipra/macros/performance.hpp"
-#include "vipra/random/distributions.hpp"
 #include "vipra/random/random.hpp"
 #include "vipra/types/float.hpp"
 
@@ -31,22 +31,20 @@ struct f3d {
       : x(valX), y(valY), z(0)
   {
   }
-  F3D_FUNC explicit f3d(VIPRA::f_pnt valX, VIPRA::f_pnt valY,
-                        VIPRA::f_pnt valZ) noexcept
+  F3D_FUNC explicit f3d(VIPRA::f_pnt valX, VIPRA::f_pnt valY, VIPRA::f_pnt valZ) noexcept
       : x(valX), y(valY), z(valZ)
   {
   }
   F3D_FUNC                f3d(f3d const& other) noexcept = default;
   F3D_FUNC                f3d(f3d&& other) noexcept = default;
-  F3D_FUNC_W_DISCARD auto operator=(f3d const& other) noexcept -> f3d& =
-                                                                      default;
+  F3D_FUNC_W_DISCARD auto operator=(f3d const& other) noexcept -> f3d& = default;
   F3D_FUNC_W_DISCARD auto operator=(f3d&& other) noexcept -> f3d& = default;
 
-  F3D_FUNC static auto random(VIPRA::f_pnt           magnitude,
-                              VIPRA::Random::Engine& engine) -> VIPRA::f3d
+  [[nodiscard]] __attribute__((always_inline)) static auto random(
+      VIPRA::f_pnt magnitude, VIPRA::Random::Engine& engine) -> VIPRA::f3d
   {
-    Random::uniform_distribution<VIPRA::f_pnt> dist{-1.0, 1.0};
-    VIPRA::f3d retVal{dist(engine), dist(engine)};
+    std::uniform_real_distribution<VIPRA::f_pnt> dist{-1.0, 1.0};
+    VIPRA::f3d                                   retVal{dist(engine), dist(engine)};
     return retVal.unit() * magnitude;
   }
 
@@ -67,8 +65,7 @@ struct f3d {
       case 'z':
         return z;
       default:
-        throw std::out_of_range(
-            "Attempt to access invalid index on VIPRA::f3d");
+        throw std::out_of_range("Attempt to access invalid index on VIPRA::f3d");
     }
   }
 
@@ -89,8 +86,7 @@ struct f3d {
       case 'z':
         return z;
       default:
-        throw std::out_of_range(
-            "Attempt to access invalid index on VIPRA::f3d");
+        throw std::out_of_range("Attempt to access invalid index on VIPRA::f3d");
     }
   }
 
@@ -173,8 +169,7 @@ struct f3d {
     return *this;
   }
 
-  F3D_FUNC auto distance_to_sqrd(f3d const& other) const noexcept
-      -> VIPRA::f_pnt
+  F3D_FUNC auto distance_to_sqrd(f3d const& other) const noexcept -> VIPRA::f_pnt
   {
     const VIPRA::f_pnt deltaX = other.x - x;
     const VIPRA::f_pnt deltaY = other.y - y;
@@ -284,8 +279,8 @@ struct f3d {
    */
   [[nodiscard]] VIPRA_INLINE auto to_string() const -> std::string
   {
-    return std::string{"("} + std::to_string(x) + ", " + std::to_string(y) +
-           ", " + std::to_string(z) + ")";
+    return std::string{"("} + std::to_string(x) + ", " + std::to_string(y) + ", " +
+           std::to_string(z) + ")";
   }
 };
 

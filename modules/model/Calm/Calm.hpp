@@ -7,10 +7,9 @@
 #include "vipra/macros/parameters.hpp"
 #include "vipra/macros/performance.hpp"
 
-#include "vipra/random/distributions.hpp"
-
 #include "calm_collision.hpp"
 #include "calm_model_types.hpp"
+#include "vipra/types/float.hpp"
 
 namespace Model {
 class Calm : public VIPRA::Modules::Module<Calm>, public VIPRA::Modules::Model {
@@ -37,17 +36,21 @@ class Calm : public VIPRA::Modules::Module<Calm>, public VIPRA::Modules::Model {
     _peds.resize(pedset.num_pedestrians());
     _collision.initialize(pedset, goals, _peds);
 
-    _peds.masses = VIPRA::Random::make_distribution<VIPRA::Random::normal_distribution<>>(
-        {_config.meanMass, _config.massStdDev}, _peds.size(), engine);
-    _peds.reactionTimes =
-        VIPRA::Random::make_distribution<VIPRA::Random::normal_distribution<>>(
-            {_config.meanReactionTime, _config.reactionTimeStdDev}, _peds.size(), engine);
-    _peds.maxSpeeds =
-        VIPRA::Random::make_distribution<VIPRA::Random::normal_distribution<>>(
-            {_config.meanMaxSpeed, _config.maxSpeedStdDev}, _peds.size(), engine);
-    _peds.shoulderLens =
-        VIPRA::Random::make_distribution<VIPRA::Random::normal_distribution<>>(
-            {_config.meanShoulderLen, _config.shoulderLenStdDev}, _peds.size(), engine);
+    _peds.masses = VIPRA::Random::make_distribution(
+        std::normal_distribution<VIPRA::f_pnt>{_config.meanMass, _config.massStdDev},
+        _peds.size(), engine);
+    _peds.reactionTimes = VIPRA::Random::make_distribution<>(
+        std::normal_distribution<VIPRA::f_pnt>{_config.meanReactionTime,
+                                               _config.reactionTimeStdDev},
+        _peds.size(), engine);
+    _peds.maxSpeeds = VIPRA::Random::make_distribution<>(
+        std::normal_distribution<VIPRA::f_pnt>{_config.meanMaxSpeed,
+                                               _config.maxSpeedStdDev},
+        _peds.size(), engine);
+    _peds.shoulderLens = VIPRA::Random::make_distribution<>(
+        std::normal_distribution<VIPRA::f_pnt>{_config.meanShoulderLen,
+                                               _config.shoulderLenStdDev},
+        _peds.size(), engine);
   }
 
   // NOLINTNEXTLINE(bugprone-easily-swappable-parameters, misc-unused-parameters)

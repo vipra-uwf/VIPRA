@@ -1,6 +1,7 @@
 #pragma once
 
 #include <functional>
+#include <random>
 #include <vector>
 
 #include "vipra/geometry/circle.hpp"
@@ -15,7 +16,6 @@
 #include "vipra/modules/module.hpp"
 #include "vipra/modules/pedestrian_input.hpp"
 
-#include "vipra/random/distributions.hpp"
 #include "vipra/random/random.hpp"
 
 #include "vipra/types/float.hpp"
@@ -79,6 +79,12 @@ class Pedestrians : public BaseModule<Pedestrians> {
 
     init_step(map, engine);
     VIPRA::Log::debug("Pedestrians Initialized");
+  }
+
+  void reset_module()
+  {
+    _coords.clear();
+    _velocities.clear();
   }
 
   void update(VIPRA::State const& state)
@@ -161,7 +167,7 @@ class Pedestrians : public BaseModule<Pedestrians> {
     _coords.resize(_coords.size() + _randomPedCnt);
     _velocities.resize(_velocities.size() + _randomPedCnt);
 
-    VIPRA::Random::uniform_distribution<size_t> polyDist{0, spawnAreas.size() - 1};
+    std::uniform_int_distribution<size_t> polyDist{0, spawnAreas.size() - 1};
 
     // go through each pedestrian and give them a random point inside one of the spawn points
     for ( size_t i = startSize; i < _coords.size(); ++i ) {

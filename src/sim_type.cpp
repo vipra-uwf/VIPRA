@@ -87,7 +87,6 @@ void Simulation::set_modules(std::string const& modulesPath)
 void Simulation::reset_modules()
 {
   _output.reset_modules();
-
   _model->reset_module();
   _pedset->reset_module();
   _goals->reset_module();

@@ -74,3 +74,4 @@ dwg2dxf
 *.data
 *.data.old
 timings.txt
+*.dat

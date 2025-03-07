@@ -3,7 +3,7 @@ BasedOnStyle: Google
 Standard: c++20
 TabWidth: 2
 UseTab: Never
-ColumnLimit: 80
+ColumnLimit: 90
 PointerAlignment: Left
 ReflowComments:  false
 IncludeBlocks: Preserve

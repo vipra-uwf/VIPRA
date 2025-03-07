@@ -10,7 +10,6 @@
 #include "vipra/input/json.hpp"
 
 #include "vipra/modules.hpp"
-#include "vipra/random/distributions.hpp"
 #include "vipra/random/random.hpp"
 
 // TODO(rolland): Check that all required parameters are provided (maybe not needed, they are checked when the module tries to get it)
