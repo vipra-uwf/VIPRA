@@ -156,7 +156,7 @@ def getPoints(timestep):
   return (pointsX, pointsY)
 
 def makeColors(peds, args):
-  count = len(peds["timesteps"][0])
+  count = len(peds["trajectories"][0])
   if args['pedColor']:
     return np.random.rand(count, 3)
   else:

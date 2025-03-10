@@ -48,10 +48,6 @@ class AStar : public VIPRA::Modules::Module<AStar>, public VIPRA::Modules::Goals
   void set_end_goals(VIPRA::Modules::Pedestrians const& pedset,
                      VIPRA::Modules::Map const& map, VIPRA::Random::Engine& engine);
 
-  [[nodiscard]] static auto squash_path(std::vector<VIPRA::f3d> const& path,
-                                        VIPRA::Random::Engine& /*engine*/)
-      -> std::vector<f3d>;
-
   [[nodiscard]] static auto get_nearest_goal(
       VIPRA::f3d pos, std::vector<VIPRA::Geometry::Polygon> const& goals)
       -> std::vector<VIPRA::Geometry::Polygon>::const_iterator;

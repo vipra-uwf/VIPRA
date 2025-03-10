@@ -134,32 +134,6 @@ void AStar::set_end_goals(VIPRA::Modules::Pedestrians const& pedset,
 }
 
 /**
-   * @brief Squashes the path to remove unnecessary points
-   *
-   * @param path
-   * @return std::vector<VIPRA::f3d>
-   */
-auto AStar::squash_path(std::vector<VIPRA::f3d> const& path,
-                        VIPRA::Random::Engine& /*engine*/) -> std::vector<VIPRA::f3d>
-{
-  assert(path.empty() == false);
-
-  std::vector<VIPRA::f3d> squashedPath;
-
-  VIPRA::f3d dif;
-
-  for ( VIPRA::idx i = 1; i < path.size(); ++i ) {
-    auto currDif = path[i] - path[i - 1];
-    if ( currDif != dif ) {
-      squashedPath.push_back(path[i - 1]);
-      dif = currDif;
-    }
-  }
-
-  return squashedPath;
-}
-
-/**
    * @brief Gets the nearest goal to the pedestrian
    *
    * @param pos
@@ -205,9 +179,6 @@ void AStar::find_path(VIPRA::idx pedIdx, VIPRA::f3d startPos,
   }
 
   // set their path, squash nodes that all go in the same direction into one node
-  if ( _paths[pedIdx].size() > 2 )
-    _paths[pedIdx] = squash_path(*path, engine);
-  else
-    _paths[pedIdx] = std::move(*path);
+  _paths[pedIdx] = std::move(*path);
 }
 }  // namespace VIPRA::Goals

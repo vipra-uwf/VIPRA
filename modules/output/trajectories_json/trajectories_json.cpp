@@ -13,15 +13,21 @@ void TrajectoriesJson::write(std::filesystem::path const& outputDir)
   std::filesystem::path filepath = outputDir / _filename;
   std::ofstream         file(filepath);
 
-  file << "{\"trajectories\":";
-  for ( const auto& timestep : _trajectories ) {
+  file << "{\"trajectories\":[";
+  for ( size_t i = 0; i < _trajectories.size(); ++i ) {
+    auto const& timestep = _trajectories[i];
     file << '[';
-    for ( const auto& position : timestep ) {
-      file << '[' << position.x << position.y << position.z << ']';
+
+    for ( size_t j = 0; j < timestep.size(); ++j ) {
+      auto const& position = timestep[j];
+      file << '[' << position.x << ',' << position.y << ',' << position.z << ']';
+      if ( j != timestep.size() - 1 ) file << ',';
     }
+
     file << ']';
+    if ( i != _trajectories.size() - 1 ) file << ',';
   }
-  file << '}';
+  file << "]}";
   file.close();
 }
 

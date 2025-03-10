@@ -19,7 +19,7 @@ peds = helpers.getPeds(args['peds'])
 difCoords = helpers.getPeds(args['dif'])
 map = helpers.getObs(args['obs'], args['dxf']);
 pedColors = helpers.makeColors(peds, args)
-timestepCnt = len(peds["timesteps"])
+timestepCnt = len(peds["trajectories"])
 
 fig,ax = plt.subplots()
 
@@ -29,7 +29,7 @@ if args['dxf']:
 else:
   helpers.plotObs(map, ax, args)
 
-[pointsX, pointsY] = helpers.getPoints(peds["timesteps"][0])
+[pointsX, pointsY] = helpers.getPoints(peds["trajectories"][0])
 [compX, compY] = helpers.getPoints(difCoords[0]) if args['dif'] else [[], []]
 points = helpers.plotPeds(pointsX, pointsY, pedColors, ax, args) if not args['dif'] else helpers.plotDif(pointsX, pointsY, compX, compY, pedColors, ax, args)
 
@@ -40,7 +40,7 @@ def animate(i):
   points.remove()
 
   helpers.printProgressBar(i, timestepCnt, 'Animating')
-  [pointsX, pointsY] = helpers.getPoints(peds["timesteps"][i])
+  [pointsX, pointsY] = helpers.getPoints(peds["trajectories"][i])
   [compX, compY] = helpers.getPoints(difCoords[i]) if args['dif'] else [[], []]
 
   helpers.plotShoulders(pointsX, pointsY, pedColors, ax, args)

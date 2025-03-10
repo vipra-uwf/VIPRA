@@ -65,9 +65,9 @@ struct Node {
       if ( neighborIdx == std::numeric_limits<VIPRA::idx>::max() ) continue;
       if ( closedSet[neighborIdx] ) continue;
 
-      const auto currPos = graph.pos(curr.self);
-      const auto neighborPos = graph.pos(neighborIdx);
-      const Node neighbor{
+      auto const& currPos = graph.pos(curr.self);
+      auto const& neighborPos = graph.pos(neighborIdx);
+      const Node  neighbor{
           neighborIdx, curr.self,
           nodes[curr.self].distanceFromStart + currPos.distance_to(neighborPos),
           neighbor.distanceFromStart + neighborPos.distance_to(endPos)};
@@ -92,10 +92,15 @@ struct Node {
   }
 
   std::vector<VIPRA::f3d> path;
+  VIPRA::f3d              dif;
 
   while ( curr.self != start ) {
-    path.push_back(graph.pos(curr.self));
     curr = nodes[curr.parent];
+    auto currDif = graph.pos(curr.self) - graph.pos(curr.parent);
+    if ( currDif != dif ) {
+      path.push_back(graph.pos(curr.parent));
+      dif = currDif;
+    }
   }
 
   return path;
