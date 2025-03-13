@@ -34,7 +34,7 @@ class SpatialMap {
     }
   }
 
-  void for_each_neighbor(VIPRA::f3d pos, auto&& func) const
+  void for_each_neighbor(VIPRA::f3d const& pos, auto&& func) const
   {
     // TODO(rolland, issue #40) this only gets the surrounding 9 grids
 
@@ -46,7 +46,7 @@ class SpatialMap {
         auto const& neighbor =
             get_grid(VIPRA::f3d{pos.x + i * _cellSize, pos.y + j * _cellSize});
 
-        for ( auto value : neighbor ) {
+        for ( auto const& value : neighbor ) {
           func(value);
         }
       }

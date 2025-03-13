@@ -1,5 +1,6 @@
 #pragma once
 
+#include <initializer_list>
 #include "drw_base.h"
 #include "drw_entities.h"
 #include "drw_interface.h"
@@ -34,6 +35,18 @@ struct DrwReader : public DRW_Interface {
     add_polyline_path(data);
   }
 
+  void addLine(const DRW_Line& data) override
+  {
+    add_obstacle({VIPRA::f3d{data.basePoint.x, data.basePoint.y},
+                  VIPRA::f3d{data.secPoint.x, data.secPoint.y}},
+                 data.layer);
+  }
+
+  void addPoint(const DRW_Point& data) override
+  {
+    add_obstacle({VIPRA::f3d{data.basePoint.x, data.basePoint.y}}, data.layer);
+  }
+
   void add_polyline_path(const DRW_LWPolyline& data)
   {
     // We add these as individidual lines to prevent the arc from closing at both ends.
@@ -47,40 +60,55 @@ struct DrwReader : public DRW_Interface {
     }
   }
 
+  void add_obstacle(std::initializer_list<VIPRA::f3d> const& points,
+                    std::string                              object_type)
+  {
+    std::string objectTypeCaseless = object_type;
+    transform(object_type.begin(), object_type.end(), object_type.begin(), ::toupper);
+
+    if ( object_type == "OBSTACLES" ) {
+      obstacles.emplace_back(points);
+    }
+    else if ( object_type == "SPAWNS" ) {
+      spawns.emplace_back(points);
+    }
+    else if ( object_type.find("AREAS") != std::string::npos ) {
+      areas[object_type] = Geometry::Polygon(points);
+    }
+    else {
+      if ( objectives[objectTypeCaseless].empty() ) {
+        objectives[objectTypeCaseless] = {Geometry::Polygon{points}};
+      }
+      else {
+        objectives[objectTypeCaseless].emplace_back(points);
+      }
+    }
+  }
+
   void add_obstacle(std::vector<VIPRA::f3d> const& points, std::string object_type)
   {
     std::string objectTypeCaseless = object_type;
     transform(object_type.begin(), object_type.end(), object_type.begin(), ::toupper);
 
-    VIPRA::Geometry::Polygon shape(points);
-
     if ( object_type == "OBSTACLES" ) {
-      obstacles.emplace_back(shape);
+      obstacles.emplace_back(points);
     }
     else if ( object_type == "SPAWNS" ) {
-      spawns.emplace_back(shape);
+      spawns.emplace_back(points);
     }
     else if ( object_type.find("AREAS") != std::string::npos ) {
-      areas[object_type] = shape;
+      areas[object_type] = Geometry::Polygon(points);
     }
     else {
       if ( objectives[objectTypeCaseless].empty() ) {
-        objectives[objectTypeCaseless] = {shape};
+        objectives[objectTypeCaseless] = {Geometry::Polygon{points}};
       }
       else {
-        objectives[objectTypeCaseless].emplace_back(shape);
+        objectives[objectTypeCaseless].emplace_back(points);
       }
     }
   }
 
-  void addPoint(const DRW_Point& /*data*/) override
-  {
-    VIPRA::Log::warn("DXF Loading for Point not impelmented");
-  }
-  void addLine(const DRW_Line& /*data*/) override
-  {
-    VIPRA::Log::warn("DXF Loading for Line not impelmented");
-  }
   void addRay(const DRW_Ray& /*data*/) override
   {
     VIPRA::Log::warn("DXF Loading for Ray not impelmented");

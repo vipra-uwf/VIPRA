@@ -30,13 +30,13 @@ void SpatialGrid::update_step(VIPRA ::State const& state)
 auto SpatialGrid::conditional_closest_ped(
     VIPRA::idx ped, std::function<bool(VIPRA::idx)> const& condition) const -> VIPRA::idx
 {
-  const VIPRA::f3d pos = ped_coords(ped);
-  VIPRA::f_pnt     minDist = std::numeric_limits<VIPRA::f_pnt>::max();
-  VIPRA::idx       minIdx = ped;
+  VIPRA::f3d const& pos = ped_coords(ped);
+  VIPRA::f_pnt      minDist = std::numeric_limits<VIPRA::f_pnt>::max();
+  VIPRA::idx        minIdx = ped;
 
   // Check all surrounding grids for the nearest pedestrian that matches the predicate
   _spatialGrid.for_each_neighbor(pos, [&](VIPRA::idx other) {
-    VIPRA::f_pnt dist = pos.distance_to_sqrd(ped_coords(other));
+    const VIPRA::f_pnt dist = pos.distance_to_sqrd(ped_coords(other));
 
     if ( dist < minDist ) {
       if ( ! condition(other) ) return;
