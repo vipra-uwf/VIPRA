@@ -16,21 +16,21 @@ Location:
   Name: aisle
   Dimensions:
     Center: {21, 5.45}
-    Lengths: {19.5, 0.5}
+    Lengths: {19, 0.4}
     Rotation: 0
 .
 
 Location:
   Name: planefront
   Dimensions:
-    Center: {9.25, 5.5}
-    Lengths: {3.5, 3}
+    Center: {8, 5.5}
+    Lengths: {6, 3}
     Rotation: 0
 .
 
 Action (Passenger):
   Condition: 
     in @aisle 
-    and Exists: Passenger in front, within 2m whose goal is not @planefront
+    and Exists: Passenger in front, within 1m whose goal is not @planefront
   Response: set velocity to {0}
 .
