@@ -66,7 +66,8 @@ class Timings {
       file << _name << i << ',';
 
       for ( int j = 0; j < counts[i]; ++j ) {
-        file << time_string(static_cast<time_t>(timings[start + j])) << ',';
+        file << time_string(static_cast<time_t>(timings[start + j]));
+        if ( j != counts[i] - 1 ) file << ',';
       }
 
       start += counts[i];
@@ -78,16 +79,16 @@ class Timings {
 #else
   void output_timings()
   {
-    std::ofstream file(filepath, std::ios_base::app);
+    std::ofstream file(timingPath, std::ios_base::app);
 
     if ( ! file.is_open() )
       throw std::runtime_error("Unable to open timings output file: " +
-                               filepath.string());
+                               timingPath.string());
 
     file << _name << ',';
 
     for ( size_t timeIdx = 0; timeIdx < _times.size(); ++timeIdx ) {
-      file << _times[timeIdx].count();
+      file << time_string(static_cast<time_t>(_times[timeIdx]));
       if ( timeIdx != _times.size() - 1 ) file << ',';
     }
 

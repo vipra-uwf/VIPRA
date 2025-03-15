@@ -32,7 +32,7 @@
       "endGoalType": "exit",
       "gridSize": 0.04,
       "goalRange": 0.15,
-      "closestObstacle": 0.2
+      "closestObstacle": 0.15
     }
   },
   "pedestrians": {
