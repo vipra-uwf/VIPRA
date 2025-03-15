@@ -21,6 +21,8 @@ project(
   LANGUAGES CXX
 )
 
+add_compile_options(-g)
+
 # BUILD VIPRA Library
 
 add_library(

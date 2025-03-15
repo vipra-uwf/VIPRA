@@ -38,6 +38,8 @@ def animate(i):
   global points
 
   points.remove()
+  for txt in ax.texts:
+        txt.remove()
 
   helpers.printProgressBar(i, timestepCnt, 'Animating')
   [pointsX, pointsY] = helpers.getPoints(peds["trajectories"][i])

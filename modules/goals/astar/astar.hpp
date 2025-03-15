@@ -52,7 +52,7 @@ class AStar : public VIPRA::Modules::Module<AStar>, public VIPRA::Modules::Goals
       VIPRA::f3d pos, std::vector<VIPRA::Geometry::Polygon> const& goals)
       -> std::vector<VIPRA::Geometry::Polygon>::const_iterator;
 
-  void find_path(VIPRA::idx pedIdx, VIPRA::f3d startPos, VIPRA::Random::Engine& engine);
+  void               find_path(VIPRA::idx pedIdx, VIPRA::f3d startPos);
   [[nodiscard]] auto find_random_point(VIPRA::Geometry::Polygon const&,
                                        VIPRA::Modules::Map const&,
                                        VIPRA::Random::Engine&) const -> VIPRA::f3d;

@@ -1,6 +1,5 @@
 
-#include "Calm.hpp"
-#include "vipra/geometry/rectangle.hpp"
+#include "calm_model.hpp"
 
 VIPRA_REGISTER_MODULE(Model::Calm, Model)
 
@@ -27,7 +26,7 @@ auto Model::Calm::obj_spatial_test(const VIPRA::Geometry::Rectangle& collisionRe
     return false;
   }
 
-  VIPRA::f3d center = (objLeft + objRight) /= 2;
+  VIPRA::f3d const center = (objLeft + objRight) /= 2;
 
   return collisionRect.is_point_inside(center) ||
          collisionRect.is_point_inside(objLeft) ||
@@ -37,7 +36,7 @@ auto Model::Calm::obj_spatial_test(const VIPRA::Geometry::Rectangle& collisionRe
 auto Model::Calm::obj_direction_test(VIPRA::f3d pedCoord, VIPRA::f3d veloc,
                                      VIPRA::f3d objCoords) -> bool
 {
-  const VIPRA::f3d displacement = objCoords - pedCoord;
+  VIPRA::f3d const displacement = objCoords - pedCoord;
 
   VIPRA::f_pnt const dotProduct = (veloc.x * displacement.x) +
                                   (veloc.y * displacement.y) + (veloc.z * displacement.z);
@@ -57,8 +56,8 @@ auto Model::Calm::is_ped_toward_goal(VIPRA::f3d pedCoords, VIPRA::f3d goal,
 auto Model::Calm::rect_from_shoulders(VIPRA::idx pedIdx, VIPRA::f3d pedCoords,
                                       VIPRA::f3d goal) -> VIPRA::Geometry::Rectangle
 {
-  const VIPRA::Geometry::Line pedShldr = _peds.shoulders[pedIdx];
-  const VIPRA::f3d            range = (goal - pedCoords).unit();
+  VIPRA::Geometry::Line const pedShldr = _peds.shoulders[pedIdx];
+  VIPRA::f3d const            range = (goal - pedCoords).unit();
 
   return VIPRA::Geometry::Rectangle{pedShldr.start, pedShldr.start + range,
                                     pedShldr.end + range, pedShldr.end};
@@ -72,28 +71,24 @@ void Model::Calm::calc_betas()
                  });
 }
 
-void Model::Calm::calc_neighbors(auto const& pedset, auto const& /*map*/,
-                                 auto const& goals)
+void Model::Calm::calc_neighbors(VIPRA::Modules::Pedestrians const& pedset,
+                                 VIPRA::Modules::Goals const&       goals,
+                                 VIPRA::Modules::Map const& /*map*/)
 {
-  const VIPRA::size pedCnt = pedset.num_pedestrians();
+  VIPRA::size const pedCnt = pedset.num_pedestrians();
   auto const&       coords = pedset.all_coords();
 
   for ( VIPRA::idx i = 0; i < pedCnt; ++i ) {
     if ( goals.is_goal_met(i) ) continue;
+    VIPRA::f3d const                 pedCoords = coords[i];
+    VIPRA::f3d const                 pedGoal = goals.current_goal(i);
+    VIPRA::Geometry::Rectangle const pedRect = rect_from_shoulders(i, pedCoords, pedGoal);
 
-    VIPRA::f3d                 pedCoords = coords[i];
-    VIPRA::f3d                 pedGoal = goals.current_goal(i);
-    VIPRA::Geometry::Rectangle pedRect = rect_from_shoulders(i, pedCoords, pedGoal);
-
-    auto nearest = pedset.conditional_closest_ped(i, [&](VIPRA::idx other) {
+    auto const nearest = pedset.conditional_closest_ped(i, [&](VIPRA::idx other) {
       if ( i == other || goals.is_goal_met(other) ) return false;
 
-      auto         otherCoords = coords[other];
+      const auto   otherCoords = coords[other];
       VIPRA::f_pnt distance = pedCoords.distance_to(otherCoords);
-
-      if ( (_collision.raceStatuses[i] == 0 && _collision.raceStatuses[other] == 1) ||
-           std::fabs(distance - EQUILIBRIUM_DISTANCE) < EQUILIBRIUM_RESOLUTION )
-        return false;
 
       if ( ! is_ped_toward_goal(pedCoords, pedGoal, otherCoords) ) return false;
 
@@ -105,7 +100,7 @@ void Model::Calm::calc_neighbors(auto const& pedset, auto const& /*map*/,
     });
 
     if ( nearest == i ) {
-      _peds.nearestDists[i] = std::numeric_limits<VIPRA::f_pnt>::max();
+      _peds.nearestDists[i] = 100.0F;
     }
     else {
       _peds.nearestDists[i] = pedCoords.distance_to(coords[nearest]);
@@ -113,47 +108,49 @@ void Model::Calm::calc_neighbors(auto const& pedset, auto const& /*map*/,
   }
 }
 
-void Model::Calm::update_state(auto const& pedset, auto const& goals, VIPRA::State& state,
+void Model::Calm::update_state(VIPRA::Modules::Pedestrians const& pedset,
+                               VIPRA::Modules::Goals const& goals, VIPRA::State& state,
                                VIPRA::delta_t deltaT)
 {
-  const VIPRA::size pedCnt = pedset.num_pedestrians();
+  VIPRA::size const pedCnt = pedset.num_pedestrians();
   auto const&       velocities = pedset.all_velocities();
   auto const&       coords = pedset.all_coords();
 
   for ( VIPRA::idx i = 0; i < pedCnt; ++i ) {
-    if ( goals.is_goal_met(i) || _collision.status(i) == CALM::WAIT ) {
+    if ( goals.is_goal_met(i) ) {
       state.velocities[i] = VIPRA::f3d{};
       continue;
     }
 
-    const VIPRA::f3d   goal = goals.current_goal(i);
-    const VIPRA::f3d   velocity = velocities[i];
-    const VIPRA::f3d   coord = coords[i];
-    const VIPRA::f_pnt desiredSpeed = _peds.maxSpeeds[i];
-    const VIPRA::f_pnt mass = _peds.masses[i];
-    const VIPRA::f_pnt reactionTime = _peds.reactionTimes[i];
-    const VIPRA::f_pnt beta = _peds.betas[i];
-    const VIPRA::f3d   direction = goal - coord;
-
-    const VIPRA::f3d propulsion =
-        ((direction.unit() * desiredSpeed * beta - velocity) * mass) / reactionTime;
-
-    state.velocities[i] = ((propulsion / mass) * deltaT) + velocity;
-
-    if ( goals.time_since_last_goal(i) > 0 &&
-         goals.time_since_last_goal(i) <= SLIDING_GOAL_TIME ) {
-      state.velocities[i].x = 0;
-      state.velocities[i].y = 0;
+    if ( _collision.status(i) == CALM::CollisionDetection::Status::LOST ) {
+      state.velocities[i] = VIPRA::f3d{};
+      continue;
     }
 
+    VIPRA::f3d const   goal = goals.current_goal(i);
+    VIPRA::f3d const   velocity = velocities[i];
+    VIPRA::f3d const   coord = coords[i];
+    VIPRA::f_pnt const desiredSpeed = _peds.maxSpeeds[i];
+    VIPRA::f_pnt const mass = _peds.masses[i];
+    VIPRA::f_pnt const reactionTime = _peds.reactionTimes[i];
+    VIPRA::f_pnt const beta = _peds.betas[i];
+    VIPRA::f3d const   direction = (goal - coord).unit();
+
+    VIPRA::f3d const friction =
+        _config.frictionCoef * (velocity - ((velocity.dot(direction)) * direction));
+    VIPRA::f3d const propulsion =
+        (((direction * desiredSpeed * beta - velocity) * mass) / reactionTime) - friction;
+
+    state.velocities[i] = ((propulsion / mass) * deltaT) + velocity;
     state.positions[i] = coord + (state.velocities[i] * deltaT);
   }
 }
 
 auto Model::Calm::is_path_blocked(VIPRA::idx pedIdx, VIPRA::f3d velocity,
-                                  VIPRA::f_pnt maxDist, auto const& map) -> VIPRA::f_pnt
+                                  VIPRA::f_pnt               maxDist,
+                                  VIPRA::Modules::Map const& map) -> VIPRA::f_pnt
 {
-  VIPRA::Geometry::Line shoulders = _peds.shoulders[pedIdx];
+  VIPRA::Geometry::Line const shoulders = _peds.shoulders[pedIdx];
   if ( shoulders.start == shoulders.end ) {
     return -1;
   }

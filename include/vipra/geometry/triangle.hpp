@@ -34,6 +34,21 @@ class Triangle {
   f_pnt              _area{};
 
  public:
+  Triangle(f3d const& point1, f3d const& point2, f3d const& point3)
+      : _points({point1, point2, point3}),
+        _area(std::abs(point1.x * (point2.y - point3.y) +
+                       point2.x * (point3.y - point1.y) +
+                       point3.x * (point1.y - point2.y)) /
+              2.0)
+  {
+  }
+
+  Triangle() = default;
+  ~Triangle() = default;
+  Triangle(Triangle const&) = default;
+  auto operator=(Triangle const&) -> Triangle& = default;
+  Triangle(Triangle&&) noexcept = default;
+  auto operator=(Triangle&&) noexcept -> Triangle& = default;
 };
 
 VIPRA_POLY_FUNC auto Triangle::is_point_inside(f3d point) const noexcept -> bool

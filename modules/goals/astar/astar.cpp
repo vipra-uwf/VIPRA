@@ -26,7 +26,7 @@ void AStar::init_step(VIPRA::Modules::Pedestrians const& pedset,
 
   // for each pedestrian, find their path to their end goal
   for ( VIPRA::idx pedIdx = 0; pedIdx < pedCnt; ++pedIdx ) {
-    find_path(pedIdx, pedset.ped_coords(pedIdx), engine);
+    find_path(pedIdx, pedset.ped_coords(pedIdx));
     VIPRA::Log::debug("Found Path for Ped {}", pedIdx);
     set_current_goal(pedIdx, _paths[pedIdx].back());
   }
@@ -61,11 +61,12 @@ auto AStar::next_goal(VIPRA::idx pedIdx, VIPRA::Modules::Pedestrians const& /*pe
      * @param newGoal
      */
 // NOLINTNEXTLINE(misc-unused-parameters)
-void AStar::change_end_goal_impl(VIPRA::idx pedIdx, VIPRA::f3d                  pos,
-                                 VIPRA::f3d /*newGoal*/, VIPRA::Random::Engine& engine)
+void AStar::change_end_goal_impl(VIPRA::idx pedIdx, VIPRA::f3d pos,
+                                 VIPRA::f3d /*newGoal*/,
+                                 VIPRA::Random::Engine& /*engine*/)
 {
   // uses A* to find the path to the new end goal
-  find_path(pedIdx, pos, engine);
+  find_path(pedIdx, pos);
   set_current_goal(pedIdx, _paths[pedIdx].back());
 }
 
@@ -158,8 +159,7 @@ auto AStar::get_nearest_goal(VIPRA::f3d                                   pos,
    * @param pedIdx 
    * @param pos 
    */
-void AStar::find_path(VIPRA::idx pedIdx, VIPRA::f3d startPos,
-                      VIPRA::Random::Engine& engine)
+void AStar::find_path(VIPRA::idx pedIdx, VIPRA::f3d startPos)
 {
   // Get the pedestrian start and end grid location
   VIPRA::idx startIdx = _graph.get_closest_grid_idx(startPos);
@@ -169,7 +169,7 @@ void AStar::find_path(VIPRA::idx pedIdx, VIPRA::f3d startPos,
     VIPRA_MODULE_ERROR("Pedestrian or goal is outside the bounds of the map provided");
   }
 
-  auto path = VIPRA::astar(startIdx, endIdx, _graph);
+  auto path = VIPRA::astar(end_goal(pedIdx), startIdx, endIdx, _graph);
 
   if ( ! path ) {
     VIPRA_MODULE_ERROR(

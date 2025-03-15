@@ -1,5 +1,6 @@
 #pragma once
 
+#include "vipra/modules/map.hpp"
 #include "vipra/modules/model.hpp"
 
 #include "vipra/macros/model.hpp"
@@ -26,7 +27,9 @@ class Calm : public VIPRA::Modules::Module<Calm>, public VIPRA::Modules::Model {
                         VIPRA_PARAM("meanMaxSpeed", _config.meanMaxSpeed),
                         VIPRA_PARAM("maxSpeedStdDev", _config.maxSpeedStdDev),
                         VIPRA_PARAM("meanShoulderLen", _config.meanShoulderLen),
-                        VIPRA_PARAM("shoulderLenStdDev", _config.shoulderLenStdDev))
+                        VIPRA_PARAM("shoulderLenStdDev", _config.shoulderLenStdDev),
+                        VIPRA_PARAM("collisionRange", _config.collisionRange),
+                        VIPRA_PARAM("friction", _config.frictionCoef))
 
   VIPRA_MODEL_RESET {}
 
@@ -34,7 +37,7 @@ class Calm : public VIPRA::Modules::Module<Calm>, public VIPRA::Modules::Model {
   VIPRA_MODEL_INIT_STEP
   {
     _peds.resize(pedset.num_pedestrians());
-    _collision.initialize(pedset, goals, _peds);
+    _collision.initialize(_config.collisionRange, pedset);
 
     _peds.masses = VIPRA::Random::make_distribution(
         std::normal_distribution<VIPRA::f_pnt>{_config.meanMass, _config.massStdDev},
@@ -57,29 +60,25 @@ class Calm : public VIPRA::Modules::Module<Calm>, public VIPRA::Modules::Model {
   VIPRA_MODEL_TIMESTEP
   {
     calc_shoulders(pedset.all_coords(), goals.current_goals());
-    calc_neighbors(pedset, map, goals);
+    calc_neighbors(pedset, goals, map);
     calc_betas();
-    update_state(pedset, goals, state, deltaT);
+    if ( timestep % 100 == 0 ) _collision.race_detection(pedset, goals, _peds);
 
-    if ( timestep > 0 ) {
-      _collision.race_detection(pedset, _peds, goals, timestep, map);
-    }
+    update_state(pedset, goals, state, deltaT);
   }
 
  private:
-  CALM::ModelData  _peds;
-  CALM::ConfigData _config{};
-  CALM::Collision  _collision;
+  CALM::ModelData          _peds;
+  CALM::ConfigData         _config{};
+  CALM::CollisionDetection _collision;
 
-  static constexpr VIPRA::delta_t SLIDING_GOAL_TIME = 0.1F;
-  static constexpr VIPRA::f_pnt   EQUILIBRIUM_DISTANCE = 0.382;
-  static constexpr VIPRA::f_pnt   EQUILIBRIUM_RESOLUTION = 0.01F;
-
-  void calc_neighbors(auto const& pedset, auto const& /*map*/, auto const& goals);
-  void update_state(auto const& pedset, auto const& goals, VIPRA::State& state,
+  void calc_neighbors(VIPRA::Modules::Pedestrians const& pedset,
+                      VIPRA::Modules::Goals const& goals, VIPRA::Modules::Map const& map);
+  void update_state(VIPRA::Modules::Pedestrians const& pedset,
+                    VIPRA::Modules::Goals const& goals, VIPRA::State& state,
                     VIPRA::delta_t deltaT);
   auto is_path_blocked(VIPRA::idx pedIdx, VIPRA::f3d veloc, VIPRA::f_pnt maxDist,
-                       auto const& map) -> VIPRA::f_pnt;
+                       VIPRA::Modules::Map const& map) -> VIPRA::f_pnt;
 
   void        calc_shoulders(VIPRA::f3dVec const&, VIPRA::f3dVec const&);
   static auto obj_spatial_test(const VIPRA::Geometry::Rectangle&, VIPRA::f3d,
