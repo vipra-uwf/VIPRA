@@ -133,6 +133,8 @@ void Simulation::run_sim(Parameters& params)
   VIPRA::State state;
   state.initialize(*_pedset);
 
+  _simulationTimes.start_new();
+
   // main loop
   while ( _currTimestep < _maxTimestep && ! _goals->is_sim_goal_met() ) {
     _model->timestep(*_pedset, *_map, *_goals, state, _timestepSize, _currTimestep);
@@ -145,6 +147,8 @@ void Simulation::run_sim(Parameters& params)
 
     ++_currTimestep;
   }
+
+  _simulationTimes.stop();
 
   if ( _outputParams )
     _output.write_to_file("parameters.json", params.get_used_parameters());
@@ -187,4 +191,6 @@ void Simulation::initialize(Parameters& params)
   _model->initialize(*_pedset, *_map, *_goals, _engine);
   _behaviorModel.initialize(*_pedset, *_map, *_goals, _seed);
 }
+
+void Simulation::output_timings() { _simulationTimes.output_timings(); }
 }  // namespace VIPRA

@@ -20,6 +20,7 @@
 #include "vipra/types/float.hpp"
 #include "vipra/types/seed.hpp"
 #include "vipra/types/time.hpp"
+#include "vipra/util/timing.hpp"
 
 // TODO(rolland): go through everything and handle errors more gracefully, currently we just throw
 
@@ -45,6 +46,8 @@ class Simulation : public Modules::Module<Simulation> {
   void set_modules(std::string const& modulesPath);
   void reset_modules();
 
+  void output_timings();
+
   void               set_sim_id(VIPRA::idx idx) { _currSimIdx = idx; }
   void               add_sim_id(VIPRA::idx idx) { _currSimIdx += idx; }
   [[nodiscard]] auto get_sim_id() const -> VIPRA::idx { return _currSimIdx; }
@@ -61,6 +64,8 @@ class Simulation : public Modules::Module<Simulation> {
   std::unique_ptr<Modules::PedestrianInput> _pedInput;
   std::unique_ptr<Modules::MapInput>        _mapInput;
   BehaviorModel                             _behaviorModel;
+
+  Util::Timings _simulationTimes{"simulation"};
 
   std::map<Modules::Type, std::function<void(void*, Parameters&, VIPRA::Random::Engine&)>>
       _configs;

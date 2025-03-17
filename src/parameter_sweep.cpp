@@ -11,7 +11,7 @@ MPI_Comm ParameterSweep::comm{};
 int                              ParameterSweep::rank{};
 int                              ParameterSweep::size{};
 ParameterSweep::DeferredFinalize ParameterSweep::_finalize{};
-Util::Timings                    ParameterSweep::_timings{"sim_run"};
+Util::Timings                    ParameterSweep::_timings{"run"};
 Util::Timings                    ParameterSweep::_inputTimings{"input_time"};
 Util::Timings                    ParameterSweep::_mpiTimings{"mpi_time"};
 

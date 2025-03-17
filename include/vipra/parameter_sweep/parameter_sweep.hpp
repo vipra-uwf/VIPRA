@@ -90,6 +90,7 @@ class ParameterSweep {
     // update each worker to the correct sim count
     sim.set_sim_id(count);
 
+    sim.output_timings();
     _timings.output_timings();
 
 #ifdef VIPRA_USE_MPI

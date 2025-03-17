@@ -3,6 +3,7 @@ import os
 import json
 import math
 import numpy as np
+import matplotlib
 import matplotlib.pyplot as plt
 import datetime
 import ezdxf
