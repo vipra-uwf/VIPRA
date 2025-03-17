@@ -197,6 +197,7 @@ void BehaviorBuilder::visit(const std::shared_ptr<peg::Ast>& ast,
   }
 
   if ( _queryMap.contains(ast->name) ) {
+    // TODO(rolland): NEXT properly build conditional expression tree
     std::cout << "Adding Query: " << ast->name << ", " << &_queryMap[ast->name]
               << '\n';
 

@@ -1,0 +1,3 @@
+Type: Sensor
+Name: Ears
+Include: ears.hpp

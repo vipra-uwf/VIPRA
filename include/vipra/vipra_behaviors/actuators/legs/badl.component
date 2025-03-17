@@ -1,0 +1,3 @@
+Type: Actuator
+Name: Legs
+Include: legs.hpp

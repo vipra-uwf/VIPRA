@@ -1,0 +1,3 @@
+Name:Behaviors
+Type:ThoughtProcess
+Include: behaviors.hpp

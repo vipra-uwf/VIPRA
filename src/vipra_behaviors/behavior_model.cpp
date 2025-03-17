@@ -28,6 +28,8 @@ void BehaviorModel::initialize(VIPRA::Modules::Pedestrians const& pedset,
 
   _environment.add_source(
       VIPRA::Sound{VIPRA::Sound::id("test"), pedset.ped_coords(0)});
+  _environment.add_source(
+      VIPRA::Sound{VIPRA::Sound::id("test1"), pedset.ped_coords(0)});
 }
 
 void BehaviorModel::update(VIPRA::Modules::Pedestrians const& pedset,

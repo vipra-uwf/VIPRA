@@ -37,6 +37,17 @@ vipra_add_base_modules()
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
+set(BADL_AGENT_FILE ${CMAKE_CURRENT_SOURCE_DIR}/include/vipra/vipra_behaviors/vipra_agent.json)
+add_subdirectory(
+  ${CMAKE_CURRENT_SOURCE_DIR}/deps/badl
+)
+
+target_link_libraries(
+  ${VIPRA_LIBRARY_NAME}
+  PUBLIC
+  BADL
+)
+
 vipra_add_library(
   PROJECT ${VIPRA_LIBRARY_NAME}
   LIBNAME nlohmann_json

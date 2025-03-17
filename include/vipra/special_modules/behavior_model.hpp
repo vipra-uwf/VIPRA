@@ -1,8 +1,8 @@
 
 #pragma once
 
-#include "vipra/vipra_behaviors/senses/sight.hpp"
-#include "vipra/vipra_behaviors/senses/sound.hpp"
+#include "vipra/vipra_behaviors/stimuli/sight/sight.hpp"
+#include "vipra/vipra_behaviors/stimuli/sound/sound.hpp"
 
 #include "vipra/modules/map.hpp"
 #include "vipra/modules/pedestrians.hpp"

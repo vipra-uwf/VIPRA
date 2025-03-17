@@ -1,0 +1,3 @@
+Name:Beliefs
+Type:InternalState
+Include: beliefs.hpp

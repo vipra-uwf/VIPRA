@@ -1,0 +1,19 @@
+Behavior:
+  Stimulus:
+    Hears test1
+  Action:
+    test 1.3, 2, string
+
+Behavior:
+  Stimulus:
+    Hears test1
+  Condition:
+    remembers something
+  Action:
+    test 1.3, 2, string
+
+Behavior:
+  Condition:
+    remembers something
+  Action:
+    test 1.3, 2, string

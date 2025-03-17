@@ -1,0 +1,26 @@
+{
+  "Sensor": [
+    "Eyes",
+    "Ears"
+  ],
+  "InternalState": [
+    "Beliefs",
+    "Memory"
+  ],
+  "Actuator": [
+    "Legs",
+    "Mouth",
+    "Brain"
+  ],
+  "Attention": [
+    "Filter"
+  ],
+  "ThoughtProcess": [
+    "Behaviors"
+  ],
+  "Stimuli": [
+    "Sight",
+    "Sound"
+  ],
+  "ProgramInterface": "vipra/vipra_behaviors/interface/prog_interface.hpp"
+}

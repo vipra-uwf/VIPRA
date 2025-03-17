@@ -1,0 +1,5 @@
+#pragma once
+
+#include "build_macros.hpp"
+
+#include @BADL_PROGRAM_INTERFACE_INCLUDE@
