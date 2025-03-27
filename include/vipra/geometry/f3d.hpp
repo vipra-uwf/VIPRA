@@ -20,6 +20,9 @@
 //                  - maybe an f2d with a small integer for the story?
 
 namespace VIPRA {
+template <class type_t>
+concept F3D_IDX = std::is_arithmetic_v<std::remove_reference_t<type_t>>;
+
 // NOLINTNEXTLINE (rolland) Keeping f3d from before format changes :  ignore(readability-identifier-naming)
 struct f3d {
   VIPRA::f_pnt x, y, z;
@@ -48,8 +51,8 @@ struct f3d {
     return retVal.unit() * magnitude;
   }
 
-  template <Concepts::Numeric data_t>
-  F3D_FUNC auto operator[](data_t index) -> VIPRA::f_pnt&
+  template <F3D_IDX idx_t>
+  F3D_FUNC auto operator[](idx_t index) -> VIPRA::f_pnt&
   {
     switch ( index ) {
       case 0:
@@ -69,8 +72,8 @@ struct f3d {
     }
   }
 
-  template <Concepts::Numeric data_t>
-  F3D_FUNC auto operator[](data_t index) const -> VIPRA::f_pnt
+  template <F3D_IDX idx_t>
+  F3D_FUNC auto operator[](idx_t index) const -> VIPRA::f_pnt
   {
     switch ( index ) {
       case 0:

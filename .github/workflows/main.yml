@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build Tests
-        run: make testing threads=8
+        run: make testing JOBS=8
 
       - name: Run tests
         run: ./build/__tests__/vipra_tests
