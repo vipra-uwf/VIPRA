@@ -28,7 +28,8 @@ class AStar : public VIPRA::Modules::Module<AStar>, public VIPRA::Modules::Goals
   VIPRA_REGISTER_PARAMS(VIPRA_PARAM("endGoalType", _endGoalType),
                         VIPRA_PARAM("goalRange", _goalRange),
                         VIPRA_PARAM("gridSize", _gridSize),
-                        VIPRA_PARAM("closestObstacle", _closestObstacle))
+                        VIPRA_PARAM("closestObstacle", _closestObstacle),
+                        VIPRA_PARAM("pathSmoothing", _pathEpsilon))
 
   VIPRA_GOALS_INIT_STEP;
   VIPRA_GOALS_UPDATE_STEP;
@@ -41,6 +42,7 @@ class AStar : public VIPRA::Modules::Module<AStar>, public VIPRA::Modules::Goals
   VIPRA::f_pnt _goalRange;
   VIPRA::f_pnt _gridSize;
   VIPRA::f_pnt _closestObstacle;
+  VIPRA::f_pnt _pathEpsilon;
 
   std::vector<std::vector<VIPRA::f3d>> _paths;
   PathingGraph                         _graph;

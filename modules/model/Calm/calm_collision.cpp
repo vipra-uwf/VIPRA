@@ -22,10 +22,12 @@ void CollisionDetection::race_detection(VIPRA::Modules::Pedestrians const& pedse
 void CollisionDetection::calc_races(VIPRA::Modules::Pedestrians const& pedset,
                                     VIPRA::Modules::Goals const&       goals)
 {
-  const VIPRA::size pedCnt = pedset.num_pedestrians();
+  VIPRA::size const pedCnt = pedset.num_pedestrians();
 
   for ( VIPRA::idx idx = 0; idx < pedCnt; ++idx ) {
     if ( goals.is_goal_met(idx) ) continue;
+
+    auto const pedDir = goals.current_goal(idx) - pedset.ped_coords(idx);
 
     if ( calc_collisions(idx, pedset, goals) ) {
       _statuses[idx] = Status::WON;
@@ -73,7 +75,7 @@ void CollisionDetection::calc_collision_shapes(VIPRA::Modules::Pedestrians const
   auto const&       coords = pedset.all_coords();
   auto const&       velocities = pedset.all_velocities();
   auto const&       shldrs = modelData.shoulders;
-  const VIPRA::size pedCnt = pedset.num_pedestrians();
+  VIPRA::size const pedCnt = pedset.num_pedestrians();
 
   for ( VIPRA::idx idx = 0; idx < pedCnt; ++idx ) {
     VIPRA::f3d const& pedVel = velocities[idx];

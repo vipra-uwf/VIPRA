@@ -99,7 +99,8 @@ auto AStar::find_random_point(VIPRA::Geometry::Polygon const& polygon,
    * @param map
    */
 void AStar::set_end_goals(VIPRA::Modules::Pedestrians const& pedset,
-                          VIPRA::Modules::Map const& map, VIPRA::Random::Engine& engine)
+                          VIPRA::Modules::Map const&         map,
+                          VIPRA::Random::Engine& /*engine*/)
 {
   assert(pedset.num_pedestrians() > 0);
 
@@ -120,7 +121,8 @@ void AStar::set_end_goals(VIPRA::Modules::Pedestrians const& pedset,
                       (*nearestGoalIter).center().x, (*nearestGoalIter).center().y);
 
     if ( nearestGoalIter != objects.end() ) {
-      f3d point = find_random_point(*nearestGoalIter, map, engine);
+      // f3d point = find_random_point(*nearestGoalIter, map, engine);
+      f3d point = nearestGoalIter->center();
 
       VIPRA::Log::debug("Ped {} Final End Goal: ({}, {})", pedIdx, point.x, point.y);
       set_end_goal(pedIdx, point);
@@ -169,7 +171,7 @@ void AStar::find_path(VIPRA::idx pedIdx, VIPRA::f3d startPos)
     VIPRA_MODULE_ERROR("Pedestrian or goal is outside the bounds of the map provided");
   }
 
-  auto path = VIPRA::astar(end_goal(pedIdx), startIdx, endIdx, _graph);
+  auto path = VIPRA::astar(end_goal(pedIdx), startIdx, endIdx, _graph, _pathEpsilon);
 
   if ( ! path ) {
     VIPRA_MODULE_ERROR(
@@ -178,7 +180,6 @@ void AStar::find_path(VIPRA::idx pedIdx, VIPRA::f3d startPos)
         pedIdx, startPos.x, startPos.y, end_goal(pedIdx).x, end_goal(pedIdx).y);
   }
 
-  // set their path, squash nodes that all go in the same direction into one node
   _paths[pedIdx] = std::move(*path);
 }
 }  // namespace VIPRA::Goals

@@ -32,9 +32,9 @@ struct Node {
   }
 };
 
-[[nodiscard]] inline auto astar(VIPRA::f3d endPos, VIPRA::idx start, VIPRA::idx end,
-                                Goals::PathingGraph const& graph) noexcept
-    -> std::optional<std::vector<VIPRA::f3d>>
+[[nodiscard]] inline auto astar(
+    VIPRA::f3d endPos, VIPRA::idx start, VIPRA::idx end, Goals::PathingGraph const& graph,
+    VIPRA::f_pnt smoothingEpsilon) noexcept -> std::optional<std::vector<VIPRA::f3d>>
 {
   auto const startPos = graph.pos(start);
   auto const endGridPos = graph.pos(end);
@@ -99,6 +99,7 @@ struct Node {
   curr = nodes[curr.parent];
 
   while ( true ) {
+    // loop back through nodes creating the path, squashing every node that goes in the same direction into one
     curr = nodes[curr.parent];
 
     if ( curr.parent == start ) break;  // skip first grid, since ped is already there
@@ -110,7 +111,6 @@ struct Node {
     }
   }
 
-  // TODO(rolland): parameterize epsilon here
-  return VIPRA::douglas_peucker_algo(path, 0.1);
+  return VIPRA::douglas_peucker_algo(path, smoothingEpsilon);
 }
 }  // namespace VIPRA
