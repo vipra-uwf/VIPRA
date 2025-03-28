@@ -1,10 +1,8 @@
 #pragma once
 
 #include <concepts>
-#include <vector>
 
 #include "vipra/geometry/circle.hpp"
-#include "vipra/geometry/f3d.hpp"
 #include "vipra/geometry/line.hpp"
 #include "vipra/geometry/rectangle.hpp"
 #include "vipra/geometry/triangle.hpp"

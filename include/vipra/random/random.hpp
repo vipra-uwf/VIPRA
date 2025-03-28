@@ -5,7 +5,9 @@
 #include <cstdint>
 #include <cstdlib>
 #include <limits>
+#include <random>
 #include <vector>
+
 #include "vipra/concepts/numeric.hpp"
 #include "vipra/types/float.hpp"
 #include "vipra/types/size.hpp"

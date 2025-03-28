@@ -2,6 +2,8 @@
 
 #include <random>
 
+#include "vipra/geometry/f3d.hpp"
+
 #include "vipra/types/float.hpp"
 #include "vipra/vipra_behaviors/_grammar/generated/BehaviorParser.h"
 
@@ -147,7 +149,7 @@ using RangeVal = std::pair<VIPRA::f_pnt, VIPRA::f_pnt>;
                                     VIPRA::seed seed) -> VIPRA::f3d
 {
   auto       values = ctx->value_numeric();
-  VIPRA::f3d val;
+  VIPRA::f3d val{};
 
   for ( VIPRA::idx i = 0; i < values.size(); ++i ) {
     auto num = get_numeric(values[i], seed);

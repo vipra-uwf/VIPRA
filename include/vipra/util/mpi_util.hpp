@@ -82,7 +82,8 @@ template <typename data_t>
 [[nodiscard]] inline auto mpi_gather_all_vectors(std::vector<data_t> const& localData)
     -> std::pair<std::vector<data_t>, std::vector<int>>
 {
-  static_assert(false,
+  constexpr bool always_false = false;
+  static_assert(always_false,
                 "Attempting to use mpi_gather_all_vectors when MPI is not enabled");
 }
 

@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "vipra/data_structures/spatial_map.hpp"
+#include "spatial_map.hpp"
 #include "vipra/macros/pedestrians.hpp"
 #include "vipra/modules/pedestrians.hpp"
 
