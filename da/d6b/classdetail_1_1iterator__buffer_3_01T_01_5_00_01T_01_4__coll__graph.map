@@ -1,5 +1,8 @@
 <map id="detail::iterator_buffer&lt; T *, T &gt;" name="detail::iterator_buffer&lt; T *, T &gt;">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,79,143,120"/>
-<area shape="rect" id="Node000002" href="$de/d0d/classdetail_1_1buffer.html" title=" " alt="" coords="14,5,134,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="77,46,77,79,71,79,71,46"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="148,79,285,120"/>
+<area shape="rect" id="Node000002" href="$d0/d6a/structdetail_1_1buffer__traits.html" title=" " alt="" coords="5,5,132,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="106,36,181,76,179,81,103,41"/>
+<area shape="rect" id="Node000003" href="$de/d0d/classdetail_1_1buffer.html" title=" " alt="" coords="156,5,277,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="211,46,211,79,206,79,205,47"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="228,47,227,79,222,79,222,46"/>
 </map>

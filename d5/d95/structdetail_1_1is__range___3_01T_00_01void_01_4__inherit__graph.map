@@ -1,5 +1,7 @@
 <map id="detail::is_range_&lt; T, void &gt;" name="detail::is_range_&lt; T, void &gt;">
-<area shape="rect" id="Node000001" title=" " alt="" coords="250,20,372,61"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,202,76"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="217,38,249,38,249,43,217,43"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="250,34,372,74"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="51,5,156,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="171,27,250,41,249,46,170,32"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,55,202,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="216,68,249,62,250,67,217,73"/>
 </map>

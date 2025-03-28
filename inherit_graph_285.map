@@ -1,3 +1,20 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$de/df6/classVIPRA_1_1Geometry_1_1Circle.html" title=" " alt="" coords="5,5,168,31"/>
+<area shape="rect" id="Node000000" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="23,5,160,46"/>
+<area shape="rect" id="Node000001" href="$dc/dab/classVIPRA_1_1Modules_1_1Module.html" title=" " alt="" coords="244,5,408,46"/>
+<area shape="poly" id="edge175_Node000000_Node000001" title=" " alt="" coords="175,23,244,23,244,28,175,28"/>
+<area shape="rect" id="Node000002" href="$da/d14/classDXF.html" title="Parameter and Polygon qualified dxf input module." alt="" coords="520,70,568,96"/>
+<area shape="poly" id="edge176_Node000001_Node000002" title=" " alt="" coords="421,48,521,74,520,80,420,53"/>
+<area shape="rect" id="Node000006" href="$da/d35/classVIPRA_1_1Util_1_1CRTP.html" title=" " alt="" coords="5,235,178,275"/>
+<area shape="rect" id="Node000005" href="$d5/da1/classVIPRA_1_1Modules_1_1ParamReader.html" title=" " alt="" coords="226,235,427,275"/>
+<area shape="poly" id="edge177_Node000006_Node000005" title=" " alt="" coords="193,252,225,252,225,258,193,258"/>
+<area shape="rect" id="Node000004" href="$d1/d4b/classVIPRA_1_1Input_1_1JSON.html" title="Parameter and Polygon qualified JSON input module." alt="" coords="475,148,613,173"/>
+<area shape="poly" id="edge178_Node000005_Node000004" title=" " alt="" coords="408,226,426,219,519,171,522,176,428,224,410,231"/>
+<area shape="rect" id="Node000003" href="$d4/d1e/classVIPRA_1_1Modules_1_1MapInput.html" title="Base MapInput Module." alt="" coords="238,120,414,145"/>
+<area shape="poly" id="edge179_Node000003_Node000002" title=" " alt="" coords="401,113,519,86,521,91,402,118"/>
+<area shape="poly" id="edge180_Node000003_Node000004" title=" " alt="" coords="430,143,475,149,474,154,429,148"/>
+<area shape="rect" id="Node000007" href="$dd/dbf/classVIPRA_1_1Modules_1_1PedestrianInput.html" title="Base PedestrianInput Module." alt="" coords="234,169,418,210"/>
+<area shape="poly" id="edge181_Node000007_Node000004" title=" " alt="" coords="434,173,475,167,475,172,434,178"/>
+<area shape="rect" id="Node000008" href="$d5/d4f/classVIPRA_1_1Modules_1_1Serializable.html" title=" " alt="" coords="232,70,420,96"/>
+<area shape="poly" id="edge182_Node000008_Node000002" title=" " alt="" coords="436,80,520,80,520,86,436,86"/>
+<area shape="poly" id="edge183_Node000008_Node000004" title=" " alt="" coords="407,98,428,104,477,124,519,145,516,149,475,129,426,110,405,103"/>
 </map>

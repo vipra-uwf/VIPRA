@@ -14,10 +14,9 @@ var searchData=
   ['nested_5fview_11',['nested_view',['../da/d0f/structnested__view.html',1,'']]],
   ['node_12',['Node',['../d3/ddb/structVIPRA_1_1DataStructures_1_1GraphMixin_1_1Node.html',1,'VIPRA::DataStructures::GraphMixin&lt; class_t, data_t &gt;::Node'],['../d7/de6/structVIPRA_1_1Node.html',1,'VIPRA::Node']]],
   ['node_13',['node',['../d2/d42/structdetail_1_1node.html',1,'detail']]],
-  ['normal_5fdistribution_14',['normal_distribution',['../da/dd5/classVIPRA_1_1Random_1_1normal__distribution.html',1,'VIPRA::Random']]],
-  ['null_15',['null',['../d6/db9/structdetail_1_1null.html',1,'detail']]],
-  ['null_5fchrono_5fspec_5fhandler_16',['null_chrono_spec_handler',['../da/d80/structdetail_1_1null__chrono__spec__handler.html',1,'detail']]],
-  ['null_5fchrono_5fspec_5fhandler_3c_20chrono_5fformat_5fchecker_20_3e_17',['null_chrono_spec_handler&lt; chrono_format_checker &gt;',['../da/d80/structdetail_1_1null__chrono__spec__handler.html',1,'detail']]],
-  ['null_5fchrono_5fspec_5fhandler_3c_20tm_5fformat_5fchecker_20_3e_18',['null_chrono_spec_handler&lt; tm_format_checker &gt;',['../da/d80/structdetail_1_1null__chrono__spec__handler.html',1,'detail']]],
-  ['numericvalue_19',['NumericValue',['../d5/d6d/classVIPRA_1_1Behaviors_1_1NumericValue.html',1,'VIPRA::Behaviors']]]
+  ['null_14',['null',['../d6/db9/structdetail_1_1null.html',1,'detail']]],
+  ['null_5fchrono_5fspec_5fhandler_15',['null_chrono_spec_handler',['../da/d80/structdetail_1_1null__chrono__spec__handler.html',1,'detail']]],
+  ['null_5fchrono_5fspec_5fhandler_3c_20chrono_5fformat_5fchecker_20_3e_16',['null_chrono_spec_handler&lt; chrono_format_checker &gt;',['../da/d80/structdetail_1_1null__chrono__spec__handler.html',1,'detail']]],
+  ['null_5fchrono_5fspec_5fhandler_3c_20tm_5fformat_5fchecker_20_3e_17',['null_chrono_spec_handler&lt; tm_format_checker &gt;',['../da/d80/structdetail_1_1null__chrono__spec__handler.html',1,'detail']]],
+  ['numericvalue_18',['NumericValue',['../d5/d6d/classVIPRA_1_1Behaviors_1_1NumericValue.html',1,'VIPRA::Behaviors']]]
 ];

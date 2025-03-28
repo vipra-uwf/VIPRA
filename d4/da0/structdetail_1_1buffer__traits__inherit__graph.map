@@ -1,5 +1,9 @@
 <map id="detail::buffer_traits" name="detail::buffer_traits">
-<area shape="rect" id="Node000001" title=" " alt="" coords="15,5,141,31"/>
-<area shape="rect" id="Node000002" href="$d1/d79/classdetail_1_1iterator__buffer.html" title=" " alt="" coords="5,79,151,120"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="81,46,81,79,75,79,75,46"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,153,132,179"/>
+<area shape="rect" id="Node000002" href="$d6/d1b/classdetail_1_1iterator__buffer_3_01OutputIt_00_01enable__if__t_3_01detail_1_1is__back__insert__195c3bb6618d4a1fea4dbe2d40622160.html" title=" " alt="" coords="180,5,431,121"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="113,144,178,115,181,120,115,149"/>
+<area shape="rect" id="Node000003" href="$dd/de7/classdetail_1_1iterator__buffer_3_01T_01_5_00_01T_01_4.html" title=" " alt="" coords="237,146,374,186"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="147,163,236,163,236,168,147,168"/>
+<area shape="rect" id="Node000004" href="$d1/d79/classdetail_1_1iterator__buffer.html" title=" " alt="" coords="233,211,378,252"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="130,181,180,195,233,210,232,215,179,200,129,186"/>
 </map>

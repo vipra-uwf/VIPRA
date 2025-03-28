@@ -1,3 +1,11 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$de/d67/structdetail_1_1arg__mapper.html" title=" " alt="" coords="5,5,132,46"/>
+<area shape="rect" id="Node000000" href="$de/d0d/classdetail_1_1buffer.html" title=" " alt="" coords="5,129,143,154"/>
+<area shape="rect" id="Node000001" href="$d7/d4d/classbasic__memory__buffer.html" title=" " alt="" coords="207,5,351,46"/>
+<area shape="poly" id="edge99_Node000000_Node000001" title=" " alt="" coords="100,117,141,86,189,55,213,44,216,49,192,60,144,90,104,121"/>
+<area shape="rect" id="Node000002" href="$d3/df3/classdetail_1_1file__print__buffer_3_01F_00_01enable__if__t_3_01has__flockfile_3_01F_01_4_1_1value_01_4_01_4.html" title=" " alt="" coords="207,70,351,141"/>
+<area shape="poly" id="edge100_Node000000_Node000002" title=" " alt="" coords="158,124,206,116,207,121,159,130"/>
+<area shape="rect" id="Node000003" href="$df/d24/classdetail_1_1counting__buffer.html" title=" " alt="" coords="191,165,367,190"/>
+<area shape="poly" id="edge101_Node000000_Node000003" title=" " alt="" coords="159,154,202,162,201,167,158,159"/>
+<area shape="rect" id="Node000004" href="$d7/d39/classdetail_1_1file__print__buffer.html" title=" " alt="" coords="211,215,347,255"/>
+<area shape="poly" id="edge102_Node000000_Node000004" title=" " alt="" coords="112,160,192,201,218,212,216,216,190,205,110,165"/>
 </map>

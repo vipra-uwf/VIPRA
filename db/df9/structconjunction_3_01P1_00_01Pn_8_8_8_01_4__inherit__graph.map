@@ -1,5 +1,7 @@
 <map id="conjunction&lt; P1, Pn... &gt;" name="conjunction&lt; P1, Pn... &gt;">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,109,163,135"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="6,5,162,61"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,76,87,108,81,108,81,76"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="50,109,208,135"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,20,104,46"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="77,56,121,107,117,110,73,60"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="128,5,283,61"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="174,74,142,110,138,107,170,71"/>
 </map>

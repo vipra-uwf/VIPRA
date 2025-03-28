@@ -1,5 +1,7 @@
 <map id="detail::is_output_iterator&lt; It, T, void_t&lt; decltype(*std::declval&lt; It &amp; &gt;()++=std::declval&lt; T &gt;())&gt; &gt;" name="detail::is_output_iterator&lt; It, T, void_t&lt; decltype(*std::declval&lt; It &amp; &gt;()++=std::declval&lt; T &gt;())&gt; &gt;">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,79,169,150"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="38,5,136,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="90,47,90,78,84,78,84,47"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="38,79,202,150"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,110,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="76,42,99,77,95,80,72,45"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="134,5,232,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="169,45,146,80,141,77,164,42"/>
 </map>

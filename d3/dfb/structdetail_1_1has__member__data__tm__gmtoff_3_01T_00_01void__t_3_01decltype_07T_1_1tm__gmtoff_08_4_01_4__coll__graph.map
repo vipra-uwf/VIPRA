@@ -1,5 +1,7 @@
 <map id="detail::has_member_data_tm_gmtoff&lt; T, void_t&lt; decltype(T::tm_gmtoff)&gt; &gt;" name="detail::has_member_data_tm_gmtoff&lt; T, void_t&lt; decltype(T::tm_gmtoff)&gt; &gt;">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,79,147,150"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="27,5,125,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="79,47,79,78,73,78,73,47"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="50,79,191,150"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,110,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="76,42,99,77,95,80,72,45"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="134,5,232,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="169,45,146,80,141,77,164,42"/>
 </map>

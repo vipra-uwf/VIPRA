@@ -1,3 +1,23 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$d1/db2/structdetail_1_1arg__ref.html" title=" " alt="" coords="5,5,153,31"/>
+<area shape="rect" id="Node000000" href="$de/d0d/classdetail_1_1buffer.html" title=" " alt="" coords="40,252,161,277"/>
+<area shape="rect" id="Node000001" href="$d7/d4d/classbasic__memory__buffer.html" title=" " alt="" coords="297,276,442,317"/>
+<area shape="poly" id="edge103_Node000000_Node000001" title=" " alt="" coords="176,271,297,285,296,291,176,276"/>
+<area shape="rect" id="Node000002" href="$d6/d1b/classdetail_1_1iterator__buffer_3_01OutputIt_00_01enable__if__t_3_01detail_1_1is__back__insert__195c3bb6618d4a1fea4dbe2d40622160.html" title=" " alt="" coords="244,5,495,121"/>
+<area shape="poly" id="edge104_Node000000_Node000002" title=" " alt="" coords="132,240,194,189,217,160,242,132,258,119,262,123,245,136,221,164,198,193,135,245"/>
+<area shape="rect" id="Node000005" href="$dd/de7/classdetail_1_1iterator__buffer_3_01T_01_5_00_01T_01_4.html" title=" " alt="" coords="301,146,438,186"/>
+<area shape="poly" id="edge105_Node000000_Node000005" title=" " alt="" coords="140,242,243,197,299,179,301,184,245,202,142,247"/>
+<area shape="rect" id="Node000007" href="$d4/d61/classdetail_1_1iterator__buffer_3_01T_01_5_00_01T_00_01fixed__buffer__traits_01_4.html" title=" " alt="" coords="301,406,438,462"/>
+<area shape="poly" id="edge106_Node000000_Node000007" title=" " alt="" coords="125,288,177,340,209,368,245,391,302,415,300,420,242,396,206,372,173,344,121,291"/>
+<area shape="rect" id="Node000009" href="$d7/d4d/classbasic__memory__buffer.html" title=" " alt="" coords="297,342,442,382"/>
+<area shape="poly" id="edge107_Node000000_Node000009" title=" " alt="" coords="143,282,245,326,297,342,296,347,243,331,141,287"/>
+<area shape="rect" id="Node000006" href="$d1/d79/classdetail_1_1iterator__buffer.html" title=" " alt="" coords="297,211,442,252"/>
+<area shape="poly" id="edge108_Node000000_Node000006" title=" " alt="" coords="176,253,296,237,297,243,176,258"/>
+<area shape="rect" id="Node000003" href="$de/d0d/classdetail_1_1buffer.html" title=" " alt="" coords="5,43,196,84"/>
+<area shape="poly" id="edge109_Node000003_Node000002" title=" " alt="" coords="211,60,243,60,243,66,211,66"/>
+<area shape="rect" id="Node000004" href="$d0/d6a/structdetail_1_1buffer__traits.html" title=" " alt="" coords="37,153,164,179"/>
+<area shape="poly" id="edge110_Node000004_Node000002" title=" " alt="" coords="150,144,242,109,244,114,152,149"/>
+<area shape="poly" id="edge111_Node000004_Node000005" title=" " alt="" coords="179,163,300,163,300,168,179,168"/>
+<area shape="poly" id="edge112_Node000004_Node000006" title=" " alt="" coords="172,180,297,211,296,216,171,185"/>
+<area shape="rect" id="Node000008" href="$d8/d91/classdetail_1_1fixed__buffer__traits.html" title=" " alt="" coords="39,414,162,454"/>
+<area shape="poly" id="edge113_Node000008_Node000007" title=" " alt="" coords="177,431,300,431,300,436,177,436"/>
 </map>

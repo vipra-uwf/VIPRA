@@ -20,12 +20,14 @@ var searchData=
   ['has_5fmutable_5fbegin_5fend_17',['has_mutable_begin_end',['../da/dee/structdetail_1_1has__mutable__begin__end.html',1,'detail']]],
   ['has_5fmutable_5fbegin_5fend_3c_20t_2c_20void_5ft_3c_20decltype_28_2adetail_3a_3arange_5fbegin_28std_3a_3adeclval_3c_20t_20_26_20_3e_28_29_29_29_2c_20decltype_28detail_3a_3arange_5fend_28std_3a_3adeclval_3c_20t_20_26_20_3e_28_29_29_29_2c_20int_20_3e_20_3e_18',['has_mutable_begin_end&lt; T, void_t&lt; decltype(*detail::range_begin(std::declval&lt; T &amp; &gt;())), decltype(detail::range_end(std::declval&lt; T &amp; &gt;())), int &gt; &gt;',['../d5/d6e/structdetail_1_1has__mutable__begin__end_3_01T_00_01void__t_3_01decltype_07_5detail_1_1range__be7f2bf1942599b08adc3d302a1be62e3f.html',1,'detail']]],
   ['has_5fparam_19',['has_param',['../dd/d44/classVIPRA_1_1Parameters.html#a25519b3c0cdf2e735a946c3e64560def',1,'VIPRA::Parameters']]],
-  ['has_5frequired_5fparam_20',['has_required_param',['../dd/d44/classVIPRA_1_1Parameters.html#a3b2819c6103bb596dc1b2d0e1c801bf1',1,'VIPRA::Parameters']]],
-  ['has_5ftag_21',['has_tag',['../d9/da0/structVIPRA_1_1Util_1_1has__tag.html',1,'VIPRA::Util']]],
-  ['has_5ftag_3c_20type_5ft_2c_20decltype_28_28void_29_20type_5ft_3a_3atag_2c_200_29_3e_22',['has_tag&lt; type_t, decltype((void) type_t::tag, 0)&gt;',['../da/d0b/structVIPRA_1_1Util_1_1has__tag_3_01type__t_00_01decltype_07_07void_08_01type__t_1_1tag_00_010_08_4.html',1,'VIPRA::Util']]],
-  ['has_5fto_5fstring_5fview_23',['has_to_string_view',['../db/de9/structdetail_1_1has__to__string__view.html',1,'detail']]],
-  ['has_5fto_5fstring_5fview_3c_20t_2c_20void_5ft_3c_20decltype_28detail_3a_3ato_5fstring_5fview_28std_3a_3adeclval_3c_20t_20_3e_28_29_29_29_3e_20_3e_24',['has_to_string_view&lt; T, void_t&lt; decltype(detail::to_string_view(std::declval&lt; T &gt;()))&gt; &gt;',['../d2/d2f/structdetail_1_1has__to__string__view_3_01T_00_01void__t_3_01decltype_07detail_1_1to__string__via2b2866f7fc9fb7752b163dce36cc145.html',1,'detail']]],
-  ['has_5ftype_25',['has_type',['../db/dbc/classVIPRA_1_1Behaviors_1_1Ptype.html#aa94e441230704804c1b2f5701987cdf2',1,'VIPRA::Behaviors::Ptype']]],
-  ['hash_26',['Hash',['../dd/d9d/structVIPRA_1_1Behaviors_1_1CaselessStrCompare_1_1Hash.html',1,'VIPRA::Behaviors::CaselessStrCompare']]],
-  ['humanbehavior_27',['HumanBehavior',['../de/dfa/classVIPRA_1_1Behaviors_1_1HumanBehavior.html',1,'VIPRA::Behaviors']]]
+  ['has_5fparameters_20',['has_parameters',['../d9/db4/conceptVIPRA_1_1Concepts_1_1has__parameters.html',1,'VIPRA::Concepts']]],
+  ['has_5frequired_5fparam_21',['has_required_param',['../dd/d44/classVIPRA_1_1Parameters.html#a3b2819c6103bb596dc1b2d0e1c801bf1',1,'VIPRA::Parameters']]],
+  ['has_5fsides_22',['has_sides',['../da/d00/conceptVIPRA_1_1Geometry_1_1has__sides.html',1,'VIPRA::Geometry']]],
+  ['has_5ftag_23',['has_tag',['../d9/da0/structVIPRA_1_1Util_1_1has__tag.html',1,'VIPRA::Util']]],
+  ['has_5ftag_3c_20type_5ft_2c_20decltype_28_28void_29_20type_5ft_3a_3atag_2c_200_29_3e_24',['has_tag&lt; type_t, decltype((void) type_t::tag, 0)&gt;',['../da/d0b/structVIPRA_1_1Util_1_1has__tag_3_01type__t_00_01decltype_07_07void_08_01type__t_1_1tag_00_010_08_4.html',1,'VIPRA::Util']]],
+  ['has_5fto_5fstring_5fview_25',['has_to_string_view',['../db/de9/structdetail_1_1has__to__string__view.html',1,'detail']]],
+  ['has_5fto_5fstring_5fview_3c_20t_2c_20void_5ft_3c_20decltype_28detail_3a_3ato_5fstring_5fview_28std_3a_3adeclval_3c_20t_20_3e_28_29_29_29_3e_20_3e_26',['has_to_string_view&lt; T, void_t&lt; decltype(detail::to_string_view(std::declval&lt; T &gt;()))&gt; &gt;',['../d2/d2f/structdetail_1_1has__to__string__view_3_01T_00_01void__t_3_01decltype_07detail_1_1to__string__via2b2866f7fc9fb7752b163dce36cc145.html',1,'detail']]],
+  ['has_5ftype_27',['has_type',['../db/dbc/classVIPRA_1_1Behaviors_1_1Ptype.html#aa94e441230704804c1b2f5701987cdf2',1,'VIPRA::Behaviors::Ptype']]],
+  ['hash_28',['Hash',['../dd/d9d/structVIPRA_1_1Behaviors_1_1CaselessStrCompare_1_1Hash.html',1,'VIPRA::Behaviors::CaselessStrCompare']]],
+  ['humanbehavior_29',['HumanBehavior',['../de/dfa/classVIPRA_1_1Behaviors_1_1HumanBehavior.html',1,'VIPRA::Behaviors']]]
 ];

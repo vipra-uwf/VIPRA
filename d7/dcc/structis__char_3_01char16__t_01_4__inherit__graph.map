@@ -1,5 +1,7 @@
 <map id="is_char&lt; char16_t &gt;" name="is_char&lt; char16_t &gt;">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,79,141,105"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="24,5,122,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="76,46,76,79,70,79,70,46"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="52,79,188,105"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,110,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="80,41,112,77,108,80,76,44"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="134,5,232,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="164,44,133,80,129,77,160,41"/>
 </map>
