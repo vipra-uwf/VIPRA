@@ -24,13 +24,10 @@ var searchData=
   ['goals_20macros_21',['Goals Macros',['../d6/d36/md_docs_2pages_2developers_2usage_2macros.html#autotoc_md177',1,'']]],
   ['goals_20modules_22',['Goals Modules',['../d6/d09/md_docs_2pages_2developers_2implementation_2goals.html',1,'']]],
   ['gperftools_23',['Using Gperftools',['../dd/d3e/md_docs_2pages_2developers_2setup.html#autotoc_md162',1,'']]],
-  ['graph_24',['Graph',['../dd/d40/classVIPRA_1_1DataStructures_1_1Graph.html',1,'VIPRA::DataStructures']]],
-  ['graphmixin_25',['GraphMixin',['../d8/de6/classVIPRA_1_1DataStructures_1_1GraphMixin.html',1,'VIPRA::DataStructures']]],
-  ['graphmixin_3c_20void_2c_20data_5ft_20_3e_26',['GraphMixin&lt; void, data_t &gt;',['../d8/de6/classVIPRA_1_1DataStructures_1_1GraphMixin.html',1,'VIPRA::DataStructures']]],
-  ['grid_27',['Grid',['../d2/dc4/classVIPRA_1_1Goals_1_1Grid.html',1,'VIPRA::Goals']]],
-  ['grid_20pedestrian_20set_28',['Grid Pedestrian Set',['../d8/dbc/md_docs_2pages_2researchers_2base__modules.html#autotoc_md196',1,'']]],
-  ['gridpoint_29',['GridPoint',['../d5/dab/structVIPRA_1_1Goals_1_1DensityGrid_1_1GridPoint.html',1,'VIPRA::Goals::DensityGrid::GridPoint'],['../db/d56/structVIPRA_1_1Goals_1_1Grid_1_1GridPoint.html',1,'VIPRA::Goals::Grid::GridPoint'],['../d1/d59/structVIPRA_1_1Goals_1_1GridPoint.html',1,'VIPRA::Goals::GridPoint']]],
-  ['group_5fdigits_5fview_30',['group_digits_view',['../db/d2b/structgroup__digits__view.html',1,'']]],
-  ['groups_31',['Groups',['../df/d1b/md_docs_2pages_2researchers_2behaviors_2behaviors__syntax.html#autotoc_md227',1,'Groups'],['../df/d1b/md_docs_2pages_2researchers_2behaviors_2behaviors__syntax.html#autotoc_md237',1,'Selecting From Groups']]],
-  ['groupscontainer_32',['GroupsContainer',['../d7/d24/classVIPRA_1_1Behaviors_1_1GroupsContainer.html',1,'VIPRA::Behaviors']]]
+  ['grid_24',['Grid',['../d2/dc4/classVIPRA_1_1Goals_1_1Grid.html',1,'VIPRA::Goals']]],
+  ['grid_20pedestrian_20set_25',['Grid Pedestrian Set',['../d8/dbc/md_docs_2pages_2researchers_2base__modules.html#autotoc_md196',1,'']]],
+  ['gridpoint_26',['GridPoint',['../d5/dab/structVIPRA_1_1Goals_1_1DensityGrid_1_1GridPoint.html',1,'VIPRA::Goals::DensityGrid::GridPoint'],['../db/d56/structVIPRA_1_1Goals_1_1Grid_1_1GridPoint.html',1,'VIPRA::Goals::Grid::GridPoint'],['../d1/d59/structVIPRA_1_1Goals_1_1GridPoint.html',1,'VIPRA::Goals::GridPoint']]],
+  ['group_5fdigits_5fview_27',['group_digits_view',['../db/d2b/structgroup__digits__view.html',1,'']]],
+  ['groups_28',['Groups',['../df/d1b/md_docs_2pages_2researchers_2behaviors_2behaviors__syntax.html#autotoc_md227',1,'Groups'],['../df/d1b/md_docs_2pages_2researchers_2behaviors_2behaviors__syntax.html#autotoc_md237',1,'Selecting From Groups']]],
+  ['groupscontainer_29',['GroupsContainer',['../d7/d24/classVIPRA_1_1Behaviors_1_1GroupsContainer.html',1,'VIPRA::Behaviors']]]
 ];

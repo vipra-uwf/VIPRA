@@ -98,94 +98,96 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;cstdint&gt;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;cstdlib&gt;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;limits&gt;</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;vipra/concepts/numeric.hpp&quot;</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;vipra/types/float.hpp&quot;</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;vipra/types/size.hpp&quot;</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">namespace </span>VIPRA::Random {</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span></div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment">// NOLINTNEXTLINE (rolland) Default Naming Convention looks ugly</span></div>
-<div class="foldopen" id="foldopen00020" data-start="{" data-end="};">
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">   20</a></span><span class="keyword">class </span>Engine {</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>  <span class="keyword">using </span>seed = __uint128_t;</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>  <span class="keyword">using </span>result_type = uint64_t;</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  Engine() : _currVal(DEFAULT_SEED) {}</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>  <span class="keyword">explicit</span> Engine(uint64_t seedVal) : _currVal(seedVal)</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  {</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    assert(seedVal != 0);</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    _currVal &lt;&lt;= SHIFT_NUM;</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>  }</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  <span class="keyword">static</span> <span class="keyword">constexpr</span> uint64_t DEFAULT_SEED = 12345;</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span></div>
-<div class="foldopen" id="foldopen00041" data-start="{" data-end="}">
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html#a6ede0ac74268d511e148682b3fbe114c">   41</a></span>  <span class="keyword">auto</span> <a class="code hl_function" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html#a6ede0ac74268d511e148682b3fbe114c">operator()</a>() noexcept -&gt; uint64_t</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  {</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    assert(_currVal != 0);</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    _currVal *= MULT_NUM;</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keywordflow">return</span> _currVal &gt;&gt; SHIFT_NUM;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  }</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;random&gt;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;vipra/concepts/numeric.hpp&quot;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;vipra/types/float.hpp&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;vipra/types/size.hpp&quot;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">namespace </span>VIPRA::Random {</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment">// NOLINTNEXTLINE (rolland) Default Naming Convention looks ugly</span></div>
+<div class="foldopen" id="foldopen00022" data-start="{" data-end="};">
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">   22</a></span><span class="keyword">class </span>Engine {</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>  <span class="keyword">using </span>seed = __uint128_t;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  <span class="keyword">using </span>result_type = uint64_t;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  Engine() : _currVal(DEFAULT_SEED) {}</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>  <span class="keyword">explicit</span> Engine(uint64_t seedVal) : _currVal(seedVal)</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>  {</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    assert(seedVal != 0);</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    _currVal &lt;&lt;= SHIFT_NUM;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  }</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>  <span class="keyword">static</span> <span class="keyword">constexpr</span> uint64_t DEFAULT_SEED = 12345;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span></div>
+<div class="foldopen" id="foldopen00043" data-start="{" data-end="}">
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html#a6ede0ac74268d511e148682b3fbe114c">   43</a></span>  <span class="keyword">auto</span> <a class="code hl_function" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html#a6ede0ac74268d511e148682b3fbe114c">operator()</a>() noexcept -&gt; uint64_t</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>  {</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    assert(_currVal != 0);</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    _currVal *= MULT_NUM;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keywordflow">return</span> _currVal &gt;&gt; SHIFT_NUM;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>  }</div>
 </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span></div>
-<div class="foldopen" id="foldopen00054" data-start="{" data-end="}">
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html#a49e677f0a9609ce76b96a0e855da75e1">   54</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html#a49e677f0a9609ce76b96a0e855da75e1">reseed</a>(uint64_t seedNum) <span class="keyword">noexcept</span></div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  {</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    _currVal = seedNum;</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    _currVal &lt;&lt;= SHIFT_NUM;</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    assert(_currVal != 0);</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>  }</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span></div>
+<div class="foldopen" id="foldopen00056" data-start="{" data-end="}">
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html#a49e677f0a9609ce76b96a0e855da75e1">   56</a></span>  <span class="keywordtype">void</span> <a class="code hl_function" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html#a49e677f0a9609ce76b96a0e855da75e1">reseed</a>(uint64_t seedNum) <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  {</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    _currVal = seedNum;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    _currVal &lt;&lt;= SHIFT_NUM;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    assert(_currVal != 0);</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>  }</div>
 </div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span></div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html#a3caead5675755726b36dfc14dad6c0ba">   67</a></span>  <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_function" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html#a3caead5675755726b36dfc14dad6c0ba">min</a>() noexcept -&gt; uint64_t { <span class="keywordflow">return</span> 0; }</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span></div>
-<div class="foldopen" id="foldopen00074" data-start="{" data-end="}">
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html#a709ce38c547084a3a17861b8772c002e">   74</a></span>  <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_function" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html#a709ce38c547084a3a17861b8772c002e">max</a>() noexcept -&gt; uint64_t</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>  {</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <span class="keywordflow">return</span> std::numeric_limits&lt;uint64_t&gt;::max();</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>  }</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html#a3caead5675755726b36dfc14dad6c0ba">   69</a></span>  <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_function" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html#a3caead5675755726b36dfc14dad6c0ba">min</a>() noexcept -&gt; uint64_t { <span class="keywordflow">return</span> 0; }</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span></div>
+<div class="foldopen" id="foldopen00076" data-start="{" data-end="}">
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html#a709ce38c547084a3a17861b8772c002e">   76</a></span>  <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_function" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html#a709ce38c547084a3a17861b8772c002e">max</a>() noexcept -&gt; uint64_t</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>  {</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    <span class="keywordflow">return</span> std::numeric_limits&lt;uint64_t&gt;::max();</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>  }</div>
 </div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>  seed                      _currVal;</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>  <span class="keyword">static</span> <span class="keyword">constexpr</span> uint64_t MULT_NUM = 0xda942042e4dd58b5;</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>  <span class="keyword">static</span> <span class="keyword">constexpr</span> uint64_t SHIFT_NUM = 64;</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>  <a class="code hl_class" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">~Engine</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>  <a class="code hl_class" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">Engine</a>(<span class="keyword">const</span> <a class="code hl_class" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">Engine</a>&amp;) = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>  <a class="code hl_class" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">Engine</a>(<a class="code hl_class" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">Engine</a>&amp;&amp;) noexcept = default;</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>  auto operator=(const <a class="code hl_class" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">Engine</a>&amp;) -&gt; <a class="code hl_class" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">Engine</a>&amp; = default;</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>  auto operator=(<a class="code hl_class" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">Engine</a>&amp;&amp;) noexcept -&gt; <a class="code hl_class" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">Engine</a>&amp; = default;</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>};</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>  seed                      _currVal;</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  <span class="keyword">static</span> <span class="keyword">constexpr</span> uint64_t MULT_NUM = 0xda942042e4dd58b5;</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>  <span class="keyword">static</span> <span class="keyword">constexpr</span> uint64_t SHIFT_NUM = 64;</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>  <a class="code hl_class" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">~Engine</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>  <a class="code hl_class" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">Engine</a>(<span class="keyword">const</span> <a class="code hl_class" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">Engine</a>&amp;) = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>  <a class="code hl_class" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">Engine</a>(<a class="code hl_class" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">Engine</a>&amp;&amp;) noexcept = default;</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>  auto operator=(const <a class="code hl_class" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">Engine</a>&amp;) -&gt; <a class="code hl_class" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">Engine</a>&amp; = default;</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>  auto operator=(<a class="code hl_class" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">Engine</a>&amp;&amp;) noexcept -&gt; <a class="code hl_class" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">Engine</a>&amp; = default;</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>};</div>
 </div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span></div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>template &lt;typename dist_t, Concepts::Numeric data_t = VIPRA::f_pnt&gt;</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>inline auto make_distribution(dist_t&amp;&amp; distr, VIPRA::size count,</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>                              VIPRA::Random::<a class="code hl_class" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">Engine</a>&amp; engine) -&gt; std::vector&lt;data_t&gt;</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>{</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>  std::vector&lt;data_t&gt; ret(count);</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>  std::transform(ret.cbegin(), ret.cend(), ret.begin(), [&amp;](data_t) {</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    data_t val = distr(engine);</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    return val;</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>  });</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>  <span class="keywordflow">return</span> ret;</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>}</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>}  <span class="comment">// namespace VIPRA::Random</span></div>
-<div class="ttc" id="aclassVIPRA_1_1Random_1_1Engine_html"><div class="ttname"><a href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a></div><div class="ttdoc">Psuedo Random number engine.</div><div class="ttdef"><b>Definition</b> random.hpp:20</div></div>
-<div class="ttc" id="aclassVIPRA_1_1Random_1_1Engine_html_a3caead5675755726b36dfc14dad6c0ba"><div class="ttname"><a href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html#a3caead5675755726b36dfc14dad6c0ba">VIPRA::Random::Engine::min</a></div><div class="ttdeci">static constexpr auto min() noexcept -&gt; uint64_t</div><div class="ttdoc">Returns the minimum number possible.</div><div class="ttdef"><b>Definition</b> random.hpp:67</div></div>
-<div class="ttc" id="aclassVIPRA_1_1Random_1_1Engine_html_a49e677f0a9609ce76b96a0e855da75e1"><div class="ttname"><a href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html#a49e677f0a9609ce76b96a0e855da75e1">VIPRA::Random::Engine::reseed</a></div><div class="ttdeci">void reseed(uint64_t seedNum) noexcept</div><div class="ttdoc">Restarts the number generator with a new seed.</div><div class="ttdef"><b>Definition</b> random.hpp:54</div></div>
-<div class="ttc" id="aclassVIPRA_1_1Random_1_1Engine_html_a6ede0ac74268d511e148682b3fbe114c"><div class="ttname"><a href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html#a6ede0ac74268d511e148682b3fbe114c">VIPRA::Random::Engine::operator()</a></div><div class="ttdeci">auto operator()() noexcept -&gt; uint64_t</div><div class="ttdoc">Produces the next pseudo random number in the sequence, uses Lehmer&#39;s generator.</div><div class="ttdef"><b>Definition</b> random.hpp:41</div></div>
-<div class="ttc" id="aclassVIPRA_1_1Random_1_1Engine_html_a709ce38c547084a3a17861b8772c002e"><div class="ttname"><a href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html#a709ce38c547084a3a17861b8772c002e">VIPRA::Random::Engine::max</a></div><div class="ttdeci">static constexpr auto max() noexcept -&gt; uint64_t</div><div class="ttdoc">Returns the maximum number possible.</div><div class="ttdef"><b>Definition</b> random.hpp:74</div></div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span></div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>template &lt;typename dist_t, Concepts::Numeric data_t = VIPRA::f_pnt&gt;</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>inline auto make_distribution(dist_t&amp;&amp; distr, VIPRA::size count,</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>                              VIPRA::Random::<a class="code hl_class" href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">Engine</a>&amp; engine) -&gt; std::vector&lt;data_t&gt;</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>{</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>  std::vector&lt;data_t&gt; ret(count);</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>  std::transform(ret.cbegin(), ret.cend(), ret.begin(), [&amp;](data_t) {</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    data_t val = distr(engine);</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    return val;</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>  });</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>  <span class="keywordflow">return</span> ret;</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>}</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>}  <span class="comment">// namespace VIPRA::Random</span></div>
+<div class="ttc" id="aclassVIPRA_1_1Random_1_1Engine_html"><div class="ttname"><a href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html">VIPRA::Random::Engine</a></div><div class="ttdoc">Psuedo Random number engine.</div><div class="ttdef"><b>Definition</b> random.hpp:22</div></div>
+<div class="ttc" id="aclassVIPRA_1_1Random_1_1Engine_html_a3caead5675755726b36dfc14dad6c0ba"><div class="ttname"><a href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html#a3caead5675755726b36dfc14dad6c0ba">VIPRA::Random::Engine::min</a></div><div class="ttdeci">static constexpr auto min() noexcept -&gt; uint64_t</div><div class="ttdoc">Returns the minimum number possible.</div><div class="ttdef"><b>Definition</b> random.hpp:69</div></div>
+<div class="ttc" id="aclassVIPRA_1_1Random_1_1Engine_html_a49e677f0a9609ce76b96a0e855da75e1"><div class="ttname"><a href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html#a49e677f0a9609ce76b96a0e855da75e1">VIPRA::Random::Engine::reseed</a></div><div class="ttdeci">void reseed(uint64_t seedNum) noexcept</div><div class="ttdoc">Restarts the number generator with a new seed.</div><div class="ttdef"><b>Definition</b> random.hpp:56</div></div>
+<div class="ttc" id="aclassVIPRA_1_1Random_1_1Engine_html_a6ede0ac74268d511e148682b3fbe114c"><div class="ttname"><a href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html#a6ede0ac74268d511e148682b3fbe114c">VIPRA::Random::Engine::operator()</a></div><div class="ttdeci">auto operator()() noexcept -&gt; uint64_t</div><div class="ttdoc">Produces the next pseudo random number in the sequence, uses Lehmer&#39;s generator.</div><div class="ttdef"><b>Definition</b> random.hpp:43</div></div>
+<div class="ttc" id="aclassVIPRA_1_1Random_1_1Engine_html_a709ce38c547084a3a17861b8772c002e"><div class="ttname"><a href="../../df/d63/classVIPRA_1_1Random_1_1Engine.html#a709ce38c547084a3a17861b8772c002e">VIPRA::Random::Engine::max</a></div><div class="ttdeci">static constexpr auto max() noexcept -&gt; uint64_t</div><div class="ttdoc">Returns the maximum number possible.</div><div class="ttdef"><b>Definition</b> random.hpp:76</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
