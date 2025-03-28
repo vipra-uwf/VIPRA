@@ -6,6 +6,8 @@ on:
 jobs:
   run-lint:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
     - uses: actions/checkout@v4
     - run: make release JOBS=8
@@ -14,7 +16,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        style: 'file' 
+        style: 'file'
+        extra-args: '-std=c++20'
         tidy-checks: ''
         ignore: __tests__|modules|tools|examples|docs|deps|cmake|behaviors|include/vipra/vipra_behaviors/_grammar
         database: 'build'
