@@ -45,35 +45,28 @@ class JSON : public VIPRA::Modules::ParamReader<JSON>,
   [[nodiscard]] auto get(std::vector<std::string> const& keys) const
       -> std::optional<data_t>;
 
-  [[nodiscard]] auto serialize() -> std::string override
-  {
-    return _json.dump();
-  }
+  [[nodiscard]] auto serialize() -> std::string override { return _json.dump(); }
 
-  [[nodiscard]] auto get_pedestrians() const
-      -> std::optional<VIPRA::f3dVec> override;
+  [[nodiscard]] auto get_pedestrians() const -> std::optional<VIPRA::f3dVec> override;
   [[nodiscard]] auto get_obstacles() const
       -> std::optional<std::vector<VIPRA::Geometry::Polygon>> override;
   [[nodiscard]] auto get_spawns() const
       -> std::optional<std::vector<VIPRA::Geometry::Polygon>> override;
   [[nodiscard]] auto get_objectives() const
-      -> std::optional<std::map<
-          std::string, std::vector<VIPRA::Geometry::Polygon>>> override;
-  [[nodiscard]] auto get_areas() const
       -> std::optional<
-          std::map<std::string, VIPRA::Geometry::Polygon>> override;
+          std::map<std::string, std::vector<VIPRA::Geometry::Polygon>>> override;
+  [[nodiscard]] auto get_areas() const
+      -> std::optional<std::map<std::string, VIPRA::Geometry::Polygon>> override;
 
  private:
   nlohmann::json _json;
 
   template <typename data_t>
-  [[nodiscard]] auto get_value(json_cref const& value) const
-      -> std::optional<data_t>;
+  [[nodiscard]] auto get_value(json_cref const& value) const -> std::optional<data_t>;
 
   [[nodiscard]] static auto is_f3d(nlohmann::json const& value) -> bool;
   [[nodiscard]] static auto is_f2d(nlohmann::json const& value) -> bool;
-  [[nodiscard]] static auto get_f3d(json_cref const& value)
-      -> std::optional<VIPRA::f3d>;
+  [[nodiscard]] static auto get_f3d(json_cref const& value) -> std::optional<VIPRA::f3d>;
   [[nodiscard]] static auto get_f3d_vec(json_cref const& value)
       -> std::optional<VIPRA::f3dVec>;
 
@@ -88,8 +81,8 @@ class JSON : public VIPRA::Modules::ParamReader<JSON>,
   [[nodiscard]] static auto get_polygons(json_cref const& value)
       -> std::optional<std::vector<VIPRA::Geometry::Polygon>>;
 
-  [[nodiscard]] auto get_value_at_key(
-      std::vector<std::string> const& keys) const -> std::optional<json_cref>
+  [[nodiscard]] auto get_value_at_key(std::vector<std::string> const& keys) const
+      -> std::optional<json_cref>
   {
     auto value = std::cref(_json);
     bool found = true;
@@ -171,8 +164,8 @@ template <typename data_t>
    * @param value 
    * @return std::optional<VIPRA::f3dVec> 
    */
-[[nodiscard]] inline auto VIPRA::Input::JSON::get_f3d_vec(
-    json_cref const& value) -> std::optional<VIPRA::f3dVec>
+[[nodiscard]] inline auto VIPRA::Input::JSON::get_f3d_vec(json_cref const& value)
+    -> std::optional<VIPRA::f3dVec>
 {
   if ( ! value.get().is_array() ) return std::nullopt;
 
@@ -186,8 +179,7 @@ template <typename data_t>
       continue;
     }
 
-    f3dVec.emplace_back(f3d.at("x").get<VIPRA::f_pnt>(),
-                        f3d.at("y").get<VIPRA::f_pnt>(),
+    f3dVec.emplace_back(f3d.at("x").get<VIPRA::f_pnt>(), f3d.at("y").get<VIPRA::f_pnt>(),
                         f3d.at("z").get<VIPRA::f_pnt>());
   }
 
@@ -224,16 +216,14 @@ inline void VIPRA::Input::JSON::load(std::string const& filepath)
     VIPRA_MODULE_ERROR("{} is not a file", filepath);
 
   std::ifstream file(filepath, std::ios::in);
-  if ( ! file.is_open() )
-    VIPRA_MODULE_ERROR("Could not open file at: ", filepath);
+  if ( ! file.is_open() ) VIPRA_MODULE_ERROR("Could not open file at: ", filepath);
 
   try {
     _json = nlohmann::json::parse(file);
   }
   catch ( nlohmann::json::parse_error const& e ) {
-    VIPRA_MODULE_ERROR(
-        "Could not parse JSON file at: {}\nnlohmann json error: {}", filepath,
-        e.what());
+    VIPRA_MODULE_ERROR("Could not parse JSON file at: {}\nnlohmann json error: {}",
+                       filepath, e.what());
   }
 
   file.close();
@@ -258,21 +248,17 @@ template <typename data_t>
     return get_f3d_vec(value);
   }
 
-  else if constexpr ( std::is_same_v<data_t,
-                                     std::vector<VIPRA::Geometry::Polygon>> ) {
+  else if constexpr ( std::is_same_v<data_t, std::vector<VIPRA::Geometry::Polygon>> ) {
     return get_polygons(value);
   }
 
-  else if constexpr ( VIPRA::Util::is_specialization<data_t,
-                                                     std::vector>::value ) {
-    using value_t =
-        typename VIPRA::Util::get_specialization_internal<data_t>::type;
+  else if constexpr ( VIPRA::Util::is_specialization<data_t, std::vector>::value ) {
+    using value_t = typename VIPRA::Util::get_specialization_internal<data_t>::type;
     return get_vector<value_t>(value);
   }
 
   else if constexpr ( VIPRA::Util::is_map_v<data_t> ) {
-    using value_t =
-        typename VIPRA::Util::get_map_specialization<data_t>::value_t;
+    using value_t = typename VIPRA::Util::get_map_specialization<data_t>::value_t;
     return get_map<value_t>(value);
   }
 
@@ -307,8 +293,7 @@ auto VIPRA::Input::JSON::get_map(json_cref const& value) const
    * @return true 
    * @return false 
    */
-[[nodiscard]] inline auto VIPRA::Input::JSON::is_f3d(
-    nlohmann::json const& value) -> bool
+[[nodiscard]] inline auto VIPRA::Input::JSON::is_f3d(nlohmann::json const& value) -> bool
 {
   if ( ! value.is_object() ) return false;
   if ( ! value.contains("x") || ! value.contains("y") || ! value.contains("z") )
@@ -326,12 +311,10 @@ auto VIPRA::Input::JSON::get_map(json_cref const& value) const
    * @return true 
    * @return false 
    */
-[[nodiscard]] inline auto VIPRA::Input::JSON::is_f2d(
-    nlohmann::json const& value) -> bool
+[[nodiscard]] inline auto VIPRA::Input::JSON::is_f2d(nlohmann::json const& value) -> bool
 {
   if ( ! value.is_object() ) return false;
   if ( ! value.contains("x") || ! value.contains("y") ) return false;
-  if ( ! value.at("x").is_number() || ! value.at("y").is_number() )
-    return false;
+  if ( ! value.at("x").is_number() || ! value.at("y").is_number() ) return false;
   return true;
 }

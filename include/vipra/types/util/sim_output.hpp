@@ -14,7 +14,8 @@ namespace VIPRA {
 template <typename output_t>
 // NOLINTNEXTLINE(readability-identifier-naming) lowercase is a regular naming convetion here
 struct sim_output {
-  using type = std::conditional_t<std::is_same_v<output_t, void> || std::is_same_v<output_t, VOID> ||
+  using type = std::conditional_t<std::is_same_v<output_t, void> ||
+                                      std::is_same_v<output_t, VOID> ||
                                       Util::all_of_type_v<VOID, output_t>,
                                   void, decltype(std::declval<output_t>().write())>;
 };

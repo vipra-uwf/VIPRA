@@ -6,10 +6,11 @@
 
 namespace VIPRA::Behaviors {
 
-void SubConditionElapsedTimeFromEvent::operator()(
-    Simpack pack, const VIPRA::idxVec&                        peds,
-    std::vector<Target> const& /*unused*/, std::vector<bool>& met,
-    std::vector<bool> const& /*unused*/, BoolOp /*unused*/)
+void SubConditionElapsedTimeFromEvent::operator()(Simpack pack, const VIPRA::idxVec& peds,
+                                                  std::vector<Target> const& /*unused*/,
+                                                  std::vector<bool>& met,
+                                                  std::vector<bool> const& /*unused*/,
+                                                  BoolOp /*unused*/)
 {
   for ( auto ped : peds ) {
     auto const& event = pack.context.events[_event];

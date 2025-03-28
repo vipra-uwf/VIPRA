@@ -93,8 +93,7 @@ using RangeVal = std::pair<VIPRA::f_pnt, VIPRA::f_pnt>;
   auto         numbers = ctx->number_range()->NUMBER();
   VIPRA::f_pnt min = std::round(std::stof(numbers[0]->toString()));
   VIPRA::f_pnt max = std::round(std::stof(numbers[1]->toString()));
-  return NumericValue(
-      seed, ExactValue{std::round(collapse_range_value(seed, min, max))});
+  return NumericValue(seed, ExactValue{std::round(collapse_range_value(seed, min, max))});
 }
 
 /**

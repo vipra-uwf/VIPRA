@@ -47,8 +47,7 @@ class MapInput {
      * @return std::vector<Geometry::Polygon>
      */
   [[nodiscard]] virtual auto get_objectives() const
-      -> std::optional<
-             std::map<std::string, std::vector<VIPRA::Geometry::Polygon>>> = 0;
+      -> std::optional<std::map<std::string, std::vector<VIPRA::Geometry::Polygon>>> = 0;
 
   /**
      * @brief Returns polygons as loaded from the input module, std::nullopt if incorrect type / doesn't exist

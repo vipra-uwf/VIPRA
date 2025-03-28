@@ -42,7 +42,8 @@ class Input : public Util::CRTP<Input<module_t>> {
     assert(_loaded);
 
     try {
-      return self().template get_impl<data_t>(std::string_view(std::forward<keys_t>(keys))...);
+      return self().template get_impl<data_t>(
+          std::string_view(std::forward<keys_t>(keys))...);
     }
     catch ( std::exception& ex ) {
       // TODO(rolland): if the input module has an issue should we just let it throw or just return nullopt like this?

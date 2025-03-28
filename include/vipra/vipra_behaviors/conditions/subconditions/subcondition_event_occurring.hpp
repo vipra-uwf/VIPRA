@@ -23,12 +23,10 @@ class SubConditionEventOccurring {
                   std::vector<bool> const& /*unused*/, BoolOp /*unused*/) const
   {
     if ( _negate ) {
-      std::fill(met.begin(), met.end(),
-                ! pack.context.events[_event].is_occurring());
+      std::fill(met.begin(), met.end(), ! pack.context.events[_event].is_occurring());
     }
     else {
-      std::fill(met.begin(), met.end(),
-                pack.context.events[_event].is_occurring());
+      std::fill(met.begin(), met.end(), pack.context.events[_event].is_occurring());
     }
   }
 

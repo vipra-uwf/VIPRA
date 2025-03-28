@@ -14,8 +14,7 @@ inline auto get_type_count(VIPRA::Behaviors::Ptype allTypes) -> VIPRA::size
 {
   VIPRA::size typeCnt = 1;
   while ( allTypes.fullType != 0 ) {
-    VIPRA::Behaviors::typeUID currType =
-        allTypes.fullType & (allTypes.fullType - 1);
+    VIPRA::Behaviors::typeUID currType = allTypes.fullType & (allTypes.fullType - 1);
     allTypes.fullType = currType;
     ++typeCnt;
   }

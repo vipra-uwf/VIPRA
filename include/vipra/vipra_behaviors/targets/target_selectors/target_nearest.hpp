@@ -41,10 +41,8 @@ struct TargetNearest {
   inline auto operator()(Simpack pack, Self self) const -> Target
   {
     if ( allPeds ) {
-      auto curr = nearest_in_group(pack, self.target.targetIdx,
-                                   pack.groups.get_group(0));
-      if ( curr.second == VIPRA::INVALID_IDX )
-        return Target{TargetType::INVALID, 0};
+      auto curr = nearest_in_group(pack, self.target.targetIdx, pack.groups.get_group(0));
+      if ( curr.second == VIPRA::INVALID_IDX ) return Target{TargetType::INVALID, 0};
       return {TargetType::PEDESTRIAN, curr.second};
     }
 
@@ -53,8 +51,8 @@ struct TargetNearest {
 
     type.for_each_type([&](typeUID type) {
       VIPRA::idx groupIdx = GroupsContainer::index(type);
-      auto       curr = nearest_in_group(pack, self.target.targetIdx,
-                                         pack.groups.get_group(groupIdx));
+      auto       curr =
+          nearest_in_group(pack, self.target.targetIdx, pack.groups.get_group(groupIdx));
       if ( curr.first < shortest ) {
         shortest = curr.first;
         nearest = curr.second;
@@ -88,8 +86,7 @@ struct TargetNearest {
     const VIPRA::f3d currCoords = coords[self];
 
     nearest = pack.pedset.conditional_closest_ped(self, [&](VIPRA::idx other) {
-      if ( std::find(idxs.begin(), idxs.end(), other) == idxs.end() )
-        return false;
+      if ( std::find(idxs.begin(), idxs.end(), other) == idxs.end() ) return false;
 
       if ( modifier ) {
         if ( ! modifier->check(pack, self, other) ) return false;

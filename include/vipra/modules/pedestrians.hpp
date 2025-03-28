@@ -103,10 +103,7 @@ class Pedestrians : public BaseModule<Pedestrians> {
     return _coords[firstPed].distance_to(_coords[secondPed]);
   }
 
-  [[nodiscard]] auto num_pedestrians() const -> VIPRA::size
-  {
-    return _coords.size();
-  }
+  [[nodiscard]] auto num_pedestrians() const -> VIPRA::size { return _coords.size(); }
 
   [[nodiscard]] auto ped_coords(VIPRA::idx pedIdx) const -> VIPRA::f3d const&
   {
@@ -140,23 +137,11 @@ class Pedestrians : public BaseModule<Pedestrians> {
   bool   _useFile{true};
 
  protected:
-  void set_velocities(VIPRA::f3dVec const& velocities)
-  {
-    _velocities = velocities;
-  }
-  void set_velocities(VIPRA::f3dVec&& velocities) noexcept
-  {
-    _velocities = velocities;
-  }
+  void set_velocities(VIPRA::f3dVec const& velocities) { _velocities = velocities; }
+  void set_velocities(VIPRA::f3dVec&& velocities) noexcept { _velocities = velocities; }
 
-  void set_coordinates(VIPRA::f3dVec const& coordinates)
-  {
-    _coords = coordinates;
-  }
-  void set_coordinates(VIPRA::f3dVec&& coordinates) noexcept
-  {
-    _coords = coordinates;
-  }
+  void set_coordinates(VIPRA::f3dVec const& coordinates) { _coords = coordinates; }
+  void set_coordinates(VIPRA::f3dVec&& coordinates) noexcept { _coords = coordinates; }
 
   [[nodiscard]] auto get_velocities() const -> VIPRA::f3dVec const&
   {

@@ -16,8 +16,7 @@ namespace VIPRA::Behaviors {
    * @param targets
    * @param latches 
    */
-void Condition::evaluate(Simpack pack, VIPRA::idxVec const& peds,
-                         std::vector<bool>&                   met,
+void Condition::evaluate(Simpack pack, VIPRA::idxVec const& peds, std::vector<bool>& met,
                          std::vector<Target> const&           targets,
                          std::optional<TimedLatchCollection>& latches)
 {
@@ -49,9 +48,8 @@ void Condition::evaluate(Simpack pack, VIPRA::idxVec const& peds,
    * @param latches 
    * @param met 
    */
-void Condition::handle_latches(Simpack                              pack,
-                               std::optional<TimedLatchCollection>& latches,
-                               std::vector<bool>&                   met)
+void Condition::handle_latches(Simpack pack, std::optional<TimedLatchCollection>& latches,
+                               std::vector<bool>& met)
 {
   if ( latches.has_value() ) {
     for ( VIPRA::idx i = 0; i < met.size(); ++i ) {

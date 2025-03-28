@@ -109,8 +109,9 @@ class Perf {
       copy -= milli;
       auto micro = std::chrono::duration_cast<Util::micro>(copy);
 
-      report += "\t" + name + ":\n\t\tTotal Time: " + std::to_string(seconds.count()) + "s " +
-                std::to_string(milli.count()) + "ms " + std::to_string(micro.count()) + "us\n";
+      report += "\t" + name + ":\n\t\tTotal Time: " + std::to_string(seconds.count()) +
+                "s " + std::to_string(milli.count()) + "ms " +
+                std::to_string(micro.count()) + "us\n";
       report += "\t\tPer Call: " + std::to_string(percallMilli.count()) + "ms " +
                 std::to_string(percallMicro.count()) + "us\n";
     }
@@ -147,13 +148,15 @@ class Perf {
     return calls;
   }
 
-  [[nodiscard]] static auto get_timings() -> std::map<std::string, Util::micro, std::less<>>&
+  [[nodiscard]] static auto get_timings()
+      -> std::map<std::string, Util::micro, std::less<>>&
   {
     static std::map<std::string, Util::micro, std::less<>> timings;
     return timings;
   }
 
-  [[nodiscard]] static auto get_clocks() -> std::map<std::string, Util::Clock<Util::micro>, std::less<>>&
+  [[nodiscard]] static auto get_clocks()
+      -> std::map<std::string, Util::Clock<Util::micro>, std::less<>>&
   {
     static std::map<std::string, Util::Clock<Util::micro>, std::less<>> timings;
     return timings;
@@ -161,7 +164,9 @@ class Perf {
 
   [[nodiscard]] static auto sort_calls() -> std::vector<std::pair<std::string, size_t>>
   {
-    const auto cmp = [](auto const& left, auto const& right) -> bool { return left.second > right.second; };
+    const auto cmp = [](auto const& left, auto const& right) -> bool {
+      return left.second > right.second;
+    };
 
     std::vector<std::pair<std::string, size_t>> retVal;
     for ( auto const& val : get_calls() ) {
@@ -173,9 +178,12 @@ class Perf {
     return retVal;
   }
 
-  [[nodiscard]] static auto sort_timings() -> std::vector<std::pair<std::string, Util::micro>>
+  [[nodiscard]] static auto sort_timings()
+      -> std::vector<std::pair<std::string, Util::micro>>
   {
-    const auto cmp = [](auto const& left, auto const& right) -> bool { return left.second > right.second; };
+    const auto cmp = [](auto const& left, auto const& right) -> bool {
+      return left.second > right.second;
+    };
 
     std::vector<std::pair<std::string, Util::micro>> retVal;
     for ( auto const& val : get_timings() ) {

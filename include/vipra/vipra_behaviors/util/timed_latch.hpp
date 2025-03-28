@@ -69,10 +69,7 @@ class TimedLatchCollection {
    * @param pedIdx : pedestrian index to get duration of
    * @return VIPRA::f_pnt 
    */
-  auto get_duration(VIPRA::idx pedIdx) -> VIPRA::f_pnt
-  {
-    return _duration.value(pedIdx);
-  }
+  auto get_duration(VIPRA::idx pedIdx) -> VIPRA::f_pnt { return _duration.value(pedIdx); }
 
  private:
   Behaviors::NumericValue    _duration;

@@ -32,9 +32,8 @@ class HumanBehavior {
 
   void initialize(Modules::Pedestrians const& pedset, Modules::Map const& map,
                   Modules::Goals& goals);
-  void timestep(Modules::Pedestrians& pedset, Modules::Map& map,
-                Modules::Goals& goals, VIPRA::State& state,
-                VIPRA::delta_t deltaT);
+  void timestep(Modules::Pedestrians& pedset, Modules::Map& map, Modules::Goals& goals,
+                VIPRA::State& state, VIPRA::delta_t deltaT);
 
   void set_all_ped_types(Ptype types)
   {
@@ -65,18 +64,14 @@ class HumanBehavior {
   {
     std::vector<Geometry::Rectangle> locs(locations.size());
 
-    std::transform(locations.begin(), locations.end(), locs.begin(),
-                   [](auto const& poly) {
-                     return Geometry::Rectangle{poly.bounding_box()};
-                   });
+    std::transform(
+        locations.begin(), locations.end(), locs.begin(),
+        [](auto const& poly) { return Geometry::Rectangle{poly.bounding_box()}; });
 
     _context.objectives[name] = std::move(locs);
   }
 
-  [[nodiscard]] auto get_name() const noexcept -> std::string const&
-  {
-    return _name;
-  }
+  [[nodiscard]] auto get_name() const noexcept -> std::string const& { return _name; }
   [[nodiscard]] auto event_count() const noexcept -> VIPRA::size
   {
     return _context.events.size();
@@ -112,8 +107,7 @@ class HumanBehavior {
   void evaluate_events(Modules::Pedestrians& pedset, Modules::Map& map,
                        Modules::Goals& goals, VIPRA::delta_t deltaT);
   void apply_actions(Modules::Pedestrians& pedset, Modules::Map& map,
-                     Modules::Goals& goals, VIPRA::State& state,
-                     VIPRA::delta_t deltaT);
+                     Modules::Goals& goals, VIPRA::State& state, VIPRA::delta_t deltaT);
 };
 
 }  // namespace VIPRA::Behaviors

@@ -25,11 +25,8 @@ namespace AStar {
  * @tparam graph_t 
  */
 template <typename graph_t>
-concept Graph = requires(const graph_t graph, VIPRA::idx idx)
-{
-  {
-    graph.neighbors(idx)
-    } -> std::same_as<std::vector<VIPRA::idx> const&>;
+concept Graph = requires(const graph_t graph, VIPRA::idx idx) {
+  { graph.neighbors(idx) } -> std::same_as<std::vector<VIPRA::idx> const&>;
 };
 
 /**
@@ -38,10 +35,9 @@ concept Graph = requires(const graph_t graph, VIPRA::idx idx)
  * @tparam func_t 
  */
 template <typename func_t>
-concept distance_func =
-    requires(func_t func, VIPRA::idx idx1, VIPRA::idx idx2) {
-      { func(idx1, idx2) } -> std::same_as<VIPRA::f_pnt>;
-    };
+concept distance_func = requires(func_t func, VIPRA::idx idx1, VIPRA::idx idx2) {
+  { func(idx1, idx2) } -> std::same_as<VIPRA::f_pnt>;
+};
 
 /**
  * @brief Concept for a function that converts a node index to a desired type
@@ -86,10 +82,7 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
     VIPRA::f_pnt distanceFromStart;
     VIPRA::f_pnt distanceWithHeuristic;
 
-    auto operator==(Node const& other) const -> bool
-    {
-      return self == other.self;
-    }
+    auto operator==(Node const& other) const -> bool { return self == other.self; }
 
     struct Compare {
       auto operator()(Node* left, Node* right) const -> bool
@@ -100,14 +93,13 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
   };
 
   // TODO(rolland): look at replacing this with a better data structure
-  struct PQueue : public std::priority_queue<Node*, std::vector<Node*>,
-                                             typename Node::Compare> {
+  struct PQueue
+      : public std::priority_queue<Node*, std::vector<Node*>, typename Node::Compare> {
     auto search(VIPRA::idx nodeIdx) -> Node*
     {
       auto container = this->c;
-      auto gridPoint =
-          std::find_if(container.begin(), container.end(),
-                       [&](Node* node) { return node->self == nodeIdx; });
+      auto gridPoint = std::find_if(container.begin(), container.end(),
+                                    [&](Node* node) { return node->self == nodeIdx; });
       if ( gridPoint == container.end() ) {
         return nullptr;
       }
@@ -117,10 +109,9 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
 
     void refresh()
     {
-      std::make_heap(
-          this->c.begin(), this->c.end(), [](Node* left, Node* right) {
-            return left->distanceWithHeuristic > right->distanceWithHeuristic;
-          });
+      std::make_heap(this->c.begin(), this->c.end(), [](Node* left, Node* right) {
+        return left->distanceWithHeuristic > right->distanceWithHeuristic;
+      });
     }
 
     auto begin() -> decltype(this->c.begin()) { return this->c.begin(); }
@@ -155,8 +146,8 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
       Node neighbor;
       neighbor.self = neighborIdx;
       neighbor.parent = current->self;
-      neighbor.distanceFromStart = current->distanceFromStart +
-                                   distance_func(current->self, neighborIdx);
+      neighbor.distanceFromStart =
+          current->distanceFromStart + distance_func(current->self, neighborIdx);
       neighbor.distanceWithHeuristic =
           neighbor.distanceFromStart + distance_func(neighborIdx, end);
 
@@ -166,8 +157,7 @@ template <AStar::Graph graph_t, AStar::distance_func distance_f_t,
         openSet.insert(&nodes[neighborIdx]);
       }
       else {
-        auto found =
-            std::find(openQueue.begin(), openQueue.end(), &nodes[neighborIdx]);
+        auto found = std::find(openQueue.begin(), openQueue.end(), &nodes[neighborIdx]);
 
         if ( neighbor.distanceFromStart < (*found)->distanceFromStart ) {
           (*found)->distanceFromStart = neighbor.distanceFromStart;

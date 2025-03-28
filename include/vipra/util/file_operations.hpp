@@ -10,8 +10,7 @@ inline void append_to_file(std::string const& filepath, std::string_view output)
 {
   std::ofstream file(filepath, std::ios_base::app);
 
-  if ( ! file.is_open() )
-    throw std::runtime_error("Unable to open file: " + filepath);
+  if ( ! file.is_open() ) throw std::runtime_error("Unable to open file: " + filepath);
 
   file << output;
 }

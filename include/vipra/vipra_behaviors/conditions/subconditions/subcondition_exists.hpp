@@ -16,13 +16,12 @@ class SubConditionExists {
   MOVEABLE(SubConditionExists)
 
  public:
-  explicit SubConditionExists(TargetModifier        modifier,
-                              SubConditionAttribute condition)
+  explicit SubConditionExists(TargetModifier modifier, SubConditionAttribute condition)
       : _modifier(std::move(modifier)), _attributeCond(condition)
   {
   }
 
-  void operator()(Simpack pack, const VIPRA::idxVec& peds,
+  void operator()(Simpack pack, const VIPRA::idxVec&                        peds,
                   std::vector<Target> const& /*unused*/, std::vector<bool>& met,
                   std::vector<bool> const& prevMet, BoolOp oper) const;
 

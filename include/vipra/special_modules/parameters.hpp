@@ -24,12 +24,11 @@ class Parameters {
   void register_param(Modules::Type module, std::string const& moduleName,
                       std::string const& paramName);
 
-  [[nodiscard]] auto has_param(Modules::Type      module,
-                               std::string const& moduleName,
+  [[nodiscard]] auto has_param(Modules::Type module, std::string const& moduleName,
                                std::string const& paramName) const -> bool;
-  [[nodiscard]] auto has_required_param(
-      Modules::Type module, std::string const& moduleName,
-      std::string const& paramName) const -> bool;
+  [[nodiscard]] auto has_required_param(Modules::Type      module,
+                                        std::string const& moduleName,
+                                        std::string const& paramName) const -> bool;
 
   [[nodiscard]] auto get_input() -> VIPRA::Input::JSON& { return _input; }
   [[nodiscard]] auto get_used_parameters() const -> std::string
@@ -38,10 +37,9 @@ class Parameters {
   }
 
   template <typename data_t>
-  [[nodiscard]] auto get_param(
-      Modules::Type module, std::string const& moduleName,
-      std::string const& paramName,
-      Random::Engine&    engine) const -> std::remove_cvref_t<data_t>;
+  [[nodiscard]] auto get_param(Modules::Type module, std::string const& moduleName,
+                               std::string const& paramName, Random::Engine& engine) const
+      -> std::remove_cvref_t<data_t>;
 
  private:
   VIPRA::Input::JSON                                                    _input;
@@ -54,12 +52,10 @@ class Parameters {
   auto get_array_param(Modules::Type module, std::string const& moduleName,
                        std::string const& paramName) const -> array_t;
 
-  [[nodiscard]] auto contains(Modules::Type      module,
-                              std::string const& moduleName,
+  [[nodiscard]] auto contains(Modules::Type module, std::string const& moduleName,
                               std::string const& paramName) const -> bool
   {
-    return _params.contains(module) &&
-           _params.at(module).contains(moduleName) &&
+    return _params.contains(module) && _params.at(module).contains(moduleName) &&
            _params.at(module).at(moduleName).contains(paramName);
   }
 
@@ -89,8 +85,8 @@ class Parameters {
    */
 template <typename data_t>
 auto Parameters::get_param(Modules::Type module, std::string const& moduleName,
-                           std::string const& paramName, Random::Engine& engine)
-    const -> std::remove_cvref_t<data_t>
+                           std::string const& paramName,
+                           Random::Engine&    engine) const -> std::remove_cvref_t<data_t>
 {
   using param_t = std::remove_cvref_t<data_t>;
 
@@ -98,9 +94,8 @@ auto Parameters::get_param(Modules::Type module, std::string const& moduleName,
 
   // Check that the parameter was registered
   if ( ! contains(module, moduleName, paramName) ) {
-    throw std::runtime_error("Parameter: " + paramName + " For " +
-                             to_string(module) + " Module: " + moduleName +
-                             " Not Registered");
+    throw std::runtime_error("Parameter: " + paramName + " For " + to_string(module) +
+                             " Module: " + moduleName + " Not Registered");
   }
 
   // load the value of the parameter
@@ -137,16 +132,14 @@ auto Parameters::get_param(Modules::Type module, std::string const& moduleName,
    * @return array_t 
    */
 template <typename array_t>
-auto Parameters::get_array_param(Modules::Type      module,
-                                 std::string const& moduleName,
+auto Parameters::get_array_param(Modules::Type module, std::string const& moduleName,
                                  std::string const& paramName) const -> array_t
 {
   std::string moduleStr = to_string(module);
 
   if ( ! contains(module, moduleName, paramName) )
-    throw std::runtime_error("Parameter: " + paramName + " For " +
-                             to_string(module) + " Module: " + moduleName +
-                             " Not Registered");
+    throw std::runtime_error("Parameter: " + paramName + " For " + to_string(module) +
+                             " Module: " + moduleName + " Not Registered");
 
   auto value = _input.get<array_t>({moduleStr, moduleName, paramName});
   if ( ! value.has_value() ) {

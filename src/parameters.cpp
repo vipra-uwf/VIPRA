@@ -25,8 +25,7 @@ void Parameters::reset()
    * @param paramName 
    * @param param 
    */
-void Parameters::register_param(Modules::Type      module,
-                                std::string const& moduleName,
+void Parameters::register_param(Modules::Type module, std::string const& moduleName,
                                 std::string const& paramName)
 {
   // TODO(rolland): maybe warn if a parameter is registered twice?
@@ -59,14 +58,12 @@ auto Parameters::has_param(Modules::Type module, std::string const& moduleName,
    * @return true 
    * @return false 
    */
-auto Parameters::has_required_param(Modules::Type      module,
-                                    std::string const& moduleName,
+auto Parameters::has_required_param(Modules::Type module, std::string const& moduleName,
                                     std::string const& paramName) const -> bool
 {
   if ( ! contains(module, moduleName, paramName) ) {
-    throw std::runtime_error("Parameter: " + paramName + " For " +
-                             to_string(module) + " Module: " + moduleName +
-                             " Not Provided In Input");
+    throw std::runtime_error("Parameter: " + paramName + " For " + to_string(module) +
+                             " Module: " + moduleName + " Not Provided In Input");
   }
   return true;
 }

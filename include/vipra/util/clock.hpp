@@ -15,8 +15,7 @@ template <typename time_t>
   time -= minutes;
   auto seconds = std::chrono::duration_cast<std::chrono::seconds>(time);
   time -= seconds;
-  auto milliseconds =
-      std::chrono::duration_cast<std::chrono::milliseconds>(time);
+  auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(time);
   time -= milliseconds;
   auto nanoseconds = std::chrono::duration_cast<std::chrono::nanoseconds>(time);
 
@@ -24,10 +23,8 @@ template <typename time_t>
 
   if ( minutes.count() > 0 ) timeStr += std::to_string(minutes.count()) += 'm';
   if ( seconds.count() > 0 ) timeStr += std::to_string(seconds.count()) += 's';
-  if ( milliseconds.count() > 0 )
-    timeStr += std::to_string(milliseconds.count()) += "ms";
-  if ( nanoseconds.count() > 0 )
-    timeStr += std::to_string(nanoseconds.count()) += "ns";
+  if ( milliseconds.count() > 0 ) timeStr += std::to_string(milliseconds.count()) += "ms";
+  if ( nanoseconds.count() > 0 ) timeStr += std::to_string(nanoseconds.count()) += "ns";
 
   if ( timeStr.empty() ) timeStr = "00";
 
@@ -40,8 +37,7 @@ template <typename time_t>
  * @tparam time_t : time scale
  * @tparam clock_t : type of clock to use
  */
-template <typename time_t = seconds,
-          typename clock_t = std::chrono::steady_clock>
+template <typename time_t = seconds, typename clock_t = std::chrono::steady_clock>
 class Clock {
  public:
   /**
@@ -62,10 +58,7 @@ class Clock {
     _start = clock_t::now();
   }
 
-  [[nodiscard]] inline auto is_running() const noexcept -> bool
-  {
-    return _running;
-  }
+  [[nodiscard]] inline auto is_running() const noexcept -> bool { return _running; }
 
   /**
    * @brief Pauses the timer on the clock
@@ -100,8 +93,7 @@ class Clock {
   {
     if ( ! _running ) return _runningTime;
 
-    return std::chrono::duration_cast<time_t>(clock_t::now() - _start) +
-           _runningTime;
+    return std::chrono::duration_cast<time_t>(clock_t::now() - _start) + _runningTime;
   }
 
   /**
@@ -113,8 +105,8 @@ class Clock {
   {
     time_t duration;
     if ( _running ) {
-      duration = std::chrono::duration_cast<time_t>(clock_t::now() - _start) +
-                 _runningTime;
+      duration =
+          std::chrono::duration_cast<time_t>(clock_t::now() - _start) + _runningTime;
     }
     else {
       duration = _runningTime;

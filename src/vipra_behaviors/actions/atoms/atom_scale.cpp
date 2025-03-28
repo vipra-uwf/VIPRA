@@ -10,8 +10,7 @@ void AtomScale::operator()(Simpack pack, const VIPRA::idxVec& peds,
 {
   for ( VIPRA::idx idx = 0; idx < peds.size(); ++idx ) {
     if ( conditionMet[idx] )
-      AttributeHandling::scale_value(targets[idx], attribute, pack, pack.state,
-                                     value);
+      AttributeHandling::scale_value(targets[idx], attribute, pack, pack.state, value);
   }
 }
 }  // namespace VIPRA::Behaviors

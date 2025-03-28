@@ -29,8 +29,7 @@ class SpatialMap {
 
       if ( &oldGrid == &newGrid ) continue;
 
-      oldGrid.erase(std::remove(oldGrid.begin(), oldGrid.end(), currIdx),
-                    oldGrid.end());
+      oldGrid.erase(std::remove(oldGrid.begin(), oldGrid.end(), currIdx), oldGrid.end());
       newGrid.push_back(currIdx);
     }
   }
@@ -42,8 +41,7 @@ class SpatialMap {
     // Loop through the surrounding grids and call the provided function with each pedestrian in each grid
     for ( int i = -1; i <= 1; ++i ) {
       for ( int j = -1; j <= 1; ++j ) {
-        if ( out_of_bounds(pos.x + i * _cellSize, pos.y + j * _cellSize) )
-          continue;
+        if ( out_of_bounds(pos.x + i * _cellSize, pos.y + j * _cellSize) ) continue;
 
         auto const& neighbor =
             get_grid(VIPRA::f3d{pos.x + i * _cellSize, pos.y + j * _cellSize});

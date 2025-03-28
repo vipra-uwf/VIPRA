@@ -36,13 +36,11 @@ void Selector::initialize(std::string const& behaviorName, Simpack pack)
 void Selector::run_selectors(const VIPRA::idxVec& selectorIdxs,
                              std::string const& behaviorName, auto pack)
 {
-  std::for_each(
-      selectorIdxs.begin(), selectorIdxs.end(), [&](VIPRA::idx index) {
-        auto& selector = _subSelectors[index];
-        auto  selectedPeds =
-            select_peds_from_group(selector, pack, behaviorName);
-        update_ped_groups(selectedPeds, selector, pack.context, behaviorName);
-      });
+  std::for_each(selectorIdxs.begin(), selectorIdxs.end(), [&](VIPRA::idx index) {
+    auto& selector = _subSelectors[index];
+    auto  selectedPeds = select_peds_from_group(selector, pack, behaviorName);
+    update_ped_groups(selectedPeds, selector, pack.context, behaviorName);
+  });
 
   _pedGroups[0].resize(pack.pedset.num_pedestrians());
   std::iota(_pedGroups[0].begin(), _pedGroups[0].end(), 0);
@@ -60,12 +58,10 @@ void Selector::run_selectors(const VIPRA::idxVec& selectorIdxs,
  * @return VIPRA::idxVec 
  */
 auto Selector::select_peds_from_group(SubSelector& selector, Simpack pack,
-                                      std::string const& behaviorName)
-    -> VIPRA::idxVec
+                                      std::string const& behaviorName) -> VIPRA::idxVec
 {
   auto const& fullGroup = _pedGroups.get_group(selector.group);
-  auto        usablegroup =
-      filter_used_peds(fullGroup, _pedGroups.get_used(selector.group));
+  auto usablegroup = filter_used_peds(fullGroup, _pedGroups.get_used(selector.group));
   auto result = selector.select_peds(fullGroup, usablegroup, pack);
 
   if ( ! result.starved ) {
@@ -79,9 +75,8 @@ auto Selector::select_peds_from_group(SubSelector& selector, Simpack pack,
     DSLException::error();
   }
 
-  VIPRA::Log::debug(
-      "Behavior: {}, Starved Selector For Type: {} From Group: {}",
-      behaviorName, selector.type.fullType, selector.group);
+  VIPRA::Log::debug("Behavior: {}, Starved Selector For Type: {} From Group: {}",
+                    behaviorName, selector.type.fullType, selector.group);
   return result.group;
 }
 
@@ -94,14 +89,13 @@ auto Selector::select_peds_from_group(SubSelector& selector, Simpack pack,
  * @param behaviorName : 
  */
 inline void Selector::update_ped_groups(const VIPRA::idxVec& selectedPeds,
-                                        SubSelector&         selector,
-                                        BehaviorContext&     context,
-                                        std::string const&   behaviorName)
+                                        SubSelector& selector, BehaviorContext& context,
+                                        std::string const& behaviorName)
 {
   std::for_each(selectedPeds.begin(), selectedPeds.end(), [&](auto& pedIdx) {
     selector.type.for_each_type([&](typeUID type) {
-      VIPRA::Log::debug("Behavior: {}, Selecting Ped {} for Type: {}",
-                        behaviorName, pedIdx, type);
+      VIPRA::Log::debug("Behavior: {}, Selecting Ped {} for Type: {}", behaviorName,
+                        pedIdx, type);
       context.types[pedIdx] += type;
       _pedGroups.add_ped(pedIdx, type);
     });
@@ -117,8 +111,8 @@ inline void Selector::update_ped_groups(const VIPRA::idxVec& selectedPeds,
  * @param used : 
  * @return VIPRA::idxVec 
  */
-inline auto Selector::filter_used_peds(
-    const VIPRA::idxVec& peds, std::vector<bool> const& used) -> VIPRA::idxVec
+inline auto Selector::filter_used_peds(const VIPRA::idxVec&     peds,
+                                       std::vector<bool> const& used) -> VIPRA::idxVec
 {
   VIPRA::idxVec ret;
 
@@ -185,10 +179,9 @@ inline auto Selector::order_selectors() -> VIPRA::idxVec
   });
 
   for ( VIPRA::idx selIdx = 0; selIdx < _subSelectors.size(); ++selIdx ) {
-    bool notInGraph =
-        std::find_if(order.begin(), order.end(), [&](VIPRA::idx index) {
-          return index == selIdx;
-        }) == order.end();
+    bool notInGraph = std::find_if(order.begin(), order.end(), [&](VIPRA::idx index) {
+                        return index == selIdx;
+                      }) == order.end();
     if ( notInGraph ) {
       order.push_back(selIdx);
     }

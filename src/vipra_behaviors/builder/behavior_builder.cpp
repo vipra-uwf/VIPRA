@@ -30,8 +30,7 @@ namespace VIPRA::Behaviors {
 
 auto BehaviorBuilder::build(std::string                  behaviorName,
                             std::filesystem::path const& filepath,
-                            Modules::Map const&          map,
-                            seed seedNum) -> HumanBehavior
+                            Modules::Map const& map, seed seedNum) -> HumanBehavior
 {
   if ( ! std::filesystem::exists(filepath) ) {
     VIPRA::Log::error("Behavior \"{}\" Does NOT Exist at {}", behaviorName,
@@ -72,8 +71,7 @@ auto BehaviorBuilder::build(std::string                  behaviorName,
  */
 
 void BehaviorBuilder::initial_behavior_setup(std::string const&  behaviorName,
-                                             Modules::Map const& map,
-                                             VIPRA::seed         seedNum)
+                                             Modules::Map const& map, VIPRA::seed seedNum)
 {
   _currentBehavior = HumanBehavior(behaviorName);
   _currentBehavior.set_seed(seedNum);
@@ -136,8 +134,8 @@ void BehaviorBuilder::initialize_locations(Modules::Map const& map)
   _locations.clear();
 
   for ( auto const& loc : map.get_areas() ) {
-    _locations[loc.first] = _currentBehavior.add_location(
-        Geometry::Rectangle{loc.second.bounding_box()});
+    _locations[loc.first] =
+        _currentBehavior.add_location(Geometry::Rectangle{loc.second.bounding_box()});
   }
 
   for ( auto const& objtype : map.get_objective_types() ) {
@@ -173,32 +171,29 @@ void BehaviorBuilder::end_behavior_check()
  * @return Condition
  */
 
-auto BehaviorBuilder::build_condition(BehaviorParser::ConditionContext* cond)
-    -> Condition
+auto BehaviorBuilder::build_condition(BehaviorParser::ConditionContext* cond) -> Condition
 {
   Condition condition;
   condition_tree_condition(cond, condition);
   return condition;
 }
 
-void BehaviorBuilder::add_sub_condition(
-    Condition& condTree, BehaviorParser::Sub_conditionContext* subcond)
+void BehaviorBuilder::add_sub_condition(Condition&                            condTree,
+                                        BehaviorParser::Sub_conditionContext* subcond)
 {
   if ( subcond->condition_Time_Elapsed_From_Event() ) {
-    condTree.add_subcondition(build_time_elapsed_subcond(
-        subcond->condition_Time_Elapsed_From_Event()));
+    condTree.add_subcondition(
+        build_time_elapsed_subcond(subcond->condition_Time_Elapsed_From_Event()));
     return;
   }
 
   if ( subcond->condition_Enter_Location() ) {
-    if ( ! get_location(
-             subcond->condition_Enter_Location()->LOC_NAME()->toString()) ) {
+    if ( ! get_location(subcond->condition_Enter_Location()->LOC_NAME()->toString()) ) {
       condTree.add_subcondition(
           build_enter_obj_subcond(subcond->condition_Enter_Location()));
     }
     else {
-      condTree.add_subcondition(
-          build_enter_subcond(subcond->condition_Enter_Location()));
+      condTree.add_subcondition(build_enter_subcond(subcond->condition_Enter_Location()));
     }
     return;
   }
@@ -228,14 +223,12 @@ void BehaviorBuilder::add_sub_condition(
   }
 
   if ( subcond->condition_Spatial() ) {
-    condTree.add_subcondition(
-        build_spatial_subcond(subcond->condition_Spatial()));
+    condTree.add_subcondition(build_spatial_subcond(subcond->condition_Spatial()));
     return;
   }
 
   if ( subcond->condition_Exit_Location() ) {
-    condTree.add_subcondition(
-        build_exit_subcond(subcond->condition_Exit_Location()));
+    condTree.add_subcondition(build_exit_subcond(subcond->condition_Exit_Location()));
     return;
   }
 
@@ -246,14 +239,12 @@ void BehaviorBuilder::add_sub_condition(
   }
 
   if ( subcond->condition_Attribute() ) {
-    condTree.add_subcondition(
-        build_attribute_subcond(subcond->condition_Attribute()));
+    condTree.add_subcondition(build_attribute_subcond(subcond->condition_Attribute()));
     return;
   }
 
   if ( subcond->condition_Exists() ) {
-    condTree.add_subcondition(
-        build_exists_subcond(subcond->condition_Exists()));
+    condTree.add_subcondition(build_exists_subcond(subcond->condition_Exists()));
     return;
   }
 
@@ -291,8 +282,8 @@ void BehaviorBuilder::condition_tree_unary(BehaviorParser::UnaryContext* unary,
   }
 }
 
-void BehaviorBuilder::condition_tree_primary(
-    BehaviorParser::PrimaryContext* primary, Condition& tree)
+void BehaviorBuilder::condition_tree_primary(BehaviorParser::PrimaryContext* primary,
+                                             Condition&                      tree)
 {
   if ( primary->condition() ) {
     condition_tree_condition(primary->condition(), tree);
@@ -312,7 +303,7 @@ void BehaviorBuilder::condition_tree_primary(
 
 auto BehaviorBuilder::build_sub_selector(slType type, slSelector selector,
                                          std::optional<slGroup> group,
-                                         bool required) -> SubSelector
+                                         bool                   required) -> SubSelector
 {
   if ( selector->selector()->selector_Everyone() ) {
     return build_everyone_selector(type, required);
@@ -330,9 +321,8 @@ auto BehaviorBuilder::build_sub_selector(slType type, slSelector selector,
     return build_location_selector(type, selector, group, required);
   }
 
-  VIPRA::Log::error(
-      "Behavior Error: Unable To Create Selector For Behavior \"{}\"",
-      _currentBehavior.get_name());
+  VIPRA::Log::error("Behavior Error: Unable To Create Selector For Behavior \"{}\"",
+                    _currentBehavior.get_name());
   BuilderException::error();
 }
 
@@ -343,9 +333,8 @@ auto BehaviorBuilder::build_sub_selector(slType type, slSelector selector,
  * @param modifier : modifier context
  */
 
-void BehaviorBuilder::add_modifier(
-    TargetModifier&                  targetModifier,
-    BehaviorParser::ModifierContext* modifier) const
+void BehaviorBuilder::add_modifier(TargetModifier&                  targetModifier,
+                                   BehaviorParser::ModifierContext* modifier) const
 {
   if ( modifier->direction() ) {
     add_direction_modifier(targetModifier, modifier->direction());
@@ -360,8 +349,7 @@ void BehaviorBuilder::add_modifier(
     return;
   }
 
-  error("Behavior Error: No Valid Target Modifier For: \"{}\"",
-        modifier->getText());
+  error("Behavior Error: No Valid Target Modifier For: \"{}\"", modifier->getText());
 }
 
 /**
@@ -371,8 +359,8 @@ void BehaviorBuilder::add_modifier(
  * @param atom : atom context
  */
 
-void BehaviorBuilder::add_atom_to_action(
-    Action& action, BehaviorParser::Action_atomContext* atom)
+void BehaviorBuilder::add_atom_to_action(Action&                             action,
+                                         BehaviorParser::Action_atomContext* atom)
 {
   if ( atom->set_atom() ) {
     add_set_atom(action, atom->set_atom());
@@ -398,7 +386,7 @@ void BehaviorBuilder::add_atom_to_action(
  * 
  */
 
-void BehaviorBuilder::add_target_to_action(Action& action,
+void BehaviorBuilder::add_target_to_action(Action&                        action,
                                            BehaviorParser::TargetContext* ctx)
 {
   if ( ctx->other() ) {
@@ -420,9 +408,8 @@ void BehaviorBuilder::add_target_to_action(Action& action,
  * @return std::optional<TargetModifier> 
  */
 
-auto BehaviorBuilder::make_target_modifier(
-    std::vector<BehaviorParser::ModifierContext*>& modifiers)
-    -> std::optional<TargetModifier>
+auto BehaviorBuilder::make_target_modifier(std::vector<BehaviorParser::ModifierContext*>&
+                                               modifiers) -> std::optional<TargetModifier>
 {
   if ( modifiers.empty() ) return std::nullopt;
 
@@ -445,8 +432,7 @@ auto BehaviorBuilder::make_target_modifier(
  * @return typeUID
  */
 
-auto BehaviorBuilder::get_type(std::string const& type) const
-    -> std::optional<typeUID>
+auto BehaviorBuilder::get_type(std::string const& type) const -> std::optional<typeUID>
 {
   auto const typeId = _types.find(type);
   if ( typeId == _types.end() ) return std::nullopt;
@@ -496,8 +482,7 @@ auto BehaviorBuilder::get_state(std::string const& state) const
  */
 
 auto BehaviorBuilder::get_composite_type(
-    std::vector<antlr4::tree::TerminalNode*> const& types) const
-    -> Behaviors::Ptype
+    std::vector<antlr4::tree::TerminalNode*> const& types) const -> Behaviors::Ptype
 {
   Ptype compType;
   for ( auto* type : types ) {
@@ -575,13 +560,11 @@ auto BehaviorBuilder::get_attribute(std::string attr) -> Attribute
  * @return VIPRA::idx 
  */
 
-auto BehaviorBuilder::get_check_location(std::string const& locName) const
-    -> VIPRA::idx
+auto BehaviorBuilder::get_check_location(std::string const& locName) const -> VIPRA::idx
 {
   auto loc = get_location(locName);
   if ( ! loc )
-    error("Behavior Error: Attempt To Use Undeclared Location: \"{}\"",
-          locName);
+    error("Behavior Error: Attempt To Use Undeclared Location: \"{}\"", locName);
   return loc.value();
 }
 
@@ -609,8 +592,7 @@ auto BehaviorBuilder::get_check_state(std::string const& stateName) const
  * @return VIPRA::idx 
  */
 
-auto BehaviorBuilder::get_check_event(std::string const& eventName) const
-    -> VIPRA::idx
+auto BehaviorBuilder::get_check_event(std::string const& eventName) const -> VIPRA::idx
 {
   auto event = get_event(eventName);
   if ( ! event )
@@ -629,8 +611,7 @@ auto BehaviorBuilder::get_check_type(std::string const& typeName) const
     -> Behaviors::typeUID
 {
   auto type = get_type(typeName);
-  if ( ! type )
-    error("Behavior Error: Attempt To Use Undeclared Type: \"{}\"", typeName);
+  if ( ! type ) error("Behavior Error: Attempt To Use Undeclared Type: \"{}\"", typeName);
   return type.value();
 }
 
@@ -645,12 +626,10 @@ auto BehaviorBuilder::get_check_type(std::string const& typeName) const
  * @return std::tuple<VIPRA::f3d, VIPRA::f3d, VIPRA::f_pnt> 
  */
 
-auto BehaviorBuilder::make_dimensions(
-    BehaviorParser::Loc_dimensionsContext* ctx) const
+auto BehaviorBuilder::make_dimensions(BehaviorParser::Loc_dimensionsContext* ctx) const
     -> std::tuple<VIPRA::f3d, VIPRA::f3d, VIPRA::f_pnt>
 {
-  auto rot =
-      get_numeric(ctx->loc_rotation()->value_numeric(), _currSeed).value(0);
+  auto rot = get_numeric(ctx->loc_rotation()->value_numeric(), _currSeed).value(0);
   auto center = get_coord(ctx->loc_center()->value_coord(), _currSeed);
   auto dims = get_coord(ctx->loc_lengths()->value_coord(), _currSeed);
   return {center, dims, rot};
@@ -663,8 +642,8 @@ auto BehaviorBuilder::make_dimensions(
  * @return Behaviors::CAttributeValue 
  */
 
-auto BehaviorBuilder::make_attribute_value(
-    BehaviorParser::Attr_valueContext* ctx) -> Behaviors::CAttributeValue
+auto BehaviorBuilder::make_attribute_value(BehaviorParser::Attr_valueContext* ctx)
+    -> Behaviors::CAttributeValue
 {
   if ( ctx->value_coord() ) {
     return AttributeHandling::store_value<VIPRA::f3d>(
@@ -683,8 +662,7 @@ auto BehaviorBuilder::make_attribute_value(
 
   if ( ctx->LOC_NAME() ) {
     auto location = get_location(ctx->LOC_NAME()->toString());
-    if ( location )
-      return AttributeHandling::store_value(Type::LOCATION, location);
+    if ( location ) return AttributeHandling::store_value(Type::LOCATION, location);
 
     std::string obj = ctx->LOC_NAME()->toString().substr(1);
     return AttributeHandling::store_value(Type::OBJECTIVE, std::move(obj));
@@ -692,8 +670,7 @@ auto BehaviorBuilder::make_attribute_value(
 
   if ( ctx->towards() ) {
     if ( ctx->towards()->LOC_NAME() ) {
-      auto location =
-          get_check_location(ctx->towards()->LOC_NAME()->toString());
+      auto location = get_check_location(ctx->towards()->LOC_NAME()->toString());
       return AttributeHandling::store_value(Type::TOWARDS_LOC, location);
     }
     if ( ctx->towards()->attribute() ) {
@@ -720,14 +697,12 @@ auto BehaviorBuilder::make_attribute_value(
  */
 
 auto BehaviorBuilder::make_list_strs(
-    std::vector<antlr4::tree::TerminalNode*> const& types)
-    -> std::vector<std::string>
+    std::vector<antlr4::tree::TerminalNode*> const& types) -> std::vector<std::string>
 {
   std::vector<std::string> strs(types.size());
 
-  std::transform(
-      types.begin(), types.end(), strs.begin(),
-      [](antlr4::tree::TerminalNode* type) { return type->toString(); });
+  std::transform(types.begin(), types.end(), strs.begin(),
+                 [](antlr4::tree::TerminalNode* type) { return type->toString(); });
 
   return strs;
 }
@@ -772,8 +747,7 @@ auto BehaviorBuilder::make_attribute_str(BehaviorParser::AttributeContext* ctx)
  * @return Direction 
  */
 
-auto BehaviorBuilder::make_direction(BehaviorParser::DirectionContext* ctx)
-    -> Direction
+auto BehaviorBuilder::make_direction(BehaviorParser::DirectionContext* ctx) -> Direction
 {
   if ( ctx->front() ) {
     return Direction::FRONT;
@@ -795,12 +769,10 @@ auto BehaviorBuilder::make_direction(BehaviorParser::DirectionContext* ctx)
  * @return VIPRA::idx 
  */
 
-auto BehaviorBuilder::add_event(BehaviorParser::Event_nameContext* ctx)
-    -> VIPRA::idx
+auto BehaviorBuilder::add_event(BehaviorParser::Event_nameContext* ctx) -> VIPRA::idx
 {
   if ( ! ctx )
-    error("Behavior Error: Event Not Given a Name: \"{}\"",
-          _currentBehavior.get_name());
+    error("Behavior Error: Event Not Given a Name: \"{}\"", _currentBehavior.get_name());
 
   auto eventName = ctx->ID()->toString();
   VIPRA::Log::debug(R"(Behavior "{}": Adding Lasting Event: "{}")",
@@ -814,13 +786,11 @@ auto BehaviorBuilder::add_event(BehaviorParser::Event_nameContext* ctx)
 
 // --------------------------------------------- ANTLR VISITOR METHODS -----------------------------------------------------------------------------------------
 
-auto BehaviorBuilder::visitLocation(BehaviorParser::LocationContext* ctx)
-    -> antlrcpp::Any
+auto BehaviorBuilder::visitLocation(BehaviorParser::LocationContext* ctx) -> antlrcpp::Any
 {
   auto name = find_location_component<lcName>(ctx);
   if ( ! name )
-    error(R"(Behavior "{}": Missing Location Name)",
-          _currentBehavior.get_name());
+    error(R"(Behavior "{}": Missing Location Name)", _currentBehavior.get_name());
   std::string locName = "@" + name.value()->ID()->toString();
 
   if ( get_location(locName) )
@@ -834,17 +804,16 @@ auto BehaviorBuilder::visitLocation(BehaviorParser::LocationContext* ctx)
 
   auto [center, dimensions, rotation] = make_dimensions(dims.value());
 
-  _locations[locName] = _currentBehavior.add_location(
-      Geometry::Rectangle{center, dimensions, rotation});
+  _locations[locName] =
+      _currentBehavior.add_location(Geometry::Rectangle{center, dimensions, rotation});
 
-  VIPRA::Log::debug(R"(Behavior "{}": Adding Location "{}")",
-                    _currentBehavior.get_name(), locName);
+  VIPRA::Log::debug(R"(Behavior "{}": Adding Location "{}")", _currentBehavior.get_name(),
+                    locName);
 
   return BehaviorBaseVisitor::visitLocation(ctx);
 }
 
-auto BehaviorBuilder::visitEvent(BehaviorParser::EventContext* ctx)
-    -> antlrcpp::Any
+auto BehaviorBuilder::visitEvent(BehaviorParser::EventContext* ctx) -> antlrcpp::Any
 {
   auto name = find_event_component<evName>(ctx);
   if ( ! name )
@@ -857,8 +826,7 @@ auto BehaviorBuilder::visitEvent(BehaviorParser::EventContext* ctx)
 
   auto startCond = find_event_component<evStart>(ctx);
   if ( ! startCond )
-    error(R"(Behavior "{}": Missing Start Condition)",
-          _currentBehavior.get_name());
+    error(R"(Behavior "{}": Missing Start Condition)", _currentBehavior.get_name());
 
   auto endCond = find_event_component<evEnd>(ctx);
 
@@ -882,13 +850,11 @@ auto BehaviorBuilder::visitEvent(BehaviorParser::EventContext* ctx)
   return BehaviorBaseVisitor::visitEvent(ctx);
 }
 
-auto BehaviorBuilder::visitAction(BehaviorParser::ActionContext* ctx)
-    -> antlrcpp::Any
+auto BehaviorBuilder::visitAction(BehaviorParser::ActionContext* ctx) -> antlrcpp::Any
 {
   auto response = find_action_component<acResponse>(ctx);
   if ( ! response )
-    error(R"(Behavior "{}": Action has no Response)",
-          _currentBehavior.get_name());
+    error(R"(Behavior "{}": Action has no Response)", _currentBehavior.get_name());
 
   auto stimulus = find_action_component<acStimulus>(ctx);
   auto target = find_action_component<acTarget>(ctx);
@@ -899,8 +865,8 @@ auto BehaviorBuilder::visitAction(BehaviorParser::ActionContext* ctx)
   auto const typeStr = ctx->ID()->toString();
   auto const type = get_check_type(typeStr);
 
-  VIPRA::Log::debug("Behavior \"{}\": Adding Action For {}",
-                    _currentBehavior.get_name(), typeStr);
+  VIPRA::Log::debug("Behavior \"{}\": Adding Action For {}", _currentBehavior.get_name(),
+                    typeStr);
 
   auto atoms = response.value()->sub_action()->action_atom();
   std::for_each(atoms.begin(), atoms.end(),
@@ -908,8 +874,7 @@ auto BehaviorBuilder::visitAction(BehaviorParser::ActionContext* ctx)
                   add_atom_to_action(action, atom);
                 });
 
-  if ( stimulus )
-    action.add_condition(build_condition(stimulus.value()->condition()));
+  if ( stimulus ) action.add_condition(build_condition(stimulus.value()->condition()));
   if ( target ) add_target_to_action(action, target.value()->target());
   if ( duration )
     action.add_duration(
@@ -919,13 +884,12 @@ auto BehaviorBuilder::visitAction(BehaviorParser::ActionContext* ctx)
   return BehaviorBaseVisitor::visitAction(ctx);
 }
 
-auto BehaviorBuilder::visitPed_Selector(
-    BehaviorParser::Ped_SelectorContext* ctx) -> antlrcpp::Any
+auto BehaviorBuilder::visitPed_Selector(BehaviorParser::Ped_SelectorContext* ctx)
+    -> antlrcpp::Any
 {
   auto type = find_selector_component<slType>(ctx);
   if ( ! type )
-    error(R"(Behavior "{}": Selector has no Type)",
-          _currentBehavior.get_name());
+    error(R"(Behavior "{}": Selector has no Type)", _currentBehavior.get_name());
 
   auto selector = find_selector_component<slSelector>(ctx);
   if ( ! selector )
@@ -935,8 +899,8 @@ auto BehaviorBuilder::visitPed_Selector(
   auto group = find_selector_component<slGroup>(ctx);
   auto required = find_selector_component<slRequired>(ctx);
 
-  _currentBehavior.add_sub_selector(build_sub_selector(
-      type.value(), selector.value(), group, required.has_value()));
+  _currentBehavior.add_sub_selector(
+      build_sub_selector(type.value(), selector.value(), group, required.has_value()));
 
   return BehaviorBaseVisitor::visitPed_Selector(ctx);
 }
@@ -945,8 +909,8 @@ auto BehaviorBuilder::visitPed_Selector(
 
 // ------------------------------- DECLARATIONS -----------------------------------------------------------------------------------------
 
-auto BehaviorBuilder::visitDecl_Ped_State(
-    BehaviorParser::Decl_Ped_StateContext* ctx) -> antlrcpp::Any
+auto BehaviorBuilder::visitDecl_Ped_State(BehaviorParser::Decl_Ped_StateContext* ctx)
+    -> antlrcpp::Any
 {
   auto const stateNames = ctx->ID();
 
@@ -969,8 +933,7 @@ auto BehaviorBuilder::visitDecl_Ped_State(
   return BehaviorBaseVisitor::visitDecl_Ped_State(ctx);
 }
 
-auto BehaviorBuilder::visitDecl_Ped(BehaviorParser::Decl_PedContext* ctx)
-    -> antlrcpp::Any
+auto BehaviorBuilder::visitDecl_Ped(BehaviorParser::Decl_PedContext* ctx) -> antlrcpp::Any
 {
   auto const typeNames = ctx->ID();
   Ptype      allTypes;
@@ -984,8 +947,8 @@ auto BehaviorBuilder::visitDecl_Ped(BehaviorParser::Decl_PedContext* ctx)
     _currType = _currType << 1U;
   }
 
-  VIPRA::Log::debug("Behavior \"{}\": All Types: {}",
-                    _currentBehavior.get_name(), allTypes.fullType);
+  VIPRA::Log::debug("Behavior \"{}\": All Types: {}", _currentBehavior.get_name(),
+                    allTypes.fullType);
   _currentBehavior.set_all_ped_types(allTypes);
   return BehaviorBaseVisitor::visitDecl_Ped(ctx);
 }
@@ -1001,8 +964,7 @@ auto BehaviorBuilder::visitDecl_Ped(BehaviorParser::Decl_PedContext* ctx)
  * @param ctx : set atom context
  */
 
-void BehaviorBuilder::add_set_atom(Action&                          action,
-                                   BehaviorParser::Set_atomContext* ctx)
+void BehaviorBuilder::add_set_atom(Action& action, BehaviorParser::Set_atomContext* ctx)
 {
   auto attrStr = make_attribute_str(ctx->attribute());
   auto attr = get_attribute(attrStr);
@@ -1027,8 +989,8 @@ void BehaviorBuilder::add_scale_atom(Action&                            action,
   action.add_atom(AtomScale{attr, attrValue});
 }
 
-void BehaviorBuilder::add_set_obj_atom(
-    Action& action, BehaviorParser::Set_objective_atomContext* ctx)
+void BehaviorBuilder::add_set_obj_atom(Action&                                    action,
+                                       BehaviorParser::Set_objective_atomContext* ctx)
 {
   std::string name = ctx->LOC_NAME()->toString().substr(1);
   action.add_atom(AtomSetObjective{name});
@@ -1045,8 +1007,7 @@ void BehaviorBuilder::add_set_obj_atom(
  * @param ctx 
  */
 auto BehaviorBuilder::build_enter_obj_subcond(
-    BehaviorParser::Condition_Enter_LocationContext* ctx)
-    -> SubConditionEnterObj
+    BehaviorParser::Condition_Enter_LocationContext* ctx) -> SubConditionEnterObj
 {
   std::string name = ctx->LOC_NAME()->toString().substr(1);
 
@@ -1096,9 +1057,8 @@ auto BehaviorBuilder::build_time_elapsed_subcond(
 {
   Behaviors::NumericValue dur = get_numeric(ctx->value_numeric(), _currSeed);
   std::string             evName = ctx->EVNT()->toString();
-  VIPRA::Log::debug(
-      R"(Behavior "{}": Adding SubCondition: Elapsed Time From "{}" Event)",
-      _currentBehavior.get_name(), evName);
+  VIPRA::Log::debug(R"(Behavior "{}": Adding SubCondition: Elapsed Time From "{}" Event)",
+                    _currentBehavior.get_name(), evName);
   auto event = get_check_event(evName);
 
   return {dur, event};
@@ -1112,13 +1072,11 @@ auto BehaviorBuilder::build_time_elapsed_subcond(
  */
 
 auto BehaviorBuilder::build_event_occurred_subcond(
-    BehaviorParser::Condition_Event_OccurredContext* ctx)
-    -> SubConditionEventOccurred
+    BehaviorParser::Condition_Event_OccurredContext* ctx) -> SubConditionEventOccurred
 {
   std::string evName = ctx->EVNT()->toString();
-  VIPRA::Log::debug(
-      R"(Behavior "{}": Adding SubCondition: Event "{}" Occurred)",
-      _currentBehavior.get_name(), evName);
+  VIPRA::Log::debug(R"(Behavior "{}": Adding SubCondition: Event "{}" Occurred)",
+                    _currentBehavior.get_name(), evName);
   auto event = get_check_event(evName);
   return SubConditionEventOccurred(event, ctx->NOT() != nullptr);
 }
@@ -1131,13 +1089,11 @@ auto BehaviorBuilder::build_event_occurred_subcond(
  */
 
 auto BehaviorBuilder::build_event_occurring_subcond(
-    BehaviorParser::Condition_Event_OccurringContext* ctx)
-    -> SubConditionEventOccurring
+    BehaviorParser::Condition_Event_OccurringContext* ctx) -> SubConditionEventOccurring
 {
   std::string evName = ctx->EVNT()->toString();
-  VIPRA::Log::debug(
-      R"(Behavior "{}": Adding SubCondition: Event "{}" Occurring)",
-      _currentBehavior.get_name(), evName);
+  VIPRA::Log::debug(R"(Behavior "{}": Adding SubCondition: Event "{}" Occurring)",
+                    _currentBehavior.get_name(), evName);
   auto event = get_check_event(evName);
   return SubConditionEventOccurring(event, ctx->NOT() != nullptr);
 }
@@ -1150,13 +1106,11 @@ auto BehaviorBuilder::build_event_occurring_subcond(
  */
 
 auto BehaviorBuilder::build_event_starting_subcond(
-    BehaviorParser::Condition_Event_StartingContext* ctx)
-    -> SubConditionEventStarting
+    BehaviorParser::Condition_Event_StartingContext* ctx) -> SubConditionEventStarting
 {
   std::string evName = ctx->EVNT()->toString();
-  VIPRA::Log::debug(
-      R"(Behavior "{}": Adding SubCondition: Event "{}" Starting)",
-      _currentBehavior.get_name(), evName);
+  VIPRA::Log::debug(R"(Behavior "{}": Adding SubCondition: Event "{}" Starting)",
+                    _currentBehavior.get_name(), evName);
   auto event = get_check_event(evName);
 
   return SubConditionEventStarting(event);
@@ -1170,8 +1124,7 @@ auto BehaviorBuilder::build_event_starting_subcond(
  */
 
 auto BehaviorBuilder::build_event_ending_subcond(
-    BehaviorParser::Condition_Event_EndingContext* ctx)
-    -> SubConditionEventEnding
+    BehaviorParser::Condition_Event_EndingContext* ctx) -> SubConditionEventEnding
 {
   std::string evName = ctx->EVNT()->toString();
   VIPRA::Log::debug(R"(Behavior "{}": Adding SubCondition: Event "{}" Ending)",
@@ -1187,8 +1140,8 @@ auto BehaviorBuilder::build_event_ending_subcond(
  * @param ctx : spatial condition context
  */
 
-auto BehaviorBuilder::build_spatial_subcond(
-    BehaviorParser::Condition_SpatialContext* ctx) -> SubConditionSpatial
+auto BehaviorBuilder::build_spatial_subcond(BehaviorParser::Condition_SpatialContext* ctx)
+    -> SubConditionSpatial
 {
   auto distance = get_numeric(ctx->value_numeric(), _currSeed);
   VIPRA::Log::debug(R"(Behavior "{}": Adding SubCondition: Spatial)",
@@ -1197,14 +1150,12 @@ auto BehaviorBuilder::build_spatial_subcond(
 }
 
 auto BehaviorBuilder::build_in_location_subcond(
-    BehaviorParser::Condition_Inside_LocationContext* ctx)
-    -> SubConditionInLocation
+    BehaviorParser::Condition_Inside_LocationContext* ctx) -> SubConditionInLocation
 {
   auto location = get_check_location(ctx->LOC_NAME()->toString());
 
-  VIPRA::Log::debug(
-      R"(Behavior "{}": Adding SubCondition: Inside Location "{}")",
-      _currentBehavior.get_name(), ctx->LOC_NAME()->toString());
+  VIPRA::Log::debug(R"(Behavior "{}": Adding SubCondition: Inside Location "{}")",
+                    _currentBehavior.get_name(), ctx->LOC_NAME()->toString());
   return SubConditionInLocation{location};
 }
 
@@ -1235,8 +1186,8 @@ auto BehaviorBuilder::build_attribute_subcond(
  * @param ctx 
  */
 
-auto BehaviorBuilder::build_exists_subcond(
-    BehaviorParser::Condition_ExistsContext* ctx) -> SubConditionExists
+auto BehaviorBuilder::build_exists_subcond(BehaviorParser::Condition_ExistsContext* ctx)
+    -> SubConditionExists
 {
   auto modifiers = ctx->modifier();
   auto targetModifier = make_target_modifier(modifiers);
@@ -1246,9 +1197,8 @@ auto BehaviorBuilder::build_exists_subcond(
   auto attrValue = make_attribute_value(ctx->attr_value());
   bool negative = ctx->NOT() != nullptr;
 
-  VIPRA::Log::debug(
-      R"(Behavior "{}": Adding SubCondition: Exists Attribute \"{}\")",
-      _currentBehavior.get_name(), attrStr);
+  VIPRA::Log::debug(R"(Behavior "{}": Adding SubCondition: Exists Attribute \"{}\")",
+                    _currentBehavior.get_name(), attrStr);
   return SubConditionExists{
       targetModifier.has_value() ? targetModifier.value() : TargetModifier{},
       SubConditionAttribute{attr, attrValue, negative}};
@@ -1265,9 +1215,9 @@ auto BehaviorBuilder::build_exists_subcond(
  * @param ctx : target context
  */
 
-void BehaviorBuilder::add_nearest_type_target(
-    Action& action, BehaviorParser::Nearest_typeContext* ctx,
-    std::optional<TargetModifier>& modifier)
+void BehaviorBuilder::add_nearest_type_target(Action&                              action,
+                                              BehaviorParser::Nearest_typeContext* ctx,
+                                              std::optional<TargetModifier>& modifier)
 {
   auto  types = ctx->id_list()->ID();
   Ptype comPtype = get_composite_type(types);
@@ -1291,8 +1241,8 @@ void BehaviorBuilder::add_nearest_type_target(
  * @param ctx : 
  */
 
-void BehaviorBuilder::add_distance_modifier(
-    TargetModifier& modifier, BehaviorParser::DistanceContext* ctx) const
+void BehaviorBuilder::add_distance_modifier(TargetModifier&                  modifier,
+                                            BehaviorParser::DistanceContext* ctx) const
 {
   NumericValue value = get_numeric(ctx->value_numeric(), _currSeed);
   modifier.add_check(ModifierDistance{value});
@@ -1305,8 +1255,8 @@ void BehaviorBuilder::add_distance_modifier(
  * @param ctx : 
  */
 
-void BehaviorBuilder::add_direction_modifier(
-    TargetModifier& modifier, BehaviorParser::DirectionContext* ctx)
+void BehaviorBuilder::add_direction_modifier(TargetModifier&                   modifier,
+                                             BehaviorParser::DirectionContext* ctx)
 {
   auto direction = make_direction(ctx);
   modifier.add_check(ModifierDirection{direction});
@@ -1320,8 +1270,7 @@ void BehaviorBuilder::add_direction_modifier(
  */
 
 void BehaviorBuilder::add_location_modifier(
-    TargetModifier&                           modifier,
-    BehaviorParser::Location_modifierContext* ctx) const
+    TargetModifier& modifier, BehaviorParser::Location_modifierContext* ctx) const
 {
   auto location = get_check_location(ctx->LOC_NAME()->toString());
 
@@ -1340,17 +1289,15 @@ void BehaviorBuilder::add_location_modifier(
  * @return SubSelector 
  */
 
-auto BehaviorBuilder::build_everyone_selector(slType type,
-                                              bool   required) -> SubSelector
+auto BehaviorBuilder::build_everyone_selector(slType type, bool required) -> SubSelector
 {
   auto  types = type->id_list()->ID();
   Ptype comPtype = get_composite_type(types);
 
   auto typeStrs = make_list_strs(types);
 
-  VIPRA::Log::debug(
-      R"(Behavior "{}": Adding Selector: "Everyone" Is Ped Type: {})",
-      _currentBehavior.get_name(), fmt::join(typeStrs, ", "));
+  VIPRA::Log::debug(R"(Behavior "{}": Adding Selector: "Everyone" Is Ped Type: {})",
+                    _currentBehavior.get_name(), fmt::join(typeStrs, ", "));
   return SubSelector{0, comPtype, required, SelectorEveryone{}};
 }
 
@@ -1374,12 +1321,10 @@ auto BehaviorBuilder::build_exactly_n_selector(slType type, slSelector selector,
   auto [groupType, groupName] = get_group(group);
 
   NumericValue nPeds = get_numeric(
-      selector->selector()->selector_Exactly_N_Random()->value_number(),
-      _currSeed);
+      selector->selector()->selector_Exactly_N_Random()->value_number(), _currSeed);
   VIPRA::Log::debug(
       R"(Behavior "{}": Adding Selector: "Exactly {}" of {} Are Ped Type: {})",
-      _currentBehavior.get_name(), nPeds.value(0), groupName,
-      fmt::join(typeStrs, ", "));
+      _currentBehavior.get_name(), nPeds.value(0), groupName, fmt::join(typeStrs, ", "));
   return SubSelector{groupType, comPtype, required, SelectorExactlyN{nPeds}};
 }
 
@@ -1402,8 +1347,8 @@ auto BehaviorBuilder::build_percent_selector(slType type, slSelector selector,
   auto  typeStrs = make_list_strs(types);
   auto [groupType, groupName] = get_group(group);
 
-  NumericValue percentage = get_numeric(
-      selector->selector()->selector_Percent()->value_number(), _currSeed);
+  NumericValue percentage =
+      get_numeric(selector->selector()->selector_Percent()->value_number(), _currSeed);
   VIPRA::Log::debug(
       R"(Behavior "{}": Adding Selector: "{} Percent" of {} Are Ped Type: {})",
       _currentBehavior.get_name(), percentage.value(0), groupName,
@@ -1430,14 +1375,12 @@ auto BehaviorBuilder::build_location_selector(slType type, slSelector selector,
   Ptype comPtype = get_composite_type(types);
   auto  typeStrs = make_list_strs(types);
   auto [groupType, groupName] = get_group(group);
-  auto locName =
-      selector->selector()->selector_Location()->LOC_NAME()->toString();
+  auto locName = selector->selector()->selector_Location()->LOC_NAME()->toString();
   auto location = get_check_location(locName);
 
-  VIPRA::Log::debug(
-      R"(Behavior "{}": Adding Selector: "In {}" Are Ped Type: {})",
-      _currentBehavior.get_name(), locName, groupName,
-      fmt::join(typeStrs, ", "));
+  VIPRA::Log::debug(R"(Behavior "{}": Adding Selector: "In {}" Are Ped Type: {})",
+                    _currentBehavior.get_name(), locName, groupName,
+                    fmt::join(typeStrs, ", "));
   return SubSelector{groupType, comPtype, required, SelectorLocation{location}};
 }
 

@@ -11,7 +11,12 @@
 #include "vipra/concepts/numeric.hpp"
 
 namespace VIPRA {
-enum ArgType : uint8_t { OPTIONAL = 0x00, REQUIRED = 0x01, VALUE_REQUIRED = 0x02, BOTH = 0x03 };
+enum ArgType : uint8_t {
+  OPTIONAL = 0x00,
+  REQUIRED = 0x01,
+  VALUE_REQUIRED = 0x02,
+  BOTH = 0x03
+};
 
 inline constexpr auto operator|(ArgType Lhs, ArgType Rhs) -> ArgType
 {
@@ -80,7 +85,10 @@ class Args {
    * 
    * @param key : argument key to add
    */
-  static void register_arg(std::string const& key) { get_arg_map()[key] = ArgType::OPTIONAL; }
+  static void register_arg(std::string const& key)
+  {
+    get_arg_map()[key] = ArgType::OPTIONAL;
+  }
 
   /**
    * @brief Adds an argument flag that can be accepted, and sets its type
@@ -100,7 +108,8 @@ class Args {
    * @param key : argument key to add
    * @param type : argument type
    */
-  static void register_arg(std::string const& key, std::string const& defaultValue, ArgType type)
+  static void register_arg(std::string const& key, std::string const& defaultValue,
+                           ArgType type)
   {
     if ( type & ArgType::REQUIRED ) get_req_set().insert(key);
     get_arg_map()[key] = type;
@@ -174,7 +183,8 @@ class Args {
   static auto split_arg(std::string_view arg) -> std::pair<std::string, std::string>
   {
     auto loc = arg.find('=');
-    if ( loc == std::string::npos ) return std::make_pair(std::string(arg.begin() + 1), "");
+    if ( loc == std::string::npos )
+      return std::make_pair(std::string(arg.begin() + 1), "");
 
     return std::make_pair(std::string(arg.begin() + 1, loc - 1),
                           std::string(arg.begin() + loc + 1, arg.length() - (loc + 1)));
@@ -195,7 +205,8 @@ class Args {
    * @param arg 
    * @return std::pair<bool, std::string> 
    */
-  static auto validate_composite_flag(std::string const& arg) -> std::pair<bool, std::string>
+  static auto validate_composite_flag(std::string const& arg)
+      -> std::pair<bool, std::string>
   {
     auto flags = split_single_letter_args(arg);
     for ( const auto& flag : flags ) {
@@ -212,7 +223,8 @@ class Args {
    * 
    * @param flag : flag to check
    */
-  static auto validate_flag(std::string_view flag, std::string_view value) -> std::pair<bool, std::string>
+  static auto validate_flag(std::string_view flag,
+                            std::string_view value) -> std::pair<bool, std::string>
   {
     auto& argSet = get_arg_map();
     auto  iter = argSet.find(flag);
@@ -250,7 +262,8 @@ class Args {
    */
   static auto format(int argc, const char* const* argv) -> std::vector<std::string>
   {
-    return std::vector<std::string>{argv, std::next(argv, static_cast<std::ptrdiff_t>(argc))};
+    return std::vector<std::string>{argv,
+                                    std::next(argv, static_cast<std::ptrdiff_t>(argc))};
   }
 
   static inline auto get_arg_map() -> std::map<std::string, ArgType, std::less<>>&

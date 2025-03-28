@@ -39,23 +39,20 @@ auto JSON::get_polygons(json_cref const& value)
   return polygons;
 }
 
-auto JSON::get_obstacles() const
-    -> std::optional<std::vector<VIPRA::Geometry::Polygon>>
+auto JSON::get_obstacles() const -> std::optional<std::vector<VIPRA::Geometry::Polygon>>
 {
   if ( ! _json.contains("obstacles") ) return std::nullopt;
   return get_polygons(_json["obstacles"]);
 }
 
-auto JSON::get_spawns() const
-    -> std::optional<std::vector<VIPRA::Geometry::Polygon>>
+auto JSON::get_spawns() const -> std::optional<std::vector<VIPRA::Geometry::Polygon>>
 {
   if ( ! _json.contains("spawns") ) return std::nullopt;
   return get_polygons(_json["spawns"]);
 }
 
 auto JSON::get_objectives() const
-    -> std::optional<
-        std::map<std::string, std::vector<VIPRA::Geometry::Polygon>>>
+    -> std::optional<std::map<std::string, std::vector<VIPRA::Geometry::Polygon>>>
 {
   if ( ! _json.contains("objectives") ) return std::nullopt;
   if ( ! _json["objectives"].is_array() ) return std::nullopt;
@@ -65,11 +62,9 @@ auto JSON::get_objectives() const
   for ( const auto& value : _json["objectives"] ) {
     // TODO(rolland): should this error? currently just skips any that don't match format
     if ( ! (value.contains("type") && value.contains("polygons")) ) continue;
-    if ( ! (value["type"].is_string() && value["polygons"].is_array()) )
-      continue;
+    if ( ! (value["type"].is_string() && value["polygons"].is_array()) ) continue;
 
-    VIPRA::Log::debug("Adding Objectives of Type: {}",
-                      value["type"].get<std::string>());
+    VIPRA::Log::debug("Adding Objectives of Type: {}", value["type"].get<std::string>());
 
     auto objPolys = get_polygons(value["polygons"]);
     if ( ! objPolys ) continue;

@@ -8,8 +8,7 @@ void AtomSet::operator()(Simpack pack, const VIPRA::idxVec& peds,
 {
   for ( VIPRA::idx idx = 0; idx < peds.size(); ++idx ) {
     if ( conditionMet[idx] ) {
-      AttributeHandling::set_value(targets[idx], attribute, pack, pack.state,
-                                   value);
+      AttributeHandling::set_value(targets[idx], attribute, pack, pack.state, value);
     }
   }
 }

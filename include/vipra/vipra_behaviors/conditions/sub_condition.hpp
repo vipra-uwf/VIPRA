@@ -19,8 +19,7 @@ enum class BoolOp { AND, OR };
  * @return false 
  */
 inline constexpr auto short_circuit(VIPRA::idx idx, std::vector<bool>& met,
-                                    std::vector<bool> const& prevMet,
-                                    BoolOp                   oper) -> bool
+                                    std::vector<bool> const& prevMet, BoolOp oper) -> bool
 {
   if ( oper == BoolOp::AND && ! prevMet[idx] ) {
     met[idx] = false;
@@ -34,7 +33,7 @@ inline constexpr auto short_circuit(VIPRA::idx idx, std::vector<bool>& met,
   return false;
 }
 
-using SubCondition = std::function<void(
-    Simpack, VIPRA::idxVec const&, std::vector<Target> const&,
-    std::vector<bool>&, std::vector<bool> const&, BoolOp)>;
+using SubCondition =
+    std::function<void(Simpack, VIPRA::idxVec const&, std::vector<Target> const&,
+                       std::vector<bool>&, std::vector<bool> const&, BoolOp)>;
 }  // namespace VIPRA::Behaviors

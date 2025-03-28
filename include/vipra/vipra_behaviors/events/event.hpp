@@ -26,35 +26,22 @@ class Event {
 
   void evaluate(auto pack);
 
-  void set_start_condition(Condition const& condition)
-  {
-    _startCondition = condition;
-  }
-  void set_end_condition(Condition const& condition)
-  {
-    _endCondition = condition;
-  }
+  void set_start_condition(Condition const& condition) { _startCondition = condition; }
+  void set_end_condition(Condition const& condition) { _endCondition = condition; }
 
   [[nodiscard]] auto is_occurring() const -> bool
   {
-    return _status == EventStatus::OCCURRING ||
-           _status == EventStatus::STARTING;
+    return _status == EventStatus::OCCURRING || _status == EventStatus::STARTING;
   }
   [[nodiscard]] auto has_occurred() const -> bool { return _occurred; }
   [[nodiscard]] auto is_starting() const -> bool
   {
     return _status == EventStatus::STARTING;
   }
-  [[nodiscard]] auto is_ending() const -> bool
-  {
-    return _status == EventStatus::ENDING;
-  }
+  [[nodiscard]] auto is_ending() const -> bool { return _status == EventStatus::ENDING; }
 
   void               set_status(EventStatus status) { _status = status; }
-  [[nodiscard]] auto get_status() const -> EventStatus const&
-  {
-    return _status;
-  }
+  [[nodiscard]] auto get_status() const -> EventStatus const& { return _status; }
 
   [[nodiscard]] auto get_name() const -> std::string const& { return _name; }
 

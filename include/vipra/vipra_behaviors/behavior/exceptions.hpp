@@ -8,7 +8,10 @@ class DSLException : public std::runtime_error {
   explicit DSLException() : std::runtime_error("") {}
   explicit DSLException(std::string const& message) : std::runtime_error(message) {}
 
-  [[noreturn]] static void error(std::string const& message) { throw DSLException(message); }
+  [[noreturn]] static void error(std::string const& message)
+  {
+    throw DSLException(message);
+  }
   [[noreturn]] static void error() { throw DSLException(); }
 };
 

@@ -28,8 +28,8 @@ class BehaviorModel : public VIPRA::Modules::Module<BehaviorModel> {
   VIPRA_REGISTER_PARAMS(VIPRA_PARAM("behaviors_dir", _behaviorsDir),
                         VIPRA_PARAM("behaviors", _behaviorNames))
 
-  void initialize(Modules::Pedestrians& pedset, Modules::Map& map,
-                  Modules::Goals& goals, VIPRA::seed seed)
+  void initialize(Modules::Pedestrians& pedset, Modules::Map& map, Modules::Goals& goals,
+                  VIPRA::seed seed)
   {
     // TODO(rolland): figure out why it errors when duplicating behaviors
 
@@ -45,9 +45,8 @@ class BehaviorModel : public VIPRA::Modules::Module<BehaviorModel> {
     behaviorTimings.pause();
   }
 
-  void timestep(Modules::Pedestrians& pedset, Modules::Map& map,
-                Modules::Goals& goals, VIPRA::State& state,
-                VIPRA::delta_t deltaT)
+  void timestep(Modules::Pedestrians& pedset, Modules::Map& map, Modules::Goals& goals,
+                VIPRA::State& state, VIPRA::delta_t deltaT)
   {
     behaviorTimings.resume();
     for ( auto& behavior : _behaviors ) {
@@ -68,8 +67,7 @@ class BehaviorModel : public VIPRA::Modules::Module<BehaviorModel> {
     Behaviors::BehaviorBuilder builder;
     std::transform(_behaviorNames.begin(), _behaviorNames.end(),
                    std::back_inserter(_behaviors), [&](auto const& name) {
-                     auto const filePath =
-                         _behaviorsDir + '/' + (name + ".bhvr");
+                     auto const filePath = _behaviorsDir + '/' + (name + ".bhvr");
                      return builder.build(name, filePath, map, seed);
                    });
   }

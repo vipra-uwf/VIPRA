@@ -16,8 +16,7 @@ void HumanBehavior::initialize(Modules::Pedestrians const& pedset,
   VIPRA::State dummyState;
 
   _context.engine = VIPRA::Random::Engine{_seedNum};
-  _context.pedStates =
-      std::vector<Behaviors::stateUID>(pedset.num_pedestrians());
+  _context.pedStates = std::vector<Behaviors::stateUID>(pedset.num_pedestrians());
   _context.types = std::vector<Behaviors::typeUID>(pedset.num_pedestrians());
 
   _conditionMet.resize(pedset.num_pedestrians(), false);
@@ -26,8 +25,7 @@ void HumanBehavior::initialize(Modules::Pedestrians const& pedset,
     _targets[i] = Target{TargetType::PEDESTRIAN, i};
   }
 
-  Simpack pack{pedset,   map,        goals, _selector.get_groups(),
-               _context, dummyState, 0};
+  Simpack pack{pedset, map, goals, _selector.get_groups(), _context, dummyState, 0};
   _selector.initialize(_name, pack);
 
   for ( auto& actionGroup : _actions ) {
@@ -59,9 +57,8 @@ void HumanBehavior::timestep(Modules::Pedestrians& pedset, Modules::Map& map,
   _context.elapsedTime += deltaT;
 }
 
-void HumanBehavior::evaluate_events(Modules::Pedestrians& pedset,
-                                    Modules::Map& map, Modules::Goals& goals,
-                                    VIPRA::delta_t deltaT)
+void HumanBehavior::evaluate_events(Modules::Pedestrians& pedset, Modules::Map& map,
+                                    Modules::Goals& goals, VIPRA::delta_t deltaT)
 {
   VIPRA::State dummyState;
   for ( auto& event : _context.events ) {
@@ -70,14 +67,13 @@ void HumanBehavior::evaluate_events(Modules::Pedestrians& pedset,
   }
 }
 
-void HumanBehavior::apply_actions(Modules::Pedestrians& pedset,
-                                  Modules::Map& map, Modules::Goals& goals,
-                                  VIPRA::State& state, VIPRA::delta_t deltaT)
+void HumanBehavior::apply_actions(Modules::Pedestrians& pedset, Modules::Map& map,
+                                  Modules::Goals& goals, VIPRA::State& state,
+                                  VIPRA::delta_t deltaT)
 {
   GroupsContainer&  groups = _selector.get_groups();
   const VIPRA::size groupCnt = groups.size();
-  Simpack           pack{pedset,   map,   goals, _selector.get_groups(),
-               _context, state, deltaT};
+  Simpack pack{pedset, map, goals, _selector.get_groups(), _context, state, deltaT};
 
   // check if any of the pedestrians should have an action applied
   for ( VIPRA::idx i = 0; i < groupCnt; ++i ) {

@@ -32,14 +32,18 @@ class GraphMixin {
   [[nodiscard]] constexpr auto node_count() const -> VIPRA::idx { return _nodes.size(); }
 
   [[nodiscard]] constexpr auto nodes() -> std::vector<Node>& { return _nodes; }
-  [[nodiscard]] constexpr auto nodes() const -> std::vector<Node> const& { return _nodes; }
+  [[nodiscard]] constexpr auto nodes() const -> std::vector<Node> const&
+  {
+    return _nodes;
+  }
 
   [[nodiscard]] constexpr auto neighbors(VIPRA::idx nodeIdx) -> std::vector<VIPRA::idx>&
   {
     assert(nodeIdx < _nodes.size());
     return _nodes[nodeIdx].neighbors;
   }
-  [[nodiscard]] constexpr auto neighbors(VIPRA::idx nodeIdx) const -> std::vector<VIPRA::idx> const&
+  [[nodiscard]] constexpr auto neighbors(VIPRA::idx nodeIdx) const
+      -> std::vector<VIPRA::idx> const&
   {
     assert(nodeIdx < _nodes.size());
     return _nodes[nodeIdx].neighbors;
@@ -71,7 +75,8 @@ class GraphMixin {
     return _nodes.size() - 1;
   }
 
-  [[nodiscard]] auto add_node(data_t data, std::vector<VIPRA::idx> neighbors) -> VIPRA::idx
+  [[nodiscard]] auto add_node(data_t                  data,
+                              std::vector<VIPRA::idx> neighbors) -> VIPRA::idx
   {
     _nodes.emplace_back(Node{data, neighbors});
     for ( auto neighbor : neighbors ) {

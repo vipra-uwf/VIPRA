@@ -57,14 +57,13 @@ class DXF : public VIPRA::Modules::Module<DXF>,
   [[nodiscard]] auto get_spawns() const
       -> std::optional<std::vector<VIPRA::Geometry::Polygon>> override;
   [[nodiscard]] auto get_objectives() const
-      -> std::optional<std::map<
-          std::string, std::vector<VIPRA::Geometry::Polygon>>> override;
-  [[nodiscard]] auto get_areas() const
       -> std::optional<
-          std::map<std::string, VIPRA::Geometry::Polygon>> override;
+          std::map<std::string, std::vector<VIPRA::Geometry::Polygon>>> override;
+  [[nodiscard]] auto get_areas() const
+      -> std::optional<std::map<std::string, VIPRA::Geometry::Polygon>> override;
 
-  [[nodiscard]] auto get_objective_types(std::vector<std::string> const& keys)
-      const -> std::optional<std::vector<std::string>>
+  [[nodiscard]] auto get_objective_types(std::vector<std::string> const& keys) const
+      -> std::optional<std::vector<std::string>>
   {
     if ( keys.size() != 1 ) return std::nullopt;
     if ( keys[0] != "obj_types" ) return std::nullopt;
