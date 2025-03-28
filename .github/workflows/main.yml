@@ -11,6 +11,8 @@ on:
 
 jobs:
   run-lint:
+    permissions:
+      pull-requests: write
     uses: ./.github/workflows/lint.yml
   
   run-tests:
