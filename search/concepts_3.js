@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['graph_0',['Graph',['../d6/db6/conceptVIPRA_1_1Algo_1_1AStar_1_1Graph.html',1,'VIPRA::Algo::AStar']]]
+  ['numeric_0',['Numeric',['../db/d7d/conceptVIPRA_1_1Concepts_1_1Numeric.html',1,'VIPRA::Concepts']]]
 ];

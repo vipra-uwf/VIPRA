@@ -24,7 +24,7 @@ var searchData=
   ['goals_20macros_21',['Goals Macros',['../d6/d36/md_docs_2pages_2developers_2usage_2macros.html#autotoc_md177',1,'']]],
   ['goals_20modules_22',['Goals Modules',['../d6/d09/md_docs_2pages_2developers_2implementation_2goals.html',1,'']]],
   ['gperftools_23',['Using Gperftools',['../dd/d3e/md_docs_2pages_2developers_2setup.html#autotoc_md162',1,'']]],
-  ['graph_24',['Graph',['../dd/d40/classVIPRA_1_1DataStructures_1_1Graph.html',1,'VIPRA::DataStructures::Graph&lt; data_t &gt;'],['../d6/db6/conceptVIPRA_1_1Algo_1_1AStar_1_1Graph.html',1,'VIPRA::Algo::AStar']]],
+  ['graph_24',['Graph',['../dd/d40/classVIPRA_1_1DataStructures_1_1Graph.html',1,'VIPRA::DataStructures']]],
   ['graphmixin_25',['GraphMixin',['../d8/de6/classVIPRA_1_1DataStructures_1_1GraphMixin.html',1,'VIPRA::DataStructures']]],
   ['graphmixin_3c_20void_2c_20data_5ft_20_3e_26',['GraphMixin&lt; void, data_t &gt;',['../d8/de6/classVIPRA_1_1DataStructures_1_1GraphMixin.html',1,'VIPRA::DataStructures']]],
   ['grid_27',['Grid',['../d2/dc4/classVIPRA_1_1Goals_1_1Grid.html',1,'VIPRA::Goals']]],

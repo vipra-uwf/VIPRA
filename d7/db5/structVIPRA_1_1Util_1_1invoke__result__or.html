@@ -102,8 +102,8 @@ $(function(){ initResizable(false); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a157c604c65afb8f8c490a961d1b9a67a" id="r_a157c604c65afb8f8c490a961d1b9a67a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a157c604c65afb8f8c490a961d1b9a67a">type</a></td></tr>
-<tr class="separator:a157c604c65afb8f8c490a961d1b9a67a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57c3810aa9a3eedfb31251fa68746795" id="r_a57c3810aa9a3eedfb31251fa68746795"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a57c3810aa9a3eedfb31251fa68746795">type</a></td></tr>
+<tr class="separator:a57c3810aa9a3eedfb31251fa68746795"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename result_t, typename func_t, typename... arg_ts&gt;<br />
@@ -117,8 +117,8 @@ struct VIPRA::Util::invoke_result_or&lt; result_t, func_t, arg_ts &gt;</div><p>U
   </dd>
 </dl>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a157c604c65afb8f8c490a961d1b9a67a" name="a157c604c65afb8f8c490a961d1b9a67a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a157c604c65afb8f8c490a961d1b9a67a">&#9670;&#160;</a></span>type</h2>
+<a id="a57c3810aa9a3eedfb31251fa68746795" name="a57c3810aa9a3eedfb31251fa68746795"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57c3810aa9a3eedfb31251fa68746795">&#9670;&#160;</a></span>type</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -130,8 +130,8 @@ template&lt;typename result_t, typename func_t, typename... arg_ts&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line"> std::conditional&lt;std::is_same_v&lt;func_t, VOID&gt;, result_t,</div>
-<div class="line">                                std::invoke_result_t&lt;func_t, arg_ts...&gt;&gt;::type</div>
+<b>Initial value:</b><div class="fragment"><div class="line"> <span class="keyword">typename</span> std::conditional&lt;std::is_same_v&lt;func_t, VOID&gt;, result_t,</div>
+<div class="line">                                         std::invoke_result_t&lt;func_t, arg_ts...&gt;&gt;::type</div>
 </div><!-- fragment -->
 </div>
 </div>

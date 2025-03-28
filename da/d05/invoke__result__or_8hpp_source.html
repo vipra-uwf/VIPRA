@@ -102,8 +102,8 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment">// NOLINTNEXTLINE(readability-identifier-naming) utility struct</span></div>
 <div class="foldopen" id="foldopen00017" data-start="{" data-end="};">
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="../../d7/db5/structVIPRA_1_1Util_1_1invoke__result__or.html">   17</a></span><span class="keyword">struct </span><a class="code hl_struct" href="../../d7/db5/structVIPRA_1_1Util_1_1invoke__result__or.html">invoke_result_or</a> {</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  <span class="keyword">using </span>type = std::conditional&lt;std::is_same_v&lt;func_t, VOID&gt;, result_t,</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>                                std::invoke_result_t&lt;func_t, arg_ts...&gt;&gt;::type;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  <span class="keyword">using </span>type = <span class="keyword">typename</span> std::conditional&lt;std::is_same_v&lt;func_t, VOID&gt;, result_t,</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>                                         std::invoke_result_t&lt;func_t, arg_ts...&gt;&gt;::type;</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>};</div>
 </div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span></div>
