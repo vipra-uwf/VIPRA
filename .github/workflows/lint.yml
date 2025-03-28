@@ -6,8 +6,6 @@ on:
 jobs:
   run-lint:
     runs-on: ubuntu-latest
-    permissions: 
-      pull-requests: write
     steps:
     - uses: actions/checkout@v4
     - run: make release JOBS=8
