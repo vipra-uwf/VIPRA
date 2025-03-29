@@ -31,6 +31,7 @@ class Goals {
   virtual VIPRA_GOALS_UPDATE_STEP = 0;
   virtual VIPRA_GOALS_NEXT_GOAL = 0;
   virtual VIPRA_GOALS_CHANGE_GOAL = 0;
+  virtual VIPRA_GOALS_RESET = 0;
 
   void initialize(VIPRA::Modules::Pedestrians const& pedset,
                   VIPRA::Modules::Map const& map, VIPRA::Random::Engine& engine)
@@ -80,8 +81,8 @@ class Goals {
     update_step(pedset, map, deltaT);
   }
 
-  void change_end_goal(VIPRA::idx pedIdx, VIPRA::f3d currPos,
-                       VIPRA::f3d goalPos, VIPRA::Random::Engine& engine)
+  void change_end_goal(VIPRA::idx pedIdx, VIPRA::f3d currPos, VIPRA::f3d goalPos,
+                       VIPRA::Random::Engine& engine)
   {
     assert(pedIdx < _endGoals.size());
     set_end_goal(pedIdx, goalPos);
@@ -105,8 +106,7 @@ class Goals {
     return _currentGoals[pedIdx];
   }
 
-  [[nodiscard]] VIPRA_INLINE auto end_goal(VIPRA::idx pedIdx) const
-      -> VIPRA::f3d const&
+  [[nodiscard]] VIPRA_INLINE auto end_goal(VIPRA::idx pedIdx) const -> VIPRA::f3d const&
   {
     return _endGoals[pedIdx];
   }
@@ -138,10 +138,7 @@ class Goals {
   static constexpr VIPRA::f_pnt MIN_GOAL_DIST = 0.05;
 
  protected:
-  VIPRA_INLINE void set_goal_met(VIPRA::idx pedIdx, bool met)
-  {
-    _met[pedIdx] = met;
-  }
+  VIPRA_INLINE void set_goal_met(VIPRA::idx pedIdx, bool met) { _met[pedIdx] = met; }
   VIPRA_INLINE void set_end_goal(VIPRA::idx pedIdx, VIPRA::f3d pos)
   {
     _endGoals[pedIdx] = pos;

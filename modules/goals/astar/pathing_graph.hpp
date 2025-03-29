@@ -46,8 +46,7 @@ class PathingGraph {
     return neighbors;
   }
 
-  [[nodiscard]] VIPRA_INLINE auto pos(VIPRA::idx gridIdx) const noexcept
-      -> VIPRA::f3d
+  [[nodiscard]] VIPRA_INLINE auto pos(VIPRA::idx gridIdx) const noexcept -> VIPRA::f3d
   {
     assert(gridIdx < _grids.size());
     return _positions[gridIdx];
@@ -61,10 +60,8 @@ class PathingGraph {
   [[nodiscard]] auto get_closest_grid_idx(VIPRA::f3d position) const noexcept
       -> VIPRA::idx
   {
-    auto const gridX =
-        static_cast<VIPRA::idx>(std::floor(position.x / _gridSize));
-    auto const gridY =
-        static_cast<VIPRA::idx>(std::floor(position.y / _gridSize));
+    auto const gridX = static_cast<VIPRA::idx>(std::floor(position.x / _gridSize));
+    auto const gridY = static_cast<VIPRA::idx>(std::floor(position.y / _gridSize));
 
     return get_index(gridX, gridY);
   }
@@ -82,13 +79,12 @@ class PathingGraph {
   void construct_graph(VIPRA::Modules::Map const& map);
   void set_adjacents(VIPRA::idx currIdx);
 
-  [[nodiscard]] auto neighbor_idx(
-      VIPRA::idx gridIdx, VIPRA::idx neighbor) const noexcept -> VIPRA::idx
+  [[nodiscard]] auto neighbor_idx(VIPRA::idx gridIdx,
+                                  VIPRA::idx neighbor) const noexcept -> VIPRA::idx
   {
     const int                xCount = static_cast<int>(_xCount);
     const std::array<int, 8> deltaIdx = {
-        (-xCount - 1), -xCount, (-xCount + 1), -1, 1,
-        (xCount - 1),  xCount,  (xCount + 1),
+        (-xCount - 1), -xCount, (-xCount + 1), -1, 1, (xCount - 1), xCount, (xCount + 1),
     };
 
     return gridIdx + deltaIdx[neighbor];

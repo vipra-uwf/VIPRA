@@ -47,5 +47,5 @@ inline auto to_string(Type type) -> std::string
   return "unknown";
 }
 
-static constexpr size_t MODULE_COUNT = 7;
+static constexpr size_t MODULE_COUNT = 8;
 }  // namespace VIPRA::Modules

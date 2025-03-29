@@ -68,8 +68,7 @@ void PathingGraph::set_adjacents(VIPRA::idx currIdx)
   const int xCount = static_cast<int>(_xCount);
 
   const std::array<int, 8> deltaIdx = {
-      (-xCount - 1), -xCount, (-xCount + 1), -1, 1,
-      (xCount - 1),  xCount,  (xCount + 1),
+      (-xCount - 1), -xCount, (-xCount + 1), -1, 1, (xCount - 1), xCount, (xCount + 1),
   };
 
   VIPRA::idx adjIdx = 0;

@@ -4,6 +4,7 @@ import json
 import math
 import numpy as np
 import matplotlib
+import matplotlib.pyplot as plt
 import datetime
 import ezdxf
 
@@ -107,8 +108,8 @@ def getArgs():
     peds     = peds,
     obs      = obs,
     dxf      = dxf,
-    xDim     = [xMin, xMax],
-    yDim     = [yMin, yMax],
+    xDim     = [xMin, xMax] if xMin != -1 else None,
+    yDim     = [yMin, yMax] if yMin != -1 else None,
     fps      = fps,
     idxColor = idxColor,
     pedColor = pedColor,
@@ -156,7 +157,7 @@ def getPoints(timestep):
   return (pointsX, pointsY)
 
 def makeColors(peds, args):
-  count = len(peds["timesteps"][0])
+  count = len(peds["trajectories"][0])
   if args['pedColor']:
     return np.random.rand(count, 3)
   else:
@@ -174,7 +175,8 @@ def plotShoulders(pointsX, pointsY, colors, ax, args):
 def plotIndexes(pointsX, pointsY, pedColors, ax, args):
   if args['indexes']:
     for index in range(0, len(pointsX)):
-      ax.text(pointsX[index], pointsY[index], index, fontsize=5, c=pedColors[index] if args['idxColor'] else 'k', alpha=args['difalpha'] if args['dif'] else 1)
+      ax.text(pointsX[index], pointsY[index], index, fontsize=5)
+      # ax.text(pointsX[index], pointsY[index], index, fontsize=5, c=pedColors[index] if args['idxColor'] else 'k', alpha=args['difalpha'] if args['dif'] else 1)
 
 def plotPeds(pedsX, pedsY, pedColors, ax, args):
   return ax.scatter(pedsX, pedsY, 2, color=pedColors)
@@ -185,15 +187,17 @@ def plotObs(obstacles, ax, args):
     ax.add_patch(poly)
 
 def prepPlot(ax, i, args):
-  xDim = args['xDim']
-  yDim = args['yDim']
-
-  ax.clear()
-  ax.set_xlim(xDim[0], xDim[1])
-  ax.set_ylim(yDim[0], yDim[1])
-  ax.autoscale(False)
-  ax.set_facecolor(args['bckColor'])
-  ax.text(xDim[1] / 2 , yDim[1], f'{datetime.timedelta(seconds=(i * 100 * 0.005))}')
+  if (args['xDim'] and args['yDim']):
+    xDim = args['xDim']
+    yDim = args['yDim']
+    ax.clear()
+    ax.set_xlim(xDim[0], xDim[1])
+    ax.set_ylim(yDim[0], yDim[1])
+    ax.set_facecolor(args['bckColor'])
+    ax.text(xDim[1] / 2 , yDim[1], f'{datetime.timedelta(seconds=(i * 100 * 0.005))}')
+  else:
+    ax.autoscale(True)
+    ax.axis('equal')
 
 percent = 0
 def printProgressBar (iteration, total, prefix="Outputing", animating=False):
@@ -252,7 +256,7 @@ def updateColors(output):
 def draw_dxf(msp, ax, args):
   # Iterate through entities in the model space
   for entity in msp:
-      if entity.dxf.layer != 'obstacles':
+      if entity.dxf.layer.lower() != 'obstacles':
         continue
       if entity.dxftype() == 'LINE':
           draw_line(ax, entity.dxf.start, entity.dxf.end)
@@ -263,7 +267,7 @@ def draw_dxf(msp, ax, args):
 
 # Function to draw a circle
 def draw_circle(ax, center, radius):
-    circle = Circle(center, radius, fill=False, color='black')
+    circle = matplotlib.pyplot.Circle(center, radius, fill=False, color='black')
     ax.add_patch(circle)
 
 # Function to draw a lightweight polyline (LWPolyline)

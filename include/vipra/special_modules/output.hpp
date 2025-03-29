@@ -31,6 +31,13 @@ class OutputCoordinator : public Modules::Module<OutputCoordinator> {
 
   VIPRA_REGISTER_PARAMS(VIPRA_PARAM("output_dir", _base_output_dir))
 
+  void reset_modules()
+  {
+    for ( auto& output : _outputs ) {
+      output->reset_module();
+    }
+  }
+
   void add_output(
       std::unique_ptr<Modules::Output>&&                                module,
       std::function<void(void*, Parameters&, VIPRA::Random::Engine&)>&& config)
@@ -42,8 +49,8 @@ class OutputCoordinator : public Modules::Module<OutputCoordinator> {
   void config(Parameters& paramIn, VIPRA::Random::Engine& engine)
   {
     paramIn.register_param(module_type(), module_name(), "output_dir");
-    _base_output_dir = paramIn.get_param<std::string>(
-        module_type(), module_name(), "output_dir", engine);
+    _base_output_dir = paramIn.get_param<std::string>(module_type(), module_name(),
+                                                      "output_dir", engine);
 
     _current_output_dir = _base_output_dir;
     create_output_directory(_current_output_dir);
@@ -95,8 +102,7 @@ class OutputCoordinator : public Modules::Module<OutputCoordinator> {
     std::ofstream         file(filepath);
 
     if ( ! file.is_open() ) {
-      throw std::runtime_error("Could not open file for writing: " +
-                               filepath.string());
+      VIPRA_MODULE_ERROR("Could not open file for writing: {}", filepath.string());
     }
 
     file << value;
@@ -105,14 +111,13 @@ class OutputCoordinator : public Modules::Module<OutputCoordinator> {
   }
 
  private:
-  std::vector<std::unique_ptr<VIPRA::Modules::Output>> _outputs;
-  std::vector<std::function<void(void*, Parameters&, VIPRA::Random::Engine&)>>
-      _configs;
+  std::vector<std::unique_ptr<VIPRA::Modules::Output>>                         _outputs;
+  std::vector<std::function<void(void*, Parameters&, VIPRA::Random::Engine&)>> _configs;
 
   std::filesystem::path _base_output_dir;
   std::filesystem::path _current_output_dir;
 
-  static void create_output_directory(std::filesystem::path const& directory)
+  void create_output_directory(std::filesystem::path const& directory) const
   {
     if ( std::filesystem::exists(directory) ) {
       if ( std::filesystem::is_directory(directory) ) {
@@ -121,16 +126,14 @@ class OutputCoordinator : public Modules::Module<OutputCoordinator> {
       }
 
       // exists but isn't a directory, error
-      throw std::runtime_error(
-          "Output directory already exists and is not a directory: " +
-          directory.string());
+      VIPRA_MODULE_ERROR("Output directory already exists and is not a directory: {}",
+                         directory.string());
     }
 
     // create and check it was actually created
     if ( ! std::filesystem::create_directory(directory) ) {
       if ( ! std::filesystem::exists(directory) )
-        throw std::runtime_error("Could not create output directory: " +
-                                 directory.string());
+        VIPRA_MODULE_ERROR("Could not create output directory: {}", directory.string());
     }
   }
 };

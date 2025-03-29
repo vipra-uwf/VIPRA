@@ -17,8 +17,8 @@ void SpatialGrid::init_step(VIPRA ::Modules ::Map const& map,
 
   // initialize spatial map
   auto dimensions = map.get_dimensions();
-  _spatialGrid.initialize(_cellSize, dimensions.x, dimensions.y,
-                          get_coordinates(), tempIndexes);
+  _spatialGrid.initialize(_cellSize, dimensions.x, dimensions.y, get_coordinates(),
+                          tempIndexes);
 }
 
 void SpatialGrid::update_step(VIPRA ::State const& state)
@@ -28,16 +28,15 @@ void SpatialGrid::update_step(VIPRA ::State const& state)
 }
 
 auto SpatialGrid::conditional_closest_ped(
-    VIPRA::idx                             ped,
-    std::function<bool(VIPRA::idx)> const& condition) const -> VIPRA::idx
+    VIPRA::idx ped, std::function<bool(VIPRA::idx)> const& condition) const -> VIPRA::idx
 {
-  const VIPRA::f3d pos = ped_coords(ped);
-  VIPRA::f_pnt     minDist = std::numeric_limits<VIPRA::f_pnt>::max();
-  VIPRA::idx       minIdx = ped;
+  VIPRA::f3d const& pos = ped_coords(ped);
+  VIPRA::f_pnt      minDist = std::numeric_limits<VIPRA::f_pnt>::max();
+  VIPRA::idx        minIdx = ped;
 
   // Check all surrounding grids for the nearest pedestrian that matches the predicate
   _spatialGrid.for_each_neighbor(pos, [&](VIPRA::idx other) {
-    VIPRA::f_pnt dist = pos.distance_to_sqrd(ped_coords(other));
+    const VIPRA::f_pnt dist = pos.distance_to_sqrd(ped_coords(other));
 
     if ( dist < minDist ) {
       if ( ! condition(other) ) return;
@@ -49,6 +48,8 @@ auto SpatialGrid::conditional_closest_ped(
 
   return minIdx;
 }
+
+void SpatialGrid::reset_peds_module() { _spatialGrid.clear(); }
 
 auto SpatialGrid::closest_ped(VIPRA::idx ped) const -> VIPRA::idx
 {
@@ -68,8 +69,8 @@ auto SpatialGrid::closest_ped(VIPRA::idx ped) const -> VIPRA::idx
   return minIdx;
 }
 
-auto SpatialGrid::all_neighbors_within(
-    VIPRA::idx pedIdx, VIPRA::f_pnt radius) const -> std::vector<VIPRA::idx>
+auto SpatialGrid::all_neighbors_within(VIPRA::idx pedIdx, VIPRA::f_pnt radius) const
+    -> std::vector<VIPRA::idx>
 {
   std::vector<VIPRA::idx> neighbors;
 

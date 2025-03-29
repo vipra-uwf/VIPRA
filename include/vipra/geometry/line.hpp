@@ -15,10 +15,14 @@ struct Line {
   // TODO(rolland): issue #18 add more to the line class
   constexpr Line(VIPRA::f3d start, VIPRA::f3d end) : start(start), end(end) {}
 
-  F3D_FUNC auto length() const noexcept -> VIPRA::f_pnt
-  {
-    return start.distance_to(end);
-  }
+  F3D_FUNC auto length() const noexcept -> VIPRA::f_pnt { return start.distance_to(end); }
+
+  /**
+   * @brief Returns unit vector in direction of line from start
+   * 
+   * @return VIPRA::f3d 
+   */
+  F3D_FUNC auto direction() const noexcept -> VIPRA::f3d { return (end - start).unit(); }
 
   /**
    * @brief Calculates the orientation of a point relative to a line.
@@ -45,18 +49,18 @@ struct Line {
    * @param point 
    * @return VIPRA::f3d 
    */
-  [[nodiscard]] VIPRA_INLINE constexpr auto closest_point(
-      VIPRA::f3d point) const noexcept -> VIPRA::f3d
+  [[nodiscard]] VIPRA_INLINE constexpr auto closest_point(VIPRA::f3d point) const noexcept
+      -> VIPRA::f3d
   {
     // TODO(rolland): issue #18 verify
     const VIPRA::f_pnt lineLength = start.distance_to(end);
 
     if ( lineLength == 0.0 ) return start;
 
-    const VIPRA::f_pnt t = std::max(
-        static_cast<VIPRA::f_pnt>(0.0),
-        std::min(static_cast<VIPRA::f_pnt>(1.0),
-                 (point - start).dot(end - start) / (lineLength * lineLength)));
+    const VIPRA::f_pnt t =
+        std::max(static_cast<VIPRA::f_pnt>(0.0),
+                 std::min(static_cast<VIPRA::f_pnt>(1.0),
+                          (point - start).dot(end - start) / (lineLength * lineLength)));
     return start + (end - start) * t;
   }
 
@@ -67,13 +71,10 @@ struct Line {
    * @return true 
    * @return false 
    */
-  [[nodiscard]] VIPRA_INLINE constexpr auto is_point_on(VIPRA::f3d point) const
-      -> bool
+  [[nodiscard]] VIPRA_INLINE constexpr auto is_point_on(VIPRA::f3d point) const -> bool
   {
-    return point.x <= std::max(start.x, end.x) &&
-           point.y <= std::max(start.y, end.y) &&
-           point.x >= std::min(start.x, end.x) &&
-           point.y >= std::min(start.y, end.y);
+    return point.x <= std::max(start.x, end.x) && point.y <= std::max(start.y, end.y) &&
+           point.x >= std::min(start.x, end.x) && point.y >= std::min(start.y, end.y);
   }
 
   /**
@@ -83,8 +84,8 @@ struct Line {
    * @return true 
    * @return false 
    */
-  [[nodiscard]] VIPRA_INLINE constexpr auto does_intersect(
-      Line other) const noexcept -> bool
+  [[nodiscard]] VIPRA_INLINE constexpr auto does_intersect(Line other) const noexcept
+      -> bool
   {
     return do_intersect(*this, other);
   }
@@ -96,8 +97,7 @@ struct Line {
    * @param other 
    * @return VIPRA::f3d 
    */
-  [[nodiscard]] constexpr auto intersection_point(Line other) const noexcept
-      -> VIPRA::f3d
+  [[nodiscard]] constexpr auto intersection_point(Line other) const noexcept -> VIPRA::f3d
   {
     assert(does_intersect(other));
 
@@ -137,14 +137,10 @@ struct Line {
 
     if ( ori1 != ori2 && ori3 != ori4 ) return true;
 
-    if ( ori1 == Orientation::COLLINEAR && line1.is_point_on(line2.start) )
-      return true;
-    if ( ori2 == Orientation::COLLINEAR && line1.is_point_on(line2.end) )
-      return true;
-    if ( ori3 == Orientation::COLLINEAR && line2.is_point_on(line1.start) )
-      return true;
-    if ( ori4 == Orientation::COLLINEAR && line2.is_point_on(line1.end) )
-      return true;
+    if ( ori1 == Orientation::COLLINEAR && line1.is_point_on(line2.start) ) return true;
+    if ( ori2 == Orientation::COLLINEAR && line1.is_point_on(line2.end) ) return true;
+    if ( ori3 == Orientation::COLLINEAR && line2.is_point_on(line1.start) ) return true;
+    if ( ori4 == Orientation::COLLINEAR && line2.is_point_on(line1.end) ) return true;
 
     return false;
   }

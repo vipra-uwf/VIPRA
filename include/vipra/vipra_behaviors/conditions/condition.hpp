@@ -39,10 +39,7 @@ class Condition {
                 std::optional<TimedLatchCollection>& latches);
 
   void add_operation(BoolOp oper) { _steps.emplace_back(oper); }
-  void add_subcondition(SubCondition&& condition)
-  {
-    _conditions.emplace_back(condition);
-  }
+  void add_subcondition(SubCondition&& condition) { _conditions.emplace_back(condition); }
 
  private:
   std::vector<SubCondition> _conditions;
@@ -57,8 +54,7 @@ class Condition {
    * @param latches 
    * @param met 
    */
-  static void handle_latches(Simpack                              pack,
-                             std::optional<TimedLatchCollection>& latches,
-                             std::vector<bool>&                   met);
+  static void handle_latches(Simpack pack, std::optional<TimedLatchCollection>& latches,
+                             std::vector<bool>& met);
 };
 }  // namespace VIPRA::Behaviors

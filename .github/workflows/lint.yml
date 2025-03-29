@@ -1,0 +1,24 @@
+name: Lint Workflow
+
+on:
+  workflow_call:
+
+jobs:
+  run-lint:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+    - uses: actions/checkout@v4
+    - run: make release JOBS=8
+    - uses: cpp-linter/cpp-linter-action@v2
+      id: linter
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        style: 'file'
+        tidy-checks: ''
+        files-changed-only: true
+        ignore: __tests__|modules|tools|examples|docs|deps|cmake|behaviors|include/vipra/vipra_behaviors/_grammar
+        database: 'build'
+        thread-comments: ${{ github.event_name == 'pull_request' && 'update' }}

@@ -15,8 +15,8 @@ namespace VIPRA::Util {
 template <typename result_t, typename func_t, typename... arg_ts>
 // NOLINTNEXTLINE(readability-identifier-naming) utility struct
 struct invoke_result_or {
-  using type =
-      std::conditional<std::is_same_v<func_t, VOID>, result_t, std::invoke_result_t<func_t, arg_ts...>>::type;
+  using type = typename std::conditional<std::is_same_v<func_t, VOID>, result_t,
+                                         std::invoke_result_t<func_t, arg_ts...>>::type;
 };
 
 /**

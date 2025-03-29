@@ -42,7 +42,7 @@ VIPRA_PEDS_UPDATE_STEP {}
 
 ### Parameters
 
-- `state` : VIPRA::State - updated positions/velocities of pedestrians
+- `state` : VIPRA::State& - out parameter, updated positions/velocities of pedestrians
 
 ### Returns
 

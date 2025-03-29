@@ -1,6 +1,7 @@
 #pragma once
 
 #include <functional>
+#include <random>
 #include <vector>
 
 #include "vipra/geometry/circle.hpp"
@@ -15,7 +16,6 @@
 #include "vipra/modules/module.hpp"
 #include "vipra/modules/pedestrian_input.hpp"
 
-#include "vipra/random/distributions.hpp"
 #include "vipra/random/random.hpp"
 
 #include "vipra/types/float.hpp"
@@ -36,12 +36,12 @@ class Pedestrians : public BaseModule<Pedestrians> {
  public:
   virtual VIPRA_PEDS_INIT_STEP = 0;
   virtual VIPRA_PEDS_UPDATE_STEP = 0;
-  [[nodiscard]] virtual auto all_neighbors_within(VIPRA::idx   pedIdx,
-                                                  VIPRA::f_pnt radius) const
-      -> std::vector<VIPRA::idx> = 0;
+  virtual VIPRA_PEDS_RESET = 0;
 
-  [[nodiscard]] virtual auto closest_ped(VIPRA::idx pedIdx) const
-      -> VIPRA::idx = 0;
+  [[nodiscard]] virtual auto all_neighbors_within(
+      VIPRA::idx pedIdx, VIPRA::f_pnt radius) const -> std::vector<VIPRA::idx> = 0;
+
+  [[nodiscard]] virtual auto closest_ped(VIPRA::idx pedIdx) const -> VIPRA::idx = 0;
 
   [[nodiscard]] virtual auto conditional_closest_ped(
       VIPRA::idx                             pedIdx,
@@ -53,8 +53,8 @@ class Pedestrians : public BaseModule<Pedestrians> {
                              VIPRA_PARAM("spawn_random", _randomSpawn),
                              VIPRA_PARAM("use_file", _useFile))
 
-  void initialize(VIPRA::Modules::PedestrianInput& input,
-                  VIPRA::Modules::Map const& map, VIPRA::Random::Engine& engine)
+  void initialize(VIPRA::Modules::PedestrianInput& input, VIPRA::Modules::Map const& map,
+                  VIPRA::Random::Engine& engine)
   {
     VIPRA::Log::debug("Initializing Pedestrians");
     if ( ! (_randomSpawn || _useFile) )
@@ -72,14 +72,19 @@ class Pedestrians : public BaseModule<Pedestrians> {
     }
 
     if ( _coords.size() == 0 )
-      VIPRA_BASE_MODULE_ERROR("Pedestrians",
-                              "No Pedestrians added to simulation");
+      VIPRA_BASE_MODULE_ERROR("Pedestrians", "No Pedestrians added to simulation");
 
     assert(_coords.size() > 0);
     assert(_coords.size() == _velocities.size());
 
     init_step(map, engine);
     VIPRA::Log::debug("Pedestrians Initialized");
+  }
+
+  void reset_module()
+  {
+    _coords.clear();
+    _velocities.clear();
   }
 
   void update(VIPRA::State const& state)
@@ -98,10 +103,7 @@ class Pedestrians : public BaseModule<Pedestrians> {
     return _coords[firstPed].distance_to(_coords[secondPed]);
   }
 
-  [[nodiscard]] auto num_pedestrians() const -> VIPRA::size
-  {
-    return _coords.size();
-  }
+  [[nodiscard]] auto num_pedestrians() const -> VIPRA::size { return _coords.size(); }
 
   [[nodiscard]] auto ped_coords(VIPRA::idx pedIdx) const -> VIPRA::f3d const&
   {
@@ -135,41 +137,24 @@ class Pedestrians : public BaseModule<Pedestrians> {
   bool   _useFile{true};
 
  protected:
-  void set_velocities(VIPRA::f3dVec const& velocities)
-  {
-    _velocities = velocities;
-  }
-  void set_velocities(VIPRA::f3dVec&& velocities) noexcept
-  {
-    _velocities = velocities;
-  }
+  void set_velocities(VIPRA::f3dVec const& velocities) { _velocities = velocities; }
+  void set_velocities(VIPRA::f3dVec&& velocities) noexcept { _velocities = velocities; }
 
-  void set_coordinates(VIPRA::f3dVec const& coordinates)
-  {
-    _coords = coordinates;
-  }
-  void set_coordinates(VIPRA::f3dVec&& coordinates) noexcept
-  {
-    _coords = coordinates;
-  }
+  void set_coordinates(VIPRA::f3dVec const& coordinates) { _coords = coordinates; }
+  void set_coordinates(VIPRA::f3dVec&& coordinates) noexcept { _coords = coordinates; }
 
   [[nodiscard]] auto get_velocities() const -> VIPRA::f3dVec const&
   {
     return _velocities;
   }
-  [[nodiscard]] auto get_coordinates() const -> VIPRA::f3dVec const&
-  {
-    return _coords;
-  }
+  [[nodiscard]] auto get_coordinates() const -> VIPRA::f3dVec const& { return _coords; }
 
-  void init_random_peds(VIPRA::Modules::Map const& map,
-                        VIPRA::Random::Engine&     engine)
+  void init_random_peds(VIPRA::Modules::Map const& map, VIPRA::Random::Engine& engine)
   {
-    // TODO(rolland, issue #50): this is terrible
-
+    // TODO(rolland): issue #45 handle spawn points
     assert(_coords.size() == _velocities.size());
 
-    auto spawnAreas = map.get_spawns();
+    auto const& spawnAreas = map.get_spawns();
     if ( spawnAreas.size() == 0 ) {
       VIPRA::Log::warn(
           "{} Pedestrians were set to spawn randomly, but no spawn areas were "
@@ -182,21 +167,17 @@ class Pedestrians : public BaseModule<Pedestrians> {
     _coords.resize(_coords.size() + _randomPedCnt);
     _velocities.resize(_velocities.size() + _randomPedCnt);
 
-    VIPRA::Random::uniform_distribution<size_t> polyDist{0,
-                                                         spawnAreas.size() - 1};
+    std::uniform_int_distribution<size_t> polyDist{0, spawnAreas.size() - 1};
 
     // go through each pedestrian and give them a random point inside one of the spawn points
     for ( size_t i = startSize; i < _coords.size(); ++i ) {
-      // TODO(rolland, issue #50): effectively infinite loop if the spawn is covered by an obstacle
       VIPRA::idx spawnIdx = polyDist(engine);
 
-      do {
-        _coords[i] = spawnAreas[spawnIdx].random_point(engine);
-      } while ( map.collision(Geometry::Circle{_coords[i], 0.3}) );
+      _coords[i] = find_random_point(spawnAreas[spawnIdx], map, engine);
     }
 
-    VIPRA::Log::debug("{} pedestrians added randomly to {} spawn areas",
-                      _randomPedCnt, spawnAreas.size());
+    VIPRA::Log::debug("{} pedestrians added randomly to {} spawn areas", _randomPedCnt,
+                      spawnAreas.size());
   }
 
   void init_specific_peds(VIPRA::Modules::PedestrianInput& input)
@@ -216,10 +197,34 @@ class Pedestrians : public BaseModule<Pedestrians> {
           "Pedestrians were set to be loaded from a file, but no coordinates "
           "could be loaded");
 
-    VIPRA::Log::debug("{} pedestrians added at {} specific spots",
-                      (*coords).size(), (*coords).size());
+    VIPRA::Log::debug("{} pedestrians added at {} specific spots", (*coords).size(),
+                      (*coords).size());
     set_coordinates(std::move(*coords));
     set_velocities(std::vector<VIPRA::f3d>(_coords.size()));
+  }
+
+  static auto find_random_point(VIPRA::Geometry::Polygon const& polygon,
+                                VIPRA::Modules::Map const&      map,
+                                VIPRA::Random::Engine&          engine) -> f3d
+  {
+    constexpr size_t       MAX_RETRIES = 100;
+    constexpr VIPRA::f_pnt CLOSEST_DIST = 0.3;
+    size_t                 retries = 0;
+
+    f3d point = polygon.random_point(engine);
+    while ( map.collision(Geometry::Circle{point, CLOSEST_DIST}) ) {
+      point = polygon.random_point(engine);
+      ++retries;
+      if ( retries > MAX_RETRIES ) {
+        VIPRA_BASE_MODULE_ERROR(
+            "Pedestrians",
+            "Unable to obtain a point in the spawn area centered at ({}, {}). "
+            "Make sure all spawn areas are outside of obstacles.",
+            polygon.center().x, polygon.center().y);
+      }
+    }
+
+    return point;
   }
 
  public:

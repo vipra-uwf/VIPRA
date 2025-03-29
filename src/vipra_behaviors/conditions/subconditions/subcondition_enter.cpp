@@ -10,8 +10,7 @@ namespace VIPRA::Behaviors {
 void SubConditionEnter::operator()(Simpack pack, const VIPRA::idxVec& peds,
                                    std::vector<Target> const& targets,
                                    std::vector<bool>&         met,
-                                   std::vector<bool> const& /*unused*/,
-                                   BoolOp /*unused*/)
+                                   std::vector<bool> const& /*unused*/, BoolOp /*unused*/)
 {
   if ( _entered.size() < pack.pedset.num_pedestrians() )
     _entered.resize(pack.pedset.num_pedestrians());
@@ -19,12 +18,12 @@ void SubConditionEnter::operator()(Simpack pack, const VIPRA::idxVec& peds,
   for ( auto ped : peds ) {
     if ( _entered[targets[ped].targetIdx] ) {
       met[ped] = false;
+      continue;
     }
 
     Location& loc = pack.context.locations[_location];
-    bool      enter =
-        loc.is_point_inside(pack.state.positions[targets[ped].targetIdx]) &&
-        ! loc.is_point_inside(pack.pedset.ped_coords(targets[ped].targetIdx));
+    bool      enter = loc.is_point_inside(pack.state.positions[targets[ped].targetIdx]) &&
+                 ! loc.is_point_inside(pack.pedset.ped_coords(targets[ped].targetIdx));
 
     if ( enter ) {
       _entered[targets[ped].targetIdx] = true;

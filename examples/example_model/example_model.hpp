@@ -20,9 +20,9 @@ NEW_VIPRA_MODULE(ExampleModel, Model)
   {
     for ( size_t i = 0; i < pedset.num_pedestrians(); ++i ) {
       // Update the pedestrian's position, to make them move in a circle
-      state.positions[i] = VIPRA::f3d{
-          _initialPoints[i][0] + _radius * std::cos(deltaT * timestep),
-          _initialPoints[i][1] + _radius * std::sin(deltaT * timestep)};
+      state.positions[i] =
+          VIPRA::f3d{_initialPoints[i][0] + _radius * std::cos(deltaT * timestep),
+                     _initialPoints[i][1] + _radius * std::sin(deltaT * timestep)};
     }
   }
 

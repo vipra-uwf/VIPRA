@@ -6,14 +6,12 @@
 <!-- TODO: move relavent macros here -->
 
 ```C++
-auto write();
-
-template <typename value_t>
-void timestep_value(std::string const&, VIPRA::timestep, value_t);
-
-template <typename value_t>
-void ped_timestep_value(VIPRA::idx, VIPRA::timestep, std::string const&, value_t);
+virtual void write(std::filesystem::path const& outputDir) = 0;
+virtual void timestep_update(VIPRA::timestep, VIPRA::delta_t,
+                              VIPRA::State const&) = 0;
 ```
+
+
 ---
 
 

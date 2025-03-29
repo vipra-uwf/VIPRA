@@ -1,9 +1,16 @@
 #pragma once
 
+#include <algorithm>
 #include <cassert>
 #include <cstdint>
 #include <cstdlib>
 #include <limits>
+#include <random>
+#include <vector>
+
+#include "vipra/concepts/numeric.hpp"
+#include "vipra/types/float.hpp"
+#include "vipra/types/size.hpp"
 
 namespace VIPRA::Random {
 
@@ -66,7 +73,10 @@ class Engine {
    * 
    * @return constexpr uint64_t 
    */
-  static inline constexpr auto max() noexcept -> uint64_t { return std::numeric_limits<uint64_t>::max(); }
+  static inline constexpr auto max() noexcept -> uint64_t
+  {
+    return std::numeric_limits<uint64_t>::max();
+  }
 
  private:
   seed                      _currVal;
@@ -80,4 +90,29 @@ class Engine {
   auto operator=(const Engine&) -> Engine& = default;
   auto operator=(Engine&&) noexcept -> Engine& = default;
 };
+
+/**
+ * @brief Creates a vector of values that follows the provided distribution
+ * 
+ * @tparam dist_t 
+ * @tparam data_t 
+ * @param distr 
+ * @param count 
+ * @param engine 
+ * @return std::vector<data_t> 
+ */
+template <typename dist_t, Concepts::Numeric data_t = VIPRA::f_pnt>
+inline auto make_distribution(dist_t&& distr, VIPRA::size count,
+                              VIPRA::Random::Engine& engine) -> std::vector<data_t>
+{
+  std::vector<data_t> ret(count);
+
+  std::transform(ret.cbegin(), ret.cend(), ret.begin(), [&](data_t) {
+    data_t val = distr(engine);
+    return val;
+  });
+
+  return ret;
+}
+
 }  // namespace VIPRA::Random

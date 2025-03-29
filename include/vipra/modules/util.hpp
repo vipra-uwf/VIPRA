@@ -1,10 +1,7 @@
 #pragma once
 
-#define FORWARD_REGISTER_PARAMS                     \
-  [[nodiscard]] auto parameters() -> decltype(auto) \
-  {                                                 \
-    return self().module_params();                  \
-  }
+#define FORWARD_REGISTER_PARAMS \
+  [[nodiscard]] auto parameters() -> decltype(auto) { return self().module_params(); }
 
 #define REGISTER_BASE_PARAMS(params...)                                     \
   [[nodiscard]] auto parameters()                                           \

@@ -17,7 +17,9 @@
       "meanMaxSpeed": 1.0,
       "maxSpeedStdDev": 0.1,
       "meanShoulderLen": 0.2,
-      "shoulderLenStdDev": 0.05
+      "shoulderLenStdDev": 0.05,
+      "collisionRange": 1.0,
+      "friction": 100.0
     }
   },
   "goals": {
@@ -32,7 +34,8 @@
       "endGoalType": "exit",
       "gridSize": 0.04,
       "goalRange": 0.15,
-      "closestObstacle": 0.2
+      "closestObstacle": 0.2,
+      "pathSmoothing": 0.15
     }
   },
   "pedestrians": {

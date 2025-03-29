@@ -1,3 +1,5 @@
+|
+| [Main Page](../../docs.md) | [Developer Setup](setup.md) | [Module Implementations](overview.md) | [Examples](examples/list.md) |
 
 # Developer Setup
 
@@ -29,7 +31,7 @@ The following are required for development of the Behaviors DSL.
 target_link_libraries(
   **project**
   PUBLIC
-  VIPRA
+  vipra
 )
 ```
 

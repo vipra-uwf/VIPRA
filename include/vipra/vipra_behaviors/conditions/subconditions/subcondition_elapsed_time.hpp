@@ -14,13 +14,12 @@ class SubConditionElapsedTimeFromEvent {
   COPYABLE(SubConditionElapsedTimeFromEvent)
   MOVEABLE(SubConditionElapsedTimeFromEvent)
  public:
-  SubConditionElapsedTimeFromEvent(Behaviors::NumericValue time,
-                                   VIPRA::idx              event)
+  SubConditionElapsedTimeFromEvent(Behaviors::NumericValue time, VIPRA::idx event)
       : _event(event), _requiredTime(std::move(time))
   {
   }
 
-  void operator()(Simpack pack, const VIPRA::idxVec& peds,
+  void operator()(Simpack pack, const VIPRA::idxVec&                        peds,
                   std::vector<Target> const& /*unused*/, std::vector<bool>& met,
                   std::vector<bool> const& /*unused*/, BoolOp /*unused*/);
 

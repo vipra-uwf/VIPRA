@@ -44,14 +44,8 @@ class Grid {
   [[nodiscard]] auto get_x_count() const -> size_t { return _xCount; }
   [[nodiscard]] auto get_y_count() const -> size_t { return _xCount; }
 
-  [[nodiscard]] auto begin() -> std::vector<GridPoint>::iterator
-  {
-    return _grid.begin();
-  }
-  [[nodiscard]] auto end() -> std::vector<GridPoint>::iterator
-  {
-    return _grid.end();
-  }
+  [[nodiscard]] auto begin() -> std::vector<GridPoint>::iterator { return _grid.begin(); }
+  [[nodiscard]] auto end() -> std::vector<GridPoint>::iterator { return _grid.end(); }
 
   void flood_fill(VIPRA::f3d start, auto const& map)
   {
@@ -66,15 +60,13 @@ class Grid {
       VIPRA::f3d currPos = next.front();
       next.pop();
 
-      if ( map.collision(Geometry::Circle{grid_center(currPos), _gridSize}) )
-        continue;
+      if ( map.collision(Geometry::Circle{grid_center(currPos), _gridSize}) ) continue;
 
       add_neighbors(currPos, start, next, 0);
     }
   }
 
-  void flood_fill(VIPRA::f3d start, auto const& map,
-                  DensityGrid const& densityGrid)
+  void flood_fill(VIPRA::f3d start, auto const& map, DensityGrid const& densityGrid)
   {
     const VIPRA::f3d       dimensions = map.get_dimensions();
     std::queue<VIPRA::f3d> next;
@@ -87,8 +79,7 @@ class Grid {
       VIPRA::f3d currPos = next.front();
       next.pop();
 
-      if ( map.collision(Geometry::Circle{grid_center(currPos), _gridSize}) )
-        continue;
+      if ( map.collision(Geometry::Circle{grid_center(currPos), _gridSize}) ) continue;
 
       VIPRA::idx densityGridIndex = densityGrid.get_closest_grid_idx(currPos);
       int        pedCount = densityGrid.get_ped_count_at_idx(densityGridIndex);
@@ -110,8 +101,7 @@ class Grid {
     auto const idx = get_index(gridX, gridY, _xCount);
 
     if ( out_of_bounds(gridX, gridY) ) {
-      VIPRA::Log::error("Grid index is out of bounds Pos: ({}, {})", pos.x,
-                        pos.y);
+      VIPRA::Log::error("Grid index is out of bounds Pos: ({}, {})", pos.x, pos.y);
       throw std::runtime_error("Grid index is out of bounds");
     }
 
@@ -178,22 +168,20 @@ class Grid {
     _grid = std::vector<GridPoint>(_xCount * _yCount);
   }
 
-  [[nodiscard]] VIPRA_INLINE auto out_of_bounds(
-      VIPRA::f_pnt gridX, VIPRA::f_pnt gridY) const -> bool
+  [[nodiscard]] VIPRA_INLINE auto out_of_bounds(VIPRA::f_pnt gridX,
+                                                VIPRA::f_pnt gridY) const -> bool
   {
-    return gridX < 0 ||
-           gridX >= static_cast<VIPRA::f_pnt>(_xCount) * _gridSize ||
+    return gridX < 0 || gridX >= static_cast<VIPRA::f_pnt>(_xCount) * _gridSize ||
            gridY < 0 || gridY >= static_cast<VIPRA::f_pnt>(_yCount) * _gridSize;
   }
 
-  [[nodiscard]] VIPRA_INLINE auto out_of_bounds(size_t gridX,
-                                                size_t gridY) const -> bool
+  [[nodiscard]] VIPRA_INLINE auto out_of_bounds(size_t gridX, size_t gridY) const -> bool
   {
     return gridX < 0 || gridX >= _xCount || gridY < 0 || gridY >= _yCount;
   }
 
-  void add_neighbors(VIPRA::f3d curr, VIPRA::f3d end,
-                     std::queue<VIPRA::f3d>& queue, VIPRA::f_pnt weight)
+  void add_neighbors(VIPRA::f3d curr, VIPRA::f3d end, std::queue<VIPRA::f3d>& queue,
+                     VIPRA::f_pnt weight)
   {
     std::array<std::pair<int, int>, 8> const directions{
         {{-1, 1}, {0, 1}, {1, 1}, {-1, 0}, {1, 0}, {-1, -1}, {0, -1}, {1, -1}}};
@@ -203,15 +191,13 @@ class Grid {
     for ( auto [i, j] : directions ) {
       if ( i == 0 && i == j ) continue;
 
-      VIPRA::f3d nextPos =
-          VIPRA::f3d{curr.x + i * _gridSize, curr.y + j * _gridSize};
+      VIPRA::f3d nextPos = VIPRA::f3d{curr.x + i * _gridSize, curr.y + j * _gridSize};
 
       if ( out_of_bounds(nextPos.x, nextPos.y) ) continue;
 
       auto& grid = get_grid(nextPos);
 
-      VIPRA::f_pnt dist =
-          currGrid.distance + curr.distance_to_sqrd(nextPos) + weight;
+      VIPRA::f_pnt dist = currGrid.distance + curr.distance_to_sqrd(nextPos) + weight;
 
       if ( grid.distance <= dist ) continue;
 

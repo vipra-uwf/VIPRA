@@ -17,6 +17,7 @@ class Model {
  public:
   virtual VIPRA_MODEL_TIMESTEP = 0;
   virtual VIPRA_MODEL_INIT_STEP = 0;
+  virtual VIPRA_MODEL_RESET = 0;
 
   Model() = default;
   Model(const Model&) = default;

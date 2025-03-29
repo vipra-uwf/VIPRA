@@ -10,8 +10,7 @@ namespace VIPRA::Behaviors {
 void SubConditionLeave::operator()(Simpack pack, const VIPRA::idxVec& peds,
                                    std::vector<Target> const& targets,
                                    std::vector<bool>&         met,
-                                   std::vector<bool> const& /*unused*/,
-                                   BoolOp /*unused*/)
+                                   std::vector<bool> const& /*unused*/, BoolOp /*unused*/)
 {
   for ( auto idx : peds ) {
     if ( _left.size() < pack.pedset.num_pedestrians() )
@@ -22,9 +21,8 @@ void SubConditionLeave::operator()(Simpack pack, const VIPRA::idxVec& peds,
     }
 
     Location& loc = pack.context.locations[_location];
-    bool      leave =
-        ! loc.is_point_inside(pack.state.positions[targets[idx].targetIdx]) &&
-        loc.is_point_inside(pack.pedset.ped_coords(targets[idx].targetIdx));
+    bool leave = ! loc.is_point_inside(pack.state.positions[targets[idx].targetIdx]) &&
+                 loc.is_point_inside(pack.pedset.ped_coords(targets[idx].targetIdx));
 
     if ( leave ) {
       _left[targets[idx].targetIdx] = true;

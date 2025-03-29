@@ -4,6 +4,7 @@
 
 #include <nlohmann/json.hpp>
 
+#include "vipra/macros/output.hpp"
 #include "vipra/modules/output.hpp"
 
 #include "vipra/macros/module.hpp"
@@ -22,12 +23,14 @@ class TrajectoriesJson : public VIPRA::Modules::Module<TrajectoriesJson>,
 
   VIPRA_REGISTER_PARAMS(VIPRA_PARAM("filename", _filename))
 
+  VIPRA_OUTPUT_RESET override { _trajectories = {}; }
+
   void write(std::filesystem::path const& outputDir) override;
   void timestep_update(VIPRA::timestep /*unused*/, VIPRA::delta_t /*unused*/,
                        VIPRA::State const& state) override;
 
  private:
-  nlohmann::json _json;
-  std::string    _filename;
+  std::vector<std::vector<VIPRA::f3d>> _trajectories;
+  std::string                          _filename;
 };
 }  // namespace VIPRA::Output

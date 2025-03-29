@@ -14,17 +14,16 @@ void SubConditionAttribute::operator()(Simpack pack, const VIPRA::idxVec& peds,
 {
   for ( auto ped : peds ) {
     if ( _value.type == Type::POSITION ) {
-      met[ped] = pack.pedset.ped_coords(targets[ped].targetIdx)
-                     .distance_to_sqrd(
-                         pack.goals.end_goal(targets[ped].targetIdx)) <= 0.04;
+      met[ped] =
+          pack.pedset.ped_coords(targets[ped].targetIdx)
+              .distance_to_sqrd(pack.goals.end_goal(targets[ped].targetIdx)) <= 0.04;
       if ( _not ) met[ped] = ! met[ped];
       continue;
     }
 
     auto attr = AttributeHandling::get_value(targets[ped], _type, pack);
 
-    if ( _value.type == Type::TOWARDS_LOC ||
-         _value.type == Type::TOWARDS_ATTR ) {
+    if ( _value.type == Type::TOWARDS_LOC || _value.type == Type::TOWARDS_ATTR ) {
       met[ped] = towards_compare(attr, pack, targets[ped].targetIdx);
     }
 
@@ -63,8 +62,8 @@ auto SubConditionAttribute::towards_compare(CAttributeValue& attr, Simpack pack,
   return towards_attribute_compare(attr, pack, self);
 }
 
-auto SubConditionAttribute::towards_location_compare(
-    CAttributeValue& attr, Simpack pack, VIPRA::idx self) const -> bool
+auto SubConditionAttribute::towards_location_compare(CAttributeValue& attr, Simpack pack,
+                                                     VIPRA::idx self) const -> bool
 {
   attr.type_check(Type::COORD);
   const VIPRA::f3d selfPos = pack.pedset.ped_coords(self);
@@ -99,9 +98,9 @@ auto SubConditionAttribute::towards_location_compare(
   return endDiff.dot(checkDiff) > TOWARDS_THRESHOLD;
 }
 
-auto SubConditionAttribute::towards_attribute_compare(
-    CAttributeValue& /*unused*/, auto /*unused*/,
-    VIPRA::idx /*unused*/) const -> bool
+auto SubConditionAttribute::towards_attribute_compare(CAttributeValue& /*unused*/,
+                                                      auto /*unused*/,
+                                                      VIPRA::idx /*unused*/) const -> bool
 {
   // TODO(rolland): implement this
   throw std::runtime_error("Towards Attribute Not implemented");

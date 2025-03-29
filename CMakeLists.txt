@@ -21,15 +21,17 @@ project(
   LANGUAGES CXX
 )
 
-# BUILD VIPRA Library
+add_compile_options(-g)
 
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/vipraUtils.cmake)
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/vipraOptions.cmake)
+# BUILD VIPRA Library
 
 add_library(
   ${VIPRA_LIBRARY_NAME}
   SHARED
 )
+  
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/vipraUtils.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/vipraOptions.cmake)
 
 add_subdirectory(src)
 add_subdirectory(include/vipra/vipra_behaviors/_grammar)

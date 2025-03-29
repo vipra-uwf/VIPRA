@@ -18,8 +18,7 @@ class Circle {
   {
     return _center;
   }
-  [[nodiscard]] VIPRA_INLINE constexpr auto radius() const
-      -> const VIPRA::f_pnt&
+  [[nodiscard]] VIPRA_INLINE constexpr auto radius() const -> const VIPRA::f_pnt&
   {
     return _radius;
   }
@@ -31,8 +30,7 @@ class Circle {
    * @return true 
    * @return false 
    */
-  [[nodiscard]] VIPRA_INLINE constexpr auto is_inside(VIPRA::f3d point) const
-      -> bool
+  [[nodiscard]] VIPRA_INLINE constexpr auto is_inside(VIPRA::f3d point) const -> bool
   {
     return (point.distance_to(_center) <= _radius);
   }

@@ -18,8 +18,7 @@ class TargetSelector {
  public:
   explicit TargetSelector(TargetFunc&& func) : _select(func) {}
 
-  void get_targets(Simpack pack, const VIPRA::idxVec& peds,
-                   std::vector<Target>& targets)
+  void get_targets(Simpack pack, const VIPRA::idxVec& peds, std::vector<Target>& targets)
   {
     if ( ! _select ) {
       std::for_each(peds.begin(), peds.end(), [&](auto idx) {
@@ -29,8 +28,7 @@ class TargetSelector {
     }
 
     std::for_each(peds.begin(), peds.end(), [&](auto idx) {
-      targets[idx] =
-          _select.value()(pack, Self{Target{TargetType::PEDESTRIAN, idx}});
+      targets[idx] = _select.value()(pack, Self{Target{TargetType::PEDESTRIAN, idx}});
     });
   }
 

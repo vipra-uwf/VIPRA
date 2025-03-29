@@ -23,8 +23,8 @@ struct SelectorResult {
  * @brief Function for choosing which pedestrians have a type
  * 
  */
-using SelectorFunc = std::function<SelectorResult(
-    const VIPRA::idxVec&, const VIPRA::idxVec&, Simpack)>;
+using SelectorFunc =
+    std::function<SelectorResult(const VIPRA::idxVec&, const VIPRA::idxVec&, Simpack)>;
 
 /**
  * @brief Selects pedestrians for one type, gets combined with other SubSelectors in Selector
@@ -41,9 +41,8 @@ class SubSelector {
   {
   }
 
-  auto select_peds(const VIPRA::idxVec& totalGroup,
-                   const VIPRA::idxVec& usableGroup,
-                   auto                 pack) -> SelectorResult
+  auto select_peds(const VIPRA::idxVec& totalGroup, const VIPRA::idxVec& usableGroup,
+                   auto pack) -> SelectorResult
   {
     return _select(totalGroup, usableGroup, pack);
   }

@@ -69,8 +69,7 @@ class Ptype {
    * 
    * @param type : type to check for
    */
-  [[nodiscard]] inline constexpr auto is_type(typeUID type) const noexcept
-      -> bool
+  [[nodiscard]] inline constexpr auto is_type(typeUID type) const noexcept -> bool
   {
     return ((type & fullType) != 0U) && ((~type & fullType) == 0);
   }
@@ -80,8 +79,7 @@ class Ptype {
    * 
    * @param type : type to check for
    */
-  [[nodiscard]] inline constexpr auto has_type(typeUID type) const noexcept
-      -> bool
+  [[nodiscard]] inline constexpr auto has_type(typeUID type) const noexcept -> bool
   {
     return (type & fullType) != 0U;
   }

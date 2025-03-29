@@ -1,6 +1,5 @@
 
-| [Main Page](../../docs.md) | [Developer Setup](setup.md) | [Examples](examples/list.md) |
-| --- | --- | --- | --- | --- | --- |
+| [Main Page](../../docs.md) | [Developer Setup](setup.md) | [Module Implementations](overview.md) | [Examples](examples/list.md) |
 
 VIPRA can either be used:
  - as a [Library](library.md) for use in other projects
@@ -43,9 +42,9 @@ Below are the steps taken in a full simulation run.
 
 These are the general steps taken when a simulation is run.
 
-#### 1. VIPRA::simulation
+#### 1. Module Loading
 
-First a Simulation is constructed using the `VIPRA::simulation` utility method.
+First a Simulation is constructed, then Modules are loaded using dlopen.
 
 #### 2. Run Sim
 

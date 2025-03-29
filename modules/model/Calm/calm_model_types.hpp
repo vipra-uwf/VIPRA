@@ -16,6 +16,8 @@ struct ConfigData {
   VIPRA::f_pnt maxSpeedStdDev;
   VIPRA::f_pnt meanShoulderLen;
   VIPRA::f_pnt shoulderLenStdDev;
+  VIPRA::f_pnt collisionRange;
+  VIPRA::f_pnt frictionCoef;
   VIPRA::size  randomSeed;
 };
 

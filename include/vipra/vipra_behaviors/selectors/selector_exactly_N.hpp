@@ -16,12 +16,10 @@ struct SelectorExactlyN {
   COPYABLE(SelectorExactlyN)
   MOVEABLE(SelectorExactlyN)
 
-  explicit SelectorExactlyN(NumericValue count) : selectCount(std::move(count))
-  {
-  }
+  explicit SelectorExactlyN(NumericValue count) : selectCount(std::move(count)) {}
 
   NumericValue selectCount;
-  auto operator()(const VIPRA::idxVec& /*unused*/, const VIPRA::idxVec& group,
+  auto         operator()(const VIPRA::idxVec& /*unused*/, const VIPRA::idxVec& group,
                   auto pack) const -> SelectorResult
   {
     auto groupPeds = group;

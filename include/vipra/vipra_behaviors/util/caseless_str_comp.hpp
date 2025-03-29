@@ -11,8 +11,7 @@ namespace VIPRA::Behaviors {
  */
 struct CaselessStrCompare {
   struct Comp {
-    auto operator()(std::string const& str1,
-                    std::string const& str2) const -> bool
+    auto operator()(std::string const& str1, std::string const& str2) const -> bool
     {
       const size_t cnt = str1.size();
       if ( cnt != str2.size() ) {

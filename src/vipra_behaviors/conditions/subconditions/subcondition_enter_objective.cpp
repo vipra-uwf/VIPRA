@@ -25,8 +25,8 @@ void SubConditionEnterObj::operator()(Simpack pack, const VIPRA::idxVec& peds,
         continue;
       }
 
-      bool inside = objectives[i].is_point_inside(
-          pack.state.positions[targets[ped].targetIdx]);
+      bool inside =
+          objectives[i].is_point_inside(pack.state.positions[targets[ped].targetIdx]);
 
       if ( inside ) {
         _visited[ped].insert(i);

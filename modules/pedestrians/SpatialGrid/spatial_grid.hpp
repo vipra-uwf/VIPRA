@@ -2,7 +2,8 @@
 
 #include <vector>
 
-#include "vipra/data_structures/spatial_map.hpp"
+#include "spatial_map.hpp"
+#include "vipra/macros/pedestrians.hpp"
 #include "vipra/modules/pedestrians.hpp"
 
 namespace VIPRA::Pedestrians {
@@ -21,13 +22,13 @@ NEW_VIPRA_MODULE(SpatialGrid, Pedestrians)
 
   VIPRA_PEDS_INIT_STEP   override;
   VIPRA_PEDS_UPDATE_STEP override;
+  VIPRA_PEDS_RESET       override;
 
   [[nodiscard]] auto conditional_closest_ped(
       VIPRA::idx ped, std::function<bool(VIPRA::idx)> const& condition)
       const -> VIPRA::idx override;
   [[nodiscard]] auto closest_ped(VIPRA::idx ped) const -> VIPRA::idx override;
-  [[nodiscard]] auto                   all_neighbors_within(VIPRA::idx   pedIdx,
-                                                            VIPRA::f_pnt radius)
+  [[nodiscard]] auto all_neighbors_within(VIPRA::idx pedIdx, VIPRA::f_pnt radius)
       const -> std::vector<VIPRA::idx> override;
 
  private:

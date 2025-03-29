@@ -14,10 +14,7 @@ class SubConditionEnterObj {
   MOVEABLE(SubConditionEnterObj)
 
  public:
-  explicit SubConditionEnterObj(std::string objName)
-      : _objective(std::move(objName))
-  {
-  }
+  explicit SubConditionEnterObj(std::string objName) : _objective(std::move(objName)) {}
 
   void operator()(Simpack pack, const VIPRA::idxVec& peds,
                   std::vector<Target> const& targets, std::vector<bool>& met,

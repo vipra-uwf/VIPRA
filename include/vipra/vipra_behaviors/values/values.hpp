@@ -1,5 +1,10 @@
 #pragma once
 
+#include <random>
+
+#include "vipra/geometry/f3d.hpp"
+
+#include "vipra/types/float.hpp"
 #include "vipra/vipra_behaviors/_grammar/generated/BehaviorParser.h"
 
 #include "vipra/logging/logging.hpp"
@@ -25,12 +30,11 @@ using RangeVal = std::pair<VIPRA::f_pnt, VIPRA::f_pnt>;
  * @param max : maximum value
  * @return VIPRA::f_pnt 
  */
-[[nodiscard]] inline auto collapse_range_value(VIPRA::seed  seed,
-                                               VIPRA::f_pnt min,
+[[nodiscard]] inline auto collapse_range_value(VIPRA::seed seed, VIPRA::f_pnt min,
                                                VIPRA::f_pnt max) -> VIPRA::f_pnt
 {
-  VIPRA::Random::Engine                             eng{seed};
-  VIPRA::Random::uniform_distribution<VIPRA::f_pnt> distr{min, max};
+  VIPRA::Random::Engine                        eng{seed};
+  std::uniform_real_distribution<VIPRA::f_pnt> distr{min, max};
   return distr(eng);
 }
 
@@ -91,8 +95,7 @@ using RangeVal = std::pair<VIPRA::f_pnt, VIPRA::f_pnt>;
   auto         numbers = ctx->number_range()->NUMBER();
   VIPRA::f_pnt min = std::round(std::stof(numbers[0]->toString()));
   VIPRA::f_pnt max = std::round(std::stof(numbers[1]->toString()));
-  return NumericValue(
-      seed, ExactValue{std::round(collapse_range_value(seed, min, max))});
+  return NumericValue(seed, ExactValue{std::round(collapse_range_value(seed, min, max))});
 }
 
 /**
@@ -146,7 +149,7 @@ using RangeVal = std::pair<VIPRA::f_pnt, VIPRA::f_pnt>;
                                     VIPRA::seed seed) -> VIPRA::f3d
 {
   auto       values = ctx->value_numeric();
-  VIPRA::f3d val;
+  VIPRA::f3d val{};
 
   for ( VIPRA::idx i = 0; i < values.size(); ++i ) {
     auto num = get_numeric(values[i], seed);

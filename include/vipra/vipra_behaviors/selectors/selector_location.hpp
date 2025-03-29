@@ -18,7 +18,7 @@ struct SelectorLocation {
   explicit SelectorLocation(VIPRA::idx loc) : location(loc) {}
 
   VIPRA::idx location;
-  auto operator()(const VIPRA::idxVec& /*unused*/, const VIPRA::idxVec& group,
+  auto       operator()(const VIPRA::idxVec& /*unused*/, const VIPRA::idxVec& group,
                   auto pack) const -> SelectorResult
   {
     auto const&   loc = pack.context.locations[location];

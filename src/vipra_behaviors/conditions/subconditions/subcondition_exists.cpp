@@ -7,8 +7,7 @@ namespace VIPRA::Behaviors {
 void SubConditionExists::operator()(Simpack pack, const VIPRA::idxVec& peds,
                                     std::vector<Target> const& /*unused*/,
                                     std::vector<bool>&       met,
-                                    std::vector<bool> const& prevMet,
-                                    BoolOp                   oper) const
+                                    std::vector<bool> const& prevMet, BoolOp oper) const
 {
   for ( auto selfidx : peds ) {
     if ( short_circuit(selfidx, met, prevMet, oper) ) continue;
@@ -18,8 +17,7 @@ void SubConditionExists::operator()(Simpack pack, const VIPRA::idxVec& peds,
 
     for ( auto idx : pack.groups.at(0) ) {
       if ( _modifier.check(pack, selfidx, idx) &&
-           _attributeCond.individual(pack, selfidx,
-                                     {TargetType::PEDESTRIAN, idx}) ) {
+           _attributeCond.individual(pack, selfidx, {TargetType::PEDESTRIAN, idx}) ) {
         met[selfidx] = true;
         break;
       }

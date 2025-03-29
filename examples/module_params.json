@@ -1,7 +1,7 @@
 {
   "simulation": {
     "main": {
-      "max_timestep": 100000,
+      "max_timestep": 120000,
       "timestep_size": 0.005,
       "output_frequency": 100,
       "random_seed": 12346345,
@@ -17,22 +17,18 @@
       "meanMaxSpeed": 1.0,
       "maxSpeedStdDev": 0.1,
       "meanShoulderLen": 0.2,
-      "shoulderLenStdDev": 0.05
+      "shoulderLenStdDev": 0.05,
+      "collisionRange": 1.0,
+      "friction": 100.0
     }
   },
   "goals": {
-    "PotentialField": {
-      "endGoalType": "exit",
-      "cellSize": 0.1,
-      "densityCellSize": 0.5,
-      "densityWeight": 1,
-      "densityUpdateFrequency": 200
-    },
     "AStar": {
       "endGoalType": "exit",
       "gridSize": 0.04,
       "goalRange": 0.15,
-      "closestObstacle": 0.2
+      "closestObstacle": 0.15,
+      "pathSmoothing": 0.15
     }
   },
   "pedestrians": {
@@ -47,7 +43,7 @@
   },
   "map": {
     "QuadTree": {
-      "minQuadSize": 0.05
+      "minQuadSize": 1
     }
   },
   "output": {

@@ -17,8 +17,7 @@ class SubConditionAttribute {
   MOVEABLE(SubConditionAttribute)
 
  public:
-  explicit SubConditionAttribute(Attribute type, CAttributeValue val,
-                                 bool negative)
+  explicit SubConditionAttribute(Attribute type, CAttributeValue val, bool negative)
       : _type(type), _value(val), _not(negative)
   {
   }
@@ -40,11 +39,10 @@ class SubConditionAttribute {
   [[nodiscard]] inline auto towards_compare(CAttributeValue& attr, Simpack pack,
                                             VIPRA::idx self) const -> bool;
 
-  [[nodiscard]] inline auto towards_location_compare(
-      CAttributeValue& attr, Simpack pack, VIPRA::idx self) const -> bool;
+  [[nodiscard]] inline auto towards_location_compare(CAttributeValue& attr, Simpack pack,
+                                                     VIPRA::idx self) const -> bool;
 
   [[nodiscard]] inline auto towards_attribute_compare(
-      CAttributeValue& /*unused*/, auto /*unused*/,
-      VIPRA::idx /*unused*/) const -> bool;
+      CAttributeValue& /*unused*/, auto /*unused*/, VIPRA::idx /*unused*/) const -> bool;
 };
 }  // namespace VIPRA::Behaviors

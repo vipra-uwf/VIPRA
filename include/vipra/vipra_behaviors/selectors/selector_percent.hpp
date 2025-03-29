@@ -18,8 +18,7 @@ struct SelectorPercent {
 
   VIPRA::f_pnt percentage;
   auto         operator()(std::vector<VIPRA::idx> const& fullGroup,
-                  std::vector<VIPRA::idx> const& group,
-                  auto                           pack) const -> SelectorResult
+                  std::vector<VIPRA::idx> const& group, auto pack) const -> SelectorResult
   {
     auto groupPeds = group;
 

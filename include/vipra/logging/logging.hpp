@@ -52,8 +52,7 @@ class Log {
                                 param_ts&&... params)
   {
     if ( level <= Level::WARN ) {
-      std::cout << "[WARN] "
-                << fmt::format(message, std::forward<param_ts>(params)...)
+      std::cout << "[WARN] " << fmt::format(message, std::forward<param_ts>(params)...)
                 << '\n';
     }
   }
@@ -70,8 +69,7 @@ class Log {
                                 param_ts&&... params)
   {
     if ( level <= Level::INFO ) {
-      std::cout << "[INFO] "
-                << fmt::format(message, std::forward<param_ts>(params)...)
+      std::cout << "[INFO] " << fmt::format(message, std::forward<param_ts>(params)...)
                 << '\n';
     }
   }
@@ -88,8 +86,7 @@ class Log {
                                  param_ts&&... params)
   {
     if ( level <= Level::DEBUG ) {
-      std::cout << "[DEBUG] "
-                << fmt::format(message, std::forward<param_ts>(params)...)
+      std::cout << "[DEBUG] " << fmt::format(message, std::forward<param_ts>(params)...)
                 << '\n';
     }
   }
@@ -105,8 +102,7 @@ class Log {
   VIPRA_INLINE static void error(fmt::format_string<param_ts...> message,
                                  param_ts&&... params)
   {
-    std::cout << "[ERROR] "
-              << fmt::format(message, std::forward<param_ts>(params)...)
+    std::cout << "[ERROR] " << fmt::format(message, std::forward<param_ts>(params)...)
               << '\n';
   }
 

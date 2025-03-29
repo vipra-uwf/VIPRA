@@ -18,10 +18,10 @@ class Triangle {
  public:
   VIPRA_POLY_FUNC auto is_point_inside(f3d point) const noexcept -> bool;
   VIPRA_POLY_FUNC auto bounding_box() const noexcept -> Rectangle;
-  VIPRA_POLY_FUNC auto random_point(Random::Engine& engine) const noexcept
-      -> f3d;
   VIPRA_POLY_FUNC auto sides() const noexcept -> std::array<Line, 3>;
   VIPRA_POLY_FUNC auto center() const noexcept -> f3d;
+
+  [[nodiscard]] auto random_point(Random::Engine& engine) const noexcept -> f3d;
 
   VIPRA_POLY_FUNC auto area() const noexcept -> f_pnt { return _area; }
   VIPRA_POLY_FUNC auto points() const noexcept -> std::array<f3d, 3> const&
@@ -34,6 +34,21 @@ class Triangle {
   f_pnt              _area{};
 
  public:
+  Triangle(f3d const& point1, f3d const& point2, f3d const& point3)
+      : _points({point1, point2, point3}),
+        _area(std::abs(point1.x * (point2.y - point3.y) +
+                       point2.x * (point3.y - point1.y) +
+                       point3.x * (point1.y - point2.y)) /
+              2.0)
+  {
+  }
+
+  Triangle() = default;
+  ~Triangle() = default;
+  Triangle(Triangle const&) = default;
+  auto operator=(Triangle const&) -> Triangle& = default;
+  Triangle(Triangle&&) noexcept = default;
+  auto operator=(Triangle&&) noexcept -> Triangle& = default;
 };
 
 VIPRA_POLY_FUNC auto Triangle::is_point_inside(f3d point) const noexcept -> bool
@@ -51,8 +66,7 @@ VIPRA_POLY_FUNC auto Triangle::is_point_inside(f3d point) const noexcept -> bool
          ((dir1 <= 0) && (dir2 <= 0) && (dir3 <= 0));
 }
 
-VIPRA_POLY_FUNC auto Triangle::random_point(
-    Random::Engine& engine) const noexcept -> f3d
+inline auto Triangle::random_point(Random::Engine& engine) const noexcept -> f3d
 {
   const Rectangle box = bounding_box();
   f3d             point = box.random_point(engine);
@@ -71,10 +85,10 @@ VIPRA_POLY_FUNC auto Triangle::bounding_box() const noexcept -> Rectangle
   f3d topRight{std::numeric_limits<VIPRA::f_pnt>::min(),
                std::numeric_limits<VIPRA::f_pnt>::min()};
   for ( auto const& point : _points ) {
-    topRight.x = std::max({topRight.x, point.x});
-    topRight.y = std::max({topRight.y, point.y});
-    botLeft.x = std::min({botLeft.x, point.x});
-    botLeft.y = std::min({botLeft.y, point.y});
+    topRight.x = std::max(topRight.x, point.x);
+    topRight.y = std::max(topRight.y, point.y);
+    botLeft.x = std::min(botLeft.x, point.x);
+    botLeft.y = std::min(botLeft.y, point.y);
   }
 
   f3d topLeft = f3d{botLeft.x, topRight.y};

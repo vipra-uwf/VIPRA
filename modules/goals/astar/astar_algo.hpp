@@ -3,9 +3,9 @@
 #include <algorithm>
 #include <limits>
 #include <optional>
-#include <unordered_set>
 #include <vector>
 
+#include "goals/astar/douglas_peucker.hpp"
 #include "goals/astar/pathing_graph.hpp"
 #include "vipra/geometry/f3d.hpp"
 #include "vipra/types/float.hpp"
@@ -32,19 +32,19 @@ struct Node {
   }
 };
 
-[[nodiscard]] inline auto astar(VIPRA::idx start, VIPRA::idx end,
-                                Goals::PathingGraph const& graph) noexcept
-    -> std::optional<std::vector<VIPRA::f3d>>
+[[nodiscard]] inline auto astar(
+    VIPRA::f3d endPos, VIPRA::idx start, VIPRA::idx end, Goals::PathingGraph const& graph,
+    VIPRA::f_pnt smoothingEpsilon) noexcept -> std::optional<std::vector<VIPRA::f3d>>
 {
-  const auto startPos = graph.pos(start);
-  const auto endPos = graph.pos(end);
+  auto const startPos = graph.pos(start);
+  auto const endGridPos = graph.pos(end);
 
   std::vector<Node> nodes(graph.node_count());
   std::vector<Node> openQueue;
   std::vector<bool> openSet(graph.node_count());
   std::vector<bool> closedSet(graph.node_count());
 
-  nodes[start] = Node{start, start, 0, startPos.distance_to(endPos)};
+  nodes[start] = Node{start, start, 0, startPos.distance_to(endGridPos)};
 
   Node curr{};
   openSet[start] = true;
@@ -61,16 +61,17 @@ struct Node {
     openSet[curr.self] = false;
     closedSet[curr.self] = true;
 
-    for ( const VIPRA::idx neighborIdx : graph.neighbors(curr.self) ) {
+    for ( VIPRA::idx const neighborIdx : graph.neighbors(curr.self) ) {
       if ( neighborIdx == std::numeric_limits<VIPRA::idx>::max() ) continue;
       if ( closedSet[neighborIdx] ) continue;
 
-      const auto currPos = graph.pos(curr.self);
-      const auto neighborPos = graph.pos(neighborIdx);
-      const Node neighbor{
+      auto const& currPos = graph.pos(curr.self);
+      auto const& neighborPos = graph.pos(neighborIdx);
+      Node const  neighbor{
           neighborIdx, curr.self,
           nodes[curr.self].distanceFromStart + currPos.distance_to(neighborPos),
-          neighbor.distanceFromStart + neighborPos.distance_to(endPos)};
+          nodes[curr.self].distanceFromStart + currPos.distance_to(neighborPos) +
+              neighborPos.distance_to(endGridPos)};
 
       if ( ! openSet[neighborIdx] ) {
         nodes[neighborIdx] = neighbor;
@@ -92,12 +93,24 @@ struct Node {
   }
 
   std::vector<VIPRA::f3d> path;
+  VIPRA::f3d              dif;
 
-  while ( curr.self != start ) {
-    path.push_back(graph.pos(curr.self));
+  path.push_back(endPos);  // skip last grid and go straight to exact end position
+  curr = nodes[curr.parent];
+
+  while ( true ) {
+    // loop back through nodes creating the path, squashing every node that goes in the same direction into one
     curr = nodes[curr.parent];
+
+    if ( curr.parent == start ) break;  // skip first grid, since ped is already there
+
+    auto currDif = graph.pos(curr.self) - graph.pos(curr.parent);
+    if ( currDif != dif ) {
+      path.push_back(graph.pos(curr.parent));
+      dif = currDif;
+    }
   }
 
-  return path;
+  return VIPRA::douglas_peucker_algo(path, smoothingEpsilon);
 }
 }  // namespace VIPRA

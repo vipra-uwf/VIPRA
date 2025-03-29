@@ -1,17 +1,19 @@
 
 
+#include "vipra/macros/errors.hpp"
 #include "vipra/macros/module.hpp"
 
 #include "astar.hpp"
 #include "astar_algo.hpp"
+#include "vipra/modules/pedestrians.hpp"
+#include "vipra/random/random.hpp"
 
 VIPRA_REGISTER_MODULE(VIPRA::Goals::AStar, Goals)
 
 namespace VIPRA::Goals {
 
 void AStar::init_step(VIPRA::Modules::Pedestrians const& pedset,
-                      VIPRA::Modules::Map const&         map,
-                      VIPRA::Random::Engine&             engine)
+                      VIPRA::Modules::Map const& map, VIPRA::Random::Engine& engine)
 {
   VIPRA::size const pedCnt = pedset.num_pedestrians();
 
@@ -24,7 +26,7 @@ void AStar::init_step(VIPRA::Modules::Pedestrians const& pedset,
 
   // for each pedestrian, find their path to their end goal
   for ( VIPRA::idx pedIdx = 0; pedIdx < pedCnt; ++pedIdx ) {
-    find_path(pedIdx, pedset.ped_coords(pedIdx), engine);
+    find_path(pedIdx, pedset.ped_coords(pedIdx));
     VIPRA::Log::debug("Found Path for Ped {}", pedIdx);
     set_current_goal(pedIdx, _paths[pedIdx].back());
   }
@@ -32,14 +34,15 @@ void AStar::init_step(VIPRA::Modules::Pedestrians const& pedset,
   assert(_paths.size() == pedCnt);
 }
 
+void AStar::reset_module() {}
+
 void AStar::update_step(VIPRA::Modules::Pedestrians const& pedset,
                         VIPRA::Modules::Map const& map, VIPRA::delta_t deltaT)
 {
 }
 
 // NOLINTNEXTLINE(misc-unused-parameters)
-auto AStar::next_goal(VIPRA::idx pedIdx,
-                      VIPRA::Modules::Pedestrians const& /*pedset*/,
+auto AStar::next_goal(VIPRA::idx pedIdx, VIPRA::Modules::Pedestrians const& /*pedset*/,
                       VIPRA::Modules::Map const& /*map*/,
                       VIPRA::delta_t /*deltaT*/) -> bool
 {
@@ -60,11 +63,33 @@ auto AStar::next_goal(VIPRA::idx pedIdx,
 // NOLINTNEXTLINE(misc-unused-parameters)
 void AStar::change_end_goal_impl(VIPRA::idx pedIdx, VIPRA::f3d pos,
                                  VIPRA::f3d /*newGoal*/,
-                                 VIPRA::Random::Engine& engine)
+                                 VIPRA::Random::Engine& /*engine*/)
 {
   // uses A* to find the path to the new end goal
-  find_path(pedIdx, pos, engine);
+  find_path(pedIdx, pos);
   set_current_goal(pedIdx, _paths[pedIdx].back());
+}
+
+auto AStar::find_random_point(VIPRA::Geometry::Polygon const& polygon,
+                              VIPRA::Modules::Map const&      map,
+                              VIPRA::Random::Engine&          engine) const -> f3d
+{
+  constexpr size_t MAX_RETRIES = 20;
+  size_t           retries = 0;
+
+  f3d point = polygon.random_point(engine);
+  while ( map.collision(Geometry::Circle{point, _closestObstacle}) ) {
+    point = polygon.random_point(engine);
+    ++retries;
+    if ( retries > MAX_RETRIES ) {
+      VIPRA_MODULE_ERROR(
+          "Unable to obtain a point in the objective centered at ({}, {}). "
+          "Make sure all objectives are outside of obstacles.",
+          polygon.center().x, polygon.center().y);
+    }
+  }
+
+  return point;
 }
 
 /**
@@ -73,8 +98,9 @@ void AStar::change_end_goal_impl(VIPRA::idx pedIdx, VIPRA::f3d pos,
    * @param pedset
    * @param map
    */
-void AStar::set_end_goals(auto const& pedset, auto const& map,
-                          VIPRA::Random::Engine& engine)
+void AStar::set_end_goals(VIPRA::Modules::Pedestrians const& pedset,
+                          VIPRA::Modules::Map const&         map,
+                          VIPRA::Random::Engine& /*engine*/)
 {
   assert(pedset.num_pedestrians() > 0);
 
@@ -92,46 +118,22 @@ void AStar::set_end_goals(auto const& pedset, auto const& map,
 
     auto const nearestGoalIter = get_nearest_goal(pos, objects);
     VIPRA::Log::debug("Ped {} Nearest End Goal: ({}, {})", pedIdx,
-                      (*nearestGoalIter).center().x,
-                      (*nearestGoalIter).center().y);
+                      (*nearestGoalIter).center().x, (*nearestGoalIter).center().y);
 
     if ( nearestGoalIter != objects.end() ) {
-      const auto point = (*nearestGoalIter).random_point(engine);
-      VIPRA::Log::debug("Ped {} Final End Goal: ({}, {})", pedIdx, point.x,
-                        point.y);
+      // f3d point = find_random_point(*nearestGoalIter, map, engine);
+      f3d point = nearestGoalIter->center();
+
+      VIPRA::Log::debug("Ped {} Final End Goal: ({}, {})", pedIdx, point.x, point.y);
       set_end_goal(pedIdx, point);
     }
     else {
-      VIPRA_MODULE_ERROR("No goal found for pedestrian {}", pedIdx);
+      VIPRA_MODULE_ERROR(
+          "No goal of type {} found for pedestrian {}. Check spelling and that "
+          "the provided map contains {}",
+          _endGoalType, pedIdx, _endGoalType);
     }
   }
-}
-
-/**
-   * @brief Squashes the path to remove unnecessary points
-   *
-   * @param path
-   * @return std::vector<VIPRA::f3d>
-   */
-auto AStar::squash_path(std::vector<VIPRA::f3d> const& path,
-                        VIPRA::Random::Engine& /*engine*/)
-    -> std::vector<VIPRA::f3d>
-{
-  assert(path.empty() == false);
-
-  std::vector<VIPRA::f3d> squashedPath;
-
-  VIPRA::f3d dif;
-
-  for ( VIPRA::idx i = 1; i < path.size(); ++i ) {
-    auto currDif = path[i] - path[i - 1];
-    if ( currDif != dif ) {
-      squashedPath.push_back(path[i - 1]);
-      dif = currDif;
-    }
-  }
-
-  return squashedPath;
 }
 
 /**
@@ -159,24 +161,25 @@ auto AStar::get_nearest_goal(VIPRA::f3d                                   pos,
    * @param pedIdx 
    * @param pos 
    */
-void AStar::find_path(VIPRA::idx pedIdx, VIPRA::f3d startPos,
-                      VIPRA::Random::Engine& engine)
+void AStar::find_path(VIPRA::idx pedIdx, VIPRA::f3d startPos)
 {
   // Get the pedestrian start and end grid location
   VIPRA::idx startIdx = _graph.get_closest_grid_idx(startPos);
   VIPRA::idx endIdx = _graph.get_closest_grid_idx(end_goal(pedIdx));
 
   if ( _graph.node_count() <= startIdx || _graph.node_count() <= endIdx ) {
-    VIPRA_MODULE_ERROR("Start or end index is out of bounds");
+    VIPRA_MODULE_ERROR("Pedestrian or goal is outside the bounds of the map provided");
   }
 
-  auto const path = VIPRA::astar(startIdx, endIdx, _graph);
+  auto path = VIPRA::astar(end_goal(pedIdx), startIdx, endIdx, _graph, _pathEpsilon);
 
   if ( ! path ) {
-    VIPRA_MODULE_ERROR("No path found for pedestrian {}", pedIdx);
+    VIPRA_MODULE_ERROR(
+        "No path found for pedestrian {}, Start: ({}, {}), End: ({}, {})\nTry "
+        "reducing gridSize in parameters",
+        pedIdx, startPos.x, startPos.y, end_goal(pedIdx).x, end_goal(pedIdx).y);
   }
 
-  // set their path, squash nodes that all go in the same direction into one node
-  _paths[pedIdx] = squash_path(*path, engine);
+  _paths[pedIdx] = std::move(*path);
 }
 }  // namespace VIPRA::Goals

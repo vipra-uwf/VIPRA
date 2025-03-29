@@ -13,8 +13,7 @@ class Pedestrians;
 class PedestrianInput {
  public:
   virtual void               load(std::string const&) = 0;
-  [[nodiscard]] virtual auto get_pedestrians() const
-      -> std::optional<VIPRA::f3dVec> = 0;
+  [[nodiscard]] virtual auto get_pedestrians() const -> std::optional<VIPRA::f3dVec> = 0;
 
   PedestrianInput() = default;
   PedestrianInput(const PedestrianInput&) = default;

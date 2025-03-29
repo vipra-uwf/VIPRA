@@ -28,6 +28,14 @@ endif()
 # Only Include MPI if the option is turned on
 if ( VIPRA_USE_MPI )
   add_definitions(-DVIPRA_USE_MPI)
-  vipra_add_library(LIBNAME MPI LINK MPI::MPI_CXX)
+  vipra_add_library(
+    PROJECT ${VIPRA_LIBRARY_NAME}
+    LIBNAME MPI
+    LINK MPI::MPI_CXX
+  )
   include_directories(SYSTEM ${MPI_CXX_INCLUDE_PATH})
+endif()
+
+if ( VIPRA_TIME_SIM )
+  add_definitions(-DVIPRA_TIME_SIM)
 endif()

@@ -1,7 +1,9 @@
 #pragma once
 
+#include <algorithm>
 #include <array>
 #include <numbers>
+#include <random>
 
 #include "vipra/geometry/definitions.hpp"
 #include "vipra/geometry/f3d.hpp"
@@ -18,8 +20,7 @@ class Triangle;
 class Rectangle {
  public:
   VIPRA_POLY_FUNC auto is_point_inside(f3d point) const noexcept -> bool;
-  VIPRA_POLY_FUNC auto random_point(Random::Engine& engine) const noexcept
-      -> f3d;
+  [[nodiscard]] auto   random_point(Random::Engine& engine) const noexcept -> f3d;
   VIPRA_POLY_FUNC auto sides() const noexcept -> std::array<Line, 4>;
   VIPRA_POLY_FUNC auto rotation() const noexcept -> f_pnt;
 
@@ -52,8 +53,7 @@ class Rectangle {
     calc_dims();
     _area = _height * _width;
   }
-  constexpr explicit Rectangle(std::array<f3d, 4> const& points)
-      : _points(points)
+  constexpr explicit Rectangle(std::array<f3d, 4> const& points) : _points(points)
   {
     calc_dims();
     _area = _height * _width;
@@ -105,30 +105,37 @@ class Rectangle {
   constexpr auto operator=(Rectangle&&) noexcept -> Rectangle& = default;
 };
 
-VIPRA_POLY_FUNC auto Rectangle::is_point_inside(f3d point) const noexcept
-    -> bool
+VIPRA_POLY_FUNC auto Rectangle::is_point_inside(f3d point) const noexcept -> bool
 {
   // NOLINTBEGIN(readability-identifier-length)
-  const f3d ab = _points[1] - _points[0];
-  const f3d am = point - _points[0];
-  const f3d bc = _points[2] - _points[1];
-  const f3d bm = point - _points[1];
-
-  return 0 <= ab.dot(am) && ab.dot(am) <= ab.dot(ab) && 0 <= bc.dot(bm) &&
-         bc.dot(bm) <= bc.dot(bc);
+  const f3d   ab = _points[0] - _points[1];
+  const f3d   am = _points[0] - point;
+  const f3d   bc = _points[1] - _points[2];
+  const f3d   bm = _points[1] - point;
+  const f_pnt dotABAM = ab.dot(am);
+  const f_pnt dotABAB = ab.dot(ab);
+  const f_pnt dotBCBM = bc.dot(bm);
+  const f_pnt dotBCBC = bc.dot(bc);
+  return 0 <= dotABAM && dotABAM <= dotABAB && 0 <= dotBCBM && dotBCBM <= dotBCBC;
   // NOLINTEND(readability-identifier-length)
 }
 
-VIPRA_POLY_FUNC auto Rectangle::random_point(
-    Random::Engine& engine) const noexcept -> f3d
+inline auto Rectangle::random_point(Random::Engine& engine) const noexcept -> f3d
 {
   // TODO(rolland): implement a better method for this
+  f3d min{std::numeric_limits<VIPRA::f_pnt>::max(),
+          std::numeric_limits<VIPRA::f_pnt>::max()};
+  f3d max{std::numeric_limits<VIPRA::f_pnt>::min(),
+          std::numeric_limits<VIPRA::f_pnt>::min()};
+  for ( auto const& point : _points ) {
+    max.x = std::max(max.x, point.x);
+    max.y = std::max(max.y, point.y);
+    min.x = std::min(min.x, point.x);
+    min.y = std::min(min.y, point.y);
+  }
 
-  auto const                                 sideList = sides();
-  Random::uniform_distribution<VIPRA::f_pnt> xDist{sideList[3].end.x,
-                                                   sideList[3].start.x};
-  Random::uniform_distribution<VIPRA::f_pnt> yDist{sideList[2].end.y,
-                                                   sideList[2].start.y};
+  std::uniform_real_distribution<VIPRA::f_pnt> xDist{min.x, max.x};
+  std::uniform_real_distribution<VIPRA::f_pnt> yDist{min.y, max.y};
 
   f3d point;
 
@@ -168,31 +175,26 @@ VIPRA_POLY_FUNC auto Rectangle::rotation() const noexcept -> f_pnt
   return rotation;
 }
 
-constexpr Rectangle::Rectangle(VIPRA::f3d const& center,
-                               VIPRA::f3d const& dimensions,
-                               VIPRA::f_pnt      rotation)
+constexpr Rectangle::Rectangle(VIPRA::f3d const& center, VIPRA::f3d const& dimensions,
+                               VIPRA::f_pnt rotation)
     : _center(center)
 {
-  const VIPRA::f3d point1 =
-      VIPRA::f3d{center.x + ((dimensions.x / 2) * cos(rotation)) -
-                     ((dimensions.y / 2) * sin(rotation)),
-                 center.y + ((dimensions.x / 2) * sin(rotation)) +
-                     ((dimensions.y / 2) * cos(rotation))};
-  const VIPRA::f3d point2 =
-      VIPRA::f3d{center.x - ((dimensions.x / 2) * cos(rotation)) -
-                     ((dimensions.y / 2) * sin(rotation)),
-                 center.y - ((dimensions.x / 2) * sin(rotation)) +
-                     ((dimensions.y / 2) * cos(rotation))};
-  const VIPRA::f3d point3 =
-      VIPRA::f3d{center.x - ((dimensions.x / 2) * cos(rotation)) +
-                     ((dimensions.y / 2) * sin(rotation)),
-                 center.y - ((dimensions.x / 2) * sin(rotation)) -
-                     ((dimensions.y / 2) * cos(rotation))};
-  const VIPRA::f3d point4 =
-      VIPRA::f3d{center.x + ((dimensions.x / 2) * cos(rotation)) +
-                     ((dimensions.y / 2) * sin(rotation)),
-                 center.y + ((dimensions.x / 2) * sin(rotation)) -
-                     ((dimensions.y / 2) * cos(rotation))};
+  const VIPRA::f3d point1 = VIPRA::f3d{center.x + ((dimensions.x / 2) * cos(rotation)) -
+                                           ((dimensions.y / 2) * sin(rotation)),
+                                       center.y + ((dimensions.x / 2) * sin(rotation)) +
+                                           ((dimensions.y / 2) * cos(rotation))};
+  const VIPRA::f3d point2 = VIPRA::f3d{center.x - ((dimensions.x / 2) * cos(rotation)) -
+                                           ((dimensions.y / 2) * sin(rotation)),
+                                       center.y - ((dimensions.x / 2) * sin(rotation)) +
+                                           ((dimensions.y / 2) * cos(rotation))};
+  const VIPRA::f3d point3 = VIPRA::f3d{center.x - ((dimensions.x / 2) * cos(rotation)) +
+                                           ((dimensions.y / 2) * sin(rotation)),
+                                       center.y - ((dimensions.x / 2) * sin(rotation)) -
+                                           ((dimensions.y / 2) * cos(rotation))};
+  const VIPRA::f3d point4 = VIPRA::f3d{center.x + ((dimensions.x / 2) * cos(rotation)) +
+                                           ((dimensions.y / 2) * sin(rotation)),
+                                       center.y + ((dimensions.x / 2) * sin(rotation)) -
+                                           ((dimensions.y / 2) * cos(rotation))};
 
   _points = {point1, point2, point3, point4};
   calc_dims();

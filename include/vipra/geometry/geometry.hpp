@@ -1,10 +1,8 @@
 #pragma once
 
 #include <concepts>
-#include <vector>
 
 #include "vipra/geometry/circle.hpp"
-#include "vipra/geometry/f3d.hpp"
 #include "vipra/geometry/line.hpp"
 #include "vipra/geometry/rectangle.hpp"
 #include "vipra/geometry/triangle.hpp"
@@ -23,9 +21,9 @@ VIPRA_POLY_FUNC auto do_intersect(polygon_t const& polygon,
   auto const sideList = polygon.sides();
   return std::any_of(sideList.begin(), sideList.end(), [&](Line const& side) {
     auto const otherSides = other.sides();
-    return std::any_of(
-        otherSides.begin(), otherSides.end(),
-        [&](Line const& otherSide) { return otherSide.does_intersect(side); });
+    return std::any_of(otherSides.begin(), otherSides.end(), [&](Line const& otherSide) {
+      return otherSide.does_intersect(side);
+    });
   });
 }
 
@@ -34,9 +32,8 @@ VIPRA_POLY_FUNC auto do_intersect(polygon_t const& polygon,
                                   Line const&      line) noexcept -> bool
 {
   auto const sideList = polygon.sides();
-  return std::any_of(sideList.begin(), sideList.end(), [&](Line const& side) {
-    return line.does_intersect(side);
-  });
+  return std::any_of(sideList.begin(), sideList.end(),
+                     [&](Line const& side) { return line.does_intersect(side); });
 }
 
 template <has_sides polygon_t>
@@ -44,9 +41,8 @@ VIPRA_POLY_FUNC auto do_intersect(Line const&      line,
                                   polygon_t const& polygon) noexcept -> bool
 {
   auto const sideList = polygon.sides();
-  return std::any_of(sideList.begin(), sideList.end(), [&](Line const& side) {
-    return line.does_intersect(side);
-  });
+  return std::any_of(sideList.begin(), sideList.end(),
+                     [&](Line const& side) { return line.does_intersect(side); });
 }
 
 template <has_sides polygon_t>
@@ -54,9 +50,8 @@ VIPRA_POLY_FUNC auto do_intersect(polygon_t const& polygon,
                                   Circle const&    circle) noexcept -> bool
 {
   auto const sideList = polygon.sides();
-  return std::any_of(sideList.begin(), sideList.end(), [&](Line const& side) {
-    return circle.does_intersect(side);
-  });
+  return std::any_of(sideList.begin(), sideList.end(),
+                     [&](Line const& side) { return circle.does_intersect(side); });
 }
 
 template <has_sides polygon_t>
@@ -64,9 +59,8 @@ VIPRA_POLY_FUNC auto do_intersect(Circle const&    circle,
                                   polygon_t const& polygon) noexcept -> bool
 {
   auto const sideList = polygon.sides();
-  return std::any_of(sideList.begin(), sideList.end(), [&](Line const& side) {
-    return circle.does_intersect(side);
-  });
+  return std::any_of(sideList.begin(), sideList.end(),
+                     [&](Line const& side) { return circle.does_intersect(side); });
 }
 
 }  // namespace VIPRA::Geometry

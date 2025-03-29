@@ -103,7 +103,7 @@ macro(vipra_add_library)
       FetchContent_GetProperties(${GET_LIB_LIBNAME})
 
       if(NOT ${GET_LIB_LIBNAME}_POPULATED)
-        message(FATAL_ERROR "Unable to Get " ${GET_LIB_LIBNAME})
+        message(FATAL_ERROR "Failed to Prepare Library: " ${GET_LIB_LIBNAME})
       endif()
 
     endif()

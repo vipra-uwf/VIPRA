@@ -41,10 +41,7 @@ class Action {
   }
 
   [[nodiscard]] auto has_condition() -> bool { return _condition.has_value(); }
-  [[nodiscard]] auto condition() -> std::optional<Condition>&
-  {
-    return _condition;
-  }
+  [[nodiscard]] auto condition() -> std::optional<Condition>& { return _condition; }
 
   [[nodiscard]] auto has_duration() -> bool { return _duration.has_value(); }
   [[nodiscard]] auto duration() -> std::optional<TimedLatchCollection>&
@@ -53,10 +50,7 @@ class Action {
   }
 
   [[nodiscard]] auto has_target() -> bool { return _targets.has_value(); }
-  [[nodiscard]] auto targets() -> std::optional<TargetSelector>&
-  {
-    return _targets;
-  }
+  [[nodiscard]] auto targets() -> std::optional<TargetSelector>& { return _targets; }
 
  private:
   std::vector<Atom>                   _atoms;

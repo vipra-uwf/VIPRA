@@ -1,5 +1,6 @@
 
 #include "vipra/simulation/sim_type.hpp"
+#include "vipra/modules.hpp"
 #include "vipra/simulation/module_loading.hpp"
 
 #include "vipra/parameter_sweep/parameter_sweep.hpp"
@@ -9,8 +10,7 @@ namespace VIPRA {
 void Simulation::set_module(Modules::Type type, std::string const& name)
 {
   const auto set = [&](auto& module) {
-    auto [mod, config] =
-        load_module<decltype(*module.get())>(name, _installDir, type);
+    auto [mod, config] = load_module<decltype(*module.get())>(name, _installDir, type);
     module = std::move(mod);
     _configs[type] = std::move(config);
   };
@@ -44,6 +44,7 @@ void Simulation::set_module(Modules::Type type, std::string const& name)
       set(_pedInput);
       break;
     case Modules::Type::MapInput:
+      // JSON is a special module used elsewhere in VIPRA so needs to be handled separately
       if ( name == "JSON" ) {
         _mapInput = std::make_unique<VIPRA::Input::JSON>();
         _configs[type] = [](void*, Parameters&, VIPRA::Random::Engine&) {};
@@ -66,9 +67,8 @@ void Simulation::set_modules(std::string const& modulesPath)
   input.load(modulesPath);
 
   const std::array<Modules::Type, Modules::MODULE_COUNT> modules{
-      Modules::Type::Model,   Modules::Type::Goals,
-      Modules::Type::Map,     Modules::Type::Pedestrians,
-      Modules::Type::Output,  Modules::Type::PedInput,
+      Modules::Type::Model,       Modules::Type::Goals,  Modules::Type::Map,
+      Modules::Type::Pedestrians, Modules::Type::Output, Modules::Type::PedInput,
       Modules::Type::MapInput};
 
   for ( auto type : modules ) {
@@ -84,17 +84,26 @@ void Simulation::set_modules(std::string const& modulesPath)
   }
 }
 
+void Simulation::reset_modules()
+{
+  _output.reset_modules();
+  _model->reset_module();
+  _pedset->reset_module();
+  _goals->reset_module();
+  _map->reset_module();
+}
+
 /**
-   * @brief Runs the simulation with the given parameters
-   * 
-   * @param params parameter module to use for the simulation
-   * @return output_data_t Tuple of the output data
-   */
-void Simulation::operator()(std::string const& pedPath,
-                            std::string const& mapPath,
+ * @brief Runs the simulation with the given parameters
+ *
+ * @param params parameter module to use for the simulation
+ * @return output_data_t Tuple of the output data
+ */
+void Simulation::operator()(std::string const& pedPath, std::string const& mapPath,
                             std::string const& paramsPath)
 {
-  // TODO(rolland): issue #25 this assumes that a only a single node should ever run this function, there may be sitations where this isn't user friendly?
+  // TODO(rolland): issue #25 this assumes that a only a single node should ever run this
+  // function, there may be sitations where this isn't user friendly?
   if ( ! ParameterSweep::is_root() ) return;
 
   if ( ! pedPath.empty() ) _pedInput->load(pedPath);
@@ -106,8 +115,11 @@ void Simulation::operator()(std::string const& pedPath,
   run_sim(params);
 }
 
-// TODO(rolland): issue #25 the simulation shouldn't have to know that it is being run in parallel
-//                  - this is needed because of the delayed loading of parameters, with the operator() every node would load the parameters when they've already been updated
+// TODO(rolland): issue #25 the simulation shouldn't have to know that it is being run in
+// parallel
+//                  - this is needed because of the delayed loading of parameters, with
+//                  the operator() every node would load the parameters when they've
+//                  already been updated
 void Simulation::run_sim(Parameters& params)
 {
   params.reset();
@@ -121,10 +133,11 @@ void Simulation::run_sim(Parameters& params)
   VIPRA::State state;
   state.initialize(*_pedset);
 
+  _simulationTimes.start_new();
+
   // main loop
   while ( _currTimestep < _maxTimestep && ! _goals->is_sim_goal_met() ) {
-    _model->timestep(*_pedset, *_map, *_goals, state, _timestepSize,
-                     _currTimestep);
+    _model->timestep(*_pedset, *_map, *_goals, state, _timestepSize, _currTimestep);
     _behaviorModel.timestep(*_pedset, *_map, *_goals, state, _timestepSize);
     _pedset->update(state);
     _goals->update(*_pedset, *_map, _timestepSize);
@@ -135,6 +148,8 @@ void Simulation::run_sim(Parameters& params)
     ++_currTimestep;
   }
 
+  _simulationTimes.stop();
+
   if ( _outputParams )
     _output.write_to_file("parameters.json", params.get_used_parameters());
 
@@ -142,11 +157,12 @@ void Simulation::run_sim(Parameters& params)
 }
 
 /**
-   * @brief Initializes the simulation and all of its modules with the given parameters
-   * 
-   * @param params parameter module to use for the simulation
-   * @return auto Tuple of the max timestep, timestep size, random seed, and the initial state
-   */
+ * @brief Initializes the simulation and all of its modules with the given parameters
+ *
+ * @param params parameter module to use for the simulation
+ * @return auto Tuple of the max timestep, timestep size, random seed, and the initial
+ * state
+ */
 void Simulation::initialize(Parameters& params)
 {
   register_params(params);
@@ -175,4 +191,6 @@ void Simulation::initialize(Parameters& params)
   _model->initialize(*_pedset, *_map, *_goals, _engine);
   _behaviorModel.initialize(*_pedset, *_map, *_goals, _seed);
 }
+
+void Simulation::output_timings() { _simulationTimes.output_timings(); }
 }  // namespace VIPRA

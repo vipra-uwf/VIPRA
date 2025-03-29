@@ -20,6 +20,7 @@
 #include "vipra/types/float.hpp"
 #include "vipra/types/seed.hpp"
 #include "vipra/types/time.hpp"
+#include "vipra/util/timing.hpp"
 
 // TODO(rolland): go through everything and handle errors more gracefully, currently we just throw
 
@@ -43,6 +44,9 @@ class Simulation : public Modules::Module<Simulation> {
   void set_install_dir(std::string const& dir) { _installDir = dir; }
   void set_module(Modules::Type type, std::string const& name);
   void set_modules(std::string const& modulesPath);
+  void reset_modules();
+
+  void output_timings();
 
   void               set_sim_id(VIPRA::idx idx) { _currSimIdx = idx; }
   void               add_sim_id(VIPRA::idx idx) { _currSimIdx += idx; }
@@ -61,8 +65,9 @@ class Simulation : public Modules::Module<Simulation> {
   std::unique_ptr<Modules::MapInput>        _mapInput;
   BehaviorModel                             _behaviorModel;
 
-  std::map<Modules::Type,
-           std::function<void(void*, Parameters&, VIPRA::Random::Engine&)>>
+  Util::Timings _simulationTimes{"simulation"};
+
+  std::map<Modules::Type, std::function<void(void*, Parameters&, VIPRA::Random::Engine&)>>
       _configs;
 
   VIPRA::Random::Engine _engine;
@@ -77,5 +82,6 @@ class Simulation : public Modules::Module<Simulation> {
   bool            _outputParams{false};
 
   void initialize(Parameters& params);
+  void cleanup_modules();
 };
 }  // namespace VIPRA

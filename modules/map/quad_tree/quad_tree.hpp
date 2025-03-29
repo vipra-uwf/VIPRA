@@ -14,8 +14,7 @@ namespace VIPRA::Map {
  * @brief Map module that uses a quadtree to store obstacles
  * 
  */
-class QuadTree : public VIPRA::Modules::Module<QuadTree>,
-                 public VIPRA::Modules::Map {
+class QuadTree : public VIPRA::Modules::Module<QuadTree>, public VIPRA::Modules::Map {
  public:
   VIPRA_MODULE_NAME("QuadTree");
   VIPRA_MODULE_TYPE(Map);
@@ -23,6 +22,8 @@ class QuadTree : public VIPRA::Modules::Module<QuadTree>,
   VIPRA_REGISTER_PARAMS(VIPRA_PARAM("minQuadSize", _obsDistance))
 
   VIPRA_MAP_INIT {}
+
+  VIPRA_MAP_RESET {}
 
  private:
   VIPRA::f_pnt _obsDistance{};

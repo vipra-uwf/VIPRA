@@ -1,6 +1,5 @@
 
 | [Main Page](../../../docs.md) | [How To Use](../usage.md) | [Provided Modules](../base_modules.md) | [VIPRA Behaviors](../behaviors/behaviors.md) | [Module Parameters](parameters.md) | [Developing Modules](../../developers/overview.md) |
-| --- | --- | --- | --- | --- | --- |
 
 # VIPRA Behaviors Syntax Reference
 
@@ -804,7 +803,7 @@ Action (typeA):
 This `Condition` checks for the status of an [Event](#events).
 
 ```
-<event> is <status>
+<event> <status>
 ```
 
 #### Available Statuses:
@@ -820,7 +819,7 @@ Occurred  // True if the event has occurred at all during the simulation
 Example:
 ```
 Action (listener):
-  Condition: !announcement is occurring
+  Condition: !announcement occurring
   Response: set velocity to {0}
 .
 ```

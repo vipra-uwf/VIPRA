@@ -56,14 +56,8 @@ class DensityGrid {
     return _grid[idx].pedCount;
   }
 
-  [[nodiscard]] auto begin() -> std::vector<GridPoint>::iterator
-  {
-    return _grid.begin();
-  }
-  [[nodiscard]] auto end() -> std::vector<GridPoint>::iterator
-  {
-    return _grid.end();
-  }
+  [[nodiscard]] auto begin() -> std::vector<GridPoint>::iterator { return _grid.begin(); }
+  [[nodiscard]] auto end() -> std::vector<GridPoint>::iterator { return _grid.end(); }
 
   /**
    * @brief Increments the pedestrian count at the grid index that contains the point. 
@@ -91,8 +85,7 @@ class DensityGrid {
     auto const idx = get_index(gridX, gridY, _xCount);
 
     if ( out_of_bounds(gridX, gridY) ) {
-      VIPRA::Log::error("Grid index is out of bounds Pos: ({}, {})", pos.x,
-                        pos.y);
+      VIPRA::Log::error("Grid index is out of bounds Pos: ({}, {})", pos.x, pos.y);
       throw std::runtime_error("Grid index is out of bounds");
     }
 
@@ -159,16 +152,14 @@ class DensityGrid {
     _grid = std::vector<GridPoint>(_xCount * _yCount);
   }
 
-  [[nodiscard]] VIPRA_INLINE auto out_of_bounds(
-      VIPRA::f_pnt gridX, VIPRA::f_pnt gridY) const -> bool
+  [[nodiscard]] VIPRA_INLINE auto out_of_bounds(VIPRA::f_pnt gridX,
+                                                VIPRA::f_pnt gridY) const -> bool
   {
-    return gridX < 0 ||
-           gridX >= static_cast<VIPRA::f_pnt>(_xCount) * _gridSize ||
+    return gridX < 0 || gridX >= static_cast<VIPRA::f_pnt>(_xCount) * _gridSize ||
            gridY < 0 || gridY >= static_cast<VIPRA::f_pnt>(_yCount) * _gridSize;
   }
 
-  [[nodiscard]] VIPRA_INLINE auto out_of_bounds(size_t gridX,
-                                                size_t gridY) const -> bool
+  [[nodiscard]] VIPRA_INLINE auto out_of_bounds(size_t gridX, size_t gridY) const -> bool
   {
     return gridX < 0 || gridX >= _xCount || gridY < 0 || gridY >= _yCount;
   }

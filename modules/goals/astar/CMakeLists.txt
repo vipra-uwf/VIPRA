@@ -5,6 +5,7 @@ vipra_module(
   SOURCES
     astar.cpp
     pathing_graph.cpp
+    douglas_peucker.cpp
   TYPE
     Goals
 )
