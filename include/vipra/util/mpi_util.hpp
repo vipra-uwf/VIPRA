@@ -78,13 +78,17 @@ inline void master_do(auto&& func)
 }  // namespace VIPRA::Util
 #else
 namespace VIPRA::Util {
+// DO NOT REMOVE
+// For whatever reason, static_assert(false) is 
+// ALWAYS asserted false by the compiler, unless you do this.
+template <class... E>
+constexpr bool always_false = false;
+
 template <typename data_t>
 [[nodiscard]] inline auto mpi_gather_all_vectors(std::vector<data_t> const& localData)
     -> std::pair<std::vector<data_t>, std::vector<int>>
 {
-  constexpr bool always_false = false;
-  static_assert(always_false,
-                "Attempting to use mpi_gather_all_vectors when MPI is not enabled");
+  static_assert(always_false<data_t>, "Attempting to use mpi_gather_all_vectors when MPI is not enabled");
 }
 
 /**

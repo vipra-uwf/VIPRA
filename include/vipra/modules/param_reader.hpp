@@ -13,6 +13,12 @@
 
 namespace VIPRA::Modules {
 
+// DO NOT REMOVE
+// For whatever reason, static_assert(false) is 
+// ALWAYS asserted false by the compiler, unless you do this.
+template <class... E>
+constexpr bool always_false = false;
+
 /**
  * @brief Base ParamReader Module
  * 
@@ -77,7 +83,7 @@ class ParamReader : public Util::CRTP<ParamReader<module_t>> {
       return dist(engine);
     }
     else {
-      static_assert(false, "Invalid Type");
+      static_assert(always_false<data_t>, "Invalid Type");
     }
   }
 };

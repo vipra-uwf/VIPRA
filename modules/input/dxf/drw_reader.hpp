@@ -109,30 +109,109 @@ struct DrwReader : public DRW_Interface {
     }
   }
 
-  void addRay(const DRW_Ray& /*data*/) override
+  void addRay(const DRW_Ray& data) override
   {
-    VIPRA::Log::warn("DXF Loading for Ray not impelmented");
+    DRW_Line dataCpy = data;
+
+    // Even if it's only 2 points, we still want to organize it as a vector of points.
+    std::vector<VIPRA::f3d> points;
+
+    points.emplace_back(dataCpy.basePoint.x, dataCpy.basePoint.y,
+                        0);  // Start point
+    points.emplace_back(dataCpy.secPoint.x, dataCpy.secPoint.y,
+                        0);  // End point
+
+    std::string layer = data.layer;
+    add_obstacle(points, layer);  
   }
-  void addXline(const DRW_Xline& /*data*/) override
+
+  void addXline(const DRW_Xline& data) override
   {
-    VIPRA::Log::warn("DXF Loading for Xline not impelmented");
+    DRW_Line dataCpy = data;
+
+    // Even if it's only 2 points, we still want to organize it as a vector of points.
+    std::vector<VIPRA::f3d> points;
+
+    points.emplace_back(dataCpy.basePoint.x, dataCpy.basePoint.y,
+                        0);  // Start point
+    points.emplace_back(dataCpy.secPoint.x, dataCpy.secPoint.y,
+                        0);  // End point
+
+    std::string layer = data.layer;
+    add_obstacle(points, layer);
   }
-  void addArc(const DRW_Arc& /*data*/) override
+
+  void addArc(const DRW_Arc& data) override
   {
-    VIPRA::Log::warn("DXF Loading for Arc not impelmented");
+    DRW_Arc dataCpy = data;
+
+    double    radius = dataCpy.radius();
+    DRW_Coord center = dataCpy.basePoint;
+
+    auto points = DrwReader::get_arc_as_polygon(
+        center, radius, data.staangle, data.endangle);
+
+    std::string layer = data.layer;
+
+    // We add these as individidual lines to prevent the arc from closing at both ends. 
+    for (int i = 0; i < points.size()-1; i++) {
+      std::vector<VIPRA::f3d> line = {points[i], points[i+1]};
+
+      add_obstacle(line, layer);
+    }
   }
-  void addCircle(const DRW_Circle& /*data*/) override
+
+  void addCircle(const DRW_Circle& data) override
   {
-    VIPRA::Log::warn("DXF Loading for Circle not impelmented");
+    // VIPRA::Log::warn("DXF Loading for Circle not impelmented");
+
+    DRW_Circle dataCpy = data;
+
+    double    radius = dataCpy.radious;
+    DRW_Coord center = dataCpy.basePoint;
+
+    auto vipraPolyline = DrwReader::get_arc_as_polygon(center, radius, 0.00, (2 * M_PI));
+
+    std::string layer = data.layer;
+    add_obstacle(vipraPolyline, layer);
   }
-  void addEllipse(const DRW_Ellipse& /*data*/) override
+
+  void addEllipse(const DRW_Ellipse& data) override
   {
-    VIPRA::Log::warn("DXF Loading for Ellipse not impelmented");
+    // Get ellipse into polyline
+    DRW_Polyline ellipseLine = DRW_Polyline();
+    DRW_Ellipse  dataCpy = data;
+    dataCpy.toPolyline(&ellipseLine, NUM_SUBDIVISIONS);
+
+    // Extract points from polyline
+    std::vector<std::shared_ptr<DRW_Vertex>> vertexList = ellipseLine.vertlist;
+    auto vipraPolyline = DrwReader::get_polygon(vertexList);
+
+    std::string layer = data.layer;
+    add_obstacle(vipraPolyline, layer);
   }
-  void addPolyline(const DRW_Polyline& /*data*/) override
+
+  void addPolyline(const DRW_Polyline& data) override
   {
-    VIPRA::Log::warn("DXF Loading for Polyline not impelmented");
+    // Extract points from polyline
+    std::vector<std::shared_ptr<DRW_Vertex>> vertexList = data.vertlist;
+    auto points = DrwReader::get_polygon(vertexList);
+
+    std::string layer = data.layer;
+
+    // If the last point is the same as the first point, close it off. 
+    if (points[0].x == points.back().x && points[0].y == points.back().y) {
+      add_obstacle(points, layer);
+      return;
+    }
+
+    // We add these as individidual lines to prevent the arc from closing at both ends. 
+    for (int i = 0; i < points.size()-1; i++) {
+      std::vector<VIPRA::f3d> line = {points[i], points[i+1]};
+      add_obstacle(line, layer);
+    }
   }
+
   void addSpline(const DRW_Spline* /*data*/) override
   {
     VIPRA::Log::warn("DXF Loading for Spline not impelmented");
@@ -194,6 +273,62 @@ struct DrwReader : public DRW_Interface {
   void writeDimstyles() override {}
   void writeObjects() override {}
   void writeAppId() override {}
+
+  /**
+   * @brief Takes in a list of vectors in the form of DRW_Vertex and returns a set of f3d points usable by VIPRA
+   *
+   * @param dxfPolygonVertices - A list of vectors in the form of DRW_Vertex
+   * @return std::vector<VIPRA::f3d>
+   */
+  auto get_arc_as_polygon(DRW_Coord center, double radius,
+                                    double start_angle,
+                                    double end_angle) -> std::vector<VIPRA::f3d>
+  {
+    std::vector<VIPRA::f3d> points;
+    double                  centerX = center.x;
+    double                  centerY = center.y;
+
+    // Increments by steps to create points around a center at the specified radius.
+    // For a circle, start point would be 0.00 and end point would be 2*pi
+    // Steps are defined as the angle resulting from subdividing 2*pi
+    double stepSize = (2 * M_PI) / NUM_SUBDIVISIONS;
+    // TODO(tyler): consider tolerance with end state. Could create two points very close together.
+    for ( double step = start_angle; step < end_angle; step += stepSize ) {
+      double x = centerX + radius * cos(step);
+      double y = centerY + radius * sin(step);
+
+      points.emplace_back(x, y, 0);
+    }
+
+    // Should add point on last point if not circle. This closes
+    // the shape if the arc is attached to another shape
+    if ( std::abs(end_angle - (2 * M_PI)) > 0.01 ) {
+      points.emplace_back(centerX + (radius * cos(end_angle)),
+                          centerY + (radius * sin(end_angle)), 0);
+    }
+
+    return points;
+  }
+
+  /**
+   * @brief Takes in a list of vectors in the form of DRW_Vertex and returns a set of f3d points usable by VIPRA
+   *
+   * @param dxfPolygonVertices - A list of vectors in the form of DRW_Vertex
+   * @return std::vector<VIPRA::f3d>
+   */
+  auto get_polygon(std::vector<std::shared_ptr<DRW_Vertex>>&
+                                  vertexList) -> std::vector<VIPRA::f3d>
+  {
+    std::vector<VIPRA::f3d> points;
+    for ( std::shared_ptr<DRW_Vertex> const& vertex : vertexList ) {
+      DRW_Vertex currVertex = *vertex;
+
+      points.emplace_back(currVertex.basePoint.x, currVertex.basePoint.y, 0);
+    }
+
+    return points;
+  }
+
 };
 
 }  // namespace VIPRA
