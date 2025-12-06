@@ -18,6 +18,7 @@ class Calm : public VIPRA::Modules::Module<Calm>, public VIPRA::Modules::Model {
   VIPRA_MODULE_NAME("Calm")
   VIPRA_MODULE_TYPE(Model)
 
+  // TODO(tylerk ): Why is this on there twice?
   VIPRA_REGISTER_PARAMS(VIPRA_PARAM("meanMass", _config.meanMass),
                         VIPRA_PARAM("massStdDev", _config.massStdDev),
                         VIPRA_PARAM("meanMass", _config.meanMass),

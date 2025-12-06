@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.19)
-set(VIPRA_LIBRARY_NAME vipra)
-set(VIPRA_EXECUTABLE_NAME VIPRA)
+set(VIPRA_LIBRARY_NAME vipra_lib)
+# TODO(tylerk): We should keep the library name and executable name different from each other
+#               in case the system is case insensitive and causes issues. However, name should be
+#               simple for the user to run.
+set(VIPRA_EXECUTABLE_NAME vipra)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

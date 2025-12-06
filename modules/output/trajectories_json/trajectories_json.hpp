@@ -23,7 +23,7 @@ class TrajectoriesJson : public VIPRA::Modules::Module<TrajectoriesJson>,
 
   VIPRA_REGISTER_PARAMS(VIPRA_PARAM("filename", _filename))
 
-  VIPRA_OUTPUT_RESET override { _trajectories = {}; }
+  VIPRA_OUTPUT_RESET override { _trajectories = {}; _velocities = {}; }
 
   void write(std::filesystem::path const& outputDir) override;
   void timestep_update(VIPRA::timestep /*unused*/, VIPRA::delta_t /*unused*/,
@@ -31,6 +31,7 @@ class TrajectoriesJson : public VIPRA::Modules::Module<TrajectoriesJson>,
 
  private:
   std::vector<std::vector<VIPRA::f3d>> _trajectories;
+  std::vector<std::vector<VIPRA::f3d>> _velocities;
   std::string                          _filename;
 };
 }  // namespace VIPRA::Output

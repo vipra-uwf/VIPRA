@@ -142,7 +142,17 @@ def getObs(obs, dxf):
 
 def getPeds(peds):
   if peds:
-    return json.load(open(peds))
+    pedestrians = json.load(open(peds))
+    just_positions = {"trajectories": []}
+
+    for timestep in pedestrians["trajectories"]:
+      positions = []
+      for ped in timestep:
+        positions.append(ped["position"])
+      just_positions["trajectories"].append(positions)
+
+    return just_positions
+    # return json.load(open(peds))
   else:
     return {}
 
