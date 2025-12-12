@@ -75,3 +75,7 @@ dwg2dxf
 *.data.old
 timings.txt
 *.dat
+
+# scripts
+!run_and_visualize.sh
+!vipra.sh
