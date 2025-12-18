@@ -2,3 +2,5 @@
 *.gif
 build/
 sim_output/
+vipra
+vipra_executable

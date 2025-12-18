@@ -1,13 +1,6 @@
 # !/bin/bash
-# Flags:
-# -c, --compile = compile
-# -r, --run = run simulation
-# -o, --map = map
-# -p, --peds = pedestrians
-# -m, --modules = modules
-# -i, --params = module params
-# -h, --help = help
 
+# TODO(tylerk): Should there even be an option to compile? Or should this be done by default?
 COMPILE=0
 RUN=0
 MAP=""
@@ -22,10 +15,10 @@ usage()
     echo "Options:"
     echo "  -c, --compile          Compile the VIPRA project"
     echo "  -r, --run              Run the VIPRA simulation"
-    echo "  -o, --map <file>       Specify the map file"
-    echo "  -p, --peds <file>      Specify the pedestrians file"
-    echo "  -m, --modules <file>   Specify the modules configuration file"
-    echo "  -i, --params <file>    Specify the module parameters file"
+    echo "  -o, --map <file>       Specify the map file (Required for run)"
+    echo "  -p, --peds <file>      Specify the pedestrians file (Required for run)"
+    echo "  -m, --modules <file>   Specify the modules configuration file (Required for run)"
+    echo "  -i, --params <file>    Specify the module parameters file (Required for run)"
     echo "  -h, --help             Display this help message"
     exit 0
 }
@@ -85,14 +78,6 @@ do
     esac
 done
 
-
-echo "map_file: ${MAP}"
-echo "pedestrian_file: ${PEDS}"
-echo "modules_file: ${MODULES}"
-echo "params_file: ${PARAMS}"
-echo "compile: ${COMPILE}"
-
-
 # Check if the Docker image exists. If not, build it.
 IMAGE_NAME="vipra"
 
@@ -100,16 +85,16 @@ if docker image inspect ${IMAGE_NAME} > /dev/null 2>&1; then
     echo "Docker image ${IMAGE_NAME} already exists."
 else
     echo "Docker image ${IMAGE_NAME} does not exist. Building now..."
-    docker build -t ${IMAGE_NAME} --build-arg map_file=${MAP} --build-arg pedestrian_file=${PEDS} --build-arg modules_file=${MODULES} --build-arg params_file=${PARAMS} --build-arg compile=${COMPILE} .
+    docker build -t ${IMAGE_NAME} --build-arg compile=${COMPILE} .
 fi
 
 
 # Check and see if a Docker container already exists. If not, create it.
 CONTAINER_NAME="vipra"
-container_status=$( docker ps -a -f name=vipra | grep testContainer 2> /dev/null )
+container_status=$( docker ps -a --format "table {{.Status}}\t{{.Names}}" -f name=vipra | grep vipra 2> /dev/null )
 
 if [[ ! -z ${container_status} ]]; then
-    echo "Container vipra exists with status: $( echo ${container_status} | awk '{ print $7 }' )"
+    echo "Container vipra exists with status: $( echo ${container_status} | awk '{ print $1 }' )"
 else
     echo "Creating new container vipra"
     docker container create -it --name vipra -v ${PWD}:/VIPRA vipra bash
@@ -117,7 +102,19 @@ fi
 
 
 # Check if the container is running. If not, start it.
-if [[ ${container_status} != *"Running"* ]]; then
+if [[ ${container_status,,} != *"up"* ]]; then
     echo "Starting existing container vipra"
     docker start vipra
+fi
+
+# Run VIPRA inside the container.
+if [[ ${RUN} -eq 1 ]]; then
+
+    if [[ -z "${MAP}" || -z "${PEDS}" || -z "${MODULES}" || -z "${PARAMS}" ]]; then
+        echo "Error: To run the simulation, you must specify the map, pedestrians, modules, and params files."
+        usage
+        exit 1
+    fi
+
+    docker exec -it vipra bash -c "/usr/local/bin/vipra -map=${MAP} -peds=${PEDS} -params=./${PARAMS} -modules=./${MODULES}"
 fi

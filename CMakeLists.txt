@@ -89,6 +89,16 @@ if (VIPRA_BUILD_EXECUTABLE)
     ${VIPRA_INCLUDE_DIRS}
   )
 
+  # Ensure the runtime linker can find the vipra shared library when
+  # running the executable from the source tree (e.g. /VIPRA) or when
+  # installed.  Use $ORIGIN-relative RPATHs so the binary looks for
+  # libraries next to itself or in the `build` directory.
+  set_target_properties(${VIPRA_EXECUTABLE_NAME} PROPERTIES
+    BUILD_RPATH "\$ORIGIN/build:\$ORIGIN"
+    INSTALL_RPATH "\$ORIGIN/../lib:\$ORIGIN"
+    INSTALL_RPATH_USE_LINK_PATH TRUE
+  )
+
   if ( NOT DEFINED VIPRA_EXECUTABLE_PATH )
     set( VIPRA_EXECUTABLE_PATH ${CMAKE_CURRENT_SOURCE_DIR} )
   endif()
