@@ -28,6 +28,7 @@ inline auto load_module(std::string const& name, std::string const& installDir,
   using mod_t = std::remove_cvref_t<module_t>;
   using make_module_t = mod_t* (*)();
   using config_module_t = void (*)(void*, VIPRA::Parameters&, VIPRA::Random::Engine&);
+  // using config_module_t = void (*)(mod_t*, VIPRA::Parameters&, VIPRA::Random::Engine&);
 
   std::string path;
 
@@ -87,6 +88,13 @@ inline auto load_module(std::string const& name, std::string const& installDir,
   return LoadedModule<module_t>{
       std::move(mod),
       std::function<void(void*, Parameters&, VIPRA::Random::Engine&)>(configFunc)};
+      // wrap the module-specific setup function (which expects mod_t*) into the
+      // generic std::function that callers use (void*), performing the proper cast
+      // back to mod_t* before invoking the module setup.
+      // std::function<void(void*, Parameters&, VIPRA::Random::Engine&)>(
+      //     [configFunc](void* m, Parameters& p, VIPRA::Random::Engine& e) {
+      //       configFunc(static_cast<mod_t*>(m), p, e);
+      //     })};
 }
 
 }  // namespace VIPRA

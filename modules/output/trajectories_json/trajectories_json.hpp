@@ -25,6 +25,7 @@ class TrajectoriesJson : public VIPRA::Modules::Module<TrajectoriesJson>,
 
   VIPRA_OUTPUT_RESET override { _trajectories = {}; _velocities = {}; }
 
+  // void initialize() override;
   void write(std::filesystem::path const& outputDir) override;
   void timestep_update(VIPRA::timestep /*unused*/, VIPRA::delta_t /*unused*/,
                        VIPRA::State const& state) override;

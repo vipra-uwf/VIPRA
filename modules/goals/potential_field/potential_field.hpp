@@ -40,9 +40,12 @@ class PotentialField : public VIPRA::Modules::Module<PotentialField>,
       VIPRA::f3d  pos = pedset.ped_coords(pedIdx);
       auto const& grid = _field.get_grid(pos);
 
+      // std::cout << "Initial Goal for Ped " << pedIdx << ": (" << pos.x + grid.direction.x << ", "
+      //           << pos.y + grid.direction.y << ")" << std::endl;
+
       if ( grid.end == _emptyf3d_ )
         VIPRA_MODULE_ERROR(
-            "No path found for pedestrian {}, Start: ({}, {}), End: ({}, {})", pedIdx,
+            "No Potential Field path found for pedestrian {}, Start: ({}, {}), End: ({}, {})", pedIdx,
             pos.x, pos.y, end_goal(pedIdx).x, end_goal(pedIdx).y);
 
       set_current_goal(pedIdx, pos + grid.direction);
@@ -55,7 +58,7 @@ class PotentialField : public VIPRA::Modules::Module<PotentialField>,
   {
     _densityCheckCounter++;
 
-    // Probably a better way to do this that doesn't reuse code, but this avoids repeating the same check every single loop.
+    // TODO(rolland): Probably a better way to do this that doesn't reuse code, but this avoids repeating the same check every single loop.
     // Who knows, maybe compiler would have already optimized this.
     if ( _densityCheckCounter >= _densityUpdateFrequency ) {
       fill_grid(map);
@@ -77,6 +80,13 @@ class PotentialField : public VIPRA::Modules::Module<PotentialField>,
     for ( VIPRA::idx pedIdx = 0; pedIdx < pedset.num_pedestrians(); ++pedIdx ) {
       VIPRA::f3d pos = pedset.ped_coords(pedIdx);
       VIPRA::f3d direction = _field.get_grid(pos).direction;
+
+      // FOR DEBUGGING PURPOSES ONLY
+      if (std::abs(pos.y - 44.10) < 0.1) {
+        VIPRA::Log::debug("Ped {} at y={:.2f}, direction: ({:.3f}, {:.3f}, {:.3f})",
+                          pedIdx, pos.y, direction.x, direction.y, direction.z);
+      }
+      // END DEBUGGING
 
       set_current_goal(pedIdx, pos + direction);
     }

@@ -208,7 +208,8 @@ class Pedestrians : public BaseModule<Pedestrians> {
                                 VIPRA::Random::Engine&          engine) -> f3d
   {
     constexpr size_t       MAX_RETRIES = 100;
-    constexpr VIPRA::f_pnt CLOSEST_DIST = 0.3;
+    // constexpr VIPRA::f_pnt CLOSEST_DIST = 0.3;
+    constexpr VIPRA::f_pnt CLOSEST_DIST = 0.6;
     size_t                 retries = 0;
 
     f3d point = polygon.random_point(engine);

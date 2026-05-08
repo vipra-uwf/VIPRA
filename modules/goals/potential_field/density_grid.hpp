@@ -84,9 +84,12 @@ class DensityGrid {
 
     auto const idx = get_index(gridX, gridY, _xCount);
 
+    // std::cout << "Getting grid index for position: (" << pos.x << ", " << pos.y << ") GridX: " << gridX
+    //      << " GridY: " << gridY << " Index: " << idx << std::endl;
+
     if ( out_of_bounds(gridX, gridY) ) {
-      VIPRA::Log::error("Grid index is out of bounds Pos: ({}, {})", pos.x, pos.y);
-      throw std::runtime_error("Grid index is out of bounds");
+      VIPRA::Log::error("Density grid index is out of bounds Pos: ({}, {})", pos.x, pos.y);
+      throw std::runtime_error("Density grid index is out of bounds");
     }
 
     return idx;

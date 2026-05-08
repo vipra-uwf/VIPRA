@@ -44,7 +44,7 @@ class DXF : public VIPRA::Modules::Module<DXF>,
   VIPRA_MODULE_NAME("DXF");
   VIPRA_MODULE_TYPE(MapInput);
 
-  VIPRA_REGISTER_PARAMS()
+  VIPRA_REGISTER_PARAMS();
 
   void load(std::string const& filepath) override;
 

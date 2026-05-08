@@ -1,11 +1,13 @@
 
 #include "calm_collision.hpp"
+#include <iostream>
 
 namespace CALM {
 
 void CollisionDetection::initialize(VIPRA::f_pnt                       range,
                                     VIPRA::Modules::Pedestrians const& pedset)
 {
+  std::cout << "Initializing CALM Collision Detection with range: " << range << std::endl;
   _range = range;
   _collisionRects.resize(pedset.num_pedestrians());
   _statuses.resize(pedset.num_pedestrians());

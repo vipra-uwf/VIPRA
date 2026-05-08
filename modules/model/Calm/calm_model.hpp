@@ -19,9 +19,8 @@ class Calm : public VIPRA::Modules::Module<Calm>, public VIPRA::Modules::Model {
   VIPRA_MODULE_TYPE(Model)
 
   // TODO(tylerk ): Why is this on there twice?
+  // TODO(tylerk ): Add an additional macro for registering model parameters so that users can define their own in the social force function.
   VIPRA_REGISTER_PARAMS(VIPRA_PARAM("meanMass", _config.meanMass),
-                        VIPRA_PARAM("massStdDev", _config.massStdDev),
-                        VIPRA_PARAM("meanMass", _config.meanMass),
                         VIPRA_PARAM("massStdDev", _config.massStdDev),
                         VIPRA_PARAM("meanReactionTime", _config.meanReactionTime),
                         VIPRA_PARAM("reactionTimeStdDev", _config.reactionTimeStdDev),
@@ -30,7 +29,8 @@ class Calm : public VIPRA::Modules::Module<Calm>, public VIPRA::Modules::Model {
                         VIPRA_PARAM("meanShoulderLen", _config.meanShoulderLen),
                         VIPRA_PARAM("shoulderLenStdDev", _config.shoulderLenStdDev),
                         VIPRA_PARAM("collisionRange", _config.collisionRange),
-                        VIPRA_PARAM("friction", _config.frictionCoef))
+                        VIPRA_PARAM("friction", _config.frictionCoef),
+                        FORCE_FIELD_PARAMS)
 
   VIPRA_MODEL_RESET {}
 

@@ -8,6 +8,12 @@ namespace VIPRA::Output {
 
 VIPRA_REGISTER_MODULE(TrajectoriesJson, Output)
 
+// void TrajectoriesJson::initialize()
+// {
+//   // Not required for this module. Return.
+//   return;
+// }
+
 void TrajectoriesJson::write(std::filesystem::path const& outputDir)
 {
   std::filesystem::path filepath = outputDir / _filename;
@@ -51,7 +57,7 @@ void TrajectoriesJson::timestep_update(VIPRA::timestep /*unused*/,
   // Inserts a new timestep at the end of the velocities vector
   _velocities.emplace_back(state.velocities.size());
 
-  // For each pedestrian, add their position at this timestep
+  // For each pedestrian, add their position and velocity at this timestep
   for ( size_t i = 0; i < state.positions.size(); ++i ) {
     _trajectories.back()[i] = state.positions[i];
     if ( i < state.velocities.size() ) _velocities.back()[i] = state.velocities[i];

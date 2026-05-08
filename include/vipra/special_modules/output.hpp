@@ -15,7 +15,6 @@
 #include "vipra/special_modules/parameters.hpp"
 #include "vipra/types/idx.hpp"
 
-// TODO(rolland): add a write to module method, that writes to a module if loaded, does nothing if not
 
 namespace VIPRA::CoordModules {
 
@@ -45,6 +44,17 @@ class OutputCoordinator : public Modules::Module<OutputCoordinator> {
     _outputs.emplace_back(std::move(module));
     _configs.emplace_back(std::move(config));
   }
+
+  // TODO(tyler): Add a method to initialize all output modules if they have an initialize method.
+  // void initialize()
+  // {
+  //   for ( auto& output : _outputs ) {
+  //     // Check if the output module has an initialize method
+  //     if constexpr (requires { output->initialize(); }) {
+  //       output->initialize(); // TODO(tyler): If module fails to initialize, handle error.
+  //     }
+  //   }
+  // }
 
   void config(Parameters& paramIn, VIPRA::Random::Engine& engine)
   {
@@ -109,6 +119,24 @@ class OutputCoordinator : public Modules::Module<OutputCoordinator> {
 
     file.close();
   }
+
+// TODO(rolland): add a write to module method, that writes to a module if loaded, does nothing if not
+// /**
+//  * @brief Write to a module through a pipe
+//  * 
+//  * @param target_module_name
+//  * @param value
+//  */
+//   void write_to_module(std::string const& target_module_name, std::string const& value)
+//   {
+//     VIPRA_MODULE_ERROR("write_to_module not yet implemented");
+
+//     std::filesystem::path filepath = _current_output_dir / target_module_name;
+//     std::ofstream         file(filepath);
+//     // TODO(tyler): check if a module is loaded. If not, do nothing.
+//     // If it is loaded, check if it has a pipe to write to.
+//     // If it does, write to the pipe. If not, error.
+//   }
 
  private:
   std::vector<std::unique_ptr<VIPRA::Modules::Output>>                         _outputs;

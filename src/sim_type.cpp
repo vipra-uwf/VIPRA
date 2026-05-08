@@ -5,6 +5,8 @@
 
 #include "vipra/parameter_sweep/parameter_sweep.hpp"
 
+#include "vipra/logging/logging.hpp"
+
 namespace VIPRA {
 
 void Simulation::set_module(Modules::Type type, std::string const& name)
@@ -136,7 +138,7 @@ void Simulation::run_sim(Parameters& params)
   _simulationTimes.start_new();
 
   // main loop
-  while ( _currTimestep < _maxTimestep && ! _goals->is_sim_goal_met() ) {
+  while ( _currTimestep < _maxTimestep && ! _goals->is_sim_goal_met() ) { // Update the timesteps as we go.
     _model->timestep(*_pedset, *_map, *_goals, state, _timestepSize, _currTimestep);
     _behaviorModel.timestep(*_pedset, *_map, *_goals, state, _timestepSize);
     _pedset->update(state);
@@ -153,7 +155,7 @@ void Simulation::run_sim(Parameters& params)
   if ( _outputParams )
     _output.write_to_file("parameters.json", params.get_used_parameters());
 
-  _output.write();
+  _output.write();  // Output is written only after the simulation completes. 
 }
 
 /**
@@ -165,6 +167,7 @@ void Simulation::run_sim(Parameters& params)
  */
 void Simulation::initialize(Parameters& params)
 {
+  // VIPRA::Log::debug("Initializing Simulation");
   register_params(params);
   config(params, _engine);
 
@@ -190,6 +193,7 @@ void Simulation::initialize(Parameters& params)
   _goals->initialize(*_pedset, *_map, _engine);
   _model->initialize(*_pedset, *_map, *_goals, _engine);
   _behaviorModel.initialize(*_pedset, *_map, *_goals, _seed);
+  // _output.initialize(); // TODO(tyler) Add initialization for output models.
 }
 
 void Simulation::output_timings() { _simulationTimes.output_timings(); }

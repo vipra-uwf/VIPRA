@@ -98,6 +98,7 @@ if [[ ! -z ${container_status} ]]; then
 else
     echo "Creating new container vipra"
     docker container create -it --name vipra -v ${PWD}:/VIPRA vipra bash
+    # docker container create -it --name vipra vipra bash
 fi
 
 

@@ -136,15 +136,43 @@ void Model::Calm::update_state(VIPRA::Modules::Pedestrians const& pedset,
     VIPRA::f_pnt const beta = _peds.betas[i];
     VIPRA::f3d const   direction = (goal - coord).unit();
 
-    VIPRA::f3d const friction =
-        _config.frictionCoef * (velocity - ((velocity.dot(direction)) * direction));
-    VIPRA::f3d const propulsion =
-        (((direction * desiredSpeed * beta - velocity) * mass) / reactionTime) - friction;
+    // Repulsion Force
+    VIPRA::f3d const repulsion =
+      _config.frictionCoef * (velocity - ((velocity.dot(direction)) * direction));
 
-    state.velocities[i] = ((propulsion / mass) * deltaT) + velocity;
+    // Propulsion (Acceleration) Force
+    VIPRA::f3d const propulsion =
+      (((direction * desiredSpeed * beta - velocity) * mass) / reactionTime);
+
+    // Force Field (Total Force)
+    VIPRA::f3d const forceField = propulsion - repulsion;
+
+    state.velocities[i] = ((forceField / mass) * deltaT) + velocity;
+    // TODO(tyler): Add Acceleration here. This should work, right? Should also create a state for this as well.
+    // state.accelerationsp[i] = velocity - state.velocities[i-1]/deltaT;
     state.positions[i] = coord + (state.velocities[i] * deltaT);
   }
 }
+
+
+// // Maybe at compile time, we can check and see if there is a force field model
+// // and if there is, use that. Otherwise, use the default friction calculation. 
+// // This would allow us to swap out the force field model without having to change the rest of the code.
+// VIPRA::f3d Model::Calm::calc_friction(VIPRA::Modules::Pedestrians const& pedset,
+//                                VIPRA::Modules::Goals const& goals, 
+//                                VIPRA::State& state,
+//                                VIPRA::delta_t deltaT,
+//                                VIPRA::idx pedIdx)
+// {
+//   // While it isn't smart to calculate this twice, we do want this to 
+//   // modular so that the force field can be replaced by other models.
+//   VIPRA::f3d const   goal = goals.current_goal(pedIdx);
+//   VIPRA::f3d const   velocity = pedset.ped_velocity(pedIdx);
+//   VIPRA::f3d const   coord = pedset.ped_coords(pedIdx);
+//   VIPRA::f3d const   direction = (goal - coord).unit();
+
+//   return _config.frictionCoef * (velocity - ((velocity.dot(direction)) * direction));
+// }
 
 auto Model::Calm::is_path_blocked(VIPRA::idx pedIdx, VIPRA::f3d velocity,
                                   VIPRA::f_pnt               maxDist,

@@ -17,6 +17,9 @@ void AStar::init_step(VIPRA::Modules::Pedestrians const& pedset,
 {
   VIPRA::size const pedCnt = pedset.num_pedestrians();
 
+  std::cout << "Initializing A* with " << pedCnt << " pedestrians and grid size of " << _gridSize
+       << std::endl;
+
   // Create map graph
   _graph = PathingGraph(map, _gridSize, _closestObstacle);
   set_end_goals(pedset, map, engine);
@@ -39,6 +42,22 @@ void AStar::reset_module() {}
 void AStar::update_step(VIPRA::Modules::Pedestrians const& pedset,
                         VIPRA::Modules::Map const& map, VIPRA::delta_t deltaT)
 {
+  auto const& objectives = map.get_objectives(_endGoalType);
+
+  for ( VIPRA::idx pedIdx = 0; pedIdx < pedset.num_pedestrians(); ++pedIdx ) {
+    auto const pos = pedset.ped_coords(pedIdx);
+    auto const nearestGoalIter = get_nearest_goal(pos, objectives);
+    if ( nearestGoalIter == objectives.end() ) continue;
+
+    auto const nearestGoal = nearestGoalIter->center();
+    if ( nearestGoal != end_goal(pedIdx) ) {
+      set_end_goal(pedIdx, nearestGoal);
+      find_path(pedIdx, pos);
+      if ( ! _paths[pedIdx].empty() ) {
+        set_current_goal(pedIdx, _paths[pedIdx].back());
+      }
+    }
+  }
 }
 
 // NOLINTNEXTLINE(misc-unused-parameters)
@@ -175,7 +194,7 @@ void AStar::find_path(VIPRA::idx pedIdx, VIPRA::f3d startPos)
 
   if ( ! path ) {
     VIPRA_MODULE_ERROR(
-        "No path found for pedestrian {}, Start: ({}, {}), End: ({}, {})\nTry "
+        "No A* path found for pedestrian {}, Start: ({}, {}), End: ({}, {})\nTry "
         "reducing gridSize in parameters",
         pedIdx, startPos.x, startPos.y, end_goal(pedIdx).x, end_goal(pedIdx).y);
   }
